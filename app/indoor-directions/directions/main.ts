@@ -13,7 +13,7 @@ import {
   buildSnaplines,
 } from "./utils";
 export default class IndoorDirections extends IndoorDirectionsEvented {
-  protected declare readonly map: maplibregl.Map;
+  declare protected readonly map: maplibregl.Map;
   private readonly pathFinder: PathFinder;
 
   protected readonly configuration: MapLibreGlDirectionsConfiguration;
@@ -41,16 +41,20 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
   }
 
   protected init() {
-    this.map.addSource(this.configuration.sourceName, {
-      type: "geojson",
-      data: {
-        type: "FeatureCollection",
-        features: [],
-      },
-    });
+    if (!this.map.getSource(this.configuration.sourceName)) {
+      this.map.addSource(this.configuration.sourceName, {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: [],
+        },
+      });
+    }
 
     this.configuration.layers.forEach((layer) => {
-      this.map.addLayer(layer);
+      if (!this.map.getLayer(layer.id)) {
+        this.map.addLayer(layer);
+      }
     });
   }
 
@@ -313,7 +317,25 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
    * Clears the map from all the instance's traces: waypoints, snappoints, routes, etc.
    */
   clear() {
-    this.setWaypoints([]);
+    this._waypoints = [];
+    this.snappoints = [];
     this.routelines = [];
+    this.draw();
+  }
+
+  destroy() {
+    try {
+      for (const layer of [...this.configuration.layers].reverse()) {
+        if (this.map.getLayer(layer.id)) {
+          this.map.removeLayer(layer.id);
+        }
+      }
+
+      if (this.map.getSource(this.configuration.sourceName)) {
+        this.map.removeSource(this.configuration.sourceName);
+      }
+    } catch {
+      // The map style may already be gone during style changes or unmount.
+    }
   }
 }

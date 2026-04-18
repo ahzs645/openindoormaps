@@ -1,6 +1,6 @@
 import { SlidersVertical } from "lucide-react";
 import { useEffect, useState } from "react";
-import topLocations from "~/mock/top-locations";
+import type { TopLocation } from "~/types/location";
 import { POI } from "~/types/poi";
 import { IndoorGeocoder } from "~/utils/indoor-geocoder";
 import { Toggle } from "../ui/toggle";
@@ -12,11 +12,13 @@ import { TopLocationsList } from "./top-location-list";
 interface DiscoveryViewProps {
   indoorGeocoder: IndoorGeocoder;
   onSelectPOI: (poi: POI) => void;
+  topLocations: TopLocation[];
 }
 
 export default function DiscoveryView({
   indoorGeocoder,
   onSelectPOI,
+  topLocations,
 }: DiscoveryViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);

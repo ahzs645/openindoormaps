@@ -1,39 +1,29 @@
-import MapLibreGlDirections, {
-  LoadingIndicatorControl,
-} from "@maplibre/maplibre-gl-directions";
-import { useEffect, useRef } from "react";
-import config from "~/config";
+import { useEffect, useState } from "react";
+import { useMap } from "~/components/map/map";
 import IndoorDirections from "~/indoor-directions/directions/main";
 
-function useDirections(map: maplibregl.Map | null) {
-  const directionsRef = useRef<MapLibreGlDirections | null>(null);
-  const indoorDirectionsRef = useRef<IndoorDirections | null>(null);
+function useDirections() {
+  const { isLoaded, map } = useMap();
+  const [indoorDirections, setIndoorDirections] =
+    useState<IndoorDirections | null>(null);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map || !isLoaded) {
+      setIndoorDirections(null);
+      return;
+    }
 
-    const handleLoad = () => {
-      directionsRef.current = new MapLibreGlDirections(map, {
-        api: config.routingApi,
-        requestOptions: { overview: "full", steps: "true" },
-      });
-      map.addControl(new LoadingIndicatorControl(directionsRef.current));
-
-      indoorDirectionsRef.current = new IndoorDirections(map);
-    };
-
-    map.on("load", handleLoad);
+    const directions = new IndoorDirections(map);
+    setIndoorDirections(directions);
 
     return () => {
-      map.off("load", handleLoad);
-      directionsRef.current = null;
-      indoorDirectionsRef.current = null;
+      directions.destroy();
+      setIndoorDirections(null);
     };
-  }, [map]);
+  }, [isLoaded, map]);
 
   return {
-    directions: directionsRef.current,
-    indoorDirections: indoorDirectionsRef.current,
+    indoorDirections,
   };
 }
 

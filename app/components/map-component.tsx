@@ -1,92 +1,98 @@
-import MaplibreInspect from "@maplibre/maplibre-gl-inspect";
-import "@maplibre/maplibre-gl-inspect/dist/maplibre-gl-inspect.css";
-import maplibregl, { FullscreenControl, NavigationControl } from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useState } from "react";
 import config from "~/config";
-import IndoorMapLayer from "~/layers/indoor-map-layer";
-import POIsLayer from "~/layers/pois-layer";
-import building from "~/mock/building.json";
-import useMapStore from "~/stores/use-map-store";
+import useFloorStore from "~/stores/floor-store";
 import DiscoveryPanel from "./discovery-panel/discovery-panel";
 import { FloorSelector } from "./floor-selector";
 import { FloorUpDownControl } from "./floor-up-down-control";
 import { IndoorMapGeoJSON } from "~/types/geojson";
-import DemoBanner from "./demo-banner";
-import OIMLogo from "../controls/oim-logo";
-import { Theme, useTheme } from "remix-themes";
-import "~/maplibre.css";
+import { type Theme, useTheme } from "~/hooks/use-theme";
+import type { LocationConfig } from "~/types/location";
+import {
+  MapCanvas,
+  MapControls,
+  MapInspectControl,
+  MapProvider,
+} from "./map/map";
+import { getAvailableFloors, IndoorMapLayers } from "./map/indoor-map-layers";
+import { MapSectionLayout } from "./map/map-section-layout";
+import { PoisLayer } from "./map/pois-layer";
 
-export default function MapComponent() {
-  const mapContainer = useRef<HTMLDivElement>(null);
+function isSmallViewport() {
+  return typeof globalThis !== "undefined" && globalThis.innerWidth < 640;
+}
+
+interface MapComponentProps {
+  location: LocationConfig;
+}
+
+export default function MapComponent({ location }: MapComponentProps) {
   const [theme] = useTheme();
-
-  const setMapInstance = useMapStore((state) => state.setMapInstance);
-  const indoorMapLayer = useMemo(
-    () =>
-      new IndoorMapLayer(
-        building.indoor_map as IndoorMapGeoJSON,
-        theme as string,
-      ),
-    [theme],
+  const [showDesktopSidebar, setShowDesktopSidebar] = useState(true);
+  const { currentFloor, setCurrentFloor } = useFloorStore();
+  const desktopPanelPlacement = location.ui?.desktopPanelPlacement ?? "overlay";
+  const desktopPanelWidth = location.ui?.desktopPanelWidth ?? 376;
+  const indoorMapData = location.data.indoorMap as IndoorMapGeoJSON;
+  const availableFloors = useMemo(
+    () => getAvailableFloors(indoorMapData),
+    [indoorMapData],
+  );
+  const mapOptions = useMemo(
+    () => ({
+      attributionControl: false as const,
+      bearing: location.mapConfig.bearing,
+      center: location.mapConfig.center,
+      pitch: location.mapConfig.pitch,
+      zoom: isSmallViewport()
+        ? location.mapConfig.mobileZoom
+        : location.mapConfig.zoom,
+    }),
+    [location],
   );
 
   useEffect(() => {
-    if (!mapContainer.current) return;
+    if (availableFloors.includes(currentFloor)) return;
 
-    const map = new maplibregl.Map({
-      ...config.mapConfig,
-      style: config.mapStyles[theme as Theme],
-      container: mapContainer.current,
-    });
-    setMapInstance(map);
-
-    map.on("load", () => {
-      try {
-        // map.addLayer(new Tile3dLayer());
-        map.addLayer(indoorMapLayer);
-        map.addLayer(
-          new POIsLayer(building.pois as GeoJSON.GeoJSON, theme as string),
-        );
-      } catch (error) {
-        console.error("Failed to initialize map layers:", error);
-      }
-    });
-
-    map.addControl(new NavigationControl(), "bottom-right");
-    map.addControl(new FullscreenControl(), "bottom-right");
-
-    if (process.env.NODE_ENV === "development") {
-      map.addControl(
-        new MaplibreInspect({
-          popup: new maplibregl.Popup({
-            closeOnClick: false,
-          }),
-          blockHoverPopupOnClick: true,
-        }),
-        "bottom-right",
-      );
+    if (availableFloors.includes(0)) {
+      setCurrentFloor(0);
+      return;
     }
 
-    map.addControl(new OIMLogo());
-
-    return () => {
-      map.remove();
-    };
-  }, [indoorMapLayer, setMapInstance, theme]);
+    setCurrentFloor(availableFloors[0] ?? 0);
+  }, [availableFloors, currentFloor, setCurrentFloor]);
 
   return (
-    <div className="flex size-full flex-col">
-      <DiscoveryPanel />
-      {process.env.NODE_ENV === "development" && (
-        <>
-          <FloorSelector indoorMapLayer={indoorMapLayer} />
-          <FloorUpDownControl indoorMapLayer={indoorMapLayer} />
-        </>
-      )}
-
-      <div ref={mapContainer} className="size-full" />
-      <DemoBanner />
-    </div>
+    <MapProvider
+      key={location.slug}
+      options={mapOptions}
+      styles={config.mapStyles}
+    >
+      <MapSectionLayout
+        desktopPanelPlacement={desktopPanelPlacement}
+        desktopSidebarWidth={desktopPanelWidth}
+        showDesktopSidebar={showDesktopSidebar}
+        sidebar={<DiscoveryPanel location={location} />}
+        onToggleDesktopSidebar={() =>
+          setShowDesktopSidebar((currentValue) => !currentValue)
+        }
+      >
+        <MapCanvas>
+          <IndoorMapLayers
+            data={indoorMapData}
+            floor={currentFloor}
+            theme={theme as Theme}
+          />
+          <PoisLayer
+            data={location.data.pois as GeoJSON.FeatureCollection}
+            theme={theme as Theme}
+          />
+          <MapControls />
+          <MapInspectControl />
+          <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
+            <FloorSelector availableFloors={availableFloors} />
+            <FloorUpDownControl availableFloors={availableFloors} />
+          </div>
+        </MapCanvas>
+      </MapSectionLayout>
+    </MapProvider>
   );
 }

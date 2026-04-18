@@ -1,30 +1,38 @@
-import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 import { useCallback, useEffect, useState } from "react";
-import building from "~/mock/building.json";
-import useMapStore from "~/stores/use-map-store";
 
+import { useMap } from "~/components/map/map";
+import config from "~/config";
 import useDirections from "~/hooks/use-directions";
 import { useIndoorGeocoder } from "~/hooks/use-indoor-geocder";
 import { POI } from "~/types/poi";
-import { Card, CardContent } from "../ui/card";
 import DiscoveryView from "./discovery-view";
 import LocationDetail from "./location-detail";
 import NavigationView from "./navigation-view";
-import poiMap from "~/utils/poi-map";
+import { buildPoiMap } from "~/utils/poi-map";
 import { MapGeoJSONFeature, MapMouseEvent } from "maplibre-gl";
+import type { LocationConfig } from "~/types/location";
 
 type UIMode = "discovery" | "detail" | "navigation";
 
-export default function DiscoveryPanel() {
-  const map = useMapStore((state) => state.mapInstance);
+interface DiscoveryPanelProps {
+  location: LocationConfig;
+}
+
+export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
+  const { isLoaded, map } = useMap();
   const [mode, setMode] = useState<UIMode>("discovery");
   const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
-  const { indoorDirections } = useDirections(map);
-  const indoorGeocoder = useIndoorGeocoder();
+  const [pendingDeparture, setPendingDeparture] = useState<
+    string | undefined
+  >();
+  const { indoorDirections } = useDirections();
+  const indoorGeocoder = useIndoorGeocoder(location);
+  const poiMap = buildPoiMap(location);
 
-  indoorDirections?.loadMapData(
-    building.indoor_routes as GeoJSON.FeatureCollection,
-  );
+  useEffect(() => {
+    if (!indoorDirections) return;
+    indoorDirections.loadMapData(location.data.indoorRoutes);
+  }, [indoorDirections, location.data.indoorRoutes]);
 
   const navigateToPOI = useCallback(
     (coordinates: GeoJSON.Position) => {
@@ -46,8 +54,55 @@ export default function DiscoveryPanel() {
   function handleBackClick() {
     setMode("discovery");
     setSelectedPOI(null);
+    setPendingDeparture(undefined);
     indoorDirections?.clear();
   }
+
+  useEffect(() => {
+    if (!indoorDirections) return;
+    if (typeof globalThis === "undefined") return;
+
+    const handleMessage = (event: MessageEvent) => {
+      const allowed = config.allowedMessageOrigins;
+      if (allowed.length > 0 && !allowed.includes(event.origin)) return;
+
+      const data = event.data;
+      if (!data || typeof data !== "object") return;
+      if (data.type !== "oim:route-to") return;
+
+      const productName = data.productName;
+      if (typeof productName !== "string" || !productName) return;
+
+      try {
+        const destinationPoi = indoorGeocoder.indoorGeocodeInput(productName);
+        if (!destinationPoi) {
+          console.warn(`[oim] product not found: ${productName}`);
+          return;
+        }
+
+        setSelectedPOI(destinationPoi);
+        setPendingDeparture(location.totemPoiName);
+        setMode("navigation");
+      } catch (error) {
+        console.error("[oim] failed to handle route-to message:", error);
+      }
+    };
+
+    globalThis.addEventListener("message", handleMessage);
+    return () => globalThis.removeEventListener("message", handleMessage);
+  }, [indoorDirections, indoorGeocoder, location.totemPoiName]);
+
+  useEffect(() => {
+    if (!map || !isLoaded) return;
+    const currentWindow = globalThis.window;
+    if (currentWindow.parent === currentWindow) return;
+
+    const notifyReady = () => {
+      currentWindow.parent.postMessage({ type: "oim:ready" }, "*");
+    };
+
+    notifyReady();
+  }, [isLoaded, map]);
 
   useEffect(() => {
     const handleMapClick = (
@@ -85,15 +140,16 @@ export default function DiscoveryPanel() {
     return () => {
       map?.off("click", "indoor-map-extrusion", handleMapClick);
     };
-  }, [map, mode, navigateToPOI]);
+  }, [map, mode, navigateToPOI, poiMap]);
 
   return (
-    <Card className="absolute z-10 w-full rounded-xl shadow-lg md:absolute md:left-4 md:top-4 md:max-w-[23.5rem]">
-      <CardContent className="p-4">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden">
+      <div className="min-h-0 flex-1 overflow-y-auto p-4">
         {mode === "discovery" && (
           <DiscoveryView
             indoorGeocoder={indoorGeocoder}
             onSelectPOI={handleSelectPOI}
+            topLocations={location.data.topLocations}
           />
         )}
         {mode === "detail" && selectedPOI && (
@@ -109,9 +165,10 @@ export default function DiscoveryPanel() {
             selectedPOI={selectedPOI}
             indoorGeocoder={indoorGeocoder}
             indoorDirections={indoorDirections}
+            initialDeparture={pendingDeparture}
           />
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

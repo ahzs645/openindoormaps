@@ -6,9 +6,9 @@ import {
   MapPin,
 } from "lucide-react";
 import { LngLatBounds } from "maplibre-gl";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useMap } from "~/components/map/map";
 import IndoorDirections from "~/indoor-directions/directions/main";
-import useMapStore from "~/stores/use-map-store";
 import { POI } from "~/types/poi";
 import { IndoorGeocoder } from "~/utils/indoor-geocoder";
 import { Button } from "../ui/button";
@@ -21,6 +21,7 @@ interface NavigationViewProps {
   selectedPOI: POI | null;
   indoorGeocoder: IndoorGeocoder;
   indoorDirections: IndoorDirections | null;
+  initialDeparture?: string;
 }
 
 export default function NavigationView({
@@ -28,17 +29,21 @@ export default function NavigationView({
   selectedPOI,
   indoorGeocoder,
   indoorDirections,
+  initialDeparture,
 }: NavigationViewProps) {
   const [activeInput, setActiveInput] = useState<
     "departure" | "destination" | null
   >(null);
-  const [departureLocation, setDepartureLocation] = useState("");
+  const [departureLocation, setDepartureLocation] = useState(
+    initialDeparture ?? "",
+  );
   const [destinationLocation, setDestinationLocation] = useState(
     selectedPOI?.name || "",
   );
+  const didAutoRouteRef = useRef(false);
   const [suggestions, setSuggestions] = useState<POI[]>([]);
   const [isAccessibleRoute, setIsAccessibleRoute] = useState(false);
-  const map = useMapStore((state) => state.mapInstance);
+  const { map } = useMap();
 
   const activeQuery =
     activeInput === "departure" ? departureLocation : destinationLocation;
@@ -51,6 +56,15 @@ export default function NavigationView({
       setSuggestions([]);
     }
   }, [activeInput, activeQuery, indoorGeocoder]);
+
+  useEffect(() => {
+    if (didAutoRouteRef.current) return;
+    if (!indoorDirections) return;
+    if (!departureLocation || !destinationLocation) return;
+    didAutoRouteRef.current = true;
+    handleRouting(departureLocation, destinationLocation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [indoorDirections]);
 
   const handleSuggestionClick = (suggestion: POI) => {
     const newDeparture =

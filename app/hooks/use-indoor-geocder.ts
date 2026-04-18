@@ -1,25 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { IndoorGeocoder, POIFeature } from "~/utils/indoor-geocoder";
-import building from "~/mock/building.json";
+import type { LocationConfig } from "~/types/location";
 
-export function useIndoorGeocoder() {
+export function useIndoorGeocoder(location: LocationConfig) {
   const geocoderRef = useRef<IndoorGeocoder | null>(null);
 
   if (!geocoderRef.current) {
     geocoderRef.current = new IndoorGeocoder(
-      building.pois.features as POIFeature[],
+      location.data.pois.features as POIFeature[],
     );
   }
-
-  useEffect(() => {
-    // TODO: Implement data loading when API is ready
-    // const loadData = async () => {
-    //   if (geocoderRef.current) {
-    //     await geocoderRef.current.loadData();
-    //   }
-    // };
-    // loadData();
-  }, []);
 
   return geocoderRef.current;
 }

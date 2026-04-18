@@ -1,57 +1,65 @@
-import { NavigationControl } from "maplibre-gl";
-import { useEffect } from "react";
-import IndoorMapLayer from "~/layers/indoor-map-layer";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useMemo } from "react";
+import { cn } from "~/lib/utils";
 import useFloorStore from "~/stores/floor-store";
-import useMapStore from "~/stores/use-map-store";
 
 interface FloorUpDownControlProps {
-  indoorMapLayer: IndoorMapLayer;
+  availableFloors: number[];
+  className?: string;
 }
 
 export function FloorUpDownControl({
-  indoorMapLayer,
+  availableFloors,
+  className,
 }: FloorUpDownControlProps) {
-  const map = useMapStore((state) => state.mapInstance);
   const { currentFloor, setCurrentFloor } = useFloorStore();
-  useEffect(() => {
-    const floorControl = new NavigationControl({
-      showCompass: false,
-      showZoom: false,
-      visualizePitch: false,
-    });
+  const sortedFloors = useMemo(
+    () => [...availableFloors].sort((a, b) => a - b),
+    [availableFloors],
+  );
+  const currentIndex = sortedFloors.indexOf(currentFloor);
+  const lowerFloor =
+    currentIndex > 0 ? sortedFloors[currentIndex - 1] : undefined;
+  const upperFloor =
+    currentIndex >= 0 && currentIndex < sortedFloors.length - 1
+      ? sortedFloors[currentIndex + 1]
+      : undefined;
 
-    map?.addControl(floorControl, "bottom-right");
+  if (sortedFloors.length <= 1) return null;
 
-    const upButton = document.createElement("button");
-    upButton.className =
-      "maplibregl-ctrl-icon maplibregl-ctrl-floor-up dark:text-black";
-    upButton.innerHTML = "&#8593;"; // Up arrow
-    upButton.addEventListener("click", () => {
-      const nextFloor = currentFloor + 1;
-      if (nextFloor <= 2) {
-        setCurrentFloor(nextFloor);
-        indoorMapLayer.setFloorLevel(nextFloor);
-      }
-    });
-
-    const downButton = document.createElement("button");
-    downButton.className =
-      "maplibregl-ctrl-icon maplibregl-ctrl-floor-down dark:text-black";
-    downButton.innerHTML = "&#8595;"; // Down arrow
-    downButton.addEventListener("click", () => {
-      const nextFloor = currentFloor - 1;
-      if (nextFloor >= 0) {
-        setCurrentFloor(nextFloor);
-      }
-    });
-
-    floorControl._container.append(upButton);
-    floorControl._container.append(downButton);
-
-    return () => {
-      map?.removeControl(floorControl);
-    };
-  }, [map, currentFloor, setCurrentFloor, indoorMapLayer]);
-
-  return null;
+  return (
+    <div
+      className={cn(
+        "overflow-hidden rounded-md border bg-background shadow-sm",
+        className,
+      )}
+    >
+      <button
+        type="button"
+        aria-label="Move up one floor"
+        className="flex size-9 items-center justify-center border-b transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+        disabled={upperFloor === undefined}
+        onClick={() => {
+          if (upperFloor !== undefined) {
+            setCurrentFloor(upperFloor);
+          }
+        }}
+      >
+        <ChevronUp className="size-4" />
+      </button>
+      <button
+        type="button"
+        aria-label="Move down one floor"
+        className="flex size-9 items-center justify-center transition-colors hover:bg-accent disabled:pointer-events-none disabled:opacity-50"
+        disabled={lowerFloor === undefined}
+        onClick={() => {
+          if (lowerFloor !== undefined) {
+            setCurrentFloor(lowerFloor);
+          }
+        }}
+      >
+        <ChevronDown className="size-4" />
+      </button>
+    </div>
+  );
 }

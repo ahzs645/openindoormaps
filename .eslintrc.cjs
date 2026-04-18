@@ -13,7 +13,6 @@ module.exports = {
     commonjs: true,
     es6: true,
   },
-  ignorePatterns: ["!**/.server", "!**/.client"],
 
   extends: ["eslint:recommended", "prettier"],
   plugins: ["check-file", "unused-imports", "prettier"],

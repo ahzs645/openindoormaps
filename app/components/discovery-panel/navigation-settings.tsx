@@ -1,15 +1,15 @@
 import { Building2, Map as MapIcon } from "lucide-react";
 import { useState } from "react";
-import { Theme, useTheme } from "remix-themes/build/theme-provider";
+import { useTheme } from "~/hooks/use-theme";
 
 export default function NavigationSettings() {
   const [includeOutdoor, setIncludeOutdoor] = useState(false);
   const [theme, setTheme] = useTheme();
 
   const handleThemeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTheme = event.target.value as "light" | "dark" | "system";
-    if (selectedTheme === Theme.DARK || selectedTheme === Theme.LIGHT) {
-      setTheme(selectedTheme as Theme);
+    const selectedTheme = event.target.value;
+    if (selectedTheme === "dark" || selectedTheme === "light") {
+      setTheme(selectedTheme);
     }
   };
 
@@ -21,8 +21,8 @@ export default function NavigationSettings() {
         value={theme?.toString()}
         onChange={handleThemeChange}
       >
-        <option value={Theme.LIGHT}>Light</option>
-        <option value={Theme.DARK}>Dark</option>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
       </select>
       <span className="text-sm font-medium dark:text-gray-200">
         Navigation Type
