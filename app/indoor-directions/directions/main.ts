@@ -13,7 +13,7 @@ import {
   buildSnaplines,
 } from "./utils";
 export default class IndoorDirections extends IndoorDirectionsEvented {
-  protected declare readonly map: maplibregl.Map;
+  declare protected readonly map: maplibregl.Map;
   private readonly pathFinder: PathFinder;
 
   protected readonly configuration: MapLibreGlDirectionsConfiguration;

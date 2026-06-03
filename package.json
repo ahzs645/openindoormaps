@@ -6,6 +6,7 @@
   "scripts": {
     "build": "remix vite:build",
     "dev": "remix vite:dev",
+    "dwg:import": "node scripts/dwg-import/cli.mjs",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
     "typecheck": "tsc",
@@ -26,6 +27,7 @@
     "@vercel/analytics": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dxf-parser": "^1.1.2",
     "isbot": "^4.1.0",
     "lucide-react": "^0.513.0",
     "maplibre-gl": "^4.7.1",

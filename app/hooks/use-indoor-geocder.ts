@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
+import building from "~/data/building";
 import { IndoorGeocoder, POIFeature } from "~/utils/indoor-geocoder";
-import building from "~/mock/building.json";
 
 export function useIndoorGeocoder() {
   const geocoderRef = useRef<IndoorGeocoder | null>(null);

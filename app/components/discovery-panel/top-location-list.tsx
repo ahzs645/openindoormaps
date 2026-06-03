@@ -1,15 +1,16 @@
 import { LucideProps } from "lucide-react";
 import { Button } from "../ui/button";
 
-interface location {
+export interface TopLocation {
   name: string;
+  query?: string;
   icon: React.ForwardRefExoticComponent<
     Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>
   >;
   colors: string;
 }
 interface TopLocationsListProps {
-  locations: location[];
+  locations: TopLocation[];
   onLocationClick: (name: string) => void;
 }
 
@@ -26,7 +27,7 @@ export function TopLocationsList({
             variant="ghost"
             size="icon"
             title={location.name}
-            onClick={() => onLocationClick(location.name)}
+            onClick={() => onLocationClick(location.query ?? location.name)}
           >
             <location.icon size={16} />
           </Button>

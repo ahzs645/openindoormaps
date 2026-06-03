@@ -1,19 +1,24 @@
 import { NavigationControl } from "maplibre-gl";
 import { useEffect } from "react";
-import IndoorMapLayer from "~/layers/indoor-map-layer";
+import { availableFloors, defaultFloor } from "~/data/building";
 import useFloorStore from "~/stores/floor-store";
 import useMapStore from "~/stores/use-map-store";
 
-interface FloorUpDownControlProps {
-  indoorMapLayer: IndoorMapLayer;
-}
-
-export function FloorUpDownControl({
-  indoorMapLayer,
-}: FloorUpDownControlProps) {
+export function FloorUpDownControl() {
   const map = useMapStore((state) => state.mapInstance);
   const { currentFloor, setCurrentFloor } = useFloorStore();
+
   useEffect(() => {
+    if (!map || availableFloors.length === 0) {
+      return;
+    }
+
+    const currentIndex = availableFloors.indexOf(currentFloor);
+    const activeIndex =
+      currentIndex === -1
+        ? availableFloors.indexOf(defaultFloor)
+        : currentIndex;
+
     const floorControl = new NavigationControl({
       showCompass: false,
       showZoom: false,
@@ -27,10 +32,9 @@ export function FloorUpDownControl({
       "maplibregl-ctrl-icon maplibregl-ctrl-floor-up dark:text-black";
     upButton.innerHTML = "&#8593;"; // Up arrow
     upButton.addEventListener("click", () => {
-      const nextFloor = currentFloor + 1;
-      if (nextFloor <= 2) {
+      const nextFloor = availableFloors[activeIndex + 1];
+      if (nextFloor !== undefined) {
         setCurrentFloor(nextFloor);
-        indoorMapLayer.setFloorLevel(nextFloor);
       }
     });
 
@@ -39,8 +43,8 @@ export function FloorUpDownControl({
       "maplibregl-ctrl-icon maplibregl-ctrl-floor-down dark:text-black";
     downButton.innerHTML = "&#8595;"; // Down arrow
     downButton.addEventListener("click", () => {
-      const nextFloor = currentFloor - 1;
-      if (nextFloor >= 0) {
+      const nextFloor = availableFloors[activeIndex - 1];
+      if (nextFloor !== undefined) {
         setCurrentFloor(nextFloor);
       }
     });
@@ -51,7 +55,7 @@ export function FloorUpDownControl({
     return () => {
       map?.removeControl(floorControl);
     };
-  }, [map, currentFloor, setCurrentFloor, indoorMapLayer]);
+  }, [currentFloor, map, setCurrentFloor]);
 
   return null;
 }

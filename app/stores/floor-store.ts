@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { defaultFloor } from "~/data/building";
 
 interface FloorState {
   currentFloor: number;
@@ -6,7 +7,7 @@ interface FloorState {
 }
 
 const useFloorStore = create<FloorState>((set) => ({
-  currentFloor: 0,
+  currentFloor: defaultFloor,
   setCurrentFloor: (floor) => set({ currentFloor: floor }),
 }));
 

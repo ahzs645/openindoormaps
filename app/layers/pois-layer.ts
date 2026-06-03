@@ -1,12 +1,20 @@
 import { CustomLayerInterface, Map } from "maplibre-gl";
+import { hasRecoveredFloorPlan, usesSyntheticFloorPlan } from "~/data/building";
+import { normalizeFloorValue } from "~/utils/floor-utils";
+
+type POIFeatureCollection = GeoJSON.FeatureCollection<
+  GeoJSON.Point,
+  GeoJSON.GeoJsonProperties
+>;
 
 export default class POIsLayer implements CustomLayerInterface {
   id: string = "pois";
   type = "custom" as const;
-  private POIs: GeoJSON.GeoJSON;
+  private map: Map | null = null;
+  private POIs: POIFeatureCollection;
   private theme;
 
-  constructor(POIs: GeoJSON.GeoJSON, theme: string = "light") {
+  constructor(POIs: POIFeatureCollection, theme: string = "light") {
     this.POIs = POIs;
     this.theme = theme;
   }
@@ -15,7 +23,28 @@ export default class POIsLayer implements CustomLayerInterface {
     // Rendering is handled by maplibre's internal renderer for geojson sources
   };
 
+  setFloorLevel(level: number) {
+    if (!this.map) return;
+
+    const source = this.map.getSource("pois") as
+      | maplibregl.GeoJSONSource
+      | undefined;
+    if (!source) return;
+
+    const filteredFeatures = this.POIs.features.filter((feature) => {
+      const floor = normalizeFloorValue(feature.properties?.floor);
+      return floor === null || floor === level;
+    });
+
+    source.setData({
+      type: "FeatureCollection",
+      features: filteredFeatures,
+    });
+  }
+
   onAdd?(map: Map): void {
+    this.map = map;
+
     const lightColor = {
       text: "#404040",
       halo: "#ffffff",
@@ -29,6 +58,18 @@ export default class POIsLayer implements CustomLayerInterface {
     };
 
     const color = this.theme === "light" ? lightColor : darkColor;
+    let pointMinZoom = 16;
+    let labelMinZoom = 16;
+
+    if (usesSyntheticFloorPlan) {
+      pointMinZoom = 22;
+      labelMinZoom = 19;
+    }
+
+    if (hasRecoveredFloorPlan) {
+      pointMinZoom = 24;
+      labelMinZoom = 18;
+    }
 
     map.addSource("pois", {
       type: "geojson",
@@ -39,7 +80,10 @@ export default class POIsLayer implements CustomLayerInterface {
       id: "point",
       type: "circle",
       source: "pois",
-      minzoom: 16,
+      minzoom: pointMinZoom,
+      layout: {
+        visibility: hasRecoveredFloorPlan ? "none" : "visible",
+      },
       paint: {
         "circle-radius": 4,
         "circle-color": color.circle,
@@ -50,7 +94,7 @@ export default class POIsLayer implements CustomLayerInterface {
       id: "point-label",
       type: "symbol",
       source: "pois",
-      minzoom: 16,
+      minzoom: labelMinZoom,
       layout: {
         "text-field": ["get", "name"],
         "text-font": ["Noto Sans Regular"],

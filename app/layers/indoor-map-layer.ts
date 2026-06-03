@@ -1,5 +1,7 @@
 import { CustomLayerInterface, Map } from "maplibre-gl";
+import { hasRecoveredFloorPlan } from "~/data/building";
 import { IndoorFeature, IndoorMapGeoJSON } from "~/types/geojson";
+import { normalizeFloorValue } from "~/utils/floor-utils";
 
 export default class IndoorMapLayer implements CustomLayerInterface {
   id: string = "indoor-map";
@@ -24,8 +26,8 @@ export default class IndoorMapLayer implements CustomLayerInterface {
     const source = this.map.getSource("indoor-map") as maplibregl.GeoJSONSource;
     const filteredFeatures = this.indoorMapData.features.filter(
       (feature: IndoorFeature) =>
-        feature.properties.level_id === level ||
-        feature.properties.level_id === null,
+        normalizeFloorValue(feature.properties.level_id) === level ||
+        normalizeFloorValue(feature.properties.level_id) === null,
     );
 
     source.setData({
@@ -37,8 +39,11 @@ export default class IndoorMapLayer implements CustomLayerInterface {
   async getAvailableFloors(): Promise<number[]> {
     const floors = new Set<number>();
     this.indoorMapData!.features.forEach((feature) => {
-      if (feature.properties.level_id !== null) {
-        floors.add(feature.properties.level_id);
+      const normalizedLevelId = normalizeFloorValue(
+        feature.properties.level_id,
+      );
+      if (normalizedLevelId !== null) {
+        floors.add(normalizedLevelId);
       }
     });
 
@@ -57,6 +62,12 @@ export default class IndoorMapLayer implements CustomLayerInterface {
       unit_hovered: "#e0e0e0",
       corridor: "#d6d5d1",
       outline: "#a6a5a2",
+      stairs: "#d9e7f7",
+      elevator: "#efe7d6",
+      detailLine: "#7b8794",
+      door: "#0f766e",
+      window: "#2563eb",
+      detailPoint: "#475569",
     };
 
     const darkColor = {
@@ -64,6 +75,12 @@ export default class IndoorMapLayer implements CustomLayerInterface {
       unit_hovered: "#374151",
       corridor: "#030712",
       outline: "#1f2937",
+      stairs: "#1d4f91",
+      elevator: "#7c5d2a",
+      detailLine: "#94a3b8",
+      door: "#34d399",
+      window: "#60a5fa",
+      detailPoint: "#cbd5e1",
     };
 
     const colors = this.theme === "dark" ? darkColor : lightColor;
@@ -78,7 +95,15 @@ export default class IndoorMapLayer implements CustomLayerInterface {
       type: "fill",
       source: "indoor-map",
       paint: {
-        "fill-color": ["coalesce", ["get", "fill"], colors.corridor],
+        "fill-color": [
+          "match",
+          ["get", "feature_type"],
+          "stairs",
+          colors.stairs,
+          "elevator",
+          colors.elevator,
+          ["coalesce", ["get", "fill"], colors.corridor],
+        ],
       },
       filter: ["==", ["geometry-type"], "Polygon"],
     });
@@ -99,10 +124,19 @@ export default class IndoorMapLayer implements CustomLayerInterface {
       id: "indoor-map-extrusion",
       type: "fill-extrusion",
       source: "indoor-map",
-      filter: ["all", ["==", "feature_type", "unit"]],
+      filter: [
+        "any",
+        ["==", "feature_type", "unit"],
+        ["==", "feature_type", "stairs"],
+        ["==", "feature_type", "elevator"],
+      ],
       paint: {
         "fill-extrusion-color": [
           "case",
+          ["==", ["get", "feature_type"], "stairs"],
+          colors.stairs,
+          ["==", ["get", "feature_type"], "elevator"],
+          colors.elevator,
           ["boolean", ["feature-state", "hover"], false],
           colors.unit_hovered,
           colors.unit,
@@ -121,6 +155,54 @@ export default class IndoorMapLayer implements CustomLayerInterface {
         "fill-extrusion-color": colors.corridor,
         "fill-extrusion-height": 0.2,
         "fill-extrusion-opacity": 1,
+      },
+    });
+
+    map.addLayer({
+      id: "indoor-map-detail-lines",
+      type: "line",
+      source: "indoor-map",
+      filter: ["==", ["geometry-type"], "LineString"],
+      paint: {
+        "line-color": [
+          "match",
+          ["get", "feature_type"],
+          "door",
+          colors.door,
+          "window",
+          colors.window,
+          colors.detailLine,
+        ],
+        "line-width": [
+          "case",
+          ["==", ["get", "feature_type"], "door"],
+          2.5,
+          ["==", ["get", "feature_type"], "window"],
+          2,
+          1.5,
+        ],
+      },
+    });
+
+    map.addLayer({
+      id: "indoor-map-detail-points",
+      type: "circle",
+      source: "indoor-map",
+      filter: ["==", ["geometry-type"], "Point"],
+      layout: {
+        visibility: hasRecoveredFloorPlan ? "none" : "visible",
+      },
+      paint: {
+        "circle-radius": 4,
+        "circle-color": [
+          "match",
+          ["get", "feature_type"],
+          "door",
+          colors.door,
+          "window",
+          colors.window,
+          colors.detailPoint,
+        ],
       },
     });
 

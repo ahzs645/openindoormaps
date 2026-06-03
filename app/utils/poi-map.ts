@@ -1,5 +1,6 @@
-import building from "~/mock/building.json";
 import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
+import building from "~/data/building";
+import { normalizeFloorValue } from "./floor-utils";
 
 function isPolygonFeature(
   feature: GeoJSON.Feature,
@@ -23,8 +24,14 @@ unitFeatures.forEach((unitFeature) => {
 (building.pois.features as GeoJSON.Feature<GeoJSON.Point>[]).forEach(
   (poiFeature) => {
     const poiCoordinates = poiFeature.geometry.coordinates;
+    const poiFloor = normalizeFloorValue(poiFeature.properties?.floor) ?? 0;
 
     for (const unitFeature of unitFeatures) {
+      const unitFloor = normalizeFloorValue(unitFeature.properties?.level_id);
+      if (unitFloor !== null && unitFloor !== poiFloor) {
+        continue;
+      }
+
       if (
         booleanPointInPolygon(
           poiCoordinates,

@@ -1,30 +1,34 @@
 import "@maplibre/maplibre-gl-geocoder/dist/maplibre-gl-geocoder.css";
 import { useCallback, useEffect, useState } from "react";
-import building from "~/mock/building.json";
+import building from "~/data/building";
 import useMapStore from "~/stores/use-map-store";
 
 import useDirections from "~/hooks/use-directions";
 import { useIndoorGeocoder } from "~/hooks/use-indoor-geocder";
 import { POI } from "~/types/poi";
+import poiMap from "~/utils/poi-map";
 import { Card, CardContent } from "../ui/card";
 import DiscoveryView from "./discovery-view";
 import LocationDetail from "./location-detail";
 import NavigationView from "./navigation-view";
-import poiMap from "~/utils/poi-map";
 import { MapGeoJSONFeature, MapMouseEvent } from "maplibre-gl";
+import useFloorStore from "~/stores/floor-store";
 
 type UIMode = "discovery" | "detail" | "navigation";
 
 export default function DiscoveryPanel() {
   const map = useMapStore((state) => state.mapInstance);
+  const setCurrentFloor = useFloorStore((state) => state.setCurrentFloor);
   const [mode, setMode] = useState<UIMode>("discovery");
   const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
   const { indoorDirections } = useDirections(map);
   const indoorGeocoder = useIndoorGeocoder();
 
-  indoorDirections?.loadMapData(
-    building.indoor_routes as GeoJSON.FeatureCollection,
-  );
+  useEffect(() => {
+    indoorDirections?.loadMapData(
+      building.indoor_routes as GeoJSON.FeatureCollection,
+    );
+  }, [indoorDirections]);
 
   const navigateToPOI = useCallback(
     (coordinates: GeoJSON.Position) => {
@@ -38,6 +42,7 @@ export default function DiscoveryPanel() {
   );
 
   function handleSelectPOI(poi: POI) {
+    setCurrentFloor(poi.floor);
     setSelectedPOI(poi);
     setMode("detail");
     navigateToPOI(poi.coordinates);
@@ -70,7 +75,9 @@ export default function DiscoveryPanel() {
           id: firstPOI.properties?.id as number,
           name: firstPOI.properties?.name as string,
           coordinates: firstPOI.geometry.coordinates,
+          floor: Number(firstPOI.properties?.floor ?? 0),
         };
+        setCurrentFloor(poi.floor);
         setSelectedPOI(poi);
         if (mode === "discovery" || mode === "detail") {
           navigateToPOI(poi.coordinates);
@@ -85,7 +92,7 @@ export default function DiscoveryPanel() {
     return () => {
       map?.off("click", "indoor-map-extrusion", handleMapClick);
     };
-  }, [map, mode, navigateToPOI]);
+  }, [map, mode, navigateToPOI, setCurrentFloor]);
 
   return (
     <Card className="absolute z-10 w-full rounded-xl shadow-lg md:absolute md:left-4 md:top-4 md:max-w-[23.5rem]">

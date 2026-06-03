@@ -1,5 +1,6 @@
 import { Link, Navigation2, QrCode, Share2, X } from "lucide-react";
 import { POI } from "~/types/poi";
+import { formatFloorLabel } from "~/utils/floor-utils";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -23,8 +24,9 @@ export default function LocationDetail({
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-semibold">{selectedPOI.name}</h2>
-          {/*TODO: add floor to poi properties and use it here */}
-          <p className="text-xs text-gray-600 dark:text-gray-400">1st Floor</p>
+          <p className="text-xs text-gray-600 dark:text-gray-400">
+            {formatFloorLabel(selectedPOI.floor)}
+          </p>
         </div>
         <div className="flex space-x-2">
           <DropdownMenu>
