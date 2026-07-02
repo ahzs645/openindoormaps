@@ -1,6 +1,10 @@
 import Graph from "../pathfinding/graph";
 import PathFinder from "../pathfinding/pathfinder";
-import { MapLibreGlDirectionsConfiguration } from "../types";
+import {
+  MapLibreGlDirectionsConfiguration,
+  PathfindingOptions,
+  RouteEdgeMetadata,
+} from "../types";
 import {
   IndoorDirectionsEvented,
   IndoorDirectionsRoutingEvent,
@@ -26,6 +30,7 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
   protected snappoints: GeoJSON.Feature<GeoJSON.Point>[] = [];
   protected routelines: GeoJSON.Feature<GeoJSON.LineString>[][] = [];
   private coordMap: Map<string, Set<GeoJSON.Position[]>> = new Map();
+  private pathfindingOptions: PathfindingOptions = {};
 
   constructor(
     map: maplibregl.Map,
@@ -141,6 +146,58 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
     });
   }
 
+  private getRouteEdgeMetadata(
+    feature: GeoJSON.Feature<GeoJSON.LineString>,
+  ): RouteEdgeMetadata {
+    const properties = feature.properties ?? {};
+    const networkType =
+      typeof properties.network_type === "string"
+        ? properties.network_type.toLowerCase()
+        : undefined;
+    const inaccessibleNetworkTypes = new Set(["stairs", "escalator"]);
+
+    return {
+      access_type:
+        typeof properties.access_type === "string"
+          ? properties.access_type
+          : null,
+      from_level_id:
+        typeof properties.from_level_id === "number"
+          ? properties.from_level_id
+          : null,
+      is_accessible:
+        typeof properties.is_accessible === "boolean"
+          ? properties.is_accessible
+          : networkType
+            ? !inaccessibleNetworkTypes.has(networkType)
+            : true,
+      level_id:
+        typeof properties.level_id === "number" ? properties.level_id : null,
+      network_type: networkType ?? null,
+      to_level_id:
+        typeof properties.to_level_id === "number" ? properties.to_level_id : null,
+      vertical_connection_id:
+        typeof properties.vertical_connection_id === "string" ||
+        typeof properties.vertical_connection_id === "number"
+          ? properties.vertical_connection_id
+          : null,
+    };
+  }
+
+  private getRouteSegmentWeight(
+    feature: GeoJSON.Feature<GeoJSON.LineString>,
+    from: GeoJSON.Position,
+    to: GeoJSON.Position,
+  ) {
+    const cost = feature.properties?.cost;
+    if (typeof cost === "number" && Number.isFinite(cost) && cost > 0) {
+      const segmentCount = Math.max(feature.geometry.coordinates.length - 1, 1);
+      return cost / segmentCount;
+    }
+
+    return this.calculateDistance(from, to);
+  }
+
   public loadMapData(geoJson: GeoJSON.FeatureCollection) {
     const coordMap = new Map<string, Set<GeoJSON.Position[]>>();
     const graph = new Graph();
@@ -148,7 +205,7 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
     this.coordMap = coordMap;
 
     geoJson.features.forEach((feature) => {
-      if (feature.geometry.type === "LineString" && feature.properties) {
+      if (feature.geometry.type === "LineString") {
         const coordinates = feature.geometry.coordinates;
 
         coordinates.forEach((coord) => {
@@ -162,20 +219,23 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
     });
 
     geoJson.features.forEach((feature) => {
-      if (feature.geometry.type === "LineString" && feature.properties) {
+      if (feature.geometry.type === "LineString") {
         const coordinates = feature.geometry.coordinates;
+        const metadata = this.getRouteEdgeMetadata(
+          feature as GeoJSON.Feature<GeoJSON.LineString>,
+        );
 
         for (let i = 0; i < coordinates.length - 1; i++) {
           const from = JSON.stringify(coordinates[i]);
           const to = JSON.stringify(coordinates[i + 1]);
 
-          // Calculate distance as weight
-          const weight = this.calculateDistance(
+          const weight = this.getRouteSegmentWeight(
+            feature as GeoJSON.Feature<GeoJSON.LineString>,
             coordinates[i],
             coordinates[i + 1],
           );
 
-          graph.addEdge(from, to, weight);
+          graph.addEdge(from, to, weight, metadata);
 
           const fromOverlaps = coordMap.get(from);
           if (fromOverlaps && fromOverlaps.size > 1) {
@@ -190,6 +250,7 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
                       from,
                       JSON.stringify(otherCoords[idx - 1]),
                       weight,
+                      metadata,
                     );
                   }
                   if (idx < otherCoords.length - 1) {
@@ -197,6 +258,7 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
                       from,
                       JSON.stringify(otherCoords[idx + 1]),
                       weight,
+                      metadata,
                     );
                   }
                 }
@@ -208,6 +270,10 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
     });
 
     this.pathFinder.setGraph(graph);
+  }
+
+  public setPathfindingOptions(options: PathfindingOptions) {
+    this.pathfindingOptions = options;
   }
   /**
    * Replaces all the waypoints with the specified ones and re-fetches the routes.
@@ -252,7 +318,11 @@ export default class IndoorDirections extends IndoorDirectionsEvented {
         const start = this.snappoints[i].geometry.coordinates;
         const end = this.snappoints[i + 1].geometry.coordinates;
 
-        const segmentRoute = this.pathFinder.dijkstra(start, end);
+        const segmentRoute = this.pathFinder.dijkstra(
+          start,
+          end,
+          this.pathfindingOptions,
+        );
 
         if (i === 0) {
           routes.push(...segmentRoute);

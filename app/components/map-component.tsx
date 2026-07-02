@@ -13,7 +13,9 @@ import {
   MapInspectControl,
   MapProvider,
 } from "./map/map";
+import { Basemap3dBuildingsLayer } from "./map/basemap-3d-buildings-layer";
 import { getAvailableFloors, IndoorMapLayers } from "./map/indoor-map-layers";
+import { MapLogoControl } from "./map/map-logo-control";
 import { MapSectionLayout } from "./map/map-section-layout";
 import { PoisLayer } from "./map/pois-layer";
 
@@ -33,12 +35,21 @@ export default function MapComponent({ location }: MapComponentProps) {
   const desktopPanelWidth = location.ui?.desktopPanelWidth ?? 376;
   const indoorMapData = location.data.indoorMap as IndoorMapGeoJSON;
   const availableFloors = useMemo(
-    () => getAvailableFloors(indoorMapData),
-    [indoorMapData],
+    () => {
+      const floors = getAvailableFloors(indoorMapData);
+      const visibleFloors = location.mapConfig.visibleFloors;
+      if (!visibleFloors?.length) return floors;
+
+      const visibleFloorSet = new Set(visibleFloors);
+      return floors.filter((floor) => visibleFloorSet.has(floor));
+    },
+    [indoorMapData, location.mapConfig.visibleFloors],
   );
   const mapOptions = useMemo(
     () => ({
-      attributionControl: false as const,
+      attributionControl: {
+        compact: true,
+      },
       bearing: location.mapConfig.bearing,
       center: location.mapConfig.center,
       pitch: location.mapConfig.pitch,
@@ -52,13 +63,24 @@ export default function MapComponent({ location }: MapComponentProps) {
   useEffect(() => {
     if (availableFloors.includes(currentFloor)) return;
 
+    const defaultFloor = location.mapConfig.defaultFloor;
+    if (defaultFloor !== undefined && availableFloors.includes(defaultFloor)) {
+      setCurrentFloor(defaultFloor);
+      return;
+    }
+
     if (availableFloors.includes(0)) {
       setCurrentFloor(0);
       return;
     }
 
     setCurrentFloor(availableFloors[0] ?? 0);
-  }, [availableFloors, currentFloor, setCurrentFloor]);
+  }, [
+    availableFloors,
+    currentFloor,
+    location.mapConfig.defaultFloor,
+    setCurrentFloor,
+  ]);
 
   return (
     <MapProvider
@@ -76,6 +98,9 @@ export default function MapComponent({ location }: MapComponentProps) {
         }
       >
         <MapCanvas>
+          <Basemap3dBuildingsLayer
+            enabled={Boolean(location.mapConfig.showBasemap3dBuildings)}
+          />
           <IndoorMapLayers
             data={indoorMapData}
             floor={currentFloor}
@@ -83,10 +108,12 @@ export default function MapComponent({ location }: MapComponentProps) {
           />
           <PoisLayer
             data={location.data.pois as GeoJSON.FeatureCollection}
+            floor={currentFloor}
             theme={theme as Theme}
           />
           <MapControls />
           <MapInspectControl />
+          <MapLogoControl />
           <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
             <FloorSelector availableFloors={availableFloors} />
             <FloorUpDownControl availableFloors={availableFloors} />

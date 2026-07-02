@@ -1,7 +1,25 @@
 import { LayerSpecification } from "maplibre-gl";
 
 export type Vertex = string;
-export type Edge = { to: Vertex; weight: number };
+export interface RouteEdgeMetadata {
+  access_type?: string | null;
+  from_level_id?: number | null;
+  is_accessible?: boolean | null;
+  level_id?: number | null;
+  network_type?: string | null;
+  to_level_id?: number | null;
+  vertical_connection_id?: string | number | null;
+}
+
+export type Edge = {
+  metadata?: RouteEdgeMetadata;
+  to: Vertex;
+  weight: number;
+};
+
+export interface PathfindingOptions {
+  accessibleOnly?: boolean;
+}
 
 export interface MapLibreGlDirectionsConfiguration {
   /**

@@ -13,7 +13,8 @@
     "typecheck": "tsc",
     "prepare": "husky",
     "format": "prettier --write .",
-    "revit:inspect": "node scripts/revit/extract-rvt-metadata.mjs"
+    "revit:inspect": "node scripts/revit/extract-rvt-metadata.mjs",
+    "ifc:convert": "python3 scripts/ifc/convert-ifc-to-location.py"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",

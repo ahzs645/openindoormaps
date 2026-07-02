@@ -1,0 +1,27 @@
+{
+  "anchor": {
+    "latitude": 53.885731,
+    "longitude": -122.808231,
+    "source": "manual UNBC campus anchor; IFC IfcSite coordinates were not trusted"
+  },
+  "counts": {
+    "IfcBuildingStorey": 13,
+    "IfcDoor": 1912,
+    "IfcRamp": 12,
+    "IfcRampFlight": 2,
+    "IfcSpace": 0,
+    "IfcStair": 92,
+    "IfcStairFlight": 121,
+    "indoorMapFeatures": 3012,
+    "indoorRouteFeatures": 110,
+    "poiFeatures": 116,
+    "wallAxisFeatures": 3000
+  },
+  "limitations": [
+    "No IfcSpace entities were present, so room polygons and room POIs were not generated.",
+    "Floor polygons are convex shell approximations from slabs and ramps.",
+    "Routes are a connector skeleton for inspection, not final room-to-room navigation."
+  ],
+  "schema": "IFC2X3",
+  "source_ifc": "/Users/ahmadjalil/Downloads/bimmer/UNBC Model - 2026-06-30 - FINAL (Fixed Library).ifc"
+}

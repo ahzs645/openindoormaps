@@ -18,7 +18,7 @@ export function FloorSelector({
   );
 
   const handleFloorChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const floor = Number.parseInt(event.target.value);
+    const floor = Number.parseFloat(event.target.value);
     setCurrentFloor(floor);
   };
 

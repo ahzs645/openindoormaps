@@ -97,6 +97,9 @@ export default function NavigationView({
       const departureCoord = departureGeo.coordinates as [number, number];
       const destinationCoord = destinationGeo.coordinates as [number, number];
 
+      indoorDirections?.setPathfindingOptions({
+        accessibleOnly: isAccessibleRoute,
+      });
       indoorDirections?.setWaypoints([departureCoord, destinationCoord]);
 
       const routeGeometry =
@@ -138,7 +141,14 @@ export default function NavigationView({
           variant="outline"
           pressed={isAccessibleRoute}
           size="icon"
-          onClick={() => setIsAccessibleRoute(!isAccessibleRoute)}
+          onClick={() => {
+            const nextValue = !isAccessibleRoute;
+            setIsAccessibleRoute(nextValue);
+            indoorDirections?.setPathfindingOptions({
+              accessibleOnly: nextValue,
+            });
+            handleRouting(departureLocation, destinationLocation);
+          }}
         >
           <Accessibility size={18} />
         </Toggle>

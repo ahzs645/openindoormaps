@@ -1,4 +1,4 @@
-import { Vertex } from "../types";
+import { Edge, PathfindingOptions, Vertex } from "../types";
 import Graph from "./graph";
 
 export default class Pathfinder {
@@ -12,6 +12,7 @@ export default class Pathfinder {
   public dijkstra(
     start: Vertex | GeoJSON.Position,
     end: Vertex | GeoJSON.Position,
+    options: PathfindingOptions = {},
   ): GeoJSON.Position[] {
     start = JSON.stringify(start);
     end = JSON.stringify(end);
@@ -35,13 +36,20 @@ export default class Pathfinder {
         .shift()!;
       if (current === end) break;
 
-      this.graph.getEdges(current).forEach(({ to, weight }) => {
+      this.graph.getEdges(current).forEach((edge) => {
+        if (!this.canUseEdge(edge, options)) return;
+
+        const { to, weight } = edge;
         const alt = distances[current] + weight;
         if (alt < distances[to]) {
           distances[to] = alt;
           previous[to] = current;
         }
       });
+    }
+
+    if (distances[end] === Infinity) {
+      throw new Error("No accessible indoor route found between waypoints.");
     }
 
     const path: Vertex[] = [];
@@ -62,6 +70,11 @@ export default class Pathfinder {
     } else {
       throw new Error(`Vertex not found in navigation graph: ${position}`);
     }
+  }
+
+  private canUseEdge(edge: Edge, options: PathfindingOptions) {
+    if (!options.accessibleOnly) return true;
+    return edge.metadata?.is_accessible !== false;
   }
 
   public setGraph(graph: Graph) {

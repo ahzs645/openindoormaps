@@ -14,6 +14,7 @@ const INDOOR_LAYER_IDS = [
   "indoor-map-fill-outline",
   "indoor-map-extrusion",
   "indoor-map-fill-extrusion",
+  "indoor-map-wall-line",
 ];
 
 interface IndoorMapLayersProps {
@@ -29,6 +30,7 @@ function getIndoorColors(theme: string) {
       outline: "#1f2937",
       unit: "#1f2937",
       unitHovered: "#374151",
+      wall: "#94a3b8",
     };
   }
 
@@ -37,6 +39,7 @@ function getIndoorColors(theme: string) {
     outline: "#a6a5a2",
     unit: "#f3f3f3",
     unitHovered: "#e0e0e0",
+    wall: "#6b7280",
   };
 }
 
@@ -103,7 +106,11 @@ export function IndoorMapLayers({ data, floor, theme }: IndoorMapLayersProps) {
     const colors = getIndoorColors(theme);
     const layers: LayerSpecification[] = [
       {
-        filter: ["==", ["geometry-type"], "Polygon"],
+        filter: [
+          "all",
+          ["==", ["geometry-type"], "Polygon"],
+          ["!=", ["get", "feature_type"], "floor_outline"],
+        ],
         id: "indoor-map-fill",
         paint: {
           "fill-color": ["coalesce", ["get", "fill"], colors.corridor],
@@ -112,7 +119,11 @@ export function IndoorMapLayers({ data, floor, theme }: IndoorMapLayersProps) {
         type: "fill",
       },
       {
-        filter: ["==", ["geometry-type"], "Polygon"],
+        filter: [
+          "all",
+          ["==", ["geometry-type"], "Polygon"],
+          ["!=", ["get", "feature_type"], "floor_outline"],
+        ],
         id: "indoor-map-fill-outline",
         paint: {
           "line-color": ["coalesce", ["get", "stroke"], colors.outline],
@@ -148,6 +159,30 @@ export function IndoorMapLayers({ data, floor, theme }: IndoorMapLayersProps) {
         },
         source: INDOOR_SOURCE_ID,
         type: "fill-extrusion",
+      },
+      {
+        filter: [
+          "all",
+          ["==", ["geometry-type"], "LineString"],
+          ["==", ["get", "feature_type"], "wall"],
+          ["!=", ["get", "is_pillar_like"], true],
+        ],
+        id: "indoor-map-wall-line",
+        paint: {
+          "line-color": ["coalesce", ["get", "stroke"], colors.wall],
+          "line-opacity": 0.85,
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            16,
+            0.7,
+            20,
+            2.2,
+          ],
+        },
+        source: INDOOR_SOURCE_ID,
+        type: "line",
       },
     ];
 

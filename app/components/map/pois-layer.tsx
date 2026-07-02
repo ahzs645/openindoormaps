@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import type {
   GeoJSONSource,
   LayerSpecification,
@@ -11,6 +11,7 @@ const POIS_LAYER_IDS = ["point", "point-label"];
 
 interface PoisLayerProps {
   data: GeoJSON.FeatureCollection;
+  floor: number;
   theme: string;
 }
 
@@ -53,8 +54,22 @@ function removePoisLayer(map: MapLibreMap) {
   }
 }
 
-export function PoisLayer({ data, theme }: PoisLayerProps) {
+function filterPoisData(
+  data: GeoJSON.FeatureCollection,
+  floor: number,
+): GeoJSON.FeatureCollection {
+  return {
+    ...data,
+    features: data.features.filter((feature) => {
+      const poiFloor = feature.properties?.floor;
+      return poiFloor === floor || poiFloor === null || poiFloor === undefined;
+    }),
+  };
+}
+
+export function PoisLayer({ data, floor, theme }: PoisLayerProps) {
   const { isLoaded, map } = useMap();
+  const filteredData = useMemo(() => filterPoisData(data, floor), [data, floor]);
 
   useEffect(() => {
     if (!isLoaded || !map) return;
@@ -112,8 +127,8 @@ export function PoisLayer({ data, theme }: PoisLayerProps) {
     if (!isLoaded || !map) return;
 
     const source = map.getSource(POIS_SOURCE_ID) as GeoJSONSource | undefined;
-    source?.setData(data);
-  }, [data, isLoaded, map]);
+    source?.setData(filteredData);
+  }, [filteredData, isLoaded, map]);
 
   return null;
 }

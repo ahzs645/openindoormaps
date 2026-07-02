@@ -1,4 +1,4 @@
-import { Vertex, Edge } from "../types";
+import { Vertex, Edge, RouteEdgeMetadata } from "../types";
 
 export default class Graph {
   adjacencyList: Map<Vertex, Edge[]> = new Map();
@@ -9,11 +9,16 @@ export default class Graph {
     }
   }
 
-  addEdge(from: Vertex, to: Vertex, weight: number) {
+  addEdge(
+    from: Vertex,
+    to: Vertex,
+    weight: number,
+    metadata?: RouteEdgeMetadata,
+  ) {
     this.addVertex(from);
     this.addVertex(to);
-    this.adjacencyList.get(from)?.push({ to, weight });
-    this.adjacencyList.get(to)?.push({ to: from, weight });
+    this.adjacencyList.get(from)?.push({ metadata, to, weight });
+    this.adjacencyList.get(to)?.push({ metadata, to: from, weight });
   }
 
   getVertexs() {

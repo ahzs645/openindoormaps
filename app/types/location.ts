@@ -16,10 +16,13 @@ export interface LocationConfig {
   };
   mapConfig: {
     center: [number, number];
+    defaultFloor?: number;
     zoom: number;
     mobileZoom: number;
     bearing: number;
     pitch: number;
+    showBasemap3dBuildings?: boolean;
+    visibleFloors?: number[];
   };
   data: {
     indoorMap: GeoJSON.FeatureCollection;
