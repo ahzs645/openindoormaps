@@ -3,12 +3,29 @@ import { LayerSpecification } from "maplibre-gl";
 export type Vertex = string;
 export interface RouteEdgeMetadata {
   access_type?: string | null;
+  direction?: "forward" | "backward" | "both" | null;
   from_level_id?: number | null;
   is_accessible?: boolean | null;
   level_id?: number | null;
   network_type?: string | null;
   to_level_id?: number | null;
   vertical_connection_id?: string | number | null;
+}
+
+export interface RouteInstruction {
+  type: "depart" | "straight" | "turn" | "floor-change" | "arrive";
+  message: string;
+  distanceMeters: number;
+  networkType?: string | null;
+  fromLevel?: number | null;
+  toLevel?: number | null;
+  turnDirection?: "left" | "right" | null;
+  /** Where the step happens, for focusing the camera on it. */
+  position?: GeoJSON.Position;
+  /** Floors crossed by a floor-change step (one ride can span several). */
+  floorsTraversed?: number;
+  /** Where a floor-change step leaves the connector. */
+  arrivalPosition?: GeoJSON.Position;
 }
 
 export type Edge = {

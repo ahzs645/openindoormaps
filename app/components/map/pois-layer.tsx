@@ -6,7 +6,7 @@ import type {
 } from "maplibre-gl";
 import { useMap } from "~/components/map/map";
 
-const POIS_SOURCE_ID = "pois";
+export const POIS_SOURCE_ID = "pois";
 const POIS_LAYER_IDS = ["point", "point-label"];
 
 interface PoisLayerProps {
@@ -69,7 +69,10 @@ function filterPoisData(
 
 export function PoisLayer({ data, floor, theme }: PoisLayerProps) {
   const { isLoaded, map } = useMap();
-  const filteredData = useMemo(() => filterPoisData(data, floor), [data, floor]);
+  const filteredData = useMemo(
+    () => filterPoisData(data, floor),
+    [data, floor],
+  );
 
   useEffect(() => {
     if (!isLoaded || !map) return;

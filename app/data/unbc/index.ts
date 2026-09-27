@@ -11,7 +11,7 @@ const unbc: LocationConfig = {
     desktopPanelWidth: 376,
   },
   mapConfig: {
-    center: [-122.808231, 53.885731],
+    center: [-122.808_231, 53.885_731],
     defaultFloor: 1,
     zoom: 18,
     mobileZoom: 17,
@@ -19,6 +19,13 @@ const unbc: LocationConfig = {
     pitch: 45,
     showBasemap3dBuildings: true,
     visibleFloors: [1, 2, 3, 4, 5, 6],
+    // IFC storey numbers are the building's own floor numbers.
+    floorNames: Object.fromEntries(
+      [0, 0.5, 1, 1.25, 1.5, 2, 3, 3.5, 4, 4.5, 5, 6].map((floor) => [
+        floor,
+        `Floor ${floor}`,
+      ]),
+    ),
   },
   data: {
     indoorMap,

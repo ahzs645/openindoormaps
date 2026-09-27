@@ -1,14 +1,17 @@
 import { useMemo, type ChangeEvent } from "react";
 import { cn } from "~/lib/utils";
 import useFloorStore from "~/stores/floor-store";
+import { formatFloorName, type FloorNames } from "~/utils/floor";
 
 interface FloorSelectorProps {
   availableFloors: number[];
+  floorNames?: FloorNames;
   className?: string;
 }
 
 export function FloorSelector({
   availableFloors,
+  floorNames,
   className,
 }: FloorSelectorProps) {
   const { currentFloor, setCurrentFloor } = useFloorStore();
@@ -36,7 +39,7 @@ export function FloorSelector({
       >
         {sortedFloors.map((floor) => (
           <option key={floor} value={floor}>
-            Floor {floor}
+            {floorNames ? formatFloorName(floor, floorNames) : `Floor ${floor}`}
           </option>
         ))}
       </select>

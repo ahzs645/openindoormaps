@@ -28,14 +28,29 @@ export class IndoorGeocoder {
   constructor(pois: POIFeature[], cutoffThreshold: number = 0.3) {
     this.cutoffThreshold = cutoffThreshold;
     this.miniSearch = new MiniSearch({
-      fields: ["name"],
-      storeFields: ["name", "type", "geometry", "id"],
+      fields: ["name", "searchTerms"],
+      storeFields: ["name", "type", "geometry", "id", "floor", "metadata"],
+      searchOptions: { boost: { name: 3 } },
     });
 
-    const flattenPOIs = pois.map((feature: POIFeature) => ({
-      ...feature.properties,
-      geometry: feature.geometry,
-    }));
+    // Like Pointr's search, match on keywords/tags/category as well as name
+    // (e.g. "coffee" finds Roast & Bake), with name matches ranked first.
+    const flattenPOIs = pois.map((feature: POIFeature) => {
+      const metadata = feature.properties.metadata ?? {};
+      const searchTerms = [
+        metadata.category,
+        ...(Array.isArray(metadata.keywords) ? metadata.keywords : []),
+        ...(Array.isArray(metadata.tags) ? metadata.tags : []),
+      ]
+        .filter((term) => typeof term === "string")
+        .map((term: string) => term.replaceAll("-", " "))
+        .join(" ");
+      return {
+        ...feature.properties,
+        searchTerms,
+        geometry: feature.geometry,
+      };
+    });
 
     this.miniSearch.addAll(flattenPOIs);
   }
@@ -53,11 +68,7 @@ export class IndoorGeocoder {
       throw new Error("No results found.");
     }
     const topResult = results[0];
-    return {
-      id: topResult.id,
-      name: topResult.name,
-      coordinates: topResult.geometry.coordinates,
-    };
+    return this.toPOI(topResult);
   }
 
   /**
@@ -89,12 +100,19 @@ export class IndoorGeocoder {
       cutoffIndex > 0 ? results.slice(0, cutoffIndex) : results.slice(0, 5);
 
     return relevantResults
-      .map((result) => ({
-        id: result.id,
-        name: result.name,
-        coordinates: result.geometry.coordinates,
-      }))
+      .map((result) => this.toPOI(result))
       .slice(0, maxResults);
+  }
+
+  private toPOI(result: SearchResult): POI {
+    return {
+      id: result.id,
+      name: result.name,
+      coordinates: result.geometry.coordinates,
+      floor: result.floor,
+      type: result.type,
+      metadata: result.metadata,
+    };
   }
 
   /**

@@ -18,6 +18,15 @@ import { getAvailableFloors, IndoorMapLayers } from "./map/indoor-map-layers";
 import { MapLogoControl } from "./map/map-logo-control";
 import { MapSectionLayout } from "./map/map-section-layout";
 import { PoisLayer } from "./map/pois-layer";
+import VenueModelsLayer, { type VenueModel } from "./map/venue-models-layer";
+
+const GALLERIA_MODELS: VenueModel[] = [
+  {
+    url: "/models/vendor-reference-models/new_escalator.glb",
+    lngLat: [-0.126_849_5, 51.507_424_6],
+    lengthMeters: 8,
+  },
+];
 
 function isSmallViewport() {
   return typeof globalThis !== "undefined" && globalThis.innerWidth < 640;
@@ -34,17 +43,14 @@ export default function MapComponent({ location }: MapComponentProps) {
   const desktopPanelPlacement = location.ui?.desktopPanelPlacement ?? "overlay";
   const desktopPanelWidth = location.ui?.desktopPanelWidth ?? 376;
   const indoorMapData = location.data.indoorMap as IndoorMapGeoJSON;
-  const availableFloors = useMemo(
-    () => {
-      const floors = getAvailableFloors(indoorMapData);
-      const visibleFloors = location.mapConfig.visibleFloors;
-      if (!visibleFloors?.length) return floors;
+  const availableFloors = useMemo(() => {
+    const floors = getAvailableFloors(indoorMapData);
+    const visibleFloors = location.mapConfig.visibleFloors;
+    if (!visibleFloors?.length) return floors;
 
-      const visibleFloorSet = new Set(visibleFloors);
-      return floors.filter((floor) => visibleFloorSet.has(floor));
-    },
-    [indoorMapData, location.mapConfig.visibleFloors],
-  );
+    const visibleFloorSet = new Set(visibleFloors);
+    return floors.filter((floor) => visibleFloorSet.has(floor));
+  }, [indoorMapData, location.mapConfig.visibleFloors]);
   const mapOptions = useMemo(
     () => ({
       attributionControl: {
@@ -111,11 +117,17 @@ export default function MapComponent({ location }: MapComponentProps) {
             floor={currentFloor}
             theme={theme as Theme}
           />
+          {location.slug === "galleria" && (
+            <VenueModelsLayer id="venue-3d-models" models={GALLERIA_MODELS} />
+          )}
           <MapControls />
           <MapInspectControl />
           <MapLogoControl />
           <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
-            <FloorSelector availableFloors={availableFloors} />
+            <FloorSelector
+              availableFloors={availableFloors}
+              floorNames={location.mapConfig.floorNames}
+            />
             <FloorUpDownControl availableFloors={availableFloors} />
           </div>
         </MapCanvas>

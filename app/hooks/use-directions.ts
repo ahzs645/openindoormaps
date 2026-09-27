@@ -13,7 +13,7 @@ function useDirections() {
       return;
     }
 
-    const directions = new IndoorDirections(map);
+    const directions = new IndoorDirections(map, { linesScalingFactor: 0.9 });
     setIndoorDirections(directions);
 
     return () => {

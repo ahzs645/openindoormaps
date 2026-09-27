@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import type { FloorNames } from "~/utils/floor";
 
 export interface TopLocation {
   name: string;
@@ -23,6 +24,8 @@ export interface LocationConfig {
     pitch: number;
     showBasemap3dBuildings?: boolean;
     visibleFloors?: number[];
+    /** Venue floor names keyed by floor number, e.g. `{ 0: "Ground Floor" }`. */
+    floorNames?: FloorNames;
   };
   data: {
     indoorMap: GeoJSON.FeatureCollection;

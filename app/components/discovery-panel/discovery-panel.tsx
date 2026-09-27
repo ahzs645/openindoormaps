@@ -4,11 +4,18 @@ import { useMap } from "~/components/map/map";
 import config from "~/config";
 import useDirections from "~/hooks/use-directions";
 import { useIndoorGeocoder } from "~/hooks/use-indoor-geocder";
+import useFloorStore from "~/stores/floor-store";
 import { POI } from "~/types/poi";
 import DiscoveryView from "./discovery-view";
 import LocationDetail from "./location-detail";
-import NavigationView from "./navigation-view";
+import NavigationView, { type RouteState } from "./navigation-view";
 import { buildPoiMap } from "~/utils/poi-map";
+import {
+  buildDeepLinkUrl,
+  readDeepLink,
+  syncDeepLink,
+} from "~/utils/deep-link";
+import { findPoiById, poiFromFeature } from "~/utils/poi";
 import { MapGeoJSONFeature, MapMouseEvent } from "maplibre-gl";
 import type { LocationConfig } from "~/types/location";
 
@@ -25,14 +32,38 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
   const [pendingDeparture, setPendingDeparture] = useState<
     string | undefined
   >();
+  const [pendingDeparturePOI, setPendingDeparturePOI] = useState<POI | null>(
+    null,
+  );
+  const [pendingAccessible, setPendingAccessible] = useState(false);
+  const [routesReady, setRoutesReady] = useState(false);
+  const [deepLinkApplied, setDeepLinkApplied] = useState(false);
   const { indoorDirections } = useDirections();
   const indoorGeocoder = useIndoorGeocoder(location);
   const poiMap = buildPoiMap(location);
+  const currentFloor = useFloorStore((state) => state.currentFloor);
+  const setCurrentFloor = useFloorStore((state) => state.setCurrentFloor);
+  const floorNames = location.mapConfig.floorNames;
 
   useEffect(() => {
-    if (!indoorDirections) return;
+    indoorDirections?.setFloor(currentFloor);
+  }, [indoorDirections, currentFloor]);
+
+  // Clicking an "Up to …" / "From …" connector marker switches floor.
+  useEffect(() => {
+    indoorDirections?.onTransitionClick(setCurrentFloor);
+    return () => indoorDirections?.onTransitionClick(null);
+  }, [indoorDirections, setCurrentFloor]);
+
+  useEffect(() => {
+    if (!indoorDirections) {
+      setRoutesReady(false);
+      return;
+    }
     indoorDirections.loadMapData(location.data.indoorRoutes);
-  }, [indoorDirections, location.data.indoorRoutes]);
+    indoorDirections.setLevelNames(floorNames);
+    setRoutesReady(true);
+  }, [indoorDirections, location.data.indoorRoutes, floorNames]);
 
   const navigateToPOI = useCallback(
     (coordinates: GeoJSON.Position) => {
@@ -45,18 +76,76 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
     [map],
   );
 
-  function handleSelectPOI(poi: POI) {
-    setSelectedPOI(poi);
-    setMode("detail");
-    navigateToPOI(poi.coordinates);
-  }
+  const handleSelectPOI = useCallback(
+    (poi: POI) => {
+      setSelectedPOI(poi);
+      setMode("detail");
+      if (poi.floor !== undefined) setCurrentFloor(poi.floor);
+      navigateToPOI(poi.coordinates);
+    },
+    [navigateToPOI, setCurrentFloor],
+  );
 
   function handleBackClick() {
     setMode("discovery");
     setSelectedPOI(null);
     setPendingDeparture(undefined);
+    setPendingDeparturePOI(null);
+    setPendingAccessible(false);
     indoorDirections?.clear();
   }
+
+  // Apply ?poi= / ?from=&to= / ?floor= once the map and route graph are ready.
+  useEffect(() => {
+    if (deepLinkApplied || !map || !isLoaded || !routesReady) return;
+    setDeepLinkApplied(true);
+
+    const link = readDeepLink(globalThis.location.search);
+    const pois = location.data.pois;
+    if (link.to !== undefined) {
+      const destination = findPoiById(pois, link.to);
+      if (destination) {
+        setSelectedPOI(destination);
+        setPendingDeparturePOI(
+          link.from === undefined ? null : findPoiById(pois, link.from),
+        );
+        setPendingAccessible(Boolean(link.accessible));
+        setMode("navigation");
+        return;
+      }
+    }
+    if (link.poi !== undefined) {
+      const poi = findPoiById(pois, link.poi);
+      if (poi) {
+        handleSelectPOI(poi);
+        return;
+      }
+    }
+    if (link.floor !== undefined) setCurrentFloor(link.floor);
+  }, [
+    deepLinkApplied,
+    handleSelectPOI,
+    isLoaded,
+    location.data.pois,
+    map,
+    routesReady,
+    setCurrentFloor,
+  ]);
+
+  // Keep the address bar shareable: it always reflects the open card.
+  useEffect(() => {
+    if (!deepLinkApplied) return;
+    if (mode === "detail" && selectedPOI) syncDeepLink({ poi: selectedPOI.id });
+    if (mode === "discovery") syncDeepLink({});
+  }, [deepLinkApplied, mode, selectedPOI]);
+
+  const handleRouteChange = useCallback((route: RouteState) => {
+    syncDeepLink({
+      from: route.from?.id,
+      to: route.to?.id,
+      accessible: route.accessible,
+    });
+  }, []);
 
   useEffect(() => {
     if (!indoorDirections) return;
@@ -120,12 +209,7 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
       if (relatedPOIs && relatedPOIs[0]) {
         const firstPOI = relatedPOIs[0];
 
-        //TODO: find cleaner way to convert GeoJSON.Feature to POI
-        const poi: POI = {
-          id: firstPOI.properties?.id as number,
-          name: firstPOI.properties?.name as string,
-          coordinates: firstPOI.geometry.coordinates,
-        };
+        const poi = poiFromFeature(firstPOI);
         setSelectedPOI(poi);
         if (mode === "discovery" || mode === "detail") {
           navigateToPOI(poi.coordinates);
@@ -150,11 +234,15 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
             indoorGeocoder={indoorGeocoder}
             onSelectPOI={handleSelectPOI}
             topLocations={location.data.topLocations}
+            floorNames={floorNames}
           />
         )}
         {mode === "detail" && selectedPOI && (
           <LocationDetail
+            key={selectedPOI.id}
             selectedPOI={selectedPOI}
+            floorNames={floorNames}
+            shareUrl={buildDeepLinkUrl({ poi: selectedPOI.id })}
             handleDirectionsClick={() => setMode("navigation")}
             handleBackClick={handleBackClick}
           />
@@ -164,8 +252,12 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
             handleBackClick={handleBackClick}
             selectedPOI={selectedPOI}
             indoorGeocoder={indoorGeocoder}
-            indoorDirections={indoorDirections}
+            indoorDirections={routesReady ? indoorDirections : null}
             initialDeparture={pendingDeparture}
+            initialDeparturePOI={pendingDeparturePOI}
+            initialAccessible={pendingAccessible}
+            floorNames={floorNames}
+            onRouteChange={handleRouteChange}
           />
         )}
       </div>

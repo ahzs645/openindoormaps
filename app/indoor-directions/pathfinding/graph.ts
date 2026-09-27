@@ -17,8 +17,23 @@ export default class Graph {
   ) {
     this.addVertex(from);
     this.addVertex(to);
-    this.adjacencyList.get(from)?.push({ metadata, to, weight });
-    this.adjacencyList.get(to)?.push({ metadata, to: from, weight });
+
+    const direction = metadata?.direction ?? "both";
+    if (direction !== "backward") {
+      this.adjacencyList.get(from)?.push({ metadata, to, weight });
+    }
+    if (direction !== "forward") {
+      this.adjacencyList.get(to)?.push({ metadata, to: from, weight });
+    }
+  }
+
+  getEdgeBetween(from: Vertex, to: Vertex): Edge | undefined {
+    const edges = this.adjacencyList.get(from);
+    if (!edges) return undefined;
+
+    return edges
+      .filter((edge) => edge.to === to)
+      .sort((a, b) => a.weight - b.weight)[0];
   }
 
   getVertexs() {
