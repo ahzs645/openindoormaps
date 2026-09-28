@@ -24,6 +24,7 @@ try {
     inputPath: args.input,
     outputDir: args.outdir ?? defaultOutputDir,
     bundleTarget: args.bundleTarget ?? null,
+    locationDir: args.locationDir ?? null,
     config,
   });
 
@@ -81,12 +82,13 @@ function parseArgs(rawArgs) {
     config: parsed.config,
     outdir: parsed.outdir,
     bundleTarget: parsed["bundle-target"],
+    locationDir: parsed["location-dir"],
   };
 }
 
 function printUsage() {
   console.log(`Usage:
-  npm run dwg:import -- --input <path/to/file.dwg|file.dxf> --config <config.json> [--outdir <dir>] [--bundle-target <path>]
+  npm run dwg:import -- --input <path/to/file.dwg|file.dxf> --config <config.json> [--outdir <dir>] [--bundle-target <path>] [--location-dir <app/data/slug>]
 
 Examples:
   npm run dwg:import -- --input "floor plan.dwg" --config scripts/dwg-import/config.example.json

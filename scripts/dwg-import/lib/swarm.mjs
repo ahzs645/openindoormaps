@@ -24,11 +24,12 @@ import {
 const HELPER_DIR = fileURLToPath(new URL("..", import.meta.url));
 
 export class AgentSwarmPipeline {
-  constructor({ inputPath, outputDir, bundleTarget, config }) {
+  constructor({ inputPath, outputDir, bundleTarget, locationDir, config }) {
     this.context = {
       inputPath: resolve(inputPath),
       outputDir: resolve(outputDir),
       bundleTarget: bundleTarget ? resolve(bundleTarget) : null,
+      locationDir: locationDir ? resolve(locationDir) : null,
       config,
       logs: [],
       warnings: [],
@@ -592,6 +593,23 @@ class ExportAgent extends BaseAgent {
     if (context.bundleTarget) {
       mkdirSync(dirname(context.bundleTarget), { recursive: true });
       writeJson(context.bundleTarget, bundle);
+    }
+
+    if (context.locationDir) {
+      mkdirSync(context.locationDir, { recursive: true });
+      writeJson(
+        join(context.locationDir, "indoor-map.geojson"),
+        toLocationIndoorMap(context.artifacts.indoorMap),
+      );
+      writeJson(
+        join(context.locationDir, "pois.geojson"),
+        toLocationPois(context.artifacts.pois),
+      );
+      writeJson(
+        join(context.locationDir, "indoor-routes.geojson"),
+        context.artifacts.indoorRoutes,
+      );
+      this.log(context, `Wrote app location data to ${context.locationDir}.`);
     }
 
     context.artifacts.output = {
@@ -2515,6 +2533,53 @@ function extractInsertRecords(dxfContents) {
   }
 
   return records;
+}
+
+const VERTICAL_FEATURE_TYPES = new Set([
+  "stairs",
+  "elevator",
+  "escalator",
+  "ramp",
+]);
+
+// The app renders stairs/elevators as `vertical_connection` features keyed by
+// `connection_type` (see app/components/map/indoor-map-layers.tsx).
+function toLocationIndoorMap(indoorMap) {
+  return featureCollection(
+    indoorMap.features.map((feature) => {
+      const featureType = feature.properties?.feature_type;
+      if (!VERTICAL_FEATURE_TYPES.has(featureType)) return feature;
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties,
+          feature_type: "vertical_connection",
+          connection_type: featureType,
+        },
+      };
+    }),
+  );
+}
+
+// The app's search and location card read `metadata.category` and
+// `metadata.keywords`; expose room use and building name there.
+function toLocationPois(pois) {
+  return featureCollection(
+    pois.features.map((feature) => {
+      const { metadata = {}, room_use, building_name } = feature.properties;
+      return {
+        ...feature,
+        properties: {
+          ...feature.properties,
+          metadata: {
+            ...metadata,
+            category: metadata.category ?? room_use ?? undefined,
+            keywords: [building_name, room_use].filter(Boolean),
+          },
+        },
+      };
+    }),
+  );
 }
 
 function writeJson(filePath, value) {

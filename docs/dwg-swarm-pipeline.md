@@ -37,7 +37,11 @@ npm run dwg:import -- \
 
 `generated/` is git-ignored. Paths inside the config (such as `campus.referenceDxf`) resolve against the current directory.
 
-The output directory contains `indoor_map.geojson`, `pois.geojson`, `indoor_routes.geojson`, a combined `building.bundle.json`, and a `report.json` with stats, warnings and unmatched labels. To show the result in the app, copy the three GeoJSON files into a location folder as `indoor-map.geojson`, `pois.geojson` and `indoor-routes.geojson`, then add a `LocationConfig` for it (see `app/data/unbc/` for an example) and register it in `app/data/locations.ts`. `--bundle-target <path>` additionally writes the combined bundle to another path.
+The output directory contains `indoor_map.geojson`, `pois.geojson`, `indoor_routes.geojson`, a combined `building.bundle.json`, and a `report.json` with stats, warnings and unmatched labels. `--bundle-target <path>` additionally writes the combined bundle to another path.
+
+To show the result in the app, pass `--location-dir app/data/<slug>`. It writes `indoor-map.geojson`, `pois.geojson` and `indoor-routes.geojson` in the app's schema: stairs/elevators become `vertical_connection` features with a `connection_type`, and room use and building name are exposed as `metadata.category`/`metadata.keywords` so search and the location card pick them up. Then add a `LocationConfig` (`index.ts`, `location-data.ts`; see `app/data/unbc/`) and register it in `app/data/locations.ts`.
+
+Check `report.json` before shipping a location: buildings whose campus placement was skipped keep an approximate position and will not line up with the basemap.
 
 ## Config strategy
 
