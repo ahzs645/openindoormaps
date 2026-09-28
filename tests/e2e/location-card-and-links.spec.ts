@@ -236,11 +236,17 @@ test("connector marker on the map switches to the next floor", async ({
   await expect(page.getByLabel("Select floor")).toHaveValue("0");
   await page.waitForTimeout(2000);
   const canvas = await page.locator(".maplibregl-canvas").boundingBox();
-  await page.mouse.click(
-    canvas!.x + canvas!.width / 2,
-    canvas!.y + canvas!.height / 2,
-  );
-  await expect(page.getByLabel("Select floor")).toHaveValue("1");
+  // The camera can still be settling on slow (software-GL) renderers, so the
+  // first click may land before the marker is centred; retry until it hits.
+  await expect(async () => {
+    await page.mouse.click(
+      canvas!.x + canvas!.width / 2,
+      canvas!.y + canvas!.height / 2,
+    );
+    await expect(page.getByLabel("Select floor")).toHaveValue("1", {
+      timeout: 1500,
+    });
+  }).toPass({ timeout: 15_000 });
 });
 
 test("route preview walks the route across floors", async ({ page }) => {
