@@ -263,3 +263,27 @@ test("route preview walks the route across floors", async ({ page }) => {
     { timeout: 20_000 },
   );
 });
+
+test("clicking a room opens a location on the visible floor", async ({
+  page,
+}) => {
+  // Regression: rooms on other floors overlap in 2D, and POIs used to be
+  // matched to the first containing room on any floor. Prada Caffè's
+  // ground-floor room then opened the 4th-floor Women's Toilets.
+  await page.goto("/harrods?poi=684");
+  const heading = page.getByRole("heading", { name: "Prada Caffè" });
+  await expect(heading).toBeVisible({ timeout: 20_000 });
+  await page.waitForTimeout(2500); // let flyTo settle on the POI
+
+  const canvas = page.locator(".maplibregl-canvas");
+  const box = (await canvas.boundingBox())!;
+  await canvas.click({
+    position: { x: box.width / 2, y: box.height / 2 },
+  });
+
+  await page.waitForTimeout(500);
+  await expect(heading).toBeVisible();
+  await expect(page.getByTestId("location-subtitle")).toHaveText(
+    /Ground Floor/,
+  );
+});
