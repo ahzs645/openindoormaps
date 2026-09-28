@@ -5,7 +5,8 @@ const topLocations: TopLocation[] = [
   {
     name: "Floor 1 overview",
     icon: Layers3,
-    colors: "bg-emerald-100 text-emerald-700 dark:bg-emerald-700 dark:text-emerald-100",
+    colors:
+      "bg-emerald-100 text-emerald-700 dark:bg-emerald-700 dark:text-emerald-100",
   },
   {
     name: "Floor 2 overview",
@@ -20,7 +21,8 @@ const topLocations: TopLocation[] = [
   {
     name: "Ramp",
     icon: Route,
-    colors: "bg-violet-100 text-violet-700 dark:bg-violet-700 dark:text-violet-100",
+    colors:
+      "bg-violet-100 text-violet-700 dark:bg-violet-700 dark:text-violet-100",
   },
 ];
 

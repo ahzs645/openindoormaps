@@ -14,7 +14,8 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "revit:inspect": "node scripts/revit/extract-rvt-metadata.mjs",
-    "ifc:convert": "python3 scripts/ifc/convert-ifc-to-location.py"
+    "ifc:convert": "python3 scripts/ifc/convert-ifc-to-location.py",
+    "dwg:import": "node scripts/dwg-import/cli.mjs"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",
@@ -50,6 +51,7 @@
     "@typescript-eslint/parser": "^8.58.2",
     "@vitejs/plugin-react": "^6.0.1",
     "autoprefixer": "^10.4.19",
+    "dxf-parser": "^1.1.2",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.0.0",
     "eslint-import-resolver-typescript": "^4.0.0",

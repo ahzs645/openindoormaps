@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useMap } from "~/components/map/map";
 import config from "~/config";
@@ -40,7 +40,7 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
   const [deepLinkApplied, setDeepLinkApplied] = useState(false);
   const { indoorDirections } = useDirections();
   const indoorGeocoder = useIndoorGeocoder(location);
-  const poiMap = buildPoiMap(location);
+  const poiMap = useMemo(() => buildPoiMap(location), [location]);
   const currentFloor = useFloorStore((state) => state.currentFloor);
   const setCurrentFloor = useFloorStore((state) => state.setCurrentFloor);
   const floorNames = location.mapConfig.floorNames;

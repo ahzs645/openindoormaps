@@ -8,7 +8,10 @@ test("renders the Bebetei Vitan map shell", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByTestId("map-canvas-root")).toBeVisible();
   await expect(page.locator(".maplibregl-canvas")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Zoom in" })).toBeVisible();
+  // Map controls render only once the style has loaded.
+  await expect(page.getByRole("button", { name: "Zoom in" })).toBeVisible({
+    timeout: 20_000,
+  });
 
   const searchBox = await page
     .getByPlaceholder("Search indoor locations...")
