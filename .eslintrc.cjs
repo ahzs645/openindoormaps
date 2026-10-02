@@ -86,5 +86,28 @@ module.exports = {
         "react/prop-types": "off",
       },
     },
+    {
+      // Geometry algorithms and their audit fixtures use inline predicates,
+      // reductions and nested classifications; retain correctness rules.
+      files: ["app/indoor-project/**/*.{ts,tsx}", "app/pages/indoor-project-page.tsx", "scripts/indoor/**/*.ts", "tests/**/*.ts"],
+      rules: {
+        "no-nested-ternary": "off",
+        "unicorn/no-nested-ternary": "off",
+        "unicorn/no-array-reduce": "off",
+        "unicorn/no-array-callback-reference": "off",
+        "unicorn/consistent-function-scoping": "off",
+        "unicorn/prefer-add-event-listener": "off",
+        "unicorn/number-literal-case": "off",
+        "@typescript-eslint/no-unused-vars": ["error", {"argsIgnorePattern":"^_", "varsIgnorePattern":"^_", "ignoreRestSiblings":true}],
+      },
+    },
+    {
+      files: ["tests/**/*.ts", "scripts/indoor/**/*.ts"],
+      rules: {
+        "unicorn/no-await-expression-member": "off",
+        "unicorn/no-magic-array-flat-depth": "off",
+        "unicorn/no-array-push-push": "off",
+      },
+    },
   ],
 };

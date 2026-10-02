@@ -1,0 +1,4519 @@
+{
+  "version": 1,
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "c102ae887508b57e9620eec45c751f2a9c5ac9918e3ca7cf8290991a260a1865"
+  },
+  "inputProject": "/Users/ahmadjalil/Downloads/UNBC.indoor.connectivity-reviewed.reviter.zip",
+  "scope": "Every previously reported isolated destination plus all named lift drawing annotations and native inventory.",
+  "isolation": {
+    "reviewed": 33,
+    "remainingIsolated": 32,
+    "summary": {
+      "ordinary-room-transit-needs-explicit-review": 3,
+      "resolved-in-current-project": 1,
+      "staff-access-retained": 25,
+      "matched-door-without-native-safe-routing-edge": 4
+    },
+    "reviews": [
+      {
+        "roomKey": "rm-1450417-6b2236189714",
+        "number": "09-232",
+        "name": "Washroom",
+        "building": "09",
+        "levelId": 1450417,
+        "arrivalNodeId": "arrival:rm-1450417-6b2236189714",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "09 Med LVL 2",
+          "entityHandle": "2DC280",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "09-232",
+          "anchorDwg": [216468.14032177837, -920015.1812091146],
+          "registrationId": "s33@e0d07fd07a3b"
+        },
+        "historicalReason": "ordinary-room-transit-needs-review",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "ordinary-room-transit-needs-explicit-review",
+        "doors": [
+          {
+            "nativeDoorId": 1522054,
+            "nativeDoorUniqueId": "18a95948-1554-409a-b0b2-d9b8fc6e64ab-00173986",
+            "nativeHostId": 1521995,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 1450417,
+            "pointFeet": [188.411163712926, 515.9813300913465],
+            "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+            "footprintFeet": [
+              [186.70323916047033, 515.4202345335468],
+              [190.19057427485316, 515.7253368219712],
+              [190.11908826538166, 516.5424256491463],
+              [186.63175315099883, 516.2373233607219]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": true,
+            "edgeEnabled": true,
+            "edgeDirection": null,
+            "portalNodes": [
+              {
+                "nodeId": "door:1450417:1522054:0",
+                "exists": true,
+                "walkingBranches": 1
+              },
+              {
+                "nodeId": "door:1450417:1522054:1",
+                "exists": true,
+                "walkingBranches": 2
+              }
+            ],
+            "neighbors": [
+              {
+                "roomKey": "rm-1450417-f77d65d92ad7",
+                "number": "09-214",
+                "name": "First Nation Gallery",
+                "levelId": 1450417,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "09 Med LVL 2",
+                  "entityHandle": "2D88D4",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "09-214",
+                  "anchorDwg": [210091.47890691957, -927189.6062365891],
+                  "registrationId": "s33@e0d07fd07a3b"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "access-review:rm-1450417-6b2236189714:1450417",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Inspect the actual public route and phase-specific threshold ownership. A gallery or stores room stays endpoint-only unless an explicit reviewer establishes a public circulation path; never infer transit permission from a room name."
+      },
+      {
+        "roomKey": "rm-1450417-6b47b8189734",
+        "number": "09-230",
+        "name": "Washroom",
+        "building": "09",
+        "levelId": 1450417,
+        "arrivalNodeId": "arrival:rm-1450417-6b47b8189734",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "09 Med LVL 2",
+          "entityHandle": "2DC270",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "09-230",
+          "anchorDwg": [213376.12773634147, -920110.0973881541],
+          "registrationId": "s33@e0d07fd07a3b"
+        },
+        "historicalReason": "ordinary-room-transit-needs-review",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "ordinary-room-transit-needs-explicit-review",
+        "doors": [
+          {
+            "nativeDoorId": 1522052,
+            "nativeDoorUniqueId": "18a95948-1554-409a-b0b2-d9b8fc6e64ab-00173984",
+            "nativeHostId": 1521995,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 1450417,
+            "pointFeet": [176.41285300849893, 514.9316139232475],
+            "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+            "footprintFeet": [
+              [174.70492845604326, 514.3705183654478],
+              [178.19226357042612, 514.6756206538721],
+              [178.12077756095462, 515.4927094810472],
+              [174.63344244657176, 515.1876071926229]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": true,
+            "edgeEnabled": true,
+            "edgeDirection": null,
+            "portalNodes": [
+              {
+                "nodeId": "door:1450417:1522052:0",
+                "exists": true,
+                "walkingBranches": 1
+              },
+              {
+                "nodeId": "door:1450417:1522052:1",
+                "exists": true,
+                "walkingBranches": 1
+              }
+            ],
+            "neighbors": [
+              {
+                "roomKey": "rm-1450417-f77d65d92ad7",
+                "number": "09-214",
+                "name": "First Nation Gallery",
+                "levelId": 1450417,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "09 Med LVL 2",
+                  "entityHandle": "2D88D4",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "09-214",
+                  "anchorDwg": [210091.47890691957, -927189.6062365891],
+                  "registrationId": "s33@e0d07fd07a3b"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "access-review:rm-1450417-6b47b8189734:1450417",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Inspect the actual public route and phase-specific threshold ownership. A gallery or stores room stays endpoint-only unless an explicit reviewer establishes a public circulation path; never infer transit permission from a room name."
+      },
+      {
+        "roomKey": "rm-1450417-c01dfc29e05c",
+        "number": "09-231",
+        "name": "H,C All Gender",
+        "building": "09",
+        "levelId": 1450417,
+        "arrivalNodeId": "arrival:rm-1450417-c01dfc29e05c",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "09 Med LVL 2",
+          "entityHandle": "2DA6DF",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "09-231",
+          "anchorDwg": [215267.08597942843, -924264.3825380967],
+          "registrationId": "s33@e0d07fd07a3b"
+        },
+        "historicalReason": "ordinary-room-transit-needs-review",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "ordinary-room-transit-needs-explicit-review",
+        "doors": [
+          {
+            "nativeDoorId": 1522053,
+            "nativeDoorUniqueId": "18a95948-1554-409a-b0b2-d9b8fc6e64ab-00173985",
+            "nativeHostId": 1521995,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 1450417,
+            "pointFeet": [180.5162606311252, 515.2906155720532],
+            "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+            "footprintFeet": [
+              [178.8083360786695, 514.7295200142534],
+              [182.29567119305236, 515.0346223026777],
+              [182.22418518358086, 515.8517111298529],
+              [178.736850069198, 515.5466088414286]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": true,
+            "edgeEnabled": true,
+            "edgeDirection": null,
+            "portalNodes": [
+              {
+                "nodeId": "door:1450417:1522053:0",
+                "exists": true,
+                "walkingBranches": 1
+              },
+              {
+                "nodeId": "door:1450417:1522053:1",
+                "exists": true,
+                "walkingBranches": 3
+              }
+            ],
+            "neighbors": [
+              {
+                "roomKey": "rm-1450417-f77d65d92ad7",
+                "number": "09-214",
+                "name": "First Nation Gallery",
+                "levelId": 1450417,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "09 Med LVL 2",
+                  "entityHandle": "2D88D4",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "09-214",
+                  "anchorDwg": [210091.47890691957, -927189.6062365891],
+                  "registrationId": "s33@e0d07fd07a3b"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "access-review:rm-1450417-c01dfc29e05c:1450417",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Inspect the actual public route and phase-specific threshold ownership. A gallery or stores room stays endpoint-only unless an explicit reviewer establishes a public circulation path; never infer transit permission from a room name."
+      },
+      {
+        "roomKey": "rm-1487353-c041caebb03e",
+        "number": "06-370",
+        "name": "Reception",
+        "building": "06",
+        "levelId": 1487353,
+        "arrivalNodeId": "arrival:rm-1487353-c041caebb03e",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "06 Conf LVL 3",
+          "entityHandle": "2EBBF8",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "06-370",
+          "anchorDwg": [381512.9325440113, -461136.29735112295],
+          "registrationId": "s22@a15e2be58a8d"
+        },
+        "historicalReason": "source-component-has-no-other-arrival",
+        "currentReachablePublicDestinations": 8,
+        "disposition": "resolved-in-current-project",
+        "doors": [
+          {
+            "nativeDoorId": 1779325,
+            "nativeDoorUniqueId": "8d490d0a-63fd-4329-8ab0-a7bb492453bf-001b267d",
+            "nativeHostId": 1779324,
+            "nativeFamily": null,
+            "nativeType": "K-LINE PORTE GT NEUF KLGT-2VT-ANG-IM",
+            "levelId": 1487353,
+            "pointFeet": [-292.9515250526108, -41.55331975500634],
+            "normalFeet": [0.5299192642335558, 0.8480480961562068],
+            "footprintFeet": [
+              [-295.8029897842492, -40.139052913317045],
+              [-290.4303905709868, -43.496225501779946],
+              [-290.10006032097243, -42.96758659669564],
+              [-295.47265953423477, -39.61041400823274]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": true,
+            "edgeEnabled": true,
+            "edgeDirection": null,
+            "portalNodes": [
+              {
+                "nodeId": "door:1487353:1779325:0",
+                "exists": true,
+                "walkingBranches": 2
+              },
+              {
+                "nodeId": "door:1487353:1779325:1",
+                "exists": true,
+                "walkingBranches": 1
+              }
+            ],
+            "neighbors": [
+              {
+                "roomKey": "rm-1487353-6e5cbce7fec2",
+                "number": "06-S306",
+                "name": "Stair 6",
+                "levelId": 1487353,
+                "hasArrival": true,
+                "circulation": true,
+                "stair": true,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "06 Conf LVL 3",
+                  "entityHandle": "A6BB79",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "06-S306",
+                  "anchorDwg": [386440.6914142434, -459726.8225988209],
+                  "registrationId": "s22@a15e2be58a8d"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "access-review:rm-1487353-c041caebb03e:1487353",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Native-safe public route now exists; preserve supporting source identities and geometry checks."
+      },
+      {
+        "roomKey": "rm-311-348404ca0af1",
+        "number": "07-792",
+        "name": "Meeting Room",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-348404ca0af1",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0CA1",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-792",
+          "anchorDwg": [136473.6751161125, -610132.2850017933],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 749970,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b7192",
+            "nativeHostId": 740354,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [64.59055886052904, 239.2160070995453],
+            "normalFeet": [-1, 4.059483146385727e-15],
+            "footprintFeet": [
+              [64.86943025160518, 237.4656790155558],
+              [64.8694302516052, 240.9663351835348],
+              [64.3116874694529, 240.9663351835348],
+              [64.31168746945289, 237.4656790155558]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3eb4c3ca1126",
+                "number": "07-751",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "Access reviewed by the user; source name and physical boundary retained."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0B4C",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-751",
+                  "anchorDwg": [140770.48371527245, -614759.6016679958],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:749970:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:749970 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-348404ca0af1:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-35a17cca0be3",
+        "number": "07-790",
+        "name": "Support",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-35a17cca0be3",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0C51",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-790",
+          "anchorDwg": [141456.39586532948, -607935.0869449052],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 750398,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b733e",
+            "nativeHostId": 740958,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [73.17195922091396, 246.39401889945202],
+            "normalFeet": [0.5299192642332071, 0.8480480961564245],
+            "footprintFeet": [
+              [71.53981749926277, 247.08505511761186],
+              [74.50854229781564, 245.22998997674296],
+              [74.80410094256516, 245.70298268129216],
+              [71.83537614401229, 247.55804782216106]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3eb4c3ca1126",
+                "number": "07-751",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "Access reviewed by the user; source name and physical boundary retained."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0B4C",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-751",
+                  "anchorDwg": [140770.48371527245, -614759.6016679958],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:750398:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:750398 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-35a17cca0be3:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-399346f64ec3",
+        "number": "07-772",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-399346f64ec3",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1BDFEB",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-772",
+          "anchorDwg": [129500.5397114986, -596750.2324756413],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748716,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6cac",
+            "nativeHostId": 739034,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [40.52313918249282, 283.78803383507517],
+            "normalFeet": [0, 1],
+            "footprintFeet": [
+              [38.77281109850332, 283.509162443999],
+              [42.27346726648232, 283.509162443999],
+              [42.27346726648232, 284.06690522615133],
+              [38.77281109850332, 284.06690522615133]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748716:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748716 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-399346f64ec3:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-39972cf64ec6",
+        "number": "07-774",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-39972cf64ec6",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1BDFFB",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-774",
+          "anchorDwg": [133253.86994750059, -596648.6305183296],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748776,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6ce8",
+            "nativeHostId": 739034,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [50.212518317997585, 283.7880338350751],
+            "normalFeet": [0, 1],
+            "footprintFeet": [
+              [48.462190234008084, 283.50916244399895],
+              [51.962846401987086, 283.50916244399895],
+              [51.962846401987086, 284.0669052261513],
+              [48.462190234008084, 284.0669052261513]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748776:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748776 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-39972cf64ec6:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3e8825ca10ff",
+        "number": "07-768",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3e8825ca10ff",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B91",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-768",
+          "anchorDwg": [133313.164983648, -605671.2911526669],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748206,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6aae",
+            "nativeHostId": 739338,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [43.862057291083616, 254.7814508283611],
+            "normalFeet": [-1, 2.0297415731928635e-15],
+            "footprintFeet": [
+              [44.14092868215976, 253.0311227443716],
+              [44.14092868215977, 256.5317789123506],
+              [43.58318590000747, 256.5317789123506],
+              [43.583185900007464, 253.0311227443716]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748206:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748206 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3e8825ca10ff:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3e9cfbca1111",
+        "number": "07-754",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3e9cfbca1111",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B3C",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-754",
+          "anchorDwg": [128282.86829284586, -610308.5153554217],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 750062,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b71ee",
+            "nativeHostId": 742213,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [38.43710650368089, 246.57460387445252],
+            "normalFeet": [-1, 2.0297415731928635e-15],
+            "footprintFeet": [
+              [38.71597789475703, 244.82427579046302],
+              [38.71597789475704, 248.32493195844202],
+              [38.15823511260474, 248.32493195844202],
+              [38.158235112604736, 244.82427579046302]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:750062:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:750062 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3e9cfbca1111:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3e9fdbca1113",
+        "number": "07-756",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3e9fdbca1113",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B2C",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-756",
+          "anchorDwg": [128449.77165026491, -607567.4553615594],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748318,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6b1e",
+            "nativeHostId": 742213,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [38.4371065036809, 255.52759954335355],
+            "normalFeet": [-1, 2.0297415731928635e-15],
+            "footprintFeet": [
+              [38.715977894757046, 253.77727145936404],
+              [38.71597789475705, 257.27792762734305],
+              [38.15823511260476, 257.27792762734305],
+              [38.15823511260475, 253.77727145936404]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748318:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748318 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3e9fdbca1113:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3ea3c3ca1117",
+        "number": "07-758",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3ea3c3ca1117",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B1C",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-758",
+          "anchorDwg": [128404.46245676366, -604673.2527722652],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748378,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6b5a",
+            "nativeHostId": 742213,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [38.43710650368091, 260.2356047926974],
+            "normalFeet": [1, -2.0297415731928307e-15],
+            "footprintFeet": [
+              [38.158235112604764, 261.98593287668695],
+              [38.15823511260476, 258.4852767087079],
+              [38.71597789475705, 258.4852767087079],
+              [38.71597789475706, 261.98593287668695]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748378:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748378 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3ea3c3ca1117:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3ea6abca1119",
+        "number": "07-760",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3ea6abca1119",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B0C",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-760",
+          "anchorDwg": [128345.49122391091, -601865.4892395712],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748572,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6c1c",
+            "nativeHostId": 742213,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [38.43710650368093, 273.8028127130343],
+            "normalFeet": [-1, 2.0297415731928307e-15],
+            "footprintFeet": [
+              [38.715977894757074, 272.0524846290448],
+              [38.71597789475708, 275.55314079702384],
+              [38.158235112604785, 275.55314079702384],
+              [38.15823511260478, 272.0524846290448]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748572:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748572 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3ea6abca1119:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3eaa0cca111c",
+        "number": "07-770",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3eaa0cca111c",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0B7D",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-770",
+          "anchorDwg": [133140.45249561785, -601993.8702070139],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748908,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6d6c",
+            "nativeHostId": 739243,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [49.94471960433012, 278.4692288810506],
+            "normalFeet": [0, 1],
+            "footprintFeet": [
+              [48.194391520340616, 278.1903574899744],
+              [51.69504768831962, 278.1903574899744],
+              [51.69504768831962, 278.74810027212675],
+              [48.194391520340616, 278.74810027212675]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748908:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748908 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3eaa0cca111c:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-3ed9b5ca1145",
+        "number": "07-766",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-3ed9b5ca1145",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0BA1",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-766",
+          "anchorDwg": [133316.75388243882, -609597.3101199663],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748269,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6aed",
+            "nativeHostId": 739338,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [43.86205729108361, 250.7296135580199],
+            "normalFeet": [-1, 2.0297415731928635e-15],
+            "footprintFeet": [
+              [44.14092868215975, 248.9792854740304],
+              [44.14092868215976, 252.4799416420094],
+              [43.583185900007464, 252.4799416420094],
+              [43.58318590000746, 248.9792854740304]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748269:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748269 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-3ed9b5ca1145:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-477224ca161e",
+        "number": "07-762",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-477224ca161e",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1C0AFC",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-762",
+          "anchorDwg": [128325.77317391902, -599162.437029727],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748652,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6c6c",
+            "nativeHostId": 742213,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [38.43710650368094, 278.83890195187956],
+            "normalFeet": [1, -2.0297415731928307e-15],
+            "footprintFeet": [
+              [38.15823511260479, 280.5892300358691],
+              [38.158235112604785, 277.08857386789003],
+              [38.71597789475708, 277.08857386789003],
+              [38.71597789475709, 280.5892300358691]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748652:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748652 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-477224ca161e:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-674d19424801",
+        "number": "05-104",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-674d19424801",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23E9A3",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-104",
+          "anchorDwg": [143497.6971062112, -609277.324537859],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 750326,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b72f6",
+            "nativeHostId": 746517,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [84.56782506745878, 243.66257775864344],
+            "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+            "footprintFeet": [
+              [83.87678884929896, 242.03043603699226],
+              [85.73185399016783, 244.9991608355451],
+              [85.25886128561862, 245.29471948029462],
+              [83.40379614474975, 242.32599468174178]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:750326:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:750326 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-674d19424801:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-6750a1424804",
+        "number": "05-106",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-6750a1424804",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23E9B3",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-106",
+          "anchorDwg": [141650.07912074646, -612234.1313964754],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 750164,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b7254",
+            "nativeHostId": 746517,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [82.42067844236692, 240.22642487559494],
+            "normalFeet": [0.8480480961564245, -0.5299192642332071],
+            "footprintFeet": [
+              [83.11171466052673, 241.85856659724615],
+              [81.25664951965786, 238.88984179869328],
+              [81.72964222420711, 238.59428315394376],
+              [83.58470736507599, 241.5630079524966]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:750164:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:750164 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-6750a1424804:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-67579142480a",
+        "number": "05-112",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-67579142480a",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23E9D3",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-112",
+          "anchorDwg": [144579.24522113428, -616598.7265111308],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 754018,
+            "nativeDoorUniqueId": "cf19e550-429c-4059-9b47-0709e7d55a32-000b8162",
+            "nativeHostId": 751874,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [82.90072690990193, 230.6982533660161],
+            "normalFeet": [-0.8480494750431519, 0.5299170575467773],
+            "footprintFeet": [
+              [82.20969493869941, 229.06610984624248],
+              [84.06475235471783, 232.03483947180365],
+              [83.59175888110447, 232.33039688578975],
+              [81.73670146508604, 229.3616672602286]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3eb4c3ca1126",
+                "number": "07-751",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "Access reviewed by the user; source name and physical boundary retained."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0B4C",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-751",
+                  "anchorDwg": [140770.48371527245, -614759.6016679958],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:754018:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:754018 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-67579142480a:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-675a9142480c",
+        "number": "05-115",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-675a9142480c",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23E9E3",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-115",
+          "anchorDwg": [142902.7051575852, -619281.751464149],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 886568,
+            "nativeDoorUniqueId": "f16a3d85-8bdb-4877-a33c-dbe3649ee506-000d8728",
+            "nativeHostId": 751908,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2032 мм",
+            "levelId": 311,
+            "pointFeet": [77.4286941781571, 221.91768708516267],
+            "normalFeet": [-0.8480480961565732, 0.5299192642329692],
+            "footprintFeet": [
+              [76.73765795999776, 220.2855453635113],
+              [78.59272310086578, 223.25427016206464],
+              [78.11973039631644, 223.54982880681405],
+              [76.26466525544842, 220.5811040082607]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3eb4c3ca1126",
+                "number": "07-751",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "Access reviewed by the user; source name and physical boundary retained."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0B4C",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-751",
+                  "anchorDwg": [140770.48371527245, -614759.6016679958],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:886568:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:886568 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-675a9142480c:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-77cfd439c452",
+        "number": "05-102",
+        "name": "Support",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-77cfd439c452",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23D24E",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-102",
+          "anchorDwg": [146800.739319382, -603991.3520332415],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 749380,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6f44",
+            "nativeHostId": 746517,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [96.47761172181197, 262.72222057511703],
+            "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+            "footprintFeet": [
+              [95.78657550365216, 261.09007885346585],
+              [97.64164064452103, 264.0588036520187],
+              [97.16864793997178, 264.3543622967682],
+              [95.3135827991029, 261.3856374982154]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:749380:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:749380 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-77cfd439c452:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-77e71439c465",
+        "number": "05-110",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-77e71439c465",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "23D23E",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-110",
+          "anchorDwg": [149061.7261392204, -609425.2575221498],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 754306,
+            "nativeDoorUniqueId": "cf19e550-429c-4059-9b47-0709e7d55a32-000b8282",
+            "nativeHostId": 751870,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [94.134247988825, 248.20888392444647],
+            "normalFeet": [-0.8480431170899737, 0.5299272323218736],
+            "footprintFeet": [
+              [93.44319643537663, 246.57674869572315],
+              [95.29828946978422, 249.54545606427632],
+              [94.82529954227337, 249.84101915316978],
+              [92.97020650786578, 246.87231178461664]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:754306:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:754306 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-77e71439c465:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-a09e9df5e705",
+        "number": "03-031",
+        "name": "Vault",
+        "building": "03",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-a09e9df5e705",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "03 CJMH LVL 0",
+          "entityHandle": "DDCA4",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "03-031",
+          "anchorDwg": [114867.71030722279, 3543.4486323757446],
+          "registrationId": "s2@99611012cfb6"
+        },
+        "historicalReason": "source-component-has-no-other-arrival",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "matched-door-without-native-safe-routing-edge",
+        "doors": [
+          {
+            "nativeDoorId": 706049,
+            "nativeDoorUniqueId": "59c0571c-084e-4946-b5af-f12ba222393c-000ac601",
+            "nativeHostId": 697398,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2032 мм",
+            "levelId": 311,
+            "pointFeet": [70.13837424813343, -278.0118832100329],
+            "normalFeet": [-1, 0],
+            "footprintFeet": [
+              [70.5484792350101, -279.7622112940224],
+              [70.5484792350101, -276.2615551260434],
+              [69.72826926125676, -276.2615551260434],
+              [69.72826926125676, -279.7622112940224]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-a0942bf5e6fc",
+                "number": "03-030",
+                "name": "Central Stores",
+                "levelId": 311,
+                "hasArrival": true,
+                "circulation": false,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "03 CJMH LVL 0",
+                  "entityHandle": "DDCB4",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "03-030",
+                  "anchorDwg": [123938.48156242352, 3173.075826165674],
+                  "registrationId": "s2@99611012cfb6"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "arrival-or-portal:rm-311-a0942bf5e6fc:311",
+                "code": "arrival-or-portal",
+                "message": "No safe walkable anchor within the snap limit: door:311:706049:0."
+              },
+              {
+                "id": "connection-anchor:706049:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:706049 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-a09e9df5e705:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "The display door has matched ownership, but no routing edge survived preparation. Inspect host wall, actual jamb width/traversal normal, continuous slab coverage, per-side approach and native wall/column clearance. Repair extraction only when native geometry supports it; do not infer that a matched icon is traversable."
+      },
+      {
+        "roomKey": "rm-311-ac5f51426f10",
+        "number": "05-105",
+        "name": "Comm",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-ac5f51426f10",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "05 Libr LVL 1",
+          "entityHandle": "23EA03",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-105",
+          "anchorDwg": [256826.62466066907, -262310.9455314852],
+          "registrationId": "s16@1c19a3d86b4e"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 865116,
+            "nativeDoorUniqueId": "e91456e8-40a3-4403-b574-e5bc907a8589-000d335c",
+            "nativeHostId": 865043,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2032 мм",
+            "levelId": 311,
+            "pointFeet": [106.5339385280559, 285.3699566603795],
+            "normalFeet": [-0.8480431170899565, 0.5299272323219013],
+            "footprintFeet": [
+              [105.88462137997608, 283.71174233557736],
+              [107.73971441438378, 286.68044970413047],
+              [107.18325567613573, 287.02817098518165],
+              [105.32816264172803, 284.05946361662853]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-8e1b19ddd9ef",
+                "number": "07-113A",
+                "name": "Corridor",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1N",
+                  "entityHandle": "1D471F",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-113A",
+                  "anchorDwg": [134431.22273312788, -594001.3316890744],
+                  "registrationId": "s24@151826fe7e4e"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:865116:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:865116 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-ac5f51426f10:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-c30c81004b62",
+        "number": "07-778",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-c30c81004b62",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1BE01B",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-778",
+          "anchorDwg": [138587.18797166174, -596581.690634044],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 749022,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6dde",
+            "nativeHostId": 739034,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [68.2266438588661, 283.78803383507505],
+            "normalFeet": [0, 1],
+            "footprintFeet": [
+              [66.4763157748766, 283.5091624439989],
+              [69.9769719428556, 283.5091624439989],
+              [69.9769719428556, 284.0669052261512],
+              [66.4763157748766, 284.0669052261512]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:749022:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:749022 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-c30c81004b62:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-c30f6b004b64",
+        "number": "07-776",
+        "name": "Office",
+        "building": "07",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-c30f6b004b64",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "1BE00B",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "07-776",
+          "anchorDwg": [136101.94749319454, -596565.7506292817],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 748854,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6d36",
+            "nativeHostId": 739034,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [54.526822779939856, 283.7880338350751],
+            "normalFeet": [0, 1],
+            "footprintFeet": [
+              [52.776494695950355, 283.50916244399895],
+              [56.27715086392936, 283.50916244399895],
+              [56.27715086392936, 284.0669052261513],
+              [52.776494695950355, 284.0669052261513]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-3ee7adca1151",
+                "number": "07-752",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "1C0BE1",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "07-752",
+                  "anchorDwg": [138603.79241938976, -599335.1474564022],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:748854:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:748854 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-c30f6b004b64:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-d963b2d0d90a",
+        "number": "05-108",
+        "name": "WC",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-d963b2d0d90a",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "2326F08",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-108",
+          "anchorDwg": [151405.09192665992, -605314.6403769989],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 754351,
+            "nativeDoorUniqueId": "cf19e550-429c-4059-9b47-0709e7d55a32-000b82af",
+            "nativeHostId": 751857,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [104.96598500148093, 265.5649336331287],
+            "normalFeet": [-0.8480480961564227, 0.52991926423321],
+            "footprintFeet": [
+              [104.2749487833211, 263.9327919114775],
+              [106.13001392419002, 266.90151671003036],
+              [105.65702121964077, 267.19707535477994],
+              [103.80195607877184, 264.22835055622704]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:754351:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:754351 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-d963b2d0d90a:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-d966b3d0d90c",
+        "number": "05-107",
+        "name": "Meeting",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-d966b3d0d90c",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "2326F15",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-107",
+          "anchorDwg": [152553.14990352502, -603477.3635552806],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 754421,
+            "nativeDoorUniqueId": "cf19e550-429c-4059-9b47-0709e7d55a32-000b82f5",
+            "nativeHostId": 751857,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [107.07836002130823, 268.94544031564203],
+            "normalFeet": [-0.8480480961564227, 0.52991926423321],
+            "footprintFeet": [
+              [106.3873238031484, 267.31329859399085],
+              [108.2423889440173, 270.28202339254375],
+              [107.76939623946805, 270.57758203729327],
+              [105.91433109859915, 267.60885723874037]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:754421:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:754421 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-d966b3d0d90c:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-d96a34d0d910",
+        "number": "05-101",
+        "name": "Office",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-d96a34d0d910",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "2326F22",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-101",
+          "anchorDwg": [148450.27114187554, -601381.1319847255],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 749298,
+            "nativeDoorUniqueId": "51e91cd5-7ab1-4e1c-b35e-17128b29b4d7-000b6ef2",
+            "nativeHostId": 746517,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [100.44679664807717, 269.0742442647684],
+            "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+            "footprintFeet": [
+              [99.75576042991734, 267.44210254311724],
+              [101.61082557078619, 270.4108273416701],
+              [101.13783286623698, 270.7063859864196],
+              [99.28276772536813, 267.73766118786676]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:749298:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:749298 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-d96a34d0d910:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-311-f33db1d0e7a5",
+        "number": "05-109",
+        "name": "Kitchen",
+        "building": "05",
+        "levelId": 311,
+        "arrivalNodeId": "arrival:rm-311-f33db1d0e7a5",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "07 Agora LVL 1C",
+          "entityHandle": "2326EFB",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-109",
+          "anchorDwg": [150387.9042626142, -606942.4809182858],
+          "registrationId": "s25@29ba96433370"
+        },
+        "historicalReason": "staff-egress-retained",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "staff-access-retained",
+        "doors": [
+          {
+            "nativeDoorId": 754102,
+            "nativeDoorUniqueId": "cf19e550-429c-4059-9b47-0709e7d55a32-000b81b6",
+            "nativeHostId": 751857,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 311,
+            "pointFeet": [100.59345563945169, 258.56742391582753],
+            "normalFeet": [-0.8480480961564227, 0.52991926423321],
+            "footprintFeet": [
+              [99.90241942129188, 256.93528219417635],
+              [101.75748456216076, 259.9040069927292],
+              [101.28449185761148, 260.1995656374787],
+              [99.42942671674261, 257.23084083892593]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-311-77d61839c457",
+                "number": "05-117",
+                "name": "Circulation",
+                "levelId": 311,
+                "hasArrival": false,
+                "circulation": false,
+                "stair": false,
+                "access": "staff",
+                "originalAccessReview": {
+                  "kind": "staff",
+                  "evidence": "user-reported",
+                  "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+                },
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "07 Agora LVL 1C",
+                  "entityHandle": "23D26E",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-117",
+                  "anchorDwg": [145827.47009017156, -610766.1500657409],
+                  "registrationId": "s25@29ba96433370"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-anchor:754102:",
+                "code": "connection-anchor",
+                "message": "Connection door:311:754102 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-311-f33db1d0e7a5:311",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "Preserve reviewed staff access. If a public destination needs a separate public entrance, inspect and export that actual native threshold; do not reopen the staff circulation to make the destination reachable."
+      },
+      {
+        "roomKey": "rm-400176-969eb6c4c056",
+        "number": "10-3558",
+        "name": "Research Office",
+        "building": "10",
+        "levelId": 400176,
+        "arrivalNodeId": "arrival:rm-400176-969eb6c4c056",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "10 TandL 3500E",
+          "entityHandle": "10A193",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "10-3558",
+          "anchorDwg": [436914.3598354012, -1083847.391442588],
+          "registrationId": "s43@63666ee61847"
+        },
+        "historicalReason": "source-component-has-no-other-arrival",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "matched-door-without-native-safe-routing-edge",
+        "doors": [
+          {
+            "nativeDoorId": 2215397,
+            "nativeDoorUniqueId": "dfe9bc33-df01-4fa0-ac1f-e47d16537f80-0021cde5",
+            "nativeHostId": 2215317,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2032 мм",
+            "levelId": 400176,
+            "pointFeet": [284.9056312575497, 789.9655776673137],
+            "normalFeet": [-1, 0],
+            "footprintFeet": [
+              [285.1845026486259, 788.2152495833242],
+              [285.1845026486259, 791.7159057513032],
+              [284.62675986647355, 791.7159057513032],
+              [284.62675986647355, 788.2152495833242]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-400176-0904d5f8f1a0",
+                "number": "10-3578",
+                "name": "Corridor",
+                "levelId": 400176,
+                "hasArrival": true,
+                "circulation": true,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "10 TandL 3500E",
+                  "entityHandle": "135818",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "10-3578",
+                  "anchorDwg": [431920.76808227785, -1081277.297351123],
+                  "registrationId": "s43@63666ee61847"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-barrier:2215397:",
+                "code": "connection-barrier",
+                "message": "Connection door:400176:2215397 crosses a native barrier."
+              },
+              {
+                "id": "access-review:rm-400176-969eb6c4c056:400176",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "The display door has matched ownership, but no routing edge survived preparation. Inspect host wall, actual jamb width/traversal normal, continuous slab coverage, per-side approach and native wall/column clearance. Repair extraction only when native geometry supports it; do not infer that a matched icon is traversable."
+      },
+      {
+        "roomKey": "rm-400176-f91a4f2d9cb3",
+        "number": "05-S304",
+        "name": "Stair",
+        "building": "05",
+        "levelId": 400176,
+        "arrivalNodeId": "arrival:rm-400176-f91a4f2d9cb3",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "05 Libr LVL 3",
+          "entityHandle": "2533EC",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "05-S304",
+          "anchorDwg": [514497.22789909143, -263697.71103969717],
+          "registrationId": "s18@ae5238eafce9"
+        },
+        "historicalReason": "source-component-has-no-other-arrival",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "matched-door-without-native-safe-routing-edge",
+        "doors": [
+          {
+            "nativeDoorId": 1920744,
+            "nativeDoorUniqueId": "6c2447b0-514c-49a3-bcfa-63b17a4e0446-001d4ee8",
+            "nativeHostId": 1920480,
+            "nativeFamily": "Дверь-Витраж-Двойная-Витрина",
+            "nativeType": "Double Stained Glass Door Showcase",
+            "levelId": 400176,
+            "pointFeet": [142.1082726765502, 221.80937099741652],
+            "normalFeet": [0.5299192642332032, 0.8480480961564271],
+            "footprintFeet": [
+              [139.938517132855, 223.04235365412345],
+              [144.16762837353014, 220.39971165401033],
+              [144.2780282202454, 220.5763883407096],
+              [140.04891697957027, 223.2190303408227]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-400176-b9e71c7b63cd",
+                "number": "05-330A",
+                "name": "Corridor",
+                "levelId": 400176,
+                "hasArrival": true,
+                "circulation": true,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "05 Libr LVL 3",
+                  "entityHandle": "24FF56",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "05-330A",
+                  "anchorDwg": [510668.25342862075, -261429.48173207522],
+                  "registrationId": "s18@ae5238eafce9"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "arrival-or-portal:rm-400176-b9e71c7b63cd:400176",
+                "code": "arrival-or-portal",
+                "message": "No safe walkable anchor within the snap limit: door:400176:1920744:0."
+              },
+              {
+                "id": "arrival-or-portal:rm-400176-f91a4f2d9cb3:400176",
+                "code": "arrival-or-portal",
+                "message": "No safe walkable anchor within the snap limit: door:400176:1920744:1."
+              },
+              {
+                "id": "connection-anchor:1920744:",
+                "code": "connection-anchor",
+                "message": "Connection door:400176:1920744 has an unsupported entrance."
+              },
+              {
+                "id": "access-review:rm-400176-f91a4f2d9cb3:400176",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "The display door has matched ownership, but no routing edge survived preparation. Inspect host wall, actual jamb width/traversal normal, continuous slab coverage, per-side approach and native wall/column clearance. Repair extraction only when native geometry supports it; do not infer that a matched icon is traversable."
+      },
+      {
+        "roomKey": "rm-402367-daa00876472f",
+        "number": "04-437",
+        "name": "Grad Office",
+        "building": "04",
+        "levelId": 402367,
+        "arrivalNodeId": "arrival:rm-402367-daa00876472f",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 4S",
+          "entityHandle": "171FC7",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-437",
+          "anchorDwg": [570821.5526310187, -126824.54073057187],
+          "registrationId": "s12@ffa92c71b286"
+        },
+        "historicalReason": "source-component-has-no-other-arrival",
+        "currentReachablePublicDestinations": 0,
+        "disposition": "matched-door-without-native-safe-routing-edge",
+        "doors": [
+          {
+            "nativeDoorId": 1116997,
+            "nativeDoorUniqueId": "984114fd-a6dc-4b9d-b49f-a862f5eab753-00110b45",
+            "nativeHostId": 1115898,
+            "nativeFamily": "Одиночные-Щитовые",
+            "nativeType": "0915 x 2134 мм",
+            "levelId": 402367,
+            "pointFeet": [-74.89909259069734, 244.12437134559116],
+            "normalFeet": [-1, 0],
+            "footprintFeet": [
+              [-74.62022119962118, 242.37404326160166],
+              [-74.62022119962118, 245.87469942958066],
+              [-75.17796398177349, 245.87469942958066],
+              [-75.17796398177349, 242.37404326160166]
+            ],
+            "ownershipMatchState": "connected",
+            "hasSavedRoutingEdge": false,
+            "edgeEnabled": false,
+            "edgeDirection": null,
+            "portalNodes": [],
+            "neighbors": [
+              {
+                "roomKey": "rm-402367-039546889998",
+                "number": "04-430",
+                "name": "Corridor",
+                "levelId": 402367,
+                "hasArrival": true,
+                "circulation": true,
+                "stair": false,
+                "access": "unknown",
+                "originalAccessReview": null,
+                "sourceDrawing": {
+                  "fileName": "floorplan.dwg",
+                  "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+                  "sectionId": "04 Res Lab LVL 4S",
+                  "entityHandle": "1734DC",
+                  "tag": "ROOMNUM",
+                  "layer": "3_Text",
+                  "rawText": "04-430",
+                  "anchorDwg": [572294.9836848908, -133215.85176332333],
+                  "registrationId": "s12@ffa92c71b286"
+                }
+              }
+            ],
+            "issues": [
+              {
+                "id": "connection-barrier:1116997:",
+                "code": "connection-barrier",
+                "message": "Connection door:402367:1116997 crosses a native barrier."
+              },
+              {
+                "id": "access-review:rm-402367-daa00876472f:402367",
+                "code": "access-review",
+                "message": "Public access has not been confirmed."
+              }
+            ]
+          }
+        ],
+        "nextAction": "The display door has matched ownership, but no routing edge survived preparation. Inspect host wall, actual jamb width/traversal normal, continuous slab coverage, per-side approach and native wall/column clearance. Repair extraction only when native geometry supports it; do not infer that a matched icon is traversable."
+      }
+    ]
+  },
+  "lifts": {
+    "decodedInventory": {
+      "placedGeometryRecords": 40611,
+      "nativeIdentityRecords": 74437,
+      "namedPlacedLiftCandidates": 0,
+      "namedFamilyDefinitions": 0,
+      "genericModelRecords": 2,
+      "unclassifiedGeometryRecords": 283,
+      "decodedParameterRecords": 9556,
+      "annotationCandidates": 5
+    },
+    "placedCandidates": [],
+    "familyMetadataCandidates": [],
+    "genericModelRecords": [
+      {
+        "nativeElementId": 1257252,
+        "nativeUniqueId": null,
+        "nativeHostId": null,
+        "nativeOwnerId": null,
+        "category": "Generic Models",
+        "family": "Vantail service anglaise",
+        "type": "Vantail service anglaise",
+        "familyId": 1257314,
+        "familySymbolId": 1257377,
+        "associatedLevelIds": [1256651],
+        "boundsFeet": {
+          "min": {
+            "x": -2.8067585301837883,
+            "y": -0.09842519685041759,
+            "z": 0.04757217847768583
+          },
+          "max": {
+            "x": 0.47408136482933827,
+            "y": 0.0984251968504335,
+            "z": 6.8541485252977346
+          }
+        },
+        "parameters": [
+          {
+            "parameterId": -1006205,
+            "name": "Visible",
+            "enumName": "IS_VISIBLE_PARAM",
+            "value": 1
+          }
+        ]
+      },
+      {
+        "nativeElementId": 1257277,
+        "nativeUniqueId": null,
+        "nativeHostId": null,
+        "nativeOwnerId": null,
+        "category": "Generic Models",
+        "family": "Vantail semi-fixe anglaise",
+        "type": "Vantail semi-fixe anglaise",
+        "familyId": 1257378,
+        "familySymbolId": 1257460,
+        "associatedLevelIds": [1256651],
+        "boundsFeet": {
+          "min": {
+            "x": 0.4215879265091398,
+            "y": -0.09842519685046643,
+            "z": 0.04757217847767917
+          },
+          "max": {
+            "x": 2.806758530183699,
+            "y": 0.09842519685042428,
+            "z": 6.854148525297729
+          }
+        },
+        "parameters": [
+          {
+            "parameterId": -1006205,
+            "name": "Visible",
+            "enumName": "IS_VISIBLE_PARAM",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "roomKey": "rm-1450417-feaef9ff66b1",
+        "number": "09-218-1",
+        "name": "Elevator",
+        "building": "09",
+        "levelId": 1450417,
+        "labelPointFeet": [250.83382170266418, 493.16533378428403],
+        "ringsFeet": [
+          [
+            [250.32036498065006, 487.3601277765324],
+            [253.52036498065004, 487.3601277765324],
+            [253.52036498065004, 496.5601277765324],
+            [248.32036498065006, 495.7601277765324],
+            [248.32036498065006, 488.1601277765324]
+          ]
+        ],
+        "disposition": "lift-area-needs-assembly-and-served-floors",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "09 Med LVL 2",
+          "entityHandle": "37C71A",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "09-218-1",
+          "anchorDwg": [236235.76808227785, -932351.2973511231],
+          "registrationId": "s33@e0d07fd07a3b"
+        },
+        "nearbyDoorsForInspectionOnly": [
+          {
+            "nativeElementId": 1522205,
+            "nativeUniqueId": "18a95948-1554-409a-b0b2-d9b8fc6e64ab-00173a1d",
+            "nativeHostId": 1522159,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2032 мм",
+            "familyId": 179021,
+            "familySymbolId": 899478,
+            "associatedLevelIds": [1450417],
+            "boundsFeet": {
+              "min": {
+                "x": 255.3747975156181,
+                "y": 492.11027899050094,
+                "z": -3.280839895013124
+              },
+              "max": {
+                "x": 258.87545368359713,
+                "y": 495.5888605771711,
+                "z": 3.6351706036745384
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": true
+          }
+        ],
+        "nearbyUnclassifiedNativeCarriersForInspectionOnly": [
+          {
+            "nativeElementId": 290698,
+            "nativeUniqueId": "64fd1c95-7415-4136-b026-7a12aa4df019-00046f8a",
+            "nativeHostId": null,
+            "nativeOwnerId": 290626,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 290626,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -363.01064423471496,
+                "y": -327.0571588005841,
+                "z": -13.123359580052494
+              },
+              "max": {
+                "x": 352.93185095055804,
+                "y": 901.6056422610815,
+                "z": 10.439693895013347
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1521698,
+            "nativeUniqueId": "18a95948-1554-409a-b0b2-d9b8fc6e64ab-00173822",
+            "nativeHostId": null,
+            "nativeOwnerId": 1521607,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 580602,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 171.813145607711,
+                "y": 447.766943113857,
+                "z": 15.748031496062993
+              },
+              "max": {
+                "x": 353.9698207144427,
+                "y": 562.0028240174446,
+                "z": 15.748031496062993
+              }
+            },
+            "parameters": []
+          }
+        ],
+        "verifiedAssemblyId": null,
+        "verifiedServedFloorIds": [],
+        "nextAction": "Inspect the native model and building source; export the actual lift assembly ElementId/UniqueId, ordered served native levels, per-floor landing-door ElementId/UniqueId and inside-lobby anchor, direction, operational access and separately verified step-free suitability. Machine/control rooms are not landing entrances."
+      },
+      {
+        "roomKey": "rm-311-1fae70ddb7c5",
+        "number": "04-112",
+        "name": "Elevator Machine Room",
+        "building": "04",
+        "levelId": 311,
+        "labelPointFeet": [-79.91827562204111, 385.5516670748079],
+        "ringsFeet": [
+          [
+            [-81.4862, 382.793],
+            [-81.4862, 388.167],
+            [-72.3485, 388.167],
+            [-72.3485, 382.793]
+          ]
+        ],
+        "disposition": "equipment-room-not-entrance",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 1N",
+          "entityHandle": "1581F8",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-112",
+          "anchorDwg": [147864.7680822779, -130596.04643873722],
+          "registrationId": "s7@26b7fb0f2803"
+        },
+        "nearbyDoorsForInspectionOnly": [
+          {
+            "nativeElementId": 1026423,
+            "nativeUniqueId": "c59801ce-aa94-48b4-aab3-72bb08d2974a-000fa977",
+            "nativeHostId": 963092,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 786024,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -72.43050548571641,
+                "y": 378.0825860166562,
+                "z": 3.280839895013123
+              },
+              "max": {
+                "x": -68.8534987021959,
+                "y": 381.5832421846352,
+                "z": 10.531496062992122
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 1032294,
+            "nativeUniqueId": "bc6db4d8-01f1-46f6-9036-b99750b432d1-000fc066",
+            "nativeHostId": 963092,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 786024,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -72.4305054857164,
+                "y": 384.25956618899784,
+                "z": 3.280839895013123
+              },
+              "max": {
+                "x": -68.85349870219589,
+                "y": 387.76022235697684,
+                "z": 10.531496062992122
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 2110407,
+            "nativeUniqueId": "927d51c9-53fd-48cb-a8a3-a63205db27a2-002033c7",
+            "nativeHostId": 1616119,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Дверь-Двойная-Щитовая_Панель",
+            "type": "1200 x 1600 mm",
+            "familyId": 619782,
+            "familySymbolId": 2110432,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": -71.78090048412233,
+                "y": 388.75532059161776,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": -69.42853827939793,
+                "y": 393.2172628488356,
+                "z": 31.102362204724407
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 2126030,
+            "nativeUniqueId": "927d51c9-53fd-48cb-a8a3-a63205db27a2-002070ce",
+            "nativeHostId": 2121450,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Дверь-Двойная-Щитовая_Панель",
+            "type": "1200 x 1600 mm",
+            "familyId": 619782,
+            "familySymbolId": 2125891,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": -71.74152910776279,
+                "y": 389.5164750763996,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": -69.39572858282843,
+                "y": 393.9784173336175,
+                "z": 21.259842519685037
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          }
+        ],
+        "nearbyUnclassifiedNativeCarriersForInspectionOnly": [
+          {
+            "nativeElementId": 290698,
+            "nativeUniqueId": "64fd1c95-7415-4136-b026-7a12aa4df019-00046f8a",
+            "nativeHostId": null,
+            "nativeOwnerId": 290626,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 290626,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -363.01064423471496,
+                "y": -327.0571588005841,
+                "z": -13.123359580052494
+              },
+              "max": {
+                "x": 352.93185095055804,
+                "y": 901.6056422610815,
+                "z": 10.439693895013347
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 502594,
+            "nativeUniqueId": "ea169eea-11da-4819-a92a-29b6f07f6007-0007ab42",
+            "nativeHostId": null,
+            "nativeOwnerId": 502550,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 502550,
+            "associatedLevelIds": [407620],
+            "boundsFeet": {
+              "min": {
+                "x": -83.9293254715976,
+                "y": 387.83689784404766,
+                "z": 44.61942257217848
+              },
+              "max": {
+                "x": -46.400939821830754,
+                "y": 522.2857167416855,
+                "z": 44.61942257217848
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 439545,
+            "nativeUniqueId": "163308bf-279a-453a-bb13-d8b65433ce80-0006b4f9",
+            "nativeHostId": null,
+            "nativeOwnerId": 439487,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 439487,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": -139.0059983789947,
+                "y": 170.1665993524746,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": -17.58686766444923,
+                "y": 529.6471592620057,
+                "z": 34.120734908136484
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 427356,
+            "nativeUniqueId": "163308bf-279a-453a-bb13-d8b65433ce80-0006855c",
+            "nativeHostId": null,
+            "nativeOwnerId": 427300,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 427300,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": -138.9297241739633,
+                "y": 169.76392355877348,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": -14.146384750805485,
+                "y": 529.5886535540908,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 437858,
+            "nativeUniqueId": "163308bf-279a-453a-bb13-d8b65433ce80-0006ae62",
+            "nativeHostId": null,
+            "nativeOwnerId": 437774,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 437774,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": -138.92972547158146,
+                "y": 170.19894447456736,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": -18.691232584555095,
+                "y": 529.5886539249512,
+                "z": 24.278215223097114
+              }
+            },
+            "parameters": []
+          }
+        ],
+        "verifiedAssemblyId": null,
+        "verifiedServedFloorIds": [],
+        "nextAction": "Inspect the native model and building source; export the actual lift assembly ElementId/UniqueId, ordered served native levels, per-floor landing-door ElementId/UniqueId and inside-lobby anchor, direction, operational access and separately verified step-free suitability. Machine/control rooms are not landing entrances."
+      },
+      {
+        "roomKey": "rm-1487816-43dc0c307de7",
+        "number": "08-113",
+        "name": "Elevator Machine Room",
+        "building": "08",
+        "levelId": 1487816,
+        "labelPointFeet": [56.61308131307851, 515.0466356789598],
+        "ringsFeet": [
+          [
+            [50.3716, 518.0441],
+            [59.2949, 518.0441],
+            [59.2949, 512.1261],
+            [53.7837, 512.1261],
+            [53.7837, 512.2082],
+            [50.4504, 512.2082],
+            [50.4504, 512.1261],
+            [50.3716, 512.1261]
+          ]
+        ],
+        "disposition": "equipment-room-not-entrance",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "08 Tea Lab LVL 1",
+          "entityHandle": "EC7C3",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "08-113",
+          "anchorDwg": [202394.13840129226, -836462.2124236757],
+          "registrationId": "s27@e4570e814a04"
+        },
+        "nearbyDoorsForInspectionOnly": [
+          {
+            "nativeElementId": 2016817,
+            "nativeUniqueId": "23a4873d-fcc8-4180-be39-7551c5882493-001ec631",
+            "nativeHostId": 1515050,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0864 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 883636,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": 49.895925753708084,
+                "y": 507.23769096228114,
+                "z": 3.2808398950131226
+              },
+              "max": {
+                "x": 53.206909621636626,
+                "y": 510.5710242956145,
+                "z": 10.531496062992122
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": true
+          },
+          {
+            "nativeElementId": 2043306,
+            "nativeUniqueId": "2f3db4f1-7929-4265-b268-5f995f540493-001f2daa",
+            "nativeHostId": 1505947,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0864 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 1119482,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": 47.91626696105718,
+                "y": 514.8480892937093,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 51.227250828985724,
+                "y": 518.1814226270426,
+                "z": 31.528871391076112
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 1504064,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016f340",
+            "nativeHostId": 1504003,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 845328,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": 47.91626696105629,
+                "y": 514.4350325149436,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": 51.394848547726404,
+                "y": 517.9356886829227,
+                "z": 41.371391076115486
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 2017147,
+            "nativeUniqueId": "23a4873d-fcc8-4180-be39-7551c5882493-001ec77b",
+            "nativeHostId": 1515102,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0864 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 883497,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": 50.45038769596531,
+                "y": 511.5519954242234,
+                "z": 3.2808398950131226
+              },
+              "max": {
+                "x": 53.78372102929866,
+                "y": 514.9614044890023,
+                "z": 10.531496062992122
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": true
+          },
+          {
+            "nativeElementId": 1513779,
+            "nativeUniqueId": "6f202619-a979-4cd9-aa80-08b72aa399e1-00171933",
+            "nativeHostId": 1513628,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 845328,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 47.916266961057175,
+                "y": 514.6901178167809,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 51.39484854772729,
+                "y": 518.19077398476,
+                "z": 21.686351706036742
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          }
+        ],
+        "nearbyUnclassifiedNativeCarriersForInspectionOnly": [
+          {
+            "nativeElementId": 1502937,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016eed9",
+            "nativeHostId": null,
+            "nativeOwnerId": null,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 43.61016459885346,
+                "y": 452.929170026583,
+                "z": 55.7742782152231
+              },
+              "max": {
+                "x": 93.66921971696371,
+                "y": 713.1677979388229,
+                "z": 55.7742782152231
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 290698,
+            "nativeUniqueId": "64fd1c95-7415-4136-b026-7a12aa4df019-00046f8a",
+            "nativeHostId": null,
+            "nativeOwnerId": 290626,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 290626,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -363.01064423471496,
+                "y": -327.0571588005841,
+                "z": -13.123359580052494
+              },
+              "max": {
+                "x": 352.93185095055804,
+                "y": 901.6056422610815,
+                "z": 10.439693895013347
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1505164,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016f78c",
+            "nativeHostId": null,
+            "nativeOwnerId": 1505064,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 567914,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": -48.602105742355164,
+                "y": 445.0543863004488,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 118.97532207916794,
+                "y": 719.4633467908695,
+                "z": 24.278215223097114
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1512485,
+            "nativeUniqueId": "6f202619-a979-4cd9-aa80-08b72aa399e1-00171425",
+            "nativeHostId": null,
+            "nativeOwnerId": null,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 547642,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": -48.60210574235437,
+                "y": 452.37696164880225,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 118.97470955629021,
+                "y": 766.028186344678,
+                "z": 14.833470681442677
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1503097,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016ef79",
+            "nativeHostId": null,
+            "nativeOwnerId": 1502994,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 574245,
+            "associatedLevelIds": [407620],
+            "boundsFeet": {
+              "min": {
+                "x": 13.671596928238364,
+                "y": 452.92256532334255,
+                "z": 47.24409448818898
+              },
+              "max": {
+                "x": 118.24435095055962,
+                "y": 713.167797938823,
+                "z": 47.24409448818898
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1503625,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016f189",
+            "nativeHostId": null,
+            "nativeOwnerId": 1503516,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 572825,
+            "associatedLevelIds": [1399969],
+            "boundsFeet": {
+              "min": {
+                "x": 0.4666280963091267,
+                "y": 452.8108434092428,
+                "z": 36.74540682414698
+              },
+              "max": {
+                "x": 118.97466591118788,
+                "y": 719.1433142855415,
+                "z": 36.74540682414698
+              }
+            },
+            "parameters": []
+          }
+        ],
+        "verifiedAssemblyId": null,
+        "verifiedServedFloorIds": [],
+        "nextAction": "Inspect the native model and building source; export the actual lift assembly ElementId/UniqueId, ordered served native levels, per-floor landing-door ElementId/UniqueId and inside-lobby anchor, direction, operational access and separately verified step-free suitability. Machine/control rooms are not landing entrances."
+      },
+      {
+        "roomKey": "rm-402367-191cb0ec63a3",
+        "number": "10-4598",
+        "name": "Elevator Control",
+        "building": "10",
+        "levelId": 402367,
+        "labelPointFeet": [243.73050736145842, 830.3913295806021],
+        "ringsFeet": [
+          [
+            [240.8581, 831.0252],
+            [246.9277, 831.0252],
+            [246.9277, 828.8106],
+            [240.8581, 828.8106]
+          ]
+        ],
+        "disposition": "equipment-room-not-entrance",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "10 TandL 4500E",
+          "entityHandle": "10FDE0",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "10-4598",
+          "anchorDwg": [556646.5746673055, -1095812.8258077614],
+          "registrationId": "s45@59c7cd758dc7"
+        },
+        "nearbyDoorsForInspectionOnly": [
+          {
+            "nativeElementId": 2232280,
+            "nativeUniqueId": "ff2004e5-10c2-4676-b954-378aa6a0dabd-00220fd8",
+            "nativeHostId": 2230734,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Дверь-Двойная-Щитовая_Панель",
+            "type": "1700 x 2100 мм",
+            "familyId": 619782,
+            "familySymbolId": 1127134,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": 240.84172611202675,
+                "y": 825.546171386523,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": 246.94408831675116,
+                "y": 828.8106070820611,
+                "z": 41.272965879265094
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": true
+          },
+          {
+            "nativeElementId": 1499584,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e1c0",
+            "nativeHostId": 1499583,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2032 мм",
+            "familyId": 179021,
+            "familySymbolId": 1006526,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 236.64129434135936,
+                "y": 827.1176936962344,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 240.3495347206804,
+                "y": 830.6183498642134,
+                "z": 21.351706036745405
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          }
+        ],
+        "nearbyUnclassifiedNativeCarriersForInspectionOnly": [
+          {
+            "nativeElementId": 1498749,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016de7d",
+            "nativeHostId": null,
+            "nativeOwnerId": 1498749,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 217.47454096965873,
+                "y": 718.2134941679483,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 304.2822837518142,
+                "y": 886.1432841941958,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1500981,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e735",
+            "nativeHostId": null,
+            "nativeOwnerId": 1500981,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 217.47454096965873,
+                "y": 718.2134941679483,
+                "z": 3.2808398950131235
+              },
+              "max": {
+                "x": 304.2822837518142,
+                "y": 886.1432841941958,
+                "z": 3.2808398950131235
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 603219,
+            "nativeUniqueId": "6b71c41f-cc80-4a1f-8654-3bce2d362d0b-00093453",
+            "nativeHostId": null,
+            "nativeOwnerId": 603219,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 227.54820810816426,
+                "y": 718.2134941679483,
+                "z": 55.7742782152231
+              },
+              "max": {
+                "x": 294.5404526464843,
+                "y": 863.8991897060062,
+                "z": 55.7742782152231
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495186,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d092",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495186,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 217.47454096965873,
+                "y": 718.2134941679483,
+                "z": 47.9002624671916
+              },
+              "max": {
+                "x": 304.2822837518142,
+                "y": 886.1432841941958,
+                "z": 47.9002624671916
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495536,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d1f0",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495536,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 217.47454096965873,
+                "y": 718.2134941679483,
+                "z": 36.74540682414698
+              },
+              "max": {
+                "x": 304.2822837518142,
+                "y": 886.1432841941958,
+                "z": 36.74540682414698
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1496652,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d64c",
+            "nativeHostId": null,
+            "nativeOwnerId": 1496652,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 217.47454096965873,
+                "y": 718.2134941679483,
+                "z": 25.590551181102363
+              },
+              "max": {
+                "x": 304.2822837518142,
+                "y": 886.1432841941958,
+                "z": 25.590551181102363
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 290698,
+            "nativeUniqueId": "64fd1c95-7415-4136-b026-7a12aa4df019-00046f8a",
+            "nativeHostId": null,
+            "nativeOwnerId": 290626,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 290626,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -363.01064423471496,
+                "y": -327.0571588005841,
+                "z": -13.123359580052494
+              },
+              "max": {
+                "x": 352.93185095055804,
+                "y": 901.6056422610815,
+                "z": 10.439693895013347
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 2221947,
+            "nativeUniqueId": "dfe9bc33-df01-4fa0-ac1f-e47d16537f80-0021e77b",
+            "nativeHostId": null,
+            "nativeOwnerId": 2221922,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 2221922,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": 9.61160593933846,
+                "y": 640.1614398196593,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 361.41309057277977,
+                "y": 975.777468527609,
+                "z": 24.278215223097114
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 2228308,
+            "nativeUniqueId": "ff2004e5-10c2-4676-b954-378aa6a0dabd-00220054",
+            "nativeHostId": null,
+            "nativeOwnerId": 2228283,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 2228283,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": 8.129060827561489,
+                "y": 638.5212967738166,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": 361.2788452381037,
+                "y": 975.949260743319,
+                "z": 34.120734908136484
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1498845,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016dedd",
+            "nativeHostId": null,
+            "nativeOwnerId": 1498826,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 592671,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 120.89777171279229,
+                "y": 715.8210884659578,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 257.0485606365828,
+                "y": 860.8970331916693,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1499251,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e073",
+            "nativeHostId": null,
+            "nativeOwnerId": 1499232,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 598992,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 197.06125842943675,
+                "y": 712.2504409351028,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 304.92532837143983,
+                "y": 886.4385519862557,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495254,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d0d6",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495235,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 601792,
+            "associatedLevelIds": [407620],
+            "boundsFeet": {
+              "min": {
+                "x": 227.42053485818042,
+                "y": 717.5081135905264,
+                "z": 47.24409448818898
+              },
+              "max": {
+                "x": 294.40851432803805,
+                "y": 864.4208224185589,
+                "z": 47.24409448818898
+              }
+            },
+            "parameters": []
+          }
+        ],
+        "verifiedAssemblyId": null,
+        "verifiedServedFloorIds": [],
+        "nextAction": "Inspect the native model and building source; export the actual lift assembly ElementId/UniqueId, ordered served native levels, per-floor landing-door ElementId/UniqueId and inside-lobby anchor, direction, operational access and separately verified step-free suitability. Machine/control rooms are not landing entrances."
+      },
+      {
+        "roomKey": "rm-402367-b4910bd43768",
+        "number": "10-4086",
+        "name": "Elevator Control",
+        "building": "10",
+        "levelId": 402367,
+        "labelPointFeet": [141.0921433611843, 825.3814471037663],
+        "ringsFeet": [
+          [
+            [139.30478526615062, 823.103485739999],
+            [142.9047852661506, 823.9034857399989],
+            [142.50478526615063, 827.9034857399989],
+            [140.9047852661506, 827.9034857399989],
+            [138.9047852661506, 825.103485739999]
+          ]
+        ],
+        "disposition": "equipment-room-not-entrance",
+        "sourceDrawing": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "10 TandL 4000W",
+          "entityHandle": "10C0FC",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "10-4086",
+          "anchorDwg": [494941.2016017325, -1082490.1533930697],
+          "registrationId": "s44@5b33bfc7fa69"
+        },
+        "nearbyDoorsForInspectionOnly": [
+          {
+            "nativeElementId": 2282717,
+            "nativeUniqueId": "e5dfe5ce-1e7e-4a73-b25e-bcb0657faec8-0022d4dd",
+            "nativeHostId": 2282675,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 788064,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": 144.5127797600758,
+                "y": 817.7571390821923,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": 149.31785549811346,
+                "y": 822.5692372159714,
+                "z": 41.371391076115486
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": true
+          },
+          {
+            "nativeElementId": 2255457,
+            "nativeUniqueId": "3ba1b920-31b7-4ce2-9a41-244fa43860c3-00226a61",
+            "nativeHostId": 2255377,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 845328,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": 136.23005531175633,
+                "y": 820.4452413702786,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 141.035131049794,
+                "y": 825.2573395040578,
+                "z": 31.528871391076112
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 2255486,
+            "nativeUniqueId": "3ba1b920-31b7-4ce2-9a41-244fa43860c3-00226a7e",
+            "nativeHostId": 2255444,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 788064,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": 144.5127797600758,
+                "y": 817.7571390821923,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 149.31785549811346,
+                "y": 822.5692372159714,
+                "z": 31.528871391076112
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 1499374,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e0ee",
+            "nativeHostId": 1499293,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 788064,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 138.66408881284295,
+                "y": 824.3404622025728,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 143.4691645508806,
+                "y": 829.1525603363519,
+                "z": 21.686351706036742
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 1499403,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e10b",
+            "nativeHostId": 1499361,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2134 мм",
+            "familyId": 179021,
+            "familySymbolId": 788064,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 144.5127797600758,
+                "y": 817.7571390821923,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 149.31785549811346,
+                "y": 822.5692372159714,
+                "z": 21.686351706036742
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          },
+          {
+            "nativeElementId": 1501546,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e96a",
+            "nativeHostId": 1501318,
+            "nativeOwnerId": null,
+            "category": "Doors",
+            "family": "Одиночные-Щитовые",
+            "type": "0915 x 2032 мм",
+            "familyId": 179021,
+            "familySymbolId": 899478,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": 144.35644179810726,
+                "y": 817.4767205802973,
+                "z": 3.280839895013123
+              },
+              "max": {
+                "x": 149.16151143087654,
+                "y": 822.2888127738336,
+                "z": 10.196850393700785
+              }
+            },
+            "parameters": [],
+            "sameDecodedLevel": false
+          }
+        ],
+        "nearbyUnclassifiedNativeCarriersForInspectionOnly": [
+          {
+            "nativeElementId": 1501008,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e750",
+            "nativeHostId": null,
+            "nativeOwnerId": 1501008,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 42.14455274194384,
+                "y": 746.7521045716309,
+                "z": 3.2808398950131235
+              },
+              "max": {
+                "x": 184.18928398111288,
+                "y": 902.4091482574443,
+                "z": 3.2808398950131235
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1501036,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016e76c",
+            "nativeHostId": null,
+            "nativeOwnerId": 1501036,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 127.95038543082251,
+                "y": 748.716940405019,
+                "z": 3.2808398950131235
+              },
+              "max": {
+                "x": 217.4745409696588,
+                "y": 841.654298028437,
+                "z": 3.2808398950131235
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 290698,
+            "nativeUniqueId": "64fd1c95-7415-4136-b026-7a12aa4df019-00046f8a",
+            "nativeHostId": null,
+            "nativeOwnerId": 290626,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 290626,
+            "associatedLevelIds": [1487816],
+            "boundsFeet": {
+              "min": {
+                "x": -363.01064423471496,
+                "y": -327.0571588005841,
+                "z": -13.123359580052494
+              },
+              "max": {
+                "x": 352.93185095055804,
+                "y": 901.6056422610815,
+                "z": 10.439693895013347
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 2221947,
+            "nativeUniqueId": "dfe9bc33-df01-4fa0-ac1f-e47d16537f80-0021e77b",
+            "nativeHostId": null,
+            "nativeOwnerId": 2221922,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 2221922,
+            "associatedLevelIds": [400176],
+            "boundsFeet": {
+              "min": {
+                "x": 9.61160593933846,
+                "y": 640.1614398196593,
+                "z": 24.278215223097114
+              },
+              "max": {
+                "x": 361.41309057277977,
+                "y": 975.777468527609,
+                "z": 24.278215223097114
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 2228308,
+            "nativeUniqueId": "ff2004e5-10c2-4676-b954-378aa6a0dabd-00220054",
+            "nativeHostId": null,
+            "nativeOwnerId": 2228283,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 2228283,
+            "associatedLevelIds": [402367],
+            "boundsFeet": {
+              "min": {
+                "x": 8.129060827561489,
+                "y": 638.5212967738166,
+                "z": 34.120734908136484
+              },
+              "max": {
+                "x": 361.2788452381037,
+                "y": 975.949260743319,
+                "z": 34.120734908136484
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 591287,
+            "nativeUniqueId": "f7653c3a-0056-40d9-9aef-4dba6961243e-000905b7",
+            "nativeHostId": null,
+            "nativeOwnerId": 591287,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 49.19074995720619,
+                "y": 760.2627203335247,
+                "z": 55.7742782152231
+              },
+              "max": {
+                "x": 174.58964532416547,
+                "y": 883.7101359017792,
+                "z": 55.7742782152231
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495201,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d0a1",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495186,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 42.14455274194384,
+                "y": 746.7521045716309,
+                "z": 43.963254593175854
+              },
+              "max": {
+                "x": 184.1892839811129,
+                "y": 902.4091482574443,
+                "z": 43.963254593175854
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495235,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d0c3",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495235,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": null,
+            "associatedLevelIds": [],
+            "boundsFeet": {
+              "min": {
+                "x": 127.95038543082251,
+                "y": 748.716940405019,
+                "z": 47.9002624671916
+              },
+              "max": {
+                "x": 217.4745409696588,
+                "y": 841.654298028437,
+                "z": 47.9002624671916
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1498821,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016dec5",
+            "nativeHostId": null,
+            "nativeOwnerId": null,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 587605,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 18.617088173728074,
+                "y": 725.6128515854986,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 195.22572815062597,
+                "y": 925.7360362549717,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1498845,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016dedd",
+            "nativeHostId": null,
+            "nativeOwnerId": 1498826,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 592671,
+            "associatedLevelIds": [694],
+            "boundsFeet": {
+              "min": {
+                "x": 120.89777171279229,
+                "y": 715.8210884659578,
+                "z": 14.435695538057743
+              },
+              "max": {
+                "x": 257.0485606365828,
+                "y": 860.8970331916693,
+                "z": 14.435695538057743
+              }
+            },
+            "parameters": []
+          },
+          {
+            "nativeElementId": 1495217,
+            "nativeUniqueId": "c16d1f64-4c8e-43fe-a01f-55f6d02c2a7a-0016d0b1",
+            "nativeHostId": null,
+            "nativeOwnerId": 1495201,
+            "category": null,
+            "family": null,
+            "type": null,
+            "familyId": null,
+            "familySymbolId": 589028,
+            "associatedLevelIds": [407620],
+            "boundsFeet": {
+              "min": {
+                "x": 40.19434558310967,
+                "y": 735.5443361045182,
+                "z": 47.24409448818898
+              },
+              "max": {
+                "x": 174.5896453241656,
+                "y": 895.2092974383922,
+                "z": 47.24409448818898
+              }
+            },
+            "parameters": []
+          }
+        ],
+        "verifiedAssemblyId": null,
+        "verifiedServedFloorIds": [],
+        "nextAction": "Inspect the native model and building source; export the actual lift assembly ElementId/UniqueId, ordered served native levels, per-floor landing-door ElementId/UniqueId and inside-lobby anchor, direction, operational access and separately verified step-free suitability. Machine/control rooms are not landing entrances."
+      }
+    ],
+    "verifiedAssemblyCount": 0,
+    "verifiedStopCount": 0,
+    "limitation": "This decoder inventories geometry, identities, ownership, families and available instance parameters. It does not decode a verified lift-to-served-floor assembly relation. Zero named/verified assemblies is not evidence that physical elevators are absent. Schema class names and family definitions alone do not establish placed equipment, stops, public access or accessibility.",
+    "repairPolicy": "No elevator/escalator routing edges or stop records are generated by this inventory. Do not join vertically aligned annotation rooms or ordinary nearby doors as inferred lift stops.",
+    "explicitConnectorReview": null,
+    "exportedRoutingConnectors": [],
+    "verifiedRoutingStopCount": 0
+  },
+  "preservation": {
+    "routesMutated": false,
+    "annotationsMutated": false,
+    "staffAccessRetained": true,
+    "ordinaryRoomsEndpointOnly": true,
+    "inferredLiftStops": 0
+  },
+  "sourceExportRequirements": [
+    "Exact source model SHA-256 and phase/view context.",
+    "Native Room ElementId/UniqueId and Finish boundary loops, where native Rooms exist.",
+    "Door ElementId/UniqueId, host and phase-specific FromRoom/ToRoom; public/staff direction and access review.",
+    "Actual elevator assembly ElementId/UniqueId; ordered served native level IDs, landing-door identities, per-floor interior lobby anchors and operational status.",
+    "Separate accessibility review of the complete landing approach, door width, car and route; elevator name alone does not prove step-free access."
+  ]
+}

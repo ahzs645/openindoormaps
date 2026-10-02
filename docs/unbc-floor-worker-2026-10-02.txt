@@ -1,0 +1,63 @@
+Indoor floor preparation worker — 2026-10-02
+
+Rooms, wall junctions, room boundaries, lower floor context, stair ground
+occlusion and stair apertures are now prepared in a module Web Worker.
+MapLibre source uploads, labels, camera updates and rendering remain on the
+main thread. Source records and routing geometry are unchanged.
+
+Each mounted map owns a worker and a bounded cache of 12 prepared floor /
+building / geometry settings combinations per immutable dataset. Cancelling
+an unfinished request terminates the worker, while completed floor results
+remain reusable. Request IDs reject obsolete replies. Imported or edited
+datasets get separate caches. Errors show a retry action; there is no
+synchronous polygon-processing fallback that would freeze the page again.
+During preparation the old floor sources are cleared, picking is removed,
+and the floor selector remains interactive. 2D/3D camera toggles reuse the
+same prepared footprints.
+
+The manual floor/building selectors retain selected room/edge IDs and fit
+the new floor without using that selection's bounds. Previously, a selected
+Library room such as 05-247 could override the campus bounds on returning
+to Floor 2. Floor browsing now keeps its place card and restores its
+highlight when that floor is visible, while showing the floor overview.
+Search and direction following retain their intentional focus behavior.
+The Whole floor review control also ignores the selected room's bounds.
+
+Measurements (before is the previously optimized synchronous build):
+                         Desktop longest task     Mobile longest task
+First Floor 4 visit          1582 -> <50 ms           1587 -> <50 ms
+First Campus Floor 3         1405 -> 51 ms            1393 -> 51 ms
+First Floor 2                1912 -> 64 ms            1909 -> 62 ms
+
+These are main-thread pauses, not total floor load times. Floor 2 still
+settles in about 2.8 seconds including preparation, source uploads, camera
+animation and tiles. Warm rendering and source updates can still cause
+short pauses, particularly on Floor 4 (about 300 ms in these runs).
+Mobile measurements use a narrow viewport on the test machine, not a
+physical phone. A reported zero longest task means none reached the
+50 ms Long Tasks threshold. Initial Floor 1 is already prepared before
+the descending pass, so that row is not an uncached preparation result.
+Full cold/warm results are in unbc-floor-worker-audit.json.
+
+Verification:
+- 89 targeted unit tests passed, including worker cancellation, wrong and
+  late responses, dataset/settings cache isolation, bounded eviction,
+  startup/crash/message errors, retry and disposal.
+- Desktop/mobile all-floor performance walkthroughs passed.
+- Desktop/mobile rapid changes, Library-selection regression, worker vs
+  synchronous geometry comparisons, unchanged data and 2D/3D reuse passed.
+- Simulated worker startup failure and retry passed.
+- Desktop/mobile Floor 3 stair-opening checks passed, including solid
+  ground outside the native well in 2D and 3D. Their import readiness
+  wait now includes asynchronous floor preparation.
+- Targeted TypeScript check and production build passed; Vite emits a
+  separate floor-presentation.worker asset.
+
+The live viewer was exported before refreshing so its unsaved Area 1
+basemap polygon was preserved. The backup's package hashes were verified
+and its indoor dataset matches the original floor-openings viewer exactly.
+Reimport and refresh confirmed Area 1 and its custom-area visibility mode.
+The live preview was checked by selecting 05-247, switching to Floor 4,
+then returning to Floor 2; it fits the whole campus floor.
+Backup: /Users/ahmadjalil/Downloads/UNBC.current-edited.floor-worker.viewer.zip
+Screenshot: docs/screenshots/unbc-floor-worker-live-floor-2.jpg

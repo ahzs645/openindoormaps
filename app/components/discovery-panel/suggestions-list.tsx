@@ -10,12 +10,17 @@ interface SuggestionsListProps {
 }
 
 function suggestionDetail(suggestion: POI, floorNames?: FloorNames) {
-  const category = suggestion.metadata?.category?.replaceAll(/[-_]+/g, " ");
+  const category = suggestion.metadata?.source_location_id
+    ? suggestion.metadata.category
+    : suggestion.metadata?.category?.replaceAll(/[-_]+/g, " ");
   const floor =
     suggestion.floor === undefined
       ? null
-      : formatFloorName(suggestion.floor, floorNames);
-  return [category, floor].filter(Boolean).join(" · ");
+      : (suggestion.metadata?.floor_name ??
+        formatFloorName(suggestion.floor, floorNames));
+  return [category, suggestion.metadata?.building_name, floor]
+    .filter(Boolean)
+    .join(" · ");
 }
 
 export default function SuggestionsList({
@@ -32,10 +37,13 @@ export default function SuggestionsList({
           variant="ghost"
           className="h-auto w-full flex-col items-start gap-0 py-1.5 text-left text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
           onMouseDown={() => onSuggestionClick(suggestion)}
+          onClick={() => onSuggestionClick(suggestion)}
         >
           <span className="w-full truncate">{suggestion.name}</span>
           {suggestionDetail(suggestion, floorNames) && (
-            <span className="w-full truncate text-xs font-normal capitalize text-muted-foreground">
+            <span
+              className={`w-full truncate text-xs font-normal text-muted-foreground ${suggestion.metadata?.source_location_id ? "" : "capitalize"}`}
+            >
               {suggestionDetail(suggestion, floorNames)}
             </span>
           )}

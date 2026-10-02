@@ -1,4 +1,4 @@
-import { useEffect, useMemo, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import config from "~/config";
 import { type Theme, useTheme } from "~/hooks/use-theme";
 import useFloorStore from "~/stores/floor-store";
@@ -7,6 +7,7 @@ import type { LocationConfig } from "~/types/location";
 import { Basemap3dBuildingsLayer } from "../map/basemap-3d-buildings-layer";
 import { getAvailableFloors, IndoorMapLayers } from "../map/indoor-map-layers";
 import { MapCanvas, MapInspectControl, MapProvider } from "../map/map";
+import { RoomViewControl, type RoomView } from "../map/room-view-control";
 import { PoisLayer } from "../map/pois-layer";
 import VenueModelsLayer, { type VenueModel } from "../map/venue-models-layer";
 
@@ -32,6 +33,7 @@ export default function NativeModeMap({
   children,
 }: NativeModeMapProps) {
   const [theme] = useTheme();
+  const [roomView, setRoomView] = useState<RoomView>("3d");
   const { currentFloor, setCurrentFloor } = useFloorStore();
   const indoorMapData = location.data.indoorMap as IndoorMapGeoJSON;
   const availableFloors = useMemo(() => {
@@ -85,10 +87,16 @@ export default function NativeModeMap({
         />
         <IndoorMapLayers
           data={indoorMapData}
+          floorContext={
+            location.data.floorContext as IndoorMapGeoJSON | undefined
+          }
           floor={currentFloor}
           theme={theme as Theme}
+          cutawayRooms={location.mapConfig.cutawayRooms}
+          roomView={location.mapConfig.roomViewControl ? roomView : undefined}
         />
         <PoisLayer
+          hospitalStyle={location.ui?.hospitalStyle}
           data={location.data.pois as GeoJSON.FeatureCollection}
           floor={currentFloor}
           theme={theme as Theme}
@@ -97,6 +105,15 @@ export default function NativeModeMap({
           <VenueModelsLayer id="venue-3d-models" models={GALLERIA_MODELS} />
         )}
         <MapInspectControl />
+        {location.mapConfig.roomViewControl && (
+          <div className="absolute right-3 top-28 z-20">
+            <RoomViewControl
+              view={roomView}
+              onChange={setRoomView}
+              pitch={location.mapConfig.pitch}
+            />
+          </div>
+        )}
         {children({ availableFloors })}
       </MapCanvas>
     </MapProvider>

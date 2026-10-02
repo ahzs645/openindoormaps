@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-01",
+  "venue": "harrods",
+  "unbc_excluded": true,
+  "source_footprints": {
+    "stairs": 53,
+    "escalator": 104,
+    "elevator": 83
+  },
+  "footprint_max_deviation_m": 0.0001,
+  "before_multifloor_groups": {
+    "stairs": 10,
+    "escalator": 9,
+    "elevator": 6
+  },
+  "current_inferred_multifloor_groups": {
+    "stairs": 10,
+    "escalator": 24,
+    "elevator": 6
+  },
+  "source_transition_seconds": {
+    "stairs_per_floor": 60,
+    "escalator_per_flight": 45,
+    "elevator_per_ride": 120
+  },
+  "checks": {
+    "geometry_unit_tests": 9,
+    "harrods_route_cases": 87,
+    "stair_trips_using_stairs": 74,
+    "captured_reference_routes": 3,
+    "clear_horizontal_graph_segments": 63402,
+    "five_venue_sample_cases": 200,
+    "browser_tests": 9,
+    "typecheck": "passed",
+    "targeted_lint": "passed"
+  },
+  "limitations": [
+    "Only one escalator flight has observed operating direction; all other directions use an explicitly unknown two-way fallback.",
+    "Most connector pairings and landing positions remain inferred from source footprints.",
+    "The complete vendor navigation graph is not included in the capture; one of the three source route corridors still differs."
+  ]
+}

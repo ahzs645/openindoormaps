@@ -1,0 +1,4214 @@
+{
+  "summary": {
+    "levels": {
+      "311": 177,
+      "694": 239,
+      "400176": 178,
+      "402367": 170,
+      "1450417": 19,
+      "1487353": 14,
+      "1487816": 88,
+      "2295121": 4
+    },
+    "buildings": {
+      "10": 225,
+      "09": 44,
+      "06": 26,
+      "08": 91,
+      "07": 83,
+      "05": 107,
+      "04": 125,
+      "03": 188
+    },
+    "milliseconds": 17699.540459,
+    "sourceUnchanged": true,
+    "eligible": 1566,
+    "recovered": 889,
+    "codes": {
+      "unclosed-native-cell": 638,
+      "insufficient-source-overlap": 36,
+      "multiple-room-labels": 2,
+      "no-native-walls": 1
+    },
+    "samples": [
+      {
+        "number": "05-139C",
+        "result": {
+          "roomKey": "rm-311-2739844a6fbd",
+          "levelId": 311,
+          "ringsFeet": [
+            [
+              [128.5355, 282.8186],
+              [133.6115, 290.9419],
+              [141.9975, 285.7018],
+              [142.205, 286.0339],
+              [142.2157, 286.0272],
+              [138.8289, 280.6073],
+              [138.7594, 280.6508],
+              [136.9043, 277.6821],
+              [136.9739, 277.6386],
+              [136.9321, 277.5718]
+            ]
+          ],
+          "boundaryElementIds": [
+            751829, 751833, 751837, 808061, 864107, 898546
+          ],
+          "sourceCoverage": 0.9967025505413531,
+          "cellCoverage": 0.8592620211011959
+        }
+      },
+      {
+        "number": "05-113",
+        "result": {
+          "roomKey": "rm-311-ac62d1426f13",
+          "levelId": 311,
+          "ringsFeet": [
+            [
+              [132.7529, 290.8062],
+              [124.2069, 277.1296],
+              [107.5782, 287.5204],
+              [108.0892, 297.3873],
+              [108.0473, 296.5772],
+              [109.9793, 299.6691],
+              [110.1506, 299.562],
+              [110.4845, 299.3534],
+              [111.1786, 300.4684],
+              [111.3866, 300.8027],
+              [111.0091, 301.0376],
+              [111.0091, 301.0377],
+              [111.4946, 301.8175],
+              [113.1864, 300.7604],
+              [113.1429, 300.6908],
+              [116.1117, 298.8357],
+              [116.1552, 298.9053],
+              [116.2158, 298.8674],
+              [114.1394, 295.5316],
+              [113.1397, 296.1563],
+              [112.9311, 295.8224],
+              [113.9314, 295.1974],
+              [114.2653, 294.9887],
+              [117.5681, 300.2948]
+            ]
+          ],
+          "boundaryElementIds": [
+            751849, 752003, 752007, 752011, 808061, 808401, 808432, 863899,
+            865321, 1817752, 1817778, 1817813, 1817863
+          ],
+          "sourceCoverage": 0.9988037918688221,
+          "cellCoverage": 0.9366060775654765
+        }
+      },
+      {
+        "number": "05-108",
+        "diagnostic": {
+          "roomKey": "rm-311-d963b2d0d90a",
+          "levelId": 311,
+          "code": "insufficient-source-overlap",
+          "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 35.5%; 4/4 supported native door thresholds)."
+        }
+      },
+      {
+        "number": "05-107",
+        "diagnostic": {
+          "roomKey": "rm-311-d966b3d0d90c",
+          "levelId": 311,
+          "code": "insufficient-source-overlap",
+          "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 47.8%; 2/2 supported native door thresholds)."
+        }
+      },
+      {
+        "number": "05-109",
+        "result": {
+          "roomKey": "rm-311-f33db1d0e7a5",
+          "levelId": 311,
+          "ringsFeet": [
+            [
+              [111.2503, 256.3947],
+              [108.9667, 252.7402],
+              [107.7287, 252.7402],
+              [107.7287, 251.7973],
+              [99.7314, 256.7945],
+              [99.6271, 256.6276],
+              [99.6173, 256.6337],
+              [99.8329, 256.9787],
+              [99.9024, 256.9353],
+              [101.7575, 259.904],
+              [101.688, 259.9475],
+              [102.7766, 261.6897],
+              [102.787, 261.6831]
+            ]
+          ],
+          "boundaryElementIds": [
+            751857, 751870, 752515, 754102, 808061, 808389, 1576205
+          ],
+          "sourceCoverage": 0.9847110671296627,
+          "cellCoverage": 0.8180459244276115
+        }
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "roomKey": "rm-1450417-c032dc29e06e",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c035be29e070",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0b3fc29e0dc",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0b6de29e0de",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0c4fe29e0ea",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0c7dc29e0ec",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0cbce29e0f0",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-c0d8de29e0fb",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-d17b2229ea35",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-d1854c29ea3d",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-d2991229eb28",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-db942729f055",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-db970929f057",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-db9a6729f05a",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dba13529f060",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbbc6729f077",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbc04929f07b",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbcd6929f085",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbd43929f08b",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbd81729f08f",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbde6729f094",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-dbe24929f098",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-ed5dced924b1",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-ed64bad924b7",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-ed6bced924bd",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f65c67d929e1",
+      "levelId": 1450417,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.7%, cell coverage 58.5%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f66d65d929f0",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f670e3d929f3",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f77d65d92ad7",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f783e9d92adc",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-f78777d92adf",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1450417-feaef9ff66b1",
+      "levelId": 1450417,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-3dc24c998731",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4d71d2d786bf",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4d74dcd786c2",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4d7862d786c5",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4d7be4d786c8",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (2 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4e1b62d7874f",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (2 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4e1ee4d78752",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (3 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-4e224ad78755",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (2 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-594f2b1f3ad6",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c015ccebb019",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c037c8ebb036",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c03b4eebb039",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c041caebb03e",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c7506febb3ca",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c756fbebb3cf",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c76473ebb3da",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-c8e17cebb51e",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-f2a6a9ebcc58",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-f2a991ebcc5a",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-f2ad75ebcc5d",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487353-f2b7a9ebcc66",
+      "levelId": 1487353,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-0046d8afc0d5",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-004a60afc0d8",
+      "levelId": 1487816,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.5%, cell coverage 55.9%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-00cb78511bfb",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-07d2fdafc4ca",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-07d681afc4cd",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-1022b341dc12",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-11a2b941dd58",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-11acab41dd60",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-189c5f41e0d1",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-1a05bf30669f",
+      "levelId": 1487816,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 63.7%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-22eb4d5b14b3",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-3d0cf1f41106",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-3e2d71f411fb",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-3e30f1f411fe",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-3e3471f41201",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-3e41f1f4120c",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-43cb14307dd8",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-45278af41574",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-45319af4157d",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-45440c307f18",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46230af4164a",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46268af4164d",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46309af41655",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46340af41658",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46378af4165b",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-463a8af4165e",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-46419af41664",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-5561e0486513",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-5b5019849abc",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-5fc9753fc521",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-603968192edb",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-6b51c44075e8",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-6b54a84075ea",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-6b5be94075f0",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-80187ffde56e",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-92f4725b53ff",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-c22f4ce15949",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-cbc4f247fde2",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-cbd20247fded",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-ee5665f5067e",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-ef4e5df50750",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-ef5f79f5075f",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-ef6665f50765",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-f75199f50bab",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-f75815f50bb1",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-f75f11f50bb7",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-f76297f50bba",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-1487816-f77395f50bc8",
+      "levelId": 1487816,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-2295121-38edd6497686",
+      "levelId": 2295121,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-2295121-38fed8497695",
+      "levelId": 2295121,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-2295121-3986c8497708",
+      "levelId": 2295121,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-2295121-5b384c849aa8",
+      "levelId": 2295121,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05afb58222f8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05d1b4822315",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05d534822318",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05ed5382232c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05f39b822331",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-05f785822335",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-0bdc6d73a3ae",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-16e712c8b3e9",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-1f69c8f5196e",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-1faa5af519a4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-1faaeaddb7c2",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-1fad56f519a7",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-1fbbe8ddb7d0",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-2054e6ddb852",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-348404ca0af1",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-34878cca0af4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-355a25da4d51",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-359080ca0bd5",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-38a12430434c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-38af11304358",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3a256cf64f3f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3a301ef64f48",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3e3908ed2f58",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3ea6abca1119",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3eaa0cca111c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3eb4c3ca1126",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 11/11 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3ebbb379258d",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 10/10 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3ed329ca113f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3f6fcd792626",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3f769d79262c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3f8d4a3046b9",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3f912c3046bd",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3f9ada3046c5",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-3fa22a3046cb",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-40262c30473b",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4030ea304744",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-40344c304747",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-40372a304749",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-40454a304756",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-40482c304758",
+      "levelId": 311,
+      "code": "multiple-room-labels",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.2%, cell coverage 89.3%; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4135f14a7e75",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4140274a7e7d",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4146ef4a7e83",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4192374a7ec4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-433cf6296f39",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-434a7e296f44",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-44b2fa297077",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-44b68029707a",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-44b9f629707d",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4673de7929a8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-4677c47929ac",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-47c7be792ac9",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-47e9b7792ae6",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-47f3e7792aee",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-47f7cd792af2",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-47fab5792af4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-5393a1f65d7e",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-5e4b23464af3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-5f7f25e673c3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-675a9142480c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-675e1942480f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-6e9be4530ca8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-7261a4260df4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-77d61839c457",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 15/16 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-84e9ae1b6aa3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a07470948d3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 15/15 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a409f0f9149",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a4b230f9152",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a4e270f9154",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a519f0f9157",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a55230f915a",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8a5f270f9163",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8aa369094957",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8b32069a6165",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8e1b19ddd9ef",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 12/13 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8f524ef5dd3b",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8f55d6f5dd3e",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8f595af5dd41",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8f5cd2f5dd44",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-8f8f5af5dd6f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9361420f9696",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9459440f9769",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9463440f9771",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-96c5f8d2663d",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-96c9afd26640",
+      "levelId": 311,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 98.2%, cell coverage 53.4%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-96d6fcd2664c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-96d728d2664c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-96daa9d2664f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-97eaa8d26736",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-97f4bed2673f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-97f82bd26741",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9b63fb0f9af0",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9b677b0f9af3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-9c58eb0f9bc1",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-a1a7b5f5e7e7",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-a53f300e9aad",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-aabdc9f5ed2b",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ac6961426f19",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ac6ce9426f1c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-b652a53ab1cf",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-b6562d3ab1d2",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-b659b13ab1d5",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-b65d293ab1d8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-b7fa83011b32",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-bb30c6dfc1d2",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (2 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-bdbe6c71b575",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-bddb523ab5c2",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-bddeda3ab5c5",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-bde24e3ab5c8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-c647459a826c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-c6dc4d9a82ea",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-c6ed4d9a82f8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-c6f1359a82fc",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-c97eccfc2061",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-cd8544d8a5f4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-cd8ef4d8a5fc",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ce76b13ffde1",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ce80e13ffdea",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ce83c93ffdec",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ce87a93ffdf0",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-cea234d8a6e6",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-ceace4d8a6ef",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-cfd7a13fff0d",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-cfdb813fff10",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d264f5fc257c",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d26c41fc2583",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d26f25fc2585",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d275f1fc258a",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d5a30ed8aa65",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d62943fe8220",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d62cc9fe8223",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d690fed8ab2f",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d767b4e683dd",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d776ea2f6f3b",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d963b2d0d90a",
+      "levelId": 311,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 35.5%; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-d966b3d0d90c",
+      "levelId": 311,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 47.8%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-dd313b6f08d8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-dd343f6f08db",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-dd3ec36f08e4",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-dd48c36f08ec",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-e666a56469b3",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-e66a296469b7",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-e671256469bd",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-e67b296469c5",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-e67ead6469c8",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-f0204e646f83",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-f78cb8ff6316",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-f8440ac8dc13",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 13/13 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-311-fca41a821dbd",
+      "levelId": 311,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-072589afc437",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-072911afc43a",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-07c585afc4bf",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-07c889afc4c1",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0a8d327adc87",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0a94367adc8d",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0a97a47adc90",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0d5eb583fba2",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.9%, cell coverage 46.8%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0d619783fba4",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.4%, cell coverage 57.4%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0d6bcd83fbad",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 8/8 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0d75ff83fbb6",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 46.2%; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-0f6e59c1a3f5",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-1000eb8130ee",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-21857a17a696",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-2449317aeb08",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-244caf7aeb0b",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-24501d7aeb0e",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-2456a17aeb13",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-245d3d7aeb19",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-3327d67487fb",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 8/8 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-332bba7487ff",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-40a604ec17ed",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-44814c708ea3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4487d8708ea8",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-44924a708eb1",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-458a48708f84",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-45945a708f8c",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-45b9dc708fac",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4671ea1dd0fd",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4b8fe81c20b5",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4c44011c214e",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4e99f77094c3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4eb8857094dd",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4ebbf37094e0",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4ef1f370950d",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-4ef8f7709513",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-5622307098b5",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-5e76d5709d55",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-5e844d709d60",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-5f19d5709ddf",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-5f20c1709de5",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-67de8170a2de",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-67e20570a2e1",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-67f66970a2f3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-79e48add7818",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-79eb92dd781e",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-79ef1cdd7821",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-79f222dd7823",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-79f5a4dd7826",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-7fc3c541796f",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.8%, cell coverage 58.0%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-81e435dd7c6f",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-81f1cddd7c7b",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-851a6e8ccbd3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-858c5daba8e8",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 20.9%; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-8d16978cd027",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-8d278d8cd036",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-8d2e198cd03b",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-94c3a92ce8a9",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-957c01fd2089",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-957ee7fd208b",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-958911fd2094",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-959343fd209c",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9679b6c4c037",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-969eb6c4c056",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9780428cd68c",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-97ef26c4c174",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-97f2aec4c177",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9c3d7270c0a5",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9c40f870c0a8",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9c446670c0ab",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9efdcfc4c4ff",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-9f07dfc4c507",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-ae535b9d8fa3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 10/10 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-b1b16e63252c",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-b9ea8e7b63d0",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-bae50c707dac",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-bae882707daf",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-bb0708707dc9",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-c45c487227b6",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-c45fcc7227b9",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-c5e6d0722905",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-c5ed4c72290a",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-c5f0d072290d",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d2a646fd4354",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d2a934fd4356",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 57.4%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d2ad12fd435a",
+      "levelId": 400176,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 64.3%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d2b366fd435f",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d3abf4fd4433",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-d3bcf2fd4441",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dc36b4177f54",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dc4ab8177f64",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dc4e34177f67",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd38b417802e",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd3c38178032",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd49b817803d",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd5424178046",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd5728178048",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-dd5ab817804b",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-e64b5d178570",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-e64ec1178573",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-e68c611785a7",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-e68f611785aa",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-e692cd1785ac",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-f8e385621061",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-f91a4f2d9cb3",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-fcc92010fae8",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-400176-fd57d2070a69",
+      "levelId": 400176,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-06c17688ef7f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-06d93688ef93",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-072205afc434",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-073a0dafc448",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-07d989afc4d0",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-07dd0dafc4d3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-08527288f0d4",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-0f7545c1a3fb",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-0fc2068de9ff",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-136b08ba658e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-178f32ec6251",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-17963eec6257",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-17a030ec6260",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 0.0%, cell coverage 0.0%; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-190526ec638f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-190f38ec6397",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1912beec639b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a173e806e36",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a1acc806e39",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a2bc8806e47",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a2f4a806e4a",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a32d0806e4e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a363a806e50",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a4048806e59",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1a43d2806e5c",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-1f1e120e87d5",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-20a8d2ec6798",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-21d39ed0cbd2",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-22337ce4ecb0",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-2236fce4ecb3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-29d3a5e4f0b6",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-29de35e4f0c0",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-2c0e15d0d20f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-320d65890804",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-322eec890820",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-323256890823",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-33a4d589095e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-41ed1fcad92f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-41efffcad931",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-41fa37cad93a",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-428607cad9b1",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-4288efcad9b3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-42903fcad9ba",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.9%, cell coverage 46.5%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-42931fcad9bc",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-429707cad9c0",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 45.0%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-546664c9f38f",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 46.0%; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-5c827acae869",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-5c8caacae872",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-5e4d4fc03aa4",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-5e5e41c03ab3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-67f628c04066",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-67f90ac04068",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-67fc78c0406b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-68005ac0406e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-680338c04070",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-68072ac04074",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-680a08c04076",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-681158c0407d",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69b0c50cfef0",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69b4290cfef3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69b7090cfef5",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69baf50cfef9",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69bdd50cfefb",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69c1390cfefe",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-69c5290cff02",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-6b3ac40d003f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-6b3e4a0d0042",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-6b41b80d0045",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-721ce30d03a4",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7220610d03a7",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-722de10d03b2",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72315f0d03b5",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72bfe30d042e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72c3610d0431",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72c6ef0d0434",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72c9ed0d0437",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72d0e10d043d",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72d45f0d0440",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-72de710d0448",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b0c418257c7",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b12c18257cc",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b16518257cf",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b19d18257d2",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b1cd18257d4",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 11/11 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b20418257d7",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-7b23c18257da",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-8373700d0d77",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 61.7%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-837da00d0d80",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 62.1%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-8380800d0d82",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-8384640d0d85",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-838ab00d0d8a",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-84d4600d0ea3",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-84d8440d0ea6",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-8e75a3917524",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-976a4c917a4c",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-976d4c917a4e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-9777dc917a58",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-977b4c917a5b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-97aadc917a83",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-a6e033f4311e",
+      "levelId": 402367,
+      "code": "no-native-walls",
+      "message": "No structural wall faces were recovered on this native level."
+    },
+    {
+      "roomKey": "rm-402367-ad60cad433c0",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 10/10 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-ad63b2d433c2",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 16/16 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-ad679ad433c6",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 8/8 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4910bd43768",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4a20bd43776",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4a4f3d43778",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4b9d3d4378b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4bd3bd4378d",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.9%, cell coverage 44.8%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4c023d4378f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-b4c40bd43793",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-cc4b6067be0b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-d4b44967c2bc",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-da1e04828d90",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-da9598764726",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-daa00876472f",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-dba21876480a",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e109095e058d",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e10ced5e0591",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e117195e059a",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e119fd5e059c",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 57.4%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e786f567cdd2",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e78e0167cdd8",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e862125e0958",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (2 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e865f65e095b",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-e87a525e096d",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-ed5c7b805479",
+      "levelId": 402367,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 3.9%, cell coverage 62.1%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-edc377ec4b13",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-edc9e3ec4b18",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-eec7fd8055ae",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-eee6738055c8",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-f29d0f5e0f95",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-f2a73b5e0f9e",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-f2ae0f5e0fa4",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-402367-f2b16b5e0fa6",
+      "levelId": 402367,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-01803a06bb62",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-01a5ba06bb82",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0303ca06bcac",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-03efd63c363c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-03f6c63c3642",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0481bc3c36b8",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0499c63c36cc",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-06d9c5812b9c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-073f075d76ca",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-07b101afc4ad",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-07b485afc4b1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-07cc11afc4c4",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-07cf75afc4c7",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-07de695d7751",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0a86f35828da",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0a8dff5828e0",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0a90f35828e2",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0aaffb5828fd",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 20.6%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0ab2ff5828ff",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0b3e77582976",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0b41fb582979",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0bed6b73a3bd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0e2608ab6500",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0e3420ab650c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0e3704ab650e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-0e3dd0ab6514",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-14611a06c685",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-14648a06c688",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-1a939d8c895c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-1ae52d8c89a2",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 98.1%, cell coverage 44.8%; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-24136e583733",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-2419fa583738",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-241d6e58373b",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-2420f658373e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-24247a583741",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 8/8 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-242772583743",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-242af6583747",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-24c44363898e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-25267258381c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-2530f6583825",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-33a7fdf6e0ae",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b4edcfee0e1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b556cfee0e7",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b58f4fee0ea",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b5fdcfee0f0",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b62e4fee0f2",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b84dcfee10f",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 58.4%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b8864fee112",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 64.7%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3b8becfee115",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 58.6%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3f176906de8a",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-3fb05906df0c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-43cb29fdc35f",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-44498dfee60e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-474283e52c61",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-474583e52c63",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-47490be52c67",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-48190206e3bd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-481c8206e3c0",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-484c1bec97cd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-50f1ace53228",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-50f834e5322d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-5102a5e53236",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-54d0ce297940",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-54d74a297945",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-5d4073297df7",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-642a9917d7de",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-6f4aa3eafa7e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 8/8 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-6f5537eafa87",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-70d53beafbcd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7baac3c6ec98",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cb67e387ad1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cbcba717e0d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cc6aa717e16",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cf33a717e3c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cf9ae717e41",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7cfd2a717e44",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-7d073e717e4c",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-85fee3718377",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-86026771837a",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-8e81e46b9de6",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 1.0%, cell coverage 13.0%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-8f8d6bf2647f",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-91caade3a374",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-91ce31e3a377",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-91eca9e3a390",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 12/13 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-91f3b5e3a397",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-91f6b9e3a399",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-985fc56bc655",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-a223746bcc2d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-a3a8f7e3adba",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-a3ac7fe3adbd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-aa04df6bade9",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 1.0%, cell coverage 7.5%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ad5ba4e3b383",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 13/13 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ae50759d8fa1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-b3934df5f238",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-b788ac9d9503",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bd2102e3bc01",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bd3586e3bc13",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bd3bf2e3bc18",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bd4686e3bc21",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bf1328011ec6",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 20.9%; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bff2dc3b433e",
+      "levelId": 694,
+      "code": "multiple-room-labels",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.6%, cell coverage 81.5%; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-bff6523b4341",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c37feb4bcd83",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c3836d4bcd86",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c3866b4bcd88",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c389dd4bcd8b",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.3%, cell coverage 57.5%; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c3976d4bcd96",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c74dabe3c232",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-c7512fe3c235",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ca23793b4972",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ca45853b498f",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ca48fb3b4992",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ca59f93b49a1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ccf07cf60069",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ccfd9cf60074",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 7/7 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d302635a3d75",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d305df5a3d78",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d316e45a3d87",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d3ac6f5a3e06",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d3b2f35a3e0b",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/10 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d3b65f5a3e0e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-d9cef5413c33",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-dab3855a418a",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 99.9%, cell coverage 46.0%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-dabe175a4193",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-dac11d5a4196",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-dbde955a4288",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e1fb3e512890",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e1fe2a512892",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e2020a512895",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3dd8e41424b",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3e08c41424d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3e41e414250",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3e79d414253",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3eb1d414256",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3ee8d414259",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e3fc1d414264",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e4108d414276",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (1 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e4138d414278",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e4248d414287",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e4280d41428a",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e683286365d5",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e68a146365db",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e68d9c6365de",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e691206365e2",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e694286365e4",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e778186366a6",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e78fa46366b9",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e793286366bd",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e98747512c85",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e98a27512c87",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e99456512c90",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 43.9%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e99847512c93",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 44.5%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-e99b23512c95",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 44.6%; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-eb3336414612",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-eb39b6414617",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-eb40c641461d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-eb4ab6414626",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 4/4 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ec366a5a4b83",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ec405a5a4b8b",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ecb63641475a",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ecb9c641475d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ecf634619eae",
+      "levelId": 694,
+      "code": "insufficient-source-overlap",
+      "message": "A unique closed, uncontested native room enclosure could not be verified (best source coverage 100.0%, cell coverage 49.1%; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ecfa1a619eb2",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-ecfcfc619eb4",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 0/0 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f460ef414b6a",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f46b5f414b73",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f46e6f414b75",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f471ef414b78",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f906f550b459",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-f911a550b463",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa20bb06b793",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa239f06b795",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa26ff06b798",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa2dcb06b79e",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 3/3 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa31af06b7a1",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa349f06b7a3",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 5/5 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa37fb06b7a6",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 6/6 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa42af06b7b0",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa459b06b7b2",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fa5a0906b7c3",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fb76133c317d",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 1/1 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fb79153c317f",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 9/9 supported native door thresholds)."
+    },
+    {
+      "roomKey": "rm-694-fb83ab3c3188",
+      "levelId": 694,
+      "code": "unclosed-native-cell",
+      "message": "No bounded native wall cell contains the room label (0 dangling edges, 0 cut edges; 2/2 supported native door thresholds)."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+Repair follow-up: Harrods walking data was rebuilt on 2026-10-01. All
+31,202 walking segments avoid source obstacle cores under documented tile
+tolerance. The original findings below describe the pre-repair data.
+See docs/harrods-navigation-repair-2026-10-01.txt for validation and limits.
+
+Indoor map source comparison — 2026-10-01
+
+Verdict
+Harrods walking routes are physically invalid against the captured source
+layout. The earlier navigation audit checked shortest paths and UI behavior
+within the supplied graphs; it did not establish fidelity to the building.
+UNBC remains excluded.
+
+Evidence
+Reused the original route's exact start/end coordinates and floors in the
+current IndoorDirections engine. Normal graph snapping still applies.
+Compared each horizontal segment with the actual source wall polygon
+material, preserving holes and merging tile fragments. Removed the small
+per-floor coordinate separation used by the importer. Eroded walls by 10 cm
+and counted only segments overlapping more than 25 cm, to avoid boundary
+rounding false positives.
+
+Captured route                            Vendor hits   App hits
+Door 3 -> Sushi by Masa (Ground)                 0          7
+Mini Super Brands 3 -> Chocolate Hall (4 -> 0)    0          5
+Captured Lower Ground -> Third Floor route       0          7
+
+The last route is the older directory capture, whose request query was lost
+in the synthetic HAR; its original coordinates/floors were still used.
+For Door 3 -> Sushi by Masa, approximately 20.7 m of the current walking
+polyline lies in source wall material. Vendor reports 116.2 m overall; the
+current app horizontal polyline measures approximately 113.0 m.
+
+The currently open /harrods?from=37&to=10 route has 11 walking segments that
+enter source wall material, totalling approximately 21.3 m overlap. There
+is no original vendor response for that exact POI pair in these captures.
+
+Across the Harrods store graph, 1,590 of 3,656 ordinary walking segments
+enter source wall material. 141 enter source virtual obstacles. These
+counts overlap and should not be added.
+
+The drawn wall geometry is faithful: per-floor symmetric difference from
+source wall material is only 0.001–0.020 percent (coordinate rounding).
+This points to the route generation, rather than a map alignment problem.
+
+Cause
+scripts/port-pointr-harrods.py:644 supplies only units smaller than 200 m2 as
+routing obstacles. Source walls are drawn as areas and omitted from the
+obstacle input. Virtual obstacles and walkway layers are also omitted.
+Floor envelopes used for sampling are bounding rectangles rather than
+verified walkable floor boundaries.
+
+scripts/port_vendors_common.py:474 joins disconnected graph components
+without obstacle visibility checks. At line 522, POI attachment falls back
+to the nearest hub regardless of obstacles. Both can reintroduce invalid
+links even if obstacle-aware generation is added elsewhere.
+
+Elevators and escalators
+The three captured comparisons agree on connector type and floor-change
+sequence (one is same-floor). Elevator/escalator footprints originate from
+source tiles, but grouping them into shafts is inferred from proximity.
+Except for one captured up-only escalator, travel directions default to
+two-way. Agreement on these samples does not validate all shafts, travel
+directions, access restrictions, or the walking approaches.
+Harrods car park entrances and outdoor connectors are also inferred.
+
+Other examples
+Eaton Centre: all 1,374 unique source same-floor edges are preserved.
+Bowie State: all 4,516 unique source same-floor edges are preserved.
+Comparisons account for the importer's documented tiny coordinate offsets
+and rounding. The imports also add 322 and 1,253 POI spurs respectively;
+those extra segments were not validated against physical obstacles here.
+City Mall uses the real Situm paths graph, but types its vertical links by
+geometric inference and adds POI spurs. Mappedin Demo Mall still uses a
+synthesized walking mesh, despite importing real vertical connections.
+Campus is an invented demo layout, so it cannot prove source fidelity.
+
+Source material checked
+- /Users/ahmadjalil/Downloads/Indoor Map/indoor map references:
+  decoded Harrods z18 tile geometry, published POIs, saved route response,
+  and Mappedin MVF bundles for Eaton Centre/Bowie State.
+- /Users/ahmadjalil/Downloads/New Folder With Items/work/pointr.har:
+  synthetic HAR of the saved directory route (query variants collapsed).
+- /Users/ahmadjalil/Desktop/New Folder With Items 3/v9.pointr.express.har:
+  two complete original Pointr route responses and endpoint POI identifiers.
+The other HARs were inventoried for available routing/graph assets.
+Captured authentication headers and signed URL tokens were not copied into
+this report or the comparison artifacts. No live vendor calls were made.
+
+Repair direction
+Prefer obtaining the complete vendor walking graph, rather than inferring
+it from a few captured routes. If it is unavailable, rebuild within actual
+walkable geometry, enforce walls/virtual obstacles on every edge including
+component joins and POI attachments, and retain disconnected areas when no
+valid passage is known. Recheck captured routes for zero wall crossings.
+Do not treat a single captured polyline as a complete building network.
+Use Eaton Centre/Bowie State for further source-based demonstrations while
+Harrods is corrected; their added POI spurs still need physical validation.
+
+Artifacts
+- docs/screenshots/harrods-source-path-comparison.png
+- docs/harrods-source-comparison.json
+
+This investigation changed only audit documents and the comparison image.
+Application code, venue datasets, and existing working changes are preserved.

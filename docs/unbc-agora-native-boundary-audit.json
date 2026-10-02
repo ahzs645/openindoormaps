@@ -1,0 +1,279 @@
+{
+  "nativeBranches": {
+    "zip": "/Users/ahmadjalil/Downloads/UNBC.native-agora/UNBC.master.reviter.zip",
+    "nativeCells": 164,
+    "branches": 2452,
+    "checkedNativeCellSegments": 9894,
+    "branchBoundaryViolations": 0,
+    "fixedBranchEndpointsPreserved": true,
+    "pin": {
+      "id": "pin-794fc6e2-4a28-4e1b-bee8-60a60d228a61",
+      "nativeCellAtPin": true,
+      "recoveredClearFloorSquareFeet": 31.17099049153694,
+      "obstacleOverlapSquareFeet": 1.1674150300677866e-5,
+      "unsupportedSquareFeet": 0,
+      "sourceTraceMissingSquareFeet": 55.53322223088526,
+      "sourceTraceObstacleOverlapSquareFeet": 34.73417813371816
+    },
+    "routes": [
+      {
+        "name": "Library corridor to upper stair",
+        "from": "05-120",
+        "to": "05-S203",
+        "available": false,
+        "levels": [],
+        "nativeCirculationLegs": 0,
+        "stairs": 0
+      },
+      {
+        "name": "Library stair",
+        "from": "05-S101",
+        "to": "05-S201",
+        "available": true,
+        "levels": [311, 694],
+        "nativeCirculationLegs": 0,
+        "stairs": 1,
+        "metres": 5.359351014155087
+      },
+      {
+        "name": "Tea Lab stair",
+        "from": "08-S101",
+        "to": "08-S201",
+        "available": true,
+        "levels": [1487816, 694],
+        "nativeCirculationLegs": 0,
+        "stairs": 1,
+        "metres": 8.822690107682803
+      },
+      {
+        "name": "Conference stair",
+        "from": "06-S204",
+        "to": "06-S204",
+        "available": false,
+        "levels": [],
+        "nativeCirculationLegs": 0,
+        "stairs": 0
+      },
+      {
+        "name": "Meeting to classroom",
+        "from": "03-015",
+        "to": "05-154",
+        "available": false,
+        "levels": [],
+        "nativeCirculationLegs": 0,
+        "stairs": 0
+      },
+      {
+        "name": "unbc-04-lift",
+        "from": "rm-311-2054e6ddb852",
+        "to": "rm-402367-133b24ba6565",
+        "available": true,
+        "levels": [311, 402367],
+        "nativeCirculationLegs": 1,
+        "stairs": 0,
+        "metres": 25.191455586716934
+      },
+      {
+        "name": "unbc-agora-conference-lift",
+        "from": "rm-311-89fd150948ca",
+        "to": "rm-1487353-4d82d4d786ce",
+        "available": true,
+        "levels": [311, 1487353],
+        "nativeCirculationLegs": 2,
+        "stairs": 0,
+        "metres": 15.819333406993474
+      }
+    ]
+  },
+  "multiFloorPubRoute": {
+    "zip": "work/native-agora/solid-verified/UNBC.master.reviter.zip",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "checkedSegments": 110,
+    "nativeBarrierFailures": 0,
+    "nativeFloorCoverageFailures": 0,
+    "sourceDatasetUnchanged": true,
+    "results": [
+      {
+        "from": "06-260",
+        "to": "07-240",
+        "distanceMetres": 96.35382472451658,
+        "rooms": [
+          "06-260",
+          "06-244",
+          "06-202",
+          "06-203",
+          "06-210",
+          "06-215",
+          "06-214",
+          "06-S204",
+          "06-S205",
+          "07-236",
+          "07-240"
+        ],
+        "openings": [
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1",
+            "hasSpan": true
+          }
+        ],
+        "turns": 2,
+        "curvedSections": 1,
+        "finalLevel": 311
+      },
+      {
+        "from": "07-240",
+        "to": "06-260",
+        "distanceMetres": 96.35382472451657,
+        "rooms": [
+          "07-240",
+          "07-236",
+          "06-202",
+          "06-244",
+          "06-203",
+          "06-210",
+          "06-215",
+          "06-214",
+          "06-S204",
+          "06-S205",
+          "06-260"
+        ],
+        "openings": [
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10",
+            "hasSpan": true
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+            "hasSpan": true
+          }
+        ],
+        "turns": 2,
+        "curvedSections": 1,
+        "finalLevel": 694
+      }
+    ]
+  },
+  "wallPin": {
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "pin": {
+      "id": "pin-ef2de091-fe1f-442c-9318-e6e719a5b515",
+      "label": "Review pin 5",
+      "levelId": 311,
+      "pointFeet": [9.180179146444484, 171.5151920471694],
+      "elevationFeet": 0
+    },
+    "regionFeet": {
+      "radius": 14,
+      "width": 28
+    },
+    "nativeFloorIds": [400238, 423406],
+    "pinOnNativeFloor": true,
+    "pinInsideNativeBarrier": false,
+    "sourceOwnersAtPin": [
+      {
+        "key": "circulation:07:311:400238:1331:17290",
+        "number": "",
+        "circulation": true,
+        "stair": false,
+        "nativeRoutingBoundary": null
+      }
+    ],
+    "localAreaSquareFeet": {
+      "nativeFloor": 783.9999999999995,
+      "sourceCirculation": 709.6803195136508,
+      "physicalClearFloorOutsideRoomClaims": 739.2710883728465,
+      "clearFloorMissingFromCirculation": 29.590768859195904,
+      "circulationOutsideNativeFloor": 0,
+      "circulationInsideNativeBarrier": 0,
+      "circulationInsideLowStairProjection": 0
+    },
+    "preparedAreaSquareFeet": {
+      "circulation": 735.5248343128867,
+      "missingClearFloor": 3.74625948654851,
+      "obstacleOverlap": 5.4265886006987785e-6
+    },
+    "sourceDatasetUnchanged": true,
+    "caveat": "Physical clear floor is a diagnostic, not authorization to enter unlabelled areas. Clip edges are audit boundaries, not walls. Doors, headroom, source ownership and connector stops still require routing validation."
+  },
+  "fixturePin": {
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "pin": {
+      "id": "pin-93d0f007-8985-4190-aae8-d4f08481d789",
+      "label": "Review pin 5",
+      "levelId": 311,
+      "pointFeet": [27.528838919878776, 192.89551289739757],
+      "elevationFeet": 0
+    },
+    "regionFeet": {
+      "radius": 14,
+      "width": 28
+    },
+    "nativeFloorIds": [400238],
+    "pinOnNativeFloor": true,
+    "pinInsideNativeBarrier": true,
+    "sourceOwnersAtPin": [
+      {
+        "key": "rm-311-3578f4ca0bc1",
+        "number": "07-203A",
+        "circulation": true,
+        "stair": false,
+        "nativeRoutingBoundary": null
+      }
+    ],
+    "localAreaSquareFeet": {
+      "nativeFloor": 784.0000000000009,
+      "sourceCirculation": 672.9518615629836,
+      "physicalClearFloorOutsideRoomClaims": 580.5549377026482,
+      "clearFloorMissingFromCirculation": 6.2882366026665295,
+      "circulationOutsideNativeFloor": 0,
+      "circulationInsideNativeBarrier": 98.68516046300192,
+      "circulationInsideLowStairProjection": 0
+    },
+    "preparedAreaSquareFeet": {
+      "circulation": 580.5136293122691,
+      "missingClearFloor": 0.04131183634262925,
+      "obstacleOverlap": 3.445964466664009e-6
+    },
+    "sourceDatasetUnchanged": true,
+    "caveat": "Physical clear floor is a diagnostic, not authorization to enter unlabelled areas. Clip edges are audit boundaries, not walls. Doors, headroom, source ownership and connector stops still require routing validation."
+  },
+  "fixtures": {
+    "nativeElementId": 2484309,
+    "separateSolidCaps": 3,
+    "upperStoreyFloorsExcluded": true,
+    "routingGeometryUnchangedAfterDisplayCorrection": true
+  },
+  "validation": {
+    "targetedTests": 48,
+    "viewerBuild": "passed",
+    "compilerBuild": "passed",
+    "scopedTypechecks": "passed",
+    "focusedLint": "passed",
+    "nativeBoundaryBrowser": "desktop and mobile passed",
+    "configuredLiftBrowser": "desktop and mobile passed; seven existing stops",
+    "productionNativeModelBrowser": "passed; preserved source assets",
+    "preservedPins": 6,
+    "masterSha256": "65204519191c6697f18f91b9286fda582fabd1533f44109fa96b6c838aad7274",
+    "curvedMultiFloorFollowBrowser": "final package desktop and mobile passed"
+  }
+}

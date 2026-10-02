@@ -13,8 +13,8 @@ const harrods: LocationConfig = {
   mapConfig: {
     center: [-0.1629, 51.4992],
     defaultFloor: 0,
-    zoom: 16,
-    mobileZoom: 15,
+    zoom: 17.5,
+    mobileZoom: 16.5,
     bearing: 0,
     pitch: 45,
     showBasemap3dBuildings: false,

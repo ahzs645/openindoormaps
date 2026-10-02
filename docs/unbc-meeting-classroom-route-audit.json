@@ -1,0 +1,30 @@
+{
+  "package": "UNBC.indoor.clean-routes.reviter.zip",
+  "start": {
+    "number": "03-015",
+    "name": "Meeting",
+    "building": "03",
+    "nativeLevelId": 311,
+    "arrivalNodeId": "arrival:rm-311-8f5cd2f5dd44"
+  },
+  "destination": {
+    "number": "05-154",
+    "name": "Classroom",
+    "building": "05",
+    "nativeLevelId": 311,
+    "arrivalNodeId": "arrival:rm-311-44b2fa297077"
+  },
+  "departureDoor": {
+    "nativeElementId": 706556,
+    "state": "connected",
+    "joins": ["03-015", "03-013"]
+  },
+  "reachableNodes": {
+    "allSavedEdges": 22,
+    "enabledEdges": 22,
+    "publicPermittedEdges": 10
+  },
+  "destinationReachable": false,
+  "finding": "No saved graph connection from the Meeting room component to the destination, even when disabled and restricted edges are included.",
+  "requiredCorrection": "Review actual connecting entrances and circulation in Reviter and regenerate the prepared ZIP. Changing route profile cannot bridge the source topology gap."
+}

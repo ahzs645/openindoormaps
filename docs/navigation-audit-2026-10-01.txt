@@ -1,0 +1,186 @@
+Repair follow-up: Harrods walking data was rebuilt on 2026-10-01. All
+31,202 walking segments avoid source obstacle cores under documented tile
+tolerance. The original findings below describe the pre-repair data.
+See docs/harrods-navigation-repair-2026-10-01.txt for validation and limits.
+
+Indoor navigation audit — 2026-10-01
+
+Verdict
+Source comparison now confirms Harrods routes cross real source walls.
+The graph/UI passes below do not validate physical building navigation.
+See docs/harrods-source-comparison-2026-10-01.txt and the comparison image.
+
+The routing engine and desktop multi-floor flow work well for the seven
+prepared mall/campus datasets, within their supplied route graphs. There are
+reproducible edge cases that prevent treating every destination as validated
+navigation. UNBC is excluded from the current review at the user's request.
+
+This was an audit of the existing working tree. Application code and venue
+data were not changed. Existing uncommitted work was preserved.
+
+Validation
+- npm run typecheck: passed.
+- npx tsx scripts/verify-venue-routing.ts --pairs=150:
+  1,032 sampled requests across Galleria, Campus, City Mall, Harrods,
+  Mappedin Mall, Bowie State, and Eaton Centre. No discrepancies in route
+  availability, shortest cost, start/end floors, instruction distances, or
+  accessible-route connector use against the independent reference graph.
+- Existing Chrome browser suite: 31 passed, one map-loading timing failure
+  in the BebeTei shell test. That test passed in an isolated rerun.
+- Manual browser checks: desktop cross-floor boarding/arrival steps,
+  changed destination text, same-node destinations,
+  phone panel behavior at 390 x 844, and BebeTei preview.
+- Supplemental headless checks: same-node destinations, flagged inactive
+  connectors, and 140 deterministic BebeTei route requests.
+
+What works
+- Galleria's up-only escalator is avoided when travelling down.
+- Accessible-only routing avoids stairs/escalators in the prepared venues.
+- Turning accessible-only on clears an unavailable previous escalator route.
+- Harrods: one-floor trips use an escalator; longer elevator rides combine
+  consecutive shaft hops into one instruction with one boarding wait.
+- Selecting a floor-change instruction focuses the boarding floor. Moving
+  to the following walking step switches to the arrival floor.
+- Connector markers switch floors; City Mall's animated preview follows
+  the walking legs onto the destination floor.
+- Campus/Bowie routes include outdoor travel, building entry/exit, skybridge
+  use, and the hillside entrance onto an upper floor.
+
+Confirmed problems, in suggested repair order
+
+1. Medium: nearby destinations can produce a completely blank route panel.
+   Reproduction: /harrods?from=16&to=144
+   Fine Jewellery -> Boghossian. Both snap to the same vertex. The engine
+   emits a one-coordinate LineString and zero instructions; the UI shows
+   neither directions nor an error/nearby-arrival message.
+   Shared-node groups: Harrods 34, Bowie State 34, Eaton Centre 23.
+   Repair: handle identical snaps explicitly, retain the walking lead-in/
+   lead-out, and show an arrival/nearby explanation instead of an invalid
+   one-point line and empty instructions.
+   Source: app/indoor-directions/directions/main.ts:891.
+   Evidence: screenshots/navigation-audit-shared-snap.jpg
+
+2. Medium: changing the destination can leave the old route displayed.
+   Reproduction: /city-mall?from=15&to=17; replace the destination text
+   with "not a real destination" and tab out without choosing a suggestion.
+   The input changes, but the route, summary, "Arrive at Zara Home" step,
+   preview, URL, and share state still describe the previous destination.
+   Repair: invalidate the previous route when an endpoint is edited; make
+   selection/submission behavior explicit and keep sharing consistent.
+   Source: app/components/discovery-panel/navigation-view.tsx:388.
+   Evidence: screenshots/navigation-audit-stale-destination.jpg
+
+3. Medium: a phone's expanded directions panel hides the focused map.
+   Reproduction: City Mall route above at 390 x 844; expand the bottom
+   sheet fully and tap "Take the escalator up to 1st Floor".
+   The camera focuses the connector but the sheet continues covering the
+   map. The user must collapse it separately to see the result.
+   Repair: collapse/reduce the sheet on step focus or preview, with camera
+   padding based on the visible sheet size; retain compact step controls.
+   Sources: app/components/discovery-panel/navigation-view.tsx:82, :294;
+   app/components/map/map-section-layout.tsx:390.
+   Evidence: screenshots/navigation-audit-mobile-step.jpg
+
+4. Medium: BebeTei's Preview route button does not animate the route.
+   Reproduction: /bebetei-vitan?from=1&to=2, then Preview route.
+   The route has valid instructions, but its walking line is classified
+   as "vertical" because the legacy adapter drops all route properties.
+   previewRoute only plays segments typed "level", so it returns false
+   immediately. The map also draws this ordinary walk as a dashed connector.
+   Repair: normalize single-floor routes with level_id 0 and corridor type;
+   classify vertical segments from connector metadata, not null level alone.
+   Sources: app/data/bebetei-vitan/location-data.ts:82;
+   app/indoor-directions/directions/main.ts:819, :1242.
+   Evidence: screenshots/navigation-audit-bebetei-preview.jpg
+
+Connector policy and data coverage to resolve
+- Eaton Centre has four escalator edges with active=false that remain
+  routable. A checked route /eaton-centre?from=20&to=304 uses one of them.
+  The importer explicitly says the upstream field's meaning is undocumented,
+  so this does not establish a real-world outage. Confirm the meaning; if
+  it is an availability flag, honor it when building/filtering the graph.
+  Source: scripts/port-mappedin-mvf.py:345.
+- Eaton's imported graph has disconnected subway/PATH/parkade destinations,
+  and its Level 4 shops have no accessible graph connection. Harrods' Sixth
+  Floor has no elevator connection in this dataset. Bowie has inaccessible
+  basement destinations. These are dataset limits, not Dijkstra failures;
+  show "not available in this map" distinctly from physical inaccessibility.
+- Long straight-line snaps exist for outdoor POIs: up to about 242 m at
+  Harrods and 86 m at Eaton. The engine adds those distances but does not
+  validate the connecting line against doors, streets, walls, or walkways.
+  Add actual outdoor connections or report unsupported destinations.
+- Some connector types/directions are inferred, and Harrods' walking mesh
+  is synthesized. A mathematically shortest graph route does not validate
+  physical walkability, escalator direction, or elevator availability.
+  Sources and per-venue limits are documented in docs/viewer-data-models.md.
+
+Recommended next work
+Fix endpoint invalidation, same-node routes, and the single-floor adapter;
+then improve phone step/preview behavior.
+Add regressions for these exact cases. Validate physical connector direction,
+floor service, and missing connections against venue evidence before making
+real-world navigation claims.
+
+Continued live browser walkthrough (UNBC excluded)
+37 interaction checks passed. One usability check failed: the phone's
+expanded bottom sheet remains over the map after a step is selected.
+Raw observations: navigation-walkthrough-checks.json.
+
+Harrods — primary real-building example
+  /harrods?from=37&to=10
+  Harrods Technology -> Abercrombie & Kent: one five-floor elevator ride
+  to Ground Floor, then an escalator down to Lower Ground.
+  Verified boarding/arrival floor sequence: 5 -> 0 -> 0 -> -1.
+  Full preview completed on Lower Ground and restored the Preview button.
+  /harrods?from=29&to=37
+  Toys -> Harrods Technology: escalator up to Fifth Floor.
+  Accessible toggle changed the route to an elevator. Swapping endpoints
+  produced an elevator down to Fourth Floor. Turning accessible-only off
+  restored the normal downward escalator route.
+
+Galleria — controlled synthetic connector example
+  /galleria?from=14&to=9
+  Central Escalator -> Galleria Food Hall: escalator up to Level 2.
+  Swapping endpoints avoided the up-only escalator.
+  /galleria?from=8&to=1
+  Pixel Toys -> Lumen Electronics: stairs down to Level 1.
+  Accessible toggle changed it to an elevator, with no stairs/escalator
+  instructions remaining.
+
+City Mall — manual search and phone navigation
+  Searched Zara Home, selected its card, clicked Directions, typed Primark
+  as the origin and selected the suggestion. Route started on Ground Floor
+  and used the escalator to 1st Floor. The walking step after the escalator
+  switched the floor correctly. Full preview finished on 1st Floor and
+  could also be cancelled. Accessible toggle chose the elevator.
+  At 390 x 844, boarding and arrival steps still selected the correct floors,
+  but the full-height sheet hid the map after focusing a step.
+  Reproduction route: /city-mall?from=15&to=17
+
+Campus — outdoor route between two buildings
+  /campus?from=32&to=11&accessible=1
+  Fitness Centre -> Observatory Deck: elevator down to Ground Floor,
+  Exit Student Union, outdoor walk, Enter Science Hall, elevator up three
+  floors to Level 4. Both elevator boarding/arrival floors were correct.
+
+Eaton Centre — unavailable accessible route and recovery
+  /eaton-centre?from=82&to=40
+  Urban Eatery -> Zara: normal escalator route exists. Accessible-only
+  cleared the route summary and escalator instructions and displayed
+  No accessible route found. Turning accessible-only off restored the route.
+
+The core navigation works as a software demo in these examples. The earlier
+nearby-destination, edited-input, phone-panel, and BebeTei-preview issues
+remain open. Application code was not changed in this continuation.
+Working example: screenshots/navigation-walkthrough-harrods.jpg
+Phone issue: screenshots/navigation-walkthrough-phone.jpg
+
+Source-fidelity follow-up — 2026-10-01
+Harrods: all three captured original routes avoid source walls, while the
+current app equivalents cross walls on 7, 5, and 7 walking segments.
+The current 37 -> 10 example also crosses walls on 11 walking segments.
+Root cause: synthesized walking mesh ignores source wall material, and
+component stitching/POI fallback links bypass obstacle checks.
+Eaton Centre and Bowie State preserve all source same-floor graph edges;
+added POI spurs still require physical validation.
+Full methods and scope: docs/harrods-source-comparison-2026-10-01.txt.

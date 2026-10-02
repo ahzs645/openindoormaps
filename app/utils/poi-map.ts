@@ -27,6 +27,24 @@ export function buildPoiMap(
       const poiCoordinates = poiFeature.geometry.coordinates;
 
       for (const unitFeature of unitFeatures) {
+        const unitLevel = unitFeature.properties?.level_id;
+        const poiLevel = poiFeature.properties?.floor;
+        if (
+          typeof unitLevel === "number" &&
+          typeof poiLevel === "number" &&
+          unitLevel !== poiLevel
+        ) {
+          continue;
+        }
+        const unitBuilding = unitFeature.properties?.building_id;
+        const poiBuilding = poiFeature.properties?.building_id;
+        if (
+          unitBuilding != null &&
+          poiBuilding != null &&
+          unitBuilding !== poiBuilding
+        ) {
+          continue;
+        }
         if (
           booleanPointInPolygon(
             poiCoordinates,

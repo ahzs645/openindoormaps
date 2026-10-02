@@ -1,0 +1,78 @@
+{
+  "zip": "/Users/ahmadjalil/Downloads/UNBC.indoor.all-ramps.reviter.zip",
+  "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "checkedSegments": 73,
+  "nativeBarrierFailures": 0,
+  "nativeFloorCoverageFailures": 0,
+  "sourceDatasetUnchanged": true,
+  "results": [
+    {
+      "from": "06-260",
+      "to": "07-240",
+      "distanceMetres": 103.13584459682242,
+      "selectedDoors": [
+        "door:694:1327976",
+        "door:694:1328019",
+        "door:694:1328017",
+        "door:694:1328016",
+        "door:311:1736144"
+      ],
+      "verticalEdges": ["connector:unbc-agora-conference-lift:0:1"],
+      "curvedPoints": 32,
+      "curveRanges": [
+        {
+          "start": 3,
+          "end": 25
+        }
+      ],
+      "turnInstructions": 5,
+      "curveInstructions": 1,
+      "finalLevel": 311
+    },
+    {
+      "from": "07-240",
+      "to": "06-260",
+      "distanceMetres": 104.05811570047354,
+      "selectedDoors": [
+        "door:311:1736144",
+        "door:694:1328016",
+        "door:694:1328017",
+        "door:694:1328019",
+        "door:694:1327976"
+      ],
+      "verticalEdges": ["connector:unbc-agora-conference-lift:0:1"],
+      "curvedPoints": 33,
+      "curveRanges": [
+        {
+          "start": 6,
+          "end": 29
+        }
+      ],
+      "turnInstructions": 6,
+      "curveInstructions": 1,
+      "finalLevel": 694
+    },
+    {
+      "from": "05-120",
+      "to": "05-165",
+      "distanceMetres": 68.58923813080614,
+      "selectedDoors": ["door:311:1836014"],
+      "verticalEdges": [],
+      "curvedPoints": 0,
+      "turnInstructions": 1,
+      "curveInstructions": 0,
+      "finalLevel": 311
+    },
+    {
+      "from": "05-165",
+      "to": "05-120",
+      "distanceMetres": 68.58923813080614,
+      "selectedDoors": ["door:311:1836014"],
+      "verticalEdges": [],
+      "curvedPoints": 0,
+      "turnInstructions": 2,
+      "curveInstructions": 0,
+      "finalLevel": 311
+    }
+  ]
+}

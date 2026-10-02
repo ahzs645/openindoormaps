@@ -3,6 +3,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 interface SearchBarProps {
+  placeholder?: string;
+  compact?: boolean;
   isSearching: boolean;
   searchQuery: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,6 +14,8 @@ interface SearchBarProps {
 
 export default function SearchBar({
   isSearching,
+  placeholder = "Search indoor locations...",
+  compact = false,
   searchQuery,
   onChange,
   onFocus,
@@ -36,11 +40,15 @@ export default function SearchBar({
       )}
       <Input
         type="text"
-        placeholder="Search indoor locations..."
+        placeholder={placeholder}
         value={searchQuery}
         onChange={onChange}
         onFocus={onFocus}
-        className="h-10 w-full min-w-72 rounded-full px-10 py-4 text-lg shadow-sm"
+        className={
+          compact
+            ? "h-12 w-full min-w-0 rounded-full border-0 bg-gray-100 px-10 text-sm font-medium shadow-none"
+            : "h-10 w-full min-w-72 rounded-full px-10 py-4 text-lg shadow-sm"
+        }
       />
     </div>
   );

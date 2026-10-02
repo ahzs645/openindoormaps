@@ -1,0 +1,5996 @@
+{
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "c102ae887508b57e9620eec45c751f2a9c5ac9918e3ca7cf8290991a260a1865"
+  },
+  "missingEntrances": 201,
+  "isolatedDestinations": 33,
+  "summary": {
+    "ordinary-room-transit-needs-review": 3,
+    "native-door-side-ownership-unresolved": 56,
+    "source-arrival-location-needs-review": 21,
+    "no-supported-native-entrance": 122,
+    "source-component-has-no-other-arrival": 5,
+    "matched-door-approach-needs-review": 2,
+    "staff-egress-retained": 25
+  },
+  "policy": "Staff-only reviews and endpoint-only ordinary rooms remain enforced. Model geometry alone does not establish public access, step-free passage or elevator stops.",
+  "reviews": [
+    {
+      "key": "rm-1450417-6b2236189714",
+      "number": "09-232",
+      "name": "Washroom",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "isolated-for-profile",
+      "reason": "ordinary-room-transit-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1522054,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-f77d65d92ad7",
+              "number": "09-214",
+              "name": "First Nation Gallery",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-1450417-6b47b8189734",
+      "number": "09-230",
+      "name": "Washroom",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "isolated-for-profile",
+      "reason": "ordinary-room-transit-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1522052,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-f77d65d92ad7",
+              "number": "09-214",
+              "name": "First Nation Gallery",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-1450417-c01dfc29e05c",
+      "number": "09-231",
+      "name": "H,C All Gender",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "isolated-for-profile",
+      "reason": "ordinary-room-transit-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1522053,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-f77d65d92ad7",
+              "number": "09-214",
+              "name": "First Nation Gallery",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-1450417-d29fde29eb2e",
+      "number": "09-280",
+      "name": "Office",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1522202,
+          "state": "unmatched",
+          "normalFeet": [-4.2138194994729217e-7, 0.9999999999999112],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-d29fde29eb2e:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-d29fde29eb2e",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-dbab6729f069",
+      "number": "09-260",
+      "name": "Lobby",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1972265,
+          "state": "unmatched",
+          "normalFeet": [0.9961946980917452, 0.08715574274766152],
+          "relatedRooms": []
+        },
+        {
+          "id": 1964672,
+          "state": "unmatched",
+          "normalFeet": [0.9961946980917464, 0.08715574274764643],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-dbab6729f069:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-dbab6729f069",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-dbbc6729f077",
+      "number": "09-267",
+      "name": "Office",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1975625,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-db9e5929f05e",
+              "number": "09-263",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1450417-dbbc6729f077:1450417",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-1450417-dbbc6729f077.",
+          "roomKey": "rm-1450417-dbbc6729f077",
+          "levelId": 1450417
+        },
+        {
+          "id": "isolated-arrival:rm-1450417-dbbc6729f077:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-dbbc6729f077",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-dbde6729f094",
+      "number": "09-220",
+      "name": "Study Space",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-dbde6729f094:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-dbde6729f094",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-dbe24929f098",
+      "number": "09-222",
+      "name": "Study Space",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-dbe24929f098:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-dbe24929f098",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-ed64bad924b7",
+      "number": "09-292",
+      "name": "Multipurpose Lab",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-ed64bad924b7:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-ed64bad924b7",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-f77d65d92ad7",
+      "number": "09-214",
+      "name": "First Nation Gallery",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1964545,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-f779f7d92ad4",
+              "number": "09-292-1",
+              "name": "Vestibule",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1522052,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-6b47b8189734",
+              "number": "09-230",
+              "name": "Washroom",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1522053,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-c01dfc29e05c",
+              "number": "09-231",
+              "name": "H,C All Gender",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1522054,
+          "state": "connected",
+          "normalFeet": [-0.08715574274764613, 0.9961946980917467],
+          "relatedRooms": [
+            {
+              "key": "rm-1450417-6b2236189714",
+              "number": "09-232",
+              "name": "Washroom",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1450417-f77d65d92ad7:1450417",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-1450417-f77d65d92ad7.",
+          "roomKey": "rm-1450417-f77d65d92ad7",
+          "levelId": 1450417
+        },
+        {
+          "id": "isolated-arrival:rm-1450417-f77d65d92ad7:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-f77d65d92ad7",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1450417-feaef9ff66b1",
+      "number": "09-218-1",
+      "name": "Elevator",
+      "building": "09",
+      "levelId": 1450417,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1450417-feaef9ff66b1:1450417",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1450417-feaef9ff66b1",
+          "levelId": 1450417
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-3dc24c998731",
+      "number": "06-213",
+      "name": "Unnamed area",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-3dc24c998731:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-3dc24c998731",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4d7862d786c5",
+      "number": "06-302",
+      "name": "Elect",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4d7862d786c5:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4d7862d786c5",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4e1b62d7874f",
+      "number": "06-340",
+      "name": "Coordinators Office",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4e1b62d7874f:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4e1b62d7874f",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4e1ee4d78752",
+      "number": "06-342",
+      "name": "Office",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4e1ee4d78752:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4e1ee4d78752",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4e224ad78755",
+      "number": "06-314",
+      "name": "Projection",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4e224ad78755:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4e224ad78755",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4e295ad7875b",
+      "number": "06-308",
+      "name": "Vestibule",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1779390,
+          "state": "unmatched",
+          "normalFeet": [-0.681998360062495, 0.7313537016191737],
+          "relatedRooms": []
+        },
+        {
+          "id": 1779391,
+          "state": "unmatched",
+          "normalFeet": [-0.7716245833871599, 0.6360782202784431],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4e295ad7875b:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4e295ad7875b",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-4e2c5cd7875d",
+      "number": "06-313",
+      "name": "Soundproof Vestibule",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1779387,
+          "state": "unmatched",
+          "normalFeet": [-0.9933599426825408, 0.11504792164024315],
+          "relatedRooms": []
+        },
+        {
+          "id": 1779388,
+          "state": "unmatched",
+          "normalFeet": [-0.9994993253965037, 0.03164014114908863],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-4e2c5cd7875d:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-4e2c5cd7875d",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-594f2b1f3ad6",
+      "number": "06-S203",
+      "name": "Stair 3",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-594f2b1f3ad6:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-594f2b1f3ad6",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-c041caebb03e",
+      "number": "06-370",
+      "name": "Reception",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "isolated-for-profile",
+      "reason": "source-component-has-no-other-arrival",
+      "nativeDoors": [
+        {
+          "id": 1779325,
+          "state": "connected",
+          "normalFeet": [0.5299192642335558, 0.8480480961562068],
+          "relatedRooms": [
+            {
+              "key": "rm-1487353-6e5cbce7fec2",
+              "number": "06-S306",
+              "name": "Stair 6",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-1487353-c760fdebb3d7",
+      "number": "06-394",
+      "name": "Storage",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1779216,
+          "state": "ambiguous",
+          "normalFeet": [-0.5299192642335553, -0.848048096156207],
+          "relatedRooms": [
+            {
+              "key": "rm-1487353-c76473ebb3da",
+              "number": "06-397",
+              "name": "Meeting Room",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-1487353-c771fbebb3e6",
+              "number": "06-368",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-c760fdebb3d7:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-c760fdebb3d7",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-c76473ebb3da",
+      "number": "06-397",
+      "name": "Meeting Room",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1779216,
+          "state": "ambiguous",
+          "normalFeet": [-0.5299192642335553, -0.848048096156207],
+          "relatedRooms": [
+            {
+              "key": "rm-1487353-c760fdebb3d7",
+              "number": "06-394",
+              "name": "Storage",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-1487353-c771fbebb3e6",
+              "number": "06-368",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-c76473ebb3da:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-c76473ebb3da",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-c77571ebb3e9",
+      "number": "06-396",
+      "name": "Washroom",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2369239,
+          "state": "ambiguous",
+          "normalFeet": [-0.8480480961562096, 0.529919264233551],
+          "relatedRooms": [
+            {
+              "key": "rm-1487353-c75df7ebb3d5",
+              "number": "06-398",
+              "name": "Washroom",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-1487353-c771fbebb3e6",
+              "number": "06-368",
+              "name": "Corridor",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-1487353-c8d3e4ebb513",
+              "number": "06-366",
+              "name": "Lounge",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-c77571ebb3e9:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-c77571ebb3e9",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487353-c8d07cebb510",
+      "number": "06-318",
+      "name": "Vestibule",
+      "building": "06",
+      "levelId": 1487353,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1779389,
+          "state": "unmatched",
+          "normalFeet": [0.529919264233554, 0.8480480961562078],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487353-c8d07cebb510:1487353",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487353-c8d07cebb510",
+          "levelId": 1487353
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-00cb78511bfb",
+      "number": "10-1513",
+      "name": "Storage",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-00cb78511bfb:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-00cb78511bfb",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-07d2fdafc4ca",
+      "number": "10-S102",
+      "name": "Stair",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1501504,
+          "state": "ambiguous",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-1487816-c4a1c947fa45",
+              "number": "10-1570",
+              "name": "Janitor",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-1487816-cbbac047fdd9",
+              "number": "10-1580",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-07d2fdafc4ca:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-07d2fdafc4ca",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-07d681afc4cd",
+      "number": "10-S103",
+      "name": "Stair",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 2211966,
+          "state": "unmatched",
+          "normalFeet": [1, 1.5347723092418513e-13],
+          "relatedRooms": []
+        },
+        {
+          "id": 1501523,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-1487816-68bdaa3fca49",
+              "number": "10-1502",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1487816-07d681afc4cd:1487816",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-1487816-07d681afc4cd.",
+          "roomKey": "rm-1487816-07d681afc4cd",
+          "levelId": 1487816
+        },
+        {
+          "id": "isolated-arrival:rm-1487816-07d681afc4cd:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-07d681afc4cd",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-189c5f41e0d1",
+      "number": "10-1046",
+      "name": "Kitchen",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-189c5f41e0d1:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-189c5f41e0d1",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-1a05bf30669f",
+      "number": "08-132",
+      "name": "H,C All Gender",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-1a05bf30669f:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-1a05bf30669f",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-3e30f1f411fe",
+      "number": "08-124",
+      "name": "Research Office",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-3e30f1f411fe:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-3e30f1f411fe",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-3e3471f41201",
+      "number": "08-129",
+      "name": "Lab",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-3e3471f41201:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-3e3471f41201",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-45278af41574",
+      "number": "08-162",
+      "name": "AV Support Storage",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-45278af41574:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-45278af41574",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-45319af4157d",
+      "number": "08-166",
+      "name": "Lecture Theatre",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2064154,
+          "state": "unmatched",
+          "normalFeet": [-1, 2.102654619996862e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-45319af4157d:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-45319af4157d",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-46230af4164a",
+      "number": "08-165",
+      "name": "Classroom Support",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-46230af4164a:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-46230af4164a",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-46268af4164d",
+      "number": "08-164",
+      "name": "Lecture Theatre",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2064122,
+          "state": "unmatched",
+          "normalFeet": [-1, 2.102654619996862e-15],
+          "relatedRooms": []
+        },
+        {
+          "id": 2064074,
+          "state": "unmatched",
+          "normalFeet": [-1, 2.102654619996862e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-46268af4164d:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-46268af4164d",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-46309af41655",
+      "number": "08-161",
+      "name": "Classroom",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "matched-door-approach-needs-review",
+      "nativeDoors": [
+        {
+          "id": 2019487,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-1487816-800e4ffde566",
+              "number": "08-155",
+              "name": "Agora",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1487816-46309af41655:1487816",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: door:1487816:2019487:0.",
+          "roomKey": "rm-1487816-46309af41655",
+          "levelId": 1487816
+        },
+        {
+          "id": "isolated-arrival:rm-1487816-46309af41655:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-46309af41655",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-46378af4165b",
+      "number": "08-S102",
+      "name": "Stair",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1487816-46378af4165b:1487816",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-1487816-46378af4165b.",
+          "roomKey": "rm-1487816-46378af4165b",
+          "levelId": 1487816
+        },
+        {
+          "id": "isolated-arrival:rm-1487816-46378af4165b:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-46378af4165b",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-5550ce486504",
+      "number": "10-1300",
+      "name": "Vestibule",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1500735,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        },
+        {
+          "id": 2471813,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-5550ce486504:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-5550ce486504",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-5561e0486513",
+      "number": "10-1308",
+      "name": "Storage",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-5561e0486513:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-5561e0486513",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-5b5019849abc",
+      "number": "10-1081",
+      "name": "Facilities Storage",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-5b5019849abc:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-5b5019849abc",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-6b54a84075ea",
+      "number": "10-1096",
+      "name": "Office",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-6b54a84075ea:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-6b54a84075ea",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-781c56fde119",
+      "number": "08-156",
+      "name": "Vestibule",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-1487816-781c56fde119:1487816",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-1487816-781c56fde119.",
+          "roomKey": "rm-1487816-781c56fde119",
+          "levelId": 1487816
+        },
+        {
+          "id": "isolated-arrival:rm-1487816-781c56fde119:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-781c56fde119",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-80187ffde56e",
+      "number": "08-167",
+      "name": "Classroom Support",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-80187ffde56e:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-80187ffde56e",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-c22f4ce15949",
+      "number": "10-1011",
+      "name": "Storage",
+      "building": "10",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-c22f4ce15949:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-c22f4ce15949",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-ee5665f5067e",
+      "number": "08-136",
+      "name": "Office",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-ee5665f5067e:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-ee5665f5067e",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-f77395f50bc8",
+      "number": "08-122",
+      "name": "Research Meeting Room",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-1487816-f77395f50bc8:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-1487816-f77395f50bc8",
+          "levelId": 1487816
+        }
+      ]
+    },
+    {
+      "key": "rm-2295121-38f4c649768c",
+      "number": "10-B502",
+      "name": "Storage",
+      "building": "10",
+      "levelId": 2295121,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-2295121-38f4c649768c:2295121",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-2295121-38f4c649768c",
+          "levelId": 2295121
+        }
+      ]
+    },
+    {
+      "key": "rm-2295121-38f7c849768e",
+      "number": "10-B504",
+      "name": "WASHROOM",
+      "building": "10",
+      "levelId": 2295121,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-2295121-38f7c849768e:2295121",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-2295121-38f7c849768e",
+          "levelId": 2295121
+        }
+      ]
+    },
+    {
+      "key": "rm-2295121-3986c8497708",
+      "number": "10-B514",
+      "name": "Hydrology Lab",
+      "building": "10",
+      "levelId": 2295121,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-2295121-3986c8497708:2295121",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-2295121-3986c8497708",
+          "levelId": 2295121
+        }
+      ]
+    },
+    {
+      "key": "rm-2295121-5b384c849aa8",
+      "number": "10-B516",
+      "name": "Storage",
+      "building": "10",
+      "levelId": 2295121,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-2295121-5b384c849aa8:2295121",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-2295121-5b384c849aa8",
+          "levelId": 2295121
+        }
+      ]
+    },
+    {
+      "key": "rm-311-05d534822318",
+      "number": "07-249",
+      "name": "Counter",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-05d534822318:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-05d534822318",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-1f69c8f5196e",
+      "number": "04-127",
+      "name": "Mech",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-1f69c8f5196e:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-1f69c8f5196e",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-1fa764ddb7bf",
+      "number": "04-135",
+      "name": "Storage Cages",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-1fa764ddb7bf:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-1fa764ddb7bf",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-1faaeaddb7c2",
+      "number": "04-111",
+      "name": "Comm Room",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-1faaeaddb7c2:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-1faaeaddb7c2",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-1fae70ddb7c5",
+      "number": "04-112",
+      "name": "Elevator Machine Room",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-1fae70ddb7c5:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-1fae70ddb7c5",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-1fb872ddb7cd",
+      "number": "04-110",
+      "name": "Facilities Table Storage",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-1fb872ddb7cd:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-1fb872ddb7cd",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-2054e6ddb852",
+      "number": "04-124",
+      "name": "Rotunda",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-2054e6ddb852:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-2054e6ddb852",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-24fd02e32d80",
+      "number": "04-121",
+      "name": "Fish Lab",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-24fd02e32d80:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-24fd02e32d80",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-34122edb8b6c",
+      "number": "07-786",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 748412,
+          "state": "unmatched",
+          "normalFeet": [-1, 4.0594831463856615e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-34122edb8b6c:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-34122edb8b6c",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-348404ca0af1",
+      "number": "07-792",
+      "name": "Meeting Room",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 749970,
+          "state": "connected",
+          "normalFeet": [-1, 4.059483146385727e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-34878cca0af4",
+      "number": "07-728",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 749727,
+          "state": "ambiguous",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb0dbca1122",
+              "number": "07-750",
+              "name": "Circulation",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            },
+            {
+              "key": "rm-311-d690fed8ab2f",
+              "number": "07-730",
+              "name": "Office",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-34878cca0af4:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-34878cca0af4",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-359e78ca0be1",
+      "number": "07-788",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 749426,
+          "state": "unmatched",
+          "normalFeet": [-1, 4.0594831463856615e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-359e78ca0be1:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-359e78ca0be1",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-35a17cca0be3",
+      "number": "07-790",
+      "name": "Support",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 750398,
+          "state": "connected",
+          "normalFeet": [0.5299192642332071, 0.8480480961564245],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-399346f64ec3",
+      "number": "07-772",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748716,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-39972cf64ec6",
+      "number": "07-774",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748776,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3e8825ca10ff",
+      "number": "07-768",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748206,
+          "state": "connected",
+          "normalFeet": [-1, 2.0297415731928635e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3e9cfbca1111",
+      "number": "07-754",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 750062,
+          "state": "connected",
+          "normalFeet": [-1, 2.0297415731928635e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3e9fdbca1113",
+      "number": "07-756",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748318,
+          "state": "connected",
+          "normalFeet": [-1, 2.0297415731928635e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3ea3c3ca1117",
+      "number": "07-758",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748378,
+          "state": "connected",
+          "normalFeet": [1, -2.0297415731928307e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3ea6abca1119",
+      "number": "07-760",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748572,
+          "state": "connected",
+          "normalFeet": [-1, 2.0297415731928307e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3eaa0cca111c",
+      "number": "07-770",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748908,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3ed329ca113f",
+      "number": "07-782",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 748964,
+          "state": "unmatched",
+          "normalFeet": [-1, 4.0594831463856615e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-3ed329ca113f:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-3ed329ca113f",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-3ed9b5ca1145",
+      "number": "07-766",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748269,
+          "state": "connected",
+          "normalFeet": [-1, 2.0297415731928635e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-3eeab1ca1153",
+      "number": "07-784",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 748530,
+          "state": "unmatched",
+          "normalFeet": [1, -4.0594831463856615e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-3eeab1ca1153:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-3eeab1ca1153",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-3f5ed3792618",
+      "number": "07-309",
+      "name": "Vestibule",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-3f5ed3792618:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-3f5ed3792618",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-3f6ceb792624",
+      "number": "07-303",
+      "name": "Mech",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-3f6ceb792624:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-3f6ceb792624",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-4673de7929a8",
+      "number": "07-513",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 731419,
+          "state": "unmatched",
+          "normalFeet": [8.118966292771454e-15, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-4673de7929a8:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-4673de7929a8",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-467e107929b1",
+      "number": "07-512",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 707549,
+          "state": "unmatched",
+          "normalFeet": [8.118966292771454e-15, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-467e107929b1:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-467e107929b1",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-477224ca161e",
+      "number": "07-762",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748652,
+          "state": "connected",
+          "normalFeet": [1, -2.0297415731928307e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-47f103792aec",
+      "number": "07-304",
+      "name": "Corridor",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1732467,
+          "state": "unmatched",
+          "normalFeet": [2.16054894113806e-15, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-47f103792aec:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-47f103792aec",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-47f7cd792af2",
+      "number": "07-246",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-47f7cd792af2:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-47f7cd792af2",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-47fab5792af4",
+      "number": "07-244",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-47fab5792af4:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-47fab5792af4",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-538589f65d72",
+      "number": "07-152",
+      "name": "Lecture Theatre",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "matched-door-approach-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1028509,
+          "state": "connected",
+          "normalFeet": [-0.7071067811864964, 0.7071067811865986],
+          "relatedRooms": [
+            {
+              "key": "rm-311-539686f65d80",
+              "number": "07-149",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1026804,
+          "state": "connected",
+          "normalFeet": [0.707106781186551, 0.7071067811865439],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3a294ef64f43",
+              "number": "07-156A",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-538589f65d72:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-538589f65d72",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-57784be66f65",
+      "number": "05-139H",
+      "name": "Storage",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 898500,
+          "state": "connected",
+          "normalFeet": [0.5299192642327678, 0.8480480961566992],
+          "relatedRooms": [
+            {
+              "key": "rm-311-433cf6296f39",
+              "number": "05-122",
+              "name": "Studio",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-311-57784be66f65:311",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-311-57784be66f65.",
+          "roomKey": "rm-311-57784be66f65",
+          "levelId": 311
+        },
+        {
+          "id": "isolated-arrival:rm-311-57784be66f65:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-57784be66f65",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-5e4b23464af3",
+      "number": "07-S205",
+      "name": "Stair",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-5e4b23464af3:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-5e4b23464af3",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-674d19424801",
+      "number": "05-104",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 750326,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-6750a1424804",
+      "number": "05-106",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 750164,
+          "state": "connected",
+          "normalFeet": [0.8480480961564245, -0.5299192642332071],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-675409424807",
+      "number": "05-111",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 754072,
+          "state": "ambiguous",
+          "normalFeet": [-0.8480494750431519, 0.5299170575467773],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            },
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-675409424807:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-675409424807",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-67579142480a",
+      "number": "05-112",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 754018,
+          "state": "connected",
+          "normalFeet": [-0.8480494750431519, 0.5299170575467773],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-675a9142480c",
+      "number": "05-115",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 886568,
+          "state": "connected",
+          "normalFeet": [-0.8480480961565732, 0.5299192642329692],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3eb4c3ca1126",
+              "number": "07-751",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-77cfd439c452",
+      "number": "05-102",
+      "name": "Support",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 749380,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-77d33839c455",
+      "number": "05-103",
+      "name": "Support",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-77d33839c455:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-77d33839c455",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-77e71439c465",
+      "number": "05-110",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 754306,
+          "state": "connected",
+          "normalFeet": [-0.8480431170899737, 0.5299272323218736],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-80323c0942ec",
+      "number": "07-239",
+      "name": "Lounge",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-80323c0942ec:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-80323c0942ec",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-84e9ae1b6aa3",
+      "number": "07-S106",
+      "name": "Stair",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-84e9ae1b6aa3:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-84e9ae1b6aa3",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-8712cb16d929",
+      "number": "07-182",
+      "name": "Duct chase, service tunnel",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2432041,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-8712cb16d929:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-8712cb16d929",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-89f2630948c0",
+      "number": "07-236A",
+      "name": "Corridor",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-89f2630948c0:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-89f2630948c0",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-89f6490948c4",
+      "number": "07-403",
+      "name": "Elect",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-89f6490948c4:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-89f6490948c4",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-8aa369094957",
+      "number": "07-223",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-8aa369094957:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-8aa369094957",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-8b32069a6165",
+      "number": "07-301",
+      "name": "Lower Dining Hall",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1715669,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        },
+        {
+          "id": 1715768,
+          "state": "unmatched",
+          "normalFeet": [4.32109788227612e-15, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-8b32069a6165:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-8b32069a6165",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-8f8f5af5dd6f",
+      "number": "03-004",
+      "name": "Facilities Storage",
+      "building": "03",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-8f8f5af5dd6f:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-8f8f5af5dd6f",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-96c5f8d2663d",
+      "number": "05-163B",
+      "name": "Fax",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-96c5f8d2663d:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-96c5f8d2663d",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-96d728d2664c",
+      "number": "05-161A",
+      "name": "Waiting",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-96d728d2664c:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-96d728d2664c",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-97f82bd26741",
+      "number": "05-166",
+      "name": "Lab",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-97f82bd26741:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-97f82bd26741",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-9b63fb0f9af0",
+      "number": "07-225",
+      "name": "Washroom",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-9b63fb0f9af0:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-9b63fb0f9af0",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-9c58eb0f9bc1",
+      "number": "07-220",
+      "name": "Janitor",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-9c58eb0f9bc1:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-9c58eb0f9bc1",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-a09e9df5e705",
+      "number": "03-031",
+      "name": "Vault",
+      "building": "03",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "source-component-has-no-other-arrival",
+      "nativeDoors": [
+        {
+          "id": 706049,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-311-a0942bf5e6fc",
+              "number": "03-030",
+              "name": "Central Stores",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-ac5f51426f10",
+      "number": "05-105",
+      "name": "Comm",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 865116,
+          "state": "connected",
+          "normalFeet": [-0.8480431170899565, 0.5299272323219013],
+          "relatedRooms": [
+            {
+              "key": "rm-311-8e1b19ddd9ef",
+              "number": "07-113A",
+              "name": "Corridor",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-b7fa83011b32",
+      "number": "04-S103",
+      "name": "Stair",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-b7fa83011b32:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-b7fa83011b32",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-bdbe6c71b575",
+      "number": "07-S204",
+      "name": "Unnamed area",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-bdbe6c71b575:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-bdbe6c71b575",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-c30c81004b62",
+      "number": "07-778",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 749022,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-c30f6b004b64",
+      "number": "07-776",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 748854,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-311-3ee7adca1151",
+              "number": "07-752",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-ce76b13ffde1",
+      "number": "05-168A",
+      "name": "Waiting",
+      "building": "05",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-ce76b13ffde1:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-ce76b13ffde1",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-d767b4e683dd",
+      "number": "04-108",
+      "name": "Research Lab",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-d767b4e683dd:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-d767b4e683dd",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-d963b2d0d90a",
+      "number": "05-108",
+      "name": "WC",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 754351,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564227, 0.52991926423321],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-d966b3d0d90c",
+      "number": "05-107",
+      "name": "Meeting",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 754421,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564227, 0.52991926423321],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-d96a34d0d910",
+      "number": "05-101",
+      "name": "Office",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 749298,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564245, 0.5299192642332071],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-deb13a6f0a1f",
+      "number": "04-108B",
+      "name": "Research Lab",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-deb13a6f0a1f:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-deb13a6f0a1f",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-debb486f0a27",
+      "number": "04-118",
+      "name": "Lab",
+      "building": "04",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-debb486f0a27:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-debb486f0a27",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-f33db1d0e7a5",
+      "number": "05-109",
+      "name": "Kitchen",
+      "building": "05",
+      "levelId": 311,
+      "status": "isolated-for-profile",
+      "reason": "staff-egress-retained",
+      "nativeDoors": [
+        {
+          "id": 754102,
+          "state": "connected",
+          "normalFeet": [-0.8480480961564227, 0.52991926423321],
+          "relatedRooms": [
+            {
+              "key": "rm-311-77d61839c457",
+              "number": "05-117",
+              "name": "Circulation",
+              "access": "staff"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-311-f3f4105b5399",
+      "number": "07-168",
+      "name": "Office",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2427810,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-f3f4105b5399:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-f3f4105b5399",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-f78cb8ff6316",
+      "number": "07-411",
+      "name": "Mech",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-f78cb8ff6316:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-f78cb8ff6316",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-311-fca784821dc0",
+      "number": "07-254",
+      "name": "Storage",
+      "building": "07",
+      "levelId": 311,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-311-fca784821dc0:311",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-311-fca784821dc0",
+          "levelId": 311
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-072911afc43a",
+      "number": "10-S303",
+      "name": "Stair",
+      "building": "10",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 2215437,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-8520f28ccbd8",
+              "number": "10-3600",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-400176-072911afc43a:400176",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-400176-072911afc43a.",
+          "roomKey": "rm-400176-072911afc43a",
+          "levelId": 400176
+        },
+        {
+          "id": "isolated-arrival:rm-400176-072911afc43a:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-072911afc43a",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-21857a17a696",
+      "number": "08-325",
+      "name": "Lab",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2037577,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-21857a17a696:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-21857a17a696",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-2456a17aeb13",
+      "number": "10-3038",
+      "name": "Waiting",
+      "building": "10",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-2456a17aeb13:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-2456a17aeb13",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-4ba0e61c20c4",
+      "number": "05-346",
+      "name": "Elect",
+      "building": "05",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-4ba0e61c20c4:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-4ba0e61c20c4",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-5e844d709d60",
+      "number": "03-2001",
+      "name": "Washroom",
+      "building": "03",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-5e844d709d60:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-5e844d709d60",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-5f19d5709ddf",
+      "number": "03-2100",
+      "name": "Office",
+      "building": "03",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-5f19d5709ddf:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-5f19d5709ddf",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-5f20c1709de5",
+      "number": "03-2095",
+      "name": "Lounge",
+      "building": "03",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-5f20c1709de5:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-5f20c1709de5",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-67e20570a2e1",
+      "number": "03-2018",
+      "name": "Office",
+      "building": "03",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1081474,
+          "state": "connected",
+          "normalFeet": [-1, 4.059483146385727e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-9c336870c09d",
+              "number": "03-2010",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-400176-67e20570a2e1:400176",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-400176-67e20570a2e1.",
+          "roomKey": "rm-400176-67e20570a2e1",
+          "levelId": 400176
+        },
+        {
+          "id": "isolated-arrival:rm-400176-67e20570a2e1:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-67e20570a2e1",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-79eb92dd781e",
+      "number": "04-335",
+      "name": "Lab",
+      "building": "04",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-79eb92dd781e:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-79eb92dd781e",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-81e0b3dd7c6c",
+      "number": "04-331",
+      "name": "Comm Room",
+      "building": "04",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-81e0b3dd7c6c:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-81e0b3dd7c6c",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-858c5daba8e8",
+      "number": "04-S303",
+      "name": "Stair",
+      "building": "04",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-400176-858c5daba8e8:400176",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-400176-858c5daba8e8.",
+          "roomKey": "rm-400176-858c5daba8e8",
+          "levelId": 400176
+        },
+        {
+          "id": "arrival-or-portal:rm-400176-858c5daba8e8:400176",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8:1.",
+          "roomKey": "rm-400176-858c5daba8e8",
+          "levelId": 400176
+        },
+        {
+          "id": "isolated-arrival:rm-400176-858c5daba8e8:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-858c5daba8e8",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-8f208dc4bc6c",
+      "number": "10-3514",
+      "name": "Comm",
+      "building": "10",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2215409,
+          "state": "ambiguous",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-8520f28ccbd8",
+              "number": "10-3600",
+              "name": "Corridor",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-400176-8f350dc4bc7e",
+              "number": "10-3512",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-8f208dc4bc6c:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-8f208dc4bc6c",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-957c01fd2089",
+      "number": "08-338",
+      "name": "Coffee & Wait Room",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-957c01fd2089:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-957c01fd2089",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-969eb6c4c056",
+      "number": "10-3558",
+      "name": "Research Office",
+      "building": "10",
+      "levelId": 400176,
+      "status": "isolated-for-profile",
+      "reason": "source-component-has-no-other-arrival",
+      "nativeDoors": [
+        {
+          "id": 2215397,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-0904d5f8f1a0",
+              "number": "10-3578",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-400176-a4b94b10b2f8",
+      "number": "08-360",
+      "name": "Link",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2112703,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-a4b94b10b2f8:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-a4b94b10b2f8",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-d2a934fd4356",
+      "number": "08-328",
+      "name": "Storage",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-d2a934fd4356:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-d2a934fd4356",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-d2ad12fd435a",
+      "number": "08-327",
+      "name": "Comm Closet",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-d2ad12fd435a:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-d2ad12fd435a",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-d3abf4fd4433",
+      "number": "08-335",
+      "name": "Office",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2035920,
+          "state": "ambiguous",
+          "normalFeet": [-1, 4.263256414560553e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-958fe5fd2099",
+              "number": "08-340",
+              "name": "Corridor",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-400176-959343fd209c",
+              "number": "08-337",
+              "name": "Print",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-d3abf4fd4433:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-d3abf4fd4433",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-dc36b4177f54",
+      "number": "08-323",
+      "name": "Spill Kit",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2042840,
+          "state": "unmatched",
+          "normalFeet": [-1, 3.1849033214658546e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-dc36b4177f54:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-dc36b4177f54",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-dc4ab8177f64",
+      "number": "08-322",
+      "name": "Lab",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2042699,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        },
+        {
+          "id": 2037767,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-dc4ab8177f64:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-dc4ab8177f64",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-dc4e34177f67",
+      "number": "08-324",
+      "name": "Prep Room",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-dc4e34177f67:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-dc4e34177f67",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-e64b5d178570",
+      "number": "08-312",
+      "name": "Office",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-e64b5d178570:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-e64b5d178570",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-e6558d178578",
+      "number": "08-307",
+      "name": "Office",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2035604,
+          "state": "unmatched",
+          "normalFeet": [-1, 2.1316282072802764e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-e6558d178578:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-e6558d178578",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-e65c5917857e",
+      "number": "08-311",
+      "name": "Office",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2042996,
+          "state": "unmatched",
+          "normalFeet": [-1, 2.1316282072802764e-15],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-e65fc1178581",
+              "number": "08-313",
+              "name": "Office",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-e65c5917857e:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-e65c5917857e",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-e68f611785aa",
+      "number": "08-319",
+      "name": "Prep Room",
+      "building": "08",
+      "levelId": 400176,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-400176-e68f611785aa:400176",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-400176-e68f611785aa",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-f91a4f2d9cb3",
+      "number": "05-S304",
+      "name": "Stair",
+      "building": "05",
+      "levelId": 400176,
+      "status": "isolated-for-profile",
+      "reason": "source-component-has-no-other-arrival",
+      "nativeDoors": [
+        {
+          "id": 1920744,
+          "state": "connected",
+          "normalFeet": [0.5299192642332032, 0.8480480961564271],
+          "relatedRooms": [
+            {
+              "key": "rm-400176-b9e71c7b63cd",
+              "number": "05-330A",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-400176-f91a4f2d9cb3:400176",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: door:400176:1920744:1.",
+          "roomKey": "rm-400176-f91a4f2d9cb3",
+          "levelId": 400176
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-049426889a71",
+      "number": "04-413",
+      "name": "Microscopy Lab",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2147987,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-049426889a71:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-049426889a71",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-06c17688ef7f",
+      "number": "03-3092",
+      "name": "Office",
+      "building": "03",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-06c17688ef7f:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-06c17688ef7f",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-072205afc434",
+      "number": "10-S403",
+      "name": "Stair",
+      "building": "10",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 2227675,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-64d7917505b2",
+              "number": "10-4516",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-402367-072205afc434:402367",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-402367-072205afc434.",
+          "roomKey": "rm-402367-072205afc434",
+          "levelId": 402367
+        },
+        {
+          "id": "isolated-arrival:rm-402367-072205afc434:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-072205afc434",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-1363bcba6587",
+      "number": "04-420",
+      "name": "Janitor",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-1363bcba6587:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-1363bcba6587",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-17a030ec6260",
+      "number": "10-4594",
+      "name": "Washroom",
+      "building": "10",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 2227812,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-402367-17a030ec6260:402367",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-402367-17a030ec6260.",
+          "roomKey": "rm-402367-17a030ec6260",
+          "levelId": 402367
+        },
+        {
+          "id": "isolated-arrival:rm-402367-17a030ec6260:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-17a030ec6260",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-1f1e120e87d5",
+      "number": "08-S401",
+      "name": "Stair",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-1f1e120e87d5:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-1f1e120e87d5",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-20a8d2ec6798",
+      "number": "10-4548",
+      "name": "Coffee",
+      "building": "10",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-20a8d2ec6798:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-20a8d2ec6798",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-546664c9f38f",
+      "number": "05-S403",
+      "name": "Stair",
+      "building": "05",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-546664c9f38f:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-546664c9f38f",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-69b7090cfef5",
+      "number": "08-438",
+      "name": "Office",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1504060,
+          "state": "ambiguous",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-69bdd50cfefb",
+              "number": "08-441",
+              "name": "Office",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-402367-69c1390cfefe",
+              "number": "08-436",
+              "name": "Print",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-69b7090cfef5:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-69b7090cfef5",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-69baf50cfef9",
+      "number": "08-439",
+      "name": "Office",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-69baf50cfef9:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-69baf50cfef9",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-69bdd50cfefb",
+      "number": "08-441",
+      "name": "Office",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1504060,
+          "state": "ambiguous",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-69b7090cfef5",
+              "number": "08-438",
+              "name": "Office",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-402367-69c1390cfefe",
+              "number": "08-436",
+              "name": "Print",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1504061,
+          "state": "unmatched",
+          "normalFeet": [1, 0],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-69bdd50cfefb:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-69bdd50cfefb",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-69c1390cfefe",
+      "number": "08-436",
+      "name": "Print",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1504060,
+          "state": "ambiguous",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-69b7090cfef5",
+              "number": "08-438",
+              "name": "Office",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-402367-69bdd50cfefb",
+              "number": "08-441",
+              "name": "Office",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-69c1390cfefe:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-69c1390cfefe",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-69c5290cff02",
+      "number": "08-437",
+      "name": "Waiting Room",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2465283,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        },
+        {
+          "id": 2465300,
+          "state": "unmatched",
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-69c5290cff02:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-69c5290cff02",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-72195d0d03a1",
+      "number": "08-422",
+      "name": "Spill Kit",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2051009,
+          "state": "unmatched",
+          "normalFeet": [-1, 0],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-72195d0d03a1:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-72195d0d03a1",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-8373700d0d77",
+      "number": "08-425",
+      "name": "Janitor",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-8373700d0d77:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-8373700d0d77",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-837da00d0d80",
+      "number": "08-426",
+      "name": "Comm Closet",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-837da00d0d80:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-837da00d0d80",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-84d4600d0ea3",
+      "number": "08-403",
+      "name": "Womens Washroom",
+      "building": "08",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-84d4600d0ea3:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-84d4600d0ea3",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-8e75a3917524",
+      "number": "04-409",
+      "name": "Genetics Equipment Room",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-8e75a3917524:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-8e75a3917524",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-9777dc917a58",
+      "number": "04-422",
+      "name": "Grad Office",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1172655,
+          "state": "unmatched",
+          "normalFeet": [-0.8660254037844192, 0.5000000000000336],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-9777dc917a58:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-9777dc917a58",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-977b4c917a5b",
+      "number": "04-444",
+      "name": "Comm",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-977b4c917a5b:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-977b4c917a5b",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-97b4cc917a8b",
+      "number": "04-407",
+      "name": "UAV Sensor and Meteorological Equip Lab",
+      "building": "04",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2147550,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-97b4cc917a8b:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-97b4cc917a8b",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-a6e033f4311e",
+      "number": "03-R001",
+      "name": "Penthouse",
+      "building": "03",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-a6e033f4311e:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-a6e033f4311e",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-b4910bd43768",
+      "number": "10-4086",
+      "name": "Elevator Control",
+      "building": "10",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-b4910bd43768:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-b4910bd43768",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-daa00876472f",
+      "number": "04-437",
+      "name": "Grad Office",
+      "building": "04",
+      "levelId": 402367,
+      "status": "isolated-for-profile",
+      "reason": "source-component-has-no-other-arrival",
+      "nativeDoors": [
+        {
+          "id": 1116997,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-039546889998",
+              "number": "04-430",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": []
+    },
+    {
+      "key": "rm-402367-ed5c7b805479",
+      "number": "03-3020",
+      "name": "Office",
+      "building": "03",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1074989,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-402367-ed740580548d",
+              "number": "03-3019",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-402367-ed5c7b805479:402367",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-402367-ed5c7b805479.",
+          "roomKey": "rm-402367-ed5c7b805479",
+          "levelId": 402367
+        },
+        {
+          "id": "isolated-arrival:rm-402367-ed5c7b805479:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-ed5c7b805479",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-edc9e3ec4b18",
+      "number": "10-4570",
+      "name": "Janitor",
+      "building": "10",
+      "levelId": 402367,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-402367-edc9e3ec4b18:402367",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-402367-edc9e3ec4b18",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "key": "rm-694-01a5ba06bb82",
+      "number": "08-265",
+      "name": "Help Desk",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-01a5ba06bb82:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-01a5ba06bb82.",
+          "roomKey": "rm-694-01a5ba06bb82",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-01a5ba06bb82:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-01a5ba06bb82",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-07b485afc4b1",
+      "number": "10-S203",
+      "name": "Stair",
+      "building": "10",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1499598,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-694-985fc56bc655",
+              "number": "10-2520",
+              "name": "Coffee",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-07b485afc4b1:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-07b485afc4b1.",
+          "roomKey": "rm-694-07b485afc4b1",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-07b485afc4b1:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-07b485afc4b1",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0a8a775828dd",
+      "number": "06-268",
+      "name": "Washroom",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1327907,
+          "state": "unmatched",
+          "normalFeet": [0.52991926423321, 0.8480480961564227],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0a8a775828dd:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0a8a775828dd",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0a8dff5828e0",
+      "number": "06-270",
+      "name": "Kitchen",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0a8dff5828e0:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0a8dff5828e0",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0a90f35828e2",
+      "number": "06-272",
+      "name": "Sandwich Bar",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0a90f35828e2:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0a90f35828e2",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0a9efb5828ee",
+      "number": "06-266",
+      "name": "Washroom",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1327908,
+          "state": "unmatched",
+          "normalFeet": [0.52991926423321, 0.8480480961564227],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0a9efb5828ee:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0a9efb5828ee",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0aaffb5828fd",
+      "number": "06-276",
+      "name": "Washroom",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-0aaffb5828fd:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-0aaffb5828fd.",
+          "roomKey": "rm-694-0aaffb5828fd",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-0aaffb5828fd:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0aaffb5828fd",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0ab2ff5828ff",
+      "number": "06-274",
+      "name": "Cooler",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2387774,
+          "state": "unmatched",
+          "normalFeet": [0.5299192642332072, 0.8480480961564245],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0ab2ff5828ff:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0ab2ff5828ff",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0b3e77582976",
+      "number": "06-276A",
+      "name": "Storage",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2387839,
+          "state": "unmatched",
+          "normalFeet": [-0.8480480961564227, 0.5299192642332101],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0b3e77582976:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0b3e77582976",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0bed6b73a3bd",
+      "number": "05-S204",
+      "name": "Stair",
+      "building": "05",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-0bed6b73a3bd:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-0bed6b73a3bd.",
+          "roomKey": "rm-694-0bed6b73a3bd",
+          "levelId": 694
+        },
+        {
+          "id": "arrival-or-portal:rm-694-0bed6b73a3bd:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0.",
+          "roomKey": "rm-694-0bed6b73a3bd",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-0bed6b73a3bd:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0bed6b73a3bd",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0e3420ab650c",
+      "number": "06-235",
+      "name": "Washroom",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0e3420ab650c:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0e3420ab650c",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0e3dd0ab6514",
+      "number": "06-232",
+      "name": "Janitor",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-0e3dd0ab6514:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-0e3dd0ab6514",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-24136e583733",
+      "number": "06-248",
+      "name": "Up-Tempo Lounge A",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-24136e583733:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-24136e583733",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-2419fa583738",
+      "number": "06-240",
+      "name": "Grab'N Go",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-2419fa583738:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-2419fa583738",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-241d6e58373b",
+      "number": "06-246",
+      "name": "Up-Tempo Lounge B",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-241d6e58373b:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-241d6e58373b",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-24c44363898e",
+      "number": "10-2570",
+      "name": "Janitor",
+      "building": "10",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-24c44363898e:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-24c44363898e",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b4edcfee0e1",
+      "number": "08-248",
+      "name": "Office",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b4edcfee0e1:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b4edcfee0e1",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b5fdcfee0f0",
+      "number": "08-247",
+      "name": "Print",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b5fdcfee0f0:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b5fdcfee0f0",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b7aecfee107",
+      "number": "08-241",
+      "name": "Office",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1996180,
+          "state": "unmatched",
+          "normalFeet": [-1, 4.263256414560553e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b7aecfee107:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b7aecfee107",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b7e74fee10a",
+      "number": "08-243",
+      "name": "Office",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1996146,
+          "state": "unmatched",
+          "normalFeet": [-1, 4.263256414560553e-15],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b7e74fee10a:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b7e74fee10a",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b84dcfee10f",
+      "number": "08-233",
+      "name": "Janitor",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b84dcfee10f:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b84dcfee10f",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b8864fee112",
+      "number": "08-234",
+      "name": "Comm Closet",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b8864fee112:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b8864fee112",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3b8becfee115",
+      "number": "08-235",
+      "name": "Storage",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3b8becfee115:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3b8becfee115",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-3f176906de8a",
+      "number": "08-211",
+      "name": "Research Office",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-3f176906de8a:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-3f176906de8a",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-474583e52c63",
+      "number": "03-1051E",
+      "name": "Storage",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-474583e52c63:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-474583e52c63",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-484f9eec97d0",
+      "number": "03-1052",
+      "name": "Vestibule",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-484f9eec97d0:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-484f9eec97d0",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-5051ade5319f",
+      "number": "03-1041",
+      "name": "Hallway",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-5051ade5319f:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-5051ade5319f",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-50f1ace53228",
+      "number": "03-1051B",
+      "name": "Office",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 679836,
+          "state": "connected",
+          "normalFeet": [4.059483146385727e-15, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-694-50f834e5322d",
+              "number": "03-1051",
+              "name": "Office",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-50f1ace53228:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-50f1ace53228.",
+          "roomKey": "rm-694-50f1ace53228",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-50f1ace53228:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-50f1ace53228",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-54d0ce297940",
+      "number": "05-221",
+      "name": "Lounge Seating",
+      "building": "05",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-54d0ce297940:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-54d0ce297940",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-54d74a297945",
+      "number": "05-222",
+      "name": "Micro Material Collection",
+      "building": "05",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-54d74a297945:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-54d74a297945",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-5f333fe38730",
+      "number": "03-1043",
+      "name": "Washroom",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2354152,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-5f333fe38730:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-5f333fe38730",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-5f36c3e38733",
+      "number": "03-1044",
+      "name": "Washroom",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2354102,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-5f36c3e38733:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-5f36c3e38733",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-7baac3c6ec98",
+      "number": "06-S201",
+      "name": "Stair",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-7baac3c6ec98:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-7baac3c6ec98",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-7cb67e387ad1",
+      "number": "03-S102",
+      "name": "Stair",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-7cb67e387ad1:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-7cb67e387ad1",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-7cc6aa717e16",
+      "number": "09-333",
+      "name": "Instrument Room",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-7cc6aa717e16:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-7cc6aa717e16",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-7cf9ae717e41",
+      "number": "09-321",
+      "name": "Glass Wash,Autoclave",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-7cf9ae717e41:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-7cf9ae717e41",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-8e81e46b9de6",
+      "number": "04-223",
+      "name": "Radio Active Waste",
+      "building": "04",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1009071,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-694-a9a5df6bad99",
+              "number": "04-217",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-8e81e46b9de6:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-8e81e46b9de6.",
+          "roomKey": "rm-694-8e81e46b9de6",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-8e81e46b9de6:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-8e81e46b9de6",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-8e8bf46b9dee",
+      "number": "04-226",
+      "name": "Chemicals",
+      "building": "04",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1009271,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-8e8bf46b9dee:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-8e8bf46b9dee",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-8f8d6bf2647f",
+      "number": "08-S203",
+      "name": "Stair",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-8f8d6bf2647f:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-8f8d6bf2647f",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-a3a8f7e3adba",
+      "number": "03-1010",
+      "name": "Office",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-a3a8f7e3adba:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-a3a8f7e3adba",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-aa04df6bade9",
+      "number": "04-221",
+      "name": "Acids Room",
+      "building": "04",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1008949,
+          "state": "connected",
+          "normalFeet": [-1, 0],
+          "relatedRooms": [
+            {
+              "key": "rm-694-a9a5df6bad99",
+              "number": "04-217",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-aa04df6bade9:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-aa04df6bade9.",
+          "roomKey": "rm-694-aa04df6bade9",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-aa04df6bade9:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-aa04df6bade9",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-ad54a0e3b37d",
+      "number": "03-1042",
+      "name": "Storage",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 908736,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-ad54a0e3b37d:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-ad54a0e3b37d",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-bf1328011ec6",
+      "number": "04-S203",
+      "name": "Stair",
+      "building": "04",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-bf1328011ec6:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-bf1328011ec6.",
+          "roomKey": "rm-694-bf1328011ec6",
+          "levelId": 694
+        },
+        {
+          "id": "arrival-or-portal:rm-694-bf1328011ec6:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8:0.",
+          "roomKey": "rm-694-bf1328011ec6",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-bf1328011ec6:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-bf1328011ec6",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-d3ac6f5a3e06",
+      "number": "10-2084",
+      "name": "Coffee",
+      "building": "10",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1499397,
+          "state": "ambiguous",
+          "normalFeet": [-0.8480452212023526, 0.5299238650937066],
+          "relatedRooms": [
+            {
+              "key": "rm-694-d30ff45a3d81",
+              "number": "10-2066",
+              "name": "Corridor",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-694-d3135e5a3d84",
+              "number": "10-2002",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-d3ac6f5a3e06:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-d3ac6f5a3e06",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-e3e08c41424d",
+      "number": "09-338",
+      "name": "Refrigerator Area",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-e3e08c41424d:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-e3e08c41424d",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-e3e41e414250",
+      "number": "09-336",
+      "name": "Instrument Room",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-e3e41e414250:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-e3e41e414250",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-e4248d414287",
+      "number": "09-315",
+      "name": "Chance Meeting",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-e4248d414287:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-e4248d414287",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-e4280d41428a",
+      "number": "09-314",
+      "name": "Concrete Catwalk",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "source-arrival-location-needs-review",
+      "nativeDoors": [
+        {
+          "id": 1969603,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-694-7cf63e717e3e",
+              "number": "09-313",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        },
+        {
+          "id": 1969423,
+          "state": "connected",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-694-d9d263413c36",
+              "number": "09-341",
+              "name": "Communication Room",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "arrival-or-portal:rm-694-e4280d41428a:694",
+          "code": "arrival-or-portal",
+          "severity": "review",
+          "message": "No safe walkable anchor within the snap limit: arrival:rm-694-e4280d41428a.",
+          "roomKey": "rm-694-e4280d41428a",
+          "levelId": 694
+        },
+        {
+          "id": "isolated-arrival:rm-694-e4280d41428a:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-e4280d41428a",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-eb3d4641461a",
+      "number": "09-384",
+      "name": "Office",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-eb3d4641461a:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-eb3d4641461a",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-eb40c641461d",
+      "number": "09-310",
+      "name": "Janitor",
+      "building": "09",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-eb40c641461d:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-eb40c641461d",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-ecfcfc619eb4",
+      "number": "05-S202",
+      "name": "Stair",
+      "building": "05",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-ecfcfc619eb4:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-ecfcfc619eb4",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-f0a63d636bfe",
+      "number": "10-2518",
+      "name": "Comm",
+      "building": "10",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1499570,
+          "state": "ambiguous",
+          "normalFeet": [0, 1],
+          "relatedRooms": [
+            {
+              "key": "rm-694-985fc56bc655",
+              "number": "10-2520",
+              "name": "Coffee",
+              "access": "unknown"
+            },
+            {
+              "key": "rm-694-e7a7ac6366ce",
+              "number": "10-2516",
+              "name": "Corridor",
+              "access": "unknown"
+            }
+          ]
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-f0a63d636bfe:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-f0a63d636bfe",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-f8fcc550b451",
+      "number": "06-258",
+      "name": "Drinks Cooler",
+      "building": "06",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 2370142,
+          "state": "unmatched",
+          "normalFeet": [-0.8480480961562026, 0.5299192642335626],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-f8fcc550b451:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-f8fcc550b451",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-fa20bb06b793",
+      "number": "08-232",
+      "name": "Soils Lab",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-fa20bb06b793:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-fa20bb06b793",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-fa239f06b795",
+      "number": "08-231",
+      "name": "Sediment and Soils Lab",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1996762,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-fa239f06b795:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-fa239f06b795",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-fa349f06b7a3",
+      "number": "08-230",
+      "name": "Sediment and Soils Lab",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1998631,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-fa349f06b7a3:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-fa349f06b7a3",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-fa459b06b7b2",
+      "number": "08-226",
+      "name": "Anthropology Lab",
+      "building": "08",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "native-door-side-ownership-unresolved",
+      "nativeDoors": [
+        {
+          "id": 1998991,
+          "state": "unmatched",
+          "normalFeet": [0, 1],
+          "relatedRooms": []
+        }
+      ],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-fa459b06b7b2:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-fa459b06b7b2",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "rm-694-fb76133c317d",
+      "number": "03-1056A",
+      "name": "Closet",
+      "building": "03",
+      "levelId": 694,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:rm-694-fb76133c317d:694",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "rm-694-fb76133c317d",
+          "levelId": 694
+        }
+      ]
+    },
+    {
+      "key": "landing:local:07:311:08:1487816:1620957:1",
+      "number": "",
+      "name": "Native connection landing",
+      "building": "08",
+      "levelId": 1487816,
+      "status": "missing-entrance",
+      "reason": "no-supported-native-entrance",
+      "nativeDoors": [],
+      "issues": [
+        {
+          "id": "isolated-arrival:landing:local:07:311:08:1487816:1620957:1:1487816",
+          "code": "isolated-arrival",
+          "severity": "review",
+          "message": "Area has no matched access to the routing graph.",
+          "roomKey": "landing:local:07:311:08:1487816:1620957:1",
+          "levelId": 1487816
+        }
+      ]
+    }
+  ]
+}

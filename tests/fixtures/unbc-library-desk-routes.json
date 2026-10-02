@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Open area to library desk",
+    "start": { "number": "05-137", "levelId": 311 },
+    "end": { "number": "05-136", "levelId": 311 },
+    "expect": "route"
+  },
+  {
+    "name": "Library desk to open area",
+    "start": { "number": "05-136", "levelId": 311 },
+    "end": { "number": "05-137", "levelId": 311 },
+    "expect": "route"
+  },
+  {
+    "name": "Main corridor to library desk",
+    "start": { "number": "05-120", "levelId": 311 },
+    "end": { "number": "05-136", "levelId": 311 },
+    "expect": "route"
+  },
+  {
+    "name": "Library desk to main corridor",
+    "start": { "number": "05-136", "levelId": 311 },
+    "end": { "number": "05-120", "levelId": 311 },
+    "expect": "route"
+  },
+  {
+    "name": "Library desk upstairs",
+    "start": { "number": "05-136", "levelId": 311 },
+    "end": { "number": "05-S203", "levelId": 694 },
+    "expect": "route"
+  },
+  {
+    "name": "Upstairs to library desk",
+    "start": { "number": "05-S203", "levelId": 694 },
+    "end": { "number": "05-136", "levelId": 311 },
+    "expect": "route"
+  },
+  {
+    "name": "Library desk unverified accessibility",
+    "start": { "number": "05-120", "levelId": 311 },
+    "end": { "number": "05-136", "levelId": 311 },
+    "expect": "blocked",
+    "profile": "accessible"
+  }
+]

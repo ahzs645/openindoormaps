@@ -1,0 +1,90 @@
+Harrods stairs, escalators and elevators — source comparison and repair
+2026-10-01. UNBC excluded.
+
+Implemented locally
+
+The source's 53 stair, 104 escalator and 83 elevator footprints are preserved
+at their original positions and rotations, including polygon holes. An
+independent comparison against merged raw tiles verifies less than 0.1 mm
+boundary deviation from coordinate rounding. Most appearance differences
+came from added decoration: 743 generated tread/chevron/cross lines and
+dashed outlines, plus bright fills. Those are removed for this source.
+Connector fills, opacity, original sprite icons and icon collision behavior
+now follow the captured light_osm.json style. Other venues retain their styles.
+
+The prior proximity grouping merged parallel escalator lanes into 9 banks.
+One-to-one matching across adjacent floors now retains 24 separate multi-floor
+lane chains; these are inferred chains, not a verified count of operating
+escalators. Captured landing pairs take priority over footprint overlap.
+Unmatched footprints remain visible without fabricated floor links.
+The 10 stair chains and 6 elevator banks remain.
+
+Each adjacent-floor escalator flight now has its own connection ID, so two
+flights generate two boarding steps and expose the intermediate landing.
+Vertical route lines are split on connection ID and carry their actual
+boarding/arrival floors, including reverse trips. Consecutive hops within
+the same elevator remain one ride.
+
+Source taxonomy transition times are used: 45 seconds per escalator flight,
+60 seconds per stair floor, and a fixed 120-second elevator ride regardless
+of floors crossed. Elevator entry/exit each cost 60 seconds, with zero extra
+hop cost; ride_time_seconds identifies this model explicitly. The displayed
+summary uses the same full-ride time. Other venues keep their existing model.
+
+Only the observed Lower Ground -> Ground escalator flight is known upward.
+The direction constraint is not propagated to its unobserved upper flights.
+Source taxonomy says escalators are unidirectional, but does not identify
+up/down orientation. Unobserved flights still use the explicitly unknown
+two-way routing fallback. They must not be presented as verified direction.
+
+Verification
+
+9 geometry unit tests passed, including separate parallel lanes, observed
+pairing priority, unmatched lanes and missing-floor gaps. Independent raw
+tile comparison checked all 240 footprints, fills, landing containment,
+adjacent floor links, travel times and accessibility flags.
+
+87 real-engine Harrods trips passed: 3 captured reference paths, both
+directions at all 38 emitted stair links, and 8 normal/accessibility venue
+trips. 74 landing trips actually used stairs. Two additional isolated
+multi-flight checks verified instructions and intermediate-floor rendering
+in both directions. Captured connector landings remain within 2.5 cm of
+the observed endpoints. Unreachable destinations still clear previous paths.
+
+All 63,402 horizontal graph segments and the tested walking routes avoid
+the original obstacle cores using the existing 4 cm wall/6 cm virtual
+obstacle precision tolerances. No obstacle tolerances were relaxed.
+POI and obstacle export contents are unchanged by this connector repair.
+
+40 sampled trips in each of City Mall, Harrods, Mappedin Mall, Bowie State
+and Eaton Centre passed independent routing cost, floor, accessibility and
+hop checks (200 cases). TypeScript and targeted ESLint checks passed.
+8 existing browser tests passed; the added stair preview test also passed:
+boarding focuses Lower Ground, the next step focuses Ground, and accessible
+navigation replaces stairs with an elevator.
+
+Reference walking-path fidelity is unchanged: 93.5%, 100%, and 73.9% of
+sampled points within 2 m of the three captured source routes. The Door 3
+to Sushi route still uses an alternative aisle for part of its path. The
+full vendor navigation graph and most operating directions are unavailable.
+
+Reproduce
+
+python3 -m unittest discover -s tests/geometry
+python3 scripts/verify-harrods-connectors.py
+npx tsx scripts/verify-harrods-routing.ts --out=/tmp/harrods-engine.json
+python3 scripts/verify-harrods-geometry.py /tmp/harrods-engine.json
+python3 scripts/compare-harrods-reference-routes.py /tmp/harrods-engine.json
+npx tsx scripts/verify-venue-routing.ts city-mall harrods mappedin-mall bowie-state eaton-centre --pairs=40
+
+Artifacts
+
+docs/harrods-connector-repair-results.json
+docs/harrods-connector-route-comparison.json
+docs/screenshots/harrods-connectors-stairs-live.png
+docs/screenshots/harrods-connectors-escalator-live.png
+
+Live examples
+
+http://127.0.0.1:42174/harrods?from=862&to=35 — stairs, Lower Ground to Ground
+http://127.0.0.1:42174/harrods?from=37&to=10 — elevator plus escalator, or elevator-only accessible mode

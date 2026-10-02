@@ -1,0 +1,27 @@
+{
+  "sample": "87 actual-engine routes; many stair-landing trips have no walking segments",
+  "alignment_tolerance_degrees": 3,
+  "short_bend_definition": "heading change greater than 15 degrees with at least one adjacent leg shorter than 2 metres",
+  "axes_degrees_by_floor": {
+    "-1": 43.31,
+    "0": 44.1,
+    "1": 44.11,
+    "2": 43.96,
+    "3": 43.91,
+    "4": 44.12,
+    "5": 44.06,
+    "6": 66.25
+  },
+  "results": {
+    "before": {
+      "axis_aligned_distance_percent": 58.6,
+      "short_bends": 182,
+      "turns": 217
+    },
+    "after": {
+      "axis_aligned_distance_percent": 64.4,
+      "short_bends": 95,
+      "turns": 155
+    }
+  }
+}

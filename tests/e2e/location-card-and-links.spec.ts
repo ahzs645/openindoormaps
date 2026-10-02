@@ -99,7 +99,7 @@ test("directions deep link routes across floors with summary and steps", async (
     /1 floor change/,
   );
   await expect(
-    page.getByText(/Take the (escalator|stairs|elevator) to 1st Floor/),
+    page.getByText(/Take the (escalator|stairs|elevator) up to 1st Floor/),
   ).toBeVisible();
 
   await page.getByRole("button", { name: "Start steps" }).click();
@@ -116,7 +116,7 @@ test("directions deep link routes across floors with summary and steps", async (
   );
   await expect(page).toHaveURL(/from=17&to=15/);
   await expect(
-    page.getByText(/Take the (escalator|stairs|elevator) to Ground Floor/),
+    page.getByText(/Take the (escalator|stairs|elevator) down to Ground Floor/),
   ).toBeVisible();
 });
 
@@ -129,7 +129,9 @@ test("accessible deep link avoids stairs and escalators", async ({ page }) => {
   await expect(
     page.getByRole("button", { name: "Accessible route" }),
   ).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByText(/Take the elevator to 1st Floor/)).toBeVisible();
+  await expect(
+    page.getByText(/Take the elevator up to 1st Floor/),
+  ).toBeVisible();
   await expect(page.getByText(/Take the (stairs|escalator)/)).toHaveCount(0);
 });
 
@@ -174,35 +176,41 @@ test("route line is drawn above the floor plan", async ({ page }) => {
 test("multi-floor rides are one step and focus the boarding floor", async ({
   page,
 }) => {
-  // Harrods Technology (Fifth Floor) -> Abercrombie & Kent (Lower Ground):
-  // a long ride, so the elevator (one wait + 15 s/floor) beats 6 flights.
+  // Harrods Technology (Fifth Floor) -> Abercrombie & Kent (Lower Ground).
+  // With Pointr's real shafts (vector tiles) the nearest elevator stops at
+  // the Ground Floor: five floors are one elevator step, then an escalator.
   await page.goto("/harrods?from=37&to=10");
   await expect(page.getByTestId("route-summary")).toBeVisible({
     timeout: 20_000,
   });
 
   const rides = page.getByText(/^Take the /);
-  await expect(rides).toHaveCount(1);
-  await expect(rides).toHaveText(
-    "Take the elevator down 6 floors to Lower Ground",
-  );
+  await expect(rides).toHaveText([
+    "Take the elevator down 5 floors to Ground Floor",
+    "Take the escalator down to Lower Ground",
+  ]);
 
   // Going down, the step shows where you board, not where you arrive.
-  await rides.click();
+  await rides.first().click();
   await expect(page.getByLabel("Select floor")).toHaveValue("5");
   await page.getByRole("button", { name: "Next step" }).click();
-  await expect(page.getByLabel("Select floor")).toHaveValue("-1");
+  await expect(page.getByLabel("Select floor")).toHaveValue("0");
 });
 
-test("one floor takes the stairs unless accessible", async ({ page }) => {
-  // Toys (Fourth Floor) -> Harrods Technology (Fifth Floor).
+test("one floor takes the escalator unless accessible", async ({ page }) => {
+  // Toys (Fourth Floor) -> Harrods Technology (Fifth Floor): a real
+  // escalator (45 s) beats the stairs (60 s); accessible-only takes the lift.
   await page.goto("/harrods?from=29&to=37");
-  await expect(page.getByText("Take the stairs to Fifth Floor")).toBeVisible({
+  await expect(
+    page.getByText("Take the escalator up to Fifth Floor"),
+  ).toBeVisible({
     timeout: 20_000,
   });
 
   await page.goto("/harrods?from=29&to=37&accessible=1");
-  await expect(page.getByText("Take the elevator to Fifth Floor")).toBeVisible({
+  await expect(
+    page.getByText("Take the elevator up to Fifth Floor"),
+  ).toBeVisible({
     timeout: 20_000,
   });
   await expect(page.getByText(/Take the (stairs|escalator)/)).toHaveCount(0);
@@ -215,7 +223,7 @@ test("going down avoids the up-only escalator", async ({ page }) => {
   await expect(page.getByTestId("route-summary")).toBeVisible({
     timeout: 20_000,
   });
-  await expect(page.getByText("Take the stairs to Level 1")).toBeVisible();
+  await expect(page.getByText("Take the stairs down to Level 1")).toBeVisible();
   await expect(page.getByText(/Take the escalator/)).toHaveCount(0);
   // The walk to and from the stairs counts, even when both ends snap
   // straight onto the staircase.
@@ -232,7 +240,7 @@ test("connector marker on the map switches to the next floor", async ({
   });
 
   // Focusing the ride step centres the map on the "Up to 1st Floor" marker.
-  await page.getByText("Take the escalator to 1st Floor").click();
+  await page.getByText("Take the escalator up to 1st Floor").click();
   await expect(page.getByLabel("Select floor")).toHaveValue("0");
   await page.waitForTimeout(2000);
   const canvas = await page.locator(".maplibregl-canvas").boundingBox();

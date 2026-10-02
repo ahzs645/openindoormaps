@@ -1,0 +1,105 @@
+Source-fidelity follow-up (same day): the aisle-aware graph supersedes the
+mesh measurements below. See harrods-route-fidelity-2026-10-01.txt and
+harrods-route-fidelity-results.json for current metrics and remaining gaps.
+
+Harrods navigation repair — 2026-10-01
+
+Implemented
+- Replaced the rectangular PRM route generator with a constrained triangle-
+  portal mesh of source walkways and destination/connector footprints. These
+  areas are clipped to the actual building outline. Walking edges, including
+  destination attachments and visibility shortcuts, must stay in free space.
+- Wall polygon holes remain free, but closed partitions never receive forced
+  component links. Unattached destinations remain isolated graph vertices.
+- The directions engine prioritizes registered destination coordinates and
+  respects a fixture-specific 15 cm limit for other snapping. A rejected
+  snap cannot fall back to an existing vertex on another floor. This stops an
+  unreachable POI from silently snapping into a neighbouring corridor.
+  Other venues retain their existing unrestricted snapping behavior.
+- Vertical connections only receive links when both landings attach to the
+  walking network. Existing source footprint shaft grouping is retained,
+  with inferred provenance and unknown escalator directions recorded.
+- Added captured route regression fixtures, geometry unit tests, whole-graph
+  obstacle checks, actual engine route checks, and an unavailable-route UI test.
+- Stored original source blockers in navigation-constraints.geojson so the
+  independent geometry verifier does not rely on the generator's own mesh.
+- The drawn indoor map and POI files are byte-identical to the user's starting
+  working tree. Existing IDs, names, coordinates and metadata are preserved.
+  The generated route fixture uses compact per-feature formatting (9.4 MB).
+
+Source precision
+The z18 tile polygons are quantized. Captured valid vendor routes cross some
+thin virtual-obstacle border strokes (~11 cm wide) and graze wall boundaries.
+The first zero-tolerance candidate disconnected those routes. The repair
+therefore uses a 4 cm inward tolerance for unioned wall material and 6 cm for
+unioned virtual-obstacle material, before applying a 1 cm routing clearance.
+Every rounded output edge avoids these obstacle cores. This is not a claim
+of zero overlap with every raw tile outline, nor a survey-level floor model.
+No obstacles are exempted just to attach a POI or join components.
+
+Validation
+- Four geometry regressions pass: narrow doorway, closed partition, polygon
+  hole/courtyard, and blocked destination without fallback attachments.
+- Exported blocker geometry independently matches the original capture tiles.
+  The verifier fixes the allowed tolerance values to prevent silent loosening.
+- All 31,202 horizontal graph segments avoid original source obstacle cores,
+  including outdoor connections at building boundaries.
+- Eleven real-engine routes pass the same geometry check: three captured
+  vendor examples plus normal/accessibility variants of 37->10, 10->37,
+  29->37, and Door 3->Sushi by Masa. Captured connector type/floor-change
+  sequences are retained. Accessible variants use elevators.
+- Registered unreachable destinations clear previously valid routes.
+  Remote unregistered points are rejected instead of snapping across rooms.
+- 150 sampled Harrods requests agree with independent reference Dijkstra:
+  no missing/extra routes, suboptimal costs, wrong floors, inaccessible
+  connectors, or bad floor hops. Median route calculation is 3 ms, max 6 ms.
+- 40 sampled requests each for City Mall, Mappedin Mall, Eaton Centre and
+  Bowie State also pass after the generic directions-engine change.
+- TypeScript typecheck, targeted ESLint, Python compilation pass.
+- Deterministic reimport preserves all four fixture files byte-for-byte.
+- Seven vendor-venue browser checks pass. The new unavailable-route case
+  waits for the map to finish loading before checking its result. The default
+  Playwright browser was missing, so the tests used an already installed
+  Chromium headless shell via a temporary config. No repository browser
+  config was changed. A stalled default-browser download was stopped.
+- Live in-app browser: repaired 37->10 route, Ground Floor instruction focus,
+  elevator-only routing and preview ending on Lower Ground verified.
+
+Coverage and remaining limits
+From Louis Vuitton, 952/994 POIs are reachable normally and 948/994 with
+accessible-only routing. Thirty POIs have no local valid mesh attachment;
+other unavailable targets include disconnected/outdoor locations. The full
+unavailable lists are in harrods-navigation-repair-results.json. Fine Watch
+Room and some other imported centroids lie inside source obstacle material;
+these correctly return no route until a verified destination entrance is
+available. The app does not invent an entrance or draw a route to that centre.
+
+This remains a geometry-derived demonstration, not Pointr's full server-side
+walking graph. Shafts are paired using adjacent source footprints; most
+escalator travel directions are unknown and remain inferred/two-way. The
+captured examples validate their own connection sequences, not every shaft.
+Car park entrances and outdoor street links remain inferred. Same-coordinate
+POI arrival handling and the previously audited phone-sheet behavior are
+separate existing issues, not changed by this repair. UNBC is excluded.
+
+Reproduce
+python3 scripts/port-pointr-harrods.py
+python3 -m unittest discover -s tests/geometry
+npx tsx scripts/verify-harrods-routing.ts --out=/tmp/harrods-routes.json
+python3 scripts/verify-harrods-geometry.py /tmp/harrods-routes.json
+npx tsx scripts/verify-venue-routing.ts harrods --pairs=150
+npm run typecheck
+
+Import requires the decoded source captures (OIM_REFERENCE_DIR can override
+its location) and Shapely 2.1+. Three captured route polylines are regression
+oracles; only their endpoint coordinates are registered as known targets.
+Their polylines do not seed the generated network.
+
+Review
+- docs/screenshots/harrods-source-path-repaired.png (source / before / after)
+- docs/screenshots/harrods-repaired-ground-floor.jpg (live application)
+- docs/harrods-navigation-repair-results.json (metrics and unavailable POIs)
+- scripts/walkable_mesh.py and scripts/port-pointr-harrods.py
+- app/indoor-directions/directions/main.ts (destination/snap handling)
+
+No commit, publication or deployment was performed.

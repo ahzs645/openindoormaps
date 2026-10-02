@@ -1,0 +1,11 @@
+UNBC browser/package diagnosis — 2026-10-02
+
+The live localhost:5180 tab was running the latest code, with no-cache headers, but its IndexedDB saved package matched UNBC.indoor.all-stairs.reviter.viewer.zip. That current stair-inventory branch had 77 room/flight bindings and 82 physical source stairs, but zero native slab occlusion bindings. Reloading or clearing HTTP cache cannot supply missing geometry evidence.
+
+Added measured same-model slab footprints and openings to all 77 bindings. The 31 unique slabs came from the preserved native RVT evidence. Everything except floorOccluders and the manifest dataset hash/size stays unchanged; rooms, routes, source-flight inventory, reviews and all other archived asset bytes are preserved. Both corrected master and viewer round-trip and hash validation passed. The new copies are UNBC.indoor.all-stairs.floor-openings.reviter.zip and UNBC.indoor.all-stairs.floor-openings.viewer.zip in Downloads. Original files were retained. These update the current stair-inventory branch and do not replace the separate consolidated routing branch.
+
+Imported the corrected viewer into the user tab, restored Campus Floor 3 / 3D rooms, and selected 06-S205. The saved browser package SHA matches the corrected viewer, so subsequent reloads restore this corrected package. Desktop/mobile geometric and mode/depth browser checks passed. No browser cache or saved reviews were cleared.
+
+Repeat for another same-model prepared package into a NEW output file:
+node --import tsx scripts/indoor/add-stair-floor-evidence.ts INPUT.zip NEW-OUTPUT.zip /Users/ahmadjalil/Downloads/UNBC.consolidated/native-stair-floor-evidence.json
+The command validates model provenance and aborts if any flight has no matching same-height measured slab. It preserves the graph and all source assets.

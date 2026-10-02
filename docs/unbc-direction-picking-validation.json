@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-02",
+  "input": "/Users/ahmadjalil/Downloads/UNBC.current-preview.campus-viewer.zip",
+  "inputSha256": "12397497ad254dca60b5a509f9cd2147329e998bb56490584700bf29917d77bc",
+  "browserTests": {
+    "passed": 2,
+    "desktopViewport": [1440, 1000],
+    "mobileViewport": [390, 844],
+    "mobileInput": "touchscreen taps",
+    "checks": [
+      "Directions retains destination",
+      "From here retains departure",
+      "typed endpoint search",
+      "map endpoints in 2D and 3D",
+      "empty endpoint advances automatically",
+      "endpoint swap and header alignment",
+      "Back restores ordinary browsing",
+      "route recalculation",
+      "no horizontal overflow",
+      "no uncaught page errors"
+    ]
+  },
+  "unitTestsPassed": 69,
+  "scopedTypecheck": "passed",
+  "build": "passed",
+  "screenshots": [
+    "screenshots/unbc-direction-picking-desktop.png",
+    "screenshots/unbc-direction-picking-mobile.png",
+    "screenshots/unbc-direction-picker-preview.png"
+  ],
+  "limits": "Map selection uses mapped room/place endpoints; blank basemap coordinates do not create navigation nodes."
+}

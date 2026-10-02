@@ -1,0 +1,233 @@
+{
+  "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "preserved": [
+    "gis/reference-points.json",
+    "model/scene.glb",
+    "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt"
+  ],
+  "allOriginalSourceRoomsPreserved": true,
+  "exportImportGraphPreserved": true,
+  "stair": {
+    "nativeElementId": 1372994,
+    "sourceRunId": 1373131,
+    "stepsAtPinElevationFeet": 3.937007874015748,
+    "displayTreads": 32,
+    "routingAuthorization": "Shared-corridor display only; no new stair route"
+  },
+  "connectors": [
+    {
+      "id": "unbc-04-lift",
+      "stops": [
+        {
+          "levelId": 311,
+          "building": "04",
+          "pointFeet": [
+            -73.44118201629885, 369.82757247857376, 3.2808398950131235
+          ],
+          "roomKey": "rm-311-2054e6ddb852"
+        },
+        {
+          "levelId": 694,
+          "building": "04",
+          "pointFeet": [
+            -73.43478562662737, 369.7245135568454, 14.435695538057743
+          ],
+          "roomKey": "rm-694-3399eaf6e0a1"
+        },
+        {
+          "levelId": 400176,
+          "building": "04",
+          "pointFeet": [
+            -73.07957959034954, 369.71025404005303, 24.278215223097114
+          ],
+          "roomKey": "rm-400176-79fc94dd782c"
+        },
+        {
+          "levelId": 402367,
+          "building": "04",
+          "pointFeet": [
+            -73.09616388011331, 369.72043187887186, 34.120734908136484
+          ],
+          "roomKey": "rm-402367-133b24ba6565"
+        }
+      ]
+    },
+    {
+      "id": "unbc-agora-conference-lift",
+      "stops": [
+        {
+          "levelId": 311,
+          "building": "07",
+          "pointFeet": [-65.36309466669573, -38.71219260731704, 0],
+          "roomKey": "rm-311-89fd150948ca"
+        },
+        {
+          "levelId": 694,
+          "building": "06",
+          "pointFeet": [
+            -72.54785183028918, -45.372319427261935, 14.435695538057743
+          ],
+          "roomKey": "rm-694-0ca9e8ab63bd"
+        },
+        {
+          "levelId": 1487353,
+          "building": "06",
+          "pointFeet": [
+            -72.31219170077651, -45.15374569177929, 29.855643044619423
+          ],
+          "roomKey": "rm-1487353-4d82d4d786ce"
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "connector": "unbc-04-lift",
+      "from": 311,
+      "to": 694,
+      "distanceMetres": 19.977420440271324,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 311,
+      "to": 400176,
+      "distanceMetres": 23.317900137767772,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 3"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 311,
+      "to": 402367,
+      "distanceMetres": 26.606803063487153,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 694,
+      "to": 311,
+      "distanceMetres": 19.977420440271324,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 694,
+      "to": 400176,
+      "distanceMetres": 13.452440578039061,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 3"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 694,
+      "to": 402367,
+      "distanceMetres": 16.74134350375844,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 400176,
+      "to": 311,
+      "distanceMetres": 23.317900137767772,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 400176,
+      "to": 694,
+      "distanceMetres": 13.45244057803906,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 400176,
+      "to": 402367,
+      "distanceMetres": 14.081823201254888,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 402367,
+      "to": 311,
+      "distanceMetres": 26.60680306348715,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 402367,
+      "to": 694,
+      "distanceMetres": 16.74134350375844,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "from": 402367,
+      "to": 400176,
+      "distanceMetres": 14.081823201254888,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Floor 3"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 311,
+      "to": 694,
+      "distanceMetres": 11.462155147106905,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 2"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 311,
+      "to": 1487353,
+      "distanceMetres": 16.018632224815832,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 3.5"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 694,
+      "to": 311,
+      "distanceMetres": 11.462155147106905,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 694,
+      "to": 1487353,
+      "distanceMetres": 11.228193350171537,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator up to Floor 3.5"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 1487353,
+      "to": 311,
+      "distanceMetres": 16.018632224815832,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "from": 1487353,
+      "to": 694,
+      "distanceMetres": 11.228193350171534,
+      "arrivalPreserved": true,
+      "instruction": "Take the elevator down to Floor 2"
+    }
+  ],
+  "regenerationGraphPreserved": true,
+  "desktopMobileFollowTestsPassed": 2,
+  "targetedTestsPassed": 63,
+  "redundantIntermediateLiftStopFixed": true
+}

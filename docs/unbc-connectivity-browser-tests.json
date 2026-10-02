@@ -1,0 +1,148 @@
+{
+  "config": {
+    "configFile": "/Users/ahmadjalil/github/openindoormaps/work/connectivity-continuation/playwright.config.ts",
+    "rootDir": "/Users/ahmadjalil/github/openindoormaps/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/ahmadjalil/github/openindoormaps/node_modules/.cache/connectivity-browser-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/ahmadjalil/github/openindoormaps/tests/e2e",
+        "testIgnore": [],
+        "testMatch": ["**/*.@(spec|test).?(c|m)[jt]s?(x)"],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      ["list", null],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ahmadjalil/github/openindoormaps/docs/unbc-connectivity-browser-tests.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --config vite.editor-test.config.ts --host 127.0.0.1 --port 42283 --strictPort",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "url": "http://127.0.0.1:42283",
+      "cwd": "/Users/ahmadjalil/github/openindoormaps"
+    }
+  },
+  "suites": [
+    {
+      "title": "indoor-project.spec.ts",
+      "file": "indoor-project.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hospital-style project navigation follows multi-turn and multi-floor routes on desktop",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 97019,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T16:55:35.103Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3c3dc2da0baa7003f451-cb95aacf34a7a5c21ee6",
+          "file": "indoor-project.spec.ts",
+          "line": 367,
+          "column": 3
+        },
+        {
+          "title": "hospital-style project navigation follows multi-turn and multi-floor routes on mobile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 99566,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T16:57:12.373Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "3c3dc2da0baa7003f451-375ac0acaeac8cc502ca",
+          "file": "indoor-project.spec.ts",
+          "line": 367,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-02T16:55:33.429Z",
+    "duration": 198685.34,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

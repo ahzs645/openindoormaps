@@ -1,0 +1,40 @@
+UNBC floor performance audit — 2026-10-02
+
+Checked the current unsaved in-app map from Floor 4 down through Floors 3, 2, 1 and 0, then returned it to Floor 4. No reload or import was performed in that tab. Profiled fresh geometry from the matching floor-openings viewer ZIP separately and verified desktop/mobile layouts in fresh test contexts.
+
+Causes and changes
+
+Room-boundary recovery previously repaired every campus level, even when the selected floor had no unfinished rooms. It now skips that work when unnecessary and restricts repairs to levels containing unfinished rooms. Joint detection skips remote segments of long/curved walls. Bounds are calculated once per geometry during a display calculation, with a local cache so later edits remain visible. Visitor walls now query nearby rooms on the same level and reuse room-edge bounds instead of checking every room for every fragment.
+
+Fresh geometry CPU preparation, seconds (Node; one before/after run)
+Floor 4: 2.99 -> 1.93
+Floor 3: 2.73 -> 1.63
+Floor 2: 3.72 -> 2.24
+Floor 1: 3.09 -> 2.47
+Floor 0: 0.31 -> 0.08
+These timings include profiling/serialization overhead and vary with machine load. They are not camera or total browser switch times.
+
+Browser longest main-thread task, milliseconds, first descending pass
+Desktop Floor 4: 2318 -> 1582; Floor 3: 1930 -> 1405; Floor 2: 2531 -> 1912.
+Mobile layout Floor 4: 2192 -> 1587; Floor 3: 1906 -> 1393; Floor 2: 2520 -> 1909.
+Floor 1 was already cached by initial import, so its descending-pass result is a repeat visit. Fresh Floor 1 preparation is measured in the CPU audit above.
+Floor 0 browser results were noisy: desktop 282 -> 306 ms; mobile 217 -> 210 ms. Do not infer a browser-frame speedup there from the large CPU-preparation improvement alone.
+Repeat visits remain roughly 0.1–0.26 second for the longest task on Floors 1–4; full settle times also include camera movement, tile/source processing, and software WebGL rendering. Mobile viewport emulation is not a physical-phone benchmark.
+
+Floor 1 has the heaviest wall payload: 16,487 wall parts against 4,700–5,788 on Floors 4–2. Floor 2 has the most stairs (575 source display features) and is the slowest uncached switch in the descending browser pass.
+
+Verification
+All five floors produced identical geometry fingerprints before and after, including rooms, walls, openings, ground and stairs. Four additional comparisons verified relative heights, visible pillars/doors, pass-through settings and building filters. The dataset, including routing nodes/edges, remained unchanged. 84 unit tests and two desktop/mobile browser tests passed. Build passed. Scoped typecheck includes the new profiling script and browser test.
+
+Remaining work
+First visits still perform polygon unions, intersections and differences synchronously on the UI thread. Moving preparation to a background worker is the next substantial optimization; these changes reduce the work but do not eliminate all first-visit pauses. Source upload, custom 3D layer construction and label/marker work account for repeat-visit pauses. Saved geometry caches must also be invalidated correctly after project edits.
+
+The production build is available on port 5180, but the user's existing tab was deliberately not reloaded because it shows Unsaved edits. Export those edits before reloading to receive the new build. The review ZIP and source model were not rewritten for this performance change.
+
+Reproduce stage profiling:
+node --import tsx scripts/indoor/profile-floor-rendering.ts INPUT.zip REPORT.json
+
+Reproduce browser profiling:
+INDOOR_PROJECT_ZIP=INPUT.zip INDOOR_PERFORMANCE_OUTPUT=OUTPUT_PREFIX npx playwright test indoor-floor-performance --workers=1
+
+Evidence: docs/unbc-floor-performance-audit.json and docs/unbc-floor-cpu-after.json.

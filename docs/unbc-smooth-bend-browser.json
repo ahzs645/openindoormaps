@@ -1,0 +1,148 @@
+{
+  "config": {
+    "configFile": "/Users/ahmadjalil/github/openindoormaps/work/smooth-bend/playwright.config.ts",
+    "rootDir": "/Users/ahmadjalil/github/openindoormaps/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/ahmadjalil/github/openindoormaps/node_modules/.cache/smooth-bend-browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/ahmadjalil/github/openindoormaps/tests/e2e",
+        "testIgnore": [],
+        "testMatch": ["indoor-curved-route.spec.ts"],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      ["list", null],
+      [
+        "json",
+        {
+          "outputFile": "/Users/ahmadjalil/github/openindoormaps/docs/unbc-smooth-bend-browser.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 7,
+    "webServer": {
+      "command": "npx vite --config vite.editor-test.config.ts --host 127.0.0.1 --port 42324 --strictPort",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "url": "http://127.0.0.1:42324",
+      "cwd": "/Users/ahmadjalil/github/openindoormaps"
+    }
+  },
+  "suites": [
+    {
+      "title": "indoor-curved-route.spec.ts",
+      "file": "indoor-curved-route.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "curved Pub Entrance to Service Pantry route and follow on desktop",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16325,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T22:40:46.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b3a56e5a5432dd4025f-7dc39f37844029cefbc3",
+          "file": "indoor-curved-route.spec.ts",
+          "line": 31,
+          "column": 3
+        },
+        {
+          "title": "curved Pub Entrance to Service Pantry route and follow on mobile",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-02T22:40:46.161Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0b3a56e5a5432dd4025f-49370943d3fe9a0cef2d",
+          "file": "indoor-curved-route.spec.ts",
+          "line": 31,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-02T22:40:44.932Z",
+    "duration": 17755.010000000002,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

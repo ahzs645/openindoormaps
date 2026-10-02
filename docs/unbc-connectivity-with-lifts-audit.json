@@ -1,0 +1,235 @@
+{
+  "input": "/Users/ahmadjalil/Downloads/UNBC.indoor.connectivity-reviewed.reviter.zip",
+  "output": "/Users/ahmadjalil/Downloads/UNBC.indoor.connectivity-with-lifts.reviter.zip",
+  "allJoinedSourceReviewsPreserved": true,
+  "preserved": [
+    "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "gis/reference-points.json",
+    "model/scene.glb"
+  ],
+  "existingTransitionsPreserved": 1544,
+  "existingRoutableArrivalsPreserved": 1671,
+  "joinedComponentsRemainConnected": 134,
+  "connectors": [
+    {
+      "id": "unbc-04-lift",
+      "kind": "elevator",
+      "nativeElementId": 2103602,
+      "reviewedShaft": {
+        "pinId": "pin-e3c49bf2-b7b8-4309-b1da-2e1a986a97d1",
+        "pointFeet": [-79.05536831396871, 372.1780205452524],
+        "wallElementIds": [2103602, 2103657, 2103738, 2104019, 2104157, 2104207]
+      },
+      "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "evidence": "User-identified elevator pin-e3c49bf2-b7b8-4309-b1da-2e1a986a97d1; native shaft walls, floor slabs and distinct lobby exit anchors reviewed against the exact model. No elevator family exists in the source.",
+      "accessible": "unknown",
+      "direction": "both",
+      "entrances": [
+        {
+          "nodeId": "connector:unbc-04-lift:0",
+          "roomKey": "rm-311-2054e6ddb852",
+          "levelId": 311
+        },
+        {
+          "nodeId": "connector:unbc-04-lift:1",
+          "roomKey": "rm-694-3399eaf6e0a1",
+          "levelId": 694
+        },
+        {
+          "nodeId": "connector:unbc-04-lift:2",
+          "roomKey": "rm-400176-79fc94dd782c",
+          "levelId": 400176
+        },
+        {
+          "nodeId": "connector:unbc-04-lift:3",
+          "roomKey": "rm-402367-133b24ba6565",
+          "levelId": 402367
+        }
+      ]
+    },
+    {
+      "id": "unbc-agora-conference-lift",
+      "kind": "elevator",
+      "nativeElementId": 1741869,
+      "reviewedShaft": {
+        "pinId": "pin-b1daf04e-fc46-402d-89c1-6ae01355f5d4",
+        "pointFeet": [-68.60123301339843, -41.79542303997869],
+        "wallElementIds": [
+          1741869, 1741648, 1741511, 1741580, 1741099, 1741269, 1333486,
+          1333415, 1779068, 1327968, 1779069, 1779070, 1779227, 1779363,
+          1778957, 1779600
+        ]
+      },
+      "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "evidence": "User-identified elevator pin-b1daf04e-fc46-402d-89c1-6ae01355f5d4; native shaft walls, floor slabs and distinct lobby exit anchors reviewed against the exact model. No elevator family exists in the source.",
+      "accessible": "unknown",
+      "direction": "both",
+      "entrances": [
+        {
+          "nodeId": "connector:unbc-agora-conference-lift:0",
+          "roomKey": "rm-311-89fd150948ca",
+          "levelId": 311
+        },
+        {
+          "nodeId": "connector:unbc-agora-conference-lift:1",
+          "roomKey": "rm-694-0ca9e8ab63bd",
+          "levelId": 694
+        },
+        {
+          "nodeId": "connector:unbc-agora-conference-lift:2",
+          "roomKey": "rm-1487353-4d82d4d786ce",
+          "levelId": 1487353
+        }
+      ]
+    }
+  ],
+  "journeys": [
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 311,
+      "toLevel": 694,
+      "exitFeet": [-73.43478562662737, 369.7245135568454, 14.435695538057743],
+      "instruction": "Take the elevator up to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 311,
+      "toLevel": 400176,
+      "exitFeet": [-73.07957959034954, 369.71025404005303, 24.278215223097114],
+      "instruction": "Take the elevator up to Floor 3"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 311,
+      "toLevel": 402367,
+      "exitFeet": [-73.09616388011331, 369.72043187887186, 34.120734908136484],
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 694,
+      "toLevel": 311,
+      "exitFeet": [-73.44118201629885, 369.82757247857376, 3.2808398950131235],
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 694,
+      "toLevel": 400176,
+      "exitFeet": [-73.07957959034954, 369.71025404005303, 24.278215223097114],
+      "instruction": "Take the elevator up to Floor 3"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 694,
+      "toLevel": 402367,
+      "exitFeet": [-73.09616388011331, 369.72043187887186, 34.120734908136484],
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 400176,
+      "toLevel": 311,
+      "exitFeet": [-73.44118201629885, 369.82757247857376, 3.2808398950131235],
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 400176,
+      "toLevel": 694,
+      "exitFeet": [-73.43478562662737, 369.7245135568454, 14.435695538057743],
+      "instruction": "Take the elevator down to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 400176,
+      "toLevel": 402367,
+      "exitFeet": [-73.09616388011331, 369.72043187887186, 34.120734908136484],
+      "instruction": "Take the elevator up to Floor 4"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 402367,
+      "toLevel": 311,
+      "exitFeet": [-73.44118201629885, 369.82757247857376, 3.2808398950131235],
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 402367,
+      "toLevel": 694,
+      "exitFeet": [-73.43478562662737, 369.7245135568454, 14.435695538057743],
+      "instruction": "Take the elevator down to Floor 2"
+    },
+    {
+      "connector": "unbc-04-lift",
+      "fromLevel": 402367,
+      "toLevel": 400176,
+      "exitFeet": [-73.07957959034954, 369.71025404005303, 24.278215223097114],
+      "instruction": "Take the elevator down to Floor 3"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 311,
+      "toLevel": 694,
+      "exitFeet": [-72.54785183028918, -45.372319427261935, 14.435695538057743],
+      "instruction": "Take the elevator up to Floor 2"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 311,
+      "toLevel": 1487353,
+      "exitFeet": [-72.31219170077651, -45.15374569177929, 29.855643044619423],
+      "instruction": "Take the elevator up to Floor 3.5"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 694,
+      "toLevel": 311,
+      "exitFeet": [-65.36309466669573, -38.71219260731704, 0],
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 694,
+      "toLevel": 1487353,
+      "exitFeet": [-72.31219170077651, -45.15374569177929, 29.855643044619423],
+      "instruction": "Take the elevator up to Floor 3.5"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 1487353,
+      "toLevel": 311,
+      "exitFeet": [-65.36309466669573, -38.71219260731704, 0],
+      "instruction": "Take the elevator down to Campus Floor 1"
+    },
+    {
+      "connector": "unbc-agora-conference-lift",
+      "fromLevel": 1487353,
+      "toLevel": 694,
+      "exitFeet": [-72.54785183028918, -45.372319427261935, 14.435695538057743],
+      "instruction": "Take the elevator down to Floor 2"
+    }
+  ],
+  "stairTreads": 32,
+  "exportImportPreserved": true,
+  "before": {
+    "recordCount": 1860,
+    "routableArrivals": 1671,
+    "components": 134,
+    "largestComponentArrivals": 420,
+    "unmatchedDoors": 341,
+    "cellSizeFeet": 0.6,
+    "omittedSourceLabels": 360
+  },
+  "after": {
+    "recordCount": 1860,
+    "routableArrivals": 1672,
+    "components": 132,
+    "largestComponentArrivals": 420,
+    "unmatchedDoors": 341,
+    "cellSizeFeet": 0.6,
+    "omittedSourceLabels": 360
+  },
+  "desktopMobilePreviewTestsPassed": 2
+}

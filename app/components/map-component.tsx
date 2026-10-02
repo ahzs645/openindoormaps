@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import config from "~/config";
 import useFloorStore from "~/stores/floor-store";
 import DiscoveryPanel from "./discovery-panel/discovery-panel";
+import { BuildingFloorSelector } from "./map/building-floor-selector";
 import { FloorSelector } from "./floor-selector";
 import { FloorUpDownControl } from "./floor-up-down-control";
 import { IndoorMapGeoJSON } from "~/types/geojson";
@@ -17,6 +18,7 @@ import { Basemap3dBuildingsLayer } from "./map/basemap-3d-buildings-layer";
 import { getAvailableFloors, IndoorMapLayers } from "./map/indoor-map-layers";
 import { MapLogoControl } from "./map/map-logo-control";
 import { MapSectionLayout } from "./map/map-section-layout";
+import { RoomViewControl, type RoomView } from "./map/room-view-control";
 import { PoisLayer } from "./map/pois-layer";
 import VenueModelsLayer, { type VenueModel } from "./map/venue-models-layer";
 
@@ -37,7 +39,9 @@ interface MapComponentProps {
 }
 
 export default function MapComponent({ location }: MapComponentProps) {
+  const [routePreview, setRoutePreview] = useState(false);
   const [theme] = useTheme();
+  const [roomView, setRoomView] = useState<RoomView>("3d");
   const [showDesktopSidebar, setShowDesktopSidebar] = useState(true);
   const { currentFloor, setCurrentFloor } = useFloorStore();
   const desktopPanelPlacement = location.ui?.desktopPanelPlacement ?? "overlay";
@@ -96,9 +100,16 @@ export default function MapComponent({ location }: MapComponentProps) {
     >
       <MapSectionLayout
         desktopPanelPlacement={desktopPanelPlacement}
+        compactOverlay={location.ui?.hospitalStyle}
+        routePreview={routePreview}
         desktopSidebarWidth={desktopPanelWidth}
         showDesktopSidebar={showDesktopSidebar}
-        sidebar={<DiscoveryPanel location={location} />}
+        sidebar={
+          <DiscoveryPanel
+            location={location}
+            onNavigationActiveChange={setRoutePreview}
+          />
+        }
         onToggleDesktopSidebar={() =>
           setShowDesktopSidebar((currentValue) => !currentValue)
         }
@@ -109,10 +120,16 @@ export default function MapComponent({ location }: MapComponentProps) {
           />
           <IndoorMapLayers
             data={indoorMapData}
+            floorContext={
+              location.data.floorContext as IndoorMapGeoJSON | undefined
+            }
             floor={currentFloor}
             theme={theme as Theme}
+            cutawayRooms={location.mapConfig.cutawayRooms}
+            roomView={location.mapConfig.roomViewControl ? roomView : undefined}
           />
           <PoisLayer
+            hospitalStyle={location.ui?.hospitalStyle}
             data={location.data.pois as GeoJSON.FeatureCollection}
             floor={currentFloor}
             theme={theme as Theme}
@@ -120,15 +137,36 @@ export default function MapComponent({ location }: MapComponentProps) {
           {location.slug === "galleria" && (
             <VenueModelsLayer id="venue-3d-models" models={GALLERIA_MODELS} />
           )}
-          <MapControls />
+          <MapControls
+            className={routePreview ? "hidden md:flex" : undefined}
+          />
           <MapInspectControl />
           <MapLogoControl />
-          <div className="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
-            <FloorSelector
-              availableFloors={availableFloors}
-              floorNames={location.mapConfig.floorNames}
-            />
-            <FloorUpDownControl availableFloors={availableFloors} />
+          <div
+            className={
+              routePreview
+                ? "absolute right-3 top-3 z-20 hidden flex-col items-end gap-2 md:flex"
+                : "absolute right-3 top-3 z-20 flex flex-col items-end gap-2"
+            }
+          >
+            {location.data.floorStacks ? (
+              <BuildingFloorSelector stacks={location.data.floorStacks} />
+            ) : (
+              <>
+                <FloorSelector
+                  availableFloors={availableFloors}
+                  floorNames={location.mapConfig.floorNames}
+                />
+                <FloorUpDownControl availableFloors={availableFloors} />
+              </>
+            )}
+            {location.mapConfig.roomViewControl && (
+              <RoomViewControl
+                view={roomView}
+                onChange={setRoomView}
+                pitch={location.mapConfig.pitch}
+              />
+            )}
           </div>
         </MapCanvas>
       </MapSectionLayout>

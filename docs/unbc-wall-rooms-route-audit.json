@@ -1,0 +1,1174 @@
+{
+  "generatedAt": "2026-10-02T03:59:25.710Z",
+  "inputs": {
+    "before": {
+      "path": "/Users/ahmadjalil/Downloads/UNBC.indoor.clean-routes.reviter.zip",
+      "sha256": "cf29666aafc32cd69e20b47c5f1531e2d9fc4a505a88e19ad2a54e793e318ae5"
+    },
+    "after": {
+      "path": "/Users/ahmadjalil/Downloads/UNBC.indoor.native-wall-rooms.reviter.zip",
+      "sha256": "0d85d0bf61e576858db64b93637a13a86d341118714da13240829e957e3fa17a"
+    }
+  },
+  "scope": "Independent package preservation and realized-route audit. Native barrier intersection tests are zero-width segment checks, not certification of minimum passage clearance.",
+  "preservation": {
+    "records": {
+      "unchanged": true,
+      "sha256": "37537635bf2aed532e2b0a7bbfca618570f68cd5dbfb3360b5366b0442f95c6f",
+      "count": 1861
+    },
+    "nodes": {
+      "unchanged": true,
+      "sha256": "5d1fc1e651cddd168f5cc81166f86c4a7b9bf5c4b59d9a8122ab23ef73248b15",
+      "count": 4809
+    },
+    "edges": {
+      "unchanged": true,
+      "sha256": "5a197e71653bbddba2200140c681413f0a6bd2faeaf05bb9cc32a6cd3e49035b",
+      "count": 5343
+    },
+    "walls": {
+      "unchanged": true,
+      "sha256": "328697b8568ff700b27860ba2ef463da8877003499d8c3add541e72f8397aeb3",
+      "count": 29460
+    },
+    "doors": {
+      "unchanged": true,
+      "sha256": "ece2a22a5d528402f5ae0f59f80229662150a55dfc08fa94b1c96666695e171a",
+      "count": 1886
+    },
+    "nativeLevels": {
+      "unchanged": true,
+      "sha256": "431c6ca8f6859f30807592587e565cf4c6fe248c5d204ef398403c3965463675",
+      "count": 12
+    },
+    "floors": {
+      "unchanged": true,
+      "sha256": "2f645d935ce9c73e7f488ecaf95e72dd04a7a130b1e816809810850688d4c72f",
+      "count": 6
+    },
+    "source": {
+      "unchanged": true,
+      "sha256": "73df3c0e9bcbbb37cee820f109faa5a33ff5d8c334ff9f91cc2e7bd00816d37d"
+    },
+    "alignment": {
+      "unchanged": true,
+      "sha256": "958deb5e00ae6c4821ffdcdaee5dda69752937ffc47d4f4624463b39a1d538ce"
+    },
+    "issues": {
+      "unchanged": true,
+      "sha256": "6d70b37afc6e97b368992c4d697f90003be8c46e77a698c9edcc8b592cc04856",
+      "count": 2577
+    }
+  },
+  "files": [
+    {
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "unchanged": true,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "bytes": 70336512
+    },
+    {
+      "path": "floors/rooms.json",
+      "unchanged": true,
+      "sha256": "a3c0fd2b5f2d5952398a8d95247011307f8701a4cd18d382ea0f7d267bf11055",
+      "bytes": 21484855
+    },
+    {
+      "path": "gis/reference-points.json",
+      "unchanged": true,
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "bytes": 602
+    },
+    {
+      "path": "model/scene.glb",
+      "unchanged": true,
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "bytes": 52216228
+    }
+  ],
+  "summary": {
+    "testedPublicCases": 8,
+    "routablePublicCases": 6,
+    "entireResolvedRoutesEqual": true,
+    "centeredSegmentsChecked": 49,
+    "unrefinedFlatSegmentsChecked": 32,
+    "nativeWallOrColumnCrossings": 0,
+    "nativeConnectorGeometryPreserved": true,
+    "accessibleCasesUnavailable": 4
+  },
+  "routes": [
+    {
+      "name": "right-turn",
+      "start": {
+        "key": "rm-311-5de6f9297e84",
+        "number": "05-120",
+        "levelId": 311
+      },
+      "end": {
+        "key": "rm-311-f015ce646f7a",
+        "number": "07-101",
+        "levelId": 311
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "eb8f32f562586893483b1b8f24957d71a4482760cffa18a5d44c1326e4af276a",
+      "edgeIds": [
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de6f9297e84|door:311:868723:0",
+        "door:311:868723",
+        "walk:circulation:07:311:0.000:door:311:863700:1|door:311:868723:1",
+        "walk:circulation:07:311:0.000:arrival:rm-311-f015ce646f7a|door:311:863700:1"
+      ],
+      "sourceGraphMetres": 17.483845399967002,
+      "resolvedMetres": 15.754913806849551,
+      "turns": [
+        {
+          "message": "Turn right",
+          "levelId": 311
+        }
+      ],
+      "floorChanges": [],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": true,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:311:868723"],
+          "pointsFeet": [
+            [138.50293785180207, 308.88510410649405, 0],
+            [117.79933469378688, 321.819282644966, 0],
+            [132.25196997869767, 344.95346350046486, 0]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "complex-two-turns",
+      "start": {
+        "key": "rm-311-5de6f9297e84",
+        "number": "05-120",
+        "levelId": 311
+      },
+      "end": {
+        "key": "rm-311-38a4a830434f",
+        "number": "05-165",
+        "levelId": 311
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "5a7a242e289c7870c7e4fccf3cd496f15c221de4d9f517251b5e2f75188e9e13",
+      "edgeIds": [
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de6f9297e84|door:311:898500:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:898500:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:976725:0",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de373297e81|door:311:976725:0",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de373297e81|door:311:1030178:1",
+        "walk:circulation:05:311:0.000:door:311:1029924:0|door:311:1030178:1",
+        "walk:circulation:05:311:0.000:door:311:1029862:0|door:311:1029924:0",
+        "walk:circulation:05:311:0.000:door:311:1029810:0|door:311:1029862:0",
+        "walk:circulation:05:311:0.000:door:311:1029810:0|door:311:892004:0",
+        "walk:circulation:05:311:0.000:door:311:1836014:1|door:311:892004:0",
+        "door:311:1836014",
+        "walk:circulation:05:311:0.000:arrival:rm-311-38a4a830434f|door:311:1836014:0"
+      ],
+      "sourceGraphMetres": 93.63456000000001,
+      "resolvedMetres": 68.58923813080614,
+      "turns": [
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        }
+      ],
+      "floorChanges": [],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": true,
+          "segments": 3,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:311:1836014"],
+          "pointsFeet": [
+            [138.5029392115986, 308.8850884812549, 0],
+            [248.33758733938674, 240.2445046013782, 0],
+            [198.13683116423374, 159.91619037992405, 0],
+            [198.80392970365227, 159.49929066720475, 0]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "native-stairs-forward",
+      "start": {
+        "key": "rm-311-5de6f9297e84",
+        "number": "05-120",
+        "levelId": 311
+      },
+      "end": {
+        "key": "rm-694-ecf634619eae",
+        "number": "05-S203",
+        "levelId": 694
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "5d0cebebcb95ea32c31e544f1658749527d59b5058e9eda9a04b5c8260c70500",
+      "edgeIds": [
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de6f9297e84|door:311:898500:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:898500:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:899451:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5dceef297e70|door:311:899451:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5dceef297e70|door:311:900015:1",
+        "door:311:900015",
+        "walk:room:rm-311-0bd5e173a3a9:arrival:rm-311-0bd5e173a3a9|door:311:900015:0",
+        "walk:room:rm-311-0bd5e173a3a9:arrival:rm-311-0bd5e173a3a9|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:0",
+        "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+        "walk:room:rm-694-ecf634619eae:arrival:rm-694-ecf634619eae|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:1"
+      ],
+      "sourceGraphMetres": 58.58479645298831,
+      "resolvedMetres": 52.14539662461134,
+      "turns": [
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        }
+      ],
+      "floorChanges": [
+        {
+          "message": "Take stairs up to Floor 2",
+          "from": 311,
+          "to": 694
+        }
+      ],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": true,
+          "segments": 6,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [138.5029385495435, 308.88509609333914, 0],
+            [176.12131927551798, 285.379608328512, 0],
+            [202.32765693954215, 327.3204519962569, 0],
+            [183.69202169201907, 338.9647516138101, 0],
+            [191.44314007002924, 351.36970679335764, 0],
+            [193.22037481953862, 350.25921854655826, 0],
+            [195.4260843955774, 353.7892547420426, 0]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 311,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:311:900015"],
+          "pointsFeet": [
+            [195.4260843955774, 353.7892547420426, 0],
+            [196.16469173067745, 354.94519458097625, 0]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": false,
+          "segments": 3,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [196.16469173067745, 354.94519458097625, 0],
+            [197.8317835297965, 354.26636843732086, 0],
+            [199.86826196076265, 359.267643834678, 0],
+            [199.86826196076265, 359.267643834678, 0]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+          "nativeElementId": 1305141,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 311,
+          "toLevel": 694,
+          "pointsFeet": [
+            [199.86826196076265, 359.267643834678, 0],
+            [204.3954883431841, 368.761245695983, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 694,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [204.3954883431841, 368.761245695983, 14.435695538057743],
+            [204.3954883431841, 368.761245695983, 14.435695538057743]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "native-stairs-reverse",
+      "start": {
+        "key": "rm-694-ecf634619eae",
+        "number": "05-S203",
+        "levelId": 694
+      },
+      "end": {
+        "key": "rm-311-5de6f9297e84",
+        "number": "05-120",
+        "levelId": 311
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "45157ddfd8f463fe23f1bc5176dbbf14df275e58bc2cf793120746b61eacbeb9",
+      "edgeIds": [
+        "walk:room:rm-694-ecf634619eae:arrival:rm-694-ecf634619eae|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:1",
+        "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+        "walk:room:rm-311-0bd5e173a3a9:arrival:rm-311-0bd5e173a3a9|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:0",
+        "walk:room:rm-311-0bd5e173a3a9:arrival:rm-311-0bd5e173a3a9|door:311:900015:0",
+        "door:311:900015",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5dceef297e70|door:311:900015:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5dceef297e70|door:311:899451:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:899451:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-44abfe297071|door:311:898500:1",
+        "walk:circulation:05:311:0.000:arrival:rm-311-5de6f9297e84|door:311:898500:1"
+      ],
+      "sourceGraphMetres": 58.58479645298831,
+      "resolvedMetres": 52.14539662461132,
+      "turns": [
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn left",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        },
+        {
+          "message": "Turn right",
+          "levelId": 311
+        }
+      ],
+      "floorChanges": [
+        {
+          "message": "Take stairs down to Campus Floor 1",
+          "from": 694,
+          "to": 311
+        }
+      ],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 694,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [204.3954883431841, 368.761245695983, 14.435695538057743],
+            [204.3954883431841, 368.761245695983, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+          "nativeElementId": 1305141,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 694,
+          "toLevel": 311,
+          "pointsFeet": [
+            [204.3954883431841, 368.761245695983, 14.435695538057743],
+            [199.86826196076265, 359.267643834678, 0]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": false,
+          "segments": 3,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [199.86826196076265, 359.267643834678, 0],
+            [199.86826196076265, 359.267643834678, 0],
+            [197.8317835297965, 354.26636843732086, 0],
+            [196.16469173067745, 354.94519458097625, 0]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 311,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:311:900015"],
+          "pointsFeet": [
+            [196.16469173067745, 354.94519458097625, 0],
+            [195.4260843955774, 353.7892547420426, 0]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 311,
+          "centered": true,
+          "segments": 6,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [195.4260843955774, 353.7892547420426, 0],
+            [193.22037481953862, 350.25921854655826, 0],
+            [191.44314007002924, 351.36970679335764, 0],
+            [183.5385766143006, 338.7191768181754, 0],
+            [202.17421186182366, 327.0748772006222, 0],
+            [176.12131927551798, 285.379608328512, 0],
+            [138.5029385495435, 308.88509609333914, 0]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "room-to-room-multifloor",
+      "start": {
+        "key": "rm-311-d966b3d0d90c",
+        "number": "05-107",
+        "levelId": 311
+      },
+      "end": {
+        "key": "rm-402367-e840165e093b",
+        "number": "05-401",
+        "levelId": 402367
+      },
+      "routable": false,
+      "routeEqual": true
+    },
+    {
+      "name": "room-to-room-multifloor-reverse",
+      "start": {
+        "key": "rm-402367-e840165e093b",
+        "number": "05-401",
+        "levelId": 402367
+      },
+      "end": {
+        "key": "rm-311-d966b3d0d90c",
+        "number": "05-107",
+        "levelId": 311
+      },
+      "routable": false,
+      "routeEqual": true
+    },
+    {
+      "name": "supported-room-to-room-three-floors",
+      "start": {
+        "key": "rm-1487816-101ba741dc0b",
+        "number": "10-1018",
+        "levelId": 1487816
+      },
+      "end": {
+        "key": "rm-402367-b4a4f3d43778",
+        "number": "10-4018",
+        "levelId": 402367
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "856aaba33cf1b3d2afff1528d182fb5f26396f3648358c37d464ec320bd7530a",
+      "edgeIds": [
+        "walk:room:rm-1487816-101ba741dc0b:arrival:rm-1487816-101ba741dc0b|door:1487816:1501381:0",
+        "door:1487816:1501381",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1950d841e16a|door:1487816:1501381:1",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1950d841e16a|door:1487816:2294795:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:2237606:1|door:1487816:2294795:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:2178892:1|door:1487816:2237606:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501546:1|door:1487816:2178892:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501545:0|door:1487816:1501546:1",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-62e57b407134|door:1487816:1501545:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-62e57b407134|door:1487816:1501387:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1949cc41e164|door:1487816:1501387:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1949cc41e164|door:1487816:2177664:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501374:0|door:1487816:2177664:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501374:0|door:1487816:1501582:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501582:0|door:1487816:2169243:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:2169185:1|door:1487816:2169243:0",
+        "door:1487816:2169185",
+        "walk:room:rm-1487816-004a60afc0d8:arrival:rm-1487816-004a60afc0d8|door:1487816:2169185:0",
+        "walk:room:rm-1487816-004a60afc0d8:arrival:rm-1487816-004a60afc0d8|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:0",
+        "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4",
+        "walk:room:rm-694-07cc11afc4c4:arrival:rm-694-07cc11afc4c4|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:1",
+        "walk:room:rm-694-07cc11afc4c4:arrival:rm-694-07cc11afc4c4|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:0",
+        "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+        "walk:room:rm-400176-07c585afc4bf:arrival:rm-400176-07c585afc4bf|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1",
+        "walk:room:rm-400176-07c585afc4bf:arrival:rm-400176-07c585afc4bf|stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+        "walk:room:rm-402367-07d989afc4d0:arrival:rm-402367-07d989afc4d0|stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1",
+        "walk:room:rm-402367-07d989afc4d0:arrival:rm-402367-07d989afc4d0|door:402367:2282750:0",
+        "door:402367:2282750",
+        "walk:circulation:10:402367:34.121:door:402367:2282742:1|door:402367:2282750:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282742:1|door:402367:2291575:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282760:1|door:402367:2291575:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282737:1|door:402367:2282760:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282737:1|door:402367:2282761:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282761:1|door:402367:2291212:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282735:1|door:402367:2291212:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282735:1|door:402367:2282762:0",
+        "walk:circulation:10:402367:34.121:arrival:rm-402367-ad71cad433cf|door:402367:2282762:0",
+        "walk:circulation:10:402367:34.121:arrival:rm-402367-ad71cad433cf|door:402367:2282730:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282730:0|door:402367:2282763:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282727:0|door:402367:2282763:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282727:0|door:402367:2282764:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282726:0|door:402367:2282764:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282725:0|door:402367:2282726:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282724:0|door:402367:2282725:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282724:0|door:402367:2289889:0",
+        "door:402367:2289889",
+        "walk:room:rm-402367-b4a4f3d43778:arrival:rm-402367-b4a4f3d43778|door:402367:2289889:1"
+      ],
+      "sourceGraphMetres": 160.81184342552845,
+      "resolvedMetres": 130.47266153028013,
+      "turns": [
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        }
+      ],
+      "floorChanges": [
+        {
+          "message": "Take stairs up to Floor 2",
+          "from": 1487816,
+          "to": 694
+        },
+        {
+          "message": "Take stairs up to Floor 3",
+          "from": 694,
+          "to": 400176
+        },
+        {
+          "message": "Take stairs up to Floor 4",
+          "from": 400176,
+          "to": 402367
+        }
+      ],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 1487816,
+          "centered": true,
+          "segments": 10,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [
+            "door:1487816:1501381",
+            "door:1487816:2169185"
+          ],
+          "pointsFeet": [
+            [144.93910657068534, 871.5488136066302, 3.2808398950131235],
+            [141.9621716830598, 873.4090168859503, 3.2808398950131235],
+            [139.8758467218127, 874.7127029527069, 3.2808398950131235],
+            [135.28177161064127, 867.3606771677515, 3.2808398950131235],
+            [160.8748002500805, 851.3683099847437, 3.2808398950131235],
+            [116.55186867135808, 780.4370935927498, 3.2808398950131235],
+            [90.95884003191884, 796.4294607757575, 3.2808398950131235],
+            [77.34179896944039, 774.637732390061, 3.2808398950131235],
+            [65.91410453850585, 781.7785787498033, 3.2808398950131235],
+            [64.37482083102759, 779.3152203514562, 3.2808398950131235],
+            [65.44898764553062, 778.6440035777265, 3.2808398950131235]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4",
+          "nativeElementId": 2474568,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 1487816,
+          "toLevel": 694,
+          "pointsFeet": [
+            [65.44898764553062, 778.6440035777265, 3.2808398950131235],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 694,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+          "nativeElementId": 1500191,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 694,
+          "toLevel": 400176,
+          "pointsFeet": [
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 400176,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+          "nativeElementId": 1496322,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 400176,
+          "toLevel": 402367,
+          "pointsFeet": [
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.56803609401368, 779.1171883217796, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 3,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [64.56803609401368, 779.1171883217796, 34.120734908136484],
+            [64.56803609401368, 779.1171883217796, 34.120734908136484],
+            [66.73185095872293, 778.0789661724958, 34.120734908136484],
+            [68.54873971996955, 781.865642185737, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:402367:2282750"],
+          "pointsFeet": [
+            [68.54873971996955, 781.865642185737, 34.120734908136484],
+            [69.541239833672, 783.2034748782601, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": true,
+          "segments": 6,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [69.541239833672, 783.2034748782601, 34.120734908136484],
+            [69.34774169424406, 783.3243867851063, 34.120734908136484],
+            [74.05654356037638, 790.8599920352113, 34.120734908136484],
+            [65.59848056971725, 796.1452135233892, 34.120734908136484],
+            [116.90387311107168, 878.2504276276476, 34.120734908136484],
+            [139.53849868985657, 864.1066443976138, 34.120734908136484],
+            [141.17281556515752, 866.7220797410358, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:402367:2289889"],
+          "pointsFeet": [
+            [141.17281556515752, 866.7220797410358, 34.120734908136484],
+            [141.77331715520154, 867.8093154775879, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [141.77331715520154, 867.8093154775879, 34.120734908136484],
+            [141.250867656664, 868.1043519524143, 34.120734908136484],
+            [143.90619593010086, 872.8063974392516, 34.120734908136484]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "supported-room-to-room-three-floors-reverse",
+      "start": {
+        "key": "rm-402367-b4a4f3d43778",
+        "number": "10-4018",
+        "levelId": 402367
+      },
+      "end": {
+        "key": "rm-1487816-101ba741dc0b",
+        "number": "10-1018",
+        "levelId": 1487816
+      },
+      "routable": true,
+      "routeEqual": true,
+      "routeGeometrySha256": "e7cba647e6edd09f1c1eacf4968ff3fb8c2ae17cb36be8787d7e53f22b35278f",
+      "edgeIds": [
+        "walk:room:rm-402367-b4a4f3d43778:arrival:rm-402367-b4a4f3d43778|door:402367:2289889:1",
+        "door:402367:2289889",
+        "walk:circulation:10:402367:34.121:door:402367:2282724:0|door:402367:2289889:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282724:0|door:402367:2282725:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282725:0|door:402367:2282726:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282726:0|door:402367:2282764:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282727:0|door:402367:2282764:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282727:0|door:402367:2282763:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282730:0|door:402367:2282763:0",
+        "walk:circulation:10:402367:34.121:arrival:rm-402367-ad71cad433cf|door:402367:2282730:0",
+        "walk:circulation:10:402367:34.121:arrival:rm-402367-ad71cad433cf|door:402367:2282762:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282735:1|door:402367:2282762:0",
+        "walk:circulation:10:402367:34.121:door:402367:2282735:1|door:402367:2291212:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282761:1|door:402367:2291212:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282737:1|door:402367:2282761:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282737:1|door:402367:2282760:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282760:1|door:402367:2291575:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282742:1|door:402367:2291575:1",
+        "walk:circulation:10:402367:34.121:door:402367:2282742:1|door:402367:2282750:1",
+        "door:402367:2282750",
+        "walk:room:rm-402367-07d989afc4d0:arrival:rm-402367-07d989afc4d0|door:402367:2282750:0",
+        "walk:room:rm-402367-07d989afc4d0:arrival:rm-402367-07d989afc4d0|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1",
+        "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+        "walk:room:rm-400176-07c585afc4bf:arrival:rm-400176-07c585afc4bf|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "walk:room:rm-400176-07c585afc4bf:arrival:rm-400176-07c585afc4bf|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1",
+        "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+        "walk:room:rm-694-07cc11afc4c4:arrival:rm-694-07cc11afc4c4|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:0",
+        "walk:room:rm-694-07cc11afc4c4:arrival:rm-694-07cc11afc4c4|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:1",
+        "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4",
+        "walk:room:rm-1487816-004a60afc0d8:arrival:rm-1487816-004a60afc0d8|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:0",
+        "walk:room:rm-1487816-004a60afc0d8:arrival:rm-1487816-004a60afc0d8|door:1487816:2169185:0",
+        "door:1487816:2169185",
+        "walk:circulation:10:1487816:3.281:door:1487816:2169185:1|door:1487816:2169243:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501582:0|door:1487816:2169243:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501374:0|door:1487816:1501582:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501374:0|door:1487816:2177664:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1949cc41e164|door:1487816:2177664:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1949cc41e164|door:1487816:1501387:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-62e57b407134|door:1487816:1501387:0",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-62e57b407134|door:1487816:1501545:0",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501545:0|door:1487816:1501546:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:1501546:1|door:1487816:2178892:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:2178892:1|door:1487816:2237606:1",
+        "walk:circulation:10:1487816:3.281:door:1487816:2237606:1|door:1487816:2294795:1",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1950d841e16a|door:1487816:2294795:1",
+        "walk:circulation:10:1487816:3.281:arrival:rm-1487816-1950d841e16a|door:1487816:1501381:1",
+        "door:1487816:1501381",
+        "walk:room:rm-1487816-101ba741dc0b:arrival:rm-1487816-101ba741dc0b|door:1487816:1501381:0"
+      ],
+      "sourceGraphMetres": 160.81184342552834,
+      "resolvedMetres": 130.4726615302801,
+      "turns": [
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn left",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 402367
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn left",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        },
+        {
+          "message": "Turn right",
+          "levelId": 1487816
+        }
+      ],
+      "floorChanges": [
+        {
+          "message": "Take stairs down to Floor 3",
+          "from": 402367,
+          "to": 400176
+        },
+        {
+          "message": "Take stairs down to Floor 2",
+          "from": 400176,
+          "to": 694
+        },
+        {
+          "message": "Take stairs down to Campus Floor 1",
+          "from": 694,
+          "to": 1487816
+        }
+      ],
+      "checks": [
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [143.90619593010086, 872.8063974392516, 34.120734908136484],
+            [141.250867656664, 868.1043519524143, 34.120734908136484],
+            [141.77331715520154, 867.8093154775879, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:402367:2289889"],
+          "pointsFeet": [
+            [141.77331715520154, 867.8093154775879, 34.120734908136484],
+            [141.17281556515752, 866.7220797410358, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": true,
+          "segments": 6,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [141.17281556515752, 866.7220797410358, 34.120734908136484],
+            [139.53849868985657, 864.1066443976138, 34.120734908136484],
+            [116.90387311107168, 878.2504276276476, 34.120734908136484],
+            [65.5055233708162, 795.9964519538885, 34.120734908136484],
+            [73.96358636147534, 790.7112304657106, 34.120734908136484],
+            [69.34774169424406, 783.3243867851063, 34.120734908136484],
+            [69.541239833672, 783.2034748782601, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "door",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 1,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": ["door:402367:2282750"],
+          "pointsFeet": [
+            [69.541239833672, 783.2034748782601, 34.120734908136484],
+            [68.54873971996955, 781.865642185737, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 402367,
+          "centered": false,
+          "segments": 3,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [68.54873971996955, 781.865642185737, 34.120734908136484],
+            [66.73185095872293, 778.0789661724958, 34.120734908136484],
+            [64.56803609401368, 779.1171883217796, 34.120734908136484],
+            [64.56803609401368, 779.1171883217796, 34.120734908136484]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+          "nativeElementId": 1498360,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 402367,
+          "toLevel": 400176,
+          "pointsFeet": [
+            [64.56803609401368, 779.1171883217796, 34.120734908136484],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 400176,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.27865344348942, 779.1720586807772, 24.278215223097114]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+          "nativeElementId": 1500191,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 400176,
+          "toLevel": 694,
+          "pointsFeet": [
+            [64.27865344348942, 779.1720586807772, 24.278215223097114],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 694,
+          "centered": false,
+          "segments": 2,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [],
+          "pointsFeet": [
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [64.97797811010935, 779.8573110777902, 14.435695538057743]
+          ]
+        },
+        {
+          "kind": "stairs",
+          "edgeId": "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4",
+          "nativeElementId": 2474568,
+          "evidence": "native-flight",
+          "nativeGeometryPreserved": true,
+          "fromLevel": 694,
+          "toLevel": 1487816,
+          "pointsFeet": [
+            [64.97797811010935, 779.8573110777902, 14.435695538057743],
+            [65.44898764553062, 778.6440035777265, 3.2808398950131235]
+          ]
+        },
+        {
+          "kind": "walk",
+          "levelId": 1487816,
+          "centered": true,
+          "segments": 10,
+          "nativeWallOrColumnCrossings": 0,
+          "selectedApertureIds": [
+            "door:1487816:1501381",
+            "door:1487816:2169185"
+          ],
+          "pointsFeet": [
+            [65.44898764553062, 778.6440035777265, 3.2808398950131235],
+            [64.37482083102759, 779.3152203514562, 3.2808398950131235],
+            [66.02883766150603, 781.9621893478613, 3.2808398950131235],
+            [81.8143334747702, 772.0982748902138, 3.2808398950131235],
+            [96.08688945624914, 794.9390419769092, 3.2808398950131235],
+            [117.32211671335875, 781.6697428918067, 3.2808398950131235],
+            [161.6038217014243, 852.5349832276412, 3.2808398950131235],
+            [136.01079306198505, 868.527350410649, 3.2808398950131235],
+            [139.8758467218127, 874.7127029527069, 3.2808398950131235],
+            [141.9621716830598, 873.4090168859503, 3.2808398950131235],
+            [144.93910657068534, 871.5488136066302, 3.2808398950131235]
+          ]
+        }
+      ]
+    }
+  ],
+  "accessibleCases": [
+    {
+      "start": "05-120",
+      "end": "05-S203",
+      "available": false,
+      "unchanged": true
+    },
+    {
+      "start": "05-S203",
+      "end": "05-120",
+      "available": false,
+      "unchanged": true
+    },
+    {
+      "start": "05-107",
+      "end": "05-401",
+      "available": false,
+      "unchanged": true
+    },
+    {
+      "start": "10-1018",
+      "end": "10-4018",
+      "available": false,
+      "unchanged": true
+    }
+  ],
+  "additionalFixtures": {
+    "command": "node --import tsx --test --test-name-pattern='rotated corridors|rotated serpentine' tests/unit/centered-route.test.ts",
+    "passed": 2,
+    "failed": 0,
+    "cases": [
+      "rotated corridors resolve to two centred straight legs and one right turn, ignoring an unused side doorway",
+      "rotated serpentine corridors resolve five real corners rather than a grid zigzag"
+    ]
+  }
+}

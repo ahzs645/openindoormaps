@@ -23,6 +23,8 @@ import ShareMenu from "./share-menu";
 
 interface LocationDetailProps {
   selectedPOI: POI;
+  hospitalStyle?: boolean;
+  onSelectCategory?: (category: string) => void;
   floorNames?: FloorNames;
   shareUrl: string;
   handleBackClick: () => void;
@@ -77,6 +79,12 @@ function safeHttpUrl(value: unknown): string | null {
   } catch {
     return null;
   }
+}
+
+function safeImageUrl(value: unknown): string | null {
+  if (typeof value === "string" && /^\/assets\/[\w./-]+$/.test(value))
+    return value;
+  return safeHttpUrl(value);
 }
 
 const BUTTON_TARGETS = {
@@ -194,6 +202,8 @@ function OpeningHoursRow({ poi }: { poi: POI }) {
 
 export default function LocationDetail({
   selectedPOI,
+  hospitalStyle = false,
+  onSelectCategory,
   floorNames,
   shareUrl,
   handleBackClick,
@@ -201,21 +211,29 @@ export default function LocationDetail({
 }: LocationDetailProps) {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const metadata = selectedPOI.metadata ?? {};
-  const logo = safeHttpUrl(metadata.logo);
+  const logo = safeImageUrl(metadata.logo);
   const images = (metadata.images ?? [])
-    .map((image) => safeHttpUrl(image))
+    .map((image) => safeImageUrl(image))
     .filter((image): image is string => image !== null);
   const website = safeHttpUrl(metadata.link);
   const socialLinks = Object.entries(metadata.social ?? {})
     .map(([network, url]) => [network, safeHttpUrl(url)] as const)
     .filter((entry): entry is readonly [string, string] => entry[1] !== null);
   const statusBadge = metadata.status ? STATUS_BADGES[metadata.status] : null;
-  const category = formatCategory(metadata.category);
+  const category = hospitalStyle
+    ? metadata.category
+    : formatCategory(metadata.category);
   const floorName =
     selectedPOI.floor === undefined
       ? null
-      : formatFloorName(selectedPOI.floor, floorNames);
-  const subtitle = [category, floorName].filter(Boolean).join(" · ");
+      : (metadata.floor_name ?? formatFloorName(selectedPOI.floor, floorNames));
+  const subtitle = (
+    hospitalStyle
+      ? [floorName, metadata.building_name]
+      : [category, metadata.building_name, floorName]
+  )
+    .filter(Boolean)
+    .join(" · ");
   const description = metadata.description?.trim();
   const isLongDescription =
     (description?.length ?? 0) > DESCRIPTION_PREVIEW_CHARS;
@@ -227,7 +245,12 @@ export default function LocationDetail({
   return (
     <div className="space-y-4" data-testid="location-detail">
       <div className="flex items-start justify-between gap-2">
-        <div className="flex min-w-0 items-center gap-3">
+        <div
+          className={cn(
+            "flex min-w-0 gap-3",
+            hospitalStyle ? "flex-col items-start" : "items-center",
+          )}
+        >
           {logo && (
             <HiddenOnError
               src={logo}
@@ -274,7 +297,12 @@ export default function LocationDetail({
       </div>
 
       <Button
-        className="w-full rounded-full"
+        className={cn(
+          "w-full",
+          hospitalStyle
+            ? "rounded-lg bg-[#305d94] hover:bg-[#264d7d]"
+            : "rounded-full",
+        )}
         onClick={handleDirectionsClick}
         variant="primary"
       >
@@ -304,7 +332,22 @@ export default function LocationDetail({
         </div>
       )}
 
+      {hospitalStyle && parseOpeningHours(metadata) && (
+        <h3 className="text-sm font-semibold">Hours</h3>
+      )}
       <OpeningHoursRow poi={selectedPOI} />
+      {hospitalStyle && category && (
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold">Categories</h3>
+          <button
+            type="button"
+            onClick={() => onSelectCategory?.(category)}
+            className="rounded-md border border-border px-2 py-1 text-xs hover:bg-secondary"
+          >
+            {category}
+          </button>
+        </div>
+      )}
 
       {description && (
         <div className="text-sm text-gray-700 dark:text-gray-300">
@@ -323,7 +366,7 @@ export default function LocationDetail({
         </div>
       )}
 
-      {images.length > 0 && (
+      {!hospitalStyle && images.length > 0 && (
         <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
           {images.map((image) => (
             <a
@@ -382,6 +425,26 @@ export default function LocationDetail({
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {hospitalStyle && images.length > 0 && (
+        <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1">
+          {images.map((image) => (
+            <a
+              key={image}
+              href={image}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full shrink-0"
+            >
+              <HiddenOnError
+                src={image}
+                alt={`${selectedPOI.name} photo`}
+                className="h-40 w-full rounded-lg object-cover"
+              />
+            </a>
+          ))}
         </div>
       )}
 

@@ -43,6 +43,20 @@ export default function WelcomePage() {
             Revit Imports
           </h2>
           <div className="flex flex-col gap-3">
+            <Link
+              to="/projects/indoor"
+              className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-secondary"
+            >
+              <FileArchive className="size-5 text-teal-600 dark:text-teal-300" />
+              <span className="min-w-0">
+                <span className="block font-medium">
+                  Prepared indoor projects
+                </span>
+                <span className="block text-sm text-muted-foreground">
+                  Import a ZIP · floor maps, routing and 3D review
+                </span>
+              </span>
+            </Link>
             {revitImportEntries.map((fixture) => (
               <Link
                 key={fixture.id}

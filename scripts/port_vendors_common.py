@@ -614,7 +614,7 @@ def build_prm_routes(levels, obstacles_by_level, doors_by_level, transitions,
     return {"type": "FeatureCollection", "features": features}
 
 
-def elevator_edges(transition, floors):
+def elevator_edges(transition, floors, fixed_ride_seconds=None):
     """Boarding edges (anchor -> stop, per floor) plus per-floor hops."""
     edges = []
 
@@ -626,17 +626,21 @@ def elevator_edges(transition, floors):
         "is_accessible": True,
         "vertical_connection_id": transition["id"],
     }
+    if fixed_ride_seconds is not None:
+        common["ride_time_seconds"] = fixed_ride_seconds
     for level in floors:
         anchor = level_offset(list(transition["anchors"][level]), level)
         edges.append(line_feature(
             [anchor, stop(level)], None, "elevator",
-            cost=ELEVATOR_BOARD_S, from_level_id=level, to_level_id=level,
+            cost=fixed_ride_seconds / 2 if fixed_ride_seconds is not None else ELEVATOR_BOARD_S,
+            from_level_id=level, to_level_id=level,
             **common,
         ))
     for lo, hi in zip(floors[:-1], floors[1:]):
         edges.append(line_feature(
             [stop(lo), stop(hi)], None, "elevator",
-            cost=ELEVATOR_RIDE_PER_FLOOR_S, from_level_id=lo, to_level_id=hi,
+            cost=0 if fixed_ride_seconds is not None else ELEVATOR_RIDE_PER_FLOOR_S,
+            from_level_id=lo, to_level_id=hi,
             **common,
         ))
     return edges
@@ -721,7 +725,7 @@ def build_routes(levels, units_by_level, transitions, lat_ref):
     return {"type": "FeatureCollection", "features": features}
 
 
-def write_fixture(out_dir, indoor_map, routes, pois):
+def write_fixture(out_dir, indoor_map, routes, pois, compact_routes=False):
     os.makedirs(out_dir, exist_ok=True)
     for filename, data in (
         ("indoor-map.geojson", indoor_map),
@@ -729,8 +733,22 @@ def write_fixture(out_dir, indoor_map, routes, pois):
         ("pois.geojson", pois),
     ):
         path = os.path.join(out_dir, filename)
+        if os.path.exists(path):
+            with open(path) as fh:
+                if json.load(fh) == data:
+                    continue  # Preserve formatting when content is unchanged.
         with open(path, "w") as fh:
-            json.dump(data, fh, indent=2)
+            if compact_routes and filename == "indoor-routes.geojson":
+                header = {k: v for k, v in data.items() if k != "features"}
+                fh.write(json.dumps(header, separators=(",", ":"))[:-1])
+                fh.write(',"features":[\n')
+                for i, feature in enumerate(data["features"]):
+                    if i:
+                        fh.write(',\n')
+                    fh.write(json.dumps(feature, separators=(",", ":")))
+                fh.write('\n]}\n')
+            else:
+                json.dump(data, fh, indent=2)
         print("wrote", path, len(data["features"]), "features")
 
 

@@ -1,0 +1,128 @@
+{
+  "zip": "work/native-circulation/final/UNBC.campus-viewer.zip",
+  "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "checkedSegments": 230,
+  "nativeBarrierFailures": 0,
+  "nativeFloorCoverageFailures": 0,
+  "sourceDatasetUnchanged": true,
+  "results": [
+    {
+      "from": "06-260",
+      "to": "06-204",
+      "distanceMetres": 71.72319385040132,
+      "unknownAccessAreas": 11,
+      "selectedDoors": [
+        "door:694:1327976",
+        "door:694:1328017",
+        "door:694:1327910"
+      ],
+      "verticalEdges": [],
+      "curvedPoints": 47,
+      "maximumCurveAngleDegrees": 1.6950960141918956,
+      "curveRanges": [
+        {
+          "start": 1,
+          "end": 45
+        }
+      ],
+      "turnInstructions": 1,
+      "curveInstructions": 1,
+      "finalLevel": 694
+    },
+    {
+      "from": "06-204",
+      "to": "06-260",
+      "distanceMetres": 71.72319385040133,
+      "unknownAccessAreas": 11,
+      "selectedDoors": [
+        "door:694:1327910",
+        "door:694:1328017",
+        "door:694:1327976"
+      ],
+      "verticalEdges": [],
+      "curvedPoints": 47,
+      "maximumCurveAngleDegrees": 1.6950960141918956,
+      "curveRanges": [
+        {
+          "start": 1,
+          "end": 45
+        }
+      ],
+      "turnInstructions": 1,
+      "curveInstructions": 1,
+      "finalLevel": 694
+    },
+    {
+      "from": "06-260",
+      "to": "07-240",
+      "distanceMetres": 96.31924037007624,
+      "unknownAccessAreas": 11,
+      "selectedDoors": [
+        "door:694:1327976",
+        "door:694:1328016",
+        "door:311:1736144"
+      ],
+      "verticalEdges": ["connector:unbc-agora-conference-lift:0:1"],
+      "curvedPoints": 48,
+      "maximumCurveAngleDegrees": 1.7192149904129739,
+      "curveRanges": [
+        {
+          "start": 1,
+          "end": 46
+        }
+      ],
+      "turnInstructions": 2,
+      "curveInstructions": 1,
+      "finalLevel": 311
+    },
+    {
+      "from": "07-240",
+      "to": "06-260",
+      "distanceMetres": 96.31924037007623,
+      "unknownAccessAreas": 11,
+      "selectedDoors": [
+        "door:311:1736144",
+        "door:694:1328016",
+        "door:694:1327976"
+      ],
+      "verticalEdges": ["connector:unbc-agora-conference-lift:0:1"],
+      "curvedPoints": 48,
+      "maximumCurveAngleDegrees": 1.719214990412922,
+      "curveRanges": [
+        {
+          "start": 1,
+          "end": 46
+        }
+      ],
+      "turnInstructions": 2,
+      "curveInstructions": 1,
+      "finalLevel": 694
+    },
+    {
+      "from": "05-120",
+      "to": "05-165",
+      "distanceMetres": 74.61519286430875,
+      "unknownAccessAreas": 9,
+      "selectedDoors": ["door:311:1836014"],
+      "verticalEdges": [],
+      "curvedPoints": 0,
+      "maximumCurveAngleDegrees": 0,
+      "turnInstructions": 13,
+      "curveInstructions": 0,
+      "finalLevel": 311
+    },
+    {
+      "from": "05-165",
+      "to": "05-120",
+      "distanceMetres": 74.61519286430874,
+      "unknownAccessAreas": 9,
+      "selectedDoors": ["door:311:1836014"],
+      "verticalEdges": [],
+      "curvedPoints": 0,
+      "maximumCurveAngleDegrees": 0,
+      "turnInstructions": 13,
+      "curveInstructions": 0,
+      "finalLevel": 311
+    }
+  ]
+}

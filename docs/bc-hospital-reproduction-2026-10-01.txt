@@ -1,0 +1,193 @@
+BC Children's and Women's Hospital reproduction — 2026-10-01
+
+Local example: /bc-hospital
+Reference route: /bc-hospital?from=300&to=258&accessible=1
+Source demo: https://demos.mappedin.com/web/mappedin-web/bc-children-s-and-women-s-hospital-campus/bc-childrens-hospital.html#/directions?to=Gift%20Shop&from=Breast%20Health%20Imaging%20Center
+
+Input: user's downloaded demos.mappedin.com capture; the complete public MVF
+zip is cdn.mappedin.com/67dc522077ee057bb82a147b/c85f5de52fd4ce28578a97694678b026e91858a7.zip.
+SHA256: 66cc3e5a1091417255b69ff9f95860c5f60fba22251095a72ef7c881ebcfdd70.
+No captured credentials or signed API requests are required or copied.
+
+Implemented
+- Eight indoor building stacks, 41 maps including outdoors, ten interior
+  elevations plus a display-only Campus outdoors option (-100).
+- 6,751 source polygons and all 54 holes preserved to 9 decimal places.
+- Source colours, heights, opacity and map/building provenance retained.
+- A room-view switch offers top-down 2D and pitched 3D without changing the
+  selected destination, floor or route. 2D flattens rooms, walls and floor
+  slabs; 3D raises rooms at the captured heights. Department regions sort
+  below their smaller rooms, with at most 4 cm of display depth separation
+  and thin raised room-edge strips to prevent coplanar roofs masking rooms.
+  The raw imported geometry/heights remain unchanged. Connector footprints
+  retain the source 0.6 opacity, with smaller blue/white icons at close zoom.
+  The active floor retains lower-floor room context through its source openings:
+  279 derived clipped polygons, including 50 Level 1 rooms under Teck Level 2's
+  three openings. Clipping traces downward to the nearest solid source floor.
+  Lower-floor room geometry is recessed in 3D (height * 0.35 / levels below);
+  this is display depth, not full architectural storey spacing. 2D preserves
+  the same clipped rooms, with floor backgrounds drawn before room colours.
+- A compact building/floor selector reproduces the source's blue badges,
+  descending levels, orange selected row and Change building flow. Each of the
+  eight buildings offers its own source levels, including Teck Ground Level and
+  Parking Garage. Building choice fits the camera to its source floor bounds.
+  POI selection and route steps keep the selected building in sync. Clicking
+  a visible lower room opens its original location on its actual source floor.
+  The room-to-location lookup is memoized across UI/floor changes.
+- Hospital discovery uses the ten reference category tiles and the source's
+  45 categories, memberships and child-category hierarchy. Search and cards
+  retain source category names, building/floor context and the old clinic alias.
+- Compact rounded panels, source logos, hours, category links, contact details
+  and gallery photos. Captured public images are served from local assets;
+  any uncaptured public image falls back to its original public URL.
+- Branded hospital logos on map labels; map labels open location cards.
+- Hospital directions begin with the route overview and Start button, followed
+  by an orange-highlighted instruction timeline. Existing route geometry,
+  endpoint editing, accessible routing, floor changes and preview remain intact.
+- 6,812 directed source graph edges, weights and 7,246 node identities retained.
+  Coincident nodes receive millimetre nudges so disconnected source identities
+  cannot accidentally merge. Explicit destinations bind to their own source
+  entrances; isolated rooms remain unreachable instead of snapping through walls.
+- Elevator/stair footprints correctly distinguish plural source layer Elevators.
+  The source has no escalator connections in this hospital bundle.
+- Directed connector metadata fixes reverse-floor instructions when opposite
+  source edges share endpoint coordinates. Portals become walks/ramps rather
+  than invented stairs. Direct elevator links retain all served floors.
+- Room cards/search results show the source building and floor name. The old
+  Breast Health Imaging Center name is searchable as an alias of the current
+  Breast Health Clinic & Bone Density name, as resolved by the live demo.
+
+Route comparison
+The live public demo was inspected, including its turn-by-turn directions:
+Breast Health Clinic & Bone Density (Shaughnessy DEF Level 2), elevator down
+  to Level 1, enter Shaughnessy AB Block, enter BC Women's Hospital, enter
+  BC Children's Hospital, arrive Gift Shop. The imported route follows that
+  sequence for normal and accessible routing. It shows approximately 340 m
+  and 4 min. The source also shows 4 min.
+The initial importer incorrectly chose an outdoor detour through Entrance 77.
+Captured neighbor weights and the downloaded SDK source establish that
+enterprise routing adds distance to same-map weights and uses the stored
+weight for cross-map links. Preserving these preferences resolves the detour.
+They are not durations: the new routing_cost property is separate from ETA.
+The source SDK estimates walking at 1.42 m/s and does not add a generic elevator
+wait. This timing model is enabled only for the hospital. Harrods keeps its
+source fixed ride times; other venues keep existing estimates.
+
+Verification
+python3 scripts/verify-bc-hospital-source.py /path/to/mvf.zip
+  PASS: all source polygons, holes, styles and directed edges/weights match.
+npx tsx scripts/verify-bc-hospital-routing.ts
+  PASS: 142 source route/shaft-direction cases, plus an isolated source room.
+npx tsx scripts/verify-venue-routing.ts bc-hospital harrods --pairs=40
+  PASS: no incorrect floors, suboptimal routes, unsupported graph hops or
+  accessibility violations. Includes correctly rejected disconnected rooms.
+npx tsx scripts/verify-harrods-routing.ts
+  PASS: 87 existing Harrods routing regressions.
+Browser tests: 15 hospital/vendor cases pass, including six hospital flows.
+  Final lower-floor and floor-picker changes are checked with two browser workers.
+  The first unrestricted concurrent run hit browser timeouts; bounded runs pass.
+  Floor-context verifier: 279 polygons exactly match source openings and nearest
+  lower-floor coverage; the 50 Teck Level 1 rooms remain below Level 2 only.
+  Floor-view verifier: all 11 floors in 2D/3D, recessed context, source immutability
+  and 2D floor-before-room paint order.
+  Alias, source details/gallery/category links, floor preview/arrival, exterior-
+  to-interior switching, source building sequence and 2D/3D route retention.
+Production build, TypeScript and targeted ESLint verified.
+TypeScript, targeted ESLint, Python compile and git diff whitespace checks pass.
+
+Remaining differences from the vendor
+- Source SDK smooths its graph paths and merges directions more aggressively.
+  Our route currently has 18 instructions versus the reference's 10.
+- Source has dynamic zoom fading and smarter label ranking. We use reduced
+  room-number labels. Captured hospital logos are reproduced; connector glyphs are our own
+  blue/white stairs and elevator icons, rather than the proprietary SDK icons.
+- Captured styles match the provided bundle. The live demo may have newer
+  colours or content, and its lighting/camera/label treatment differs.
+- Many numbered rooms have zero-neighbor entry nodes in the source. They are
+  shown/searchable but cannot receive a valid route unless real connections
+  are supplied; no fabricated room-door connections have been added.
+
+Reimport
+python3 scripts/port-mappedin-mvf.py bc-hospital /path/to/captured-mvf.zip
+
+Screenshots
+  docs/screenshots/bc-hospital-source-route.png
+  docs/screenshots/bc-hospital-cutaway-level-1.png
+  docs/screenshots/bc-hospital-cutaway-level-2.png
+  docs/screenshots/bc-hospital-exterior.png
+
+Room-view/UI screenshots
+  docs/screenshots/bc-hospital-rooms-3d.png
+  docs/screenshots/bc-hospital-rooms-2d.png
+  docs/screenshots/bc-hospital-gift-shop-card.png
+
+Lower-floor and selector screenshots
+  docs/screenshots/bc-hospital-level-2-lower-rooms-3d.png
+  docs/screenshots/bc-hospital-level-2-lower-rooms-2d.png
+  docs/screenshots/bc-hospital-building-floor-picker.png
+
+Cutaway verification
+python3 scripts/verify-bc-hospital-floor-context.py
+npx tsx scripts/verify-bc-hospital-floor-view.ts
+
+Directions preview presentation (desktop and mobile)
+- Dedicated hospital desktop preview: white rounded panel, source-like type
+  sizes and greys, blue progress line with elevator and arrival markers,
+  dotted timeline, orange selected instruction and fixed previous/next controls.
+- Mobile uses a compact current-instruction card above the map and a bottom
+  summary/control card, with the current building/floor chip between them.
+  The route line uses the reference's light blue. Other venue styles retain
+  their existing presentation.
+- Animated preview reports its current instruction and updates the displayed
+  building/floor; manual step changes cancel playback. Close/Back returns to
+  the editable route with both endpoints retained. Route options support Escape.
+- The screenshot journey is NICU (Dragonfly), POI 1877, to Emergency (Turtle
+  Bay) Reception, POI 260, accessible: 226 m and 3 minutes, with an elevator
+  descent from Teck Level 2 to Level 1. Local instructions still use our route
+  engine rather than copying the reference's more aggressive direction merging.
+- Responsive visual checks: desktop 1440 x 900, mobile 390 x 844 and 320 x 568.
+  Small-phone content has no horizontal overflow and leaves the map visible
+  between the instruction and summary cards.
+- Final verification: 19 browser cases pass (8 hospital, 9 vendor routes,
+  2 Bebetei desktop/mobile); 142 hospital and 87 Harrods routing regressions
+  pass. Production build, TypeScript, targeted ESLint and whitespace check pass.
+
+Directions preview screenshots
+  docs/screenshots/bc-hospital-route-preview-desktop.png
+  docs/screenshots/bc-hospital-route-preview-mobile.png
+
+Next/Previous camera follow comparison
+- Compared the live public Mappedin NICU (Dragonfly) to Emergency (Turtle Bay)
+  route on desktop and mobile. Reference Next frames the selected walking
+  section, highlights it, and switches to the arrival floor on the elevator
+  instruction. Previous to the preceding walking instruction restores Level 2.
+- Replaced the hospital's fixed zoom-20 jump to an instruction point with an
+  animated fit of its actual routed section. Camera padding uses the rendered
+  desktop panel or mobile instruction/floor-chip bounds; resizing refits after
+  MapLibre updates its internal viewport. Current 2D/3D pitch and bearing are
+  preserved.
+- Hospital connector steps frame the route on the arrival floor. Other venues
+  retain their boarding-floor connector previews. Selected path/position overlays
+  clear when editing or rerouting. A thinner light-blue base route distinguishes
+  the darker current walking section.
+- Verification: all 21 hospital/vendor/Bebetei browser cases pass. The two new
+  Next/Previous cases additionally inspect real MapLibre projected path points,
+  rendered selected-section features and layer order on desktop and mobile;
+  both pass after the final route-width and resize changes, including resizing
+  across the mobile/desktop breakpoint in both directions. A source-geometry check
+  covers 53 instruction sections across three forward/reverse hospital journeys,
+  including correct floors, connector context, cleanup and short-phone padding.
+  Existing 142 hospital and 87 Harrods routing cases, TypeScript, targeted ESLint,
+  production build and whitespace checks pass.
+- Direction merging remains a separate difference: this NICU journey has 17
+  local instructions versus 9 in the reference. No route geometry was replaced
+  with straight camera lines or changed to imitate the reference's wording.
+
+Next/Previous screenshots
+  docs/screenshots/bc-hospital-step-follow-mobile.png
+  docs/screenshots/bc-hospital-step-follow-desktop.png
+  docs/screenshots/bc-hospital-step-follow-elevator-mobile.png
+  docs/screenshots/bc-hospital-reference-next-mobile.png
+
+Next/Previous geometry verification
+npx tsx scripts/verify-bc-hospital-step-follow.ts

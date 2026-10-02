@@ -1,0 +1,454 @@
+{
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "c102ae887508b57e9620eec45c751f2a9c5ac9918e3ca7cf8290991a260a1865"
+  },
+  "report": {
+    "recordCount": 1860,
+    "routableArrivals": 1653,
+    "components": 142,
+    "largestComponentArrivals": 409,
+    "unmatchedDoors": 351,
+    "cellSizeFeet": 0.6,
+    "omittedSourceLabels": 360
+  },
+  "nodeCount": 4922,
+  "edgeCount": 5460,
+  "edgeKinds": {
+    "walk": 3936,
+    "door": 1487,
+    "opening": 10,
+    "stairs": 25,
+    "local-steps": 2
+  },
+  "routes": [
+    {
+      "name": "Open area to library desk",
+      "expect": "route",
+      "start": {
+        "number": "05-137",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "route": {
+        "metres": 11.932166494588289,
+        "sourceGraphMetres": 12.872817263626793,
+        "edges": 3,
+        "paths": [
+          {
+            "centered": true,
+            "vertices": 5,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "name": "Library desk to open area",
+      "expect": "route",
+      "start": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-137",
+        "levelId": 311
+      },
+      "route": {
+        "metres": 11.647039914697583,
+        "sourceGraphMetres": 12.872817263626793,
+        "edges": 3,
+        "paths": [
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": true,
+            "vertices": 4,
+            "nativeLevels": [311]
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "name": "Main corridor to library desk",
+      "expect": "route",
+      "start": {
+        "number": "05-120",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "route": {
+        "metres": 44.44938334145878,
+        "sourceGraphMetres": 48.16865726362679,
+        "edges": 6,
+        "paths": [
+          {
+            "centered": true,
+            "vertices": 5,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "name": "Library desk to main corridor",
+      "expect": "route",
+      "start": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-120",
+        "levelId": 311
+      },
+      "route": {
+        "metres": 44.449383341458784,
+        "sourceGraphMetres": 48.168657263626784,
+        "edges": 6,
+        "paths": [
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": true,
+            "vertices": 5,
+            "nativeLevels": [311]
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "name": "Library desk upstairs",
+      "expect": "route",
+      "start": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-S203",
+        "levelId": 694
+      },
+      "route": {
+        "metres": 69.52416233064672,
+        "sourceGraphMetres": 75.29809371661509,
+        "edges": 13,
+        "paths": [
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": true,
+            "vertices": 7,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 4,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311, 694]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [694]
+          }
+        ],
+        "transitions": ["stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae"]
+      }
+    },
+    {
+      "name": "Upstairs to library desk",
+      "expect": "route",
+      "start": {
+        "number": "05-S203",
+        "levelId": 694
+      },
+      "end": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "route": {
+        "metres": 69.52416233064672,
+        "sourceGraphMetres": 75.2980937166151,
+        "edges": 13,
+        "paths": [
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [694]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [694, 311]
+          },
+          {
+            "centered": false,
+            "vertices": 4,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": true,
+            "vertices": 7,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 2,
+            "nativeLevels": [311]
+          },
+          {
+            "centered": false,
+            "vertices": 3,
+            "nativeLevels": [311]
+          }
+        ],
+        "transitions": ["stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae"]
+      }
+    },
+    {
+      "name": "Library desk unverified accessibility",
+      "expect": "blocked",
+      "start": {
+        "number": "05-120",
+        "levelId": 311
+      },
+      "end": {
+        "number": "05-136",
+        "levelId": 311
+      },
+      "route": null
+    }
+  ],
+  "roundtrip": {
+    "originalModelPreserved": true,
+    "gisPreserved": true,
+    "staffBlocked": true
+  },
+  "maxGeoDifferenceDegrees": 1.5888218580782548e-14,
+  "floorCoverage": [
+    {
+      "id": "03:311",
+      "records": 28,
+      "arrivals": 27,
+      "unconfirmedAccess": 28
+    },
+    {
+      "id": "03:400176",
+      "records": 88,
+      "arrivals": 84,
+      "unconfirmedAccess": 88
+    },
+    {
+      "id": "03:402367",
+      "records": 92,
+      "arrivals": 88,
+      "unconfirmedAccess": 92
+    },
+    {
+      "id": "03:694",
+      "records": 101,
+      "arrivals": 91,
+      "unconfirmedAccess": 101
+    },
+    {
+      "id": "04:311",
+      "records": 51,
+      "arrivals": 40,
+      "unconfirmedAccess": 51
+    },
+    {
+      "id": "04:400176",
+      "records": 44,
+      "arrivals": 41,
+      "unconfirmedAccess": 44
+    },
+    {
+      "id": "04:402367",
+      "records": 51,
+      "arrivals": 44,
+      "unconfirmedAccess": 51
+    },
+    {
+      "id": "04:694",
+      "records": 69,
+      "arrivals": 65,
+      "unconfirmedAccess": 69
+    },
+    {
+      "id": "05:311",
+      "records": 124,
+      "arrivals": 116,
+      "unconfirmedAccess": 123
+    },
+    {
+      "id": "05:400176",
+      "records": 39,
+      "arrivals": 38,
+      "unconfirmedAccess": 39
+    },
+    {
+      "id": "05:402367",
+      "records": 50,
+      "arrivals": 49,
+      "unconfirmedAccess": 50
+    },
+    {
+      "id": "05:694",
+      "records": 49,
+      "arrivals": 45,
+      "unconfirmedAccess": 49
+    },
+    {
+      "id": "06:1487353",
+      "records": 47,
+      "arrivals": 35,
+      "unconfirmedAccess": 47
+    },
+    {
+      "id": "06:694",
+      "records": 48,
+      "arrivals": 34,
+      "unconfirmedAccess": 48
+    },
+    {
+      "id": "07:311",
+      "records": 194,
+      "arrivals": 162,
+      "unconfirmedAccess": 190
+    },
+    {
+      "id": "08:1487816",
+      "records": 63,
+      "arrivals": 49,
+      "unconfirmedAccess": 63
+    },
+    {
+      "id": "08:400176",
+      "records": 50,
+      "arrivals": 37,
+      "unconfirmedAccess": 50
+    },
+    {
+      "id": "08:402367",
+      "records": 53,
+      "arrivals": 43,
+      "unconfirmedAccess": 53
+    },
+    {
+      "id": "08:694",
+      "records": 71,
+      "arrivals": 57,
+      "unconfirmedAccess": 71
+    },
+    {
+      "id": "09:1450417",
+      "records": 65,
+      "arrivals": 57,
+      "unconfirmedAccess": 65
+    },
+    {
+      "id": "09:694",
+      "records": 61,
+      "arrivals": 53,
+      "unconfirmedAccess": 61
+    },
+    {
+      "id": "10:1487816",
+      "records": 103,
+      "arrivals": 94,
+      "unconfirmedAccess": 103
+    },
+    {
+      "id": "10:2295121",
+      "records": 10,
+      "arrivals": 6,
+      "unconfirmedAccess": 10
+    },
+    {
+      "id": "10:400176",
+      "records": 106,
+      "arrivals": 103,
+      "unconfirmedAccess": 106
+    },
+    {
+      "id": "10:402367",
+      "records": 100,
+      "arrivals": 95,
+      "unconfirmedAccess": 100
+    },
+    {
+      "id": "10:694",
+      "records": 104,
+      "arrivals": 100,
+      "unconfirmedAccess": 104
+    }
+  ]
+}

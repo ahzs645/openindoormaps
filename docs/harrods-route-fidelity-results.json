@@ -1,0 +1,410 @@
+{
+  "sample_spacing_m": 0.25,
+  "aisle_classification_tolerance_m": 0.1,
+  "limitation": "Three captured routes; the complete vendor graph is not available.",
+  "routes": [
+    {
+      "name": "Lower Ground to Third Floor",
+      "source_reported_distance_m": 119.43615339608434,
+      "source": {
+        "horizontal_distance_m": 115.77,
+        "outside_source_aisles_m": 11.13,
+        "median_source_deviation_m": 0.0,
+        "p95_source_deviation_m": 0.0,
+        "within_2m_percent": 100.0
+      },
+      "current": {
+        "horizontal_distance_m": 118.79,
+        "outside_source_aisles_m": 12.0,
+        "median_source_deviation_m": 0.23,
+        "p95_source_deviation_m": 2.28,
+        "within_2m_percent": 93.5
+      },
+      "before": {
+        "horizontal_distance_m": 116.39,
+        "outside_source_aisles_m": 57.87,
+        "median_source_deviation_m": 2.18,
+        "p95_source_deviation_m": 8.67,
+        "within_2m_percent": 48.4
+      }
+    },
+    {
+      "name": "Mini Super Brands 3 to Chocolate Hall",
+      "source_reported_distance_m": 137.20736976023016,
+      "source": {
+        "horizontal_distance_m": 140.55,
+        "outside_source_aisles_m": 7.47,
+        "median_source_deviation_m": 0.0,
+        "p95_source_deviation_m": 0.0,
+        "within_2m_percent": 100.0
+      },
+      "current": {
+        "horizontal_distance_m": 146.2,
+        "outside_source_aisles_m": 8.34,
+        "median_source_deviation_m": 0.17,
+        "p95_source_deviation_m": 1.07,
+        "within_2m_percent": 100.0
+      },
+      "before": {
+        "horizontal_distance_m": 133.44,
+        "outside_source_aisles_m": 60.45,
+        "median_source_deviation_m": 1.16,
+        "p95_source_deviation_m": 3.37,
+        "within_2m_percent": 67.9
+      }
+    },
+    {
+      "name": "Door 3 to Sushi by Masa",
+      "source_reported_distance_m": 116.20938376073249,
+      "source": {
+        "horizontal_distance_m": 116.86,
+        "outside_source_aisles_m": 7.73,
+        "median_source_deviation_m": 0.0,
+        "p95_source_deviation_m": 0.0,
+        "within_2m_percent": 100.0
+      },
+      "current": {
+        "horizontal_distance_m": 117.55,
+        "outside_source_aisles_m": 7.74,
+        "median_source_deviation_m": 0.21,
+        "p95_source_deviation_m": 7.32,
+        "within_2m_percent": 73.9
+      },
+      "before": {
+        "horizontal_distance_m": 107.52,
+        "outside_source_aisles_m": 48.98,
+        "median_source_deviation_m": 0.98,
+        "p95_source_deviation_m": 7.29,
+        "within_2m_percent": 64.0
+      }
+    }
+  ],
+  "current_graph": {
+    "walking_segments_verified": 63228,
+    "payload_bytes": 19936171,
+    "coverage_from_Louis_Vuitton": {
+      "normal": {
+        "reachable": 966,
+        "total": 994,
+        "unavailable": [
+          {
+            "id": 3,
+            "name": "Fine Watch Room",
+            "floor": 0
+          },
+          {
+            "id": 7,
+            "name": "Luxury Accessories Room 4",
+            "floor": 0
+          },
+          {
+            "id": 14,
+            "name": "ParkBee Pavilion Road - Knightsbridge",
+            "floor": 0
+          },
+          {
+            "id": 15,
+            "name": "Luxury Accessories",
+            "floor": 0
+          },
+          {
+            "id": 36,
+            "name": "Food Court",
+            "floor": 0
+          },
+          {
+            "id": 56,
+            "name": "Luxury Accessories",
+            "floor": 0
+          },
+          {
+            "id": 65,
+            "name": "Knightsbridge Station (Stop KH)",
+            "floor": 0
+          },
+          {
+            "id": 66,
+            "name": "Knightsbridge Station (Stop KD)",
+            "floor": 0
+          },
+          {
+            "id": 67,
+            "name": "Pont Street (Stop KL)",
+            "floor": 0
+          },
+          {
+            "id": 68,
+            "name": "Knightsbridge Barracks (Stop KF)",
+            "floor": 0
+          },
+          {
+            "id": 69,
+            "name": "Knightsbridge Barracks",
+            "floor": 0
+          },
+          {
+            "id": 70,
+            "name": "Harrods (Stop KB)",
+            "floor": 0
+          },
+          {
+            "id": 71,
+            "name": "Sloane Street / Knightsbridge Station (Stop KK)",
+            "floor": 0
+          },
+          {
+            "id": 72,
+            "name": "Knightsbridge Station / Harrods (Stop KC)",
+            "floor": 0
+          },
+          {
+            "id": 73,
+            "name": "Knightsbridge Station / Harrods (Stop KE)",
+            "floor": 0
+          },
+          {
+            "id": 95,
+            "name": "Luxury Home 2#1#2",
+            "floor": 3
+          },
+          {
+            "id": 109,
+            "name": "Staff Breakroom",
+            "floor": 4
+          },
+          {
+            "id": 132,
+            "name": "Men's Toilets",
+            "floor": 2
+          },
+          {
+            "id": 153,
+            "name": "Dior",
+            "floor": 0
+          },
+          {
+            "id": 167,
+            "name": "Balenciaga",
+            "floor": 0
+          },
+          {
+            "id": 265,
+            "name": "Brunello Cucinelli",
+            "floor": 2
+          },
+          {
+            "id": 608,
+            "name": "Moynat",
+            "floor": 0
+          },
+          {
+            "id": 673,
+            "name": "Harrods Roast & Bake",
+            "floor": 0
+          },
+          {
+            "id": 691,
+            "name": "Knightsbridge",
+            "floor": 0
+          },
+          {
+            "id": 692,
+            "name": "Tube Exit",
+            "floor": 0
+          },
+          {
+            "id": 705,
+            "name": "Brunello Cucinelli",
+            "floor": 2
+          },
+          {
+            "id": 788,
+            "name": "Gianvito Rossi",
+            "floor": 5
+          },
+          {
+            "id": 978,
+            "name": "Jill Sander",
+            "floor": 1
+          }
+        ]
+      },
+      "accessible": {
+        "reachable": 960,
+        "total": 994,
+        "unavailable": [
+          {
+            "id": 3,
+            "name": "Fine Watch Room",
+            "floor": 0
+          },
+          {
+            "id": 7,
+            "name": "Luxury Accessories Room 4",
+            "floor": 0
+          },
+          {
+            "id": 14,
+            "name": "ParkBee Pavilion Road - Knightsbridge",
+            "floor": 0
+          },
+          {
+            "id": 15,
+            "name": "Luxury Accessories",
+            "floor": 0
+          },
+          {
+            "id": 34,
+            "name": "Salon de Parfums",
+            "floor": 6
+          },
+          {
+            "id": 36,
+            "name": "Food Court",
+            "floor": 0
+          },
+          {
+            "id": 56,
+            "name": "Luxury Accessories",
+            "floor": 0
+          },
+          {
+            "id": 65,
+            "name": "Knightsbridge Station (Stop KH)",
+            "floor": 0
+          },
+          {
+            "id": 66,
+            "name": "Knightsbridge Station (Stop KD)",
+            "floor": 0
+          },
+          {
+            "id": 67,
+            "name": "Pont Street (Stop KL)",
+            "floor": 0
+          },
+          {
+            "id": 68,
+            "name": "Knightsbridge Barracks (Stop KF)",
+            "floor": 0
+          },
+          {
+            "id": 69,
+            "name": "Knightsbridge Barracks",
+            "floor": 0
+          },
+          {
+            "id": 70,
+            "name": "Harrods (Stop KB)",
+            "floor": 0
+          },
+          {
+            "id": 71,
+            "name": "Sloane Street / Knightsbridge Station (Stop KK)",
+            "floor": 0
+          },
+          {
+            "id": 72,
+            "name": "Knightsbridge Station / Harrods (Stop KC)",
+            "floor": 0
+          },
+          {
+            "id": 73,
+            "name": "Knightsbridge Station / Harrods (Stop KE)",
+            "floor": 0
+          },
+          {
+            "id": 95,
+            "name": "Luxury Home 2#1#2",
+            "floor": 3
+          },
+          {
+            "id": 98,
+            "name": "Safe Deposit",
+            "floor": -1
+          },
+          {
+            "id": 103,
+            "name": "Drybar",
+            "floor": -1
+          },
+          {
+            "id": 105,
+            "name": "Salon de Parfums",
+            "floor": 6
+          },
+          {
+            "id": 109,
+            "name": "Staff Breakroom",
+            "floor": 4
+          },
+          {
+            "id": 122,
+            "name": "Women's and Men's Toilets",
+            "floor": 6
+          },
+          {
+            "id": 126,
+            "name": "Women's Toilets",
+            "floor": -1
+          },
+          {
+            "id": 132,
+            "name": "Men's Toilets",
+            "floor": 2
+          },
+          {
+            "id": 153,
+            "name": "Dior",
+            "floor": 0
+          },
+          {
+            "id": 167,
+            "name": "Balenciaga",
+            "floor": 0
+          },
+          {
+            "id": 265,
+            "name": "Brunello Cucinelli",
+            "floor": 2
+          },
+          {
+            "id": 608,
+            "name": "Moynat",
+            "floor": 0
+          },
+          {
+            "id": 673,
+            "name": "Harrods Roast & Bake",
+            "floor": 0
+          },
+          {
+            "id": 691,
+            "name": "Knightsbridge",
+            "floor": 0
+          },
+          {
+            "id": 692,
+            "name": "Tube Exit",
+            "floor": 0
+          },
+          {
+            "id": 705,
+            "name": "Brunello Cucinelli",
+            "floor": 2
+          },
+          {
+            "id": 788,
+            "name": "Gianvito Rossi",
+            "floor": 5
+          },
+          {
+            "id": 978,
+            "name": "Jill Sander",
+            "floor": 1
+          }
+        ]
+      }
+    }
+  }
+}

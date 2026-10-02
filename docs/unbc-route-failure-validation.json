@@ -1,0 +1,60 @@
+{
+  "audit": "docs/unbc-route-failure-review.json",
+  "input": "/Users/ahmadjalil/Downloads/UNBC.campus-viewer.zip",
+  "inputSha256": "7cec82614ad0fb3f8866b62945a2d47d116b32279900ab73bd3d1555e0d528e9",
+  "publicWarningAudit": {
+    "records": 1861,
+    "nodes": 4973,
+    "edges": 5554,
+    "eligibleDepartures": 1672,
+    "previouslyMislabeledDirectedPairs": 66076,
+    "affectedDepartures": 1382,
+    "ignoredBuilding07Building10Pairs": 132192,
+    "otherDirectedSourceGapPairs": 2419634,
+    "edgePolicyExclusions": {},
+    "representativeReasons": {
+      "room-transit": 1382
+    },
+    "exclusiveFailureReason": "room-transit: endpoint-only room policy is the only difference from raw reachability",
+    "datasetUnchanged": true
+  },
+  "validation": {
+    "openIndoorMapsUnitTests": 77,
+    "reviterPipelineTests": 10,
+    "desktopAndMobileBrowserTests": 2,
+    "openIndoorMapsScopedTypes": "passed",
+    "reviterPipelineScopedTypes": "passed",
+    "openIndoorMapsBuild": "passed",
+    "reviterBuild": "passed"
+  },
+  "browserViewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "checks": [
+    "Truthful Gallery transit failure",
+    "Review connection targets Gallery",
+    "Explicit passage review permits an existing route",
+    "Revoking passage review blocks it again",
+    "Source room classification and polygon preserved",
+    "Master and optimized viewer exports preserve permission",
+    "Reviter regeneration preserves exact geometry-bound permission",
+    "Stale geometry invalidates permission",
+    "Disabled internal native doors and staff restrictions remain blocked",
+    "Reverse escalator failures report direction"
+  ],
+  "livePreview": "http://127.0.0.1:5180/projects/indoor",
+  "liveDatasetPermissionsChanged": false,
+  "ignored": "Building 07 \u2194 Building 10 missing-connection case",
+  "screenshots": [
+    "docs/screenshots/unbc-route-failure-preview.png",
+    "docs/screenshots/unbc-route-failure-desktop.png",
+    "docs/screenshots/unbc-route-failure-mobile.png"
+  ]
+}

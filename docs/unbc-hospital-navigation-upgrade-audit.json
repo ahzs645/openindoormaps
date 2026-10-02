@@ -1,0 +1,2021 @@
+{
+  "generatedAt": "2026-10-02T04:26:53.519Z",
+  "scope": "Explicit route pairs in both directions/profiles plus native wall/column zero-width checks. Raster clearance preference is not passage-width or accessibility certification. Door candidate counts are diagnostics, not inferred links.",
+  "before": {
+    "path": "/Users/ahmadjalil/Downloads/UNBC.indoor.native-wall-rooms.reviter.zip",
+    "sha256": "0d85d0bf61e576858db64b93637a13a86d341118714da13240829e957e3fa17a",
+    "report": {
+      "recordCount": 1860,
+      "routableArrivals": 1610,
+      "components": 134,
+      "largestComponentArrivals": 421,
+      "unmatchedDoors": 411,
+      "cellSizeFeet": 0.6,
+      "omittedSourceLabels": 360
+    },
+    "nodeCount": 4809,
+    "edgeCount": 5343,
+    "connectors": 0,
+    "unmatchedDoorReasons": {
+      "unmatched:1 candidates": 290,
+      "ambiguous:3 candidates": 23,
+      "unmatched:0 candidates": 96,
+      "unmatched:2 candidates": 2
+    },
+    "unmatchedDoorExamples": [
+      {
+        "nativeElementId": 293248,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-a08d9ff5e6f7"]
+      },
+      {
+        "nativeElementId": 754072,
+        "levelId": 311,
+        "state": "ambiguous",
+        "candidateRoomKeys": [
+          "rm-311-3eb4c3ca1126",
+          "rm-311-675409424807",
+          "rm-311-77d61839c457"
+        ]
+      },
+      {
+        "nativeElementId": 624028,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-0bdc6d73a3ae"]
+      },
+      {
+        "nativeElementId": 627630,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-3f8d4a3046b9"]
+      },
+      {
+        "nativeElementId": 631811,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-0bd5e173a3a9"]
+      },
+      {
+        "nativeElementId": 1030761,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-5dd275297e73"]
+      },
+      {
+        "nativeElementId": 1810971,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-1f9c5af51998"]
+      },
+      {
+        "nativeElementId": 1947884,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 1947914,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 1948987,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-86e02816d8fe"]
+      },
+      {
+        "nativeElementId": 2303650,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 350234,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-399064f64ec1"]
+      },
+      {
+        "nativeElementId": 2427535,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-d62943fe8220"]
+      },
+      {
+        "nativeElementId": 2427810,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-f3f4105b5399"]
+      },
+      {
+        "nativeElementId": 2432041,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-8712cb16d929"]
+      },
+      {
+        "nativeElementId": 731149,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-a19a1df5e7db"]
+      },
+      {
+        "nativeElementId": 749727,
+        "levelId": 311,
+        "state": "ambiguous",
+        "candidateRoomKeys": [
+          "rm-311-34878cca0af4",
+          "rm-311-3eb0dbca1122",
+          "rm-311-3eb4c3ca1126"
+        ]
+      },
+      {
+        "nativeElementId": 900561,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-e67b296469c5"]
+      },
+      {
+        "nativeElementId": 707367,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-466d127929a2"]
+      },
+      {
+        "nativeElementId": 707415,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-466d127929a2"]
+      }
+    ],
+    "gridQuality": {
+      "auditedEdges": 0,
+      "totalTurns": 0,
+      "minimumEstimatedRasterClearanceFeet": null,
+      "clearanceCertified": false
+    },
+    "routeAudit": {
+      "segments": 73,
+      "crossings": 0,
+      "results": [
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 15.754913806849551,
+          "sourceDistanceMetres": 17.483845399967002,
+          "turns": 1,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 15.754913806849551,
+          "sourceDistanceMetres": 17.483845399967006,
+          "turns": 1,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 68.58923813080614,
+          "sourceDistanceMetres": 93.63456000000001,
+          "turns": 2,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 68.58923813080614,
+          "sourceDistanceMetres": 93.63456000000002,
+          "turns": 2,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 52.14539662461133,
+          "sourceDistanceMetres": 58.58479645298831,
+          "turns": 7,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 311,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 52.145396624611365,
+          "sourceDistanceMetres": 58.58479645298831,
+          "turns": 7,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 311
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 5.359351014155087,
+          "sourceDistanceMetres": 5.359351014155087,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 311,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 5.359351014155087,
+          "sourceDistanceMetres": 5.359351014155087,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 311
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 8.822690107682803,
+          "sourceDistanceMetres": 8.822690107682803,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 1487816,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 8.822690107682803,
+          "sourceDistanceMetres": 8.822690107682803,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 1487816
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 128.9678299398523,
+          "sourceDistanceMetres": 160.81184342552845,
+          "turns": 12,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 1487816,
+              "to": 694
+            },
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 400176
+            },
+            {
+              "type": "stairs",
+              "from": 400176,
+              "to": 402367
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 2
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 128.96782993985232,
+          "sourceDistanceMetres": 160.81184342552834,
+          "turns": 12,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 402367,
+              "to": 400176
+            },
+            {
+              "type": "stairs",
+              "from": 400176,
+              "to": 694
+            },
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 1487816
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 2
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        }
+      ]
+    },
+    "preservedSourceFiles": {
+      "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "gis/reference-points.json": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "model/scene.glb": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab"
+    }
+  },
+  "after": {
+    "path": "/Users/ahmadjalil/Downloads/UNBC.indoor.hospital-review.reviter.zip",
+    "sha256": "13274b950b05e435012309a885c75313057697fbac9128c3098bcb31359c3cfd",
+    "report": {
+      "recordCount": 1860,
+      "routableArrivals": 1639,
+      "components": 128,
+      "largestComponentArrivals": 432,
+      "unmatchedDoors": 378,
+      "cellSizeFeet": 0.6,
+      "omittedSourceLabels": 360
+    },
+    "nodeCount": 4880,
+    "edgeCount": 5388,
+    "connectors": 0,
+    "unmatchedDoorReasons": {
+      "unmatched:1 candidates": 271,
+      "ambiguous:3 candidates": 14,
+      "unmatched:0 candidates": 88,
+      "ambiguous:4 candidates": 1,
+      "unmatched:2 candidates": 4
+    },
+    "unmatchedDoorExamples": [
+      {
+        "nativeElementId": 293248,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-a08d9ff5e6f7"]
+      },
+      {
+        "nativeElementId": 754072,
+        "levelId": 311,
+        "state": "ambiguous",
+        "candidateRoomKeys": [
+          "rm-311-3eb4c3ca1126",
+          "rm-311-675409424807",
+          "rm-311-77d61839c457"
+        ]
+      },
+      {
+        "nativeElementId": 624028,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-0bdc6d73a3ae"]
+      },
+      {
+        "nativeElementId": 627630,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-3f8d4a3046b9"]
+      },
+      {
+        "nativeElementId": 631811,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-0bd5e173a3a9"]
+      },
+      {
+        "nativeElementId": 1030761,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-5dd275297e73"]
+      },
+      {
+        "nativeElementId": 1810971,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-1f9c5af51998"]
+      },
+      {
+        "nativeElementId": 1947884,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 1947914,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 1948987,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-86e02816d8fe"]
+      },
+      {
+        "nativeElementId": 2303650,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": []
+      },
+      {
+        "nativeElementId": 350234,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-399064f64ec1"]
+      },
+      {
+        "nativeElementId": 2427535,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-d62943fe8220"]
+      },
+      {
+        "nativeElementId": 2427810,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-f3f4105b5399"]
+      },
+      {
+        "nativeElementId": 2432041,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-8712cb16d929"]
+      },
+      {
+        "nativeElementId": 748412,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-34122edb8b6c"]
+      },
+      {
+        "nativeElementId": 748530,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-3eeab1ca1153"]
+      },
+      {
+        "nativeElementId": 748964,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-3ed329ca113f"]
+      },
+      {
+        "nativeElementId": 749426,
+        "levelId": 311,
+        "state": "unmatched",
+        "candidateRoomKeys": ["rm-311-359e78ca0be1"]
+      },
+      {
+        "nativeElementId": 749727,
+        "levelId": 311,
+        "state": "ambiguous",
+        "candidateRoomKeys": [
+          "rm-311-34878cca0af4",
+          "rm-311-3eb0dbca1122",
+          "rm-311-3eb4c3ca1126"
+        ]
+      }
+    ],
+    "gridQuality": {
+      "auditedEdges": 3887,
+      "totalTurns": 4438,
+      "minimumEstimatedRasterClearanceFeet": 0.6,
+      "clearanceCertified": false
+    },
+    "routeAudit": {
+      "segments": 72,
+      "crossings": 0,
+      "results": [
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 15.754913806849551,
+          "sourceDistanceMetres": 17.483845399967002,
+          "turns": 1,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 15.754913806849551,
+          "sourceDistanceMetres": 17.483845399967006,
+          "turns": 1,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library to Agora native doorway",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 68.58916345211,
+          "sourceDistanceMetres": 94.73183999999998,
+          "turns": 2,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 68.58916345211001,
+          "sourceDistanceMetres": 94.73183999999998,
+          "turns": 2,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to west vestibule multi-turn",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 54.868017962141955,
+          "sourceDistanceMetres": 58.950556452988295,
+          "turns": 8,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 311,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 56.19349670005763,
+          "sourceDistanceMetres": 58.950556452988295,
+          "turns": 8,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 311
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Library corridor to upper stair multi-floor",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 5.359351014155087,
+          "sourceDistanceMetres": 5.359351014155087,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 311,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 5.359351014155087,
+          "sourceDistanceMetres": 5.359351014155087,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 311
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library Floor 1 to Floor 2 stair",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 8.822690107682803,
+          "sourceDistanceMetres": 8.822690107682803,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 1487816,
+              "to": 694
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 8.822690107682803,
+          "sourceDistanceMetres": 8.822690107682803,
+          "turns": 0,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 1487816
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 1
+        },
+        {
+          "name": "Tea Lab upstairs flight",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Upper Rotunda drop is blocked",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Library to Waiting Lounge coverage review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Tea Lab landing review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Agora to Medical local connection review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": false,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 129.15095772890547,
+          "sourceDistanceMetres": 163.21865021251423,
+          "turns": 12,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 1487816,
+              "to": 694
+            },
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 400176
+            },
+            {
+              "type": "stairs",
+              "from": 400176,
+              "to": 402367
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 2
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": true,
+          "profile": "public",
+          "available": true,
+          "distanceMetres": 129.15095772890547,
+          "sourceDistanceMetres": 163.21865021251412,
+          "turns": 12,
+          "transitions": [
+            {
+              "type": "stairs",
+              "from": 402367,
+              "to": 400176
+            },
+            {
+              "type": "stairs",
+              "from": 400176,
+              "to": 694
+            },
+            {
+              "type": "stairs",
+              "from": 694,
+              "to": 1487816
+            }
+          ],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 2
+        },
+        {
+          "name": "Ordinary room across three flights",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": false,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": false,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": true,
+          "profile": "public",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        },
+        {
+          "name": "Meeting room to fourth-floor classroom remains source-gap review",
+          "reverse": true,
+          "profile": "accessible",
+          "available": false,
+          "distanceMetres": null,
+          "sourceDistanceMetres": null,
+          "turns": 0,
+          "transitions": [],
+          "nativeBarrierCrossings": 0,
+          "centeredWalkingPaths": 0
+        }
+      ]
+    },
+    "preservedSourceFiles": {
+      "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "gis/reference-points.json": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "model/scene.glb": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab"
+    }
+  },
+  "changes": [
+    {
+      "name": "Library to Agora native doorway",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 15.754913806849551,
+      "afterMetres": 15.754913806849551,
+      "beforeTurns": 1,
+      "afterTurns": 1
+    },
+    {
+      "name": "Library to Agora native doorway",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library to Agora native doorway",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 15.754913806849551,
+      "afterMetres": 15.754913806849551,
+      "beforeTurns": 1,
+      "afterTurns": 1
+    },
+    {
+      "name": "Library to Agora native doorway",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library corridor to west vestibule multi-turn",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 68.58923813080614,
+      "afterMetres": 68.58916345211,
+      "beforeTurns": 2,
+      "afterTurns": 2
+    },
+    {
+      "name": "Library corridor to west vestibule multi-turn",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library corridor to west vestibule multi-turn",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 68.58923813080614,
+      "afterMetres": 68.58916345211001,
+      "beforeTurns": 2,
+      "afterTurns": 2
+    },
+    {
+      "name": "Library corridor to west vestibule multi-turn",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library corridor to upper stair multi-floor",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 52.14539662461133,
+      "afterMetres": 54.868017962141955,
+      "beforeTurns": 7,
+      "afterTurns": 8
+    },
+    {
+      "name": "Library corridor to upper stair multi-floor",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library corridor to upper stair multi-floor",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 52.145396624611365,
+      "afterMetres": 56.19349670005763,
+      "beforeTurns": 7,
+      "afterTurns": 8
+    },
+    {
+      "name": "Library corridor to upper stair multi-floor",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library Floor 1 to Floor 2 stair",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 5.359351014155087,
+      "afterMetres": 5.359351014155087,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library Floor 1 to Floor 2 stair",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library Floor 1 to Floor 2 stair",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 5.359351014155087,
+      "afterMetres": 5.359351014155087,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library Floor 1 to Floor 2 stair",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Tea Lab upstairs flight",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 8.822690107682803,
+      "afterMetres": 8.822690107682803,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Tea Lab upstairs flight",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Tea Lab upstairs flight",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 8.822690107682803,
+      "afterMetres": 8.822690107682803,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Tea Lab upstairs flight",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Upper Rotunda drop is blocked",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Upper Rotunda drop is blocked",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Upper Rotunda drop is blocked",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Upper Rotunda drop is blocked",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library to Waiting Lounge coverage review",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library to Waiting Lounge coverage review",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library to Waiting Lounge coverage review",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Library to Waiting Lounge coverage review",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Tea Lab landing review",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Tea Lab landing review",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Tea Lab landing review",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Tea Lab landing review",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Medical local connection review",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Medical local connection review",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Medical local connection review",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Agora to Medical local connection review",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Ordinary room across three flights",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 128.9678299398523,
+      "afterMetres": 129.15095772890547,
+      "beforeTurns": 12,
+      "afterTurns": 12
+    },
+    {
+      "name": "Ordinary room across three flights",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Ordinary room across three flights",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": true,
+      "afterAvailable": true,
+      "beforeMetres": 128.96782993985232,
+      "afterMetres": 129.15095772890547,
+      "beforeTurns": 12,
+      "afterTurns": 12
+    },
+    {
+      "name": "Ordinary room across three flights",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Meeting room to fourth-floor classroom remains source-gap review",
+      "reverse": false,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Meeting room to fourth-floor classroom remains source-gap review",
+      "reverse": false,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Meeting room to fourth-floor classroom remains source-gap review",
+      "reverse": true,
+      "profile": "public",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    },
+    {
+      "name": "Meeting room to fourth-floor classroom remains source-gap review",
+      "reverse": true,
+      "profile": "accessible",
+      "beforeAvailable": false,
+      "afterAvailable": false,
+      "beforeMetres": null,
+      "afterMetres": null,
+      "beforeTurns": 0,
+      "afterTurns": 0
+    }
+  ]
+}

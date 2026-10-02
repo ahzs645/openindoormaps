@@ -1,0 +1,33 @@
+UNBC interface walkthrough — 2026-10-02
+
+Use the consolidated editable master for review and export. The campus viewer ZIP carries the same prepared geometry and routes but excludes the native model and authoring controls.
+
+Floor and building selector
+The upper-right selector changes the campus floor and building filter. Campus Floor 3 combines native levels 400176 and 1487353; they have different physical elevations. A campus floor is a display grouping, not proof that every area is at the same height. Route-following changes to the floor of the active instruction.
+
+Map views
+2D rooms gives a flat plan. 3D rooms gives a simplified floor cutaway. 3D relative heights keeps physical height differences within a grouped campus floor. Source model appears only when the full package includes its native scene; it shows the original geometry rather than the simplified room display.
+
+Ground, openings and stairs
+A selectable stair-room outline describes a place; it does not mean the entire outline is solid ground. For native-bound stair rooms, painted ground now comes from the matching native slab, preserving its measured openings and solid landings. Ordinary blue/grey room and corridor ground remains solid and hides stairs below it. A stair footprint alone must not create an opening in neighboring ground. The original stair-place outline remains available for selection through the opening. This changes display only; source geometry, routing and floor connectivity remain unchanged. The all-floor audit covers 75 native bindings and 56 stair places in 20 flat/relative and simple/detailed combinations. Twenty other stair-room records have no matching native flight and retain their previous display pending source review.
+
+Selecting places
+Search, category tiles and room selections open a place card. From here sets departure; Directions sets destination. Direction endpoints can also be typed or selected from the map. A room label or selectable region is not proof of a connected arrival. Places needing entrance review must report that condition rather than silently drawing a route through a wall.
+
+Routing and following
+Choose both endpoints, then review the route. Previous/next instructions update the route highlight, camera and floor. Stair/lift instructions should retain the arrival position on the destination floor. The two reviewed lifts have seven stops in total. Lift accessibility is still unknown; a lift must not automatically become an approved wheelchair route. The separately reviewed Agora ramp has a step-free route in both directions.
+
+Preferences and review
+Map preferences control geometry simplification, labels, pass-through places, vestibule doors and unmapped structures. These affect presentation, not permission to walk through physical obstacles. Review project exposes source evidence and corrections. Export reviewed project creates the editable master; Export campus viewer creates the browsing copy. Reload/import the updated package after a data change; reload the app after a renderer change.
+
+Known source limitations
+336 unmatched doors remain in the consolidated master. Some room boundaries and stair landings still need source/entrance review. This rendering fix does not approve those routes. Reviter-only regeneration currently needs the native ramp preparation reapplied to retain its prepared graph; the consolidated folder README includes the command.
+
+Validation
+The initial 10 desktop/mobile browser scenarios passed across ground occlusion, export/reload, endpoint picking, relative heights, ramp following and instruction camera/floor changes. The later stair-place overlap correction is validated separately: native wells remain open, solid surrounding ground hides descending treads, and real map clicks still select the stair place on desktop/mobile. Six desktop/mobile browser scenarios and nine geometry/height checks passed after this correction, along with the production build and scoped typecheck. The browser checks cover open-well/solid-ground rendering, real stair-place clicks, typed and map-picked endpoints, relative heights and ramp following. The mobile touch fixture was corrected and its failing scenario passed on rerun. Screenshots use the consolidated package. Original model, dataset and routing ZIP checksums are unchanged by this viewer correction. Test evidence is in work/stair-ground-fix.
+
+Loading improvement
+Routes are loaded on demand. The initial entry is approximately 4.8 KB and the indoor page approximately 539 KB before compression, plus shared libraries. The separate 48 MB demo-venue data chunk is no longer part of indoor project startup. These sizes describe bundles, not a guaranteed loading-time measurement.
+
+Explicit 3D rooms verification
+The previous desktop screenshot link showed 2D; the correction also applies to 3D rooms. New desktop/mobile checks verify the 3D rooms pressed state, visible opaque floor extrusion and signed descending-stair layer, with the native well open. Both passed. Correct desktop proof: docs/screenshots/unbc-floor-3-stairwell-mode-verified-3d-desktop.png; mobile proof: docs/screenshots/unbc-floor-3-stairwell-mode-verified-3d-mobile.png. No new application change was required for this verification.

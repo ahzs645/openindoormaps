@@ -14,7 +14,12 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "revit:inspect": "node scripts/revit/extract-rvt-metadata.mjs",
-    "ifc:convert": "python3 scripts/ifc/convert-ifc-to-location.py"
+    "ifc:convert": "python3 scripts/ifc/convert-ifc-to-location.py",
+    "test:indoor": "node --import tsx --test tests/unit/indoor-project.test.ts tests/unit/centered-route.test.ts",
+    "indoor:audit": "tsx scripts/indoor/audit-project.ts",
+    "indoor:audit-rooms": "tsx scripts/indoor/audit-room-routing.ts",
+    "indoor:export-viewer": "tsx scripts/indoor/export-campus-viewer.ts",
+    "indoor:regenerate-cache": "node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/regenerate-from-native-cache.ts"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",
@@ -23,12 +28,15 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-toggle": "^1.1.1",
     "@turf/boolean-point-in-polygon": "^7.2.0",
+    "@turf/buffer": "^7.4.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "fflate": "^0.8.3",
     "lucide-react": "^0.513.0",
     "maplibre-gl": "^5.23.0",
     "minisearch": "^7.1.1",
     "nanoid": "^5.0.9",
+    "polygon-clipping": "^0.15.7",
     "qrcode-generator": "^1.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -68,6 +76,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "tailwindcss": "^3.4.4",
+    "tsx": "^4.23.15",
     "typescript": "^5.1.6",
     "vite": "^8.0.8"
   },

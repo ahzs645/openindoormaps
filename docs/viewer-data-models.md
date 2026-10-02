@@ -37,10 +37,17 @@ Fully captured. Venue payload is a GeoJSON FeatureCollection (~992 features for
 the demo venue). Ported to `app/data/harrods` (`scripts/port-pointr-harrods.py`):
 8 levels, polygon POIs as units with descriptions/logos. Concession brands
 share their department's exact footprint (one map polygon, one searchable POI
-per brand). Transition nodes (class `path`) are absent from the POI payload,
-so shafts reuse real vendor evidence: the escalator (L-1 → L0, up-only) and
-elevator positions from the captured route-engine sample, plus one inferred
-staircase.
+per brand). Transitions are absent from the POI payload but present in the
+site's vector tiles (`mbtiler/.../TileFiles/{z}/{x}/{y}.pbf`, 49 layers incl.
+`stairs`, `escalator`, `elevator`, `wall`, `virtualobstacle`, `walkway`):
+`node scripts/decode-pointr-tiles.mjs --fetch <pointr.har>` downloads the z18
+tiles using the template in the captured tileset metadata and decodes them.
+Connector footprints retain the original fill and icons, without invented tread
+patterns. Departments are flat surfaces, with 0.75 m source wall rings
+and explicit source walkway/circulation polygons; whole-department roof blocks
+would hide the interior. The Harrods graph offers wall-checked right-angle
+links inside public aisles and prefers the floor's own rotated axes. Parallel escalators are matched one-to-one across adjacent floors.
+The captured L-1 → L0 flight is up-only; other flight orientations remain unknown.
 
 - **Stores/POIs**: one flat feature list; Polygon (unit) and Point (POI)
   features share one property schema:
@@ -131,7 +138,7 @@ and floor-change instructions.
 | Elevator           | `network_type: "elevator"`, `is_accessible: true`, `cost: 120` | `elevator-node`, accessible, 120s     | elevator steps          |
 | Entrance           | POI `type: "entrance"`                                         | `building-entrance-exit` (1s)         | —                       |
 | Accessible routing | `accessibleOnly`                                               | `isTransitionAccessible` filter       | `ONLY_ACCESSIBLE`       |
-| Turn instructions  | not generated (geometry only)                                  | `message`/`turnAngleRadians` features | indication enum         |
+| Turn instructions  | Situm-style steps (`buildInstructions`)                        | `message`/`turnAngleRadians` features | indication enum         |
 
 ## Route graph conventions (all venues)
 
@@ -140,23 +147,96 @@ and floor-change instructions.
 - **Elevators** are a one-off wait plus a short ride: each floor has a stop
   ~1 cm from the corridor anchor, joined by a 45 s boarding edge
   (`from_level_id == to_level_id`), and stops are chained with 15 s hops.
-  One floor = 105 s (Pointr's taxonomy says 120 s); six floors = 180 s, so
-  long trips take the elevator and 1–2 floor trips take the stairs.
+  This remains the fallback for venues without source ride times. Harrods uses
+  the Pointr taxonomy's fixed 120 s ride: 60 s at each end, zero additional
+  cost between stops, with `ride_time_seconds: 120` on each elevator edge.
 - **Escalators are two-way** unless vendor evidence says otherwise
   (`direction: "forward"` on Harrods' L-1 → L0 and Galleria's central one).
 - **Floors never share vertices**: every route coordinate on floor _n_ is
   shifted by _n_ × 2e-7° longitude, so routes can only change floor over a
   connector edge.
-- Re-check any re-port with `python3 scripts/audit-venue-routing.py`.
+- **Buildings**: walking edges may carry `building_id` / `building_name`.
+  When consecutive walking edges change building the directions add a
+  `building-change` step: "Exit Science Hall" onto an `outdoor` edge,
+  "Take the Science–Library Skybridge" onto any other building-less edge,
+  "Enter Library" back indoors. Venues without `building_id` are unaffected.
+- **Campus grounds** (lawns, walkways, building roofs) use
+  `level_id: null` so they draw under every floor. Floor numbers are global
+  across buildings (floor 1 is "Level 2" everywhere).
+- **Geometry-constrained destinations**: Harrods route data includes Point
+  features with `network_type: "destination"`, `source_coordinate`, numeric
+  `level_id`, and `is_routable`. Isolated targets are retained as vertices without
+  edges. Registered target coordinates take priority over nearest-node snapping.
+  The optional FeatureCollection `max_snap_distance_m` bounds other snapping;
+  venues without it retain their existing behavior. Rejected snaps cannot
+  fall back to a graph vertex on another floor.
+- **Harrods geometry**: `navigation-constraints.geojson` preserves source
+  wall/virtual-obstacle/void polygons, their holes, and per-layer tolerances.
+  The tile captures have centimetre quantization errors and virtual-obstacle
+  border strokes crossed by real vendor routes: walls use a 4 cm inward
+  tolerance, virtual obstacles use 6 cm. Layer unions are inset before routing;
+  every rounded walking edge is checked against those cores. This is a
+  geometry-derived network, not the uncaptured vendor server graph. POIs with
+  blocked centres or no demonstrated attachment return an unavailable route.
+  Source floor drawings and POI identities/positions remain unchanged.
+- **Harrods source fidelity**: source `walkway` and `circulation` boundaries
+  remain in the triangulation even where departments overlap them. Walking
+  edges use optional `routing_cost_factor` to prefer those public spaces
+  (up to 5x cost off-aisle); this affects route selection, not displayed travel
+  time. Department access remains possible. Three captured connector pairs
+  uniquely match their footprint shafts and provide actual boarding/arrival
+  coordinates and `source_group_id`; other landing coordinates remain inferred.
+  Captured walking polylines are comparison oracles, not imported graph edges.
+  The importer accepts `--output=...` for isolated comparison candidates.
+- Harrods importer requires Shapely 2.1+ (constrained triangulation) and decoded
+  source tiles. Validation: `python3 -m unittest discover -s tests/geometry`,
+  `npx tsx scripts/verify-harrods-routing.ts --out=/tmp/harrods-routes.json`,
+  `python3 scripts/verify-harrods-geometry.py /tmp/harrods-routes.json`,
+  `python3 scripts/compare-harrods-reference-routes.py /tmp/harrods-routes.json`.
+- Re-check any re-port with `python3 scripts/audit-venue-routing.py` (graph
+  reachability per floor) and `npx tsx scripts/verify-venue-routing.ts`
+  (runs the app's real engine over random POI pairs and compares every route
+  with a reference Dijkstra: failures, optimality, floors, accessibility).
 
 ### Per-venue data status
 
-| Venue         | Connectors                                                     | Source                                                                             | Known limits                                                                                                                                                                                     |
-| ------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| galleria      | stairs, up-only escalator, elevator                            | synthetic                                                                          | —                                                                                                                                                                                                |
-| city-mall     | per floor pair: 3 escalators, 2 elevators, 1 stairs            | Situm `paths.links` (real)                                                         | Links are untyped: ≥5 m horizontal span ⇒ escalator, else nearest elevator/stairs footprint                                                                                                      |
-| harrods       | 1 up-only escalator (L-1→L0), 1 elevator, 1 stairs, all floors | escalator + elevator positions from the captured route sample; stairs **inferred** | Pointr keeps transition nodes in vector tiles, which the capture does not include; the elevator is extended to all floors and the stairs are guessed. Re-capture the site's `.pbf` tiles to fix. |
-| mappedin-mall | 6 escalators, 2 elevators                                      | MVF v2 `connection.json` + `node.geojson` (real)                                   | MVF "Stairs 1" has no nodes; no escalator direction in the data                                                                                                                                  |
+| Venue         | Connectors                                                                                      | Source                                                                                                                      | Known limits                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| ------------- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| galleria      | stairs, up-only escalator, elevator                                                             | synthetic                                                                                                                   | —                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| eaton-centre  | 25 escalators (two-way), 13 elevators, 5 stairs                                                 | Mappedin MVF v2 bundle (real graph + connections)                                                                           | Subway/PATH exits and parkade lobbies are unconnected in the vendor graph; Level 4 has no accessible route                                                                                                                                                                                                                                                                                                                           |
+| bowie-state   | 51 stairs, 19 elevators, 25 doors (1 changes floor), across 15 buildings                        | Mappedin MVF v2 bundle (real graph + connections)                                                                           | One global floor selector (elevation); 13 locations without a footprint are placed on their node                                                                                                                                                                                                                                                                                                                                     |
+| campus        | per building: stairs + elevator (+ escalator in the Union); Level 2 skybridge; outdoor walkways | synthetic (`scripts/generate-campus-fixture.py`)                                                                            | One global floor selector for all buildings; building names are not drawn as map labels (entrance POIs carry them)                                                                                                                                                                                                                                                                                                                   |
+| city-mall     | per floor pair: 3 escalators, 2 elevators, 1 stairs                                             | Situm `paths.links` (real)                                                                                                  | Links are untyped: ≥5 m horizontal span ⇒ escalator, else nearest elevator/stairs footprint                                                                                                                                                                                                                                                                                                                                          |
+| harrods       | 10 stair chains, 24 separate escalator lane chains (one L-1→L0 flight known up-only), 6 elevator banks; floor 6 has no elevator                  | Pointr vector tiles (z18: stairs/escalator/elevator/wall layers, `scripts/decode-pointr-tiles.mjs`) + captured route sample | Stair/elevator banks link nearby same-type footprints on adjacent floors (≤1 m elevator, ≤2.5 m stairs). Escalator lanes use one-to-one adjacent-floor pairing (≤1 m), prioritizing captured landing pairs. Each escalator flight is a separate instruction/ride, with intermediate-floor route lines. The walking mesh preserves source walkway/circulation boundaries, prefers public aisles over department shortcuts, restores three captured connector landing pairs, and uses constrained triangle portals (`scripts/walkable_mesh.py`), clipped to the building. Every edge avoids wall/virtual-obstacle cores (4 cm/6 cm tile tolerance); unreachable POIs remain isolated. Pointr's full server graph is not captured; shaft pairing and unknown escalator directions remain inferred. Two buildings: store + **Harrods Car Park** (own mesh); car park entrances and `outdoor` walkways to it and to the 3 nearest bus stops are **inferred**. |
+| mappedin-mall | 6 escalators, 2 elevators                                                                       | MVF v2 `connection.json` + `node.geojson` (real)                                                                            | MVF "Stairs 1" has no nodes; no escalator direction in the data                                                                                                                                                                                                                                                                                                                                                                      |
+
+**Bowie State University** (`app/data/bowie-state`,
+`scripts/port-mappedin-mvf.py`) is a real Mappedin campus taken from
+the MVF v2 bundle in a HAR of the public map gallery page. Nothing is
+synthesized: the outdoor "Main Campus Map" floor plus 15 building floor
+stacks, the vendor's node graph (same-floor `neighbors` → walking edges) and
+`connection.json` (51 stairs, 19 elevators, 25 doors; 10 single-node entries
+are skipped). Doors are walking edges tagged with the building, so directions
+read "Exit Student Center" → "Enter Computer Science Building"; Charlotte
+Robinson Hall's Door 3 lands on Floor 2 from the hillside path, which the
+engine treats as a floor change ("Enter Charlotte Robinson Hall (Floor 2)").
+Outdoor spaces keep the vendor colours with `level_id: null`. The fixture is
+written as compact JSON and excluded from Prettier (4.4 MB). In
+accessible-only mode the Physical Education Complex racquetball courts
+(basement) are unreachable — the vendor data has no elevator there.
+
+**CF Toronto Eaton Centre** (`app/data/eaton-centre`, same importer:
+`python3 scripts/port-mappedin-mvf.py eaton-centre <gallery.har>`) is one
+building, five floors named by Mappedin (Urban Eatery = −2 … Level 4 = 2),
+with 25 escalators, 13 routable elevators and 5 stairs; the office-tower
+elevators and the Ramp list fewer than two nodes and are skipped. Escalators
+stay two-way (the node graph links both directions); a few carry an
+undocumented `extra.active` flag, kept as an `active` edge property. Each POI
+gets a spur to its own Mappedin entry node when that node is on the floor's
+main network. The subway/PATH exits and parkade lobbies are detached islands
+in the vendor graph, so 5 POIs (Dundas Station, Dundas subway entrance, Queen
+St Station, the PATH, Yonge Parkade) have no route, and Level 4's shops are
+reached only by escalator (no accessible route).
 
 City Mall also ports Situm's non-routed vector-map classes (parking bays,
 roads, walls, glass walls, voids, furniture…) as flat `feature_type: "area"`
@@ -171,8 +251,15 @@ polygons in the vendor theme colours, so the Basement car park renders.
    (`main.ts:buildInstructions`); rendered in the navigation view.
 3. ~~**Floor-aware route rendering**~~ — done: routelines are split per level
    and `IndoorDirections.setFloor()` filters them to the active floor.
-4. **Turn instructions are angle-based only** — no landmark references
-   ("at the food court, turn left") like Pointr's `message` strings.
+4. ~~**Turn instructions are angle-based only**~~ — reworded after Situm's
+   indications (`maps.situm.com/src/features/directions`, locale
+   `navigation.steps.*`): walking legs are simplified (Ramer–Douglas–Peucker,
+   1.5 m) before turns are measured; turns are slight (30–60°), normal or
+   "Turn around" (≥150°) and absorb the walk after them ("Turn left and go
+   ahead for 13 m"); legs under 3 m fold into the previous step; every ride
+   says up/down ("Take the escalator up to Fifth Floor", like Pointr's "Take
+   Escalator up to Level 0"); start/arrive name the POIs ("Arrive at Zara").
+   Still no landmark references ("at the food court, turn left").
 5. **Indications UX** — Situm-style sequential indication cards
    (INITIAL → TURN → CHANGE_FLOOR → DESTINATION_REACHED) are not yet a
    dedicated UI mode; our steps list is static.

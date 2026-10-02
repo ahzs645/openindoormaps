@@ -1,0 +1,183 @@
+{
+  "method": "Local metre projection at 51.499 N. Source wall/virtualobstacle polygon material, including holes. Per-floor coordinate epsilon removed. Obstacles eroded 0.1m; count segments overlapping >0.25m. Vertical links excluded. Vendor endpoints reused directly, allowing normal graph snapping.",
+  "source_fragments": {
+    "virtualobstacle": 523,
+    "walkway": 94,
+    "wall": 710
+  },
+  "harrods_walking_graph": {
+    "segments": 3656,
+    "horizontal_m": 38387.04,
+    "wall": {
+      "segments_over_0.25m": 1590,
+      "overlap_m": 7135.63
+    },
+    "virtualobstacle": {
+      "segments_over_0.25m": 141,
+      "overlap_m": 995.34
+    }
+  },
+  "routes": [
+    {
+      "case": "pointr-route-1.json",
+      "imported": {
+        "segments": 9,
+        "horizontal_m": 82.74,
+        "wall": {
+          "segments_over_0.25m": 7,
+          "overlap_m": 31.74
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "imported_connectors": [
+        {
+          "networkType": "escalator",
+          "fromLevel": -1,
+          "toLevel": 0
+        },
+        {
+          "networkType": "elevator",
+          "fromLevel": 0,
+          "toLevel": 3
+        }
+      ],
+      "source": {
+        "segments": 102,
+        "horizontal_m": 115.77,
+        "wall": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "source_distance_m": 119.43615339608434
+    },
+    {
+      "case": "v9.pointr.express-route-1.json",
+      "imported": {
+        "segments": 13,
+        "horizontal_m": 139.2,
+        "wall": {
+          "segments_over_0.25m": 5,
+          "overlap_m": 13.7
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "imported_connectors": [
+        {
+          "networkType": "elevator",
+          "fromLevel": 4,
+          "toLevel": 0
+        }
+      ],
+      "source": {
+        "segments": 101,
+        "horizontal_m": 140.55,
+        "wall": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "source_distance_m": 137.20736976023016
+    },
+    {
+      "case": "v9.pointr.express-route-3.json",
+      "imported": {
+        "segments": 11,
+        "horizontal_m": 113.01,
+        "wall": {
+          "segments_over_0.25m": 7,
+          "overlap_m": 20.69
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "imported_connectors": [],
+      "source": {
+        "segments": 63,
+        "horizontal_m": 116.86,
+        "wall": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "source_distance_m": 116.20938376073249
+    },
+    {
+      "case": "harrods-37-to-10",
+      "imported": {
+        "segments": 15,
+        "horizontal_m": 176.76,
+        "wall": {
+          "segments_over_0.25m": 11,
+          "overlap_m": 21.33
+        },
+        "virtualobstacle": {
+          "segments_over_0.25m": 0,
+          "overlap_m": 0.0
+        }
+      },
+      "imported_connectors": [
+        {
+          "networkType": "elevator",
+          "fromLevel": 5,
+          "toLevel": 0
+        },
+        {
+          "networkType": "escalator",
+          "fromLevel": 0,
+          "toLevel": -1
+        }
+      ]
+    }
+  ],
+  "other_venues": [
+    {
+      "venue": "eaton-centre",
+      "source_unique_same_floor_edges": 1374,
+      "imported_unique_same_floor_edges": 1696,
+      "source_edges_preserved": 1374,
+      "missing_source_edges": 0,
+      "additional_poi_spurs": 322,
+      "method": "Source endpoints rounded to 9dp with documented floor separation and collision epsilon; exact edge identity comparison. Additional spur geometry not verified."
+    },
+    {
+      "venue": "bowie-state",
+      "source_unique_same_floor_edges": 4516,
+      "imported_unique_same_floor_edges": 5769,
+      "source_edges_preserved": 4516,
+      "missing_source_edges": 0,
+      "additional_poi_spurs": 1253,
+      "method": "Source endpoints rounded to 9dp with documented floor separation and collision epsilon; exact edge identity comparison. Additional spur geometry not verified."
+    }
+  ],
+  "source_wall_geometry_difference_percent_by_floor": {
+    "-1": 0.006,
+    "0": 0.02,
+    "1": 0.013,
+    "2": 0.019,
+    "3": 0.016,
+    "4": 0.015,
+    "5": 0.008,
+    "6": 0.001
+  }
+}

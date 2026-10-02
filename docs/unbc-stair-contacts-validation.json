@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-02",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "project": "/Users/ahmadjalil/Downloads/UNBC.indoor.stair-contacts-latest.reviter.zip",
+  "baseline": "/Users/ahmadjalil/Downloads/UNBC.indoor.before-stair-contacts-latest.reviter.zip",
+  "nativeAssemblies": 82,
+  "nativeRunsWithEndpoints": 107,
+  "nativeRamps": 12,
+  "outdoorAssemblies": [1842431, 1460777],
+  "tieredSeatingAssemblies": [1801478, 1779473],
+  "preservedGraphNodes": 5295,
+  "preservedReviewItems": 2584,
+  "checks": {
+    "focusedUnitTests": "3 passed",
+    "desktopAndMobileBrowserTests": "2 passed; eight reported assemblies on each viewport",
+    "nativeSourceTreads": "unchanged",
+    "roomsRecordsAndEdges": "identical to latest baseline",
+    "existingRampBindingsAndRouteTriangles": "unchanged",
+    "wheelchairRoute": "uses reviewed ramp and excludes stairs",
+    "lint": "passed",
+    "typecheck": "passed",
+    "productionBuild": "passed"
+  },
+  "remainingReview": "Physical geometry and nearby native height references do not confirm an entrance, seating aisle or campus floor connection.",
+  "screenshots": [
+    "screenshots/unbc-tiered-seating-relative.png",
+    "screenshots/unbc-outdoor-stairs-relative.png"
+  ]
+}

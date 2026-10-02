@@ -15,7 +15,7 @@ Usage: python3 scripts/audit-venue-routing.py [venue ...]
 import json, math, heapq, collections, sys
 
 
-VENUES = sys.argv[1:] or ["galleria", "city-mall", "harrods", "mappedin-mall"]
+VENUES = sys.argv[1:] or ["galleria", "campus", "bowie-state", "eaton-centre", "city-mall", "harrods", "mappedin-mall"]
 
 def dist_m(a, b):
     lat = math.radians((a[1] + b[1]) / 2)

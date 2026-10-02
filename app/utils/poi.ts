@@ -12,6 +12,7 @@ export function poiFromFeature(feature: GeoJSON.Feature<GeoJSON.Point>): POI {
     coordinates: feature.geometry.coordinates,
     floor: typeof properties.floor === "number" ? properties.floor : undefined,
     type: properties.type,
+    buildingId: properties.building_id,
     metadata: properties.metadata as POIMetadata | undefined,
   };
 }

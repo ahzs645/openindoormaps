@@ -1,0 +1,86 @@
+{
+  "input": "/Users/ahmadjalil/Downloads/UNBC.indoor.native-wall-rooms.reviter.zip",
+  "reference": "/Users/ahmadjalil/Downloads/UNBC.indoor.clean-routes.reviter.zip",
+  "preparedRooms": 881,
+  "eligibleRooms": 1566,
+  "byLevel": {
+    "311": {
+      "eligible": 326,
+      "prepared": 176,
+      "fallback": 150
+    },
+    "694": {
+      "eligible": 422,
+      "prepared": 237,
+      "fallback": 185
+    },
+    "400176": {
+      "eligible": 285,
+      "prepared": 177,
+      "fallback": 108
+    },
+    "402367": {
+      "eligible": 303,
+      "prepared": 170,
+      "fallback": 133
+    },
+    "1450417": {
+      "eligible": 51,
+      "prepared": 19,
+      "fallback": 32
+    },
+    "1487353": {
+      "eligible": 35,
+      "prepared": 13,
+      "fallback": 22
+    },
+    "1487816": {
+      "eligible": 136,
+      "prepared": 85,
+      "fallback": 51
+    },
+    "2295121": {
+      "eligible": 8,
+      "prepared": 4,
+      "fallback": 4
+    }
+  },
+  "sourceAssets": [
+    {
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "unchanged": true
+    },
+    {
+      "path": "floors/rooms.json",
+      "unchanged": true
+    },
+    {
+      "path": "gis/reference-points.json",
+      "unchanged": true
+    },
+    {
+      "path": "model/scene.glb",
+      "unchanged": true
+    }
+  ],
+  "unchanged": {
+    "records": true,
+    "nodes": true,
+    "edges": true,
+    "walls": true,
+    "doors": true
+  },
+  "violations": [],
+  "building05Level311Display": {
+    "prepared-native-walls": 48,
+    "native-walls": 2,
+    "source-footprint": 50
+  },
+  "diagnosticCodes": {
+    "unclosed-native-cell": 638,
+    "insufficient-source-overlap": 36,
+    "multiple-room-labels": 2,
+    "no-native-walls": 1,
+    "empty-display-block": 8
+  }
+}

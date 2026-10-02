@@ -35,7 +35,7 @@ test("keeps the map usable with the mobile bottom sheet", async ({ page }) => {
   ).toBeVisible();
 
   const sheetBox = await page
-    .getByRole("separator", { name: "Drag to resize map panel" })
+    .getByRole("button", { name: "Resize map panel" })
     .locator("xpath=..")
     .boundingBox();
   const lastMapButtonBox = await page

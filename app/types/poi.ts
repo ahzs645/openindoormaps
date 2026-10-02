@@ -15,6 +15,7 @@ export interface POI {
   name: string;
   coordinates: GeoJSON.Position;
   floor?: number;
+  buildingId?: string;
   type?: string;
   metadata?: POIMetadata;
 }

@@ -3,29 +3,46 @@ import { LayerSpecification } from "maplibre-gl";
 export type Vertex = string;
 export interface RouteEdgeMetadata {
   access_type?: string | null;
+  /** Building a walking edge is inside; `null` outdoors or on a skybridge. */
+  building_id?: string | null;
+  building_name?: string | null;
   direction?: "forward" | "backward" | "both" | null;
   from_level_id?: number | null;
   is_accessible?: boolean | null;
   level_id?: number | null;
   network_type?: string | null;
+  /** Source-defined time for one complete ride, across any number of floors. */
+  ride_time_seconds?: number | null;
   to_level_id?: number | null;
   vertical_connection_id?: string | number | null;
 }
 
 export interface RouteInstruction {
-  type: "depart" | "straight" | "turn" | "floor-change" | "arrive";
+  type:
+    | "depart"
+    | "straight"
+    | "turn"
+    | "floor-change"
+    | "building-change"
+    | "arrive";
   message: string;
   distanceMeters: number;
   networkType?: string | null;
   fromLevel?: number | null;
   toLevel?: number | null;
   turnDirection?: "left" | "right" | null;
+  /** Slight turn, turn, or U-turn ("around"). */
+  turnKind?: "slight" | "turn" | "around" | null;
+  /** Building entered by a building-change step (`null` = leaving one). */
+  buildingName?: string | null;
   /** Where the step happens, for focusing the camera on it. */
   position?: GeoJSON.Position;
   /** Floors crossed by a floor-change step (one ride can span several). */
   floorsTraversed?: number;
   /** Where a floor-change step leaves the connector. */
   arrivalPosition?: GeoJSON.Position;
+  /** Full ride duration when supplied by the source; otherwise estimated. */
+  travelTimeSeconds?: number;
 }
 
 export type Edge = {

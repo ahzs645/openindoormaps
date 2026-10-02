@@ -1,0 +1,179 @@
+{
+  "source": "/Users/ahmadjalil/Downloads/UNBC.indoor.clean-routes.reviter.zip",
+  "totalRecords": 1860,
+  "outlineProvenance": {
+    "derived": 1776,
+    "vector-walls": 76,
+    "survey-boundary-proposal": 1,
+    "wall-fit-proposal": 1,
+    "manual": 1,
+    "native-floor-crosswalk": 4,
+    "registered-plan-and-native-floor": 1
+  },
+  "boundaryReferenceSections": 38,
+  "preparedExporter": "Reviter indoor-pipeline.ts copies annotation.polygonFeet and holesFeet directly to records[].ringsFeet. It does not call rebuildRoomBoundaries.",
+  "derivedExtractor": "Reviter derived-rooms.ts traces free raster cells and simplifies loops with tolerance 0.7 cells; these are explicitly approximate regions, not exact room-to-wall boundaries.",
+  "probeScope": "Existing registered-survey rebuild, same-floor native door footprints from the prepared package; full occupant sets from the two selected registered sections. Diagnostic only: no source, room, graph or package was modified.",
+  "rebuildProbe": [
+    {
+      "section": "05 Libr LVL 1",
+      "roomCount": 110,
+      "rebuilt": 33,
+      "unresolved": 77,
+      "examples": [
+        {
+          "number": "05-113",
+          "resolved": false,
+          "rings": [
+            [122.81094164818563, 278.145062560729],
+            [124.41094164818566, 278.145062560729],
+            [126.41094164818566, 280.94506256072896],
+            [131.61094164818564, 289.34506256072905],
+            [131.61094164818564, 291.34506256072905],
+            [118.81094164818563, 299.34506256072905],
+            [117.21094164818567, 299.34506256072905],
+            [114.81094164818563, 294.94506256072896],
+            [113.61094164818564, 294.94506256072896],
+            [114.81094164818563, 299.34506256072905],
+            [111.61094164818564, 300.94506256072896],
+            [108.41094164818566, 296.94506256072896],
+            [108.01094164818562, 287.34506256072905]
+          ],
+          "source": {
+            "number": "dwg",
+            "name": "dwg",
+            "polygon": "derived"
+          }
+        },
+        {
+          "number": "05-139C",
+          "resolved": true,
+          "rings": [
+            [128.66152980766412, 282.7478866352015],
+            [136.93001846596357, 277.58120536805177],
+            [136.9681292820403, 277.6421959409544],
+            [136.90431098753854, 277.6820740372797],
+            [137.1120784231729, 278.01457143853605],
+            [134.57517229491552, 279.5997928635749],
+            [134.66609419919016, 279.71687132948153],
+            [134.76224860502666, 279.8296919397183],
+            [134.86343637699014, 279.93802104319957],
+            [134.9694479555616, 280.0416342907346],
+            [135.08006379113633, 280.1403170996532],
+            [135.19505479870924, 280.23386509820654],
+            [135.31418283230957, 280.3220845488199],
+            [135.43720117820004, 280.4047927493222],
+            [135.56385506582066, 280.4818184113223],
+            [135.69388219541707, 280.5530020149461],
+            [135.827013281263, 280.6181961392017],
+            [135.96297260934952, 280.67726576728796],
+            [136.10147860838805, 280.73008856621334],
+            [136.2422444329434, 280.776555140148],
+            [136.38497855748983, 280.8165692569812],
+            [136.52938538015917, 280.8500480476182],
+            [136.67516583493136, 280.87692217760195],
+            [136.8220180109991, 280.8971359907039],
+            [136.96963777802426, 280.9106476241884],
+            [137.11771941599017, 280.9174290955105],
+            [137.26595624834746, 280.91746636026676],
+            [137.41404127713946, 280.910759341282],
+            [137.56166781879404, 280.89732192876914],
+            [137.7085301392649, 280.87718195156174],
+            [137.85432408720436, 280.8503811194817],
+            [137.99874772386113, 280.8169749369575],
+            [138.14150194839308, 280.77703258807554],
+            [138.28229111730548, 280.73063679329897],
+            [138.42082365672624, 280.6778836381553],
+            [138.55681266625527, 280.61888237424256],
+            [138.6965056645826, 280.55018506172],
+            [138.7593761284059, 280.6507988358334],
+            [138.8231830917971, 280.6109278199719],
+            [142.00294001953318, 285.6996458448868],
+            [133.73445136123368, 290.86632711203646]
+          ],
+          "source": {
+            "number": "dwg",
+            "name": "dwg",
+            "polygon": "vector-walls"
+          }
+        },
+        {
+          "number": "05-154",
+          "resolved": false,
+          "rings": [
+            [233.61094164818564, 278.545062560729],
+            [235.61094164818564, 278.94506256072896],
+            [249.61094164818564, 301.34506256072905],
+            [249.61094164818564, 302.545062560729],
+            [247.21094164818567, 303.745062560729],
+            [247.21094164818567, 305.34506256072905],
+            [244.41094164818566, 305.34506256072905],
+            [223.61094164818564, 318.94506256072896],
+            [219.21094164818567, 318.94506256072896],
+            [206.81094164818563, 299.34506256072905],
+            [206.81094164818563, 297.745062560729],
+            [208.01094164818568, 296.94506256072896],
+            [208.01094164818568, 294.545062560729]
+          ],
+          "source": {
+            "number": "dwg",
+            "name": "dwg",
+            "polygon": "derived"
+          }
+        }
+      ],
+      "ms": 965
+    },
+    {
+      "section": "07 Agora LVL 1C",
+      "roomCount": 102,
+      "rebuilt": 36,
+      "unresolved": 66,
+      "examples": [
+        {
+          "number": "05-108",
+          "resolved": false,
+          "rings": [
+            [110.01094164818562, 257.745062560729],
+            [112.41094164818566, 258.545062560729],
+            [113.61094164818564, 262.145062560729],
+            [109.21094164818567, 264.94506256072896],
+            [105.61094164818564, 265.745062560729],
+            [103.61094164818564, 261.745062560729]
+          ],
+          "source": {
+            "number": "dwg",
+            "name": "dwg",
+            "polygon": "derived"
+          }
+        },
+        {
+          "number": "05-107",
+          "resolved": false,
+          "rings": [
+            [113.61094164818564, 262.94506256072896],
+            [115.61094164818564, 263.745062560729],
+            [118.01094164818562, 268.94506256072896],
+            [112.41094164818566, 272.545062560729],
+            [110.01094164818562, 272.94506256072896],
+            [107.61094164818564, 269.34506256072893],
+            [107.61094164818564, 267.34506256072893]
+          ],
+          "source": {
+            "number": "dwg",
+            "name": "dwg",
+            "polygon": "derived"
+          }
+        }
+      ],
+      "ms": 1168
+    }
+  ],
+  "remainingWork": [
+    "Build structural wall-face topology per native floor, keeping columns/curtain boundaries distinguished and preserving genuine openings.",
+    "Use labels/room identities to assign enclosed cells; preserve source registration and floor holes.",
+    "Use native door thresholds to close cells during discovery while excluding swing/leaf symbols from structural boundaries.",
+    "Validate corner-to-wall agreement, separate room ownership, hallways, source voids and door routing; retain explicit unresolved cases.",
+    "Export verified presentation boundaries separately from approximate source and routing geometry until reviewed source changes have been recompiled and retested."
+  ]
+}

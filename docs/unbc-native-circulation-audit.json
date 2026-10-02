@@ -1,0 +1,93 @@
+{
+  "zip": "work/native-circulation/final/UNBC.master.reviter.zip",
+  "nativeCells": 144,
+  "branches": 1784,
+  "checkedNativeCellSegments": 7173,
+  "branchBoundaryViolations": 0,
+  "fixedBranchEndpointsPreserved": true,
+  "pin": {
+    "id": "pin-794fc6e2-4a28-4e1b-bee8-60a60d228a61",
+    "nativeCellAtPin": true,
+    "recoveredClearFloorSquareFeet": 31.17099049153694,
+    "obstacleOverlapSquareFeet": 0.000004798306690645404,
+    "unsupportedSquareFeet": 0,
+    "sourceTraceMissingSquareFeet": 55.53322223088526,
+    "sourceTraceObstacleOverlapSquareFeet": 34.73417813371816
+  },
+  "routes": [
+    {
+      "name": "Library corridor to upper stair",
+      "from": "05-120",
+      "to": "05-S203",
+      "available": false,
+      "levels": [],
+      "nativeCirculationLegs": 0,
+      "stairs": 0,
+      "availableBefore": false
+    },
+    {
+      "name": "Library stair",
+      "from": "05-S101",
+      "to": "05-S201",
+      "available": true,
+      "levels": [311, 694],
+      "nativeCirculationLegs": 0,
+      "stairs": 1,
+      "metres": 5.359351014155087,
+      "availableBefore": true
+    },
+    {
+      "name": "Tea Lab stair",
+      "from": "08-S101",
+      "to": "08-S201",
+      "available": true,
+      "levels": [1487816, 694],
+      "nativeCirculationLegs": 0,
+      "stairs": 1,
+      "metres": 8.822690107682803,
+      "availableBefore": true
+    },
+    {
+      "name": "Conference stair",
+      "from": "06-S204",
+      "to": "06-S204",
+      "available": false,
+      "levels": [],
+      "nativeCirculationLegs": 0,
+      "stairs": 0,
+      "availableBefore": false
+    },
+    {
+      "name": "Meeting to classroom",
+      "from": "03-015",
+      "to": "05-154",
+      "available": false,
+      "levels": [],
+      "nativeCirculationLegs": 0,
+      "stairs": 0,
+      "availableBefore": false
+    },
+    {
+      "name": "unbc-04-lift",
+      "from": "rm-311-2054e6ddb852",
+      "to": "rm-402367-133b24ba6565",
+      "available": true,
+      "levels": [311, 402367],
+      "nativeCirculationLegs": 1,
+      "stairs": 0,
+      "metres": 25.191455586716934,
+      "availableBefore": true
+    },
+    {
+      "name": "unbc-agora-conference-lift",
+      "from": "rm-311-89fd150948ca",
+      "to": "rm-1487353-4d82d4d786ce",
+      "available": true,
+      "levels": [311, 1487353],
+      "nativeCirculationLegs": 0,
+      "stairs": 0,
+      "metres": 16.018632224815832,
+      "availableBefore": true
+    }
+  ]
+}

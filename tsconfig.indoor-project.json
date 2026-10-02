@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "app/indoor-project/**/*.ts",
+    "app/indoor-project/**/*.tsx",
+    "app/pages/indoor-project-page.tsx",
+    "tests/unit/indoor-project.test.ts",
+    "scripts/indoor/audit-project.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

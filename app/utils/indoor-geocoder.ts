@@ -29,7 +29,15 @@ export class IndoorGeocoder {
     this.cutoffThreshold = cutoffThreshold;
     this.miniSearch = new MiniSearch({
       fields: ["name", "searchTerms"],
-      storeFields: ["name", "type", "geometry", "id", "floor", "metadata"],
+      storeFields: [
+        "name",
+        "type",
+        "geometry",
+        "id",
+        "floor",
+        "metadata",
+        "building_id",
+      ],
       searchOptions: { boost: { name: 3 } },
     });
 
@@ -110,6 +118,7 @@ export class IndoorGeocoder {
       name: result.name,
       coordinates: result.geometry.coordinates,
       floor: result.floor,
+      buildingId: result.building_id,
       type: result.type,
       metadata: result.metadata,
     };

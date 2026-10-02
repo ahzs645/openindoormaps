@@ -1,0 +1,99 @@
+Harrods source-fidelity follow-up — 2026-10-01
+
+The wall-safe mesh still allowed shortcuts through department footprints.
+Comparison with the original route responses showed 49–60 m outside source
+walkway/circulation areas, versus only 7–11 m in the vendor's routes.
+The captures contain circulation polygons that the previous importer omitted.
+
+Implemented
+- Include the source circulation polygons and preserve their boundaries,
+  together with walkway boundaries, inside the constrained triangulation.
+  Department polygons no longer swallow the aisle network during unioning.
+- Prefer these public walking areas using routing_cost_factor. Fully
+  off-aisle walking edges cost 5x during path selection; department access
+  remains possible. Preference costs do not inflate displayed walking time.
+  A trial that only reweighted the old graph produced detours and was rejected.
+- Recover the boarding/arrival coordinates of one escalator and two elevators
+  from the original route responses. Each pair uniquely fits the same-type
+  source footprints on both floors. Preserve their source group IDs and
+  distinguish captured from inferred landing coordinates in the route data.
+  Other floors of those shafts still use inferred positions.
+- Check connector positions as well as type and floor sequence. Matching just
+  "elevator" could otherwise let a different shaft pass the regression.
+- Count a continuous elevator ride as one floor change in the UI summary.
+  Floors travelled still determine the ride time. Fifth -> Ground -> Lower
+  Ground now shows two changes; elevator-only Fifth -> Lower Ground shows one.
+- Add --output to the importer so candidate fixtures can be tested separately.
+  Add an independent source-path comparison script and an aisle-choice test.
+
+Comparison against fixed captured endpoints (0.25 m sampling)
+                                Earlier graph       Current graph
+Lower Ground -> Third Floor     48.4% within 2 m     93.5% within 2 m
+Mini Super Brands -> Chocolate  67.9% within 2 m    100.0% within 2 m
+Door 3 -> Sushi by Masa         64.0% within 2 m     73.9% within 2 m
+
+Median deviations are now 0.23 m, 0.17 m and 0.21 m respectively. Distance
+outside source aisles fell from 57.87/60.45/48.98 m to 12.00/8.34/7.74 m.
+Current measured horizontal lengths are 118.79/146.20/117.55 m, versus source
+polyline lengths 115.77/140.55/116.86 m. Compare like-for-like geometry:
+vendor-reported distances differ slightly from its returned polyline lengths.
+All metrics, including original reported distances, are in
+harrods-route-fidelity-results.json. These are three observed paths, not a
+claim that every pair in the building reproduces the vendor's route.
+
+Validation
+- All 63,228 horizontal graph segments avoid the unchanged source obstacle
+  cores; original 4 cm wall / 6 cm virtual-obstacle tolerance is retained.
+- Eleven real-engine routes pass, including captured shaft positions,
+  normal/reverse/accessibility trips, unreachable targets and rejected snaps.
+- Five physical-layout tests pass, including preferring a public U-shaped
+  aisle over an open department shortcut while retaining department access.
+- 40 pairs each in Harrods, City Mall, Mappedin Mall, Eaton Centre and Bowie
+  State agree with independent Dijkstra, with no wrong floors, inaccessible
+  connectors, missing/extra paths, or suboptimal routing weights. Harrods
+  median route computation: 4 ms; maximum: 13 ms in this sample.
+- Eight browser tests pass, including changing the multi-floor example to
+  elevator-only navigation. Typecheck and targeted lint pass.
+- Live browser checks confirm boarding-step focus stays on Fifth Floor,
+  the following walking step switches to Ground Floor, and the accessible
+  variant groups its six-floor elevator ride into one instruction/change.
+- Graph reachability from Louis Vuitton improved to 966/994 normally and
+  960/994 accessible-only (previously 952/994 and 948/994). This counts graph
+  reachability; existing same-coordinate POI arrival handling remains a
+  separate UI issue. The captured map, POI and obstacle files are unchanged.
+- Generated route payload is now approximately 19.9 MB, versus 9.4 MB for
+  the earlier graph: preserving aisle boundaries adds vertices and edges.
+
+Remaining differences and evidence limits
+Door 3 -> Sushi still takes the other mapped aisle around one department.
+Its length is close, but the 95th-percentile source deviation is 7.32 m.
+The other two examples are much closer (2.28 m and 1.07 m at the 95th
+percentile). The source SDK sends routing requests to the server; neither
+the directory captures nor the richer HAR contain its full walking graph.
+The tile metadata describes drawing layers, not a navigable graph.
+
+Exact aisle centrelines, destination entrances/anchors, most escalator
+directions, and unobserved shaft links remain unavailable. Imported polygon
+POIs use their existing centres; Mini Super Brands and Chocolate Hall differ
+from the server's captured route endpoints by about 5.3 m and 2.1 m. The
+quantitative comparison deliberately fixes endpoints to the original route
+coordinates to isolate pathfinding from that separate destination issue.
+Walking polylines were not inserted into the graph. Only their endpoint and
+connector-node observations are used. Car park entrances and street links
+remain inferred. UNBC is excluded.
+
+Reproduce
+python3 scripts/port-pointr-harrods.py
+python3 -m unittest discover -s tests/geometry
+npx tsx scripts/verify-harrods-routing.ts --out=/tmp/harrods-routes.json
+python3 scripts/verify-harrods-geometry.py /tmp/harrods-routes.json
+python3 scripts/compare-harrods-reference-routes.py /tmp/harrods-routes.json
+npx tsx scripts/verify-venue-routing.ts harrods --pairs=40
+
+Review
+docs/screenshots/harrods-route-fidelity.png
+docs/screenshots/harrods-route-fidelity-live.jpg
+docs/harrods-route-fidelity-results.json
+scripts/compare-harrods-reference-routes.py
+
+No commit, publication or deployment was performed.

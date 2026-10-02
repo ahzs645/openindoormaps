@@ -14,6 +14,8 @@ type MobileSheetState = "collapsed" | "half" | "full";
 
 interface MapSectionLayoutProps {
   children: ReactNode;
+  compactOverlay?: boolean;
+  routePreview?: boolean;
   className?: string;
   desktopPanelPlacement?: "overlay" | "sidebar";
   desktopSidebarWidth?: number;
@@ -85,6 +87,8 @@ function nextSheetState(state: MobileSheetState): MobileSheetState {
 
 export function MapSectionLayout({
   children,
+  compactOverlay = false,
+  routePreview = false,
   className,
   desktopPanelPlacement = "sidebar",
   desktopSidebarWidth = 376,
@@ -97,7 +101,7 @@ export function MapSectionLayout({
     useState<MobileSheetState>("collapsed");
   const rootRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
-  const handleRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLButtonElement>(null);
   const scrimRef = useRef<HTMLButtonElement>(null);
   const dragging = useRef(false);
   const startY = useRef(0);
@@ -375,7 +379,9 @@ export function MapSectionLayout({
         <button
           ref={scrimRef}
           type="button"
-          className="absolute inset-0 bg-black md:hidden"
+          className={
+            routePreview ? "hidden" : "absolute inset-0 bg-black md:hidden"
+          }
           style={{ opacity: 0, pointerEvents: "none" }}
           aria-label="Collapse map panel"
           onClick={() => snapTo("collapsed")}
@@ -388,16 +394,25 @@ export function MapSectionLayout({
             isOverlayPanel
               ? "md:absolute md:left-4 md:top-4 md:h-auto md:max-h-[calc(100%-2rem)] md:w-[var(--desktop-sidebar-width)] md:rounded-lg md:border md:bg-card/95 md:text-card-foreground md:shadow-lg md:backdrop-blur"
               : "md:relative md:inset-auto md:h-full md:rounded-none md:border-y-0 md:border-l-0 md:bg-background md:shadow-none md:backdrop-blur-none",
+            compactOverlay &&
+              "md:rounded-3xl md:bg-white md:backdrop-blur-none",
+            compactOverlay &&
+              !routePreview &&
+              "md:bottom-auto md:max-h-[calc(100%-2.5rem)]",
+            routePreview && "hidden md:bottom-4 md:flex md:h-[calc(100%-2rem)]",
           )}
         >
-          <div
+          <button
             ref={handleRef}
-            className="flex shrink-0 cursor-grab touch-none select-none items-center justify-center py-3 active:cursor-grabbing md:hidden"
-            role="separator"
-            aria-label="Drag to resize map panel"
+            type="button"
+            aria-label="Resize map panel"
+            onClick={() =>
+              snapTo(nextSheetState(stateFromTranslate(currentY.current)))
+            }
+            className="flex h-10 shrink-0 cursor-grab touch-none select-none items-center justify-center py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 active:cursor-grabbing md:hidden"
           >
-            <div className="h-1 w-10 rounded-full bg-muted-foreground/40" />
-          </div>
+            <span className="h-1 w-10 rounded-full bg-muted-foreground/40" />
+          </button>
 
           <div
             className={cn(

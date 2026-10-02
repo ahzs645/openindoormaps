@@ -1,0 +1,71 @@
+{
+  "input": "Browser saved project",
+  "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "nativeStairBindings": 74,
+  "nativeTreads": 1565,
+  "stair04S103": {
+    "stairElementId": 2140032,
+    "runElementIds": [2140042],
+    "treads": 31,
+    "floorElevationFeet": 3.2808398950131235,
+    "arrivalRemainsUnresolved": true
+  },
+  "unchangedDatasetFields": {
+    "format": true,
+    "version": true,
+    "generator": true,
+    "source": true,
+    "alignment": true,
+    "floors": true,
+    "nativeLevels": true,
+    "records": true,
+    "visitor": true,
+    "nodes": true,
+    "edges": true,
+    "walls": true,
+    "doors": true,
+    "issues": true,
+    "report": true,
+    "presentation": true
+  },
+  "preservedFiles": {
+    "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": true,
+    "gis/reference-points.json": true,
+    "floors/rooms.json": true,
+    "model/scene.glb": true
+  },
+  "packageHashesValid": true,
+  "validation": {
+    "openIndoorMapsUnitTests": 58,
+    "reviterTargetedTests": 11,
+    "desktopAndMobile2DAnd3DBrowserTests": 2
+  },
+  "risingStairCorrection": {
+    "preparedZip": "/Users/ahmadjalil/Downloads/UNBC.indoor.rising-stairs.reviter.zip",
+    "nativeRiseMetres": 3.4,
+    "nativeTreadThicknessMetres": 0.05,
+    "threeDimensionalBase": "measured tread underside, not floor",
+    "twoDimensionalPlanCutMetres": 1.2,
+    "overheadSelection": "dashed overhead outline yields selection to underlying area",
+    "sourceInspection": {
+      "application": "Reviter RVT recovery",
+      "mode": "first person, Walk with Solid beta",
+      "modelEyeFeet": [-84, 329, 9.18635],
+      "wall999409": {
+        "nativeBaseFeet": 0,
+        "nativeTopFeet": 6.6026902887139105,
+        "topAboveRecoveredFloorMetres": 1.0125
+      },
+      "evidenceScreenshot": "docs/screenshots/unbc-curved-stair-reviter-first-person.jpg"
+    },
+    "preservation": "Only viewer/indoor.json stairDisplay and manifest changed; original RVT, room/GIS/scene files and existing graph unchanged",
+    "routeAuthorization": "No under-stair routes or entrance claims added",
+    "validation": {
+      "openIndoorMapsUnitTests": 55,
+      "reviterTargetedTests": 11,
+      "desktopMobile2D3DAndOverheadSelectionTests": 2,
+      "scopedTypechecksBothApps": "passed",
+      "openIndoorMapsProductionBuild": "passed"
+    }
+  }
+}

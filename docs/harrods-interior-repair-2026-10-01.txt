@@ -1,0 +1,92 @@
+Harrods interior display and aisle angles
+2026-10-01. Continues the earlier connector repair; UNBC excluded.
+
+Problem and change
+
+The renderer drew each department as an opaque 2.5 m block. These roofs
+masked the interior walls and floor surfaces in the pitched map. The import
+also omitted the source walkway/circulation polygons from the visible plan,
+although routing already used them.
+
+Departments now render as flat surfaces, with the captured style's department
+colours where defined. The map exports all 34 walkway and 53 circulation
+polygons, and renders the 367 source wall polygon parts at the original
+0.75 m height. Polygon holes and positions are preserved. Unit/corridor
+heights are explicit properties; other venues keep their existing defaults.
+Walls have their own extrusion layer so they do not receive shop click/hover
+behavior. Flat surfaces skip the redundant extrusion pass to avoid striped
+depth conflicts, and flat departments retain click/hover interaction. Room
+selection now matches POIs by floor and building before polygon containment;
+a regression check covers overlapping stacked rooms in two buildings. The initial Harrods zoom is closer (17.5 desktop, 16.5 mobile).
+
+This reveals the rooms and departments present in the Harrods source.
+Harrods has large open retail departments; it does not have the hospital's
+many small clinical rooms. No new rooms or partitions are invented.
+
+The triangle navigation mesh could produce small diagonal zigzags. The
+Harrods importer now infers a principal axis from long aisle boundaries
+on each floor (roughly 44 degrees for most floors, 66 degrees on Sixth).
+It offers right-angle links within public aisle polygons, including around
+corners where a diagonal would enter a wall. Both legs must pass the same
+walkable-space and obstacle checks as every other graph edge. Existing
+triangle links and narrow-door topology remain available.
+
+A diagonal preference cost (0.6 maximum added multiplier in public aisles)
+favours the building's axes, rather than compass north/south. It affects
+route selection only; displayed distance/time still use actual walking.
+It is a preference, not a promise that every leg is perpendicular: curved
+aisles, other wings, door approaches and department destinations can still
+need diagonal legs. Other venues do not enable this option.
+
+Measured result
+
+Across the same 87 engine route cases, including stair landing trips:
+- Walking distance aligned within 3 degrees of a floor axis: 58.6% -> 64.4%.
+- Turns over 15 degrees: 217 -> 155.
+- Such turns with an adjacent leg under 2 m: 182 -> 95 (48% fewer).
+
+The three captured connector sequences and exact boarding/arrival nodes
+remain correct. Reference walking-route results:
+- Lower Ground -> Third: 116.81 m, 93.4% of samples within 2 m of source.
+- Mini Super Brands 3 -> Chocolate Hall: 144.04 m, 100% within 2 m.
+- Door 3 -> Sushi: 119.56 m, 100% within 2 m (previously 73.9%).
+The Door 3 alternative-aisle issue reported in the earlier audit is resolved
+for this captured example. These three examples do not establish parity
+with the vendor's complete navigation graph.
+
+Verification
+
+python3 scripts/verify-harrods-floorplan.py checks raw tile boundaries/holes,
+all visible interior layers, flat departments and low walls. Boundary
+rounding tolerance is 0.1 mm; no routing obstacle tolerances were changed.
+
+python3 scripts/verify-harrods-connectors.py still passes all 240 footprints
+and emitted connector metadata. The fixed ride time and known direction
+from the earlier repair remain. Unknown escalator directions remain unknown.
+
+10 geometry tests pass, including a rotated open aisle whose chosen path
+uses actual right-angle legs instead of triangle diagonals. 87 Harrods
+engine route cases pass (76 using stairs), including accessibility and
+unreachable-target behavior. All 81,777 horizontal graph edges and tested
+walking paths avoid original source obstacle cores. POI and blocker exports
+are unchanged. 200 samples across five non-UNBC venues pass independent
+cost/floor/accessibility checks. Nine browser tests, TypeScript and targeted
+ESLint checks pass. Sampled Harrods routing median 14 ms, maximum 51 ms.
+
+Artifacts
+
+docs/harrods-interior-angle-results.json
+docs/harrods-interior-route-comparison.json
+docs/screenshots/harrods-interior-first-floor.png
+docs/screenshots/harrods-interior-ground-route.png
+
+Reproduce
+
+python3 scripts/port-pointr-harrods.py
+python3 scripts/verify-harrods-floorplan.py
+python3 -m unittest discover -s tests/geometry
+npx tsx scripts/verify-harrods-routing.ts --out=/tmp/harrods-engine.json
+python3 scripts/verify-harrods-geometry.py /tmp/harrods-engine.json
+python3 scripts/compare-harrods-reference-routes.py /tmp/harrods-engine.json
+
+Room selection regression: npx tsx tests/poi-map.test.ts

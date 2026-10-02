@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useMap } from "~/components/map/map";
 import config from "~/config";
@@ -6,6 +6,7 @@ import useDirections from "~/hooks/use-directions";
 import { useIndoorGeocoder } from "~/hooks/use-indoor-geocder";
 import useFloorStore from "~/stores/floor-store";
 import { POI } from "~/types/poi";
+import HospitalDiscoveryView from "./hospital-discovery-view";
 import DiscoveryView from "./discovery-view";
 import LocationDetail from "./location-detail";
 import NavigationView, { type RouteState } from "./navigation-view";
@@ -23,10 +24,25 @@ type UIMode = "discovery" | "detail" | "navigation";
 
 interface DiscoveryPanelProps {
   location: LocationConfig;
+  onNavigationActiveChange?: (active: boolean) => void;
 }
 
-export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
+export default function DiscoveryPanel({
+  location,
+  onNavigationActiveChange,
+}: DiscoveryPanelProps) {
   const { isLoaded, map } = useMap();
+  const [routePreview, setRoutePreview] = useState(false);
+  const handlePresentationChange = useCallback(
+    (active: boolean) => {
+      setRoutePreview(active);
+      onNavigationActiveChange?.(active);
+    },
+    [onNavigationActiveChange],
+  );
+  const [discoveryCategory, setDiscoveryCategory] = useState<string | null>(
+    null,
+  );
   const [mode, setMode] = useState<UIMode>("discovery");
   const [selectedPOI, setSelectedPOI] = useState<POI | null>(null);
   const [pendingDeparture, setPendingDeparture] = useState<
@@ -38,11 +54,16 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
   const [pendingAccessible, setPendingAccessible] = useState(false);
   const [routesReady, setRoutesReady] = useState(false);
   const [deepLinkApplied, setDeepLinkApplied] = useState(false);
-  const { indoorDirections } = useDirections();
+  const { indoorDirections } = useDirections(
+    Boolean(location.ui?.hospitalStyle),
+  );
   const indoorGeocoder = useIndoorGeocoder(location);
-  const poiMap = buildPoiMap(location);
+  const poiMap = useMemo(() => buildPoiMap(location), [location]);
   const currentFloor = useFloorStore((state) => state.currentFloor);
   const setCurrentFloor = useFloorStore((state) => state.setCurrentFloor);
+  const setCurrentBuildingId = useFloorStore(
+    (state) => state.setCurrentBuildingId,
+  );
   const floorNames = location.mapConfig.floorNames;
 
   useEffect(() => {
@@ -66,10 +87,10 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
   }, [indoorDirections, location.data.indoorRoutes, floorNames]);
 
   const navigateToPOI = useCallback(
-    (coordinates: GeoJSON.Position) => {
+    (coordinates: GeoJSON.Position, zoom = 20) => {
       map?.flyTo({
         center: coordinates as [number, number],
-        zoom: 20,
+        zoom,
         duration: 1300,
       });
     },
@@ -78,15 +99,24 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
 
   const handleSelectPOI = useCallback(
     (poi: POI) => {
+      if (location.ui?.hospitalStyle)
+        setCurrentBuildingId(poi.buildingId ?? null);
       setSelectedPOI(poi);
       setMode("detail");
-      if (poi.floor !== undefined) setCurrentFloor(poi.floor);
-      navigateToPOI(poi.coordinates);
+      const displayFloor = poi.metadata?.display_floor ?? poi.floor;
+      if (displayFloor !== undefined) setCurrentFloor(displayFloor);
+      navigateToPOI(poi.coordinates, poi.type === "building" ? 17 : 20);
     },
-    [navigateToPOI, setCurrentFloor],
+    [
+      navigateToPOI,
+      setCurrentFloor,
+      setCurrentBuildingId,
+      location.ui?.hospitalStyle,
+    ],
   );
 
   function handleBackClick() {
+    setDiscoveryCategory(null);
     setMode("discovery");
     setSelectedPOI(null);
     setPendingDeparture(undefined);
@@ -203,13 +233,22 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
       if (!features?.length) return;
 
       const clickedFeature = features[0];
-      const unitId = Number(clickedFeature.id);
+      const unitId = Number(
+        clickedFeature.properties.source_unit_id ?? clickedFeature.id,
+      );
       const relatedPOIs = poiMap.get(unitId);
 
       if (relatedPOIs && relatedPOIs[0]) {
         const firstPOI = relatedPOIs[0];
 
         const poi = poiFromFeature(firstPOI);
+        if (
+          clickedFeature.properties.view_context &&
+          (mode === "discovery" || mode === "detail")
+        ) {
+          handleSelectPOI(poi);
+          return;
+        }
         setSelectedPOI(poi);
         if (mode === "discovery" || mode === "detail") {
           navigateToPOI(poi.coordinates);
@@ -220,16 +259,65 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
       }
     };
 
-    map?.on("click", "indoor-map-extrusion", handleMapClick);
-    return () => {
-      map?.off("click", "indoor-map-extrusion", handleMapClick);
+    const handleFlatUnitClick = (
+      event: MapMouseEvent & { features?: MapGeoJSONFeature[] },
+    ) => {
+      const p = event.features?.[0]?.properties;
+      if (p?.feature_type === "unit" && p.extrusion_height === 0) {
+        handleMapClick(event);
+      }
     };
-  }, [map, mode, navigateToPOI, poiMap]);
+
+    const handlePoiClick = (
+      event: MapMouseEvent & { features?: MapGeoJSONFeature[] },
+    ) => {
+      const id = event.features?.[0]?.properties?.id;
+      const poi =
+        id === undefined ? null : findPoiById(location.data.pois, Number(id));
+      if (poi) handleSelectPOI(poi);
+    };
+    if (location.ui?.hospitalStyle) {
+      map?.on("click", "point-label", handlePoiClick);
+      map?.on("click", "point", handlePoiClick);
+    }
+    map?.on("click", "indoor-map-extrusion", handleMapClick);
+    map?.on("click", "indoor-map-fill", handleFlatUnitClick);
+    return () => {
+      if (location.ui?.hospitalStyle) {
+        map?.off("click", "point-label", handlePoiClick);
+        map?.off("click", "point", handlePoiClick);
+      }
+      map?.off("click", "indoor-map-extrusion", handleMapClick);
+      map?.off("click", "indoor-map-fill", handleFlatUnitClick);
+    };
+  }, [
+    map,
+    mode,
+    navigateToPOI,
+    poiMap,
+    handleSelectPOI,
+    location.data.pois,
+    location.ui?.hospitalStyle,
+  ]);
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">
-        {mode === "discovery" && (
+      <div
+        className={
+          routePreview
+            ? "min-h-0 flex-1 overflow-hidden p-4"
+            : "min-h-0 flex-1 overflow-y-auto p-4"
+        }
+      >
+        {mode === "discovery" && location.ui?.hospitalStyle && (
+          <HospitalDiscoveryView
+            location={location}
+            initialCategory={discoveryCategory}
+            indoorGeocoder={indoorGeocoder}
+            onSelectPOI={handleSelectPOI}
+          />
+        )}
+        {mode === "discovery" && !location.ui?.hospitalStyle && (
           <DiscoveryView
             indoorGeocoder={indoorGeocoder}
             onSelectPOI={handleSelectPOI}
@@ -241,6 +329,11 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
           <LocationDetail
             key={selectedPOI.id}
             selectedPOI={selectedPOI}
+            hospitalStyle={location.ui?.hospitalStyle}
+            onSelectCategory={(category) => {
+              setDiscoveryCategory(category);
+              setMode("discovery");
+            }}
             floorNames={floorNames}
             shareUrl={buildDeepLinkUrl({ poi: selectedPOI.id })}
             handleDirectionsClick={() => setMode("navigation")}
@@ -249,6 +342,8 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
         )}
         {mode === "navigation" && (
           <NavigationView
+            onPresentationChange={handlePresentationChange}
+            floorStacks={location.data.floorStacks}
             handleBackClick={handleBackClick}
             selectedPOI={selectedPOI}
             indoorGeocoder={indoorGeocoder}
@@ -256,6 +351,8 @@ export default function DiscoveryPanel({ location }: DiscoveryPanelProps) {
             initialDeparture={pendingDeparture}
             initialDeparturePOI={pendingDeparturePOI}
             initialAccessible={pendingAccessible}
+            routeTiming={location.routeTiming}
+            hospitalStyle={location.ui?.hospitalStyle}
             floorNames={floorNames}
             onRouteChange={handleRouteChange}
           />

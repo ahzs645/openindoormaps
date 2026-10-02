@@ -1,0 +1,192 @@
+[
+  {
+    "name": "Harrods elevator boarding",
+    "result": "pass",
+    "observed": "5"
+  },
+  {
+    "name": "Harrods elevator arrival",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "Harrods escalator boarding",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "Harrods escalator arrival",
+    "result": "pass",
+    "observed": "-1"
+  },
+  {
+    "name": "Harrods preview starts",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Harrods preview finishes on Lower Ground",
+    "result": "pass",
+    "observed": "-1"
+  },
+  {
+    "name": "Harrods preview hands controls back",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Harrods accessible toggle chooses elevator",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Harrods accessible toggle clears escalator",
+    "result": "pass",
+    "observed": 0
+  },
+  {
+    "name": "Harrods accessible reverse trip",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Harrods normal reverse trip chooses escalator",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Galleria upward escalator",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Galleria reverse trip avoids the up-only escalator",
+    "result": "pass",
+    "observed": 0
+  },
+  {
+    "name": "Galleria downward stairs",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Galleria accessible elevator",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Galleria accessible trip has no stairs or escalator",
+    "result": "pass",
+    "observed": 0
+  },
+  {
+    "name": "Campus exits origin building",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Campus enters destination building",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Campus departure elevator boarding",
+    "result": "pass",
+    "observed": "1"
+  },
+  {
+    "name": "Campus outdoor leg on ground floor",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "Campus destination elevator boarding",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "Campus destination elevator arrival",
+    "result": "pass",
+    "observed": "3"
+  },
+  {
+    "name": "City Mall manual search produces escalator route",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "City Mall manual route starts on origin floor",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "City Mall walking step moves to arrival floor",
+    "result": "pass",
+    "observed": "1"
+  },
+  {
+    "name": "City Mall preview starts",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "City Mall preview finishes on destination floor",
+    "result": "pass",
+    "observed": "1"
+  },
+  {
+    "name": "City Mall preview hands controls back",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "City Mall preview can be cancelled",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "City Mall accessible toggle chooses elevator",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Eaton normal multi-floor escalator route",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Eaton missing accessible connection is explained",
+    "result": "pass",
+    "observed": "No accessible route found. Try turning off the accessible-route option."
+  },
+  {
+    "name": "Eaton inaccessible route clears the old summary",
+    "result": "pass",
+    "observed": 0
+  },
+  {
+    "name": "Eaton inaccessible route clears escalator instructions",
+    "result": "pass",
+    "observed": 0
+  },
+  {
+    "name": "Eaton route recovers when accessible-only is turned off",
+    "result": "pass",
+    "observed": true
+  },
+  {
+    "name": "Phone step focuses escalator departure floor",
+    "result": "pass",
+    "observed": "0"
+  },
+  {
+    "name": "Phone next step switches to destination floor",
+    "result": "pass",
+    "observed": "1"
+  },
+  {
+    "name": "Phone focused step keeps the map visible",
+    "result": "fail",
+    "observed": "Expanded bottom sheet remains over the map after step focus"
+  }
+]
