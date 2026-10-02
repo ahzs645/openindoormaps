@@ -76,7 +76,7 @@ function roofHull(parts: Rings[]): Rings {
   const half = (list: Ring) => {
     const hull: Ring = [];
     for (const point of list) {
-      while (hull.length > 1 && cross(hull.at(-2), hull.at(-1), point) <= 0)
+      while (hull.length > 1 && cross(hull.at(-2)!, hull.at(-1)!, point) <= 0)
         hull.pop();
       hull.push(point);
     }

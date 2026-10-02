@@ -77,7 +77,7 @@ export function ProjectModelLayer({
         renderer.localClippingEnabled = true;
         onStatus("Loading the prepared 3D scene…");
         new GLTFLoader().parse(
-          [...bytes].buffer as ArrayBuffer,
+          new Uint8Array(bytes).buffer as ArrayBuffer,
           "",
           (gltf) => {
             if (disposed) {

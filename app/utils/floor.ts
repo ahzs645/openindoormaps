@@ -14,3 +14,15 @@ export function formatFloorName(
   if (named) return named;
   return floor < 0 ? `Level B${Math.abs(floor)}` : `Level ${floor + 1}`;
 }
+
+/**
+ * Coerces a GeoJSON floor property (`floor`, `level_id`) to a number. Imported
+ * data stores these as numbers, numeric strings or "null"; anything that is not
+ * a finite number yields `null`.
+ */
+export function normalizeFloorValue(value: unknown): number | null {
+  if (typeof value === "number") return Number.isFinite(value) ? value : null;
+  if (typeof value !== "string" || value.trim() === "") return null;
+  const numeric = Number(value.trim());
+  return Number.isFinite(numeric) ? numeric : null;
+}

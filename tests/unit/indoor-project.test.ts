@@ -255,7 +255,10 @@ function fixture(): IndoorDataset {
 }
 const hash = async (b: Uint8Array) =>
   Buffer.from(
-    await crypto.subtle.digest("SHA-256", [...b].buffer as ArrayBuffer),
+    await crypto.subtle.digest(
+      "SHA-256",
+      new Uint8Array(b).buffer as ArrayBuffer,
+    ),
   ).toString("hex");
 
 test("basemap exclusion areas survive master and viewer exports without changing source geometry or routing", async () => {
@@ -1893,7 +1896,10 @@ test("source connector binding rejects guessed links and stale individual access
     ],
   };
   validateConnectorBinding(d, source);
-  assert.throws(() => validateConnectorBinding(d), /matching source/);
+  assert.throws(
+    () => validateConnectorBinding(d, undefined as never),
+    /matching source/,
+  );
   const wrong = structuredClone(source);
   wrong.connectors[0].entrances[0].levelId = 2;
   assert.throws(() => validateConnectorBinding(d, wrong), /served entrances/);

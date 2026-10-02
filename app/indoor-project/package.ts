@@ -115,7 +115,10 @@ const limit = (p: string) => (modelPath(p) ? 512 * MB : limits[p]);
 const hash = async (bytes: Uint8Array) =>
   [
     ...new Uint8Array(
-      await crypto.subtle.digest("SHA-256", [...bytes].buffer as ArrayBuffer),
+      await crypto.subtle.digest(
+        "SHA-256",
+        new Uint8Array(bytes).buffer as ArrayBuffer,
+      ),
     ),
   ]
     .map((b) => b.toString(16).padStart(2, "0"))
@@ -621,7 +624,7 @@ export async function persistProject(bytes: Uint8Array): Promise<void> {
   await new Promise<void>((resolve, reject) => {
     const tx = db.transaction("projects", "readwrite");
     tx.objectStore("projects").put(
-      new Blob([[...bytes].buffer as ArrayBuffer]),
+      new Blob([new Uint8Array(bytes).buffer as ArrayBuffer]),
       "last",
     );
     tx.oncomplete = () => resolve();

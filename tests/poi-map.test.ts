@@ -48,3 +48,19 @@ for (const [id] of rooms)
     [id + 10],
   );
 console.log("PASS: room selection matches its own floor and building.");
+const numericStrings = structuredClone(location);
+for (const feature of numericStrings.data.indoorMap.features)
+  if (feature.properties)
+    feature.properties.level_id = String(feature.properties.level_id);
+for (const feature of numericStrings.data.pois.features)
+  if (feature.properties)
+    feature.properties.floor = String(feature.properties.floor);
+const normalizedMapping = buildPoiMap(numericStrings);
+for (const [id] of rooms)
+  assert.deepEqual(
+    normalizedMapping.get(id)?.map((f) => f.id),
+    [id + 10],
+  );
+console.log(
+  "PASS: imported numeric floor strings retain building-aware room selection.",
+);

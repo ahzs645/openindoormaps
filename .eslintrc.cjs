@@ -1,6 +1,10 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
+  // `npm run lint` passes --ignore-path .gitignore, which disables
+  // .eslintignore, so extra ignores live here.
+  // Vendored Draco decoder (three.js DRACOLoader runtime).
+  ignorePatterns: ["public/draco/"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
@@ -89,7 +93,12 @@ module.exports = {
     {
       // Geometry algorithms and their audit fixtures use inline predicates,
       // reductions and nested classifications; retain correctness rules.
-      files: ["app/indoor-project/**/*.{ts,tsx}", "app/pages/indoor-project-page.tsx", "scripts/indoor/**/*.ts", "tests/**/*.ts"],
+      files: [
+        "app/indoor-project/**/*.{ts,tsx}",
+        "app/pages/indoor-project-page.tsx",
+        "scripts/indoor/**/*.ts",
+        "tests/**/*.ts",
+      ],
       rules: {
         "no-nested-ternary": "off",
         "unicorn/no-nested-ternary": "off",
@@ -97,8 +106,17 @@ module.exports = {
         "unicorn/no-array-callback-reference": "off",
         "unicorn/consistent-function-scoping": "off",
         "unicorn/prefer-add-event-listener": "off",
+        // Binary APIs require typed arrays, not iterable copies as plain arrays.
+        "unicorn/prefer-spread": "off",
         "unicorn/number-literal-case": "off",
-        "@typescript-eslint/no-unused-vars": ["error", {"argsIgnorePattern":"^_", "varsIgnorePattern":"^_", "ignoreRestSiblings":true}],
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            argsIgnorePattern: "^_",
+            varsIgnorePattern: "^_",
+            ignoreRestSiblings: true,
+          },
+        ],
       },
     },
     {

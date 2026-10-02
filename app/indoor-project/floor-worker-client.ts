@@ -127,12 +127,12 @@ export class FloorWorkerClient {
               new Error(event.message || "The floor worker could not start."),
             );
         };
-        worker.addEventListener("messageerror", () => {
+        worker.onmessageerror = () => {
           if (this.worker === worker)
             this.stop(
               new Error("The floor worker returned unreadable geometry."),
             );
-        });
+        };
       }
       this.worker.postMessage({
         requestId: id,

@@ -392,7 +392,7 @@ export default function IndoorProjectPage() {
         return;
       }
       const url = URL.createObjectURL(
-        new Blob([[...bytes].buffer as ArrayBuffer], {
+        new Blob([new Uint8Array(bytes).buffer as ArrayBuffer], {
           type: "application/zip",
         }),
       );
@@ -462,7 +462,7 @@ export default function IndoorProjectPage() {
         );
         return;
       }
-      const blob = new Blob([[...bytes].buffer as ArrayBuffer], {
+      const blob = new Blob([new Uint8Array(bytes).buffer as ArrayBuffer], {
           type: "application/zip",
         }),
         url = URL.createObjectURL(blob);

@@ -1,5 +1,6 @@
 import { booleanPointInPolygon } from "@turf/boolean-point-in-polygon";
 import type { LocationConfig } from "~/types/location";
+import { normalizeFloorValue } from "~/utils/floor";
 
 function isPolygonFeature(
   feature: GeoJSON.Feature,
@@ -25,15 +26,12 @@ export function buildPoiMap(
   (location.data.pois.features as GeoJSON.Feature<GeoJSON.Point>[]).forEach(
     (poiFeature) => {
       const poiCoordinates = poiFeature.geometry.coordinates;
+      const poiFloor = normalizeFloorValue(poiFeature.properties?.floor);
 
       for (const unitFeature of unitFeatures) {
-        const unitLevel = unitFeature.properties?.level_id;
-        const poiLevel = poiFeature.properties?.floor;
-        if (
-          typeof unitLevel === "number" &&
-          typeof poiLevel === "number" &&
-          unitLevel !== poiLevel
-        ) {
+        // Match normalized floors as well as source building identities.
+        const unitFloor = normalizeFloorValue(unitFeature.properties?.level_id);
+        if (poiFloor !== null && unitFloor !== null && unitFloor !== poiFloor) {
           continue;
         }
         const unitBuilding = unitFeature.properties?.building_id;
@@ -45,6 +43,7 @@ export function buildPoiMap(
         ) {
           continue;
         }
+
         if (
           booleanPointInPolygon(
             poiCoordinates,

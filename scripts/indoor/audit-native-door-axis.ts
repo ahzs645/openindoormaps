@@ -38,7 +38,7 @@ const originalZip = unzipSync(beforeBytes),
   newZip = unzipSync(afterBytes);
 const sha = async (bytes: Uint8Array) =>
   Buffer.from(
-    await crypto.subtle.digest("SHA-256", [...bytes].buffer),
+    await crypto.subtle.digest("SHA-256", new Uint8Array(bytes).buffer),
   ).toString("hex");
 const preservedAssets = [];
 for (const path of Object.keys(originalZip).filter(
