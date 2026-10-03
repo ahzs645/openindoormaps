@@ -34,7 +34,7 @@ const resolvedRouteCache = new WeakMap<
   ProjectRoutingGraph,
   {
     geometry: string;
-    routes: Map<string, ProjectRoute>;
+    routes: Map<string, ProjectRoute | null>;
     floorFailures: Map<string, number[]>;
   }
 >();
@@ -148,11 +148,24 @@ function resolveProjectRoute(
   }
   const routeKey = JSON.stringify([startKey, endKey]);
   const existing = resolved.routes.get(routeKey);
-  if (existing && excluded.size === 0) {
+  if (resolved.routes.has(routeKey) && excluded.size === 0) {
     resolved.routes.delete(routeKey);
-    resolved.routes.set(routeKey, existing);
-    return copyRoute(existing);
+    resolved.routes.set(routeKey, existing!);
+    const floorIds = resolved.floorFailures.get(routeKey);
+    if (floorIds) {
+      resolved.floorFailures.delete(routeKey);
+      resolved.floorFailures.set(routeKey, floorIds);
+    }
+    return existing ? copyRoute(existing) : null;
   }
+  // Failure explanations ask for the same route again. Retain completed
+  // failures under the same exact policy/geometry binding as successful routes.
+  const remember = (route: ProjectRoute | null) => {
+    resolved.routes.set(routeKey, route);
+    while (resolved.routes.size > 16)
+      resolved.routes.delete(resolved.routes.keys().next().value!);
+    return route ? copyRoute(route) : null;
+  };
   const start = records.get(startKey),
     end = records.get(endKey);
   if (
@@ -161,7 +174,7 @@ function resolveProjectRoute(
     !isProjectDestination(start) ||
     !isProjectDestination(end)
   )
-    return null;
+    return remember(null);
   const distances = new Map<string, number>([[start.arrivalNodeId, 0]]),
     previous = new Map<string, { from: string; edge: IndoorEdge }>(),
     heap: { id: string; cost: number }[] = [];
@@ -214,13 +227,13 @@ function resolveProjectRoute(
       }
     }
   }
-  if (!distances.has(end.arrivalNodeId)) return null;
+  if (!distances.has(end.arrivalNodeId)) return remember(null);
   const edges: IndoorEdge[] = [],
     nodeIds = [end.arrivalNodeId];
   let at = end.arrivalNodeId;
   while (at !== start.arrivalNodeId) {
     const step = previous.get(at);
-    if (!step) return null;
+    if (!step) return remember(null);
     edges.push(step.edge);
     at = step.from;
     nodeIds.push(at);
@@ -272,7 +285,7 @@ function resolveProjectRoute(
     // Iterate rather than recurse, so many bad fragments cannot overflow the
     // stack or impose an arbitrary limit that hides a viable alternative.
     if (next.size > excluded.size) return { retry: next };
-    return null;
+    return remember(null);
   }
   resolved.floorFailures.delete(routeKey);
   const distanceMetres = paths.reduce(
@@ -316,10 +329,7 @@ function resolveProjectRoute(
       .filter((e) => e.kind === "door")
       .map((e) => e.id),
   };
-  resolved.routes.set(routeKey, result);
-  while (resolved.routes.size > 16)
-    resolved.routes.delete(resolved.routes.keys().next().value!);
-  return copyRoute(result);
+  return remember(result);
 }
 
 export function validateIndoorDataset(

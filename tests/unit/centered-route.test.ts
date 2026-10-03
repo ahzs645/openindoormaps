@@ -1741,6 +1741,12 @@ test("unresolved positive native slab holes block unsafe source fallbacks and na
   assert.deepEqual(diagnostic.blockers, [
     { kind: "native-floor-hole", edgeId: "", nativeElementId: 123 },
   ]);
+  assert.equal(findProjectRoute(d, "a", "b"), null);
+  assert.deepEqual(
+    createProjectRouteDiagnostics(d).inspect("a", "b"),
+    diagnostic,
+    "a cached failed route preserves its native-floor explanation",
+  );
   d.walkingSupport.floors.push({
     nativeElementId: 124,
     elevationFeet: 0,

@@ -757,6 +757,24 @@ test("room labels never fabricate a route blocker when physical links are permit
   assert.equal(result.message, "");
 });
 
+test("route diagnostics explain rejected native circulation evidence", () => {
+  const d = fixture();
+  d.edges[0].nativeCellId = "stale-native-cell";
+  assert.equal(findProjectRoute(d, "a", "c"), null);
+  const failure = createProjectRouteDiagnostics(d).inspect("a", "c");
+  assert.equal(failure.kind, "blocked");
+  assert.ok(
+    failure.blockers.some((b) => b.kind === "native-circulation-proof"),
+  );
+  assert.match(failure.message, /verified native floor boundaries/);
+  assert.ok(!failure.message.includes("source path ."));
+  delete d.edges[0].nativeCellId;
+  assert.ok(
+    findProjectRoute(d, "a", "c"),
+    "reviewed source edits invalidate failed-route cache",
+  );
+});
+
 test("route diagnostics identify metadata blockers individually and keep their native evidence", () => {
   const d = fixture();
   d.records[1].access = "staff";

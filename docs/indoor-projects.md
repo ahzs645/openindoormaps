@@ -1154,3 +1154,36 @@ Regression coverage includes disjoint slab shells, nested voids, persisted
 wall caps, tiny seams, low fixture tops, failed polygon overlays and legacy
 walk rejection. Browser checks load the exported package, inspect actual map
 sources and render the pinned areas on desktop and mobile.
+### Repeatable random multifloor audit
+
+Run `node --import tsx scripts/indoor/audit-random-routes.ts project.zip report.json 120 20261002`
+to sample 120 public and 120 step-free requests between different campus floors.
+The seed is repeatable. The report binds its input ZIP by SHA-256, records timing,
+failure reasons and full-route hashes, checks enabled/directed/profile-permitted
+edges, endpoint continuity, floor-change instructions and native floor openings,
+and confirms that routing leaves the dataset unchanged. It also emits
+`report.geometry-input.json` for the independent `audit-resolved-geometry.ts`
+native-wall/column check. That proof covers centered and clearance-validated
+planar sections; it does not certify preserved source or vertical geometry.
+
+The October 2 sample is saved in `docs/unbc-random-routing-audit.json`: 79 of
+120 public requests produced routes; 27 lacked source connections, 13 were
+blocked by native floor openings, and one had rejected circulation evidence.
+All 120 step-free requests were blocked by unverified/source connectivity;
+the sampled ZIP has no confirmed multifloor step-free links. No calculation
+exception or transition mismatch occurred. Independent proof checked 2,096
+walking segments without obstacle crossings. These are sampled results,
+not campus-wide accessibility certification.
+
+Profiling revealed repeated scans of detailed polygon edges. Conservative
+vertical edge bins retain exact containment/boundary arithmetic and rebuild
+after edits. For the 39 successful baseline pairs, median calculation dropped
+from 2.94 seconds to 1.02 seconds, with unchanged supported walking geometry.
+The slowest baseline pair, `10-2014` to `07-242`, dropped from 16.53 to 2.55
+seconds. The full 120-pair public sample's maximum was 3.11 seconds. Timings
+are local Node measurements with a prepared graph, not mobile timing guarantees.
+Completed failed routes are cached under the same exact source-policy/geometry
+binding as successful routes, so failure explanations avoid another route search.
+Set `INDOOR_PROJECT_ZIP` to the master ZIP and run
+`tests/e2e/indoor-random-routes.spec.ts` to check representative sampled requests
+through the actual route worker on desktop and mobile.

@@ -1,4 +1,5 @@
 import { nativeJointBarriers } from "./native-joint-barriers";
+import { createRingPointQuery } from "./ring-point-query";
 import {
   nativeCirculationCells,
   nativeCirculationSurfaces,
@@ -81,6 +82,7 @@ const length = (points: readonly number[][]) =>
       0,
     );
 let ringBounds = new WeakMap<XY[], number[]>();
+let ringQueries = new WeakMap<XY[], ReturnType<typeof createRingPointQuery>>();
 function boundsOfRing(ring: XY[]) {
   let bounds = ringBounds.get(ring);
   if (!bounds) {
@@ -145,28 +147,12 @@ function insideRing(p: XY, ring: XY[]) {
     p[1] > bounds[3] + 1e-8
   )
     return false;
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const a = ring[i],
-      b = ring[j];
-    const dx = b[0] - a[0],
-      dy = b[1] - a[1],
-      cross = (p[0] - a[0]) * dy - (p[1] - a[1]) * dx;
-    if (
-      Math.abs(cross) <= 1e-8 * Math.hypot(dx, dy) &&
-      p[0] >= Math.min(a[0], b[0]) - 1e-8 &&
-      p[0] <= Math.max(a[0], b[0]) + 1e-8 &&
-      p[1] >= Math.min(a[1], b[1]) - 1e-8 &&
-      p[1] <= Math.max(a[1], b[1]) + 1e-8
-    )
-      return true;
-    if (
-      a[1] > p[1] !== b[1] > p[1] &&
-      p[0] < ((b[0] - a[0]) * (p[1] - a[1])) / (b[1] - a[1]) + a[0]
-    )
-      inside = !inside;
+  let query = ringQueries.get(ring);
+  if (!query) {
+    query = createRingPointQuery(ring);
+    ringQueries.set(ring, query);
   }
-  return inside;
+  return query(p);
 }
 const inside = (point: XY, parts: Rings[]) =>
   parts.some(
@@ -1181,6 +1167,7 @@ export function centeredRoutePaths(
   // Reviews can edit an existing ring array in place. Bounds are reusable
   // inside one synchronous resolution, never across changed geometry.
   ringBounds = new WeakMap();
+  ringQueries = new WeakMap();
   const passageQuery = createDoorPassageQuery(data);
   const paths: RoutePath[] = [],
     groups: { edges: IndoorEdge[]; first: string; last: string }[] = [];

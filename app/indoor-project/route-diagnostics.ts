@@ -281,6 +281,14 @@ export function createProjectRouteDiagnostics(
       clauses.push(
         "uses a source doorway whose proof no longer matches the model, drawing registration or supporting floors",
       );
+    if (kinds.has("native-circulation-proof"))
+      clauses.push(
+        "uses a walking connection outside its verified native floor boundaries or with stale boundary evidence",
+      );
+    if (kinds.has("native-floor-hole"))
+      clauses.push(
+        "crosses a native floor opening without supported floor geometry",
+      );
     if (kinds.has("step-free"))
       clauses.push(
         "includes stairs or connections without confirmed step-free access",
