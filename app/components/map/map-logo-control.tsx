@@ -20,12 +20,12 @@ export function MapLogoControl({ className }: MapLogoControlProps) {
         alt=""
         aria-hidden="true"
         className="size-6"
-        src="/images/oim-ctrl-logo.svg"
+        src={`${import.meta.env.BASE_URL}images/oim-ctrl-logo.svg`}
       />
       <img
         alt="OpenIndoorMaps"
         className="hidden h-5 w-auto dark:invert sm:block"
-        src="/images/oim-ctrl-logo-text.svg"
+        src={`${import.meta.env.BASE_URL}images/oim-ctrl-logo-text.svg`}
       />
     </a>
   );

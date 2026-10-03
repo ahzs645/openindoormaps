@@ -498,9 +498,18 @@ export function IndoorMapLayers({
       }
     }
     const iconFiles: [string, string][] = [
-      ["vc-stairs", "/images/vendor-reference-icons/stairs.png"],
-      ["vc-escalator", "/images/vendor-reference-icons/escalator.png"],
-      ["vc-elevator", "/images/vendor-reference-icons/elevator.png"],
+      [
+        "vc-stairs",
+        `${import.meta.env.BASE_URL}images/vendor-reference-icons/stairs.png`,
+      ],
+      [
+        "vc-escalator",
+        `${import.meta.env.BASE_URL}images/vendor-reference-icons/escalator.png`,
+      ],
+      [
+        "vc-elevator",
+        `${import.meta.env.BASE_URL}images/vendor-reference-icons/elevator.png`,
+      ],
     ];
 
     Promise.all(

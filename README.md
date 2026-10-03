@@ -14,7 +14,6 @@
 **OpenIndoorMaps** is an open-source project focused on providing a minimalist, self-hostable indoor navigation solution. The goal is to help users navigate complex indoor spaces such as shopping malls, airports, hospitals, and universities, using web-based mapping technologies.
 ![Demo of OpenIndoorMaps](https://github.com/user-attachments/assets/343bd636-05e9-4c8c-a6ad-64a53374cbf7)
 
-
 ## Release Status
 
 **Current Version: Pre-Alpha (Map Viewer Demo Only)**
@@ -31,6 +30,7 @@ We are actively working on expanding the project. The next major steps include:
 Stay tuned for upcoming updates, and feel free to contribute, provide feedback, or report issues.
 
 ## Join Our Community
+
 We have an active Discord channel for discussions and collaboration. Join us [here](https://discord.gg/znGgpCGDGQ).
 
 ## Why OpenIndoorMaps?
@@ -70,8 +70,10 @@ Many current indoor navigation solutions lack the flexibility and adaptability n
 - **Parking Garages**: Direct drivers to available spaces and exits.
 
 ## Contributing
-We are about to start development soon, and we welcome anyone who is interested or has great ideas! If you have suggestions, feel free to: 
-1. **Create an Issue**: Share your thoughts or feature ideas by opening an issue and describing your concept. 
+
+We are about to start development soon, and we welcome anyone who is interested or has great ideas! If you have suggestions, feel free to:
+
+1. **Create an Issue**: Share your thoughts or feature ideas by opening an issue and describing your concept.
 2. **Join Our Community**: We have a Discord channel for discussions and collaboration. Please join us [here](https://discord.gg/znGgpCGDGQ).
 
 ## License
@@ -81,3 +83,10 @@ This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE
 ---
 
 Let’s build something great together! 🚀
+
+## GitHub Pages workspace
+
+[Open the indoor project workspace](https://projects.ahmadjalil.com/openindoormaps/#/projects/indoor)
+and choose **Import project ZIP** to load your prepared Reviter master from your
+device. See [deployment and testing](docs/github-pages.md) for the GitHub Actions
+workflow, browser checks and local preview commands.

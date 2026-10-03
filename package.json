@@ -20,7 +20,9 @@
     "indoor:audit-rooms": "tsx scripts/indoor/audit-room-routing.ts",
     "indoor:export-viewer": "tsx scripts/indoor/export-campus-viewer.ts",
     "indoor:regenerate-cache": "node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/regenerate-from-native-cache.ts",
-    "dwg:import": "node scripts/dwg-import/cli.mjs"
+    "dwg:import": "node scripts/dwg-import/cli.mjs",
+    "build:pages": "vite build --mode pages",
+    "test:pages": "playwright test --config playwright.pages.config.ts"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",

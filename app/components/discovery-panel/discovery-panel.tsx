@@ -14,6 +14,7 @@ import { buildPoiMap } from "~/utils/poi-map";
 import {
   buildDeepLinkUrl,
   readDeepLink,
+  routeSearch,
   syncDeepLink,
 } from "~/utils/deep-link";
 import { findPoiById, poiFromFeature } from "~/utils/poi";
@@ -130,7 +131,7 @@ export default function DiscoveryPanel({
     if (deepLinkApplied || !map || !isLoaded || !routesReady) return;
     setDeepLinkApplied(true);
 
-    const link = readDeepLink(globalThis.location.search);
+    const link = readDeepLink(routeSearch());
     const pois = location.data.pois;
     if (link.to !== undefined) {
       const destination = findPoiById(pois, link.to);

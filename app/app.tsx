@@ -1,5 +1,5 @@
 import { createElement, lazy, Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import { ThemeContext, useThemeProvider } from "~/hooks/use-theme";
 const LocationPage = lazy(() => import("~/pages/location-page"));
 const NativeModePage = lazy(() => import("~/pages/native-mode-page"));
@@ -8,6 +8,8 @@ const ViewerModePage = lazy(() => import("~/pages/viewer-mode-page"));
 const ViewerModesPage = lazy(() => import("~/pages/viewer-modes-page"));
 const WelcomePage = lazy(() => import("~/pages/welcome-page"));
 const IndoorProjectPage = lazy(() => import("~/pages/indoor-project-page"));
+// Pages has no server-side route fallback. Hash routes also survive a refresh.
+const Router = import.meta.env.MODE === "pages" ? HashRouter : BrowserRouter;
 
 export default function App() {
   const themeValue = useThemeProvider();
@@ -15,9 +17,7 @@ export default function App() {
   return createElement(
     ThemeContext.Provider,
     { value: themeValue },
-    <BrowserRouter
-      future={{ v7_relativeSplatPath: true, v7_startTransition: true }}
-    >
+    <Router future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
       <Suspense fallback={<div role="status">Loading map…</div>}>
         <Routes>
           <Route path="/" element={<WelcomePage />} />
@@ -32,6 +32,6 @@ export default function App() {
           <Route path="/:locationId" element={<LocationPage />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>,
+    </Router>,
   );
 }

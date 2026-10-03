@@ -19,6 +19,16 @@ export interface DeepLinkState {
 
 const DEEP_LINK_KEYS = ["poi", "from", "to", "accessible", "floor"] as const;
 
+/** Read queries inside Pages hash routes as well as normal browser routes. */
+export function routeSearch(url: string = globalThis.location.href): string {
+  const parsed = new URL(url);
+  if (parsed.hash.startsWith("#/")) {
+    const index = parsed.hash.indexOf("?");
+    return index === -1 ? "" : parsed.hash.slice(index);
+  }
+  return parsed.search;
+}
+
 function readNumber(params: URLSearchParams, key: string): number | undefined {
   const raw = params.get(key);
   if (raw === null || raw.trim() === "") return undefined;
@@ -42,14 +52,20 @@ export function buildDeepLinkUrl(
   base: string = globalThis.location.href,
 ): string {
   const url = new URL(base);
-  for (const key of DEEP_LINK_KEYS) url.searchParams.delete(key);
-  if (state.poi !== undefined) url.searchParams.set("poi", String(state.poi));
-  if (state.from !== undefined)
-    url.searchParams.set("from", String(state.from));
-  if (state.to !== undefined) url.searchParams.set("to", String(state.to));
-  if (state.accessible) url.searchParams.set("accessible", "1");
-  if (state.floor !== undefined)
-    url.searchParams.set("floor", String(state.floor));
+  const hashRoute = url.hash.startsWith("#/");
+  const params = hashRoute
+    ? new URLSearchParams(routeSearch(base))
+    : url.searchParams;
+  for (const key of DEEP_LINK_KEYS) params.delete(key);
+  if (state.poi !== undefined) params.set("poi", String(state.poi));
+  if (state.from !== undefined) params.set("from", String(state.from));
+  if (state.to !== undefined) params.set("to", String(state.to));
+  if (state.accessible) params.set("accessible", "1");
+  if (state.floor !== undefined) params.set("floor", String(state.floor));
+  if (hashRoute) {
+    const query = params.toString();
+    url.hash = url.hash.split("?")[0] + (query ? `?${query}` : "");
+  }
   return url.toString();
 }
 

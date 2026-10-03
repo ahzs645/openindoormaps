@@ -17,7 +17,11 @@ function geojsonPlugin(): Plugin {
   };
 }
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base:
+    mode === "pages"
+      ? (process.env.PAGES_BASE_PATH ?? "/openindoormaps/")
+      : "/",
   plugins: [geojsonPlugin(), react()],
   resolve: {
     tsconfigPaths: true,
@@ -32,4 +36,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));

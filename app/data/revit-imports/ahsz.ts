@@ -6,7 +6,7 @@ const ahszRevitImport: RevitImportFixture = {
   sourceFileName: "ahsz_3d model_17.04_finished.rvt",
   status: "metadata-only",
   preview: {
-    src: "/revit/ahsz-preview.png",
+    src: `${import.meta.env.BASE_URL}revit/ahsz-preview.png`,
     width: 128,
     height: 128,
     sizeBytes: 1707,

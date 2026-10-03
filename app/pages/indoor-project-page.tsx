@@ -102,6 +102,7 @@ import {
   BasemapBuildingLayer,
   BasemapAreaDrawing,
 } from "~/indoor-project/basemap-building-layer";
+import { routeSearch } from "~/utils/deep-link";
 import "./indoor-project.css";
 
 const noPins: ReviewPin[] = [];
@@ -221,7 +222,7 @@ export default function IndoorProjectPage() {
     [simplifyGeometry, setSimplifyGeometry] = useState(true),
     [view, setView] = useState<"2d" | "3d" | "relative" | "native">(() =>
       typeof globalThis !== "undefined" &&
-      new URLSearchParams(globalThis.location.search).get("view") === "relative"
+      new URLSearchParams(routeSearch()).get("view") === "relative"
         ? "relative"
         : "3d",
     ),
@@ -260,7 +261,7 @@ export default function IndoorProjectPage() {
     setDraftPoints([]);
     setEditTool("select");
     setView(
-      new URLSearchParams(globalThis.location.search).get("view") === "relative"
+      new URLSearchParams(routeSearch()).get("view") === "relative"
         ? "relative"
         : "3d",
     );
@@ -925,7 +926,9 @@ export default function IndoorProjectPage() {
           <p>
             In Reviter, load the model and room reviews, save GIS reference
             points, then choose <strong>Prepare OpenIndoorMaps project</strong>.
-            Import that ZIP here.
+            Import that ZIP here. You can also select your finalized master
+            Reviter ZIP. The package is processed in this browser; keep exported
+            ZIPs as backups.
           </p>
           <ol>
             <li>Check buildings and campus floors.</li>

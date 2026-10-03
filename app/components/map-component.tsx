@@ -24,7 +24,7 @@ import VenueModelsLayer, { type VenueModel } from "./map/venue-models-layer";
 
 const GALLERIA_MODELS: VenueModel[] = [
   {
-    url: "/models/vendor-reference-models/new_escalator.glb",
+    url: `${import.meta.env.BASE_URL}models/vendor-reference-models/new_escalator.glb`,
     lngLat: [-0.126_849_5, 51.507_424_6],
     lengthMeters: 8,
   },
