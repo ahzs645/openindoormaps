@@ -1,4 +1,4 @@
-import { createProjectRouteDiagnostics } from "./route-diagnostics";
+import type { ProjectRouteDiagnostic } from "./route-diagnostics";
 import { useEffect, useMemo, useState } from "react";
 import { LngLatBounds } from "maplibre-gl";
 import {
@@ -83,6 +83,9 @@ const categoryIcons = {
 export function ProjectNavigation({
   data,
   route,
+  calculating,
+  calculationError,
+  routeDiagnostic,
   start,
   end,
   mode,
@@ -118,6 +121,9 @@ export function ProjectNavigation({
   data: IndoorDataset;
   managedLocations?: MapLocation[];
   route: ProjectRoute | null;
+  calculating: boolean;
+  calculationError?: string;
+  routeDiagnostic?: ProjectRouteDiagnostic;
   start: string;
   end: string;
   mode: "public" | "accessible";
@@ -187,15 +193,7 @@ export function ProjectNavigation({
     [data, route, departure, destination],
   );
   const summary = useMemo(() => summarizeRoute(steps), [steps]);
-  const diagnostics = useMemo(
-    () => createProjectRouteDiagnostics(data, mode),
-    [data, mode],
-  );
-  const failure = useMemo(
-    () =>
-      start && end && !route ? diagnostics.inspect(start, end) : undefined,
-    [diagnostics, start, end, route],
-  );
+  const failure = routeDiagnostic;
   const destinations = useMemo(
     () =>
       data.records
@@ -464,7 +462,15 @@ export function ProjectNavigation({
               />
               {start &&
                 end &&
-                (route ? (
+                (calculating ? (
+                  <p
+                    className="project-nav-result"
+                    role="status"
+                    data-testid="project-route-calculating"
+                  >
+                    Calculating directions…
+                  </p>
+                ) : route ? (
                   <div
                     className="project-nav-result"
                     data-testid="project-route-result"
@@ -510,8 +516,10 @@ export function ProjectNavigation({
                     data-testid="project-route-result"
                     className="project-warning"
                   >
-                    <p>{arrivalMessage ?? failure?.message}</p>
-                    {!arrivalMessage && (
+                    <p>
+                      {calculationError ?? arrivalMessage ?? failure?.message}
+                    </p>
+                    {!calculationError && !arrivalMessage && (
                       <button
                         onClick={() => {
                           const target =

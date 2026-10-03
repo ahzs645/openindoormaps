@@ -27,8 +27,8 @@ jobs:
       - run: npm ci
       - name: Check prepared-project types
         run: npx tsc -p tsconfig.indoor-project.json
-      - name: Check route links
-        run: node --import tsx --test tests/unit/deep-link.test.ts
+      - name: Check routing and worker lifecycle
+        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v6

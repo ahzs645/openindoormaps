@@ -25,7 +25,11 @@ import {
 type XY = [number, number];
 type XYZ = [number, number, number];
 type Rings = XY[][];
-type WalkableArea = { boundaries: Rings[]; contains: (point: XY) => boolean };
+type WalkableArea = {
+  boundaries: Rings[];
+  contains: (point: XY) => boolean;
+  boundaryRings?: (bounds: number[]) => XY[][];
+};
 export type RoutePath = {
   edgeIds: string[];
   levelIds: number[];
@@ -85,6 +89,53 @@ function boundsOfRing(ring: XY[]) {
   }
   return bounds;
 }
+/** Coarse bins discard irrelevant polygons; every surviving point/segment
+ * still uses the exact rings. Long envelopes use an overflow list. */
+function geometryIndex<T>(items: T[], boundsOf: (item: T) => number[]) {
+  const entries = items.map((item, order) => ({
+    item,
+    order,
+    bounds: boundsOf(item),
+  }));
+  const bins = new Map<string, typeof entries>(),
+    overflow: typeof entries = [];
+  const size = 32;
+  const extent = (bounds: number[]) => bounds.map((n) => Math.floor(n / size));
+  for (const entry of entries) {
+    const [x0, y0, x1, y1] = extent(entry.bounds);
+    if ((x1 - x0 + 1) * (y1 - y0 + 1) > 256) {
+      overflow.push(entry);
+      continue;
+    }
+    for (let x = x0; x <= x1; x++)
+      for (let y = y0; y <= y1; y++) {
+        const key = `${x}:${y}`,
+          bucket = bins.get(key) ?? [];
+        bucket.push(entry);
+        bins.set(key, bucket);
+      }
+  }
+  return (bounds: number[]): T[] => {
+    const [x0, y0, x1, y1] = extent(bounds);
+    const candidates = new Set(overflow);
+    if ((x1 - x0 + 1) * (y1 - y0 + 1) > 256)
+      return entries
+        .filter((e) => overlaps(e.bounds, bounds))
+        .map((e) => e.item);
+    for (let x = x0; x <= x1; x++)
+      for (let y = y0; y <= y1; y++)
+        for (const entry of bins.get(`${x}:${y}`) ?? []) candidates.add(entry);
+    return [...candidates]
+      .filter((e) => overlaps(e.bounds, bounds))
+      .sort((a, b) => a.order - b.order)
+      .map((e) => e.item);
+  };
+}
+function indexedContains(parts: Rings[]) {
+  const query = geometryIndex(parts, box);
+  return (p: XY) =>
+    inside(p, query([p[0] - 1e-8, p[1] - 1e-8, p[0] + 1e-8, p[1] + 1e-8]));
+}
 function insideRing(p: XY, ring: XY[]) {
   const bounds = boundsOfRing(ring);
   if (
@@ -125,7 +176,12 @@ const inside = (point: XY, parts: Rings[]) =>
   );
 /** Split the whole segment at polygon boundaries. Midpoints then test every
  * continuous interval, including masks/columns much narrower than the raster. */
-function breaks(a: XY, b: XY, parts: Rings[]) {
+function breaks(
+  a: XY,
+  b: XY,
+  parts: Rings[],
+  query?: WalkableArea["boundaryRings"],
+) {
   const values = [0, 1],
     dx = b[0] - a[0],
     dy = b[1] - a[1];
@@ -135,7 +191,7 @@ function breaks(a: XY, b: XY, parts: Rings[]) {
     Math.max(a[0], b[0]),
     Math.max(a[1], b[1]),
   ];
-  for (const ring of parts.flat()) {
+  for (const ring of query ? query(segmentBounds) : parts.flat()) {
     if (!overlaps(segmentBounds, boundsOfRing(ring))) continue;
     for (let i = 0; i < ring.length; i++) {
       const u = ring[i],
@@ -159,7 +215,7 @@ const interpolate = (a: XY, b: XY, t: number): XY => [
 ];
 const validSegment = (a: XY, b: XY, area: WalkableArea) => {
   if (Math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-7) return area.contains(a);
-  const ts = breaks(a, b, area.boundaries);
+  const ts = breaks(a, b, area.boundaries, area.boundaryRings);
   return (
     ts.every((t) => area.contains(interpolate(a, b, t))) &&
     ts
@@ -302,7 +358,7 @@ function center(
 ): { point: XY; width: number } | null {
   const a: XY = [point[0] - axis[0] * span, point[1] - axis[1] * span],
     b: XY = [point[0] + axis[0] * span, point[1] + axis[1] * span];
-  const ts = breaks(a, b, area.boundaries),
+  const ts = breaks(a, b, area.boundaries, area.boundaryRings),
     intervals: [number, number][] = [];
   for (let i = 1; i < ts.length; i++) {
     if (
@@ -621,24 +677,39 @@ function refine(
           overlaps(bounds, box(floor.ringsFeet)),
       )
       .map((floor) => floor.ringsFeet);
+    const boundaries = [
+      ...(supportedFloors ?? []),
+      ...allowed,
+      ...masks,
+      ...holes,
+      ...walls.map((w) => w.ringsFeet),
+      ...apertures,
+    ];
+    const allowedPoint = indexedContains(allowed),
+      floorPoint = supportedFloors
+        ? indexedContains(supportedFloors)
+        : undefined,
+      maskedPoint = indexedContains(masks),
+      holePoint = indexedContains(holes),
+      aperturePoint = indexedContains(apertures),
+      nearbyWalls = geometryIndex(walls, (w) => box(w.ringsFeet));
     const free: WalkableArea = {
-      boundaries: [
-        ...(supportedFloors ?? []),
-        ...allowed,
-        ...masks,
-        ...holes,
-        ...walls.map((w) => w.ringsFeet),
-        ...apertures,
-      ],
+      boundaries,
+      boundaryRings: geometryIndex(boundaries.flat(), boundsOfRing),
       contains: (point) =>
-        inside(point, allowed) &&
-        (!supportedFloors || inside(point, supportedFloors)) &&
-        !inside(point, masks) &&
-        !inside(point, holes) &&
-        !walls.some(
+        allowedPoint(point) &&
+        (!floorPoint || floorPoint(point)) &&
+        !maskedPoint(point) &&
+        !holePoint(point) &&
+        !nearbyWalls([
+          point[0] - 1e-8,
+          point[1] - 1e-8,
+          point[0] + 1e-8,
+          point[1] + 1e-8,
+        ]).some(
           (w) =>
             inside(point, [w.ringsFeet]) &&
-            (w.kind === "column" || !inside(point, apertures)),
+            (w.kind === "column" || !aperturePoint(point)),
         ),
     };
     const openingBodySupported = (

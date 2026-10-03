@@ -1,4 +1,5 @@
 import type { IndoorDataset, IndoorRecord } from "./contract";
+import { routingCalculationValue } from "./routing-cache";
 export type NativeCirculationCell = NonNullable<
   IndoorDataset["circulationGeometry"]
 >["cells"][number];
@@ -155,25 +156,27 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
 }
 /** Keep this wire binding identical to Reviter's preparation function. */
 export function nativeCirculationGeometryKey(data: IndoorDataset): string {
-  return JSON.stringify([
-    data.source.modelSha256,
-    data.records.map((r) => [
-      r.key,
-      r.levelId,
-      r.elevationFeet,
-      r.circulation,
-      r.stair,
-      r.walkable,
-      r.access,
-      r.ringsFeet,
-      r.properties.floorOpeningsFeet,
-      r.properties.spaceUse,
-      r.properties.stairAccess,
+  return routingCalculationValue(data, "native-circulation-binding", () =>
+    JSON.stringify([
+      data.source.modelSha256,
+      data.records.map((r) => [
+        r.key,
+        r.levelId,
+        r.elevationFeet,
+        r.circulation,
+        r.stair,
+        r.walkable,
+        r.access,
+        r.ringsFeet,
+        r.properties.floorOpeningsFeet,
+        r.properties.spaceUse,
+        r.properties.stairAccess,
+      ]),
+      data.walls,
+      data.doors,
+      data.walkingSupport,
     ]),
-    data.walls,
-    data.doors,
-    data.walkingSupport,
-  ]);
+  );
 }
 export function nativeCirculationCells(
   data: IndoorDataset,
@@ -263,14 +266,39 @@ const insideRing = (p: number[], ring: number[][]) => {
   return inside;
 };
 
-const supportedNativePoint = (
-  p: number[],
-  surfaces: { rings: number[][][] }[],
-) =>
+type Bounds = [number, number, number, number];
+type IndexedRing = { points: number[][]; bounds: Bounds };
+type IndexedSurface = { z: number; rings: IndexedRing[]; bounds: Bounds };
+const ringBounds = (points: number[][]): Bounds => {
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity;
+  for (const p of points) {
+    minX = Math.min(minX, p[0]);
+    minY = Math.min(minY, p[1]);
+    maxX = Math.max(maxX, p[0]);
+    maxY = Math.max(maxY, p[1]);
+  }
+  return [minX, minY, maxX, maxY];
+};
+const overlaps = (a: Bounds, b: Bounds) =>
+  a[0] <= b[2] + 1e-6 &&
+  a[2] >= b[0] - 1e-6 &&
+  a[1] <= b[3] + 1e-6 &&
+  a[3] >= b[1] - 1e-6;
+const inBounds = (p: number[], b: Bounds) =>
+  p[0] >= b[0] - 1e-6 &&
+  p[0] <= b[2] + 1e-6 &&
+  p[1] >= b[1] - 1e-6 &&
+  p[1] <= b[3] + 1e-6;
+const containsRing = (p: number[], r: IndexedRing) =>
+  inBounds(p, r.bounds) && insideRing(p, r.points);
+const supportedNativePoint = (p: number[], surfaces: IndexedSurface[]) =>
   surfaces.some(
     (s) =>
-      insideRing(p, s.rings[0]) &&
-      !s.rings.slice(1).some((h) => insideRing(p, h)),
+      containsRing(p, s.rings[0]) &&
+      !s.rings.slice(1).some((h) => containsRing(p, h)),
   );
 
 /** Existing source walks cannot override a regenerated physical floor boundary.
@@ -294,7 +322,13 @@ export function nativeCirculationWalkBlockers(
       z: s.elevationFeet,
       rings: s.ringsFeet,
     })),
-  ];
+  ].map((surface): IndexedSurface => {
+    const rings = surface.rings.map((points) => ({
+      points,
+      bounds: ringBounds(points),
+    }));
+    return { z: surface.z, rings, bounds: rings[0].bounds };
+  });
   for (const edge of data.edges) {
     if (
       edge.kind !== "walk" ||
@@ -306,17 +340,30 @@ export function nativeCirculationWalkBlockers(
     for (let i = 1; i < edge.pointsFeet.length; i++) {
       const a = edge.pointsFeet[i - 1],
         b = edge.pointsFeet[i];
+      const segmentBounds: Bounds = [
+        Math.min(a[0], b[0]),
+        Math.min(a[1], b[1]),
+        Math.max(a[0], b[0]),
+        Math.max(a[1], b[1]),
+      ];
+      // Bounds only reject irrelevant geometry. The exact boundary cuts and
+      // interval checks below still veto gaps and arbitrarily thin obstacles.
       const local = surfaces.filter(
-        (s) => Math.abs(s.z - a[2]) < 0.05 && Math.abs(s.z - b[2]) < 0.05,
+        (s) =>
+          Math.abs(s.z - a[2]) < 0.05 &&
+          Math.abs(s.z - b[2]) < 0.05 &&
+          overlaps(s.bounds, segmentBounds),
       );
       const dx = b[0] - a[0],
         dy = b[1] - a[1],
         cuts = [0, 1];
       for (const surface of local)
-        for (const ring of surface.rings)
-          for (let j = 0; j < ring.length; j++) {
-            const p = ring[j],
-              q = ring[(j + 1) % ring.length],
+        for (const indexed of surface.rings.filter((r) =>
+          overlaps(r.bounds, segmentBounds),
+        ))
+          for (let j = 0; j < indexed.points.length; j++) {
+            const p = indexed.points[j],
+              q = indexed.points[(j + 1) % indexed.points.length],
               ex = q[0] - p[0],
               ey = q[1] - p[1],
               den = dx * ey - dy * ex;

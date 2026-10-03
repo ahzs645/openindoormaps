@@ -55,6 +55,20 @@ for (const mobile of [false, true]) {
       );
     await floor.selectOption(options[1]);
     await expect(floor).toHaveValue(options[1]);
+    // Exercise the bundled route worker on the static Pages host too.
+    const departure = page.getByLabel("Route start", { exact: true });
+    const arrival = page.getByLabel("Route destination", { exact: true });
+    const roomKey = await departure
+      .locator("option")
+      .nth(1)
+      .getAttribute("value");
+    await departure.selectOption(roomKey!);
+    await arrival.selectOption(roomKey!);
+    await expect(page.getByTestId("project-route-result")).toContainText(
+      "0.0 m",
+      { timeout: 30_000 },
+    );
+
     await page.getByRole("button", { name: "2D rooms", exact: true }).click();
     await expect(
       page.getByRole("button", { name: "2D rooms", exact: true }),

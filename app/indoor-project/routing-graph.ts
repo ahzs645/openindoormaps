@@ -8,6 +8,7 @@ import {
   routingSnapshot,
   routingArrays,
   sameRoutingArrays,
+  withRoutingCalculation,
 } from "./routing-cache";
 import type { RouteBlocker } from "./route-policy";
 
@@ -50,6 +51,14 @@ const coverageCache = new WeakMap<
 export function projectRoutingGraph(
   data: IndoorDataset,
   mode: ProjectRouteMode = "public",
+): ProjectRoutingGraph {
+  return withRoutingCalculation(data, () =>
+    buildProjectRoutingGraph(data, mode),
+  );
+}
+function buildProjectRoutingGraph(
+  data: IndoorDataset,
+  mode: ProjectRouteMode,
 ): ProjectRoutingGraph {
   const snapshot = routingSnapshot(data),
     arrays = routingArrays(data);

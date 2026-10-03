@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   nativeCirculationGeometryKey,
+  nativeCirculationWalkBlockers,
   nativeCirculationCells,
   nativeCirculationSurfaces,
   validateNativeCirculationGeometry,
@@ -461,5 +462,65 @@ test("native fixture caps render as solid blocks and invalidate with source geom
   assert.throws(
     () => validateNativeCirculationGeometry(data),
     /fixture geometry/,
+  );
+});
+
+test("local boundary indexing retains union support, holes, disconnected gaps and elevation isolation", () => {
+  const d = fixture();
+  d.circulationGeometry!.preparedRoomKeys = ["hall"];
+  d.circulationGeometry!.cells[0].ringsFeet = [
+    rect(0, 0, 64, 6),
+    rect(31.999, 1, 32.001, 5),
+  ];
+  d.circulationGeometry!.reviewSurfaces = [
+    {
+      roomKey: "hall",
+      levelId: 1,
+      elevationFeet: 0,
+      ringsFeet: [rect(64, 0, 96, 6)],
+    },
+    {
+      roomKey: "hall",
+      levelId: 1,
+      elevationFeet: 12,
+      ringsFeet: [rect(96, 0, 128, 6)],
+    },
+  ];
+  const edge = d.edges[0];
+  const walk = (id: string, pointsFeet: [number, number, number][]) => ({
+    ...edge,
+    id,
+    pointsFeet,
+  });
+  d.edges = [
+    walk("thin-hole", [
+      [30, 3, 0],
+      [34, 3, 0],
+    ]),
+    walk("supported-seam", [
+      [62, 3, 0],
+      [66, 3, 0],
+    ]),
+    walk("floor-boundary", [
+      [64, 0, 0],
+      [64, 6, 0],
+    ]),
+    walk("upper-floor-cannot-fill-gap", [
+      [90, 3, 0],
+      [110, 3, 0],
+    ]),
+    walk("long-segment", [
+      [0, 0, 0],
+      [96, 0, 0],
+    ]),
+  ];
+  assert.deepEqual([...nativeCirculationWalkBlockers(d)].sort(), [
+    "thin-hole",
+    "upper-floor-cannot-fill-gap",
+  ]);
+  d.circulationGeometry!.reviewSurfaces[0].ringsFeet = [rect(70, 0, 96, 6)];
+  assert.ok(
+    nativeCirculationWalkBlockers(d).has("supported-seam"),
+    "changed rings must rebuild their bounds",
   );
 });

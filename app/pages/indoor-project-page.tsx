@@ -37,7 +37,8 @@ import { ConnectorEditor } from "~/indoor-project/connector-editor";
 import { CampusFloorEditor } from "~/indoor-project/campus-floor-editor";
 import { VisitorMetadataEditor } from "~/indoor-project/visitor-metadata-editor";
 import { ProjectModelLayer } from "~/indoor-project/model-layer";
-import { geographicPoint, findProjectRoute } from "~/indoor-project/routing";
+import { geographicPoint } from "~/indoor-project/routing";
+import { useProjectRoute } from "~/indoor-project/use-project-route";
 import {
   readIndoorProject,
   exportIndoorProject,
@@ -580,11 +581,8 @@ export default function IndoorProjectPage() {
   const record = data?.records.find((r) => r.key === selected),
     edge = data?.edges.find((e) => e.id === edgeId),
     door = data?.doors?.find((d) => d.id === edgeId);
-  const baseRoute = useMemo(
-    () =>
-      data && start && end ? findProjectRoute(data, start, end, mode) : null,
-    [data, start, end, mode],
-  );
+  const routeCalculation = useProjectRoute(data, start, end, mode);
+  const baseRoute = routeCalculation.route;
   const arrivalResult = useMemo(
     () =>
       data
@@ -1296,7 +1294,11 @@ export default function IndoorProjectPage() {
                 />
                 {start &&
                   end &&
-                  (route ? (
+                  (routeCalculation.calculating ? (
+                    <p role="status" data-testid="project-route-calculating">
+                      Calculating directions…
+                    </p>
+                  ) : route ? (
                     <div
                       className="project-route"
                       data-testid="project-route-result"
@@ -1361,7 +1363,9 @@ export default function IndoorProjectPage() {
                       className="project-warning"
                       data-testid="project-route-result"
                     >
-                      {arrivalResult.message ??
+                      {routeCalculation.error ??
+                        arrivalResult.message ??
+                        routeCalculation.diagnostic?.message ??
                         "No verified route for this profile. Check disconnected entrances, area restrictions and unconfirmed step-free edges."}
                     </p>
                   ))}
@@ -1671,6 +1675,9 @@ export default function IndoorProjectPage() {
                     roomThree={view === "3d" || view === "relative"}
                     data={data}
                     route={route}
+                    calculating={routeCalculation.calculating}
+                    calculationError={routeCalculation.error}
+                    routeDiagnostic={routeCalculation.diagnostic}
                     start={start}
                     end={end}
                     mode={mode}

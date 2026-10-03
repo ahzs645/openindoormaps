@@ -1,4 +1,8 @@
 import type { ProjectRouteArrival } from "./route-arrival";
+import {
+  withRoutingCalculation,
+  routingCalculationValue,
+} from "./routing-cache";
 import { createProjectRouteDiagnostics } from "./route-diagnostics";
 import { createNativeFloorHoleQuery } from "./walking-support";
 import { validateNativeCirculationGeometry } from "./native-circulation";
@@ -86,15 +90,23 @@ export function findProjectRoute(
   endKey: string,
   mode: "public" | "accessible" = "public",
 ): ProjectRoute | null {
-  let excluded = new Set<string>();
-  for (;;) {
-    const result = resolveProjectRoute(data, startKey, endKey, mode, excluded);
-    if (result && "retry" in result) {
-      excluded = result.retry;
-      continue;
+  return withRoutingCalculation(data, () => {
+    let excluded = new Set<string>();
+    for (;;) {
+      const result = resolveProjectRoute(
+        data,
+        startKey,
+        endKey,
+        mode,
+        excluded,
+      );
+      if (result && "retry" in result) {
+        excluded = result.retry;
+        continue;
+      }
+      return result;
     }
-    return result;
-  }
+  });
 }
 export function projectRouteFloorFailure(
   data: IndoorDataset,
@@ -117,13 +129,18 @@ function resolveProjectRoute(
 ): ProjectRoute | null | { retry: Set<string> } {
   const graph = projectRoutingGraph(data, mode);
   const { records, adjacency } = graph;
-  const geometry = JSON.stringify([
-    data.walls,
-    data.nodes,
-    data.alignment,
-    data.walkingSupport,
-    data.circulationGeometry,
-  ]);
+  const geometry = routingCalculationValue(
+    data,
+    "resolved-route-geometry",
+    () =>
+      JSON.stringify([
+        data.walls,
+        data.nodes,
+        data.alignment,
+        data.walkingSupport,
+        data.circulationGeometry,
+      ]),
+  );
   let resolved = resolvedRouteCache.get(graph);
   if (!resolved || resolved.geometry !== geometry) {
     resolved = { geometry, routes: new Map(), floorFailures: new Map() };

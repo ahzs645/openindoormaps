@@ -81,7 +81,7 @@ for (const mobile of [false, true]) {
     await page.getByRole("option", { name: /06-260 · Pub Entrance/ }).click();
     await expect(
       page.getByRole("button", { name: "Preview directions", exact: true }),
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 30_000 });
     const a = data!.records.find((r) => r.number === "06-260")!,
       b = data!.records.find((r) => r.number === destination)!;
     const expected = findProjectRoute(data!, a.key, b.key)!;

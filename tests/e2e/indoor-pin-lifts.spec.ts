@@ -61,10 +61,12 @@ for (const mobile of [false, true])
           .selectOption("all");
         await page.getByLabel("Map floor", { exact: true }).selectOption(f.id);
         await expect
-          .poll(() =>
-            page
-              .locator('.project-connector-marker[data-kind="elevator"]')
-              .count(),
+          .poll(
+            () =>
+              page
+                .locator('.project-connector-marker[data-kind="elevator"]')
+                .count(),
+            { timeout: 30_000 },
           )
           .toBeGreaterThan(0);
       }
@@ -81,6 +83,7 @@ for (const mobile of [false, true])
         .selectOption(b.roomKey);
       await expect(page.getByTestId("project-route-result")).not.toContainText(
         "No verified route",
+        { timeout: 30_000 },
       );
       await page
         .getByRole("button", { name: "Explore map", exact: true })
