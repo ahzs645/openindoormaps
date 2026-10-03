@@ -1,3 +1,4 @@
+import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import {
   LngLatBounds,
@@ -21,6 +22,8 @@ import {
 import { connectorMarkerLayer } from "./connector-marker-layer";
 import {
   HALLWAY_COLOR,
+  RESTRICTED_AREA_COLOR,
+  isRestrictedArea,
   isHallway,
   isPassThroughPlace,
 } from "./display-passages";
@@ -111,6 +114,7 @@ function PreparedProjectMapLayers({
     simpleWalls,
     simpleRooms,
     simpleAreas,
+    simpleDoors,
     overviewGeometry,
     overviewLabels,
   } = prepared.presentation;
@@ -253,7 +257,8 @@ function PreparedProjectMapLayers({
       portals,
       routeLines,
       records,
-      doorFootprints,
+      doorFootprints:
+        !review && simplifyGeometry ? simpleDoors : doorFootprints,
       lowerRooms,
       labels: review ? labels : visitorLabels,
     };
@@ -269,14 +274,38 @@ function PreparedProjectMapLayers({
     simpleWalls,
     simpleRooms,
     simpleAreas,
+    simpleDoors,
     visitorLabels,
     nativeStairKeys,
     roomThree,
     nativeModel,
     relativeHeights,
   ]);
-  const stairCutAreas = roomThree ? prepared.stairCutAreas : physicalGround;
-  const stairCutRooms = roomThree ? prepared.stairCutRooms : layers.roomBlocks;
+  const stairCutAreas = useMemo(
+    () =>
+      visitorRoomSurfaces(
+        roomThree ? prepared.stairCutAreas : physicalGround,
+        review,
+      ),
+    [roomThree, prepared.stairCutAreas, physicalGround, review],
+  );
+  const selectionOnlyKeys = [
+    ...new Set([
+      ...nativeStairKeys,
+      ...layers.areas.features
+        .filter((f) => f.properties?.boundaryReviewRequired === true)
+        .map((f) => String(f.properties?.key)),
+    ]),
+  ];
+  const stairCutRooms = roomThree
+    ? prepared.stairCutRooms
+    : {
+        ...layers.roomBlocks,
+        features: [
+          ...layers.roomBlocks.features,
+          ...prepared.assumedRoomBlocks.features,
+        ],
+      };
   useEffect(() => {
     if (!map || !isLoaded) return;
     const overviewSource = map.getSource("project-overview") as
@@ -337,7 +366,7 @@ function PreparedProjectMapLayers({
       stairCutRooms,
       layers.exposedWalls,
       nativeStairs,
-      layers.areas,
+      prepared.selectionAreas,
     ];
     for (const [i, id] of sources.entries()) {
       const value = values[i];
@@ -363,13 +392,13 @@ function PreparedProjectMapLayers({
         id: "project-stair-place-hit",
         type: "fill",
         source: "project-selection-areas",
-        filter: ["in", ["get", "key"], ["literal", nativeStairKeys]],
+        filter: ["in", ["get", "key"], ["literal", selectionOnlyKeys]],
         paint: { "fill-opacity": 0 },
       });
     map.setFilter("project-stair-place-hit", [
       "in",
       ["get", "key"],
-      ["literal", nativeStairKeys],
+      ["literal", selectionOnlyKeys],
     ]);
     map.setLayerZoomRange(
       "project-stair-place-hit",
@@ -600,6 +629,54 @@ function PreparedProjectMapLayers({
         },
       });
     }
+    if (!map.getLayer("project-flat-selection-fill")) {
+      // Unfinished rooms have no visitor block to recolour. Highlight only the
+      // corrected floor mask, leaving the native walls and door apertures intact.
+      map.addLayer(
+        {
+          id: "project-flat-selection-fill",
+          type: "fill",
+          source: "project-selection-areas",
+          paint: { "fill-color": "#ffe09d" },
+        },
+        "project-exposed-wall-fill",
+      );
+      map.addLayer(
+        {
+          id: "project-flat-selection-surface",
+          type: "fill-extrusion",
+          source: "project-selection-areas",
+          paint: {
+            "fill-extrusion-color": "#ffe09d",
+            "fill-extrusion-base": ["coalesce", ["get", "floorTop"], 0.025],
+            "fill-extrusion-height": [
+              "+",
+              ["coalesce", ["get", "floorTop"], 0.025],
+              0.002,
+            ],
+            "fill-extrusion-opacity": 1,
+            "fill-extrusion-vertical-gradient": false,
+          },
+        },
+        "project-wall-boxes",
+      );
+    }
+    for (const id of [
+      "project-flat-selection-fill",
+      "project-flat-selection-surface",
+    ]) {
+      map.setFilter(id, [
+        "all",
+        ["==", ["get", "floorMaskSource"], "partial-native-wall-faces"],
+        ["==", ["get", "key"], selected],
+      ]);
+      map.setLayerZoomRange(id, review ? 0 : ROOM_DETAIL_START, 24);
+      map.setLayoutProperty(
+        id,
+        "visibility",
+        id.endsWith("surface") === roomThree ? "visible" : "none",
+      );
+    }
     if (!map.getLayer("project-native-stair-fill")) {
       // Native projections take precedence over approximate overlapping source
       // areas when picked, but never expand a routing polygon.
@@ -703,6 +780,8 @@ function PreparedProjectMapLayers({
       "project-wall-boxes",
       "project-wall-fill",
       "project-exposed-wall-fill",
+      "project-door-fill",
+      "project-door-boxes",
       "project-native-stair-fill",
       "project-native-stair-boxes",
       "project-native-stair-outline",
@@ -768,9 +847,13 @@ function PreparedProjectMapLayers({
       ["project-exposed-wall-fill", "fill-opacity", 1],
       ["project-room-boxes", "fill-extrusion-opacity", 1],
       ["project-wall-boxes", "fill-extrusion-opacity", 1],
+      ["project-door-fill", "fill-opacity", 1],
+      ["project-door-boxes", "fill-extrusion-opacity", 1],
       ["project-native-stair-fill", "fill-opacity", 0.92],
       ["project-native-stair-boxes", "fill-extrusion-opacity", 1],
       ["project-native-stair-outline", "line-opacity", 1],
+      ["project-flat-selection-fill", "fill-opacity", 1],
+      ["project-flat-selection-surface", "fill-extrusion-opacity", 1],
       ["project-lower-fill", "fill-opacity", 0.9],
       ["project-lower-outline", "line-opacity", 0.4],
     ] as const) {
@@ -860,7 +943,9 @@ function PreparedProjectMapLayers({
     map.setPaintProperty(
       "project-relative-floors",
       "fill-extrusion-height",
-      relativeHeights ? ["coalesce", ["get", "floorTop"], 0.025] : 0.025,
+      relativeHeights
+        ? ["coalesce", ["get", "floorTop"], 0.025]
+        : ["case", ["==", ["get", "nativeFloor"], true], 0.005, 0.025],
     );
     map.setFilter(
       "project-relative-floors",
@@ -888,8 +973,17 @@ function PreparedProjectMapLayers({
       );
     map.setPaintProperty(
       "project-door-boxes",
+      "fill-extrusion-base",
+      relativeHeights
+        ? ["get", "base"]
+        : ["coalesce", ["get", "displayDoorBase"], 0],
+    );
+    map.setPaintProperty(
+      "project-door-boxes",
       "fill-extrusion-height",
-      relativeHeights ? ["get", "height"] : 0.015,
+      relativeHeights
+        ? ["get", "height"]
+        : ["coalesce", ["get", "displayDoorHeight"], 0.015],
     );
     for (const id of ["project-lower-fill", "project-lower-outline"])
       map.setLayoutProperty(id, "visibility", roomThree ? "none" : "visible");
@@ -923,6 +1017,10 @@ function PreparedProjectMapLayers({
             ROOM_DETAIL_END,
             [
               "case",
+              ["==", ["get", "nativeFloor"], true],
+              "#faf9f5",
+              ["==", ["get", "access"], "staff"],
+              RESTRICTED_AREA_COLOR,
               ["==", ["get", "circulation"], true],
               HALLWAY_COLOR,
               ["get", "color"],
@@ -1071,6 +1169,8 @@ function PreparedProjectMapLayers({
           "project-door-fill",
           "project-door-boxes",
           "project-room-boxes",
+          "project-flat-selection-fill",
+          "project-flat-selection-surface",
           "project-relative-floors",
           "project-block-fill",
           ids[1],
@@ -1080,7 +1180,9 @@ function PreparedProjectMapLayers({
       });
       const hit =
         features.find((f) => f.layer.id.startsWith("project-native-stair-")) ??
-        features[0];
+        // Physical slab ground is decorative. It must not swallow the
+        // selection footprint of an unresolved room beneath its surface.
+        features.find((f) => f.properties?.key || f.properties?.id);
       if (!hit) return;
       if (hit.properties?.id) onPick("edge", String(hit.properties.id));
       else if (hit.properties?.key) {
@@ -1090,6 +1192,7 @@ function PreparedProjectMapLayers({
         if (
           !review &&
           record &&
+          !isRestrictedArea(record) &&
           ((isHallway(record) &&
             !hit.layer.id.startsWith("project-native-stair-")) ||
             (!showPassThroughPlaces && isPassThroughPlace(record)))
@@ -1182,6 +1285,10 @@ function PreparedProjectMapLayers({
         !review && isArea
           ? [
               "case",
+              ["==", ["get", "nativeFloor"], true],
+              "#faf9f5",
+              ["==", ["get", "access"], "staff"],
+              RESTRICTED_AREA_COLOR,
               ["==", ["get", "circulation"], true],
               HALLWAY_COLOR,
               ["==", ["get", "key"], selected],
@@ -1190,12 +1297,23 @@ function PreparedProjectMapLayers({
             ]
           : [
               "case",
+              ["==", ["get", "nativeFloor"], true],
+              "#faf9f5",
+              ["==", ["get", "access"], "staff"],
+              RESTRICTED_AREA_COLOR,
               ["==", ["get", "key"], selected],
               "#ffe09d",
               ["get", "color"],
             ];
       const overview = isArea
-        ? ["case", ["==", ["get", "circulation"], true], "#bfd1cd", "#8d9395"]
+        ? [
+            "case",
+            ["==", ["get", "nativeFloor"], true],
+            "#faf9f5",
+            ["==", ["get", "circulation"], true],
+            "#bfd1cd",
+            "#8d9395",
+          ]
         : "#8d9395";
       map.setPaintProperty(
         id,
@@ -1238,9 +1356,13 @@ function PreparedProjectMapLayers({
       ["project-wall-fill", "fill-opacity", 1],
       ["project-room-boxes", "fill-extrusion-opacity", 1],
       ["project-wall-boxes", "fill-extrusion-opacity", 1],
+      ["project-door-fill", "fill-opacity", 1],
+      ["project-door-boxes", "fill-extrusion-opacity", 1],
       ["project-native-stair-fill", "fill-opacity", 0.92],
       ["project-native-stair-boxes", "fill-extrusion-opacity", 1],
       ["project-native-stair-outline", "line-opacity", 1],
+      ["project-flat-selection-fill", "fill-opacity", 1],
+      ["project-flat-selection-surface", "fill-extrusion-opacity", 1],
       ["project-area-outline", "line-opacity", 1],
       ["project-block-outline", "line-opacity", 1],
       ["project-lower-fill", "fill-opacity", 0.9],

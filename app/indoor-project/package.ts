@@ -1,3 +1,4 @@
+import { validatePreparedRouting } from "./prepared-routing";
 import { throughNavigationGeometryKey } from "./through-navigation";
 import { validateSharedStairBinding } from "./stair-display";
 import {
@@ -205,6 +206,7 @@ export async function readIndoorProject(
     ) as ProjectRooms,
     dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
   validateIndoorDataset(dataset);
+  validatePreparedRouting(dataset);
   if (rooms.reviewPins !== undefined)
     validateReviewPins(rooms.reviewPins, dataset);
   if (rooms.mapEdits !== undefined) validateMapEdits(rooms.mapEdits, dataset);
@@ -304,6 +306,42 @@ export async function exportIndoorProject(
   );
 }
 
+/** Replace only derived routing data; retain the exact authoring/source bytes. */
+export async function exportPreparedRoutingProject(
+  project: IndoorProject,
+  dataset: IndoorDataset,
+): Promise<Uint8Array> {
+  const sourceOnly = (value: IndoorDataset) => {
+    const copy = { ...value } as IndoorDataset & { preparedRouting?: unknown };
+    delete copy.preparedRouting;
+    return JSON.stringify(copy);
+  };
+  if (sourceOnly(dataset) !== sourceOnly(project.dataset))
+    throw new Error(
+      "Routing preparation cannot modify source data or reviews.",
+    );
+  validatePreparedRouting(dataset);
+  const indoor = strToU8(JSON.stringify(dataset));
+  if (indoor.length > limits["viewer/indoor.json"])
+    throw new Error("Prepared indoor dataset exceeds the package size limit.");
+  const manifest = structuredClone(project.manifest);
+  manifest.indoor = {
+    path: "viewer/indoor.json",
+    bytes: indoor.length,
+    sha256: await hash(indoor),
+  };
+  const files: AsyncZippable = {};
+  for (const [name, bytes] of Object.entries(project.files))
+    files[name] = [bytes, { level: modelPath(name) ? 0 : 6 }];
+  files["viewer/indoor.json"] = indoor;
+  files["manifest.json"] = strToU8(JSON.stringify(manifest));
+  return new Promise((resolve, reject) =>
+    zip(files, { level: 6 }, (err, bytes) =>
+      err ? reject(err) : resolve(bytes),
+    ),
+  );
+}
+
 async function readViewerFiles(
   manifest: ViewerManifest,
   files: Unzipped,
@@ -343,6 +381,7 @@ async function readViewerFiles(
   }
   const dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
   validateIndoorDataset(dataset);
+  validatePreparedRouting(dataset);
   const rooms = JSON.parse(
     strFromU8(files["viewer/metadata.json"]),
   ) as ProjectRooms;

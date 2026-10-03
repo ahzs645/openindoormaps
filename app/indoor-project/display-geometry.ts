@@ -1,3 +1,4 @@
+import { unresolvedRoomBoundaryKeys } from "./boundary-evidence";
 import polygonClipping from "polygon-clipping";
 import type { FeatureCollection, Polygon, MultiPolygon, Point } from "geojson";
 import type { IndoorDataset, IndoorRecord } from "./contract";
@@ -13,13 +14,19 @@ import {
 
 import {
   isDisplayPassage,
+  isFlatArea,
   isRoomSizedWallEnvelope,
   isPassThroughPlace,
   vestibuleDoorIds,
   HALLWAY_COLOR,
+  RESTRICTED_AREA_COLOR,
+  isRestrictedArea,
 } from "./display-passages";
 import { ROOM_DETAIL_ZOOM } from "./zoom-presentation";
-import { circulationThresholds } from "./circulation-thresholds";
+import {
+  circulationThresholds,
+  nativeDoorDisplayAperture,
+} from "./circulation-thresholds";
 import { nativeCirculationSurfaces } from "./native-circulation";
 
 type Ring = [number, number][];
@@ -251,16 +258,26 @@ const polygonArea = (rings: Rings) =>
     return sum + ((i ? -1 : 1) * Math.abs(signed)) / 2;
   }, 0);
 export function roomDisplayColor(r: IndoorRecord, selected: boolean): string {
+  if (isRestrictedArea(r)) return RESTRICTED_AREA_COLOR;
   if (selected) return "#ffe09d";
   if (!r.walkable) return "#ffffff";
   if (r.stair && !r.circulation) return "#cfd9e4";
   if (isDisplayPassage(r)) return HALLWAY_COLOR;
-  if (r.access === "staff") return "#dce1e6";
 
   if (/washroom|toilet|\bwc\b|all gender/i.test(r.name)) return "#bce7f1";
   if (/library|study|reading/i.test(r.name)) return "#b8d5a5";
   if (/class|lecture|seminar|meeting|hall\b/i.test(r.name)) return "#eee7d5";
   return "#f5f5f4";
+}
+
+function placeDisplayColor(
+  data: IndoorDataset,
+  r: IndoorRecord,
+  selected: boolean,
+) {
+  // Access is a map meaning, so a category colour or selection must not hide it.
+  if (isRestrictedArea(r) || selected) return roomDisplayColor(r, selected);
+  return projectPlaceColor(data, r) ?? roomDisplayColor(r, false);
 }
 
 /** Display-only subtraction of recovered door footprints. Never changes rooms or graph. */
@@ -302,6 +319,9 @@ export function projectDisplayGeometry(
     }
     return box;
   };
+  const unresolved = unresolvedRoomBoundaryKeys(data);
+  const isFlatDisplay = (r: IndoorRecord) =>
+    isFlatArea(r) || unresolved.has(r.key);
   const records = data.records.filter(
     (r) =>
       levelIds.includes(r.levelId) &&
@@ -317,6 +337,8 @@ export function projectDisplayGeometry(
   const boundarySource = (key: string) => {
     if (prepared.has(key)) {
       const source = prepared.get(key)!.boundarySource;
+      if (source === "native-mesh-wall-enclosure")
+        return "prepared-native-mesh-walls";
       if (source === "revit-finish-face") return "prepared-revit-finish-face";
       if (source === "registered-source-wall-enclosure")
         return "prepared-registered-source-walls";
@@ -328,7 +350,7 @@ export function projectDisplayGeometry(
   };
   const displayRecords = records.map((r) => ({
     ...r,
-    circulation: isDisplayPassage(r),
+    circulation: isFlatArea(r),
     ringsFeet:
       prepared.get(r.key)?.interiorRingsFeet ??
       boundaries.get(r.key) ??
@@ -402,20 +424,7 @@ export function projectDisplayGeometry(
       })(),
       // Extend only across wall thickness; the measured clear width is kept.
       // Native door rectangles often stop partway through a wall face.
-      rings: [
-        close(
-          d.footprintFeet!.map((p) => {
-            const n = d.normalFeet;
-            if (!n) return p;
-            const side =
-              (p[0] - d.pointFeet[0]) * n[0] + (p[1] - d.pointFeet[1]) * n[1];
-            return [
-              p[0] + Math.sign(side) * n[0],
-              p[1] + Math.sign(side) * n[1],
-            ] as [number, number];
-          }),
-        ),
-      ],
+      rings: [close(nativeDoorDisplayAperture(d))],
       box: cachedBounds([d.footprintFeet!]).map((n, i) => n + (i < 2 ? -1 : 1)),
     }));
   let uncutSurfaces = 0;
@@ -464,11 +473,9 @@ export function projectDisplayGeometry(
           access: r.access,
           selected: r.key === selected,
           passThrough: isPassThroughPlace(r),
-          color:
-            r.key === selected
-              ? roomDisplayColor(r, true)
-              : (projectPlaceColor(data, r) ?? roomDisplayColor(r, false)),
+          color: placeDisplayColor(data, r, r.key === selected),
           boundarySource: boundarySource(r.key),
+          boundaryReviewRequired: unresolved.has(r.key),
         },
         geometry: polygon(
           r.walkable && !r.circulation
@@ -531,7 +538,7 @@ export function projectDisplayGeometry(
         openDrop: false,
         selected: false,
         color: HALLWAY_COLOR,
-        boundarySource: "prepared-native-opening",
+        boundarySource: threshold.boundarySource,
         openingId: threshold.id,
       },
       geometry: polygon(threshold.parts),
@@ -659,7 +666,13 @@ export function projectDisplayGeometry(
   const roomBlocks: FeatureCollection<MultiPolygon> = {
     type: "FeatureCollection",
     features: displayRecords
-      .filter((r) => r.walkable && !r.circulation && !isOpenDrop(r))
+      .filter(
+        (r) =>
+          r.walkable &&
+          !r.circulation &&
+          !isOpenDrop(r) &&
+          !unresolved.has(r.key),
+      )
       .sort((a, b) => a.key.localeCompare(b.key))
       .map((r) => {
         const original = r.ringsFeet.map((ring) => close(ring));
@@ -693,7 +706,7 @@ export function projectDisplayGeometry(
               .filter(
                 (other) =>
                   other.levelId === r.levelId &&
-                  (isDisplayPassage(other) || isOpenDrop(other)) &&
+                  (isFlatArea(other) || isOpenDrop(other)) &&
                   intersects(cachedBounds(other.ringsFeet), roomBounds),
               )
               .map((other) => other.ringsFeet.map((ring) => close(ring)));
@@ -746,7 +759,7 @@ export function projectDisplayGeometry(
                 .filter(
                   (other) =>
                     other.levelId === r.levelId &&
-                    (isDisplayPassage(other) || isOpenDrop(other)) &&
+                    (isFlatArea(other) || isOpenDrop(other)) &&
                     intersects(cachedBounds(other.ringsFeet), roomBounds),
                 )
                 .map((other) => other.ringsFeet);
@@ -780,10 +793,8 @@ export function projectDisplayGeometry(
           id: r.key,
           properties: {
             key: r.key,
-            color:
-              r.key === selected
-                ? roomDisplayColor(r, true)
-                : (projectPlaceColor(data, r) ?? roomDisplayColor(r, false)),
+            access: r.access,
+            color: placeDisplayColor(data, r, r.key === selected),
             height: ROOM_BLOCK_HEIGHT_METRES,
             boundarySource: boundarySource(r.key),
           },
@@ -814,7 +825,7 @@ export function projectDisplayGeometry(
           .filter(
             (other) =>
               other.levelId === column.levelId &&
-              (isDisplayPassage(other) || isOpenDrop(other)) &&
+              (isFlatArea(other) || isOpenDrop(other)) &&
               intersects(cachedBounds(other.ringsFeet), box),
           )
           .map((other) => other.ringsFeet);
@@ -1183,13 +1194,13 @@ export function projectDisplayGeometry(
     const keysBelow = new Set(rooms.map((room) => room.key));
     for (const room of rooms) {
       const feature = (
-        isDisplayPassage(room) ? lowerDisplay.areas : lowerDisplay.roomBlocks
+        isFlatDisplay(room) ? lowerDisplay.areas : lowerDisplay.roomBlocks
       ).features.find((f) => f.properties?.key === room.key);
       if (!feature) continue;
       const clipped = clipFeature(
         feature,
-        isDisplayPassage(room) ? "floor" : "room",
-        isDisplayPassage(room) ? 0 : ROOM_BLOCK_HEIGHT_METRES,
+        isFlatDisplay(room) ? "floor" : "room",
+        isFlatDisplay(room) ? 0 : ROOM_BLOCK_HEIGHT_METRES,
       );
       if (clipped) lowerFeatures.push(clipped);
     }
@@ -1224,7 +1235,7 @@ export function projectDisplayGeometry(
             landmark: projectPlaceMetadata(data, r.key)?.landmark ?? false,
             category: projectPlaceCategory(data, r),
             priority: projectPlaceMetadata(data, r.key)?.landmark ? 0 : 1,
-            heightMetres: isDisplayPassage(r)
+            heightMetres: isFlatDisplay(r)
               ? 0.03
               : ROOM_BLOCK_HEIGHT_METRES + 0.03,
             name: r.number

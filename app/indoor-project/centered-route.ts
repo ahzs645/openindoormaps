@@ -1,3 +1,4 @@
+import { preparedWalkingGuides } from "./prepared-routing";
 import { centeredJunctions } from "./centered-junction";
 import { nativeJointBarriers } from "./native-joint-barriers";
 import { createRingPointQuery } from "./ring-point-query";
@@ -41,6 +42,8 @@ export type RoutePath = {
   nativeFloorSupported?: boolean;
   /** The circulation part of this path used prepared native walking cells. */
   nativeCirculationUsed?: boolean;
+  /** A model/policy-bound prepared guide passed continuous runtime checks. */
+  preparedGuideUsed?: boolean;
   /** Only the finite opening crossing and its local full-width approach. */
   openingSpanSupported?: boolean;
   shape?: "centered" | "orthogonal" | "curved";
@@ -628,6 +631,8 @@ function refine(
   portalEdges: IndoorEdge[] = [],
   guideOnly = false,
   junctionOnly = false,
+  preparedGuide?: XYZ[],
+  fixedAnchors = false,
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -878,6 +883,7 @@ function refine(
     const arrival = (id: string) => {
       const node = data.nodes.find((n) => n.id === id);
       return (
+        !fixedAnchors &&
         node?.kind === "arrival" &&
         data.records.some(
           (r) => r.key === node.roomKey && r.circulation && !r.stair,
@@ -886,6 +892,23 @@ function refine(
     };
     const candidates: XY[][] = [];
     let sourceGuide = false;
+    let preparedCandidate = false;
+    if (
+      preparedGuide &&
+      length(preparedGuide) <= sourceLength * 1.15 + 0.6 &&
+      preparedGuide
+        .slice(1)
+        .every((p, i) =>
+          validSegment(
+            [preparedGuide[i][0], preparedGuide[i][1]],
+            [p[0], p[1]],
+            free,
+          ),
+        )
+    ) {
+      candidates.push(preparedGuide.map((p) => [p[0], p[1]]));
+      preparedCandidate = true;
+    }
     if (guideOnly) {
       const guide = path.pointsFeet.map<XY>((p) => [p[0], p[1]]);
       if (!guide.slice(1).every((p, i) => validSegment(guide[i], p, free)))
@@ -894,10 +917,17 @@ function refine(
       sourceGuide = true;
     }
     const frames: { a: XY; b: XY; u: XY; v: XY }[] = [];
-    for (const angle of axes(
+    for (const rawAngle of axes(
       walls.filter((w) => w.kind === "wall").map((w) => w.ringsFeet),
     )) {
-      const u: XY = [Math.cos(angle), Math.sin(angle)],
+      // Keep prepared native frames stable across JS engines. Sub-nanometre
+      // trigonometric differences can otherwise flip a boundary-aligned elbow.
+      const angle = preparedCandidate
+        ? Math.round(rawAngle * 1e10) / 1e10
+        : rawAngle;
+      const component = (n: number) =>
+        preparedCandidate ? Math.round(n * 1e12) / 1e12 : n;
+      const u: XY = [component(Math.cos(angle)), component(Math.sin(angle))],
         v: XY = [-u[1], u[0]];
       const a = centeredPoint(start, u, v, free, span),
         b = centeredPoint(end, u, v, free, span);
@@ -919,6 +949,7 @@ function refine(
         );
         if (
           !guideOnly &&
+          !preparedCandidate &&
           points.slice(1).every((p, i) => validSegment(points[i], p, free)) &&
           length(points) <= sourceLength * 1.15 + 0.6
         )
@@ -1192,8 +1223,21 @@ function refine(
       );
     };
     const policyCandidates = candidates.filter(policyAllowed);
-    if (candidates.length > 0 && policyCandidates.length === 0)
+    if (candidates.length > 0 && policyCandidates.length === 0) {
+      if (preparedGuide)
+        return refine(
+          data,
+          path,
+          edges,
+          firstId,
+          lastId,
+          passageQuery,
+          portalEdges,
+          guideOnly,
+          junctionOnly,
+        );
       return source("doorway-policy");
+    }
     candidates.splice(0, candidates.length, ...policyCandidates);
     candidates.sort((a, b) => a.length - b.length || length(a) - length(b));
     if (candidates.length === 0) return source("no-clearance-route");
@@ -1265,6 +1309,7 @@ function refine(
       centered: true,
       nativeFloorSupported: !!supportedFloors,
       nativeCirculationUsed: nativeSurfaces.cells.length > 0,
+      preparedGuideUsed: preparedCandidate || undefined,
       openingSpanSupported: openingSpans.length > 0 ? true : undefined,
       shape: isCurved ? "curved" : sourceGuide ? "orthogonal" : "centered",
       curveRanges: isCurved ? curved?.ranges : undefined,
@@ -1289,6 +1334,12 @@ export function centeredRoutePaths(
   ringBounds = new WeakMap();
   ringQueries = new WeakMap();
   const passageQuery = createDoorPassageQuery(data);
+  const prepared = enabled
+    ? preparedWalkingGuides(data)
+    : new Map<string, XYZ[]>();
+  const edgeOrientations = new Map(
+    edges.map((edge, i) => [edge, nodeIds[i] === edge.from]),
+  );
   const paths: RoutePath[] = [],
     groups: { edges: IndoorEdge[]; first: string; last: string }[] = [];
   const flatKind = (edge: IndoorEdge) =>
@@ -1346,6 +1397,25 @@ export function centeredRoutePaths(
         },
       ];
     const group = groups[i];
+    let usedPreparedGuide = false;
+    const preparedGuide =
+      prepared.size === 0
+        ? undefined
+        : group.edges
+            .flatMap((edge) => {
+              const stored = prepared.get(edge.id);
+              if (stored) usedPreparedGuide = true;
+              // Orientation follows the source graph, never coordinate coincidence.
+              const forward = edgeOrientations.get(edge);
+              const points = stored ?? edge.pointsFeet;
+              return (forward ? points : [...points].reverse()).map(
+                (p) => [...p] as XYZ,
+              );
+            })
+            .filter(
+              (p, j, all) =>
+                !j || Math.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8,
+            );
     const resolved = refine(
       data,
       path,
@@ -1358,6 +1428,9 @@ export function centeredRoutePaths(
           validatedSourceDoorProof(data, e) &&
           [e.from, e.to].some((id) => id === group.first || id === group.last),
       ),
+      false,
+      false,
+      usedPreparedGuide ? preparedGuide : undefined,
     );
     if (
       (resolved.centered &&
@@ -1568,4 +1641,65 @@ export function centeredRoutePaths(
     if (adjusted.centered) refined[i] = adjusted;
   }
   return refined;
+}
+
+/** Compile one existing planar walking branch, without moving its source node
+ * anchors or changing connectivity. Runtime still verifies joined corridors. */
+export function prepareWalkingGuide(
+  data: IndoorDataset,
+  edge: IndoorEdge,
+): XYZ[] | null {
+  if (
+    edge.kind !== "walk" ||
+    !edge.enabled ||
+    edge.pointsFeet.length < 2 ||
+    edge.pointsFeet.some((p) => Math.abs(p[2] - edge.pointsFeet[0][2]) >= 0.01)
+  )
+    return null;
+  ringBounds = new WeakMap();
+  ringQueries = new WeakMap();
+  const from = data.nodes.find((n) => n.id === edge.from),
+    to = data.nodes.find((n) => n.id === edge.to);
+  if (!from || !to || from.levelId !== to.levelId) return null;
+  const path = refine(
+    data,
+    {
+      edgeIds: [edge.id],
+      levelIds: [from.levelId],
+      pointsFeet: edge.pointsFeet.map((p) => [...p] as XYZ),
+      centered: false,
+    },
+    [edge],
+    edge.from,
+    edge.to,
+    createDoorPassageQuery(data),
+    [],
+    false,
+    false,
+    undefined,
+    true,
+  );
+  if (
+    !path.centered ||
+    !path.nativeFloorSupported ||
+    path.pointsFeet.length < 2 ||
+    path.pointsFeet.length > 10_000
+  )
+    return null;
+  if (
+    path.pointsFeet.some(
+      (p) => Math.abs(p[2] - edge.pointsFeet[0][2]) >= 0.01,
+    ) ||
+    [0, path.pointsFeet.length - 1].some(
+      (index, j) =>
+        Math.hypot(
+          ...path.pointsFeet[index].map(
+            (v, k) =>
+              v - edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
+          ),
+        ) > 1e-7,
+    )
+  )
+    return null;
+  return path.pointsFeet;
 }

@@ -22,10 +22,13 @@
     "indoor:regenerate-cache": "node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/regenerate-from-native-cache.ts",
     "dwg:import": "node scripts/dwg-import/cli.mjs",
     "build:pages": "vite build --mode pages",
-    "test:pages": "playwright test --config playwright.pages.config.ts"
+    "test:pages": "playwright test --config playwright.pages.config.ts",
+    "indoor:prepare-routing": "node --max-old-space-size=4096 --import tsx scripts/indoor/prepare-routing.ts",
+    "indoor:audit-room-generalization": "node --import tsx scripts/indoor/audit-room-generalization.ts"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",
+    "@noble/hashes": "^2.4.0",
     "@phi-ag/rvt": "^0.2.4",
     "@radix-ui/react-dropdown-menu": "^2.1.5",
     "@radix-ui/react-slot": "^1.1.1",

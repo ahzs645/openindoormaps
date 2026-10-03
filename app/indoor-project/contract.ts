@@ -224,7 +224,14 @@ export type IndoorDataset = {
         | "native-wall-enclosure"
         | "revit-finish-face"
         | "registered-source-wall-enclosure"
-        | "source-backed-native-wall-enclosure";
+        | "source-backed-native-wall-enclosure"
+        | "native-mesh-wall-enclosure";
+      meshProof?: {
+        cutElevationFeet: number;
+        precisionFeet: number;
+        nativeFloorCoveredSquareFeet: number;
+        nativeElementIds: number[];
+      };
       boundaryEvidence?: string;
       sourceProof?: {
         sourceSha256: string;
@@ -316,7 +323,12 @@ export type IndoorDataset = {
     evidence: string;
     accessible: "yes" | "no" | "unknown";
     direction: "both" | "from-to" | "to-from";
-    entrances: { nodeId: string; roomKey: string; levelId: number }[];
+    entrances: {
+      nodeId: string;
+      roomKey: string;
+      levelId: number;
+      areaKey?: string;
+    }[];
   }[];
   /** Source-supported sloping faces, separate from stair display and routing policy. */
   rampDisplay?: {

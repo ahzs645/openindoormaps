@@ -1,4 +1,17 @@
+import { generalizedRoomGeometry } from "./generalized-room-geometry";
+import { nativeFloorGround } from "./native-floor-ground";
+import { visitorRoomSurfaces } from "./visitor-room-surfaces";
+import { relativeHeightGeometry } from "./relative-heights";
+import { rampFloorApertures } from "./ramp-floor-apertures";
+import {
+  wallFaceFloorSurfaces,
+  wallFaceRoomFloorMasks,
+  wallFaceSelectionSurfaces,
+} from "./wall-face-floor-masks";
 import type { IndoorDataset } from "./contract";
+import type { FeatureCollection, MultiPolygon } from "geojson";
+import { ROOM_BLOCK_HEIGHT_METRES, roomDisplayColor } from "./display-geometry";
+import { projectPlaceColor } from "./visitor-metadata";
 import {
   floorPresentation,
   type FloorPresentationOptions,
@@ -44,21 +57,122 @@ export function prepareFloor(
     !options.review && options.simplifyGeometry
       ? presentation.simpleRooms
       : presentation.display.roomBlocks;
-  const roomBlocks = {
+  let roomBlocks = {
     ...rooms,
     features: rooms.features.filter(
       (f) => !nativeStairKeys.includes(String(f.properties?.key)),
     ),
   };
-  const physicalGround = stairPlaceGround(data, areas);
+  const visitorAreas = visitorRoomSurfaces(areas, options.review);
+  const floorMasks = options.review
+    ? new Map()
+    : wallFaceRoomFloorMasks(data, presentation.display.records);
+  const selectionAreas = wallFaceSelectionSurfaces(
+    data,
+    presentation.display.areas,
+    floorMasks,
+  );
+  const byKey = new Map(data.records.map((r) => [r.key, r]));
+  let assumedRoomBlocks: FeatureCollection<MultiPolygon> = {
+    ...roomBlocks,
+    features: selectionAreas.features
+      .filter(
+        (f) =>
+          f.properties?.floorMaskSource === "assumed-native-wall-enclosure",
+      )
+      .map((f) => {
+        const record = byKey.get(String(f.properties?.key))!;
+        return {
+          ...f,
+          properties: {
+            ...f.properties,
+            color:
+              projectPlaceColor(data, record) ??
+              roomDisplayColor(record, false),
+            height: ROOM_BLOCK_HEIGHT_METRES,
+            boundarySource: "assumed-native-wall-enclosure",
+            displayOnly: true,
+          },
+        };
+      }),
+  };
+  if (options.relativeHeights)
+    assumedRoomBlocks = relativeHeightGeometry(
+      data,
+      levelIds,
+      assumedRoomBlocks,
+      "room",
+    );
+  roomBlocks = {
+    ...roomBlocks,
+    features: [...roomBlocks.features, ...assumedRoomBlocks.features],
+  };
+  const volumeKeys = new Set(
+    assumedRoomBlocks.features.map((f) => String(f.properties?.key)),
+  );
+  const withRaisedLabels = {
+    ...presentation,
+    display: {
+      ...presentation.display,
+      labels: {
+        ...presentation.display.labels,
+        features: presentation.display.labels.features.map((f) =>
+          volumeKeys.has(String(f.properties?.key))
+            ? {
+                ...f,
+                properties: {
+                  ...f.properties,
+                  heightMetres:
+                    Number(f.properties?.heightMetres ?? 0.03) +
+                    ROOM_BLOCK_HEIGHT_METRES,
+                },
+              }
+            : f,
+        ),
+      },
+    },
+  };
+  const shownAreas = options.review
+    ? visitorAreas
+    : wallFaceFloorSurfaces(
+        data,
+        presentation.display.records,
+        visitorAreas,
+        floorMasks,
+      );
+  const nativeGround = nativeFloorGround(data, levelIds, building);
+  const nativeSurfaces = options.relativeHeights
+    ? rampFloorApertures(
+        data,
+        levelIds,
+        relativeHeightGeometry(
+          data,
+          levelIds,
+          {
+            type: "FeatureCollection",
+            features: nativeGround,
+          },
+          "floor",
+        ),
+      ).features
+    : nativeGround;
+  const physicalGround = stairPlaceGround(data, {
+    ...shownAreas,
+    features: [...nativeSurfaces, ...shownAreas.features],
+  });
   const nativeStairs = stairsAboveDisplayedGround(
     unoccluded,
     physicalGround,
     options.relativeHeights ?? false,
   );
   return {
-    presentation,
+    presentation: withRaisedLabels,
+    assumedRoomBlocks,
     nativeStairKeys,
+    selectionAreas:
+      !options.review && options.simplifyGeometry
+        ? generalizedRoomGeometry(data, selectionAreas)
+        : selectionAreas,
     physicalGround,
     nativeStairs,
     stairCutAreas: stairFloorApertures(

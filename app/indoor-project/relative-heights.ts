@@ -43,7 +43,12 @@ export function relativeHeightGeometry<T extends Geometry>(
       const doorZ =
         door && data.edges.find((e) => e.id === door.id)?.pointsFeet[0]?.[2];
       const levelId = record?.levelId ?? door?.levelId ?? Number(p.levelId);
-      const z = record?.elevationFeet ?? doorZ ?? levels.get(levelId) ?? datum;
+      const z =
+        record?.elevationFeet ??
+        doorZ ??
+        (p.nativeFloor === true ? Number(p.elevationFeet) : undefined) ??
+        levels.get(levelId) ??
+        datum;
       let base = (z - datum) * scale;
       if (kind === "lower") {
         const upper = records.get(String(p.upperKey));
@@ -65,7 +70,9 @@ export function relativeHeightGeometry<T extends Geometry>(
           levelId,
           base,
           height: base + height,
-          floorTop: base + 0.025,
+          // Native slab ground sits beneath coloured place surfaces. Equal
+          // tops cause depth fighting where the circulation overlay overlaps.
+          floorTop: base + (p.nativeFloor === true ? 0.005 : 0.025),
           ...(kind === "label"
             ? { heightMetres: base + Number(p.heightMetres ?? 0.03) }
             : {}),

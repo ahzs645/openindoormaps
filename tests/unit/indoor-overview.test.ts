@@ -44,6 +44,13 @@ test("overview joins wall-width room seams while retaining courtyards and separa
     },
     {
       ...record,
+      key: "small-opening",
+      building: "A",
+      circulation: false,
+      ringsFeet: [rect(150, 0, 30, 30), rect(160, 10, 6, 6)],
+    },
+    {
+      ...record,
       key: "other",
       building: "B",
       circulation: false,
@@ -67,6 +74,10 @@ test("overview joins wall-width room seams while retaining courtyards and separa
     booleanPointInPolygon(geographicPoint(data, [50, 80]), a),
     false,
     "real courtyard remains open",
+  );
+  assert.ok(
+    booleanPointInPolygon(geographicPoint(data, [163, 13]), a),
+    "entrance-sized aperture disappears from the campus illustration",
   );
   assert.equal(
     booleanPointInPolygon(geographicPoint(data, [25, 10]), a),

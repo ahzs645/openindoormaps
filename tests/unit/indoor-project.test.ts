@@ -1,3 +1,14 @@
+import { prepareRouting } from "../../app/indoor-project/prepare-routing";
+import {
+  exportPreparedRoutingProject,
+  readIndoorProject,
+  exportIndoorProject,
+  exportCampusViewer,
+  isViewerProject,
+  reviewArea,
+  reviewEdge,
+  reviewVisitorMetadata,
+} from "../../app/indoor-project/package";
 import { createProjectRouteDiagnostics } from "../../app/indoor-project/route-diagnostics";
 import {
   setMapAnnotations,
@@ -28,15 +39,6 @@ import {
   geographicPoint,
   projectRouteFailure,
 } from "../../app/indoor-project/routing";
-import {
-  readIndoorProject,
-  exportIndoorProject,
-  exportCampusViewer,
-  isViewerProject,
-  reviewArea,
-  reviewEdge,
-  reviewVisitorMetadata,
-} from "../../app/indoor-project/package";
 
 import {
   projectRoutingGraph,
@@ -2771,4 +2773,40 @@ test("corridor preference chooses a reasonable detour and permits an ordinary-ro
   );
   assert.equal(route.sourceDistanceMetres, 6.096);
   assert.ok(route.preferenceCost! > route.sourceDistanceMetres);
+});
+
+test("routing preparation preserves every source asset in master and viewer packages", async () => {
+  const bytes = await archive();
+  const raw = unzipSync(bytes);
+  // Preserve authored formatting too, rather than only equivalent room JSON.
+  raw["floors/rooms.json"] = strToU8(
+    JSON.stringify(JSON.parse(strFromU8(raw["floors/rooms.json"])), null, 2),
+  );
+  const manifest = JSON.parse(strFromU8(raw["manifest.json"]));
+  manifest.floors.bytes = raw["floors/rooms.json"].length;
+  manifest.floors.sha256 = await hash(raw["floors/rooms.json"]);
+  const data = JSON.parse(strFromU8(raw["viewer/indoor.json"]));
+  data.source.roomsSha256 = manifest.floors.sha256;
+  raw["viewer/indoor.json"] = strToU8(JSON.stringify(data));
+  manifest.indoor.bytes = raw["viewer/indoor.json"].length;
+  manifest.indoor.sha256 = await hash(raw["viewer/indoor.json"]);
+  raw["manifest.json"] = strToU8(JSON.stringify(manifest));
+  const master = await readIndoorProject(zipSync(raw));
+  const viewer = await readIndoorProject(await exportCampusViewer(master));
+  for (const project of [master, viewer]) {
+    const prepared = await prepareRouting(project.dataset);
+    const result = await readIndoorProject(
+      await exportPreparedRoutingProject(project, prepared.dataset),
+    );
+    assert.deepEqual(result.dataset, prepared.dataset);
+    for (const [path, asset] of Object.entries(project.files))
+      if (!["manifest.json", "viewer/indoor.json"].includes(path))
+        assert.deepEqual(result.files[path], asset, path);
+    const edited = structuredClone(prepared.dataset);
+    edited.records[0].name = "Changed room";
+    await assert.rejects(
+      exportPreparedRoutingProject(project, edited),
+      /cannot modify source/,
+    );
+  }
 });

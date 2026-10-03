@@ -46,8 +46,19 @@ export function wallRoomBoundaries(
   data: IndoorDataset,
   records: IndoorRecord[],
 ): Map<string, Rings> {
+  // A full native-level compiler check has stronger evidence than this local
+  // display fallback. Do not silently promote an enclosure it found ambiguous,
+  // unclosed, or inconsistent with the room's own label.
+  const rejected = new Set(
+    data.presentation?.sourceModelSha256 === data.source.modelSha256
+      ? data.presentation.diagnostics.map((finding) => finding.roomKey)
+      : [],
+  );
+  const candidates = records.filter((r) => !rejected.has(r.key));
   const levels = new Set(
-    records.filter((r) => r.walkable && !r.circulation).map((r) => r.levelId),
+    candidates
+      .filter((r) => r.walkable && !r.circulation)
+      .map((r) => r.levelId),
   );
   // Repair only levels with unfinished rooms. Same-level wall joints cannot
   // contribute to an enclosure on any other level.
@@ -80,7 +91,7 @@ export function wallRoomBoundaries(
     )
     .map((r) => ({ ...r, box: bounds(r.ringsFeet) }));
   const resolved = new Map<string, Rings>();
-  for (const r of records.filter((r) => r.walkable && !r.circulation)) {
+  for (const r of candidates.filter((r) => r.walkable && !r.circulation)) {
     const box = bounds(r.ringsFeet).map((n, i) => n + (i < 2 ? -3 : 3));
     const local = walls
       .filter((w) => w.levelId === r.levelId && intersects(w.box, box))

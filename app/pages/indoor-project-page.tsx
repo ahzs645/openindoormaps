@@ -1,3 +1,4 @@
+import { projectBoundaryEvidence } from "../indoor-project/boundary-evidence";
 import {
   NativeStairReview,
   NativeStairInspector,
@@ -220,7 +221,7 @@ export default function IndoorProjectPage() {
     [showPassThroughPlaces, setShowPassThroughPlaces] = useState(false),
     [showVestibuleDoors, setShowVestibuleDoors] = useState(false),
     [showStructures, setShowStructures] = useState(false),
-    [simplifyGeometry, setSimplifyGeometry] = useState(true),
+    [simplifyGeometry, setSimplifyGeometry] = useState(false),
     [view, setView] = useState<"2d" | "3d" | "relative" | "native">(() =>
       typeof globalThis !== "undefined" &&
       new URLSearchParams(routeSearch()).get("view") === "relative"
@@ -513,6 +514,13 @@ export default function IndoorProjectPage() {
   const floor = displayData?.floors.find((f) => f.id === floorId),
     levelIds = useMemo(() => floor?.levelIds ?? [], [floor]),
     data = displayData;
+  const boundaryEvidence = useMemo(
+    () =>
+      data && project
+        ? projectBoundaryEvidence(data, project.rooms)
+        : new Map<string, string>(),
+    [data, project],
+  );
   const pins = project?.rooms.reviewPins?.pins ?? noPins;
   const chosenPin = pins.find(
     (p) => p.id === pinId && levelIds.includes(p.levelId),
@@ -1862,21 +1870,7 @@ export default function IndoorProjectPage() {
                     <dt>Source ID</dt>
                     <dd>{record.key}</dd>
                     <dt>Room boundary</dt>
-                    <dd>
-                      {project.rooms.annotations.find(
-                        (r) => r.key === record.key,
-                      )?.semanticInteriorProvenance
-                        ? "Imported Revit Finish boundary · navigation regenerated"
-                        : project.rooms.annotations.find(
-                              (r) => r.key === record.key,
-                            )?.nativeInteriorProvenance
-                          ? "Recovered native wall interior · navigation regenerated"
-                          : data.presentation?.rooms.some(
-                                (r) => r.roomKey === record.key,
-                              )
-                            ? "Prepared native display block · original navigation interior"
-                            : "Source outline · boundary review needed"}
-                    </dd>
+                    <dd>{boundaryEvidence.get(record.key)}</dd>
                     <dt>Arrival</dt>
                     <dd>
                       {record.arrivalNodeId

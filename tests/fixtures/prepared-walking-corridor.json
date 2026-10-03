@@ -1,0 +1,331 @@
+{
+  "format": "reviter-indoor",
+  "version": 1,
+  "generator": "reviter/indoor-pipeline-1",
+  "source": {
+    "modelFileName": "fixture.rvt",
+    "modelSha256": "",
+    "roomsSha256": ""
+  },
+  "alignment": {
+    "originFeet": [0, 0, 0],
+    "originGeographic": [-122, 53],
+    "projectionLatitude": 53,
+    "rotationRadians": 0,
+    "horizontalMetresPerFoot": 0.3048,
+    "verticalMetresPerFoot": 0.3048,
+    "rmsMetres": 0,
+    "referenceCount": 2
+  },
+  "floors": [
+    {
+      "id": "floor",
+      "name": "Floor 1",
+      "levelIds": [1],
+      "elevationFeet": 0
+    }
+  ],
+  "nativeLevels": [
+    {
+      "id": 1,
+      "name": "Floor 1",
+      "elevationFeet": 0
+    }
+  ],
+  "records": [
+    {
+      "key": "a",
+      "number": "a",
+      "name": "Corridor",
+      "building": "01",
+      "levelId": 1,
+      "elevationFeet": 0,
+      "elevationEvidence": "fixture",
+      "surfaceId": "a",
+      "circulation": true,
+      "stair": false,
+      "access": "public",
+      "walkable": true,
+      "confidence": 1,
+      "ringsFeet": [
+        [
+          [0, 0],
+          [20, 0],
+          [20, 8],
+          [0, 8]
+        ]
+      ],
+      "properties": {},
+      "arrivalNodeId": "a"
+    },
+    {
+      "key": "b",
+      "number": "b",
+      "name": "Corridor",
+      "building": "01",
+      "levelId": 1,
+      "elevationFeet": 0,
+      "elevationEvidence": "fixture",
+      "surfaceId": "b",
+      "circulation": true,
+      "stair": false,
+      "access": "public",
+      "walkable": true,
+      "confidence": 1,
+      "ringsFeet": [
+        [
+          [0, 8],
+          [8, 8],
+          [8, 30],
+          [0, 30]
+        ]
+      ],
+      "properties": {},
+      "arrivalNodeId": "b"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "a",
+      "roomKey": "a",
+      "kind": "arrival",
+      "point": [17, 1],
+      "pointFeet": [17, 1, 0],
+      "levelId": 1,
+      "building": "01",
+      "surfaceId": "a",
+      "geographic": [-122, 53]
+    },
+    {
+      "id": "door-a",
+      "roomKey": "a",
+      "kind": "portal",
+      "point": [4, 7.5],
+      "pointFeet": [4, 7.5, 0],
+      "levelId": 1,
+      "building": "01",
+      "surfaceId": "a",
+      "geographic": [-122, 53]
+    },
+    {
+      "id": "door-b",
+      "roomKey": "b",
+      "kind": "portal",
+      "point": [4, 8.5],
+      "pointFeet": [4, 8.5, 0],
+      "levelId": 1,
+      "building": "01",
+      "surfaceId": "b",
+      "geographic": [-122, 53]
+    },
+    {
+      "id": "unused-side-door",
+      "roomKey": "b",
+      "kind": "portal",
+      "point": [7, 18],
+      "pointFeet": [7, 18, 0],
+      "levelId": 1,
+      "building": "01",
+      "surfaceId": "b",
+      "geographic": [-122, 53]
+    },
+    {
+      "id": "b",
+      "roomKey": "b",
+      "kind": "arrival",
+      "point": [1, 25],
+      "pointFeet": [1, 25, 0],
+      "levelId": 1,
+      "building": "01",
+      "surfaceId": "b",
+      "geographic": [-122, 53]
+    }
+  ],
+  "edges": [
+    {
+      "id": "walk-a",
+      "from": "a",
+      "to": "door-a",
+      "kind": "walk",
+      "pointsFeet": [
+        [17, 1, 0],
+        [17, 6, 0],
+        [4, 6, 0],
+        [4, 7.5, 0]
+      ],
+      "roomKeys": ["a"],
+      "lengthMetres": 5.9436,
+      "evidence": "fixture",
+      "enabled": true,
+      "accessible": "yes"
+    },
+    {
+      "id": "door",
+      "from": "door-a",
+      "to": "door-b",
+      "kind": "door",
+      "pointsFeet": [
+        [4, 7.5, 0],
+        [4, 8.5, 0]
+      ],
+      "roomKeys": ["a", "b"],
+      "lengthMetres": 0.3048,
+      "evidence": "fixture",
+      "enabled": true,
+      "accessible": "yes"
+    },
+    {
+      "id": "walk-b1",
+      "from": "door-b",
+      "to": "unused-side-door",
+      "kind": "walk",
+      "pointsFeet": [
+        [4, 8.5, 0],
+        [6, 8.5, 0],
+        [6, 18, 0],
+        [7, 18, 0]
+      ],
+      "roomKeys": ["b"],
+      "lengthMetres": 3.81,
+      "evidence": "fixture",
+      "enabled": true,
+      "accessible": "yes"
+    },
+    {
+      "id": "walk-b2",
+      "from": "unused-side-door",
+      "to": "b",
+      "kind": "walk",
+      "pointsFeet": [
+        [7, 18, 0],
+        [7, 26, 0],
+        [1, 26, 0],
+        [1, 25, 0]
+      ],
+      "roomKeys": ["b"],
+      "lengthMetres": 4.572000000000001,
+      "evidence": "fixture",
+      "enabled": true,
+      "accessible": "yes"
+    }
+  ],
+  "walls": [
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 0,
+      "ringsFeet": [
+        [
+          [-0.2, 0],
+          [0, 0],
+          [0, 30],
+          [-0.2, 30]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 1,
+      "ringsFeet": [
+        [
+          [0, -0.2],
+          [20, -0.2],
+          [20, 0],
+          [0, 0]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 2,
+      "ringsFeet": [
+        [
+          [20, 0],
+          [20.2, 0],
+          [20.2, 8],
+          [20, 8]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 3,
+      "ringsFeet": [
+        [
+          [8, 7.8],
+          [20, 7.8],
+          [20, 8.2],
+          [8, 8.2]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 4,
+      "ringsFeet": [
+        [
+          [0, 7.8],
+          [8, 7.8],
+          [8, 8.2],
+          [0, 8.2]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 5,
+      "ringsFeet": [
+        [
+          [7.8, 8],
+          [8.2, 8],
+          [8.2, 30],
+          [7.8, 30]
+        ]
+      ]
+    },
+    {
+      "kind": "wall",
+      "levelId": 1,
+      "nativeElementId": 6,
+      "ringsFeet": [
+        [
+          [0, 30],
+          [8, 30],
+          [8, 30.2],
+          [0, 30.2]
+        ]
+      ]
+    }
+  ],
+  "doors": [
+    {
+      "id": "door",
+      "levelId": 1,
+      "nativeElementId": 100,
+      "pointFeet": [4, 8],
+      "footprintFeet": [
+        [1, 7.5],
+        [7, 7.5],
+        [7, 8.5],
+        [1, 8.5]
+      ],
+      "roomKeys": ["a", "b"],
+      "state": "connected"
+    }
+  ],
+  "issues": [],
+  "report": {
+    "recordCount": 2,
+    "routableArrivals": 2,
+    "components": 1,
+    "largestComponentArrivals": 2,
+    "unmatchedDoors": 0,
+    "cellSizeFeet": 0.6,
+    "omittedSourceLabels": 0
+  }
+}

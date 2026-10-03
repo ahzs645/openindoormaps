@@ -1,5 +1,13 @@
+import {
+  generalizedRoomGeometry,
+  generalizedRoomDoorways,
+  generalizedRoomWalls,
+} from "./generalized-room-geometry";
 import type { IndoorDataset } from "./contract";
-import { projectDisplayGeometry } from "./display-geometry";
+import {
+  ROOM_BLOCK_HEIGHT_METRES,
+  projectDisplayGeometry,
+} from "./display-geometry";
 import { visitorWallGeometry } from "./visitor-wall-geometry";
 import {
   compactWallDetails,
@@ -50,13 +58,27 @@ function buildFloorPresentation(
   const result = {
     display,
     visitorWalls,
-    simpleWalls: simpleWallGeometry(
+    simpleWalls: generalizedRoomWalls(
       data,
-      options.showStructures ? display.exposedWalls : visitorWalls,
-      details,
+      simpleWallGeometry(
+        data,
+        options.showStructures ? display.exposedWalls : visitorWalls,
+        details,
+      ),
     ),
-    simpleRooms: simpleRoomGeometry(data, display.roomBlocks, details),
-    simpleAreas: simpleRoomGeometry(data, display.areas, details),
+    simpleRooms: generalizedRoomGeometry(
+      data,
+      simpleRoomGeometry(data, display.roomBlocks, details),
+    ),
+    simpleAreas: generalizedRoomGeometry(
+      data,
+      simpleRoomGeometry(data, display.areas, details),
+    ),
+    simpleDoors: generalizedRoomDoorways(
+      data,
+      display.doorFootprints,
+      ROOM_BLOCK_HEIGHT_METRES,
+    ),
     overviewGeometry: buildingOverviewGeometry(data, display.records),
     overviewLabels: buildingOverviewLabels(data, display.records),
     nativeStairs: projectStairDisplay(
@@ -135,6 +157,11 @@ function buildFloorPresentation(
       data,
       levelIds,
       relativeHeightGeometry(data, levelIds, result.simpleRooms, "room"),
+    ),
+    simpleDoors: generalizedRoomDoorways(
+      data,
+      relativeHeightGeometry(data, levelIds, display.doorFootprints, "door"),
+      ROOM_BLOCK_HEIGHT_METRES,
     ),
     simpleAreas: rampFloorApertures(
       data,

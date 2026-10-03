@@ -1,3 +1,4 @@
+import { isConnectorLobbyDestination } from "./connector-arrival";
 import type { IndoorDataset } from "./contract";
 import type { ProjectRoute } from "./routing";
 import { routingDoorApertures } from "./routing-apertures";
@@ -69,6 +70,7 @@ export function resolveRouteArrival(
 ): { route: ProjectRoute | null; message?: string } {
   if (!route || mode === "inside") return { route };
   const end = data.records.find((r) => r.key === endKey);
+  if (end && isConnectorLobbyDestination(data, end)) return { route };
   let index = -1;
   route.edges.forEach((edge, i) => {
     if (

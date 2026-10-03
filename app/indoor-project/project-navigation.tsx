@@ -12,6 +12,7 @@ import {
   SlidersHorizontal,
   Users,
   DoorOpen,
+  LockKeyhole,
 } from "lucide-react";
 import { useMap } from "../components/map/map";
 import HospitalRoutePreview from "../components/discovery-panel/hospital-route-preview";
@@ -39,7 +40,12 @@ import {
 
 import type { MapLocation } from "./map-edits";
 import { LocationDetails } from "./location-details";
-import { isHallway, isPassThroughPlace } from "./display-passages";
+import {
+  isHallway,
+  isPassThroughPlace,
+  isRestrictedArea,
+  RESTRICTED_AREA_COLOR,
+} from "./display-passages";
 import { LabelSettingsPanel } from "./label-settings-panel";
 import { BasemapSettingsPanel } from "./basemap-settings-panel";
 import type {
@@ -244,6 +250,7 @@ export function ProjectNavigation({
   useEffect(() => {
     if (
       record &&
+      !isRestrictedArea(record) &&
       ((isHallway(record) &&
         !(showPassThroughPlaces && isPassThroughPlace(record))) ||
         (!showPassThroughPlaces && isPassThroughPlace(record)))
@@ -584,8 +591,8 @@ export function ProjectNavigation({
                     Simplify map geometry
                   </label>
                   <p>
-                    Hide pillars and small wall details. Turn off to see the
-                    detailed layout.
+                    Use clean room blocks where doors, neighbours and floor
+                    openings allow it. Turn off to see the detailed layout.
                   </p>
                   <label>
                     <input
@@ -623,7 +630,8 @@ export function ProjectNavigation({
                 </div>
               )}
               {record &&
-                (!isHallway(record) ||
+                (isRestrictedArea(record) ||
+                  !isHallway(record) ||
                   (showPassThroughPlaces && isPassThroughPlace(record))) && (
                   <div className="project-place-card">
                     <button
@@ -663,10 +671,21 @@ export function ProjectNavigation({
                         {placeMetadata.description}
                       </p>
                     )}
-                    {!record.arrivalNodeId && (
-                      <p className="project-access-note">
-                        Entrance needs review before directions are available.
+                    {isRestrictedArea(record) ? (
+                      <p className="project-restricted-note">
+                        <span
+                          className="project-restricted-swatch"
+                          style={{ backgroundColor: RESTRICTED_AREA_COLOR }}
+                        />
+                        <LockKeyhole size={16} aria-hidden="true" />
+                        Off limits · Staff only
                       </p>
+                    ) : (
+                      !record.arrivalNodeId && (
+                        <p className="project-access-note">
+                          Entrance needs review before directions are available.
+                        </p>
+                      )
                     )}
                     {managedLocation && (
                       <LocationDetails location={managedLocation} />

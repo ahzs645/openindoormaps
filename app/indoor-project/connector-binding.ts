@@ -12,6 +12,7 @@ type SourceConnectorReview = {
     reviewedShaft?: unknown;
     entrances: {
       roomKey: string;
+      areaKey?: string;
       levelId: number;
       pointFeet: [number, number];
     }[];
@@ -58,6 +59,7 @@ export function validateConnectorBinding(
           !s ||
           !node ||
           s.roomKey !== entry.roomKey ||
+          s.areaKey !== entry.areaKey ||
           s.levelId !== entry.levelId ||
           entry.nodeId !== `connector:${connector.id}:${index}` ||
           !Array.isArray(s.pointFeet) ||

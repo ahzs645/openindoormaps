@@ -1,5 +1,6 @@
 import type { IndoorDataset, IndoorRecord } from "./contract";
 import { routingCalculationValue } from "./routing-cache";
+import { createNativeDoorApproachQuery } from "./native-door-approach";
 export type NativeCirculationCell = NonNullable<
   IndoorDataset["circulationGeometry"]
 >["cells"][number];
@@ -316,6 +317,7 @@ export function nativeCirculationWalkBlockers(
   )
     return blocked;
   const keys = new Set(prepared.preparedRoomKeys);
+  const doorApproaches = createNativeDoorApproachQuery(data);
   const surfaces = [
     ...cells.map((c) => ({ z: c.elevationFeet, rings: c.ringsFeet })),
     ...(prepared.reviewSurfaces ?? []).map((s) => ({
@@ -337,6 +339,15 @@ export function nativeCirculationWalkBlockers(
       !edge.roomKeys.every((k) => keys.has(k))
     )
       continue;
+    const approachSurfaces = doorApproaches(edge).map(
+      (surface): IndexedSurface => {
+        const rings = surface.rings.map((points) => ({
+          points,
+          bounds: ringBounds(points),
+        }));
+        return { z: surface.z, rings, bounds: rings[0].bounds };
+      },
+    );
     for (let i = 1; i < edge.pointsFeet.length; i++) {
       const a = edge.pointsFeet[i - 1],
         b = edge.pointsFeet[i];
@@ -348,7 +359,7 @@ export function nativeCirculationWalkBlockers(
       ];
       // Bounds only reject irrelevant geometry. The exact boundary cuts and
       // interval checks below still veto gaps and arbitrarily thin obstacles.
-      const local = surfaces.filter(
+      const local = [...surfaces, ...approachSurfaces].filter(
         (s) =>
           Math.abs(s.z - a[2]) < 0.05 &&
           Math.abs(s.z - b[2]) < 0.05 &&

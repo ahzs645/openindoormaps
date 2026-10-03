@@ -30,8 +30,8 @@ export const labelVisibleAtZoom = (
   maximum = Infinity,
 ) => zoom >= minimum && zoom < maximum;
 
-/** Overview-only morphological closing joins wall-width seams between room
- * footprints. Separate buildings and large courtyards remain separate. This
+/** Overview-only morphological closing joins wall/entrance-width seams between
+ * room footprints. Separate buildings and large courtyards remain separate. This
  * simplified illustration never supplies a room boundary or routing surface. */
 export function buildingOverviewGeometry(
   data: IndoorDataset,
@@ -52,10 +52,12 @@ export function buildingOverviewGeometry(
         ),
       };
       try {
-        const radius = 0.61; // two feet; less than a pixel at campus overview scale
-        const expanded = buffer(source, radius, { units: "meters", steps: 1 });
+        // Suppress small architectural apertures alongside the hidden detail
+        // layers. This closes gaps up to about eight feet only in the overview.
+        const radius = 1.22;
+        const expanded = buffer(source, radius, { units: "meters", steps: 4 });
         const closed =
-          expanded && buffer(expanded, -radius, { units: "meters", steps: 1 });
+          expanded && buffer(expanded, -radius, { units: "meters", steps: 4 });
         if (!closed) continue;
         features.push({
           ...closed,

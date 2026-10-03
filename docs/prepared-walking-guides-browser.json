@@ -1,0 +1,44 @@
+{
+  "routes": 6,
+  "devices": ["1440\u00d7980 desktop", "390\u00d7844 mobile"],
+  "browser": "Google Chrome for Testing 153.0.8010.12 headless, SwiftShader software rendering",
+  "testsPassed": 2,
+  "checkedNativeFloorSegments": 170,
+  "timings": {
+    "desktop": [
+      {
+        "from": "06-260",
+        "to": "07-240",
+        "uiMilliseconds": 2999
+      },
+      {
+        "from": "05-113",
+        "to": "07-148A",
+        "uiMilliseconds": 2227
+      },
+      {
+        "from": "07-148A",
+        "to": "10-4544",
+        "uiMilliseconds": 2932
+      }
+    ],
+    "mobile": [
+      {
+        "from": "06-260",
+        "to": "07-240",
+        "uiMilliseconds": 3528
+      },
+      {
+        "from": "05-113",
+        "to": "07-148A",
+        "uiMilliseconds": 2112
+      },
+      {
+        "from": "07-148A",
+        "to": "10-4544",
+        "uiMilliseconds": 3267
+      }
+    ]
+  },
+  "scope": "Actual browser route-worker responses; graph and route-shape comparisons, preview step progress and final floor selector verified. UI timing includes worker communication and endpoint selection but excludes ZIP parsing and separate floor presentation preparation."
+}

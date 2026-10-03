@@ -5,6 +5,8 @@ import type { IndoorDataset, IndoorRecord } from "./contract";
 export const isVestibule = (room: IndoorRecord) =>
   /\bvestibule\b/i.test(room.name);
 export const HALLWAY_COLOR = "#d7e2e5";
+export const RESTRICTED_AREA_COLOR = "#dfb6bd";
+export const isRestrictedArea = (room: IndoorRecord) => room.access === "staff";
 /** Source access restrictions remain authoritative even when a corridor's
  * circulation flag is missing. This classification affects presentation only. */
 export const isHallway = (room: IndoorRecord) =>
@@ -16,6 +18,9 @@ export const isDisplayPassage = (room: IndoorRecord) =>
   isHallway(room) ||
   isVestibule(room) ||
   /^rotunda$/i.test(room.name.trim());
+/** Flat presentation does not change source access, room type, or routing. */
+export const isFlatArea = (room: IndoorRecord) =>
+  isRestrictedArea(room) || isDisplayPassage(room);
 export const isPassThroughPlace = (room: IndoorRecord) =>
   !room.stair && (isVestibule(room) || /^rotunda$/i.test(room.name.trim()));
 

@@ -18,6 +18,8 @@ export type SourceConnectorReview = {
     direction: "both" | "from-to" | "to-from";
     entrances: {
       roomKey: string;
+      /** Explicit shaft-area identity whose destination is this lobby stop. */
+      areaKey?: string;
       levelId: number;
       nativeElementId: number;
       pointFeet: [number, number];
@@ -68,6 +70,11 @@ export function validateSourceConnectorReview(
           !e ||
           typeof e.roomKey !== "string" ||
           !e.roomKey ||
+          (e.areaKey !== undefined &&
+            (!c.reviewedShaft ||
+              typeof e.areaKey !== "string" ||
+              !e.areaKey.trim() ||
+              e.areaKey.length > 512)) ||
           !Number.isSafeInteger(e.levelId) ||
           !Number.isSafeInteger(e.nativeElementId) ||
           !Array.isArray(e.pointFeet) ||

@@ -139,6 +139,7 @@ function resolveProjectRoute(
         data.alignment,
         data.walkingSupport,
         data.circulationGeometry,
+        (data as IndoorDataset & { preparedRouting?: unknown }).preparedRouting,
       ]),
   );
   let resolved = resolvedRouteCache.get(graph);
@@ -758,6 +759,7 @@ export function validateIndoorDataset(
         ![
           "native-wall-enclosure",
           "revit-finish-face",
+          "native-mesh-wall-enclosure",
           "registered-source-wall-enclosure",
           "source-backed-native-wall-enclosure",
         ].includes(room.boundarySource) ||
@@ -766,6 +768,35 @@ export function validateIndoorDataset(
           "source-backed-native-wall-enclosure",
         ].includes(room.boundarySource) &&
           !room.sourceProof) ||
+        (room.boundarySource === "native-mesh-wall-enclosure" &&
+          !room.meshProof) ||
+        (room.meshProof !== undefined &&
+          (room.boundarySource !== "native-mesh-wall-enclosure" ||
+            !room.meshProof ||
+            !Number.isFinite(room.meshProof.cutElevationFeet) ||
+            Math.abs(
+              room.meshProof.cutElevationFeet -
+                ((d.nativeLevels.find((l) => l.id === room.levelId)
+                  ?.elevationFeet ?? Infinity) +
+                  4),
+            ) > 0.0001 ||
+            !Number.isFinite(room.meshProof.precisionFeet) ||
+            room.meshProof.precisionFeet <= 0 ||
+            room.meshProof.precisionFeet > 0.0001 ||
+            !Number.isFinite(room.meshProof.nativeFloorCoveredSquareFeet) ||
+            room.meshProof.nativeFloorCoveredSquareFeet <= 0 ||
+            !Array.isArray(room.meshProof.nativeElementIds) ||
+            room.meshProof.nativeElementIds.length === 0 ||
+            room.meshProof.nativeElementIds.length > 60_000 ||
+            new Set(room.meshProof.nativeElementIds).size !==
+              room.meshProof.nativeElementIds.length ||
+            !room.meshProof.nativeElementIds.every(
+              (id) =>
+                Number.isSafeInteger(id) &&
+                id > 0 &&
+                Array.isArray(room.boundaryElementIds) &&
+                room.boundaryElementIds.includes(id),
+            ))) ||
         (room.sourceProof !== undefined &&
           (!room.sourceProof ||
             !/^[a-f0-9]{64}$/.test(room.sourceProof.sourceSha256) ||
@@ -1077,6 +1108,12 @@ export function validateIndoorDataset(
             !byNode.has(e.nodeId) ||
             byNode.get(e.nodeId)!.roomKey !== e.roomKey ||
             byNode.get(e.nodeId)!.levelId !== e.levelId ||
+            (e.areaKey !== undefined &&
+              (!c.reviewedShaft ||
+                !id(e.areaKey) ||
+                !d.records.some(
+                  (r) => r.key === e.areaKey && r.levelId === e.levelId,
+                ))) ||
             !d.nativeLevels.some((l) => l.id === e.levelId),
         ) ||
         (c.reviewedShaft === undefined

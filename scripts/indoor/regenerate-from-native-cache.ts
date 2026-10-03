@@ -62,8 +62,23 @@ const missing = before.dataset.records.filter(
     r.arrivalNodeId &&
     !dataset.records.find((n) => n.key === r.key)?.arrivalNodeId,
 );
+// A reviewed source access change intentionally removes a public arrival.
+// Keep the loss guard for every other destination, including unknown access.
+const restricted = missing.filter((record) => {
+  const annotation = original.rooms.annotations.find(
+    (r) => r.key === record.key,
+  );
+  const regenerated = dataset.records.find((r) => r.key === record.key);
+  return (
+    annotation?.access?.kind === "staff" &&
+    regenerated?.access === "staff" &&
+    !dataset.edges.some(
+      (edge) => edge.enabled && edge.roomKeys.includes(record.key),
+    )
+  );
+});
 assert.deepEqual(
-  missing.map((r) => r.key),
+  missing.filter((r) => !restricted.includes(r)).map((r) => r.key),
   [],
   "Existing arrival connections must survive regeneration",
 );
@@ -139,6 +154,7 @@ const summary = {
   before: before.dataset.report,
   after: dataset.report,
   arrivals: dataset.records.filter((r) => r.arrivalNodeId).length,
+  intentionallyRestrictedArrivals: restricted.map((r) => r.key),
   preparedRooms: dataset.presentation?.rooms.length ?? 0,
   ramps: dataset.rampDisplay?.ramps.length ?? 0,
   liftStops:
