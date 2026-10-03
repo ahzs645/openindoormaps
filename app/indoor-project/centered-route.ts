@@ -1,3 +1,4 @@
+import { centeredJunctions } from "./centered-junction";
 import { nativeJointBarriers } from "./native-joint-barriers";
 import { createRingPointQuery } from "./ring-point-query";
 import {
@@ -626,6 +627,7 @@ function refine(
   passageQuery: ReturnType<typeof createDoorPassageQuery>,
   portalEdges: IndoorEdge[] = [],
   guideOnly = false,
+  junctionOnly = false,
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -1003,7 +1005,7 @@ function refine(
     // frame, through the exact same supported rooms and selected apertures.
     // Every replacement segment is checked continuously; vertical legs never
     // enter this function and fixed staircase/door anchors remain endpoints.
-    const originalCandidates = [...candidates];
+    const originalCandidates = junctionOnly ? [] : [...candidates];
     for (const original of originalCandidates)
       for (const frame of frames) {
         const simplified: XY[] = [original[0]];
@@ -1068,7 +1070,7 @@ function refine(
     // A single frame forces extra elbows there. Join supported native axes at
     // their intersection, keeping the same anchors, region and door policy.
     const directions = frames.flatMap(({ u, v }) => [u, v]);
-    for (const original of [...candidates]
+    for (const original of (junctionOnly ? [] : [...candidates])
       .sort((a, b) => a.length - b.length || length(a) - length(b))
       .slice(0, 3)) {
       const simplified: XY[] = [original[0]];
@@ -1195,6 +1197,16 @@ function refine(
     candidates.splice(0, candidates.length, ...policyCandidates);
     candidates.sort((a, b) => a.length - b.length || length(a) - length(b));
     if (candidates.length === 0) return source("no-clearance-route");
+    if (junctionOnly) {
+      const junctions = centeredJunctions(
+        candidates[0],
+        directions,
+        (p, normal) => center(p, normal, free, span),
+        (a, b) => validSegment(a, b, free),
+      );
+      if (junctions.length > candidates[0].length && policyAllowed(junctions))
+        candidates[0] = junctions;
+    }
     const curved = guideOnly
       ? null
       : curvedCorridorPath(
@@ -1515,6 +1527,45 @@ export function centeredRoutePaths(
       joinedApproaches.add(middle.edgeIds[0]);
       i = Math.max(0, i - 2);
     }
+  }
+  // Centre obtuse junction approaches after guide joins have finished. Otherwise
+  // the vertex-count simplifier would erase the centred approach again. Reuse
+  // the same exact geometry and passage policy, keeping metadata cut endpoints.
+  for (let i = 0; i < refined.length; i++) {
+    const path = refined[i];
+    if (
+      !path.centered ||
+      !path.nativeFloorSupported ||
+      path.shape === "curved" ||
+      !path.pointsFeet.slice(1, -1).some((b, j) => {
+        const a = path.pointsFeet[j],
+          c = path.pointsFeet[j + 2];
+        const u = [b[0] - a[0], b[1] - a[1]],
+          v = [c[0] - b[0], c[1] - b[1]];
+        return (
+          Math.hypot(...u) >= 6 &&
+          Math.hypot(...v) >= 6 &&
+          (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(...u) * Math.hypot(...v)) <
+            Math.cos((100 * Math.PI) / 180)
+        );
+      })
+    )
+      continue;
+    const first = edges.findIndex((e) => e.id === path.edgeIds[0]);
+    const last = edges.findIndex((e) => e.id === path.edgeIds.at(-1));
+    if (first === -1 || last < first) continue;
+    const adjusted = refine(
+      data,
+      path,
+      edges.slice(first, last + 1),
+      nodeIds[first],
+      nodeIds[last + 1],
+      passageQuery,
+      [],
+      true,
+      true,
+    );
+    if (adjusted.centered) refined[i] = adjusted;
   }
   return refined;
 }

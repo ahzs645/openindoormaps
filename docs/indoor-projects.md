@@ -64,9 +64,7 @@ For another model, provide another case JSON. Each case has `name`, `start` and 
 
 The runtime project engine uses stable graph IDs with explicit building/level/surface identities, so identical XY coordinates on separate floors never imply adjacency. Existing static venues retain their routing code and data. The portable contract is `app/indoor-project/contract.ts`, copied from Reviter `lib/reviter/indoor-contract.ts`; synchronize contract changes and migrations in both repositories.
 
-
-Prepared native entrances (October 1, 2026)
------------------------------------------
+## Prepared native entrances (October 1, 2026)
 
 Reviter now includes an optional `doors` array in `viewer/indoor.json`: native level/element IDs, position, recovered oriented footprint when available, candidate/source room keys and connected/unmatched/ambiguous state. Older prepared ZIPs still load, with graph markers and a notice to regenerate for actual apertures. Door geometry is display evidence; it never creates or enables a routing edge. Reviewed disabled connections remain disabled through export and regeneration.
 
@@ -82,9 +80,7 @@ INDOOR_PROJECT_ZIP=/absolute/path/UNBC.indoor.clean-routes.reviter.zip npm run t
 
 Checks cover solid room blocks with open hallways, native entrance geometry, clickable entrance review, 2D/3D camera and floor state, Library–Agora routing, staircase transitions and step-free exclusion on desktop and a 390×844 mobile viewport. Unit tests cover source holes, per-floor aperture cuts, display-only lower-floor context, invalid geometry rejection, and review/export preservation.
 
-
-Cleaner walls and routes (October 1, 2026)
------------------------------------------
+## Cleaner walls and routes (October 1, 2026)
 
 Use `/Users/ahmadjalil/Downloads/UNBC.indoor.clean-routes.reviter.zip` for the current preview. Reviter separates native wall and column footprints with optional `walls[].kind`. Pillars are hidden by default in 2D/3D rooms and can be restored with **Show pillars**. Original Source model presentation is retained. Old ZIPs remain importable; they require regeneration to identify columns. Unclassified shapes are never guessed to be pillars.
 
@@ -96,7 +92,6 @@ Current UNBC: 4,809 nodes, 5,343 edges, 1,610 supported arrivals, 134 components
 
 Evidence: `docs/unbc-clean-route-audit.json`, `docs/unbc-clean-geometry-audit.json`, `docs/unbc-clean-preservation.json`; desktop/mobile browser regressions additionally cover pillar visibility and the regenerated route.
 
-
 ## Centred corridor routes (October 1, 2026)
 
 The remaining Library–Agora zigzag came from using a whole circulation region’s averaged grid direction across differently angled corridors, plus a visit to an unused side-door anchor (#863700). OpenIndoorMaps now resolves continuous same-floor walking legs after source graph search, using native wall directions and free corridor cross-sections. It prefers a straight or single right-angle path with centred corridor arrivals. Room arrivals, stair entrances and actual floor-transition geometry retain their original endpoints. The map, route fit and displayed distance use the resolved geometry; source graph IDs, reviews and archived geometry remain unchanged.
@@ -106,7 +101,6 @@ Every proposed segment is checked continuously against source room coverage, hol
 With the existing `UNBC.indoor.clean-routes.reviter.zip`, 05-120 → 07-101 is now **15.755 m**, with **three vertices / two straight legs / one 90° right turn**. An independent native-barrier audit found zero wall or column crossings; the reverse route matches. The selected native doorway remains #868723. This viewer change requires a refreshed app, not ZIP regeneration. Missing campus connections and the 411 unmatched doors remain source-review work.
 
 Validation: 18 unit tests, desktop/mobile browser regressions with the actual prepared ZIP, TypeScript check, production build, and the seven-case project audit. Evidence: `docs/unbc-centered-route-audit.json`, `docs/unbc-centered-geometry-audit.json`, and `docs/screenshots/unbc-centered-route-desktop.png` / `unbc-centered-route-mobile.png`. The repeatable `indoor:audit` report now includes source-graph distance and each rendered path’s centring state, vertex count and native levels.
-
 
 ## Multiple turns and the hospital-style visitor interface
 
@@ -118,11 +112,11 @@ When no valid single elbow exists, a sparse graph connects corridor centre lanes
 
 Demonstrated examples:
 
-| Route | Result |
-| --- | --- |
-| 05-120 Corridor → 05-165 Vestibule, Campus Floor 1 | 68.589 m, three straight legs and two turns; saved graph was 93.635 m |
-| 05-120 Corridor → 05-S203 Stair, Floor 2 | 58.585 m, native stair transition; Next/Previous switch Floor 1 ↔ Floor 2 |
-| Rotated synthetic serpentine corridor | Five corners, native obstacles respected, reverse route matches |
+| Route                                              | Result                                                                     |
+| -------------------------------------------------- | -------------------------------------------------------------------------- |
+| 05-120 Corridor → 05-165 Vestibule, Campus Floor 1 | 68.589 m, three straight legs and two turns; saved graph was 93.635 m      |
+| 05-120 Corridor → 05-S203 Stair, Floor 2           | 58.585 m, native stair transition; Next/Previous switch Floor 1 ↔ Floor 2 |
+| Rotated synthetic serpentine corridor              | Five corners, native obstacles respected, reverse route matches            |
 
 The second example retains its saved walking geometry where the full centre-lane candidate cannot be validated. This does not repair the existing disconnected campus cases or 411 unmatched doors.
 
@@ -254,7 +248,6 @@ walking-dot hit targets and the progress fill uses the same adjusted positions.
 Desktop/mobile checks exercise the actual three-flight classroom example and
 its reverse, rather than bypassing overlapping controls with forced clicks.
 
-
 ## Native wall room presentation (2026-10-01)
 
 The pipeline now adds optional `presentation` geometry. Source `records[].ringsFeet`, room annotations, native geometry and graph remain separate. Model SHA and each source record's floor/polygon serialization bind prepared visual geometry to its source. Imports reject malformed, wrong-floor or stale presentation entries. Metadata review/export preserves valid presentation; marking a room nonwalkable removes its display block.
@@ -282,7 +275,6 @@ whose records, nodes, edges, native walls/doors, alignment and source hashes mat
 the audited clean-routes package. The active desktop instruction now scrolls into
 view during step selection. Screenshots: `unbc-three-flight-desktop.png` and
 `unbc-three-flight-mobile.png` under `docs/screenshots/`.
-
 
 Final validation for this change: 33 targeted Reviter unit tests and 31 OpenIndoorMaps unit tests passed. Four real-package desktop/mobile browser workflows passed, covering room geometry, common 2D/3D footprints, visitor door visibility, native pillar toggles, complex right-angle routing, stair floor-following/reversal, consecutive floor milestones and unconfirmed step-free rejection. Both production builds passed. OpenIndoorMaps scoped TypeScript and new geometry-module lint checks passed; Reviter's focused preparation-module TypeScript passed. Full Reviter TypeScript still reports pre-existing errors under `work/**` copies and audit scripts. The first development browser run was invalidated by hot reload; final browser validation ran on a fresh server with watching/HMR disabled.
 
@@ -453,7 +445,6 @@ multi-turn routes, all three successive stair flights, reverse following,
 selector behavior and step-free rejection. Updated views are
 `docs/screenshots/unbc-three-flight-desktop.png` and
 `docs/screenshots/unbc-three-flight-mobile.png`.
-
 
 ## Local wall-joint completion pass (2026-10-02)
 
@@ -645,7 +636,6 @@ uncertainty and floor/building filtering. Actual-package browser coverage in
 `tests/e2e/indoor-wall-review.spec.ts` verifies desktop/mobile wall picking,
 2D/3D switching and exported image/context.
 
-
 ## Native curved stair selection (2026-10-02)
 
 Prepared projects can now include `stairDisplay`: original native tread polygons bound to a stair place by overlap and the physical flight endpoint at its recovered slab elevation. 3D treads retain their measured elevation above or below the recovered slab and native thickness metadata. Display risers join adjacent measured treads without filling the entire space below a flight. In 2D, treads above a 1.2 m display cut appear as dashed overhead context and leave the ground area selectable. Lower treads provide the stair click surface. They replace the approximate stair room block for presentation; the original room outline remains available in source review. Empty space is not filled using a stair bounding rectangle.
@@ -747,7 +737,6 @@ The currently loaded preview was also exported as
 It has 4,922 nodes, while the saved master above has 4,973; the exporter preserves
 each input exactly and does not replace an older map with a newer compilation.
 
-
 ## Native door orientation and campus routing continuation (2026-10-02)
 
 The regenerated example is `/Users/ahmadjalil/Downloads/UNBC.indoor.door-axis.reviter.zip`. It uses the exact embedded RVT's decoded 3D geometry, checked against model SHA-256 `8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178`, rather than inferring openings from the visitor display. RVT, room JSON, scene and GIS entries remain byte-for-byte identical to the native-stairs input.
@@ -782,7 +771,6 @@ Final continuation checks: 31 targeted preparation tests and 60 viewer unit test
 The subsequent package is `/Users/ahmadjalil/Downloads/UNBC.indoor.connectivity-reviewed.reviter.zip`. Three subagents reviewed all 234 missing/isolated cases against the exact native model. Shared compiler fixes recover 18 public-connected destinations and 3,575 reachable pairs. There are now 184 missing entrances and 32 public-isolated destinations: 25 staff restrictions, three Gallery transit/access decisions and four unsupported native approaches. Lift assembly and served-floor evidence remain unverified.
 
 See [the complete continuation report](unbc-connectivity-continuation.md) and `unbc-connectivity-case-review.json` for every case, native source references, reproducible preparation and independent geometry/preservation proofs. The earlier “five isolated source components” classification is superseded: matched display-door ownership did not establish saved routing edges. Pass-through place search, selection and cards now consistently honor the map preference.
-
 
 ## Stair depth and visible doorways (2026-10-02)
 
@@ -1029,7 +1017,6 @@ The remaining source repair groups and authoritative examples are in
 an explicit area/POI classification; distinct labels alone do not justify invented
 walls or merged room boxes.
 
-
 ## Curved corridor routing (2026-10-02)
 
 The Pub Entrance 06-260 → Bookstore 07-240 example exposed a limitation in rectilinear path refinement: preferring a small number of native-axis elbows also made a genuinely curved lobby look angular. `curved-route.ts` adds a geometry-derived bend candidate to the existing resolver. It detects sustained, consistently turning circulation boundaries, traces local free-corridor cross-section midpoints, relaxes the trace and validates every chord continuously. Thin columns, walls, room masks, selected native apertures, physical-height native slabs and holes retain their original vetoes. The candidate must respect the walking budget and doorway direction/policy. Fixed endpoints and source graph identities remain intact. A nearby curved column, rectangle or raster staircase cannot authorize a curve.
@@ -1073,7 +1060,6 @@ The required geometry correction is to derive circulation cells from exact same-
 node --max-old-space-size=4096 --import tsx scripts/indoor/audit-pin-floor.ts prepared.zip exact-native-cache.json pin-review.json audit-output
 ```
 
-
 ### Native floor-bound circulation (October 2, 2026)
 
 Reviter's preparation pipeline now produces optional `circulationGeometry` cells directly from coplanar native floor profiles and their holes, with walls, columns, native door footprints, protected room claims and low stair projections subtracted. Original room outlines classify whole connected cells; they no longer define the recovered circulation boundary. A cell needs at least 65% circulation ownership coverage. Unlabelled slabs or incomplete enclosures stay in the review report; no hull, dilation or bounding rectangle fills their gaps. Native coordinate booleans use a 1e-6 ft numerical precision grid to dissolve duplicate floating-point faces.
@@ -1089,7 +1075,6 @@ node --max-old-space-size=6144 --import tsx scripts/indoor/rebuild-native-circul
 Validation: 144 native cells, 1,784 walking branches and 7,173 continuously checked cell-contained line segments with no boundary violations. Around pin 4, 31.17 sq ft of previously omitted clear floor is recovered; overlap with native obstacles drops from 34.73 sq ft in the old trace to 0.000005 sq ft of numerical residue. Some nearby clear floor remains unclassified; native geometry does not by itself prove public access. Pub Entrance → Bookstore passes independent native floor/wall checks in both directions, with the curved corridor preserved. Library and Tea Lab stair pairs and both compiled lift routes still change physical levels. The Library corridor → upper stair, Conference stair destination pair and Meeting → Classroom cases remain unavailable in this reviewed source package; they are recorded rather than silently joined.
 
 Evidence: `docs/unbc-native-circulation-audit.json`, `docs/unbc-native-circulation-route-proof.json`, `docs/unbc-native-circulation-browser.json`. The compiler has 21 focused passing tests, the viewer has 10, both scoped TypeScript checks pass and both production builds pass. Five passing browser tests cover desktop/mobile native cells, actual rendered curve coordinates, Next-step camera follow, arrival, all seven lift stops, both lift previews and their destination floor changes. A production-build test verifies preserved pin 4 and the native GLB section at Floor 2; see `docs/screenshots/unbc-native-circulation-pin-production.png`. Broader existing test/lint failures outside this change are not represented as a clean whole-repository result.
-
 
 ## Continuous native corridor bends (2026-10-02, 15:45)
 
@@ -1154,6 +1139,7 @@ Regression coverage includes disjoint slab shells, nested voids, persisted
 wall caps, tiny seams, low fixture tops, failed polygon overlays and legacy
 walk rejection. Browser checks load the exported package, inspect actual map
 sources and render the pinned areas on desktop and mobile.
+
 ### Repeatable random multifloor audit
 
 Run `node --import tsx scripts/indoor/audit-random-routes.ts project.zip report.json 120 20261002`
@@ -1222,3 +1208,30 @@ tests:
 ```sh
 node --import tsx --test tests/unit/native-circulation.test.ts tests/unit/centered-route.test.ts tests/unit/indoor-project.test.ts tests/unit/route-worker-client.test.ts
 ```
+
+### Centered junction approaches
+
+Native-axis simplification prioritizes fewer vertices. At an obtuse junction,
+that can extend a corridor leg to the outside of the intersection, even when a
+more central approach is available. A final bounded junction pass now samples
+exact perpendicular corridor sections, requires a stable narrow centre lane,
+and joins it to the existing outgoing guide. It may add one gentle bearing
+change before a right-angle turn. It never increases walking distance, moves
+fixed anchors, or skips the existing exact floor/barrier and directional
+passage checks. Broad plazas and unsupported or unstable lanes keep their guide.
+The pass runs after native approach joins so the simplifier cannot erase it.
+
+`docs/unbc-centered-junction-audit.json` records the master-package checks.
+For `05-113` to `07-148A`, the upper 121.8-degree bend becomes a 90-degree turn
+with a short central approach. The route drops from 128.8 m to 126.0 m and gains
+one bearing instruction (9 to 10 counted turns). Eleven selected requests,
+including reversed, curved and multi-floor journeys, retain their selected
+directional door crossings and floor transitions. Nine routes are available;
+the same two source-blocked requests remain blocked. Independent native floor
+and obstacle checks cover 187 resolved walking segments with no wall, column
+or repaired-junction crossings. Saved source and vertical sections are outside
+that planar clearance audit.
+
+`centered-junction.test.ts` covers rotations, reverse traversal, unchanged
+anchors, floor holes/obstacles, broad plazas and unstable/non-native lanes.
+Run it alongside the route, native-circulation and worker tests.
