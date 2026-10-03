@@ -327,6 +327,7 @@ export type IndoorDataset = {
       /** Measured native ramp with no reviewed navigation connection yet. */
       displayOnly?: true;
       buildings?: string[];
+      circulation?: boolean;
       nativeElementId: number;
       levelIds: number[];
       anchorPointFeet: [number, number, number];

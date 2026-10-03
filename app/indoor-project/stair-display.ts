@@ -17,7 +17,7 @@ export function projectStairDisplay(
   const features: FeatureCollection<Polygon>["features"] = [];
   if (data.stairDisplay?.sourceModelSha256 !== data.source.modelSha256)
     return { type: "FeatureCollection", features };
-  const source = relativeHeights && data.stairDisplay.sourceFlights;
+  const source = data.stairDisplay.sourceFlights;
   const flights = source
     ? source
         .filter(

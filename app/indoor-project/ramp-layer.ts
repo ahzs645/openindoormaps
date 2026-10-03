@@ -30,7 +30,7 @@ export function nativeRampLayer(
   const scene = new THREE.Scene(),
     camera = new THREE.Camera();
   const material = new THREE.MeshLambertMaterial({
-    color: "#b8d7ce",
+    color: "#d5eef6",
     side: THREE.DoubleSide,
     depthTest: true,
     depthWrite: true,
@@ -41,6 +41,8 @@ export function nativeRampLayer(
     depthTest: true,
     depthWrite: true,
   });
+  const unreviewedMaterial = material.clone();
+  unreviewedMaterial.color.set("#d3d6d4");
   const routeMaterial = new THREE.MeshBasicMaterial({
     color: "#39b4f7",
     side: THREE.DoubleSide,
@@ -62,7 +64,6 @@ export function nativeRampLayer(
         routePaths.set(path, sharedDatum);
   for (const ramp of data.rampDisplay?.ramps ?? []) {
     const edge = data.edges.find((e) => e.id === ramp.edgeId);
-    if (ramp.displayOnly && !relativeHeights) continue;
     const datum =
       nativeModel || relativeHeights || !edge
         ? sharedDatum
@@ -134,7 +135,10 @@ export function nativeRampLayer(
       new THREE.Float32BufferAttribute(positions, 3),
     );
     geometry.computeVertexNormals();
-    const mesh = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(
+      geometry,
+      ramp.circulation || edge ? material : unreviewedMaterial,
+    );
     mesh.frustumCulled = false;
     if (nativeModel) geometry.dispose();
     else scene.add(mesh);
@@ -195,6 +199,8 @@ export function nativeRampLayer(
       platformMaterial.transparent = opacity < 1;
       material.opacity = opacity;
       material.transparent = opacity < 1;
+      unreviewedMaterial.opacity = opacity;
+      unreviewedMaterial.transparent = opacity < 1;
       camera.projectionMatrix
         .fromArray(args.defaultProjectionData.mainMatrix as number[])
         .multiply(transform);
@@ -210,6 +216,7 @@ export function nativeRampLayer(
       });
       platformMaterial.dispose();
       material.dispose();
+      unreviewedMaterial.dispose();
       routeMaterial.dispose();
       renderer?.dispose();
     },

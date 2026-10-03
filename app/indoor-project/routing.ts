@@ -496,6 +496,8 @@ export function validateIndoorDataset(
             edge.kind !== "ramp" ||
             edge.nativeElementId !== ramp.nativeElementId) ||
         (ramp.displayOnly !== undefined && ramp.displayOnly !== true) ||
+        (ramp.circulation !== undefined &&
+          typeof ramp.circulation !== "boolean") ||
         !Number.isSafeInteger(ramp.nativeElementId) ||
         ramp.nativeElementId <= 0 ||
         seen.has(ramp.nativeElementId) ||
