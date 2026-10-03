@@ -10,8 +10,13 @@ import {
 import { nativeCirculationGeometryKey as compilerKey } from "../../../reviter/lib/reviter/native-circulation-geometry.ts";
 import { projectDisplayGeometry } from "../../app/indoor-project/display-geometry";
 import { centeredRoutePaths } from "../../app/indoor-project/centered-route";
-import { containsRoomPoint } from "../../../reviter/lib/reviter/room-directory.ts";
+import { openingSpanCrossings } from "../../app/indoor-project/opening-span";
+import {
+  containsRoomPoint,
+  nativeRouteBlocker,
+} from "../../../reviter/lib/reviter/room-directory.ts";
 import { projectRoutingGraph } from "../../app/indoor-project/routing-graph";
+import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 type Point = [number, number];
 const rect = (x0: number, y0: number, x1: number, y1: number): Point[] => [
@@ -375,6 +380,186 @@ test("real thresholds, access changes and stale/disconnected native cells cannot
       JSON.stringify(data.edges[1]),
     );
   }
+});
+
+function nativeApproachFixture(): IndoorDataset {
+  const data = seamFixture();
+  const approach = data.edges[1];
+  approach.id = "native-circulation:left|right";
+  delete approach.openingSpan;
+  approach.pointsFeet = [
+    [9.5, 1, 0],
+    [9.5, 2, 0],
+    [10, 2, 0],
+    [10, 1.5, 0],
+    [10.5, 1.5, 0],
+    [10.5, 1, 0],
+  ];
+  approach.lengthMetres = 0.9144;
+  return data;
+}
+
+test("native floor approaches join centered corridor guides without anchor zigzags in either direction", () => {
+  for (const reverse of [false, true]) {
+    const data = nativeApproachFixture();
+    const before = JSON.stringify(data);
+    const edges = reverse ? [...data.edges].reverse() : data.edges;
+    const ids = reverse
+      ? ["b", "right", "left", "a"]
+      : ["a", "left", "right", "b"];
+    const paths = centeredRoutePaths(data, edges, ids);
+    assert.equal(paths.length, 3);
+    assert.ok(
+      paths.every(
+        (p) => p.centered && p.nativeFloorSupported && p.nativeCirculationUsed,
+      ),
+    );
+    assert.deepEqual(
+      paths.flatMap((p, i) => (i ? p.pointsFeet.slice(1) : p.pointsFeet)),
+      reverse
+        ? [
+            [18, 3, 0],
+            [10.5, 3, 0],
+            [9.5, 3, 0],
+            [2, 3, 0],
+          ]
+        : [
+            [2, 3, 0],
+            [9.5, 3, 0],
+            [10.5, 3, 0],
+            [18, 3, 0],
+          ],
+    );
+    assert.deepEqual(
+      paths.flatMap((p) => p.edgeIds),
+      edges.map((e) => e.id),
+    );
+    assert.equal(JSON.stringify(data), before);
+  }
+});
+
+test("straightened native approach guides preserve building changes in directions", () => {
+  const data = nativeApproachFixture();
+  for (const node of data.nodes)
+    node.building = node.roomKey === "hall" ? "Library" : "Agora";
+  const nodeIds = ["a", "left", "right", "b"];
+  const paths = centeredRoutePaths(data, data.edges, nodeIds);
+  const steps = projectNavigationSteps(
+    data,
+    {
+      edges: data.edges,
+      nodeIds,
+      paths,
+      distanceMetres: 16 * 0.3048,
+      sourceDistanceMetres: 7,
+      unknownAccessAreas: [],
+      unknownAccessibilityEdges: 0,
+    },
+    "Hall",
+    "Other",
+  );
+  assert.deepEqual(
+    [...new Set(steps.map((s) => s.building))],
+    ["Library", "Agora"],
+  );
+  assert.ok(steps.some((s) => s.building === "Agora" && s.type === "straight"));
+  assert.equal(
+    steps.filter((s) => s.type === "turn" || s.type === "floor-change").length,
+    0,
+  );
+});
+
+test("native approach joins require current continuous ownership and retain physical or directed thresholds", () => {
+  for (const change of [
+    (d: IndoorDataset) => {
+      d.edges[1].id = "unverified-opening";
+    },
+    (d: IndoorDataset) => {
+      d.edges[1].direction = "from-to";
+    },
+    (d: IndoorDataset) => {
+      d.edges[1].enabled = false;
+    },
+    (d: IndoorDataset) => {
+      d.circulationGeometry!.sourceModelSha256 = "b".repeat(64);
+    },
+    (d: IndoorDataset) => {
+      d.circulationGeometry!.cells[0].ringsFeet.push(rect(9.9, 0, 10.1, 2.5));
+    },
+    (d: IndoorDataset) => {
+      d.records[1].access = "public";
+      d.circulationGeometry!.sourceGeometryKey =
+        nativeCirculationGeometryKey(d);
+    },
+  ]) {
+    const data = nativeApproachFixture();
+    change(data);
+    const paths = centeredRoutePaths(data, data.edges, [
+      "a",
+      "left",
+      "right",
+      "b",
+    ]);
+    assert.ok(paths.length > 1, JSON.stringify(data.edges[1]));
+    assert.ok(paths.some((p) => p.edgeIds.includes(data.edges[1].id)));
+  }
+});
+
+test("a native approach with a certified finite aperture still crosses that aperture", () => {
+  const data = nativeApproachFixture();
+  data.edges[1].openingSpan = seamFixture().edges[1].openingSpan;
+  const paths = centeredRoutePaths(data, data.edges, [
+    "a",
+    "left",
+    "right",
+    "b",
+  ]);
+  const points = paths.flatMap((p, i) =>
+    i ? p.pointsFeet.slice(1) : p.pointsFeet,
+  );
+  const crossings = openingSpanCrossings(
+    data.edges[1],
+    data.edges[1].openingSpan!,
+    points,
+  );
+  assert.ok(crossings.some((c) => c.forward));
+  assert.ok(
+    points.length > 2,
+    "the finite threshold cannot move onto the unrestricted center lane",
+  );
+});
+
+test("joining native approaches cannot straighten through a wall or column", () => {
+  const data = nativeApproachFixture();
+  const wall = rect(9.9, 2.5, 10.1, 5.5);
+  const column = rect(12, 2.5, 13, 4.5);
+  data.walls.push(
+    { kind: "wall", nativeElementId: 103, levelId: 1, ringsFeet: [wall] },
+    { kind: "column", nativeElementId: 104, levelId: 1, ringsFeet: [column] },
+  );
+  data.circulationGeometry!.cells[0].ringsFeet.push(wall, column);
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  const blocked = nativeRouteBlocker(
+    { walls: [{ polygon: wall }], columns: [{ polygon: column }] },
+    [],
+  );
+  assert.equal(blocked([2, 3], [18, 3]), true);
+  const paths = centeredRoutePaths(data, data.edges, [
+    "a",
+    "left",
+    "right",
+    "b",
+  ]);
+  for (const path of paths)
+    for (let i = 1; i < path.pointsFeet.length; i++)
+      assert.equal(
+        blocked(
+          path.pointsFeet[i - 1].slice(0, 2) as Point,
+          path.pointsFeet[i].slice(0, 2) as Point,
+        ),
+        false,
+      );
 });
 test("one accepted native fragment retains the physically clipped remainder of the same source area", () => {
   const data = fixture();

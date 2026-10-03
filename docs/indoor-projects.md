@@ -1187,3 +1187,38 @@ binding as successful routes, so failure explanations avoid another route search
 Set `INDOOR_PROJECT_ZIP` to the master ZIP and run
 `tests/e2e/indoor-random-routes.spec.ts` to check representative sampled requests
 through the actual route worker on desktop and mobile.
+
+### Continuous native floor approach joins
+
+Generated `native-circulation:` connections can be stored as `opening` edges
+when they join different source surfaces. They are not automatically physical
+doorways. A current model-bound native cell must cover the entire saved approach
+and all its circulation owners, with matching access and elevation, before the
+resolved route can align that approach with its adjoining corridor guides.
+Directed connections, finite apertures and stale or disconnected cells retain
+their thresholds. Source graph edges and policy metadata remain unchanged.
+
+The resolver first centers each supported walking section, then simplifies the
+combined guide against native wall axes, exact floors, walls, columns, masks
+and selected doorway crossings. It accepts a join only without increasing
+turns or distance. Projected source anchors divide the cleaned line into its
+original edge groups without introducing bends, preserving Library/Agora
+building labels in the navigation preview. Curved and vertical sections retain
+their existing handling.
+
+`docs/unbc-corridor-join-audit.json` records eleven selected master-package
+requests. Washroom `05-113` to Office `07-148A` changes from 131.6 m and 13 turns
+to 128.8 m and 9 turns; the reverse direction drops from 16 to 10 turns.
+Straight Library corridor routes retain their geometry. All selected directional
+door crossings and vertical instructions remain unchanged; two source-blocked
+requests stay blocked. Independent checks found continuous floor support and
+no native obstacle crossings across 185 resolved walking segments.
+
+Regression tests in `native-circulation.test.ts` cover both directions, building
+labels, finite/directed thresholds, stale geometry, access changes, native cell
+holes, walls and columns. Run alongside the existing centered-route and policy
+tests:
+
+```sh
+node --import tsx --test tests/unit/native-circulation.test.ts tests/unit/centered-route.test.ts tests/unit/indoor-project.test.ts tests/unit/route-worker-client.test.ts
+```

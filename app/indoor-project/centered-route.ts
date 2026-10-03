@@ -81,6 +81,85 @@ const length = (points: readonly number[][]) =>
       (sum, p, i) => sum + Math.hypot(p[0] - points[i][0], p[1] - points[i][1]),
       0,
     );
+function walkingPathQuality(points: number[][]) {
+  let turns = 0;
+  for (let i = 1; i < points.length - 1; i++) {
+    const a = points[i - 1],
+      b = points[i],
+      c = points[i + 1];
+    const incoming = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    const outgoing = Math.atan2(c[1] - b[1], c[0] - b[0]);
+    const delta = Math.abs(
+      Math.atan2(Math.sin(outgoing - incoming), Math.cos(outgoing - incoming)),
+    );
+    if (delta > (25 * Math.PI) / 180) turns++;
+  }
+  return { turns, distance: length(points) };
+}
+/** Split a cleaned guide at projected source anchors. These are collinear
+ * metadata boundaries, not turns or physical thresholds. Source edge groups
+ * retain their building identity while the line stays continuous. */
+function splitWalkingGuide(
+  points: XYZ[],
+  parts: RoutePath[],
+): RoutePath[] | null {
+  const distances = [0];
+  for (let i = 1; i < points.length; i++)
+    distances.push(
+      distances[i - 1] +
+        Math.hypot(
+          points[i][0] - points[i - 1][0],
+          points[i][1] - points[i - 1][1],
+        ),
+    );
+  const cuts = [{ distance: 0, point: points[0] }];
+  for (const part of parts.slice(0, -1)) {
+    const anchor = part.pointsFeet.at(-1)!;
+    let best: { distance: number; point: XYZ; error: number } | undefined;
+    for (let i = 1; i < points.length; i++) {
+      const a = points[i - 1],
+        b = points[i];
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1];
+      const len2 = dx * dx + dy * dy;
+      if (len2 < 1e-12) continue;
+      const t = Math.max(
+        0,
+        Math.min(1, ((anchor[0] - a[0]) * dx + (anchor[1] - a[1]) * dy) / len2),
+      );
+      const point: XYZ = [a[0] + t * dx, a[1] + t * dy, a[2]];
+      const error = Math.hypot(point[0] - anchor[0], point[1] - anchor[1]);
+      if (!best || error < best.error)
+        best = {
+          point,
+          error,
+          distance: distances[i - 1] + t * Math.sqrt(len2),
+        };
+    }
+    if (
+      !best ||
+      best.distance <= cuts.at(-1)!.distance + 1e-6 ||
+      best.distance >= distances.at(-1)! - 1e-6
+    )
+      return null;
+    cuts.push(best);
+  }
+  cuts.push({ distance: distances.at(-1)!, point: points.at(-1)! });
+  return parts.map((part, i) => ({
+    ...part,
+    shape: "orthogonal",
+    sourceReason: undefined,
+    pointsFeet: [
+      cuts[i].point,
+      ...points.filter(
+        (_, j) =>
+          distances[j] > cuts[i].distance + 1e-6 &&
+          distances[j] < cuts[i + 1].distance - 1e-6,
+      ),
+      cuts[i + 1].point,
+    ],
+  }));
+}
 let ringBounds = new WeakMap<XY[], number[]>();
 let ringQueries = new WeakMap<XY[], ReturnType<typeof createRingPointQuery>>();
 function boundsOfRing(ring: XY[]) {
@@ -480,18 +559,21 @@ function doorCoverage(footprint: XY[], edge: IndoorEdge, normal?: XY): Rings {
   ];
 }
 
-/** A recovered seam between two semantic corridor records is not a doorway
+/** A recovered seam or floor approach between circulation records is not a doorway
  * when a current native cell proves continuous floor through both anchors.
  * Real doors, access changes, directed openings and disconnected cells retain
  * their finite thresholds. The graph edge and its access metadata stay intact. */
-function nativeCellSeam(data: IndoorDataset, edge: IndoorEdge): boolean {
+function nativeCellConnection(data: IndoorDataset, edge: IndoorEdge): boolean {
+  const seam = edge.id.startsWith("opening:recovered-circulation-seam:");
+  const approach = edge.id.startsWith("native-circulation:");
   if (
     edge.kind !== "opening" ||
     !edge.enabled ||
-    !edge.id.startsWith("opening:recovered-circulation-seam:") ||
+    (!seam && !approach) ||
     (edge.direction && edge.direction !== "both") ||
-    !validatedOpeningSpan(data, edge) ||
-    edge.roomKeys.length !== 2
+    (seam &&
+      (!validatedOpeningSpan(data, edge) || edge.roomKeys.length !== 2)) ||
+    (approach && (!!edge.openingSpan || edge.roomKeys.length < 2))
   )
     return false;
   const owners = edge.roomKeys.map((key) =>
@@ -501,7 +583,7 @@ function nativeCellSeam(data: IndoorDataset, edge: IndoorEdge): boolean {
     owners.some(
       (r) => !r?.circulation || !r.walkable || r.access === "staff",
     ) ||
-    owners[0]!.access !== owners[1]!.access
+    owners.some((r) => r!.access !== owners[0]!.access)
   )
     return false;
   return nativeCirculationCells(data).some(
@@ -528,6 +610,13 @@ function nativeCellSeam(data: IndoorDataset, edge: IndoorEdge): boolean {
   );
 }
 
+function nativeCellSeam(data: IndoorDataset, edge: IndoorEdge): boolean {
+  return (
+    edge.id.startsWith("opening:recovered-circulation-seam:") &&
+    nativeCellConnection(data, edge)
+  );
+}
+
 function refine(
   data: IndoorDataset,
   path: RoutePath,
@@ -536,6 +625,7 @@ function refine(
   lastId: string,
   passageQuery: ReturnType<typeof createDoorPassageQuery>,
   portalEdges: IndoorEdge[] = [],
+  guideOnly = false,
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -561,7 +651,7 @@ function refine(
   // A recovered doorless opening keeps its proven threshold anchors. Walking
   // legs on either side can centre without moving that source connection.
   const openingEdges = edges.filter(
-    (e) => e.kind === "opening" && !nativeCellSeam(data, e),
+    (e) => e.kind === "opening" && !nativeCellConnection(data, e),
   );
   const openingSpans = openingEdges.map((edge) => ({
     edge,
@@ -793,6 +883,14 @@ function refine(
       );
     };
     const candidates: XY[][] = [];
+    let sourceGuide = false;
+    if (guideOnly) {
+      const guide = path.pointsFeet.map<XY>((p) => [p[0], p[1]]);
+      if (!guide.slice(1).every((p, i) => validSegment(guide[i], p, free)))
+        return source("no-clearance-route");
+      candidates.push(guide);
+      sourceGuide = true;
+    }
     const frames: { a: XY; b: XY; u: XY; v: XY }[] = [];
     for (const angle of axes(
       walls.filter((w) => w.kind === "wall").map((w) => w.ringsFeet),
@@ -818,6 +916,7 @@ function refine(
             !i || Math.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
         );
         if (
+          !guideOnly &&
           points.slice(1).every((p, i) => validSegment(points[i], p, free)) &&
           length(points) <= sourceLength * 1.15 + 0.6
         )
@@ -879,10 +978,14 @@ function refine(
     // source guide has continuous native clearance. Use that guide as a basis
     // for orthogonal simplification, rather than silently retaining its raster
     // elbows. This cannot authorize a gap or repair an unsupported source leg.
-    let sourceGuide = false;
     if (
       candidates.length === 0 &&
-      edges.every((e) => e.kind === "walk" || !!validatedOpeningSpan(data, e))
+      edges.every(
+        (e) =>
+          e.kind === "walk" ||
+          nativeCellConnection(data, e) ||
+          !!validatedOpeningSpan(data, e),
+      )
     ) {
       const guide = path.pointsFeet
         .map<XY>((p) => [p[0], p[1]])
@@ -1092,17 +1195,22 @@ function refine(
     candidates.splice(0, candidates.length, ...policyCandidates);
     candidates.sort((a, b) => a.length - b.length || length(a) - length(b));
     if (candidates.length === 0) return source("no-clearance-route");
-    const curved = curvedCorridorPath(
-      candidates[0],
-      nativeSurfaces.cells.length > 0
-        ? nativeSurfaces.cells.flatMap((cell) => cell.ringsFeet)
-        : records
-            .filter((record) => record.circulation && !record.stair)
-            .flatMap((record) => record.ringsFeet),
-      (point, normal) => center(point, normal, free, span),
-      (a, b) => validSegment(a, b, free),
-      Math.min(sourceLength * 1.15 + 0.6, length(candidates[0]) * 1.2 + 0.6),
-    );
+    const curved = guideOnly
+      ? null
+      : curvedCorridorPath(
+          candidates[0],
+          nativeSurfaces.cells.length > 0
+            ? nativeSurfaces.cells.flatMap((cell) => cell.ringsFeet)
+            : records
+                .filter((record) => record.circulation && !record.stair)
+                .flatMap((record) => record.ringsFeet),
+          (point, normal) => center(point, normal, free, span),
+          (a, b) => validSegment(a, b, free),
+          Math.min(
+            sourceLength * 1.15 + 0.6,
+            length(candidates[0]) * 1.2 + 0.6,
+          ),
+        );
     const substantialTurns = (
       points: XY[],
       ranges: RoutePath["curveRanges"] = [],
@@ -1211,7 +1319,7 @@ export function centeredRoutePaths(
       groups.push({ edges: [edge], first: from.id, last: to.id });
     }
   });
-  return paths.flatMap((path, i) => {
+  const refined = paths.flatMap((path, i) => {
     if (!enabled)
       return [
         {
@@ -1242,7 +1350,7 @@ export function centeredRoutePaths(
     if (
       (resolved.centered &&
         !group.edges.some(
-          (e) => e.kind === "opening" && !nativeCellSeam(data, e),
+          (e) => e.kind === "opening" && !nativeCellConnection(data, e),
         )) ||
       !group.edges.some((e) => ["door", "opening"].includes(e.kind)) ||
       !data.doors ||
@@ -1296,7 +1404,7 @@ export function centeredRoutePaths(
       ).map((p) => [...p] as XYZ);
       if (
         edge.kind === "door" ||
-        (edge.kind === "opening" && !nativeCellSeam(data, edge))
+        (edge.kind === "opening" && !nativeCellConnection(data, edge))
       ) {
         flush();
         parts.push({
@@ -1320,22 +1428,7 @@ export function centeredRoutePaths(
         const points = paths.flatMap((p, i) =>
           i ? p.pointsFeet.slice(1) : p.pointsFeet,
         );
-        let turns = 0;
-        for (let i = 1; i < points.length - 1; i++) {
-          const a = points[i - 1],
-            b = points[i],
-            c = points[i + 1];
-          const incoming = Math.atan2(b[1] - a[1], b[0] - a[0]),
-            outgoing = Math.atan2(c[1] - b[1], c[0] - b[0]);
-          const delta = Math.abs(
-            Math.atan2(
-              Math.sin(outgoing - incoming),
-              Math.cos(outgoing - incoming),
-            ),
-          );
-          if (delta > (25 * Math.PI) / 180) turns++;
-        }
-        return { turns, distance: length(points) };
+        return walkingPathQuality(points);
       };
       const original = quality([resolved]),
         fixed = quality(parts);
@@ -1347,4 +1440,81 @@ export function centeredRoutePaths(
     }
     return parts;
   });
+  if (!enabled) return refined;
+  // Native floor approaches have graph anchors, but no physical threshold.
+  // Centre each supported run first, then simplify its joins using that guide.
+  // This retains the chosen corridor lanes instead of searching an entire
+  // campus cell again and drifting into a different part of an open plaza.
+  const joinedApproaches = new Set<string>();
+  for (let i = 1; i < refined.length - 1; i++) {
+    const middle = refined[i];
+    if (
+      middle.edgeIds.length !== 1 ||
+      !middle.edgeIds[0].startsWith("native-circulation:") ||
+      joinedApproaches.has(middle.edgeIds[0])
+    )
+      continue;
+    const index = edges.findIndex((e) => e.id === middle.edgeIds[0]);
+    if (index === -1 || !nativeCellConnection(data, edges[index])) continue;
+    const parts = refined.slice(i - 1, i + 2);
+    if (
+      parts.some(
+        (p) =>
+          !p.centered ||
+          !p.nativeFloorSupported ||
+          p.shape === "curved" ||
+          p.levelIds.length !== 1 ||
+          p.levelIds[0] !== middle.levelIds[0] ||
+          p.pointsFeet.some(
+            (q) => Math.abs(q[2] - middle.pointsFeet[0][2]) >= 0.01,
+          ),
+      )
+    )
+      continue;
+    const first = edges.findIndex((e) => e.id === parts[0].edgeIds[0]);
+    const last = edges.findIndex((e) => e.id === parts[2].edgeIds.at(-1));
+    if (first === -1 || last < first) continue;
+    const walking = edges.slice(first, last + 1);
+    if (
+      walking.some(
+        (e) =>
+          !["walk", "door", "opening"].includes(e.kind) ||
+          (e.kind === "opening" && !nativeCellConnection(data, e)),
+      )
+    )
+      continue;
+    const pointsFeet = parts.flatMap((p, j) =>
+      j ? p.pointsFeet.slice(1) : p.pointsFeet,
+    );
+    const joined = refine(
+      data,
+      {
+        edgeIds: walking.map((e) => e.id),
+        levelIds: middle.levelIds,
+        pointsFeet,
+        centered: false,
+      },
+      walking,
+      nodeIds[first],
+      nodeIds[last + 1],
+      passageQuery,
+      [],
+      true,
+    );
+    const originalQuality = walkingPathQuality(pointsFeet);
+    const joinedQuality = walkingPathQuality(joined.pointsFeet);
+    if (
+      joined.centered &&
+      joined.pointsFeet.length < pointsFeet.length &&
+      joinedQuality.turns <= originalQuality.turns &&
+      joinedQuality.distance <= originalQuality.distance + 1e-6
+    ) {
+      const divided = splitWalkingGuide(joined.pointsFeet, parts);
+      if (!divided) continue;
+      refined.splice(i - 1, 3, ...divided);
+      joinedApproaches.add(middle.edgeIds[0]);
+      i = Math.max(0, i - 2);
+    }
+  }
+  return refined;
 }

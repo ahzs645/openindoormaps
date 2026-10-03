@@ -140,7 +140,8 @@ export function projectNavigationSteps(
         (last.type === "depart" ||
           last.type === "straight" ||
           last.type === "turn") &&
-        last.levelId === step.levelId
+        last.levelId === step.levelId &&
+        last.building === step.building
       ) {
         last.distanceMeters += metres;
         last.pointsFeet.push(b);
