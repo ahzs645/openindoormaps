@@ -6,6 +6,7 @@ import type { FeatureCollection } from "geojson";
 import { geographicPoint } from "../../app/indoor-project/routing";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import polygonClipping from "polygon-clipping";
+import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 const zip = process.env.INDOOR_VIEWER_ZIP;
 for (const mobile of [false, true])
   test(`Floor 3 keeps the Building 6 native well open and surrounding ground solid on ${mobile ? "mobile" : "desktop"}`, async ({
@@ -168,61 +169,99 @@ for (const mobile of [false, true])
         ground: FeatureCollection;
         selection: FeatureCollection;
       };
-      const ground = collections.ground.features.find(
-        (f) => f.properties?.key === "rm-1487353-b7dc671f702f",
-      )!;
-      expect(ground.geometry.type).toBe("MultiPolygon");
-      expect(ground.properties?.groundEvidence).toBe("native-stair-slab");
-      const selection = collections.selection.features.find(
-        (f) => f.properties?.key === ground.properties?.key,
-      )!;
-      const polygonArea = (parts: number[][][][]) => {
-        const origin = parts[0]?.[0]?.[0] ?? [0, 0];
-        return parts.reduce(
-          (sum, p) =>
-            sum +
-            p.reduce(
-              (s, r, i) =>
-                s +
-                ((i ? -1 : 1) *
-                  Math.abs(
-                    r.reduce((a, q, j) => {
-                      const b = r[(j + 1) % r.length];
-                      return (
-                        a +
-                        (q[0] - origin[0]) * (b[1] - origin[1]) -
-                        (b[0] - origin[0]) * (q[1] - origin[1])
-                      );
-                    }, 0),
-                  )) /
-                  2,
-              0,
-            ),
-          0,
-        );
+      const material = collections.ground.features.filter(
+        (f) =>
+          !f.properties?.openDrop &&
+          (f.geometry.type === "Polygon" || f.geometry.type === "MultiPolygon"),
+      );
+      expect(material.some((f) => f.properties?.nativeFloor)).toBe(true);
+      // The native well is open in the actual rendered ground, not merely in a
+      // place-specific overlay. Source contours remain available for picking.
+      expect(
+        material.some((f) =>
+          booleanPointInPolygon(
+            { type: "Point", coordinates: center },
+            f.geometry as
+              | import("geojson").Polygon
+              | import("geojson").MultiPolygon,
+          ),
+        ),
+      ).toBe(false);
+      const ground = {
+        geometry: {
+          type: "MultiPolygon" as const,
+          coordinates: material.flatMap((f) =>
+            f.geometry.type === "Polygon"
+              ? [f.geometry.coordinates]
+              : (f.geometry as import("geojson").MultiPolygon).coordinates,
+          ),
+        },
       };
-      if (
-        ground.geometry.type === "MultiPolygon" &&
-        selection.geometry.type === "MultiPolygon"
-      )
+      const stairKeys = new Set(
+        data.records.filter((r) => r.stair).map((r) => r.key),
+      );
+      for (const f of material.filter((f) =>
+        stairKeys.has(String(f.properties?.key)),
+      ))
         expect(
-          polygonArea(ground.geometry.coordinates) /
-            polygonArea(selection.geometry.coordinates),
-        ).toBeLessThan(0.05);
+          f.properties?.nativeCellId ||
+            f.properties?.groundEvidence === "native-stair-surround",
+        ).toBeTruthy();
       expect(
         collections.stairs.features.filter(
           (f) => f.properties?.stairElementId === 1_779_495,
         ).length,
       ).toBeGreaterThanOrEqual(24);
-      // Ordinary ground is preserved; the selectable stair outline is not material.
-      for (const f of collections.ground.features.filter(
-        (f) => !f.properties?.groundEvidence,
-      ))
-        expect(f).toEqual(
-          collections.selection.features.find(
-            (s) => s.id === f.id && s.properties?.key === f.properties?.key,
-          ),
-        );
+      // Native circulation stays inside its original physical cell. Existing
+      // room-face masks may trim its tint around neighbouring repaired rooms.
+      for (const f of collections.ground.features.filter((f) =>
+        Boolean(f.properties?.nativeCellId),
+      )) {
+        const original = collections.selection.features.find(
+          (s) => s.id === f.id && s.properties?.key === f.properties?.key,
+        )!;
+        expect(original).toBeDefined();
+        if (f.properties?.wallFaceFloorMasks) {
+          expect(f.geometry.type).toBe("MultiPolygon");
+          expect(original.geometry.type).toBe("MultiPolygon");
+          const extra = polygonClipping.difference(
+            (f.geometry as import("geojson").MultiPolygon).coordinates as [
+              number,
+              number,
+            ][][][],
+            (original.geometry as import("geojson").MultiPolygon)
+              .coordinates as [number, number][][][],
+          );
+          const origin = (f.geometry as import("geojson").MultiPolygon)
+            .coordinates[0][0][0];
+          const extraArea = extra.reduce(
+            (sum, polygon) =>
+              sum +
+              polygon.reduce(
+                (area, ring, i) =>
+                  area +
+                  ((i ? -1 : 1) *
+                    Math.abs(
+                      ring.reduce((value, a, j) => {
+                        const b = ring[(j + 1) % ring.length];
+                        return (
+                          value +
+                          (a[0] - origin[0]) * (b[1] - origin[1]) -
+                          (b[0] - origin[0]) * (a[1] - origin[1])
+                        );
+                      }, 0),
+                    )) /
+                    2,
+                0,
+              ),
+            0,
+          );
+          // Geographic clipping can leave sub-millimetre round-trip slivers.
+          expect(extraArea).toBeLessThan(1e-14);
+        } else {
+          expect(f).toEqual(original);
+        }
+      }
       const covered = collections.stairs.features.filter(
         (f) =>
           f.properties?.stairElementId === 1_779_495 &&
@@ -267,7 +306,7 @@ for (const mobile of [false, true])
         path: `${process.env.INDOOR_SCREENSHOT_DIR ?? "docs/screenshots"}/unbc-floor-3-stairwell-mode-verified-${three ? "3d" : "2d"}-${mobile ? "mobile" : "desktop"}.png`,
       });
     }
-    // The open well still supports a real map click in 2D.
+    // The open well still supports a real native-flight click in 2D.
     await page.getByRole("button", { name: "2D rooms", exact: true }).click();
     await page.evaluate(
       ({ center, mobile }) =>
@@ -292,8 +331,11 @@ for (const mobile of [false, true])
       return { x: p.x + r.left, y: p.y + r.top };
     }, center);
     await page.mouse.click(point.x, point.y);
-    await expect(
-      page.locator('[data-testid="project-navigation"]'),
-    ).toContainText("06-S205");
+    const inspector = page.getByRole("complementary", {
+      name: "Source staircase",
+      exact: true,
+    });
+    await expect(inspector).toContainText("Source staircase #1779495");
+    await expect(inspector).toContainText("06-S205");
     expect(errors).toEqual([]);
   });

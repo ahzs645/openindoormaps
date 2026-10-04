@@ -3,6 +3,7 @@ import { zipSync, strToU8 } from "fflate";
 import type { IndoorDataset } from "./contract";
 import { reviewPinContext, type ReviewPin } from "./review-pins";
 import type { WallCapture } from "./wall-review-layer";
+import { nearbySourceStairs, type SourceStair } from "./source-stairs";
 export function ReviewPinPanel({
   pin,
   data,
@@ -11,6 +12,7 @@ export function ReviewPinPanel({
   onRemove,
   onLocate,
   capture,
+  onInspectStair,
 }: {
   pin: ReviewPin;
   data: IndoorDataset;
@@ -19,6 +21,7 @@ export function ReviewPinPanel({
   onRemove: () => void;
   onLocate: () => void;
   capture: WallCapture;
+  onInspectStair?: (stair: SourceStair) => void;
 }) {
   const [label, setLabel] = useState(pin.label),
     [notes, setNotes] = useState(pin.notes),
@@ -82,6 +85,27 @@ export function ReviewPinPanel({
         </dd>
       </dl>
       <button onClick={onLocate}>Show pin on map</button>
+      {nearbySourceStairs(data, pin.levelId, pin.pointFeet).map(
+        ({ stair, routeEdges }) => (
+          <div key={stair.stairElementId} className="project-native-ramp-item">
+            <strong>Native staircase #{stair.stairElementId}</strong>
+            <p>
+              {routeEdges.some((edge) => edge.enabled)
+                ? "Route connection available"
+                : "No compiled route connection · landings need review"}
+            </p>
+            <p>
+              Nearby native steps identify the staircase; railing proximity does
+              not confirm an entrance.
+            </p>
+            {onInspectStair && (
+              <button onClick={() => onInspectStair(stair)}>
+                Inspect staircase #{stair.stairElementId}
+              </button>
+            )}
+          </div>
+        ),
+      )}
       <label>
         Pin label
         <input

@@ -758,6 +758,7 @@ export function validateIndoorDataset(
           JSON.stringify([source.levelId, source.ringsFeet]) ||
         ![
           "native-wall-enclosure",
+          "reviewed-native-wall-enclosure",
           "revit-finish-face",
           "native-mesh-wall-enclosure",
           "registered-source-wall-enclosure",
@@ -768,6 +769,29 @@ export function validateIndoorDataset(
           "source-backed-native-wall-enclosure",
         ].includes(room.boundarySource) &&
           !room.sourceProof) ||
+        (room.boundarySource === "reviewed-native-wall-enclosure" &&
+          (!room.reviewProof ||
+            room.reviewProof.sourceModelSha256 !== d.source.modelSha256 ||
+            !Number.isFinite(room.reviewProof.nativeFloorCoveredSquareFeet) ||
+            room.reviewProof.nativeFloorCoveredSquareFeet <= 0 ||
+            !Array.isArray(room.reviewProof.closures) ||
+            room.reviewProof.closures.length === 0 ||
+            room.reviewProof.closures.length > 12 ||
+            room.reviewProof.closures.some(
+              (c) =>
+                !Number.isSafeInteger(c.nativeWallId) ||
+                c.nativeWallId <= 0 ||
+                !room.boundaryElementIds.includes(c.nativeWallId) ||
+                !Number.isFinite(c.reachFeet) ||
+                c.reachFeet <= 0.05 ||
+                c.reachFeet > 1.5 ||
+                !Array.isArray(c.ringsFeet) ||
+                c.ringsFeet.length !== 1 ||
+                c.ringsFeet[0].length !== 4 ||
+                c.ringsFeet[0].some(
+                  (p) => p.length !== 2 || p.some((n) => !Number.isFinite(n)),
+                ),
+            ))) ||
         (room.boundarySource === "native-mesh-wall-enclosure" &&
           !room.meshProof) ||
         (room.meshProof !== undefined &&

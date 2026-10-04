@@ -1030,7 +1030,12 @@ export default function IndoorProjectPage() {
                   setSelected("");
                   setEdgeId(sourceStairId(stair.stairElementId));
                   setPinId("");
-                  const points = stair.treads.flatMap((t) => t.ringFeet);
+                  const points = [
+                    ...stair.treads.flatMap((t) => t.ringFeet),
+                    ...(stair.landings ?? []).flatMap((l) =>
+                      l.ringsFeet.flat(),
+                    ),
+                  ];
                   setEditorFocus({
                     point: [
                       (Math.min(...points.map((p) => p[0])) +
@@ -1812,6 +1817,32 @@ export default function IndoorProjectPage() {
                   pin={chosenPin}
                   data={data}
                   onLocate={() => pinFit.current?.()}
+                  onInspectStair={(stair) => {
+                    // The native-flight focus takes precedence over a pending
+                    // whole-floor fit from asynchronous floor preparation.
+                    fitted.current = true;
+                    setSelected("");
+                    setEdgeId(sourceStairId(stair.stairElementId));
+                    setPinId("");
+                    const points = [
+                      ...stair.treads.flatMap((t) => t.ringFeet),
+                      ...(stair.landings ?? []).flatMap((l) =>
+                        l.ringsFeet.flat(),
+                      ),
+                    ];
+                    setEditorFocus({
+                      point: [
+                        (Math.min(...points.map((p) => p[0])) +
+                          Math.max(...points.map((p) => p[0]))) /
+                          2,
+                        (Math.min(...points.map((p) => p[1])) +
+                          Math.max(...points.map((p) => p[1]))) /
+                          2,
+                      ],
+                      nonce: Date.now(),
+                      zoom: 20,
+                    });
+                  }}
                   onSave={(pin) =>
                     commit(
                       setReviewPins(

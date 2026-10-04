@@ -6,12 +6,13 @@ type Point = [number, number];
 /** Visibility only. Native treads and route polygons remain untouched. */
 export function visibleTreadPolygons(
   flight: Pick<Flight, "floorOccluders">,
-  tread: Flight["treads"][number],
+  tread: Flight["treads"][number] & { ringsFeet?: Point[][] },
 ): Point[][][] {
   const slabs = (flight.floorOccluders ?? []).filter(
     (s) => tread.elevationFeet < s.elevationFeet - 0.01,
   );
-  if (slabs.length === 0) return [[tread.ringFeet]];
+  const rings = tread.ringsFeet ?? [tread.ringFeet];
+  if (slabs.length === 0) return [rings];
   const scale = 100_000;
   const local = (r: Point[]) =>
     [...r, r[0]].map(
@@ -19,10 +20,7 @@ export function visibleTreadPolygons(
     );
   try {
     return polygonClipping
-      .difference(
-        [local(tread.ringFeet)],
-        ...slabs.map((s) => s.ringsFeet.map(local)),
-      )
+      .difference(rings.map(local), ...slabs.map((s) => s.ringsFeet.map(local)))
       .map((p) =>
         p.map((r) => r.map((q) => [q[0] / scale, q[1] / scale] as Point)),
       );

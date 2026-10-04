@@ -1,4 +1,5 @@
 import type { IndoorDataset } from "./contract";
+import pointInPolygon from "@turf/boolean-point-in-polygon";
 export type SourceStair = NonNullable<
   NonNullable<IndoorDataset["stairDisplay"]>["sourceFlights"]
 >[number];
@@ -38,6 +39,59 @@ export function sourceStairEdges(data: IndoorDataset, stair: SourceStair) {
       e.nativeElementId === stair.stairElementId &&
       (e.kind === "stairs" || e.kind === "local-steps"),
   );
+}
+
+/** Physical tread proximity helps locate a source assembly from a review pin.
+ * A railing or projected flight does not prove a landing or authorize a route. */
+export function nearbySourceStairs(
+  data: IndoorDataset,
+  levelId: number,
+  point: [number, number],
+  maxDistanceFeet = 8,
+) {
+  if (data.stairDisplay?.sourceModelSha256 !== data.source.modelSha256)
+    return [];
+  const distanceToTread = (ring: [number, number][]) => {
+    if (ring.length < 3) return Infinity;
+    if (
+      pointInPolygon(point, {
+        type: "Polygon",
+        coordinates: [[...ring, ring[0]]],
+      })
+    )
+      return 0;
+    return Math.min(
+      ...ring.map((a, i) => {
+        const b = ring[(i + 1) % ring.length],
+          dx = b[0] - a[0],
+          dy = b[1] - a[1],
+          t = Math.max(
+            0,
+            Math.min(
+              1,
+              ((point[0] - a[0]) * dx + (point[1] - a[1]) * dy) /
+                (dx * dx + dy * dy || 1),
+            ),
+          );
+        return Math.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
+      }),
+    );
+  };
+  return (data.stairDisplay.sourceFlights ?? [])
+    .filter((stair) => stair.levelIds.includes(levelId))
+    .map((stair) => ({
+      stair,
+      distanceFeet: Math.min(
+        ...stair.treads.map((t) => distanceToTread(t.ringFeet)),
+      ),
+      routeEdges: sourceStairEdges(data, stair),
+    }))
+    .filter((hit) => hit.distanceFeet <= maxDistanceFeet)
+    .sort(
+      (a, b) =>
+        a.distanceFeet - b.distanceFeet ||
+        a.stair.stairElementId - b.stair.stairElementId,
+    );
 }
 export function sourceStairAnchor(
   data: IndoorDataset,

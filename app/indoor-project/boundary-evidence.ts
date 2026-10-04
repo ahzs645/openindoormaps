@@ -37,11 +37,17 @@ export function projectBoundaryEvidence(
                 (native?.sourceModelSha256 === data.source.modelSha256 &&
                   native.boundarySource === "native-wall-enclosure")
               ? "Recovered native wall interior · navigation regenerated"
-              : meshKeys.has(record.key)
-                ? "Native 3D wall section · display only; original navigation interior"
-                : displayKeys.has(record.key)
-                  ? "Prepared native display block · original navigation interior"
-                  : "Source outline · boundary review needed";
+              : data.presentation?.rooms.some(
+                    (r) =>
+                      r.roomKey === record.key &&
+                      r.boundarySource === "reviewed-native-wall-enclosure",
+                  )
+                ? "Reviewed native wall faces · short display closures; native doors retained"
+                : meshKeys.has(record.key)
+                  ? "Native 3D wall section · display only; original navigation interior"
+                  : displayKeys.has(record.key)
+                    ? "Prepared native display block · original navigation interior"
+                    : "Source outline · boundary review needed";
       return [record.key, text];
     }),
   );

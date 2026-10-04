@@ -71,7 +71,20 @@ export function projectStairDisplay(
         r,
       ]),
     );
-    for (const [i, t] of flight.treads.entries()) {
+    const surfaces = [
+      ...flight.treads.map((t) => ({
+        ...t,
+        surfaceKind: "tread" as const,
+        ringsFeet: [t.ringFeet],
+      })),
+      ...(flight.landings ?? []).map((l) => ({
+        ...l,
+        runElementId: l.nativeElementId,
+        ringFeet: l.ringsFeet[0],
+        surfaceKind: "landing" as const,
+      })),
+    ];
+    for (const [i, t] of surfaces.entries()) {
       const scale = data.alignment.verticalMetresPerFoot;
       const topMetres =
         (t.elevationFeet -
@@ -140,7 +153,8 @@ export function projectStairDisplay(
         const q = profile[(j + 1) % profile.length];
         area += p[0] * q[1] - q[0] * p[1];
       }
-      let color = i % 2 ? "#d4dde6" : "#c7d3df";
+      let color =
+        t.surfaceKind === "landing" ? "#c7d3df" : i % 2 ? "#d4dde6" : "#c7d3df";
       if ("context" in flight && flight.context === "tiered-seating")
         color = i % 2 ? "#d6cebd" : "#c9c0ad";
       if (area < 0) profile.reverse();
@@ -170,6 +184,10 @@ export function projectStairDisplay(
             ...(source ? { id: flight.roomKey } : { key: flight.roomKey }),
             stairElementId: flight.stairElementId,
             runElementId: t.runElementId,
+            surfaceKind: t.surfaceKind,
+            ...(t.surfaceKind === "landing"
+              ? { nativeElementId: t.runElementId }
+              : {}),
             topMetres,
             baseMetres,
             displayBaseMetres,

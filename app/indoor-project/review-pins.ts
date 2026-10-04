@@ -2,6 +2,7 @@ import type { IndoorDataset } from "./contract";
 import type { IndoorProject } from "./package";
 import { wallReviewContext, wallReviewKey } from "./wall-review";
 import type { EditPoint } from "./map-edits";
+import { nearbySourceStairs } from "./source-stairs";
 export type ReviewPin = {
   id: string;
   label: string;
@@ -144,6 +145,21 @@ export function reviewPinContext(data: IndoorDataset, pin: ReviewPin) {
     floor: data.floors.find((f) => f.levelIds.includes(pin.levelId))?.name,
     alignment: data.alignment,
     nearbyWall: pin.wallKey ? wallReviewContext(data, pin.wallKey) : null,
+    nearbyStairs: nearbySourceStairs(data, pin.levelId, pin.pointFeet).map(
+      ({ stair, distanceFeet, routeEdges }) => ({
+        stairElementId: stair.stairElementId,
+        distanceFeet,
+        levelIds: stair.levelIds,
+        sourceGeometry: stair.sourceGeometry,
+        routeConnectionAvailable: routeEdges.some((edge) => edge.enabled),
+        routeEdges: routeEdges.map((edge) => ({
+          id: edge.id,
+          enabled: edge.enabled,
+          roomKeys: edge.roomKeys,
+          evidence: edge.evidence,
+        })),
+      }),
+    ),
     nearbyRooms: data.records
       .filter(
         (r) =>

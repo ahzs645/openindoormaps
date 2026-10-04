@@ -1,4 +1,6 @@
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
+import { stableWallGeometry } from "./stable-wall-geometry";
+import { precisionWallLayer } from "./precision-wall-layer";
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import {
   LngLatBounds,
@@ -243,16 +245,20 @@ function PreparedProjectMapLayers({
           ? simpleRooms
           : roomBlocks
         ).features.filter(
-          (f) => !nativeStairKeys.includes(String(f.properties?.key)),
+          (f) =>
+            !nativeStairKeys.includes(String(f.properties?.key)) &&
+            !prepared.stairSurroundKeys.includes(String(f.properties?.key)),
         ),
       ),
-      exposedWalls: review
-        ? exposedWalls
-        : simplifyGeometry
-          ? simpleWalls
-          : showStructures
-            ? exposedWalls
-            : visitorWalls,
+      exposedWalls: stableWallGeometry(
+        review
+          ? exposedWalls
+          : simplifyGeometry
+            ? simpleWalls
+            : showStructures
+              ? exposedWalls
+              : visitorWalls,
+      ),
       lines,
       portals,
       routeLines,
@@ -277,6 +283,7 @@ function PreparedProjectMapLayers({
     simpleDoors,
     visitorLabels,
     nativeStairKeys,
+    prepared.stairSurroundKeys,
     roomThree,
     nativeModel,
     relativeHeights,
@@ -292,6 +299,7 @@ function PreparedProjectMapLayers({
   const selectionOnlyKeys = [
     ...new Set([
       ...nativeStairKeys,
+      ...prepared.stairSurroundKeys,
       ...layers.areas.features
         .filter((f) => f.properties?.boundaryReviewRequired === true)
         .map((f) => String(f.properties?.key)),
@@ -885,6 +893,16 @@ function PreparedProjectMapLayers({
       map.removeLayer("project-descending-stairs");
     if (map.getLayer("project-native-ramps"))
       map.removeLayer("project-native-ramps");
+    if (map.getLayer("project-precision-walls"))
+      map.removeLayer("project-precision-walls");
+    if (roomThree && !review && !nativeModel)
+      map.addLayer(
+        precisionWallLayer(
+          layers.exposedWalls,
+          data.alignment.originGeographic,
+        ),
+        "project-network-line",
+      );
     if (data.rampDisplay?.ramps.length || (relativeHeights && route))
       map.addLayer(
         nativeRampLayer(
@@ -988,7 +1006,13 @@ function PreparedProjectMapLayers({
     for (const id of ["project-lower-fill", "project-lower-outline"])
       map.setLayoutProperty(id, "visibility", roomThree ? "none" : "visible");
     for (const id of ["project-room-boxes", "project-wall-boxes"])
-      map.setLayoutProperty(id, "visibility", roomThree ? "visible" : "none");
+      map.setLayoutProperty(
+        id,
+        "visibility",
+        roomThree && (id !== "project-wall-boxes" || review || nativeModel)
+          ? "visible"
+          : "none",
+      );
     map.setFilter(
       "project-area-outline",
       review
@@ -1239,6 +1263,8 @@ function PreparedProjectMapLayers({
         map.removeLayer("project-descending-stairs");
       if (map.getLayer("project-native-ramps"))
         map.removeLayer("project-native-ramps");
+      if (map.getLayer("project-precision-walls"))
+        map.removeLayer("project-precision-walls");
     };
   }, [
     map,
@@ -1271,6 +1297,21 @@ function PreparedProjectMapLayers({
   ]);
   useEffect(() => {
     if (!map || !isLoaded || !map.getLayer("project-room-boxes")) return;
+    const selectedStairKeys =
+      data.stairDisplay?.sourceModelSha256 === data.source.modelSha256
+        ? data.stairDisplay.flights
+            .filter(
+              (f) =>
+                f.roomKey === selected &&
+                data.records.some(
+                  (r) =>
+                    r.key === f.roomKey &&
+                    f.sourceGeometryKey ===
+                      JSON.stringify([r.levelId, r.elevationFeet, r.ringsFeet]),
+                ),
+            )
+            .map((f) => `source-stair:${f.stairElementId}`)
+        : [];
     for (const [id, property] of [
       ["project-relative-floors", "fill-extrusion-color"],
       ["project-room-fill", "fill-color"],
@@ -1281,6 +1322,9 @@ function PreparedProjectMapLayers({
     ]) {
       const isArea =
         id === "project-room-fill" || id === "project-relative-floors";
+      const selectionMatch = id.startsWith("project-native-stair-")
+        ? ["in", ["get", "key"], ["literal", [selected, ...selectedStairKeys]]]
+        : ["==", ["get", "key"], selected];
       const detail =
         !review && isArea
           ? [
@@ -1291,7 +1335,7 @@ function PreparedProjectMapLayers({
               RESTRICTED_AREA_COLOR,
               ["==", ["get", "circulation"], true],
               HALLWAY_COLOR,
-              ["==", ["get", "key"], selected],
+              selectionMatch,
               "#ffe09d",
               ["get", "color"],
             ]
@@ -1301,7 +1345,7 @@ function PreparedProjectMapLayers({
               "#faf9f5",
               ["==", ["get", "access"], "staff"],
               RESTRICTED_AREA_COLOR,
-              ["==", ["get", "key"], selected],
+              selectionMatch,
               "#ffe09d",
               ["get", "color"],
             ];
@@ -1345,7 +1389,7 @@ function PreparedProjectMapLayers({
         0.6,
       ]);
     }
-  }, [map, isLoaded, selected, layers, review]);
+  }, [map, isLoaded, selected, layers, review, data]);
   useEffect(() => {
     if (!map || !isLoaded || !map.getLayer("project-room-fill")) return;
     for (const [id, property, full] of [

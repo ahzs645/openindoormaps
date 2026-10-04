@@ -121,11 +121,10 @@ export function projectConnectorMarkers(
   levelIds: number[],
   building: string,
   review?: SourceConnectorReview,
-  relativeHeights = false,
+  _relativeHeights = false,
 ): FeatureCollection<Point> {
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const source =
-    relativeHeights &&
     data.stairDisplay?.sourceModelSha256 === data.source.modelSha256
       ? data.stairDisplay.sourceFlights?.filter(
           (s) =>

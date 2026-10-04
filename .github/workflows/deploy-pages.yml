@@ -28,7 +28,7 @@ jobs:
       - name: Check prepared-project types
         run: npx tsc -p tsconfig.indoor-project.json
       - name: Check routing and worker lifecycle
-        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts
+        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v6

@@ -18,6 +18,7 @@ import {
 } from "./floor-presentation";
 import { sourceStairAreaKeys } from "./source-stairs";
 import { stairPlaceGround } from "./stair-place-ground";
+import { stairSurroundGround } from "./stair-surround-ground";
 import { stairsAboveDisplayedGround } from "./stair-ground-occlusion";
 import { stairFloorApertures } from "./stair-floor-apertures";
 
@@ -49,6 +50,11 @@ export function prepareFloor(
         .filter((key) => places.has(key)),
     ]),
   ];
+  const stairSurroundKeys =
+    !options.review &&
+    data.walkingSupport?.sourceModelSha256 === data.source.modelSha256
+      ? presentation.display.records.filter((r) => r.stair).map((r) => r.key)
+      : [];
   const areas =
     !options.review && options.simplifyGeometry
       ? presentation.simpleAreas
@@ -60,7 +66,9 @@ export function prepareFloor(
   let roomBlocks = {
     ...rooms,
     features: rooms.features.filter(
-      (f) => !nativeStairKeys.includes(String(f.properties?.key)),
+      (f) =>
+        !nativeStairKeys.includes(String(f.properties?.key)) &&
+        !stairSurroundKeys.includes(String(f.properties?.key)),
     ),
   };
   const visitorAreas = visitorRoomSurfaces(areas, options.review);
@@ -156,7 +164,9 @@ export function prepareFloor(
         ),
       ).features
     : nativeGround;
-  const physicalGround = stairPlaceGround(data, {
+  const physicalGround = (
+    options.review ? stairPlaceGround : stairSurroundGround
+  )(data, {
     ...shownAreas,
     features: [...nativeSurfaces, ...shownAreas.features],
   });
@@ -169,6 +179,7 @@ export function prepareFloor(
     presentation: withRaisedLabels,
     assumedRoomBlocks,
     nativeStairKeys,
+    stairSurroundKeys,
     selectionAreas:
       !options.review && options.simplifyGeometry
         ? generalizedRoomGeometry(data, selectionAreas)
