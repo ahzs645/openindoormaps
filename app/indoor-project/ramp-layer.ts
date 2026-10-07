@@ -2,6 +2,7 @@ import { MercatorCoordinate, type CustomLayerInterface } from "maplibre-gl";
 import * as THREE from "three";
 import { routeRibbonPositions } from "./route-ribbon";
 import { floorHeightDatum } from "./relative-heights";
+import { HALLWAY_COLOR } from "./display-passages";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
 import {
@@ -43,6 +44,16 @@ export function nativeRampLayer(
   });
   const unreviewedMaterial = material.clone();
   unreviewedMaterial.color.set("#d3d6d4");
+  // Plan views use the same unlit tint as circulation fills. A lit, depth-
+  // tested 3D mesh can turn pale ramps white or hide them beneath the floor.
+  const planMaterial = new THREE.MeshBasicMaterial({
+    color: HALLWAY_COLOR,
+    side: THREE.DoubleSide,
+    depthTest: false,
+    depthWrite: false,
+  });
+  const unreviewedPlanMaterial = planMaterial.clone();
+  unreviewedPlanMaterial.color.set("#d3d6d4");
   const routeMaterial = new THREE.MeshBasicMaterial({
     color: "#39b4f7",
     side: THREE.DoubleSide,
@@ -137,7 +148,13 @@ export function nativeRampLayer(
     geometry.computeVertexNormals();
     const mesh = new THREE.Mesh(
       geometry,
-      ramp.circulation || edge ? material : unreviewedMaterial,
+      three
+        ? ramp.circulation || edge
+          ? material
+          : unreviewedMaterial
+        : ramp.circulation || edge
+          ? planMaterial
+          : unreviewedPlanMaterial,
     );
     mesh.frustumCulled = false;
     if (nativeModel) geometry.dispose();
@@ -180,7 +197,7 @@ export function nativeRampLayer(
   return {
     id: "project-native-ramps",
     type: "custom",
-    renderingMode: "3d",
+    renderingMode: three || nativeModel ? "3d" : "2d",
     onAdd(map, gl) {
       mapInstance = map;
       renderer = new THREE.WebGLRenderer({
@@ -201,6 +218,10 @@ export function nativeRampLayer(
       material.transparent = opacity < 1;
       unreviewedMaterial.opacity = opacity;
       unreviewedMaterial.transparent = opacity < 1;
+      planMaterial.opacity = opacity;
+      planMaterial.transparent = opacity < 1;
+      unreviewedPlanMaterial.opacity = opacity;
+      unreviewedPlanMaterial.transparent = opacity < 1;
       camera.projectionMatrix
         .fromArray(args.defaultProjectionData.mainMatrix as number[])
         .multiply(transform);
@@ -217,6 +238,8 @@ export function nativeRampLayer(
       platformMaterial.dispose();
       material.dispose();
       unreviewedMaterial.dispose();
+      planMaterial.dispose();
+      unreviewedPlanMaterial.dispose();
       routeMaterial.dispose();
       renderer?.dispose();
     },

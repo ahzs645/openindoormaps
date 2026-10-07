@@ -1,5 +1,7 @@
+import { floorDisplayName } from "./floor-display-name";
 import type { IndoorDataset } from "./contract";
 import type { IndoorProject } from "./package";
+import { interiorLabelPoint } from "./interior-label-point";
 import {
   validateBasemapBuildings,
   type BasemapBuildingSettings,
@@ -353,6 +355,8 @@ export function roomLabelPoint(data: IndoorDataset, key: string): EditPoint {
   if (!room) throw new Error("Unknown room for label.");
   const anchor = data.nodes.find((n) => n.id === room.arrivalNodeId);
   if (anchor) return [anchor.pointFeet[0], anchor.pointFeet[1]];
+  const interior = interiorLabelPoint(room.ringsFeet);
+  if (interior) return interior;
   const points = room.ringsFeet[0];
   return [
     points.reduce((s, p) => s + p[0], 0) / points.length,
@@ -436,7 +440,7 @@ export function editorVisitorDataset(project: IndoorProject): IndoorDataset {
     !locations?.some((p) => p.roomKeys.length) &&
     !project.rooms.mapEdits?.floorNames
   )
-    return project.dataset;
+    return { ...project.dataset, floors: project.dataset.floors.map(f => ({...f, name: floorDisplayName(f.name)})) };
   const visitor = structuredClone(
     project.dataset.visitor ?? {
       version: 1 as const,
@@ -473,7 +477,7 @@ export function editorVisitorDataset(project: IndoorProject): IndoorDataset {
     visitor,
     floors: project.dataset.floors.map((f) => ({
       ...f,
-      name: project.rooms.mapEdits?.floorNames?.[f.id] ?? f.name,
+      name: project.rooms.mapEdits?.floorNames?.[f.id] ?? floorDisplayName(f.name),
     })),
   };
 }

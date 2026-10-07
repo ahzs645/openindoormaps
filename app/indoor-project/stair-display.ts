@@ -2,6 +2,8 @@ import type { FeatureCollection, Polygon } from "geojson";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint } from "./routing";
 import { floorHeightDatum } from "./relative-heights";
+import { hiddenLectureStairIds } from "./lecture-stair-display";
+import { HALLWAY_COLOR } from "./display-passages";
 import { visibleTreadPolygons } from "./stair-occlusion";
 
 /** Full native tread projections. A selectable overhead flight is a stair
@@ -11,6 +13,7 @@ export function projectStairDisplay(
   levelIds: readonly number[],
   building: string,
   relativeHeights = false,
+  visitor = false,
 ): FeatureCollection<Polygon> {
   const datum = floorHeightDatum(data, levelIds);
   const records = new Map(data.records.map((r) => [r.key, r]));
@@ -64,7 +67,13 @@ export function projectStairDisplay(
             JSON.stringify([r.levelId, r.elevationFeet, r.ringsFeet])
         );
       });
+  const hidden = visitor ? hiddenLectureStairIds(data) : new Set<number>();
   for (const flight of flights) {
+    if (hidden.has(flight.stairElementId)) continue;
+    // Treads and every joining face share the same display coordinate system.
+    // A campus may show several native levels on one floor; using the campus
+    // datum for just a riser turns the one-step face into a floor-height wall.
+    const displayDatum = relativeHeights ? datum : flight.floorElevationFeet;
     const runs = new Map(
       ("runs" in flight ? flight.runs : undefined)?.map((r) => [
         r.runElementId,
@@ -86,10 +95,7 @@ export function projectStairDisplay(
     ];
     for (const [i, t] of surfaces.entries()) {
       const scale = data.alignment.verticalMetresPerFoot;
-      const topMetres =
-        (t.elevationFeet -
-          (relativeHeights ? datum : flight.floorElevationFeet)) *
-        scale;
+      const topMetres = (t.elevationFeet - displayDatum) * scale;
       const baseMetres =
         topMetres - (t.thicknessFeet ?? 0.164_041_994_750_656_17) * scale;
       // A display riser joins only measured adjacent steps from this run.
@@ -142,7 +148,7 @@ export function projectStairDisplay(
         baseMetres,
         topMetres - riseFeet * scale,
         run?.beginWithRiser && Math.abs(t.elevationFeet - first) < 0.001
-          ? (run.bottomElevationFeet - datum) * scale
+          ? (run.bottomElevationFeet - displayDatum) * scale
           : Infinity,
       );
       // Revit run profiles use 3→0 at the bottom and 1→2 at the top.
@@ -157,6 +163,7 @@ export function projectStairDisplay(
         t.surfaceKind === "landing" ? "#c7d3df" : i % 2 ? "#d4dde6" : "#c7d3df";
       if ("context" in flight && flight.context === "tiered-seating")
         color = i % 2 ? "#d6cebd" : "#c9c0ad";
+      if (visitor) color = i % 2 ? "#c8ded2" : HALLWAY_COLOR;
       if (area < 0) profile.reverse();
       const endpointRisers: {
         a: number[];
@@ -175,7 +182,7 @@ export function projectStairDisplay(
           a: geographicPoint(data, profile[1]),
           b: geographicPoint(data, profile[2]),
           bottom: topMetres,
-          top: (run.topElevationFeet - datum) * scale,
+          top: (run.topElevationFeet - displayDatum) * scale,
         });
       for (const polygon of visibleTreadPolygons(flight, t))
         features.push({

@@ -21,6 +21,7 @@ export const floorWorkerKey = (
     o.showPassThroughPlaces,
     o.showVestibuleDoors,
     o.showStructures,
+    o.showDoorwayRecesses ?? true,
     o.review,
     o.simplifyGeometry,
   ]);

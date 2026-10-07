@@ -1,3 +1,4 @@
+import { createIndoorExclusionQuery } from "./indoor-exclusions";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import { projectRoutingGraph } from "./routing-graph";
 import { findProjectRoute, projectRouteFloorFailure } from "./routing";
@@ -85,7 +86,30 @@ export function createProjectRouteDiagnostics(
         [],
         start?.arrivalNodeId ? endKey : startKey,
       );
+    const outside = createIndoorExclusionQuery(data);
     for (const room of [start, end]) {
+      const node = data.nodes.find((n) => n.id === room.arrivalNodeId);
+      const excluded = node ? outside([node.pointFeet]) : [];
+      if (excluded.length) {
+        const offLimits = excluded.some((id) =>
+          data.indoorExclusions?.areas.some(
+            (area) => area.id === id && area.reason === "off-limits",
+          ),
+        );
+        return result(
+          "blocked",
+          offLimits
+            ? `${roomLabel(room.key)} is in a reviewed non-traversable footprint excluded from selection and directions.`
+            : `${roomLabel(room.key)} is in a confirmed outdoor area excluded from indoor directions. Outdoor routing is not available yet.`,
+          [
+            {
+              kind: offLimits ? "off-limits" : "outdoor",
+              edgeId: "",
+              roomKey: room.key,
+            },
+          ],
+        );
+      }
       if (!room.walkable || room.access === "staff") {
         const kind = room.walkable ? "staff" : "non-walkable";
         return result(
@@ -265,6 +289,14 @@ export function createProjectRouteDiagnostics(
         .slice(0, 3)
         .join(", ");
     const clauses: string[] = [];
+    if (kinds.has("outdoor"))
+      clauses.push(
+        "crosses a confirmed outdoor area excluded from indoor directions; outdoor routing is not available yet",
+      );
+    if (kinds.has("off-limits"))
+      clauses.push(
+        "crosses a reviewed non-traversable footprint excluded from selection and directions",
+      );
     if (kinds.has("staff"))
       clauses.push(`crosses ${names("staff")}, marked staff-only in the map`);
     if (kinds.has("disabled"))

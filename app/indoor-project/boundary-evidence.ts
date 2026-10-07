@@ -43,11 +43,34 @@ export function projectBoundaryEvidence(
                       r.boundarySource === "reviewed-native-wall-enclosure",
                   )
                 ? "Reviewed native wall faces · short display closures; native doors retained"
-                : meshKeys.has(record.key)
-                  ? "Native 3D wall section · display only; original navigation interior"
-                  : displayKeys.has(record.key)
-                    ? "Prepared native display block · original navigation interior"
-                    : "Source outline · boundary review needed";
+                : data.presentation?.rooms.some(
+                      (r) =>
+                        r.roomKey === record.key &&
+                        r.boundarySource ===
+                          "registered-source-wall-enclosure" &&
+                        r.sourceProof?.modelReviewedDividerIndices?.length,
+                    )
+                  ? "Reviewed native model and architectural walls · merged room display; original navigation interior"
+                  : data.presentation?.rooms.some(
+                        (r) =>
+                          r.roomKey === record.key &&
+                          r.boundarySource ===
+                            "registered-source-wall-enclosure" &&
+                          r.sourceProof?.closedDoorSwings?.length,
+                      )
+                    ? "Registered architectural walls · door swings closed for display; original navigation interior"
+                    : data.presentation?.rooms.some(
+                          (r) =>
+                            r.roomKey === record.key &&
+                            r.boundarySource ===
+                              "registered-source-wall-enclosure",
+                        )
+                      ? "Registered architectural walls · display only; original navigation interior"
+                      : meshKeys.has(record.key)
+                        ? "Native 3D wall section · display only; original navigation interior"
+                        : displayKeys.has(record.key)
+                          ? "Prepared native display block · original navigation interior"
+                          : "Source outline · boundary review needed";
       return [record.key, text];
     }),
   );

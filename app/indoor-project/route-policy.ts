@@ -1,3 +1,5 @@
+import { createIndoorExclusionQuery } from "./indoor-exclusions";
+import { routingCalculationValue } from "./routing-cache";
 import { hasReviewedThroughNavigation } from "./through-navigation";
 import type { IndoorEdge, IndoorRecord, IndoorDataset } from "./contract";
 import { validatedSourceDoorProof } from "./routing-apertures";
@@ -8,6 +10,8 @@ import {
 import type { WalkPassage } from "./route-passages";
 
 export type RouteBlockerKind =
+  | "outdoor"
+  | "off-limits"
   | "disabled"
   | "staff"
   | "non-walkable"
@@ -42,6 +46,23 @@ export function projectLinkPolicy(
   nativeCellIds?: Set<string>,
   nativeWalkBlockers?: Set<string>,
 ) {
+  const policies = routingCalculationValue(
+    data,
+    "routing-link-policies",
+    () =>
+      new WeakMap<
+        IndoorEdge,
+        Map<
+          boolean,
+          {
+            public: { blockers: RouteBlocker[]; requiredRooms: string[] };
+            accessible: { blockers: RouteBlocker[]; requiredRooms: string[] };
+          }
+        >
+      >(),
+  );
+  const previous = policies.get(edge)?.get(forward);
+  if (previous) return previous[mode];
   const dependencies = [edge, ...passages.map((p) => p.edge)];
   const roomKeys = [...new Set(dependencies.flatMap((e) => e.roomKeys))];
   const blockers: RouteBlocker[] = [];
@@ -61,20 +82,39 @@ export function projectLinkPolicy(
     ).has(edge.nativeCellId)
   )
     add("native-circulation-proof");
+  const outside = routingCalculationValue(data, "indoor-exclusion-query", () =>
+    createIndoorExclusionQuery(data),
+  );
+  const nodePoints = routingCalculationValue(
+    data,
+    "routing-node-points",
+    () => new Map(data.nodes.map((n) => [n.id, n.pointFeet])),
+  );
   for (const dependency of dependencies) {
+    const exclusions = new Set([
+      ...outside.forEdge(dependency.pointsFeet, dependency),
+      ...[dependency.from, dependency.to].flatMap((id) => {
+        const point = nodePoints.get(id);
+        return point ? outside([point]) : [];
+      }),
+    ]);
+    const reasons = new Set(
+      [...exclusions].map(
+        (id) =>
+          data.indoorExclusions?.areas.find((area) => area.id === id)?.reason ??
+          "outdoor",
+      ),
+    );
+    for (const reason of reasons) add(reason, dependency);
     if (
       dependency.sourceDoorProof &&
       !validatedSourceDoorProof(data, dependency)
     )
       add("source-proof", dependency);
     if (!dependency.enabled) add("disabled", dependency);
-    if (mode === "accessible" && dependency.accessible !== "yes")
-      add("step-free", dependency);
+    if (dependency.accessible !== "yes") add("step-free", dependency);
   }
-  if (
-    mode === "accessible" &&
-    ["stairs", "local-steps", "escalator"].includes(edge.kind)
-  )
+  if (["stairs", "local-steps", "escalator"].includes(edge.kind))
     add("step-free");
   for (const key of roomKeys) {
     const room = records.get(key);
@@ -99,5 +139,18 @@ export function projectLinkPolicy(
       !["elevator", "escalator"].includes(edge.kind)
     );
   });
-  return { blockers, requiredRooms };
+  // Physical/access proof is identical in both profiles. Retain its exact
+  // ordered blockers once; the public profile omits only step-free vetoes.
+  // Authoring calculations still discard this map after each edit/check.
+  const result = {
+    public: {
+      blockers: blockers.filter((b) => b.kind !== "step-free"),
+      requiredRooms,
+    },
+    accessible: { blockers, requiredRooms },
+  };
+  const directions = policies.get(edge) ?? new Map();
+  directions.set(forward, result);
+  policies.set(edge, directions);
+  return result[mode];
 }

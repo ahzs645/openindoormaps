@@ -1,4 +1,5 @@
 import test from "node:test";
+import { routingSnapshot } from "../../app/indoor-project/routing-cache";
 import assert from "node:assert/strict";
 import {
   nativeCirculationGeometryKey,
@@ -707,5 +708,100 @@ test("local boundary indexing retains union support, holes, disconnected gaps an
   assert.ok(
     nativeCirculationWalkBlockers(d).has("supported-seam"),
     "changed rings must rebuild their bounds",
+  );
+});
+
+test("strict native evidence never restores legacy route or contour surfaces after a stale mutation", async () => {
+  const data = fixture();
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const source = {
+    version: 1 as const,
+    sourceModelSha256: data.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 20, 6)]],
+        sourceElementIds: [100],
+        cutElevationsFeet: [4, 8],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  data.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  assert.equal(nativeCirculationGeometryKey(data), compilerKey(data));
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  assert.ok(nativeCirculationSurfaces(data, data.records).cells.length);
+  assert.ok(
+    nativeCirculationWalkBlockers(data).has("walk"),
+    "legacy outline branches require native regeneration",
+  );
+  const snapshot = routingSnapshot(data);
+  data.nativeIndoorEnvelopes.levels[0]!.partsFeet[0]![0]![0]![0] += 0.1;
+  assert.notEqual(
+    routingSnapshot(data),
+    snapshot,
+    "mutable authoring graph and guide caches recheck envelope geometry",
+  );
+  assert.deepEqual(nativeCirculationCells(data), []);
+  assert.deepEqual(
+    nativeCirculationSurfaces(data, data.records).rings,
+    [],
+    "old source outlines cannot return as physical routing geometry",
+  );
+  assert.ok(nativeCirculationWalkBlockers(data).has("walk"));
+});
+
+test("strict native branches cannot borrow an adjacent cell to extend their certified face", async () => {
+  const data = fixture();
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const source = {
+    version: 1 as const,
+    sourceModelSha256: data.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 20, 6)]],
+        sourceElementIds: [100],
+        cutElevationsFeet: [4, 8],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  data.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  const cell = data.circulationGeometry!.cells[0]!;
+  cell.ringsFeet = [rect(0, 0, 10, 6)];
+  data.circulationGeometry!.preparedRoomKeys = ["hall"];
+  data.circulationGeometry!.cells.push({
+    ...cell,
+    id: cell.id + ":adjacent",
+    ringsFeet: [rect(10, 0, 20, 6)],
+  });
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  data.edges[0]!.nativeCellId = cell.id;
+  assert.ok(
+    nativeCirculationWalkBlockers(data).has("walk"),
+    "a continuous but unrelated adjacent face cannot certify this native branch",
+  );
+  data.edges[0]!.pointsFeet = [
+    [2, 2, 0],
+    [8, 2, 0],
+  ];
+  assert.ok(
+    !nativeCirculationWalkBlockers(data).has("walk"),
+    "the unchanged exact own-face route remains available",
   );
 });

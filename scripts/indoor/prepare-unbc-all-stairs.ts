@@ -144,17 +144,14 @@ function recover(run: Native): Flight["treads"] {
   }
   const result: Flight["treads"] = [];
   for (const [z, ts] of groups) {
-    const parts = polygonClipping.union(
-      ...ts.map((t) => [
-        t.map(
-          (p) =>
-            [Math.round(p[0] * 1e5), Math.round(p[1] * 1e5)] as [
-              number,
-              number,
-            ],
-        ),
-      ]),
-    );
+    const polygons = ts.map((t) => [
+      t.map(
+        (p) =>
+          [Math.round(p[0] * 1e5), Math.round(p[1] * 1e5)] as [number, number],
+      ),
+    ]);
+    if (!polygons.length) continue;
+    const parts = polygonClipping.union(polygons[0], ...polygons.slice(1));
     for (const p of parts) {
       assert.equal(p.length, 1);
       result.push({

@@ -1,4 +1,5 @@
 import type { IndoorDataset } from "./contract";
+import { routeWorkerDataset } from "./route-worker-dataset";
 import type {
   RouteCalculation,
   RouteRequest,
@@ -13,6 +14,7 @@ export interface RouteWorker {
 }
 type Pending = {
   id: number;
+  warmup: boolean;
   resolve: (value: RouteCalculation) => void;
   reject: (reason: unknown) => void;
 };
@@ -25,6 +27,11 @@ export class RouteWorkerClient {
   private pending?: Pending;
   private sequence = 0;
   constructor(private readonly factory: () => RouteWorker) {}
+  /** Imports/clears may leave no route endpoints. Release the previous cloned
+   * graph immediately, rather than retaining it until another route is requested. */
+  resetData(data: IndoorDataset | undefined) {
+    if (this.workerData && this.workerData !== data) this.stop();
+  }
   private stop(
     reason: unknown = new DOMException(
       "Route calculation cancelled.",
@@ -44,14 +51,23 @@ export class RouteWorkerClient {
     end: string,
     mode: RouteRequest["mode"],
   ) {
-    if (this.pending) this.stop();
+    if (this.pending) {
+      if (this.pending.warmup && this.workerData === data) {
+        // Finishing this same-snapshot graph is useful to the queued request.
+        // Reject its obsolete readiness reply without rebuilding the worker.
+        this.pending.reject(
+          new DOMException("Route preparation superseded.", "AbortError"),
+        );
+        this.pending = undefined;
+      } else this.stop();
+    }
     const id = ++this.sequence;
     let resolve!: Pending["resolve"], reject!: Pending["reject"];
     const promise = new Promise<RouteCalculation>((ok, fail) => {
       resolve = ok;
       reject = fail;
     });
-    this.pending = { id, resolve, reject };
+    this.pending = { id, warmup: !end, resolve, reject };
     try {
       if (!this.worker) {
         const worker = this.factory();
@@ -85,7 +101,7 @@ export class RouteWorkerClient {
       }
       this.worker.postMessage({
         requestId: id,
-        data: this.workerData === data ? undefined : data,
+        data: this.workerData === data ? undefined : routeWorkerDataset(data),
         start,
         end,
         mode,

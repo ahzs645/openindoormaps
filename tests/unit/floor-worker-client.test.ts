@@ -178,3 +178,20 @@ test("unmount cancels active work and worker-reported geometry errors do not poi
   await third.promise;
   client.dispose();
 });
+
+test("doorway recess display options cannot reuse the opposite cached mask", () => {
+  const closed = floorWorkerKey([694], "10", {
+    ...options,
+    showDoorwayRecesses: false,
+  });
+  const open = floorWorkerKey([694], "10", {
+    ...options,
+    showDoorwayRecesses: true,
+  });
+  assert.notEqual(closed, open);
+  assert.equal(
+    open,
+    floorWorkerKey([694], "10", options),
+    "older callers retain detailed doorway masks",
+  );
+});

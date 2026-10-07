@@ -85,6 +85,7 @@ export function ReviewPinLayer({
       },
     });
     return () => {
+      if (!map.getStyle()) return;
       for (const id of ["project-review-pin-label", "project-review-pin-dot"])
         if (map.getLayer(id)) map.removeLayer(id);
       if (map.getSource("project-review-pins"))
@@ -200,11 +201,12 @@ export function ReviewPinLayer({
         }),
       );
     return () => {
-      if (map.getLayer("project-relative-review-pins"))
-        map.removeLayer("project-relative-review-pins");
       map.off("click", click);
       if (placing) map.getCanvas().style.cursor = "";
       map.getContainer().classList.remove("project-placing-review-pin");
+      if (!map.getStyle()) return;
+      if (map.getLayer("project-relative-review-pins"))
+        map.removeLayer("project-relative-review-pins");
     };
   }, [
     map,

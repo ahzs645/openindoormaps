@@ -1,10 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import office from "../fixtures/unbc-office-10-1040-display.json";
+import classroom from "../fixtures/unbc-classroom-08-161-display.json";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import { displayDoorwayClosures } from "../../app/indoor-project/display-doorway-closures";
 import { wallFaceRoomFloorMasks } from "../../app/indoor-project/wall-face-floor-masks";
 import { prepareFloor } from "../../app/indoor-project/prepared-floor";
+import { wallJunctionPatches } from "../../app/indoor-project/wall-junctions";
 
 const walls = (gap: number): IndoorDataset["walls"] =>
   [0, 10 + gap].map((y, i) => ({
@@ -98,6 +100,76 @@ test("a five-and-a-half-foot aligned gap is closed only by the six-foot limit", 
   assert.equal(six.length, 1);
   assert.equal(six[0].widthFeet, 5.5);
   assert.equal(displayDoorwayClosures(walls(6.01), 6).length, 0);
+});
+test("a tiny native jamb closes against a long aligned wall, but two short posts cannot invent a doorway", () => {
+  const ws = walls(4);
+  ws[1].ringsFeet[0][2][1] = 14.6;
+  ws[1].ringsFeet[0][3][1] = 14.6;
+  const closures = displayDoorwayClosures(ws);
+  assert.equal(closures.length, 1);
+  assert.equal(closures[0].widthFeet, 4);
+  ws[0].ringsFeet[0][2][1] = 0.6;
+  ws[0].ringsFeet[0][3][1] = 0.6;
+  assert.equal(displayDoorwayClosures(ws).length, 0);
+});
+test("room corner assumptions do not widen the physical renderer's numerical cleanup", () => {
+  const ws = walls(4);
+  ws[1].ringsFeet = [
+    [
+      [0, 10.25],
+      [10, 10.25],
+      [10, 10.75],
+      [0, 10.75],
+    ],
+  ];
+  const before = JSON.stringify(ws);
+  assert.equal(wallJunctionPatches(ws).length, 0);
+  assert.ok(wallJunctionPatches(ws, 0.3).length > 0);
+  ws[1].ringsFeet[0].forEach((p) => (p[1] += 0.1));
+  assert.equal(wallJunctionPatches(ws, 0.3).length, 0);
+  ws[1].ringsFeet[0].forEach((p) => (p[1] -= 0.1));
+  assert.equal(JSON.stringify(ws), before);
+});
+test("08-161 uses its enclosed native wall interior at both limits, without changing navigation or source outlines", () => {
+  const data = structuredClone(classroom) as unknown as IndoorDataset;
+  const before = JSON.stringify(data);
+  const room = data.records.find((r) => r.number === "08-161")!;
+  const five = wallFaceRoomFloorMasks(data, data.records, 5);
+  const six = wallFaceRoomFloorMasks(data, data.records, 6);
+  assert.ok(five.displayEnclosures?.has(room.key));
+  assert.ok(five.cornerContinuations?.has(room.key));
+  assert.deepEqual(five.get(room.key), six.get(room.key));
+  assert.deepEqual(
+    five.assumedOpenings
+      ?.get(room.key)
+      ?.map((o) => Math.round(o.widthFeet * 100) / 100),
+    [4.75, 3.5],
+  );
+  assert.notDeepEqual(five.get(room.key), room.ringsFeet);
+  const prepared = prepareFloor(data, [room.levelId], "all", {
+    review: false,
+    simplifyGeometry: false,
+    showPillars: false,
+    showPassThroughPlaces: false,
+    showVestibuleDoors: false,
+    showStructures: false,
+    relativeHeights: false,
+  });
+  const block = prepared.assumedRoomBlocks.features.find(
+    (f) => f.properties?.key === room.key,
+  );
+  assert.ok(block);
+  assert.equal(block.properties?.displayOnly, true);
+  assert.equal(
+    block.properties?.boundarySource,
+    "assumed-native-wall-enclosure",
+  );
+  assert.equal(block.properties?.displayCornerContinuation.maximumFeet, 0.3);
+  assert.equal(
+    Number(block.properties?.height) - Number(block.properties?.base ?? 0),
+    0.6,
+  );
+  assert.equal(JSON.stringify(data), before);
 });
 test("restricted and passage areas remain flat even when native faces can bound a volume", () => {
   for (const name of ["staff", "Vestibule", "Corridor", "Rotunda"]) {

@@ -212,6 +212,7 @@ export function MapAnnotationLayer({
       map.getCanvas().style.cursor = "";
       map.getContainer().classList.remove("project-placing-annotation");
       for (const marker of markers) marker.remove();
+      if (!map.getStyle()) return;
       for (const id of ["project-annotation-line", "project-annotation-fill"])
         if (map.getLayer(id)) map.removeLayer(id);
       if (map.getSource("project-annotations"))

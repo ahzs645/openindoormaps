@@ -1,3 +1,30 @@
+import {validateNativeIndoorEnvelopes,verifyNativeIndoorEnvelopes,type NativeIndoorEnvelopes} from "./native-indoor-envelopes";
+import {validateNativeDisplayScopes, type NativeDisplayScopes} from "./native-display-scopes";
+import { MAX_REVIEW_CONTAINER_BYTES } from "./review-bundle-limits";
+import { floorDisplayName } from "./floor-display-name";
+import { publishNativeExploreMapping, validatePublishedNativeExploreMapping } from "./native-explore-mapping";
+import {
+  nativeDoorBoundaryClosureFootprints,
+  validateNativeDoorBoundaryClosures,
+  type NativeDoorBoundaryClosures,
+} from "./native-door-boundary-closures";
+import {
+  nativeWallPositionRepairedWalls,
+  validateNativeWallPositionRepairs,
+  type NativeWallPositionRepairs,
+} from "./native-wall-position-repairs";
+import { validateDoorApertureBinding } from "./reviewed-door-apertures";
+import { validateReviewedAreaPartitionBinding, type ReviewedAreaPartitions } from "./reviewed-area-partitions";
+import {
+  validateSelectionDoorBinding,
+  type SelectionDoorThresholds,
+} from "./selection-door-thresholds";
+import {
+  withWindowExportMode,
+  type WindowExportMode,
+} from "./native-window-display";
+import { validateIndoorExclusions } from "./indoor-exclusions";
+import type { IndoorExclusions } from "./contract";
 import { validatePreparedRouting } from "./prepared-routing";
 import { throughNavigationGeometryKey } from "./through-navigation";
 import { validateSharedStairBinding } from "./stair-display";
@@ -22,6 +49,54 @@ import { validateConnectorBinding } from "./connector-binding";
 import { validateMapEdits, type MapEdits } from "./map-edits";
 import { validateReviewPins, type ReviewPins } from "./review-pins";
 import type { CampusStoreyReview } from "./campus-floors";
+import {
+  validateEnclosureReviews,
+  type EnclosureReview,
+} from "./enclosure-review";
+
+import {
+  validateEnclosureProposals,
+  type EnclosureProposals,
+} from "./enclosure-proposals";
+import { verifyReviewBundle, type ReviewBundle } from "./review-bundle";
+import {
+  serializeRoomsForArchive,
+  unpackReviewBundle,
+  REVIEW_BUNDLE_ARCHIVE_PATH,
+} from "./review-bundle-wire";
+import {
+  validateNativeBoundaryPatches,
+  validateNativeBoundaryBinding,
+  type NativeBoundaryPatches,
+} from "./native-boundary-patches";
+import {
+  validateNativeAreaReviews,
+  type NativeAreaReviews,
+} from "./native-area-review";
+
+function validateIndoorScopeBinding(
+  rooms: ProjectRooms,
+  dataset: IndoorDataset,
+) {
+  validateNativeDisplayScopes(rooms.nativeDisplayScopes, dataset.source.modelSha256);
+  validateNativeIndoorEnvelopes(rooms.nativeIndoorEnvelopes, dataset.source.modelSha256);
+  if (JSON.stringify(rooms.nativeIndoorEnvelopes) !== JSON.stringify(dataset.nativeIndoorEnvelopes))
+    throw new Error("Source and prepared native indoor enclosures do not match. Regenerate the master.");
+  if (rooms.format !== "openindoormaps-viewer-metadata" && JSON.stringify(rooms.nativeDisplayScopes) !== JSON.stringify(dataset.nativeDisplayScopes))
+    throw new Error("Source and prepared native display scopes do not match.");
+  validateIndoorExclusions(
+    rooms.indoorExclusions,
+    dataset.source.modelSha256,
+    dataset.nativeLevels,
+  );
+  if (
+    JSON.stringify(rooms.indoorExclusions) !==
+    JSON.stringify(dataset.indoorExclusions)
+  )
+    throw new Error(
+      "Source and prepared outdoor exclusions do not match. Regenerate the reviewed master.",
+    );
+}
 
 type Entry = { path: string; bytes: number; sha256: string };
 type ArchiveManifest = {
@@ -33,6 +108,7 @@ type ArchiveManifest = {
   georeference: Entry;
   indoor: Entry;
   scene?: Entry;
+  reviewBundle?: Entry;
 };
 /** Viewer assets are derived from a master; model identity is retained without model bytes. */
 type ViewerManifest = {
@@ -66,6 +142,18 @@ export type ProjectRooms = {
   mapEdits?: MapEdits;
   reviewPins?: ReviewPins;
   campusStoreys?: CampusStoreyReview[];
+  enclosureReviews?: EnclosureReview;
+  enclosureProposals?: EnclosureProposals;
+  reviewBundle?: ReviewBundle;
+  nativeDoorBoundaryClosures?: NativeDoorBoundaryClosures;
+  nativeWallPositionRepairs?: NativeWallPositionRepairs;
+  selectionDoorThresholds?: SelectionDoorThresholds;
+  reviewedAreaPartitions?: ReviewedAreaPartitions;
+  indoorExclusions?: IndoorExclusions;
+  nativeDisplayScopes?: NativeDisplayScopes;
+  nativeIndoorEnvelopes?: NativeIndoorEnvelopes;
+  nativeAreaReviews?: NativeAreaReviews;
+  nativeBoundaryPatches?: NativeBoundaryPatches;
   indoorReviews?: {
     version: 1;
     records: Record<
@@ -107,6 +195,8 @@ const MB = 1024 * 1024,
     "viewer/indoor.json": 128 * MB,
     "viewer/metadata.json": 16 * MB,
     "model/scene.glb": 256 * MB,
+    // Literal avoids the existing package/review-bundle initialization cycle.
+    "review/companions.bin": MAX_REVIEW_CONTAINER_BYTES,
   };
 // Reject control characters in archive paths before accepting model entries.
 const modelPath = (p: string) =>
@@ -178,6 +268,7 @@ export async function readIndoorProject(
       manifest.georeference,
       manifest.indoor,
       ...(manifest.scene ? [manifest.scene] : []),
+      ...(manifest.reviewBundle ? [manifest.reviewBundle] : []),
     ],
     paths = [
       manifest.model.path,
@@ -185,6 +276,7 @@ export async function readIndoorProject(
       "gis/reference-points.json",
       "viewer/indoor.json",
       ...(manifest.scene ? ["model/scene.glb"] : []),
+      ...(manifest.reviewBundle ? [REVIEW_BUNDLE_ARCHIVE_PATH] : []),
     ];
   if (
     Object.keys(files).some((p) => p !== "manifest.json" && !paths.includes(p))
@@ -205,8 +297,37 @@ export async function readIndoorProject(
       strFromU8(files["floors/rooms.json"]),
     ) as ProjectRooms,
     dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
+  const reviewWire=rooms.reviewBundle as unknown as {format?:string;storage?:string}|undefined;
+  const wireReferencesBinary = reviewWire?.format === "openindoormaps-review-bundle-wire" && reviewWire.storage === "archive-entry";
+  if (wireReferencesBinary !== !!manifest.reviewBundle)
+    throw new Error(
+      "Review bundle archive binding does not match source rooms.",
+    );
+  rooms.reviewBundle = await unpackReviewBundle(rooms.reviewBundle, files);
   validateIndoorDataset(dataset);
+  await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
   validatePreparedRouting(dataset);
+  await validatePublishedNativeExploreMapping(dataset);
+  validateEnclosureReviews(rooms.enclosureReviews);
+  validateEnclosureProposals(rooms.enclosureProposals);
+  await verifyReviewBundle(rooms.reviewBundle);
+  validateNativeAreaReviews(rooms.nativeAreaReviews, dataset);
+  validateIndoorScopeBinding(rooms, dataset);
+  validateSupplementalBoundaryBinding(rooms, dataset);
+  validateSelectionDoorBinding(rooms, dataset);
+  validateReviewedAreaPartitionBinding(rooms, dataset);
+  validateDoorApertureBinding(rooms.reviewedDoorApertures, dataset);
+  validateNativeBoundaryPatches(
+    rooms.nativeBoundaryPatches,
+    dataset.source.modelSha256,
+  );
+  validateNativeBoundaryBinding(
+    dataset.walls,
+    rooms.nativeBoundaryPatches,
+    dataset.source.modelSha256,
+    dataset.boundaryPatchState,
+    rooms.reviewedDoorApertures,
+  );
   if (rooms.reviewPins !== undefined)
     validateReviewPins(rooms.reviewPins, dataset);
   if (rooms.mapEdits !== undefined) validateMapEdits(rooms.mapEdits, dataset);
@@ -272,21 +393,56 @@ export async function exportIndoorProject(
     throw new Error(
       "A campus viewer package cannot regenerate a source project. Use the full reviewed master ZIP.",
     );
+  validateEnclosureReviews(project.rooms.enclosureReviews);
+  validateEnclosureProposals(project.rooms.enclosureProposals);
+  await verifyReviewBundle(project.rooms.reviewBundle);
+  validateNativeAreaReviews(project.rooms.nativeAreaReviews, project.dataset);
+  await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
+  validateIndoorScopeBinding(project.rooms, project.dataset);
+  validateSupplementalBoundaryBinding(project.rooms, project.dataset);
+  validateSelectionDoorBinding(project.rooms, project.dataset);
+  validateReviewedAreaPartitionBinding(project.rooms, project.dataset);
+  validateDoorApertureBinding(
+    project.rooms.reviewedDoorApertures,
+    project.dataset,
+  );
+  validateNativeBoundaryPatches(
+    project.rooms.nativeBoundaryPatches,
+    project.dataset.source.modelSha256,
+  );
+  validateNativeBoundaryBinding(
+    project.dataset.walls,
+    project.rooms.nativeBoundaryPatches,
+    project.dataset.source.modelSha256,
+    project.dataset.boundaryPatchState,
+    project.rooms.reviewedDoorApertures,
+  );
   if (project.rooms.reviewPins !== undefined)
     validateReviewPins(project.rooms.reviewPins, project.dataset);
   if (project.rooms.mapEdits !== undefined)
     validateMapEdits(project.rooms.mapEdits, project.dataset);
-  const rooms = strToU8(JSON.stringify(project.rooms)),
+  const serialized = await serializeRoomsForArchive(project.rooms),
+    rooms = serialized.rooms,
     manifest = structuredClone(project.manifest) as ArchiveManifest,
     dataset = structuredClone(project.dataset),
     files: AsyncZippable = {};
   manifest.createdAt = new Date().toISOString();
+  if (serialized.reviewEntry) {
+    const entry = serialized.reviewEntry;
+    manifest.reviewBundle = {
+      path: entry.path,
+      bytes: entry.bytes.length,
+      sha256: entry.sha256,
+    };
+    files[entry.path] = [entry.bytes, { level: 0 }];
+  } else delete manifest.reviewBundle;
   manifest.floors = {
     path: "floors/rooms.json",
     bytes: rooms.length,
     sha256: await hash(rooms),
   };
   dataset.source.roomsSha256 = manifest.floors.sha256;
+  dataset.nativeExploreMapping = await publishNativeExploreMapping(dataset, dataset);
   const indoor = strToU8(JSON.stringify(dataset));
   manifest.indoor = {
     path: "viewer/indoor.json",
@@ -294,7 +450,7 @@ export async function exportIndoorProject(
     sha256: await hash(indoor),
   };
   for (const [name, bytes] of Object.entries(project.files))
-    if (name !== "manifest.json")
+    if (name !== "manifest.json" && name !== REVIEW_BUNDLE_ARCHIVE_PATH)
       files[name] = [bytes, { level: modelPath(name) ? 0 : 6 }];
   files["floors/rooms.json"] = rooms;
   files["viewer/indoor.json"] = indoor;
@@ -381,7 +537,9 @@ async function readViewerFiles(
   }
   const dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
   validateIndoorDataset(dataset);
+  await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
   validatePreparedRouting(dataset);
+  await validatePublishedNativeExploreMapping(dataset);
   const rooms = JSON.parse(
     strFromU8(files["viewer/metadata.json"]),
   ) as ProjectRooms;
@@ -403,6 +561,21 @@ async function readViewerFiles(
     );
   validateSharedStairBinding(dataset, rooms.annotations);
   if (rooms.mapEdits !== undefined) validateMapEdits(rooms.mapEdits, dataset);
+  validateEnclosureReviews(rooms.enclosureReviews);
+  validateEnclosureProposals(rooms.enclosureProposals);
+  if (
+    rooms.reviewBundle !== undefined ||
+    rooms.nativeAreaReviews !== undefined ||
+    rooms.nativeBoundaryPatches !== undefined ||
+    rooms.selectionDoorThresholds !== undefined ||
+    rooms.reviewedAreaPartitions !== undefined ||
+    dataset.reviewedAreaPartitions !== undefined ||
+    rooms.nativeDoorBoundaryClosures !== undefined ||
+    rooms.nativeWallPositionRepairs !== undefined
+  )
+    throw new Error(
+      "Authoring review files must not be embedded in a campus viewer.",
+    );
   if (rooms.indoorConnectors !== undefined)
     validateSourceConnectorReview(
       rooms.indoorConnectors,
@@ -420,8 +593,17 @@ async function readViewerFiles(
  * Source room geometry and safety bindings are preserved, never regenerated or rounded. */
 export async function exportCampusViewer(
   project: IndoorProject,
+  options: { windows?: WindowExportMode } = {},
 ): Promise<Uint8Array> {
+  if (
+    project.dataset.boundaryPatchState?.regenerated === false ||
+    project.dataset.doorAperturePatchState?.regenerated === false
+  )
+    throw new Error(
+      "Regenerate applied boundary patches in Reviter before exporting a campus viewer.",
+    );
   validateIndoorDataset(project.dataset);
+  await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
   validateSharedStairBinding(project.dataset, project.rooms.annotations);
   if (project.rooms.mapEdits !== undefined)
     validateMapEdits(project.rooms.mapEdits, project.dataset);
@@ -447,6 +629,7 @@ export async function exportCampusViewer(
       })),
     georeference: project.rooms.georeference,
     visitorMetadata: project.dataset.visitor,
+    nativeIndoorEnvelopes: project.dataset.nativeIndoorEnvelopes,
     mapEdits: project.rooms.mapEdits,
     campusStoreys: project.rooms.campusStoreys,
     indoorConnectors: project.rooms.indoorConnectors,
@@ -469,10 +652,23 @@ export async function exportCampusViewer(
         }
       : undefined,
   };
+  const visitorDataset = options.windows
+    ? withWindowExportMode(project.dataset, options.windows)
+    : structuredClone(project.dataset);
+  visitorDataset.floors = visitorDataset.floors.map(f => ({...f, name: project.rooms.mapEdits?.floorNames?.[f.id] ?? floorDisplayName(f.name)}));
+  delete visitorDataset.nativeDoorBoundaryClosures;
+  delete visitorDataset.nativeWallPositionRepairs;
+  delete visitorDataset.selectionDoorThresholds;
+  delete visitorDataset.reviewedAreaPartitions;
+  delete visitorDataset.doorAperturePatchState;
+  if (options.windows === "simplified") delete visitorDataset.windowDisplay;
+  for (const area of visitorDataset.indoorExclusions?.areas ?? [])
+    delete area.notes;
+  visitorDataset.nativeExploreMapping = await publishNativeExploreMapping(project.dataset, visitorDataset);
   const files: AsyncZippable = {
     "viewer/metadata.json": strToU8(JSON.stringify(metadata)),
     "gis/reference-points.json": strToU8(JSON.stringify(metadata.georeference)),
-    "viewer/indoor.json": strToU8(JSON.stringify(project.dataset)),
+    "viewer/indoor.json": strToU8(JSON.stringify(visitorDataset)),
   };
   const entry = async (path: string): Promise<Entry> => {
     const bytes = files[path] as Uint8Array;
@@ -658,32 +854,87 @@ export function reviewVisitorMetadata(
   next.rooms.visitorMetadata = structuredClone(metadata);
   return next;
 }
-export async function persistProject(bytes: Uint8Array): Promise<void> {
+// Register writes immediately and serialize them across page mounts. A return
+// from Venue maps must wait for an import that is still being saved.
+let projectWrite: Promise<void> = Promise.resolve();
+export function persistProject(
+  bytes: Uint8Array,
+  fileName?: string,
+): Promise<void> {
+  projectWrite = projectWrite
+    .catch(() => {})
+    .then(() => writeProject(bytes, fileName));
+  return projectWrite;
+}
+async function writeProject(
+  bytes: Uint8Array,
+  fileName?: string,
+): Promise<void> {
   const db = await projectDB();
-  await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction("projects", "readwrite");
-    tx.objectStore("projects").put(
-      new Blob([new Uint8Array(bytes).buffer as ArrayBuffer]),
-      "last",
-    );
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-    tx.addEventListener("abort", () => reject(tx.error));
-  });
-  db.close();
+  try {
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction("projects", "readwrite");
+      tx.objectStore("projects").put(
+        new Blob([new Uint8Array(bytes).buffer as ArrayBuffer]),
+        "last",
+      );
+      if (fileName) tx.objectStore("projects").put(fileName, "last-file-name");
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+      tx.addEventListener("abort", () => reject(tx.error));
+    });
+  } finally {
+    db.close();
+  }
+}
+export function clearProject(): Promise<void> {
+  projectWrite = projectWrite
+    .catch(() => {})
+    .then(async () => {
+      const db = await projectDB();
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction("projects", "readwrite");
+          tx.objectStore("projects").delete("last");
+          tx.objectStore("projects").delete("last-file-name");
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+          tx.addEventListener("abort", () => reject(tx.error));
+        });
+      } finally {
+        db.close();
+      }
+    });
+  return projectWrite;
 }
 export async function restoreProject(): Promise<Uint8Array | null> {
+  const snapshot = await restoreProjectSnapshot();
+  return snapshot?.bytes ?? null;
+}
+export async function restoreProjectSnapshot(): Promise<{
+  bytes: Uint8Array;
+  fileName?: string;
+} | null> {
+  await projectWrite.catch(() => {});
   const db = await projectDB();
-  const blob = await new Promise<Blob | undefined>((resolve, reject) => {
-    const request = db
-      .transaction("projects")
-      .objectStore("projects")
-      .get("last");
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-  db.close();
-  return blob ? new Uint8Array(await blob.arrayBuffer()) : null;
+  try {
+    const store = db.transaction("projects").objectStore("projects");
+    const read = <T>(key: string) =>
+      new Promise<T | undefined>((resolve, reject) => {
+        const request = store.get(key);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    const [blob, fileName] = await Promise.all([
+      read<Blob>("last"),
+      read<string>("last-file-name"),
+    ]);
+    return blob
+      ? { bytes: new Uint8Array(await blob.arrayBuffer()), fileName }
+      : null;
+  } finally {
+    db.close();
+  }
 }
 function projectDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -693,4 +944,33 @@ function projectDB(): Promise<IDBDatabase> {
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
   });
+}
+
+function validateSupplementalBoundaryBinding(
+  rooms: ProjectRooms,
+  data: IndoorDataset,
+) {
+  validateNativeDoorBoundaryClosures(
+    rooms.nativeDoorBoundaryClosures,
+    data.source.modelSha256,
+  );
+  if (rooms.nativeWallPositionRepairs)
+    validateNativeWallPositionRepairs(
+      rooms.nativeWallPositionRepairs,
+      data.source.modelSha256,
+    );
+  if (
+    JSON.stringify(rooms.nativeDoorBoundaryClosures) !==
+      JSON.stringify(data.nativeDoorBoundaryClosures) ||
+    JSON.stringify(rooms.nativeWallPositionRepairs) !==
+      JSON.stringify(data.nativeWallPositionRepairs)
+  )
+    throw new Error(
+      "Supplemental boundary source and prepared geometry differ. Regenerate the source master.",
+    );
+  for (const level of new Set(
+    data.nativeDoorBoundaryClosures?.doors.map((d) => d.levelId) ?? [],
+  ))
+    nativeDoorBoundaryClosureFootprints(data, level);
+  nativeWallPositionRepairedWalls(data);
 }

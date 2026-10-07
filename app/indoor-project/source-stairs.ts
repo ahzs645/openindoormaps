@@ -97,7 +97,31 @@ export function sourceStairAnchor(
   data: IndoorDataset,
   stair: SourceStair,
   levels: readonly number[],
+  building = "all",
 ): [number, number, number] {
+  // Use the saved, supported landing when this assembly is connected. The
+  // nearest tread is a physical display fallback, not the floor's arrival.
+  // In a combined campus floor prefer the lowest visible native landing;
+  // a single native-level view gets its own original endpoint.
+  if (data.stairDisplay?.sourceModelSha256 === data.source.modelSha256) {
+    const ids = new Set(
+      sourceStairEdges(data, stair)
+        .filter((edge) => edge.enabled)
+        .flatMap((edge) => [edge.from, edge.to]),
+    );
+    const landing = data.nodes
+      .filter(
+        (node) =>
+          ids.has(node.id) &&
+          levels.includes(node.levelId) &&
+          stair.levelIds.includes(node.levelId) &&
+          (building === "all" || node.building === building),
+      )
+      .sort(
+        (a, b) => a.pointFeet[2] - b.pointFeet[2] || a.id.localeCompare(b.id),
+      )[0];
+    if (landing) return [...landing.pointFeet];
+  }
   const native = data.nativeLevels.filter(
     (l) => levels.includes(l.id) && stair.levelIds.includes(l.id),
   );

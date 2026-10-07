@@ -16,6 +16,7 @@ type Rings = Point[][];
 type FloorMasks = Map<string, Rings> & {
   assumedOpenings?: Map<string, DisplayDoorwayClosure[]>;
   displayEnclosures?: Set<string>;
+  cornerContinuations?: Set<string>;
 };
 type Hit = { ring: Point[]; edge: number; t: number; point: Point };
 const reach = 3; // Association with a nearby source edge, never wall-gap closure.
@@ -108,6 +109,7 @@ export function wallFaceRoomFloorMasks(
     result: FloorMasks = Object.assign(new Map<string, Rings>(), {
       assumedOpenings: new Map<string, DisplayDoorwayClosure[]>(),
       displayEnclosures: new Set<string>(),
+      cornerContinuations: new Set<string>(),
     });
   if (data.walkingSupport?.sourceModelSha256 !== data.source.modelSha256)
     return result;
@@ -135,6 +137,11 @@ export function wallFaceRoomFloorMasks(
       );
       if (walls.length === 0) continue;
       const openings = displayDoorwayClosures(walls, maxOpeningWidthFeet);
+      // Native plan projections sometimes stop a few inches before a corner.
+      // Continue only measured short end caps to an existing nearby wall face.
+      // These assumptions close room display; they never become physical walls
+      // or establish a routing boundary, doorway, or access connection.
+      const corners = wallJunctionPatches(walls, 0.3);
       // A known native door closes the visual room perimeter at its measured
       // threshold, even if the source scene depicts its leaf swung open.
       // The passage remains open in routing and in the doorway marker layer.
@@ -150,7 +157,7 @@ export function wallFaceRoomFloorMasks(
       const wallMaterial = pc.union(
         walls[0].ringsFeet,
         ...walls.slice(1).map((w) => w.ringsFeet),
-        ...wallJunctionPatches(walls).map((w) => w.rings),
+        ...corners.map((w) => w.rings),
         ...openings.map((o) => o.rings),
       ) as Rings[];
       // Most native wall footprints already span their door openings. Keep
@@ -164,6 +171,9 @@ export function wallFaceRoomFloorMasks(
             ) as Rings[])
           : wallMaterial;
       const contours = material.flat().map(openRing);
+      const nativeEnclosures = material
+        .flatMap((part) => part.slice(1))
+        .filter((ring) => insideRing(seed, ring));
       const hit = (p: Point): Hit | undefined => {
         let best: Hit | undefined,
           minimum = reach;
@@ -229,18 +239,31 @@ export function wallFaceRoomFloorMasks(
           out.push(...path.slice(0, -1));
         } else out.push(a?.point ?? source[i]);
       }
-      if (followed < 2) continue;
-      const ring = out.filter(
-        (p, i) => i === 0 || distance(p, out[i - 1]) > 1e-7,
-      );
+      if (nativeEnclosures.length > 1) continue;
+      if (nativeEnclosures.length === 0 && followed < 2) continue;
+      // Prefer the actual closed native interior over matching each coarse
+      // source vertex to a face. Source notches can otherwise create diagonals
+      // and disconnected fragments even when the measured room is enclosed.
+      const ring =
+        nativeEnclosures.length === 1
+          ? openRing(nativeEnclosures[0])
+          : out.filter((p, i) => i === 0 || distance(p, out[i - 1]) > 1e-7);
       if (ring.length < 3) continue;
-      const parts = pc.difference(
+      const candidates = pc.difference(
         [ring, ...room.ringsFeet.slice(1)],
         ...material,
       ) as Rings[];
       // Do not subtract the enlarged doorway display cutter here. It is for
       // carving visible wall openings, and used to bite into the room floor.
-      if (parts.length !== 1 || !inside(seed, parts)) continue;
+      // Following native notches can split a coarse source contour into a
+      // room interior and detached scraps. Only its identified, seed-containing
+      // component can belong to this room. Never choose between multiple
+      // seeded parts or discard a substantial disconnected source area.
+      const seeded = candidates.filter((part) => inside(seed, [part]));
+      if (seeded.length !== 1) continue;
+      const parts = seeded;
+      const detachedArea = area(candidates) - area(parts);
+      if (detachedArea > area([room.ringsFeet]) * 0.02) continue;
       const sourceArea = area([room.ringsFeet]),
         maskArea = area(parts);
       if (
@@ -274,6 +297,8 @@ export function wallFaceRoomFloorMasks(
         continue;
       if (area(added) < 0.01) continue;
       result.set(room.key, parts[0]);
+      if (nativeEnclosures.length === 1 && corners.length > 0)
+        result.cornerContinuations!.add(room.key);
       // A floor mask can use source seams, but a display volume must have its
       // entire perimeter supported by native material or doorway caps. Sample
       // every tenth of a foot; tolerate only 0.05 ft of plan/mesh corner error.
@@ -367,6 +392,7 @@ export function wallFaceSelectionSurfaces(
   masks: ReadonlyMap<string, Rings> & {
     assumedOpenings?: ReadonlyMap<string, DisplayDoorwayClosure[]>;
     displayEnclosures?: ReadonlySet<string>;
+    cornerContinuations?: ReadonlySet<string>;
   },
 ): FeatureCollection<MultiPolygon> {
   if (masks.size === 0) return areas;
@@ -385,6 +411,15 @@ export function wallFaceSelectionSurfaces(
                 ? "assumed-native-wall-enclosure"
                 : "partial-native-wall-faces",
               boundaryReviewRequired: true,
+              displayCornerContinuation: masks.cornerContinuations?.has(
+                String(f.properties?.key),
+              )
+                ? {
+                    maximumFeet: 0.3,
+                    assumption:
+                      "short-native-end-cap-to-existing-wall-face-for-display-only",
+                  }
+                : undefined,
               displayDoorwayClosures:
                 masks.assumedOpenings
                   ?.get(String(f.properties?.key))

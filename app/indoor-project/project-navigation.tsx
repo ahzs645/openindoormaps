@@ -18,10 +18,16 @@ import { useMap } from "../components/map/map";
 import HospitalRoutePreview from "../components/discovery-panel/hospital-route-preview";
 import { summarizeRoute } from "../utils/route-summary";
 import { hospitalFollowPadding } from "../utils/hospital-follow-padding";
+import { fitProjectPlaceBounds } from "./place-camera";
 import type { IndoorDataset, IndoorRecord } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
 import { projectFloorName, projectNavigationSteps } from "./navigation-steps";
 import { ProjectPlaceSearch } from "./place-search";
+import {
+  isNamedOpenPlace,
+  isPlaceSearchCandidate,
+  isVisitorHallway,
+} from "./place-discovery";
 import {
   projectBuildingName,
   projectPlaceDisplayName,
@@ -32,16 +38,14 @@ import { connectorSvg } from "./connector-markers";
 import { ProjectRouteArrivalMenu } from "./route-arrival-menu";
 import type { ProjectArrivalMode } from "./route-arrival";
 import { ProjectRouteProfileMenu } from "./route-profile-menu";
+import { routeTransitRooms } from "./route-review-summary";
 import {
   isProjectDestination,
-  projectRoutingGraph,
-  reachableProjectDestinations,
 } from "./routing-graph";
 
 import type { MapLocation } from "./map-edits";
 import { LocationDetails } from "./location-details";
 import {
-  isHallway,
   isPassThroughPlace,
   isRestrictedArea,
   RESTRICTED_AREA_COLOR,
@@ -92,6 +96,7 @@ export function ProjectNavigation({
   calculating,
   calculationError,
   routeDiagnostic,
+  reachable,
   start,
   end,
   mode,
@@ -106,12 +111,18 @@ export function ProjectNavigation({
   onPickTarget,
   onMode,
   onPick,
+  onLocate,
   onFloor,
   onReview,
   roomThree,
   managedLocations,
   showPassThroughPlaces,
   onPassThroughPlaces,
+  onWindowDetail,
+  showDoorwayRecesses,
+  onDoorwayRecesses,
+  showDoorLocations,
+  onDoorLocations,
   showVestibuleDoors,
   onVestibuleDoors,
   showStructures,
@@ -130,6 +141,7 @@ export function ProjectNavigation({
   calculating: boolean;
   calculationError?: string;
   routeDiagnostic?: ProjectRouteDiagnostic;
+  reachable?: Set<string>;
   start: string;
   end: string;
   mode: "public" | "accessible";
@@ -144,11 +156,18 @@ export function ProjectNavigation({
   onPickTarget: (target: "start" | "end" | null) => void;
   onMode: (mode: "public" | "accessible") => void;
   onPick: (kind: "area" | "edge", key: string) => void;
+  /** Native mode waits for its current scoped faces and selected card layout. */
+  onLocate?: (key: string) => void;
   onFloor: (levelId: number) => void;
   onReview: () => void;
   roomThree: boolean;
   showPassThroughPlaces: boolean;
   onPassThroughPlaces: (show: boolean) => void;
+  onWindowDetail?: (mode: "native" | "simplified") => void;
+  showDoorwayRecesses: boolean;
+  onDoorwayRecesses: (show: boolean) => void;
+  showDoorLocations: boolean;
+  onDoorLocations: (show: boolean) => void;
   showVestibuleDoors: boolean;
   onVestibuleDoors: (show: boolean) => void;
   showStructures: boolean;
@@ -199,6 +218,10 @@ export function ProjectNavigation({
     [data, route, departure, destination],
   );
   const summary = useMemo(() => summarizeRoute(steps), [steps]);
+  const transitRooms = useMemo(
+    () => (route ? routeTransitRooms(data, route, start, end) : []),
+    [data, route, start, end],
+  );
   const failure = routeDiagnostic;
   const destinations = useMemo(
     () =>
@@ -206,6 +229,7 @@ export function ProjectNavigation({
         .filter(
           (room) =>
             isProjectDestination(room) &&
+            !isVisitorHallway(room) &&
             (showPassThroughPlaces ||
               !isPassThroughPlace(room) ||
               room.key === start ||
@@ -214,23 +238,14 @@ export function ProjectNavigation({
         .sort((a, b) => placeName(data, a).localeCompare(placeName(data, b))),
     [data, showPassThroughPlaces, start, end],
   );
-  const reachable = useMemo(
-    () =>
-      start
-        ? reachableProjectDestinations(projectRoutingGraph(data, mode), start)
-        : undefined,
-    [data, mode, start],
-  );
   const matches = useMemo(
     () =>
       data.records
         .filter(
           (r) =>
-            isProjectDestination(r) &&
-            (!isHallway(r) ||
-              (showPassThroughPlaces && isPassThroughPlace(r))) &&
-            (showPassThroughPlaces || !isPassThroughPlace(r)) &&
+            isPlaceSearchCandidate(r, query, showPassThroughPlaces) &&
             (!r.circulation ||
+              isNamedOpenPlace(r) ||
               !!query ||
               category === "See All" ||
               category === "Stairs & Entrances") &&
@@ -249,10 +264,18 @@ export function ProjectNavigation({
   );
   useEffect(() => {
     if (
+      data.records.some((room) => room.key === start && isVisitorHallway(room))
+    )
+      onStart("");
+    if (data.records.some((room) => room.key === end && isVisitorHallway(room)))
+      onEnd("");
+  }, [data, start, end, onStart, onEnd]);
+  useEffect(() => {
+    if (
       record &&
+      !record.stair &&
       !isRestrictedArea(record) &&
-      ((isHallway(record) &&
-        !(showPassThroughPlaces && isPassThroughPlace(record))) ||
+      (isVisitorHallway(record) ||
         (!showPassThroughPlaces && isPassThroughPlace(record)))
     )
       onPick("area", "");
@@ -315,29 +338,16 @@ export function ProjectNavigation({
     };
   }, [following, map]);
   const choose = (r: IndoorRecord) => {
+    if (onLocate) {
+      onLocate(r.key);
+      return;
+    }
     onPick("area", r.key);
     onFloor(r.levelId);
     if (map) {
       const bounds = new LngLatBounds();
       for (const p of r.ringsFeet[0]) bounds.extend(geographicPoint(data, p));
-      const container = map.getContainer();
-      const rect = container.getBoundingClientRect();
-      const card = container.ownerDocument
-        .querySelector('[data-testid="project-navigation"]')
-        ?.getBoundingClientRect();
-      map.fitBounds(bounds, {
-        padding:
-          container.clientWidth >= 768
-            ? { left: 410, right: 70, top: 80, bottom: 80 }
-            : {
-                left: 30,
-                right: 30,
-                top: Math.min(130, rect.height * 0.15),
-                bottom: Math.min(
-                  rect.height * 0.7,
-                  card ? rect.bottom - card.top + 24 : 340,
-                ),
-              },
+      fitProjectPlaceBounds(map, bounds, {
         maxZoom: 21,
         // A room selection can interrupt the view-mode camera animation.
         // Use the requested mode instead of freezing its intermediate pitch.
@@ -504,6 +514,25 @@ export function ProjectNavigation({
                         {route.unknownAccessAreas.length} areas.
                       </p>
                     )}
+                    {route.unknownAccessibilityEdges > 0 && (
+                      <p className="project-access-note">
+                        Step-free access is unconfirmed for{" "}
+                        {route.unknownAccessibilityEdges}{" "}
+                        {route.unknownAccessibilityEdges === 1
+                          ? "connection"
+                          : "connections"}
+                        .
+                      </p>
+                    )}
+                    {transitRooms.length > 0 && (
+                      <p className="project-access-note">
+                        This route passes through{" "}
+                        {transitRooms
+                          .map((room) => placeName(data, room))
+                          .join(", ")}
+                        . Check that these rooms permit passage.
+                      </p>
+                    )}
                     <button
                       className="project-primary"
                       // Keep the search field's blur from moving this button
@@ -602,6 +631,45 @@ export function ProjectNavigation({
                     />
                     Show pass-through places
                   </label>
+                  {data.windowDisplay?.elements.length && onWindowDetail ? (
+                    <label>
+                      Preview window detail
+                      <select
+                        aria-label="Preview window detail"
+                        value={data.windowDisplay.mode}
+                        onChange={(e) =>
+                          onWindowDetail(
+                            e.target.value as "native" | "simplified",
+                          )
+                        }
+                      >
+                        <option value="simplified">
+                          Current simplified windows
+                        </option>
+                        <option value="native">Preserve native windows</option>
+                      </select>
+                    </label>
+                  ) : null}
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={showDoorwayRecesses}
+                      onChange={(e) => onDoorwayRecesses(e.target.checked)}
+                    />
+                    Show doorway recesses
+                  </label>
+                  <p>
+                    Room fills close measured doorway recesses when this is off.
+                    Door locations and directions stay available.
+                  </p>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={showDoorLocations}
+                      onChange={(e) => onDoorLocations(e.target.checked)}
+                    />
+                    Show door locations
+                  </label>
                   <label>
                     <input
                       type="checkbox"
@@ -631,8 +699,8 @@ export function ProjectNavigation({
               )}
               {record &&
                 (isRestrictedArea(record) ||
-                  !isHallway(record) ||
-                  (showPassThroughPlaces && isPassThroughPlace(record))) && (
+                  !isPassThroughPlace(record) ||
+                  showPassThroughPlaces) && (
                   <div className="project-place-card">
                     <button
                       className="project-back"

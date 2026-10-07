@@ -424,6 +424,8 @@ def recover_room_polygons(request):
                         [float(x), float(y)]
                         for x, y in list(chosen_polygon.exterior.coords)[:-1]
                     ],
+                    "cadRings": [[[float(x), float(y)] for x, y in ring.coords]
+                                 for ring in [chosen_polygon.exterior, *chosen_polygon.interiors]],
                     "area": float(chosen_polygon.area),
                     "rawBounds": [
                         float(chosen_polygon.bounds[0]),

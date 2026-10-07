@@ -1,9 +1,48 @@
+import type { PatchComparisonView } from "../indoor-project/patch-comparison-controls";
+import type { IndoorDataset } from "../indoor-project/contract";
+import { NativeExploreLayer } from "../indoor-project/native-explore-layer";
+import {
+  hasNativeExploreGeometry,
+  initialMapPresentation,
+} from "../indoor-project/native-explore";
+import { PinComparisonLayer } from "../indoor-project/pin-comparison-layer";
+import type {
+  PinComparisonMode,
+  PinComparisonResult,
+} from "../indoor-project/pin-comparison";
+import {
+  pinRecommendations,
+  type PinRecommendation,
+} from "../indoor-project/pin-recommendations";
+import { readPinPatchDecisions } from "../indoor-project/pin-patch-decisions";
+import { PinRecommendationsPanel } from "../indoor-project/pin-recommendations-panel";
+import { NativeGapScanLayer } from "../indoor-project/native-gap-scan-layer";
+import type { GapScanPreview } from "../indoor-project/native-gap-scan";
+import type { WindowExportMode } from "../indoor-project/native-window-display";
 import { projectBoundaryEvidence } from "../indoor-project/boundary-evidence";
+import { EnclosureReviewPanel } from "../indoor-project/enclosure-review-panel";
+import { BoundaryProposalPreviewLayer } from "../indoor-project/boundary-proposal-preview-layer";
+import {
+  assertBoundaryPatchPreviewResult,
+  assertProposalDisplayPreviewPlan,
+  type BoundaryPatchPreviewPlan,
+  type ProposalDisplayPreviewPlan,
+} from "../indoor-project/enclosure-proposals";
+import { readProjectFolder } from "../indoor-project/review-bundle";
+import { ReviewBundlePanel } from "../indoor-project/review-bundle-panel";
+import { NativeAreaPanel } from "../indoor-project/native-area-panel";
+import { NativeAreaLayer } from "../indoor-project/native-area-layer";
+import type { NativeAreaResult } from "../indoor-project/native-area-review";
 import {
   NativeStairReview,
   NativeStairInspector,
 } from "../indoor-project/native-stair-review";
 import { sourceStairId } from "../indoor-project/source-stairs";
+import {
+  ConnectorFloorLinks,
+  connectorFloorSelectionId,
+} from "../indoor-project/connector-floor-links";
+import { ConnectorDetails } from "../indoor-project/connector-details";
 import { hasReviewedThroughNavigation } from "../indoor-project/through-navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
@@ -18,7 +57,6 @@ import {
   ProjectRouteFocus,
 } from "~/indoor-project/map-layers";
 import {
-  resolveRouteArrival,
   loadArrivalMode,
   saveArrivalMode,
 } from "~/indoor-project/route-arrival";
@@ -46,7 +84,8 @@ import {
   exportCampusViewer,
   isViewerProject,
   persistProject,
-  restoreProject,
+  clearProject,
+  restoreProjectSnapshot,
   reviewArea,
   reviewEdge,
   type IndoorProject,
@@ -116,14 +155,22 @@ const mapStyles = {
   light: "https://tiles.openfreemap.org/styles/bright",
   dark: "https://tiles.openfreemap.org/styles/bright",
 };
-function ViewPitch({ three }: { three: boolean }) {
+function ViewPitch({
+  three,
+  selectionOwnsCamera = false,
+}: {
+  three: boolean;
+  selectionOwnsCamera?: boolean;
+}) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (!isLoaded) return;
+    // Room review fits the selected bounds and requested pitch together. A
+    // separate pitch animation would cancel that fit before its zoom arrives.
+    if (!isLoaded || selectionOwnsCamera) return;
     const pitch = three ? 55 : 0;
     if (map && Math.abs(map.getPitch() - pitch) > 0.1)
       map.easeTo({ pitch, duration: 600 });
-  }, [map, three, isLoaded]);
+  }, [map, three, isLoaded, selectionOwnsCamera]);
   return null;
 }
 function EditorFocus({
@@ -136,22 +183,45 @@ function EditorFocus({
     nonce: number;
     zoom?: number;
     pitch?: number;
+    connector?: boolean;
   } | null;
 }) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (map && isLoaded && focus)
+    if (map && isLoaded && focus) {
+      const container = map.getContainer();
+      const card =
+        focus.connector &&
+        container
+          .closest(".project-map")
+          ?.querySelector('[aria-label="Selected connector"]')
+          ?.getBoundingClientRect();
+      const padding = card
+        ? container.clientWidth <= 650
+          ? {
+              left: 24,
+              right: 24,
+              top: 130,
+              bottom: Math.min(card.height + 28, container.clientHeight * 0.55),
+            }
+          : { left: 50, right: card.width + 40, top: 90, bottom: 60 }
+        : undefined;
       map.easeTo({
         center: geographicPoint(data, focus.point),
         zoom: focus.zoom ?? 20.5,
         ...(focus.pitch === undefined ? {} : { pitch: focus.pitch }),
+        ...(padding ? { padding, retainPadding: false } : {}),
         duration: 450,
       });
+    }
   }, [map, isLoaded, focus, data.alignment]);
   return null;
 }
 export default function IndoorProjectPage() {
+  const [windowMode, setWindowMode] = useState<WindowExportMode | undefined>();
   const [review, setReview] = useState(false);
+  const [roomReview, setRoomReview] = useState(false);
+  const [roomWindowPreview, setRoomWindowPreview] = useState(false);
   const [editing, setEditing] = useState(false);
   const [wallMode, setWallMode] = useState(false);
   const [wallId, setWallId] = useState("");
@@ -182,6 +252,7 @@ export default function IndoorProjectPage() {
     nonce: number;
     zoom?: number;
     pitch?: number;
+    connector?: boolean;
   } | null>(null);
   const [draftPoints, setDraftPoints] = useState<EditPoint[]>([]);
   const [vertexIndex, setVertexIndex] = useState(0);
@@ -220,6 +291,8 @@ export default function IndoorProjectPage() {
     [showPillars, setShowPillars] = useState(false),
     [showPassThroughPlaces, setShowPassThroughPlaces] = useState(false),
     [showVestibuleDoors, setShowVestibuleDoors] = useState(false),
+    [showDoorwayRecesses, setShowDoorwayRecesses] = useState(false),
+    [showDoorLocations, setShowDoorLocations] = useState(false),
     [showStructures, setShowStructures] = useState(false),
     [simplifyGeometry, setSimplifyGeometry] = useState(false),
     [view, setView] = useState<"2d" | "3d" | "relative" | "native">(() =>
@@ -229,6 +302,8 @@ export default function IndoorProjectPage() {
         : "3d",
     ),
     [modelStatus, setModelStatus] = useState(""),
+    [fullSourceContext, setFullSourceContext] = useState(false),
+    [showSourcePatches, setShowSourcePatches] = useState(true),
     [search, setSearch] = useState(""),
     [name, setName] = useState(""),
     [notes, setNotes] = useState(""),
@@ -239,58 +314,239 @@ export default function IndoorProjectPage() {
     [accessible, setAccessible] = useState<"yes" | "no" | "unknown">("unknown");
   const latestProject = useRef(project);
   latestProject.current = project;
+  // An explicit import owns this page from the moment the file is selected.
+  // A slow startup restore or an earlier ZIP must never replace it afterwards.
+  const projectLoad = useRef(0);
+  const [importNotice, setImportNotice] = useState(false);
+  const [packageInfo, setPackageInfo] = useState<{
+    fileName: string;
+    restored: boolean;
+  } | null>(null);
   const routePickState = useRef({ target: routePickTarget, start, end });
   routePickState.current = { target: routePickTarget, start, end };
   const input = useRef<HTMLInputElement>(null),
     fit = useRef<(includeSelection?: boolean) => void>(),
     fitSelection = useRef(true),
     fitted = useRef(false);
-  const accept = useCallback((p: IndoorProject) => {
-    setDrawingBasemapArea(false);
-    setDownload(null);
-    setPast([]);
-    setFuture([]);
-    setDirty(false);
-    setAnnotationId("");
-    setLocationId("");
-    setEditorFocus(null);
-    setEditorAppearance(defaultEditorAppearance);
-    setWallId("");
-    setWallMode(false);
-    setPinId("");
+  const [placeFitRequest, setPlaceFitRequest] = useState(0);
+  const folderInput = useRef<HTMLInputElement>(null);
+  const [folderChoosing, setFolderChoosing] = useState(false);
+  useEffect(() => {
+    if (!folderChoosing || !folderInput.current) return;
+    const el = folderInput.current;
+    const cancel = () => setFolderChoosing(false);
+    el.addEventListener("cancel", cancel);
+    el.click();
+    return () => el.removeEventListener("cancel", cancel);
+  }, [folderChoosing]);
+  const [pinReview, setPinReview] = useState(false);
+  const [pinRecommendation, setPinRecommendation] =
+    useState<PinRecommendation>();
+  const [pinComparisonMode, setPinComparisonMode] =
+    useState<PinComparisonMode>("map");
+  const [pinAcceptedView, setPinAcceptedView] = useState(false);
+  const [pinPatchId, setPinPatchId] = useState<string>();
+  const [pinComparison, setPinComparison] = useState<PinComparisonResult>();
+  const [pinComparisonStatus, setPinComparisonStatus] = useState("");
+  const [pinCurrentOutline, setPinCurrentOutline] = useState(true);
+  const pinModelPatches = useMemo(
+    () =>
+      pinReview
+        ? {
+            version: 1 as const,
+            patches: (
+              project?.rooms.nativeBoundaryPatches?.patches ?? []
+            ).filter(
+              (p) =>
+                p.status === "applied" ||
+                (!!pinComparison &&
+                  (pinComparisonMode === "patch" ||
+                    pinComparisonMode === "updated-selection") &&
+                  pinComparison?.patches.some(
+                    (preview) => preview.id === p.id,
+                  )),
+            ),
+          }
+        : project?.rooms.nativeBoundaryPatches,
+    [
+      pinReview,
+      project?.rooms.nativeBoundaryPatches,
+      pinComparisonMode,
+      pinRecommendation,
+      pinComparison,
+      pinPatchId,
+    ],
+  );
+  useEffect(() => {
+    setPinComparison(undefined);
+    setPinComparisonStatus("");
+    if (!pinReview || !pinRecommendation || !project) return;
+    const pin = project.rooms.reviewPins?.pins.find(
+      (p) => p.id === pinRecommendation.pinId,
+    );
+    if (!pin) return;
+    const patchIds =
+      !pinAcceptedView && pinPatchId
+        ? [pinPatchId]
+        : pinRecommendation.patchIds;
+    if (patchIds.some((id) => !pinRecommendation.patchIds.includes(id))) return;
+    const patches = patchIds.map((id) =>
+      project.rooms.nativeBoundaryPatches?.patches.find((p) => p.id === id),
+    );
+    if (patches.some((p) => !p)) {
+      setPinComparisonStatus(
+        "A saved patch is missing. Refresh this recommendation before previewing it.",
+      );
+      return;
+    }
+    setPinComparisonStatus("Tracing current and proposed native boundaries…");
+    const worker = new Worker(
+      new URL("../indoor-project/pin-comparison.worker.ts", import.meta.url),
+      { type: "module" },
+    );
+    worker.onmessage = ({
+      data: response,
+    }: MessageEvent<{ result?: PinComparisonResult; error?: string }>) => {
+      setPinComparison(response.result);
+      setPinComparisonStatus(
+        response.error ??
+          "Comparison ready. Preview only; current geometry and directions remain unchanged.",
+      );
+    };
+    worker.onerror = () =>
+      setPinComparisonStatus(
+        "Boundary comparison failed. Select another pin or reopen the review to retry.",
+      );
+    const entry = pinRecommendations(project).find(
+      (e) => e.recommendation.id === pinRecommendation.id,
+    );
+    worker.postMessage({
+      data: project.dataset,
+      levelId: pin.levelId,
+      point: pin.pointFeet,
+      patches,
+      accepted:
+        pinAcceptedView && entry
+          ? {
+              decisions: readPinPatchDecisions(project),
+              recommendationId: pinRecommendation.id,
+              evidenceSha256: entry.evidenceSha256,
+            }
+          : undefined,
+    });
+    return () => worker.terminate();
+  }, [
+    pinReview,
+    pinRecommendation,
+    project?.dataset,
+    project?.rooms.nativeBoundaryPatches,
+    pinPatchId,
+    pinAcceptedView,
+    pinAcceptedView ? project?.rooms.reviewBundle : undefined,
+  ]);
+  const [nativePatchComparison, setNativePatchComparison] =
+    useState<PatchComparisonView>();
+  const [connectionPreview, setConnectionPreview] = useState<GapScanPreview>();
+  const [nativeExploreEnabled, setNativeExploreEnabled] = useState(true);
+  const [nativeAreas, setNativeAreas] = useState(false);
+  const [boundaryPreview, setBoundaryPreview] =
+    useState<BoundaryPatchPreviewPlan>();
+  const [boundaryComparison, setBoundaryComparison] =
+    useState<PinComparisonResult>();
+  const [boundaryAfter, setBoundaryAfter] = useState(true);
+  const [boundaryPreviewResult, setBoundaryPreviewResult] =
+    useState<NativeAreaResult>();
+  const [boundaryPreviewStatus, setBoundaryPreviewStatus] = useState("");
+  const [displayPreview, setDisplayPreview] =
+    useState<ProposalDisplayPreviewPlan>();
+  const [displayPreviewStatus, setDisplayPreviewStatus] = useState("");
+  const [verifiedDisplayPreview, setVerifiedDisplayPreview] = useState<{
+    plan: ProposalDisplayPreviewPlan;
+    data: IndoorProject["dataset"];
+  }>();
+  const [nativeAreaLevel, setNativeAreaLevel] = useState<number>();
+  const [nativeAreaResult, setNativeAreaResult] = useState<NativeAreaResult>();
+  const [nativeAreaError, setNativeAreaError] = useState("");
+  const [nativeAreaSelection, setNativeAreaSelection] = useState<string[]>([]);
+  const [nativeAreaAdd, setNativeAreaAdd] = useState(false);
+  const [nativeAreaOptions, setNativeAreaOptions] = useState<
+    import("../indoor-project/native-area-review").NativeAreaOptions
+  >({});
+  const [nativeHallways, setNativeHallways] = useState(true);
+  const [nativeDrawing, setNativeDrawing] = useState<
+    "wall" | "outdoor" | "partition"
+  >();
+  const [nativeDraft, setNativeDraft] = useState<[number, number][]>([]);
+  useEffect(() => {
+    setNativeDrawing(undefined);
+    setNativeDraft([]);
     setPlacingPin(false);
     setMovingPin(false);
-    setDraftPoints([]);
-    setEditTool("select");
-    setView(
-      new URLSearchParams(routeSearch()).get("view") === "relative"
-        ? "relative"
-        : "3d",
-    );
-    if (isViewerProject(p)) {
+  }, [nativeAreaLevel, nativeAreas]);
+  const nativeAreaAnchorKey = useRef<string>();
+  const accept = useCallback(
+    (p: IndoorProject, fileName?: string, restored = false) => {
+      latestProject.current = p;
+      setImportNotice(false);
+      setPackageInfo({
+        fileName: fileName ?? p.manifest.model.fileName,
+        restored,
+      });
+      setDrawingBasemapArea(false);
+      setRoomReview(false);
+      setPinReview(false);
+      setPinRecommendation(undefined);
+      setPinComparisonMode("map");
+      setNativeAreas(false);
+      setNativeAreaSelection([]);
+      setDownload(null);
+      setWindowMode(undefined);
+      setPast([]);
+      setFuture([]);
+      setDirty(false);
+      setAnnotationId("");
+      setLocationId("");
+      setEditorFocus(null);
+      setEditorAppearance(defaultEditorAppearance);
+      setWallId("");
+      setWallMode(false);
+      setPinId("");
+      setPlacingPin(false);
+      setMovingPin(false);
+      setDraftPoints([]);
+      setEditTool("select");
+      setFullSourceContext(false);
+      const presentation = initialMapPresentation(
+        p.dataset,
+        new URLSearchParams(routeSearch()).get("view"),
+        !restored,
+      );
+      setView(presentation.view);
+      setNativeExploreEnabled(presentation.nativeFloor);
       setReview(false);
       setEditing(false);
-    }
-    setProject(p);
-    setFloorId(
-      p.dataset.floors.find((f) =>
-        /(?:^|\b)(?:floor|level|lvl)\s*1(?:\b|$)/i.test(f.name),
-      )?.id ??
-        p.dataset.floors[0]?.id ??
-        "",
-    );
-    setBuilding("all");
-    setSelected("");
-    setEdgeId("");
-    setStart("");
-    setRoutePickTarget(null);
-    setEnd("");
-    fitSelection.current = true;
-    fitted.current = false;
-    setMessage(
-      `Loaded ${p.rooms.annotations.filter((r) => r.status !== "deleted").length.toLocaleString()} source areas · ${p.dataset.records.length.toLocaleString()} mapped locations · ${p.dataset.nodes.length.toLocaleString()} graph nodes · ${p.dataset.issues.length.toLocaleString()} review items.`,
-    );
-  }, []);
+      setProject(p);
+      setFloorId(
+        p.dataset.floors.find((f) =>
+          /(?:^|\b)(?:floor|level|lvl)\s*1(?:\b|$)/i.test(f.name),
+        )?.id ??
+          p.dataset.floors[0]?.id ??
+          "",
+      );
+      setBuilding("all");
+      setSelected("");
+      setEdgeId("");
+      setStart("");
+      setRoutePickTarget(null);
+      setEnd("");
+      fitSelection.current = true;
+      fitted.current = false;
+      setMessage(
+        `Loaded ${p.rooms.annotations.filter((r) => r.status !== "deleted").length.toLocaleString()} source areas · ${p.dataset.records.length.toLocaleString()} mapped locations · ${p.dataset.nodes.length.toLocaleString()} graph nodes · ${p.dataset.issues.length.toLocaleString()} review items.`,
+      );
+    },
+    [],
+  );
   useEffect(() => {
     return () => {
       if (download) URL.revokeObjectURL(download.url);
@@ -298,43 +554,110 @@ export default function IndoorProjectPage() {
   }, [download]);
   useEffect(() => {
     let active = true;
-    void restoreProject()
-      .then(async (bytes) => {
-        if (bytes && active) {
-          const p = await readIndoorProject(bytes);
-          if (active) accept(p);
+    const loads = projectLoad;
+    const request = loads.current;
+    const current = () => active && loads.current === request;
+    void restoreProjectSnapshot()
+      .then(async (snapshot) => {
+        if (snapshot && current()) {
+          const p = await readIndoorProject(snapshot.bytes);
+          if (current()) accept(p, snapshot.fileName, true);
         }
       })
       .catch(() => {
-        if (active)
+        if (current())
           setMessage(
             "Saved project could not be restored. Import a prepared ZIP.",
           );
       });
     return () => {
       active = false;
+      loads.current++;
     };
   }, [accept]);
-  async function load(file: File) {
+  async function load(file: File, folderFiles?: File[]) {
+    const request = ++projectLoad.current;
+    const current = () => projectLoad.current === request;
     setBusy(true);
-    setMessage("Validating package hashes and loading floor maps…");
+    setImportNotice(true);
+    setMessage(
+      folderFiles
+        ? "Checking the master folder, companion hashes and floor maps…"
+        : `Validating ${file.name} and loading floor maps…`,
+    );
     try {
-      const bytes = new Uint8Array(await file.arrayBuffer());
-      const loaded = await readIndoorProject(bytes);
+      const folder = folderFiles
+        ? await readProjectFolder(folderFiles)
+        : undefined;
+      const bytes = folder
+        ? await exportIndoorProject(folder.project)
+        : new Uint8Array(await file.arrayBuffer());
+      if (!current()) return;
+      const loaded = folder?.project ?? (await readIndoorProject(bytes));
+      if (!current()) return;
       const next = preserveReviewPins(loaded, latestProject.current);
       const saved = next === loaded ? bytes : await exportIndoorProject(next);
-      accept(next);
+      if (!current()) return;
+      // Queue the write before making the map available for navigation away.
+      const writing = persistProject(saved, folder?.fileName ?? file.name);
+      accept(next, folder?.fileName ?? file.name);
       try {
-        await persistProject(saved);
+        await writing;
       } catch {
-        setMessage(
-          "Project loaded. Browser storage is unavailable; export reviews to preserve them.",
-        );
+        if (current()) {
+          setImportNotice(true);
+          setMessage(
+            "Project loaded. Browser storage is unavailable; export reviews to preserve them.",
+          );
+        }
       }
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : String(error));
+      if (current()) {
+        setImportNotice(true);
+        setMessage(
+          `Could not import ${folderFiles ? "master folder" : file.name}: ${error instanceof Error ? error.message : String(error)}${latestProject.current ? " Previous map remains loaded." : ""}`,
+        );
+      }
     } finally {
-      setBusy(false);
+      if (current()) setBusy(false);
+    }
+  }
+  async function clearMap() {
+    const request = ++projectLoad.current;
+    // Queue deletion before allowing a fresh import or a page remount.
+    const clearing = clearProject();
+    latestProject.current = null;
+    setProject(null);
+    setPackageInfo(null);
+    setReview(true);
+    setRoomReview(false);
+    setNativeAreas(false);
+    setNativeAreaSelection([]);
+    setEditing(false);
+    setPast([]);
+    setFuture([]);
+    setDirty(false);
+    setDownload(null);
+    setDraftPoints([]);
+    setSelected("");
+    setStart("");
+    setEnd("");
+    setBusy(true);
+    setImportNotice(false);
+    setMessage("Clearing the current map and saved project…");
+    try {
+      await clearing;
+      if (projectLoad.current === request)
+        setMessage(
+          "Map cleared, including the saved ZIP in this browser. Import a project ZIP to start fresh.",
+        );
+    } catch {
+      if (projectLoad.current === request)
+        setMessage(
+          "Current map cleared. Browser storage could not be cleared; an older saved ZIP may return after reload. Import a new ZIP to replace it.",
+        );
+    } finally {
+      if (projectLoad.current === request) setBusy(false);
     }
   }
   const commit = useCallback(
@@ -384,10 +707,15 @@ export default function IndoorProjectPage() {
   const cancelBasemapArea = useCallback(() => setDrawingBasemapArea(false), []);
   async function saveViewer() {
     if (!project || busy) return;
+    const request = projectLoad.current;
+    const current = () => projectLoad.current === request;
     setBusy(true);
     setMessage("Preparing campus room geometry, places and navigation…");
     try {
-      const bytes = await exportCampusViewer(project);
+      const windows =
+        windowMode ?? project.dataset.windowDisplay?.mode ?? "simplified";
+      const bytes = await exportCampusViewer(project, { windows });
+      if (!current()) return;
       if (latestProject.current !== project) {
         setMessage(
           "The map changed during export. Export again for the current version.",
@@ -404,15 +732,16 @@ export default function IndoorProjectPage() {
         kind: "viewer",
         name:
           project.manifest.model.fileName.replace(/\.rvt$/i, "") +
-          ".campus-viewer.zip",
+          `.windows-${windows}.campus-viewer.zip`,
       });
       setMessage(
-        `Campus viewer ready · ${(bytes.length / 1_048_576).toFixed(2)} MiB · 2D + 3D rooms and navigation. The reviewed master remains loaded.`,
+        `Campus viewer ready · ${windows === "native" ? "Preserved native windows" : "Current simplified windows"} · ${(bytes.length / 1_048_576).toFixed(2)} MiB. Rooms and routing are unchanged; the reviewed master remains loaded.`,
       );
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : String(error));
+      if (current())
+        setMessage(error instanceof Error ? error.message : String(error));
     } finally {
-      setBusy(false);
+      if (current()) setBusy(false);
     }
   }
   function cancelDrawing() {
@@ -455,10 +784,13 @@ export default function IndoorProjectPage() {
   }, [dirty, draftPoints.length]);
   async function save() {
     if (!project || busy) return;
+    const request = projectLoad.current;
+    const current = () => projectLoad.current === request;
     setBusy(true);
     setMessage("Saving source model, reviews, GIS alignment and navigation…");
     try {
       const bytes = await exportIndoorProject(project);
+      if (!current()) return;
       if (latestProject.current !== project) {
         setMessage(
           "Edits changed during export. Export again to save the current version.",
@@ -477,19 +809,22 @@ export default function IndoorProjectPage() {
       });
       try {
         await persistProject(bytes);
+        if (!current()) return;
         if (latestProject.current === project) setDirty(false);
         setMessage(
           "Reviewed ZIP ready and saved in this browser. Click Download reviewed ZIP for a portable backup.",
         );
       } catch {
-        setMessage(
-          "Reviewed ZIP ready. Browser storage is unavailable; click Download reviewed ZIP to preserve it.",
-        );
+        if (current())
+          setMessage(
+            "Reviewed ZIP ready. Browser storage is unavailable; click Download reviewed ZIP to preserve it.",
+          );
       }
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : String(error));
+      if (current())
+        setMessage(error instanceof Error ? error.message : String(error));
     } finally {
-      setBusy(false);
+      if (current()) setBusy(false);
     }
   }
   const connectorReview = useMemo(
@@ -507,13 +842,289 @@ export default function IndoorProjectPage() {
     ]),
     project?.rooms.mapEdits?.floorNames,
   ]);
-  const displayData = useMemo(
-    () => (project ? editorVisitorDataset(project) : undefined),
-    [presentationKey, project?.dataset],
+  const displayData = useMemo(() => {
+    if (!project) return undefined;
+    const data = editorVisitorDataset(project);
+    const previewMode = roomReview && roomWindowPreview ? "native" : windowMode;
+    return data.windowDisplay && previewMode
+      ? { ...data, windowDisplay: { ...data.windowDisplay, mode: previewMode } }
+      : data;
+  }, [
+    presentationKey,
+    project?.dataset,
+    windowMode,
+    roomReview,
+    roomWindowPreview,
+  ]);
+  useEffect(
+    () => setRoomWindowPreview(false),
+    [project?.dataset.source.roomsSha256, roomReview],
   );
   const floor = displayData?.floors.find((f) => f.id === floorId),
-    levelIds = useMemo(() => floor?.levelIds ?? [], [floor]),
+    levelIds = useMemo(
+      () =>
+        nativeAreas && nativeAreaLevel !== undefined
+          ? [nativeAreaLevel]
+          : (floor?.levelIds ?? []),
+      [floor, nativeAreas, nativeAreaLevel],
+    ),
     data = displayData;
+  const nativeExplore =
+    !!data &&
+    !review &&
+    view === "2d" &&
+    nativeExploreEnabled &&
+    hasNativeExploreGeometry(data);
+  // Native mode owns the requested floor immediately. Loading or a failed
+  // trace must not flash old prepared outlines as if they were native faces.
+  const nativeFloorLevels = useMemo(
+    () => (nativeExplore ? levelIds : []),
+    [nativeExplore, levelIds],
+  );
+  const displayPreviewReady =
+    verifiedDisplayPreview?.plan === displayPreview &&
+    verifiedDisplayPreview?.data === data;
+
+  useEffect(() => {
+    setNativeAreaResult(undefined);
+    setNativeAreaSelection([]);
+    setNativeAreaError("");
+    if (!nativeAreas || !data || nativeAreaLevel === undefined) return;
+    const worker = new Worker(
+      new URL(
+        "../indoor-project/native-area-review.worker.ts",
+        import.meta.url,
+      ),
+      { type: "module" },
+    );
+    worker.onmessage = ({
+      data: response,
+    }: MessageEvent<{ result?: NativeAreaResult; error?: string }>) => {
+      setNativeAreaResult(response.result);
+      if (response.result) {
+        if (nativeAreaOptions.cropPolygonFeet) {
+          fitted.current = true;
+          setNativeAreaSelection(response.result.regions.map((r) => r.id));
+        } else {
+          const key = nativeAreaOptions.roomKey ?? nativeAreaAnchorKey.current;
+          const found = response.result.regions.filter(
+            (r) => key && r.roomKeys.includes(key),
+          );
+          if (found.length) {
+            fitted.current = true;
+            setNativeAreaSelection(found.map((r) => r.id));
+          }
+        }
+      }
+      setNativeAreaError(response.error ?? "");
+    };
+    worker.onerror = () =>
+      setNativeAreaError(
+        "Native boundary tracing failed. Choose another level to retry.",
+      );
+    worker.postMessage({
+      data,
+      levelId: nativeAreaLevel,
+      options: nativeAreaOptions,
+    });
+    return () => worker.terminate();
+  }, [nativeAreas, data, nativeAreaLevel, nativeAreaOptions]);
+  useEffect(() => {
+    setBoundaryPreviewResult(undefined);
+    setBoundaryComparison(undefined);
+    setBoundaryAfter(true);
+    setBoundaryPreviewStatus("");
+    if (
+      !boundaryPreview ||
+      !data ||
+      !roomReview ||
+      selected !== boundaryPreview.roomKey
+    ) {
+      setBoundaryPreview(undefined);
+      return;
+    }
+    let active = true;
+    const worker = new Worker(
+      new URL(
+        "../indoor-project/boundary-proposal-preview.worker.ts",
+        import.meta.url,
+      ),
+      { type: "module" },
+    );
+    setBoundaryPreviewStatus("Tracing the proposed boundary…");
+    worker.onmessage = ({
+      data: response,
+    }: MessageEvent<{
+      result?: NativeAreaResult;
+      comparison?: PinComparisonResult;
+      error?: string;
+    }>) => {
+      if (!active) return;
+      try {
+        if (!response.result)
+          throw new Error(response.error ?? "Could not trace the proposal.");
+        assertBoundaryPatchPreviewResult(
+          project!,
+          boundaryPreview,
+          response.result,
+        );
+        setBoundaryPreviewResult(response.result);
+        setBoundaryComparison(response.comparison);
+        const regions = response.result.regions.filter((r) =>
+          r.roomKeys.includes(boundaryPreview.roomKey),
+        );
+        const labels = new Set(regions.flatMap((r) => r.roomKeys));
+        setBoundaryPreviewStatus(
+          `Boundary preview ready · ${regions.length} matching regions · ${labels.size} place labels. Each color shows a connected native area; magenta shows the wall extension. This is a boundary comparison, not an applied room or route repair.`,
+        );
+      } catch (error) {
+        setBoundaryPreviewStatus(
+          error instanceof Error ? error.message : String(error),
+        );
+      }
+      worker.terminate();
+    };
+    worker.onerror = () => {
+      if (active)
+        setBoundaryPreviewStatus(
+          "The proposal could not be traced. Show original and retry.",
+        );
+      worker.terminate();
+    };
+    worker.postMessage({
+      data,
+      roomKey: boundaryPreview.roomKey,
+      levelId: boundaryPreview.patch.levelId,
+      options: boundaryPreview.options,
+      ...(boundaryPreview.patches
+        ? { patches: boundaryPreview.patches }
+        : boundaryPreview.patch.manualPointsFeet
+          ? {}
+          : { patch: boundaryPreview.patch }),
+    });
+    return () => {
+      active = false;
+      worker.terminate();
+    };
+  }, [
+    boundaryPreview,
+    data,
+    roomReview,
+    selected,
+    project?.rooms.nativeBoundaryPatches,
+  ]);
+  useEffect(() => {
+    setVerifiedDisplayPreview(undefined);
+    if (!displayPreview) return;
+    if (
+      !project ||
+      !data ||
+      !roomReview ||
+      selected !== displayPreview.roomKey
+    ) {
+      setDisplayPreview(undefined);
+      setDisplayPreviewStatus("");
+      return;
+    }
+    try {
+      assertProposalDisplayPreviewPlan(project, displayPreview);
+    } catch (error) {
+      setDisplayPreview(undefined);
+      setDisplayPreviewStatus(
+        error instanceof Error ? error.message : String(error),
+      );
+      return;
+    }
+    if (displayPreview.kind === "slab-supported-walkway") {
+      setVerifiedDisplayPreview({
+        plan: displayPreview,
+        data,
+      });
+      setDisplayPreviewStatus(
+        "Blue shows the source outline cropped to native slab support. This is a display comparison; access and directions are unchanged.",
+      );
+      return;
+    }
+    let active = true;
+    const worker = new Worker(
+      new URL(
+        "../indoor-project/walkway-proposal-preview.worker.ts",
+        import.meta.url,
+      ),
+      { type: "module" },
+    );
+    setDisplayPreviewStatus(
+      displayPreview.nativeRegion?.passThroughDoorIds?.length
+        ? "Tracing native floor continuity through the reviewed thresholds…"
+        : "Tracing the full native enclosure from inside wall faces and closed doorway thresholds…",
+    );
+    worker.onmessage = ({
+      data: response,
+    }: MessageEvent<{ verified?: boolean; error?: string }>) => {
+      if (!active) return;
+      if (response.verified) {
+        setVerifiedDisplayPreview({
+          plan: displayPreview,
+          data,
+        });
+        const preview = displayPreview.nativeRegion!;
+        const bypasses = preview.diagnostics.doorChecks.filter(
+          (d) =>
+            d.status === "same-region" &&
+            !preview.passThroughDoorIds?.includes(d.nativeElementId),
+        ).length;
+        setDisplayPreviewStatus(
+          preview.previewPurpose === "boundary-investigation"
+            ? `Full native boundary traced · ${preview.diagnostics.roomKeys.length} place labels · ${bypasses} doorway bypasses. Amber shows the connected area that still needs wall-join investigation. ${preview.passThroughDoorIds?.length ? `${preview.passThroughDoorIds.length} pass-through thresholds are included in the floor preview; physical doors remain recorded. ` : ""}The old outline identifies the seed only; walls, columns and floor openings remain excluded. Access and directions are unchanged.`
+            : "Blue shows the full native enclosure, bounded by inside wall faces and closed doorway thresholds. The old outline identifies the seed only; walls, columns and openings remain excluded. Access and directions are unchanged.",
+        );
+      } else
+        setDisplayPreviewStatus(
+          response.error ?? "The native boundary could not be verified.",
+        );
+      worker.terminate();
+    };
+    worker.onerror = () => {
+      if (active)
+        setDisplayPreviewStatus(
+          "The native boundary could not be traced. Show original and retry.",
+        );
+      worker.terminate();
+    };
+    // Scene/model bytes are not needed for polygon tracing or evidence validation.
+    worker.postMessage({
+      project: { dataset: project.dataset, rooms: project.rooms },
+      plan: displayPreview,
+    });
+    return () => {
+      active = false;
+      worker.terminate();
+    };
+  }, [
+    displayPreview,
+    data,
+    roomReview,
+    selected,
+    project?.rooms.nativeBoundaryPatches,
+  ]);
+  const selectNativeArea = useCallback(
+    (id: string, additive: boolean) => {
+      nativeAreaAnchorKey.current = nativeAreaResult?.regions.find(
+        (r) => r.id === id,
+      )?.roomKeys[0];
+      // Native selection owns the camera even if prepared floor layers arrive
+      // later; their whole-floor fit must not replace the selected boundary.
+      fitted.current = true;
+      setNativeAreaSelection((old) =>
+        additive
+          ? old.includes(id)
+            ? old.filter((k) => k !== id)
+            : [...old, id]
+          : [id],
+      );
+    },
+    [nativeAreaResult],
+  );
   const boundaryEvidence = useMemo(
     () =>
       data && project
@@ -525,13 +1136,16 @@ export default function IndoorProjectPage() {
   const chosenPin = pins.find(
     (p) => p.id === pinId && levelIds.includes(p.levelId),
   );
-  const pinNativeLevel = levelIds.includes(pinLevel)
-    ? pinLevel
-    : [...levelIds].sort(
-        (a, b) =>
-          (data?.records.filter((r) => r.levelId === b).length ?? 0) -
-          (data?.records.filter((r) => r.levelId === a).length ?? 0),
-      )[0];
+  const pinNativeLevel =
+    nativeAreas && nativeAreaLevel !== undefined
+      ? nativeAreaLevel
+      : levelIds.includes(pinLevel)
+        ? pinLevel
+        : [...levelIds].sort(
+            (a, b) =>
+              (data?.records.filter((r) => r.levelId === b).length ?? 0) -
+              (data?.records.filter((r) => r.levelId === a).length ?? 0),
+          )[0];
   const selectPin = useCallback((id: string) => {
     setPinId(id);
     setSelected("");
@@ -542,6 +1156,8 @@ export default function IndoorProjectPage() {
     setMovingPin(false);
   }, []);
   const beginPinPlacement = useCallback(() => {
+    setNativeDrawing(undefined);
+    setNativeDraft([]);
     setPlacingPin(true);
     setMovingPin(false);
     setPinId("");
@@ -593,23 +1209,21 @@ export default function IndoorProjectPage() {
   const baseRoute = routeCalculation.route;
   const arrivalResult = useMemo(
     () =>
-      data
-        ? resolveRouteArrival(data, baseRoute, end, arrivalMode)
-        : { route: null },
-    [data, baseRoute, end, arrivalMode],
+      arrivalMode === "inside"
+        ? { route: baseRoute }
+        : (routeCalculation.arrivals?.[arrivalMode] ?? { route: null }),
+    [baseRoute, arrivalMode, routeCalculation.arrivals],
   );
   const route = arrivalResult.route;
   const arrivalReasons = useMemo(
     () =>
-      data && baseRoute
+      baseRoute
         ? {
-            doorway: resolveRouteArrival(data, baseRoute, end, "doorway")
-              .message,
-            hallway: resolveRouteArrival(data, baseRoute, end, "hallway")
-              .message,
+            doorway: routeCalculation.arrivals?.doorway?.message,
+            hallway: routeCalculation.arrivals?.hallway?.message,
           }
         : {},
-    [data, baseRoute, end],
+    [baseRoute, routeCalculation.arrivals],
   );
   const destinations = useMemo(
     () =>
@@ -665,10 +1279,15 @@ export default function IndoorProjectPage() {
   );
   const pickMapPlace = useCallback(
     (kind: "area" | "edge", id: string) => {
-      if (kind === "area" && !assignRoutePlace(id)) return;
+      if (
+        kind === "area" &&
+        !data?.records.some((r) => r.key === id && r.stair) &&
+        !assignRoutePlace(id)
+      )
+        return;
       pick(kind, id);
     },
-    [assignRoutePlace, pick],
+    [assignRoutePlace, pick, data],
   );
   const pickAnnotation = useCallback(
     (id: string) => {
@@ -787,6 +1406,18 @@ export default function IndoorProjectPage() {
       fn(fitSelection.current);
     }
   }, []);
+  const changeView = (nextView: typeof view) => {
+    if (displayPreview?.kind === "native-enclosure-walkway") {
+      fitted.current = true;
+    } else if (roomReview && selected) {
+      fitSelection.current = true;
+      if (nextView === view) fit.current?.(true);
+      else fitted.current = false;
+    }
+    if (nextView === "native" && nextView !== view)
+      setModelStatus("Loading the prepared 3D scene…");
+    setView(nextView);
+  };
   useEffect(() => {
     if (record) {
       setName(record.name);
@@ -840,20 +1471,135 @@ export default function IndoorProjectPage() {
   };
   return (
     <main
-      className={`indoor-project ${review || !project ? "project-review" : "project-explore"}`}
+      className={`indoor-project ${review || !project ? "project-review" : "project-explore"} ${roomReview || nativeAreas || pinReview ? "project-enclosure-review" : ""} ${pinReview ? "project-pin-review" : ""}`}
     >
       <header>
         <div>
-          <span className="project-kicker">REPLICABLE INDOOR PIPELINE</span>
-          <h1>Indoor project workspace</h1>
+          <span className="project-kicker">
+            {roomReview ? "ROOM EVIDENCE REVIEW" : "REPLICABLE INDOOR PIPELINE"}
+          </span>
+          <h1>
+            {roomReview ? "Review room enclosures" : "Indoor project workspace"}
+          </h1>
         </div>
         <nav>
+          <button disabled={busy} onClick={() => void clearMap()}>
+            Clear map
+          </button>
+          {project && (
+            <button
+              disabled={busy}
+              aria-pressed={roomReview}
+              onClick={() => {
+                setRoomReview((open) => !open);
+                setPinReview(false);
+                setNativeAreas(false);
+                setReview(!roomReview);
+                setEditing(false);
+                setWallMode(false);
+                setWallId("");
+                setPinId("");
+                setPlacingPin(false);
+                setMovingPin(false);
+                cancelDrawing();
+                setStart("");
+                setEnd("");
+                setRoutePickTarget(null);
+                setCirculation(false);
+                setSimplifyGeometry(false);
+                setShowPillars(false);
+                setShowStructures(true);
+                setShowPassThroughPlaces(true);
+                setShowVestibuleDoors(false);
+              }}
+            >
+              {roomReview ? "Close room review" : "Room review"}
+            </button>
+          )}
+          {project && !isViewerProject(project) && (
+            <button
+              disabled={busy}
+              aria-pressed={nativeAreas}
+              onClick={() => {
+                setNativeAreas((open) => !open);
+                setPinReview(false);
+                setRoomReview(false);
+                setEditing(false);
+                setReview(true);
+                setView("2d");
+                setBuilding("all");
+                setWallMode(false);
+                setPlacingPin(false);
+                setMovingPin(false);
+                setSelected("");
+                setStart("");
+                setEnd("");
+                setRoutePickTarget(null);
+                cancelDrawing();
+                fitted.current = false;
+                fitSelection.current = false;
+                setEditorFocus(null);
+                setNativeAreaLevel(
+                  levelIds[0] ?? project.dataset.nativeLevels[0]?.id,
+                );
+              }}
+            >
+              {nativeAreas ? "Close native areas" : "Native areas"}
+            </button>
+          )}
+          {project && !isViewerProject(project) && (
+            <button
+              disabled={busy}
+              aria-pressed={pinReview}
+              onClick={() => {
+                setPinReview((open) => !open);
+                setReview(true);
+                setRoomReview(false);
+                setNativeAreas(false);
+                setEditing(false);
+                setWallMode(false);
+                setPlacingPin(false);
+                setMovingPin(false);
+                cancelDrawing();
+                setStart("");
+                setEnd("");
+                setRoutePickTarget(null);
+              }}
+            >
+              {pinReview ? "Close pin review" : "Pin review"}
+            </button>
+          )}
+          {project && packageInfo && (
+            <details className="project-package" data-testid="project-package">
+              <summary>Loaded map</summary>
+              <div>
+                <strong>{packageInfo.fileName}</strong>
+                <span>
+                  {packageInfo.restored
+                    ? "Restored from this browser"
+                    : "Imported from ZIP"}
+                </span>
+                <span>
+                  Package exported{" "}
+                  {new Date(project.manifest.createdAt).toLocaleString()}
+                </span>
+                <span>
+                  Imported map revision{" "}
+                  <code>{project.manifest.indoor.sha256.slice(0, 12)}</code>
+                </span>
+                {dirty && <span>Contains unsaved edits</span>}
+              </div>
+            </details>
+          )}
           {project && !isViewerProject(project) && (
             <button
               aria-pressed={editing}
               disabled={busy}
               onClick={() => {
                 setEditing((value) => !value);
+                setPinReview(false);
+                setNativeAreas(false);
+                setRoomReview(false);
                 setReview(true);
                 setView("2d");
                 cancelDrawing();
@@ -865,7 +1611,16 @@ export default function IndoorProjectPage() {
           {project && !isViewerProject(project) && (
             <button
               onClick={() => {
+                if (
+                  review &&
+                  nativeExploreEnabled &&
+                  hasNativeExploreGeometry(project.dataset)
+                )
+                  setView("2d");
                 setReview((r) => !r);
+                setPinReview(false);
+                setNativeAreas(false);
+                setRoomReview(false);
                 setEditing(false);
                 cancelDrawing();
               }}
@@ -884,6 +1639,9 @@ export default function IndoorProjectPage() {
               <button disabled={busy} onClick={() => input.current?.click()}>
                 Import project ZIP
               </button>
+              <button disabled={busy} onClick={() => setFolderChoosing(true)}>
+                Import master folder
+              </button>
               {!project || !isViewerProject(project) ? (
                 <button
                   disabled={!project || busy || draftPoints.length > 0}
@@ -892,6 +1650,34 @@ export default function IndoorProjectPage() {
                   Export reviewed project
                 </button>
               ) : null}
+              {project && (
+                <label className="project-window-export">
+                  Window detail
+                  <select
+                    aria-label="Window detail"
+                    value={
+                      windowMode ??
+                      project.dataset.windowDisplay?.mode ??
+                      "simplified"
+                    }
+                    onChange={(e) =>
+                      setWindowMode(e.target.value as WindowExportMode)
+                    }
+                    disabled={busy}
+                  >
+                    <option value="simplified">
+                      Current simplified windows
+                    </option>
+                    <option
+                      value="native"
+                      disabled={!project.dataset.windowDisplay?.elements.length}
+                    >
+                      Preserve native windows
+                    </option>
+                  </select>
+                  <span>Preview and viewer export · same rooms and routes</span>
+                </label>
+              )}
               {project && (
                 <button
                   disabled={busy || draftPoints.length > 0}
@@ -921,11 +1707,34 @@ export default function IndoorProjectPage() {
             event.target.value = "";
           }}
         />
+        {folderChoosing && (
+          <input
+            ref={folderInput}
+            hidden
+            type="file"
+            multiple
+            {...{ webkitdirectory: "", directory: "" }}
+            aria-label="Import master folder files"
+            onChange={async (event) => {
+              const element = event.currentTarget;
+              const files = Array.from(element.files ?? []);
+              if (files.length) await load(files[0], files);
+              element.value = "";
+              setFolderChoosing(false);
+            }}
+          />
+        )}
       </header>
-      <p className="project-status" role="status">
+      <p
+        className={`project-status${importNotice ? "project-import-notice" : ""}`}
+        role="status"
+      >
         {dirty && <strong>Unsaved edits · </strong>}
         {message}
       </p>
+      {project && review && !pinReview && (
+        <ReviewBundlePanel bundle={project.rooms.reviewBundle} />
+      )}
       {!project || !data ? (
         <section className="project-intro">
           <h2>One package, from source model to tested routes</h2>
@@ -956,8 +1765,304 @@ export default function IndoorProjectPage() {
         </section>
       ) : (
         <div
-          className={`project-layout ${editing ? "project-edit-layout" : ""} ${editing && !record && !edge && !door ? "project-content-only" : ""}`}
+          className={`project-layout ${roomReview || nativeAreas ? "project-room-review-layout" : ""} ${editing ? "project-edit-layout" : ""} ${pinReview ? "project-pin-review-layout" : ""} ${editing && !record && !edge && !door ? "project-content-only" : ""}`}
         >
+          {pinReview && (
+            <aside
+              className="project-sidebar pin-review-sidebar"
+              aria-label="Pin review sidebar"
+            >
+              <PinRecommendationsPanel
+                project={project}
+                locked={busy}
+                onApply={(next) => {
+                  commit(next);
+                  setMessage(
+                    "Review decisions saved in this browser. Export reviewed project to retain them. Geometry and directions are unchanged.",
+                  );
+                }}
+                activeId={pinRecommendation?.id}
+                onSelect={(recommendation) => {
+                  setPinRecommendation(recommendation);
+                  setPinAcceptedView(false);
+                  setPinPatchId(recommendation.patchIds[0]);
+                  setPinComparisonMode("map");
+                  const pin = project.rooms.reviewPins?.pins.find(
+                    (p) => p.id === recommendation.pinId,
+                  );
+                  if (pin) {
+                    selectPin(pin.id);
+                    chooseLevel(pin.levelId);
+                    fitted.current = true;
+                    setEditorFocus({
+                      point: pin.pointFeet,
+                      nonce: Date.now(),
+                      zoom: 22,
+                      pitch: view === "2d" ? 0 : 45,
+                    });
+                  }
+                }}
+                onLocate={(id) => {
+                  const pin = project.rooms.reviewPins?.pins.find(
+                    (p) => p.id === id,
+                  );
+                  if (!pin) return;
+                  selectPin(id);
+                  chooseLevel(pin.levelId);
+                  fitted.current = true;
+                  setEditorFocus({
+                    point: pin.pointFeet,
+                    nonce: Date.now(),
+                    zoom: 22,
+                    pitch: view === "2d" ? 0 : 45,
+                  });
+                }}
+                onCompare={(mode) => {
+                  setPinComparisonMode(mode);
+                  if (
+                    mode === "current-selection" ||
+                    mode === "updated-selection"
+                  ) {
+                    fitted.current = true;
+                    changeView("2d");
+                  }
+                }}
+                acceptedView={pinAcceptedView}
+                onAccepted={() => {
+                  if (!pinAcceptedView) setPinComparison(undefined);
+                  setPinAcceptedView(true);
+                  setPinComparisonMode("updated-selection");
+                  fitted.current = true;
+                  changeView("2d");
+                }}
+                selectedPatchId={pinPatchId}
+                onPatchSelect={(id) => {
+                  setPinAcceptedView(false);
+                  setPinPatchId(id);
+                  setPinComparison(undefined);
+                  setPinComparisonStatus(
+                    "Tracing this patch’s effect on the native boundary…",
+                  );
+                  if (pinComparisonMode === "map")
+                    setPinComparisonMode("patch");
+                  const patch =
+                    project.rooms.nativeBoundaryPatches?.patches.find(
+                      (p) => p.id === id,
+                    );
+                  const pin = project.rooms.reviewPins?.pins.find(
+                    (p) => p.id === pinRecommendation?.pinId,
+                  );
+                  if (pin) {
+                    const ring = patch?.ringsFeet[0];
+                    const point: [number, number] = ring
+                      ? [
+                          ring.reduce((s, p) => s + p[0], 0) / ring.length,
+                          ring.reduce((s, p) => s + p[1], 0) / ring.length,
+                        ]
+                      : pin.pointFeet;
+                    chooseLevel(pin.levelId);
+                    fitted.current = true;
+                    setEditorFocus({
+                      point,
+                      nonce: Date.now(),
+                      zoom: 22,
+                      pitch: view === "2d" ? 0 : 45,
+                    });
+                  }
+                }}
+                mode={pinComparisonMode}
+                comparison={pinComparison}
+                comparisonStatus={pinComparisonStatus}
+              />
+              {pinComparisonMode !== "map" && (
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={pinCurrentOutline}
+                    onChange={(e) => setPinCurrentOutline(e.target.checked)}
+                  />
+                  Compare before-patch outline (dashed orange)
+                </label>
+              )}
+              <ReviewBundlePanel bundle={project.rooms.reviewBundle} />
+            </aside>
+          )}
+          {nativeAreas && nativeAreaLevel !== undefined && (
+            <aside className="project-sidebar">
+              <details open={placingPin || !!chosenPin}>
+                <summary>Reference pins</summary>
+                <ReviewPinControls
+                  data={data}
+                  pins={pins}
+                  levelIds={[nativeAreaLevel]}
+                  levelId={nativeAreaLevel}
+                  placing={placingPin}
+                  onLevel={setPinLevel}
+                  onPlace={beginPinPlacement}
+                  onCancel={cancelPinPlacement}
+                  onSelect={selectPin}
+                />
+                {chosenPin && (
+                  <ReviewPinPanel
+                    key={chosenPin.id + ":" + chosenPin.pointFeet.join(",")}
+                    pin={chosenPin}
+                    data={data}
+                    onLocate={() => pinFit.current?.()}
+                    onSave={(pin) =>
+                      commit(
+                        setReviewPins(
+                          project,
+                          pins.map((p) => (p.id === pin.id ? pin : p)),
+                        ),
+                      )
+                    }
+                    onMove={() => {
+                      setNativeDrawing(undefined);
+                      setNativeDraft([]);
+                      setMovingPin(true);
+                      setPlacingPin(true);
+                    }}
+                    onRemove={() => {
+                      commit(
+                        setReviewPins(
+                          project,
+                          pins.filter((p) => p.id !== chosenPin.id),
+                        ),
+                      );
+                      setPinId("");
+                      cancelPinPlacement();
+                    }}
+                    capture={() =>
+                      wallCapture.current
+                        ? wallCapture.current()
+                        : Promise.reject(new Error("Map is not ready yet."))
+                    }
+                  />
+                )}
+              </details>
+              <NativeAreaPanel
+                project={project}
+                levelId={nativeAreaLevel}
+                onLevel={(id) => {
+                  setNativeAreaLevel(id);
+                  nativeAreaAnchorKey.current = undefined;
+                  setNativeAreaOptions((old) => ({
+                    maxGapFeet: old.maxGapFeet,
+                    mode: old.mode,
+                  }));
+                  chooseLevel(id);
+                  fitted.current = false;
+                  fitSelection.current = false;
+                }}
+                onConnectionPreview={setConnectionPreview}
+                onPatchComparison={setNativePatchComparison}
+                result={nativeAreaResult}
+                error={nativeAreaError}
+                selected={nativeAreaSelection}
+                additive={nativeAreaAdd}
+                onAdditive={setNativeAreaAdd}
+                onSelect={selectNativeArea}
+                locked={busy}
+                onUndo={undo}
+                canUndo={past.length > 0}
+                onClear={() => {
+                  nativeAreaAnchorKey.current = undefined;
+                  setNativeAreaSelection([]);
+                }}
+                onApply={commit}
+                options={nativeAreaOptions}
+                drawing={nativeDrawing}
+                draft={nativeDraft}
+                onDrawing={(tool) => {
+                  cancelPinPlacement();
+                  setNativeDrawing(tool);
+                  setNativeDraft([]);
+                }}
+                onPartitionDraft={setNativeDraft}
+                onFinishOutdoor={() => {
+                  nativeAreaAnchorKey.current = undefined;
+                  setNativeAreaOptions((old) => ({
+                    ...old,
+                    roomKey: undefined,
+                    mode: "connected",
+                    cropPolygonFeet: nativeDraft,
+                    manualGapPoints: undefined,
+                    previewGapIds: [],
+                  }));
+                  setNativeDrawing(undefined);
+                }}
+                onOptions={(next) => {
+                  if (next.nativeFloorId !== nativeAreaOptions.nativeFloorId) {
+                    nativeAreaAnchorKey.current = undefined;
+                    setNativeAreaSelection([]);
+                  }
+                  if (
+                    JSON.stringify(next.cropPolygonFeet) !==
+                    JSON.stringify(nativeAreaOptions.cropPolygonFeet)
+                  )
+                    nativeAreaAnchorKey.current = undefined;
+                  setNativeAreaOptions(next);
+                }}
+                showHallways={nativeHallways}
+                onShowHallways={setNativeHallways}
+                onLocateDoor={(point) => {
+                  fitted.current = true;
+                  setEditorFocus({
+                    point,
+                    nonce: Date.now(),
+                    zoom: 22,
+                    pitch: 0,
+                  });
+                }}
+              />
+            </aside>
+          )}
+          {roomReview && (
+            <aside className="project-sidebar">
+              <EnclosureReviewPanel
+                project={project}
+                selected={selected}
+                view={view}
+                onView={changeView}
+                sourceStatus={modelStatus}
+                onApply={commit}
+                onPreviewBoundary={(plan) => {
+                  setDisplayPreview(undefined);
+                  setDisplayPreviewStatus("");
+                  setBoundaryPreview(plan);
+                }}
+                previewBoundaryPatchId={boundaryPreview?.patch.id}
+                onExitBoundaryPreview={() => setBoundaryPreview(undefined)}
+                boundaryPreviewStatus={boundaryPreviewStatus}
+                boundaryComparison={boundaryComparison}
+                boundaryAfter={boundaryAfter}
+                onBoundaryAfter={setBoundaryAfter}
+                onPreviewWindows={() => setRoomWindowPreview(true)}
+                onExitWindowPreview={() => setRoomWindowPreview(false)}
+                previewingWindows={roomWindowPreview}
+                onPreviewDisplay={(plan) => {
+                  fitted.current = true;
+                  setBoundaryPreview(undefined);
+                  setDisplayPreview(plan);
+                }}
+                previewDisplayRoomKey={displayPreview?.roomKey}
+                onExitDisplayPreview={() => {
+                  setDisplayPreview(undefined);
+                  setDisplayPreviewStatus("");
+                }}
+                displayPreviewStatus={displayPreviewStatus}
+                onLocate={(key) => {
+                  const room = data.records.find((r) => r.key === key);
+                  if (!room) return;
+                  chooseLevel(room.levelId);
+                  setBuilding("all");
+                  setEditorFocus(null);
+                  fitted.current = false;
+                  pick("area", key);
+                }}
+              />
+            </aside>
+          )}
           {editing && (
             <aside className="project-sidebar">
               <MapEditorPanel
@@ -1001,7 +2106,7 @@ export default function IndoorProjectPage() {
               />
             </aside>
           )}
-          {review && !editing && (
+          {review && !editing && !roomReview && !nativeAreas && !pinReview && (
             <aside className="project-sidebar">
               <ReviewPinControls
                 data={data}
@@ -1229,6 +2334,35 @@ export default function IndoorProjectPage() {
                     />
                     Show pass-through places
                   </label>
+                  {project.dataset.windowDisplay?.elements.length ? (
+                    <label>
+                      Preview window detail
+                      <select
+                        aria-label="Preview window detail"
+                        value={windowMode ?? project.dataset.windowDisplay.mode}
+                        onChange={(e) =>
+                          setWindowMode(e.target.value as WindowExportMode)
+                        }
+                      >
+                        <option value="simplified">
+                          Current simplified windows
+                        </option>
+                        <option value="native">Preserve native windows</option>
+                      </select>
+                    </label>
+                  ) : null}
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={showDoorwayRecesses}
+                      onChange={(e) => setShowDoorwayRecesses(e.target.checked)}
+                    />
+                    Show doorway recesses
+                  </label>
+                  <p>
+                    Room fills close measured doorway recesses when this is off.
+                    Door locations and directions stay available.
+                  </p>
                   <label>
                     <input
                       type="checkbox"
@@ -1481,7 +2615,7 @@ export default function IndoorProjectPage() {
           )}
           <section className="project-map" aria-label="Indoor campus map">
             <div className="project-map-toolbar">
-              {review && !editing && (
+              {review && !editing && !roomReview && (
                 <div
                   className="project-pin-shortcut"
                   style={{ top: route ? 58 : 0 }}
@@ -1499,44 +2633,88 @@ export default function IndoorProjectPage() {
                   {placingPin && (
                     <p aria-live="polite">
                       Click or tap anywhere on the floor plan.
+                      {nativeAreas &&
+                        ` Native level #${nativeAreaLevel}; region selection is paused while placing the pin.`}
                     </p>
                   )}
                 </div>
               )}
               <div
                 className="project-view-switch"
+                hidden={nativeAreas}
                 role="group"
                 aria-label="Map presentation"
               >
                 <button
-                  aria-pressed={view === "2d"}
-                  onClick={() => setView("2d")}
+                  aria-pressed={view === "2d" && !nativeExplore}
+                  onClick={() => {
+                    if (!review) setNativeExploreEnabled(false);
+                    changeView("2d");
+                  }}
                 >
                   2D rooms
                 </button>
+                {!review && hasNativeExploreGeometry(data) && (
+                  <button
+                    aria-pressed={nativeExplore}
+                    onClick={() => {
+                      setNativeExploreEnabled(true);
+                      changeView("2d");
+                    }}
+                  >
+                    Native floor map
+                  </button>
+                )}
                 <button
                   aria-pressed={view === "3d"}
-                  onClick={() => setView("3d")}
+                  onClick={() => changeView("3d")}
                 >
                   3D rooms
                 </button>
                 <button
                   aria-pressed={view === "relative"}
                   title="Keep source height differences within the campus floor"
-                  onClick={() => setView("relative")}
+                  onClick={() => changeView("relative")}
                 >
                   3D relative heights
                 </button>
                 {project.scene && (
                   <button
                     aria-pressed={view === "native"}
-                    onClick={() => setView("native")}
+                    onClick={() => changeView("native")}
                   >
                     Source model
                   </button>
                 )}
+                {project.scene && view === "native" && (
+                  <button
+                    aria-pressed={fullSourceContext}
+                    title="Reveal all source walls, glazing and roofs above and below this floor"
+                    onClick={() => {
+                      setModelStatus("Loading the prepared 3D scene…");
+                      setFullSourceContext((value) => !value);
+                    }}
+                  >
+                    Full model context
+                  </button>
+                )}
+                {project.scene &&
+                  view === "native" &&
+                  !!project.rooms.nativeBoundaryPatches?.patches.length && (
+                    <button
+                      aria-pressed={showSourcePatches}
+                      title="Applied footprints are magenta, proposals orange. Original model bytes are preserved; wall heights are not inferred."
+                      onClick={() => setShowSourcePatches((value) => !value)}
+                    >
+                      Show geometry patches
+                    </button>
+                  )}
               </div>
-              {review ? (
+              {nativeAreas ? (
+                <span className="native-area-map-level">
+                  Native level #{nativeAreaLevel}
+                </span>
+              ) : review && !roomReview ? (
                 <label className="project-floor-picker">
                   <span>{floorBadge(floor)}</span>
                   <select
@@ -1589,7 +2767,10 @@ export default function IndoorProjectPage() {
               <MapCanvas>
                 <ProjectMapLayers
                   data={data}
-                  geometryOpacity={editing ? editorAppearance.geometry : 1}
+                  nativeFloorLevels={nativeFloorLevels}
+                  geometryOpacity={
+                    nativeAreas ? 0.4 : editing ? editorAppearance.geometry : 1
+                  }
                   labelsVisible={!editing || editorAppearance.labels}
                   basemapVisible={!editing || editorAppearance.basemap}
                   levelIds={levelIds}
@@ -1605,18 +2786,33 @@ export default function IndoorProjectPage() {
                   showPassThroughPlaces={showPassThroughPlaces}
                   showVestibuleDoors={showVestibuleDoors}
                   showStructures={showStructures}
+                  showDoorwayRecesses={showDoorwayRecesses}
+                  showDoorLocations={showDoorLocations}
                   connectorReview={connectorReview}
-                  review={review}
+                  review={review && !roomReview}
                   route={route}
                   selected={selected}
                   onPick={pickMapPlace}
                   pickEnabled={
+                    !nativeAreas &&
                     !drawingBasemapArea &&
                     !(review && (wallMode || placingPin) && !editing) &&
                     (!editing || editTool === "select")
                   }
                   onFitReady={ready}
+                  selectionPadding={roomReview ? 40 : undefined}
                 />
+                {nativeExplore && (
+                  <NativeExploreLayer
+                    data={data}
+                    levelIds={levelIds}
+                    building={building}
+                    selected={selected}
+                    onPick={(key) => pickMapPlace("area", key)}
+                    onFitReady={ready}
+                    fitRequest={placeFitRequest}
+                  />
+                )}
                 <BasemapBuildingLayer data={data} settings={basemapBuildings} />
                 <BasemapAreaDrawing
                   data={data}
@@ -1662,16 +2858,101 @@ export default function IndoorProjectPage() {
                   onPoint={placeAnnotationPoint}
                 />
                 <EditorFocus data={data} focus={editorFocus} />
+                {roomReview &&
+                  ((boundaryPreview && boundaryPreviewResult) ||
+                    (displayPreview && displayPreviewReady)) && (
+                    <BoundaryProposalPreviewLayer
+                      data={data}
+                      plan={boundaryPreview}
+                      result={boundaryPreviewResult}
+                      comparison={boundaryComparison}
+                      after={boundaryAfter}
+                      displayPlan={
+                        displayPreviewReady ? displayPreview : undefined
+                      }
+                    />
+                  )}
+                {nativeAreas && (
+                  <NativeAreaLayer
+                    data={data}
+                    result={nativeAreaResult}
+                    selected={nativeAreaSelection}
+                    showHallways={nativeHallways}
+                    interactive={!placingPin && !nativePatchComparison}
+                    drawing={nativeDrawing}
+                    draft={nativeDraft}
+                    onPoint={(point) => {
+                      if (
+                        nativeDrawing === "partition" &&
+                        nativeDraft.length >= 2
+                      )
+                        return;
+                      const points = [...nativeDraft, point];
+                      setNativeDraft(points);
+                      if (nativeDrawing === "wall" && points.length === 2) {
+                        nativeAreaAnchorKey.current = undefined;
+                        setNativeAreaOptions((old) => ({
+                          ...old,
+                          manualGapPoints: points as [
+                            [number, number],
+                            [number, number],
+                          ],
+                          previewGapIds: [],
+                        }));
+                        setNativeDrawing(undefined);
+                      }
+                    }}
+                    decisions={project.rooms.nativeAreaReviews?.decisions ?? []}
+                    onSelect={(id, additive) =>
+                      selectNativeArea(id, additive || nativeAreaAdd)
+                    }
+                  />
+                )}
+                {pinReview &&
+                  pinComparison &&
+                  levelIds.includes(
+                    project.rooms.reviewPins?.pins.find(
+                      (p) => p.id === pinRecommendation?.pinId,
+                    )?.levelId ?? -1,
+                  ) &&
+                  pinComparisonMode !== "map" && (
+                    <PinComparisonLayer
+                      data={data}
+                      result={pinComparison}
+                      mode={pinComparisonMode}
+                      showCurrent={pinCurrentOutline}
+                    />
+                  )}
+                {nativeAreas &&
+                  nativePatchComparison?.data === data &&
+                  nativePatchComparison.result.patches.every(
+                    (p) => p.levelId === nativeAreaLevel,
+                  ) && (
+                    <PinComparisonLayer
+                      data={data}
+                      result={nativePatchComparison.result}
+                      mode={nativePatchComparison.mode}
+                      showCurrent={false}
+                    />
+                  )}
+                {nativeAreas && connectionPreview && (
+                  <NativeGapScanLayer data={data} preview={connectionPreview} />
+                )}
                 {view === "native" && project.scene && (
                   <ProjectModelLayer
                     data={data}
                     bytes={project.scene}
                     levelIds={levelIds}
+                    sectionLevelId={record?.levelId}
+                    fullContext={fullSourceContext}
+                    boundaryPatches={pinModelPatches}
+                    showPatches={showSourcePatches}
                     onStatus={setModelStatus}
                   />
                 )}
                 {!review && (
                   <ProjectNavigation
+                    onWindowDetail={setWindowMode}
                     managedLocations={project.rooms.mapEdits?.locations}
                     showStructures={showStructures}
                     simplifyGeometry={simplifyGeometry}
@@ -1689,6 +2970,7 @@ export default function IndoorProjectPage() {
                     data={data}
                     route={route}
                     calculating={routeCalculation.calculating}
+                    reachable={routeCalculation.reachable}
                     calculationError={routeCalculation.error}
                     routeDiagnostic={routeCalculation.diagnostic}
                     start={start}
@@ -1705,33 +2987,105 @@ export default function IndoorProjectPage() {
                     onPickTarget={setRoutePickTarget}
                     onMode={setMode}
                     onPick={pick}
+                    onLocate={
+                      nativeExplore
+                        ? (key) => {
+                            const room = data.records.find(
+                              (r) => r.key === key,
+                            );
+                            if (!room) return;
+                            fitted.current = false;
+                            fitSelection.current = true;
+                            setPlaceFitRequest((request) => request + 1);
+                            chooseLevel(room.levelId);
+                            pick("area", key);
+                          }
+                        : undefined
+                    }
                     onFloor={chooseLevel}
-                    onReview={() => setReview(true)}
+                    onReview={() => {
+                      setPinReview(false);
+                      setRoomReview(false);
+                      setNativeAreas(false);
+                      setEditing(false);
+                      setPlacingPin(false);
+                      setWallMode(false);
+                      setReview(true);
+                    }}
                     showPassThroughPlaces={showPassThroughPlaces}
                     onPassThroughPlaces={setShowPassThroughPlaces}
                     showVestibuleDoors={showVestibuleDoors}
                     onVestibuleDoors={setShowVestibuleDoors}
+                    showDoorwayRecesses={showDoorwayRecesses}
+                    onDoorwayRecesses={setShowDoorwayRecesses}
+                    showDoorLocations={showDoorLocations}
+                    onDoorLocations={setShowDoorLocations}
                   />
                 )}
                 <ProjectRouteFocus data={data} route={route} />
-                <ViewPitch three={view !== "2d"} />
+                <ViewPitch
+                  three={view !== "2d"}
+                  selectionOwnsCamera={roomReview && !!selected}
+                />
                 <MapControls />
               </MapCanvas>
             </MapProvider>
-            {!review && sourceStair && (
-              <aside
-                className="project-point-location-card"
-                aria-label="Source staircase"
-              >
-                <button
-                  aria-label="Close source staircase"
-                  onClick={() => setEdgeId("")}
+            {!review &&
+              (sourceStair ||
+                record?.stair ||
+                (edge &&
+                  [
+                    "stairs",
+                    "local-steps",
+                    "ramp",
+                    "elevator",
+                    "escalator",
+                  ].includes(edge.kind))) && (
+                <aside
+                  className="project-point-location-card"
+                  aria-label="Selected connector"
                 >
-                  ×
-                </button>
-                <NativeStairInspector data={data} stair={sourceStair} />
-              </aside>
-            )}
+                  <button
+                    aria-label="Close selected connector"
+                    onClick={() => {
+                      setEdgeId("");
+                      setSelected("");
+                    }}
+                  >
+                    ×
+                  </button>
+                  <ConnectorFloorLinks
+                    data={data}
+                    room={record?.stair ? record : undefined}
+                    edge={edge}
+                    nativeElementId={sourceStair?.stairElementId}
+                    onNavigate={(target) => {
+                      setFloorId(target.floorId);
+                      setBuilding("all");
+                      setSelected("");
+                      setEdgeId(connectorFloorSelectionId(data, target));
+                      setEditorFocus({
+                        point: [
+                          target.node.pointFeet[0],
+                          target.node.pointFeet[1],
+                        ],
+                        nonce: Date.now(),
+                        zoom: 20,
+                        connector: true,
+                      });
+                    }}
+                  />
+                  {sourceStair ? (
+                    <NativeStairInspector data={data} stair={sourceStair} />
+                  ) : (
+                    <ConnectorDetails
+                      data={data}
+                      room={record?.stair ? record : undefined}
+                      edge={edge}
+                    />
+                  )}
+                </aside>
+              )}
             {!review &&
               locationId &&
               !selected &&
@@ -1780,8 +3134,8 @@ export default function IndoorProjectPage() {
               </div>
             )}
             <div className="project-map-legend">
-              Blue-grey corridors · blue entrances · blue-grey stairs · blue
-              route · orange doors need review
+              Light green walkways and stairs · grey overview buildings · blue
+              entrances · blue route · orange doors need review
               {!data.doors && (
                 <span>
                   {" "}
@@ -1790,7 +3144,7 @@ export default function IndoorProjectPage() {
               )}
             </div>
           </section>
-          {review && (!editing || record || edge || door) && (
+          {review && !pinReview && (!editing || record || edge || door) && (
             <aside className="project-inspector">
               <h2>
                 {chosenPin && !editing
@@ -1805,6 +3159,25 @@ export default function IndoorProjectPage() {
                           ? "Entrance review"
                           : "Map inspector"}
               </h2>
+              <ConnectorFloorLinks
+                data={data}
+                room={record?.stair ? record : undefined}
+                edge={edge}
+                nativeElementId={sourceStair?.stairElementId}
+                onNavigate={(target) => {
+                  setFloorId(target.floorId);
+                  if (nativeAreas) setNativeAreaLevel(target.node.levelId);
+                  setBuilding("all");
+                  setSelected("");
+                  setEdgeId(connectorFloorSelectionId(data, target));
+                  setEditorFocus({
+                    point: [target.node.pointFeet[0], target.node.pointFeet[1]],
+                    nonce: Date.now(),
+                    zoom: 20,
+                    connector: true,
+                  });
+                }}
+              />
               {sourceStair ? (
                 <NativeStairInspector
                   data={data}

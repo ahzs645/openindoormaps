@@ -167,6 +167,33 @@ test("source room proof rejects missing provenance, imprecise registration and u
   }
 });
 
+test("omitted native edge pockets retain finite bounded display provenance without changing routing", () => {
+  const data = fixture();
+  const proof = data.presentation!.rooms[0].sourceProof!;
+  const before = JSON.stringify([data.records, data.nodes, data.edges]);
+  proof.omittedNativeEdgeFragments = {
+    ringsFeet: [
+      [
+        [
+          [0, 0],
+          [1, 0],
+          [0, 0.1],
+        ],
+      ],
+    ],
+    squareFeet: 0.05,
+  };
+  validateIndoorDataset(data);
+  assert.equal(JSON.stringify([data.records, data.nodes, data.edges]), before);
+  for (const invalid of [-1, 2.01, Number.NaN]) {
+    proof.omittedNativeEdgeFragments.squareFeet = invalid;
+    assert.throws(() => validateIndoorDataset(data), /prepared room/);
+  }
+  proof.omittedNativeEdgeFragments.squareFeet = 0.05;
+  proof.omittedNativeEdgeFragments.ringsFeet[0][0][0][0] = Number.NaN;
+  assert.throws(() => validateIndoorDataset(data), /prepared room/);
+});
+
 test("exact walking support rejects stale binding, duplicate floors and malformed holes", () => {
   for (const mutate of [
     (d: IndoorDataset) => {
@@ -392,4 +419,40 @@ test("registered source doorways retain drawing identity without a native door I
     mutate(d);
     assert.throws(() => validateIndoorDataset(d), /registered source doorway/);
   }
+});
+
+test("registered display swing proof requires finite measured thresholds and both jamb wall supports", () => {
+  const d = fixture(),
+    room = d.presentation!.rooms[0],
+    proof = room.sourceProof!;
+  proof.closedDoorSwings = [
+    {
+      arcSegmentIndices: [0, 1, 2, 3, 4, 5, 6, 7],
+      leafSegmentIndices: [8],
+      supportingWallSegmentIndices: [9, 10],
+      hingeFeet: [0, 0],
+      radiusFeet: 3,
+      closedLeafFeet: [
+        [0, 0],
+        [3, 0],
+      ],
+      thresholdSegments: [
+        [
+          [0, 0],
+          [3, 0],
+        ],
+      ],
+    },
+  ];
+  validateIndoorDataset(d);
+  const bad = structuredClone(d);
+  bad.presentation!.rooms[0].sourceProof!.closedDoorSwings![0].thresholdSegments[0][0][0] =
+    Number.NaN;
+  assert.throws(() => validateIndoorDataset(bad));
+  const unsupported = structuredClone(d);
+  unsupported.presentation!.rooms[0].sourceProof!.closedDoorSwings![0].supportingWallSegmentIndices =
+    [9];
+  assert.throws(() => validateIndoorDataset(unsupported));
+  assert.deepEqual(d.nodes, []);
+  assert.deepEqual(d.edges, []);
 });

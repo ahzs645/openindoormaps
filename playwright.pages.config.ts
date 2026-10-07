@@ -3,12 +3,12 @@ import base from "./playwright.config";
 
 export default defineConfig({
   ...base,
-  testMatch: "github-pages.spec.ts",
+  testMatch: ["github-pages.spec.ts", "project-import.spec.ts"],
   use: {
     ...base.use,
     baseURL: "http://127.0.0.1:42175",
     launchOptions: {
-      ...base.use.launchOptions,
+      ...base.use?.launchOptions,
       executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
     },
   },

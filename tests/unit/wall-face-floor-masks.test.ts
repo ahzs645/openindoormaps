@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import pc from "polygon-clipping";
 import pointInPolygon from "@turf/boolean-point-in-polygon";
 import office from "../fixtures/unbc-office-10-1040-display.json";
+import classroom from "../fixtures/unbc-classroom-08-161-display.json";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import type { FeatureCollection, MultiPolygon } from "geojson";
 import { geographicPoint } from "../../app/indoor-project/routing";
@@ -25,6 +26,24 @@ const corners: [number, number][] = [
   [77, 779],
   [77, 800.25],
 ];
+test("08-161 native enclosure cannot override missing floor, another room, or a missing native side", () => {
+  for (const kind of ["no-floor", "other-room", "missing-side"] as const) {
+    const data = structuredClone(classroom) as unknown as IndoorDataset;
+    const room = data.records.find((r) => r.number === "08-161")!;
+    if (kind === "no-floor") data.walkingSupport!.floors = [];
+    if (kind === "other-room")
+      data.records.push({
+        ...room,
+        key: "other-classroom",
+        ringsFeet: [rect(115, 680, 0.9)],
+      });
+    if (kind === "missing-side")
+      data.walls = data.walls.filter((w) => w.nativeElementId !== 1_514_985);
+    const mask = wallFaceRoomFloorMasks(data, data.records);
+    assert.equal(mask.displayEnclosures?.has(room.key), false, kind);
+    if (kind !== "missing-side") assert.equal(mask.has(room.key), false, kind);
+  }
+});
 test("actual 10-1040 tint follows the native wall faces and corners without promoting its open enclosure", () => {
   const data = fixture(),
     room = data.records[0],

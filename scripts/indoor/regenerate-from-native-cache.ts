@@ -3,6 +3,7 @@
  * node --import tsx scripts/indoor/regenerate-from-native-cache.ts master.zip native-cache.json output-directory
  */
 import assert from "node:assert/strict";
+import type { IndoorDataset } from "../../app/indoor-project/contract";
 import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -10,6 +11,7 @@ const { join, resolve } = path;
 import { readProjectPackage } from "../../../reviter/lib/reviter/project-package.ts";
 import { prepareIndoorDataset } from "../../../reviter/lib/reviter/indoor-pipeline.ts";
 import type { ConvertResult } from "../../../reviter/lib/reviter/types.ts";
+import { validatePublishedNativeExploreMapping } from "../../app/indoor-project/native-explore-mapping";
 import {
   readIndoorProject,
   exportIndoorProject,
@@ -50,6 +52,9 @@ const dataset = await prepareIndoorDataset(
       console.log(message);
   },
 );
+// The compiler hashes hydrated annotations. A portable package binds the exact
+// preserved source entry, whose review companions may use archive wire storage.
+dataset.source.roomsSha256 = original.manifest.floors.sha256;
 cache = undefined; // Release the decoded native model before archive workers clone buffers.
 if (globalThis.gc) globalThis.gc();
 assert.equal(
@@ -132,9 +137,37 @@ console.time("Export viewer");
 const viewerBytes = await exportCampusViewer(master);
 console.timeEnd("Export viewer");
 const viewer = await readIndoorProject(viewerBytes);
+const visitorExpected: IndoorDataset = structuredClone(dataset);
+delete visitorExpected.selectionDoorThresholds;
+delete visitorExpected.doorAperturePatchState;
+delete visitorExpected.nativeDoorBoundaryClosures;
+delete visitorExpected.nativeWallPositionRepairs;
+// Logical partition descriptors and their history are authoring selections.
+// Visitor exports retain physical rooms and portals. The exact read-only native
+// floor outline is a separately validated derived publication, not this history.
+delete visitorExpected.reviewedAreaPartitions;
+// Exclusion footprints/reasons are visitor geometry; authoring notes stay in
+// the reviewed master alongside the source evidence and recommendation files.
+for (const area of visitorExpected.indoorExclusions?.areas ?? [])
+  delete area.notes;
+// Native mapping is derived flat selection/display data, not a graph mutation.
+// Check its source/current geometry and output binding independently, then
+// retain strict byte-equivalent dataset parity for every remaining field.
+await validatePublishedNativeExploreMapping(viewer.dataset);
+if (
+  dataset.walkingSupport?.sourceModelSha256 === dataset.source.modelSha256 &&
+  dataset.walkingSupport.floors.length
+)
+  assert.ok(
+    viewer.dataset.nativeExploreMapping,
+    "Visitor native floor mapping is required for a native-supported master",
+  );
+const visitorComparable = structuredClone(viewer.dataset);
+delete visitorComparable.nativeExploreMapping;
+delete visitorExpected.nativeExploreMapping;
 assert.equal(
-  sha(new TextEncoder().encode(JSON.stringify(viewer.dataset))),
-  sha(new TextEncoder().encode(JSON.stringify(dataset))),
+  sha(new TextEncoder().encode(JSON.stringify(visitorComparable))),
+  sha(new TextEncoder().encode(JSON.stringify(visitorExpected))),
   "2D/3D viewer geometry and routing must match the master",
 );
 assert.ok(

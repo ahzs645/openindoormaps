@@ -106,6 +106,7 @@ export function WallReviewLayer({
         }),
     );
     return () => {
+      if (!map.getStyle()) return;
       for (const id of [
         "project-review-wall-outline",
         "project-review-wall-boxes",

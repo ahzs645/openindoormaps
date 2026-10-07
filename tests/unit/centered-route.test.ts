@@ -3,6 +3,7 @@ import { recoverNativeWallJunctionRepairs as visitorJoints } from "../../app/ind
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { nativeCirculationGeometryKey } from "../../app/indoor-project/native-circulation";
 import { routeLanes } from "../../app/indoor-project/route-lanes";
 import { centeredRoutePaths } from "../../app/indoor-project/centered-route";
 import {
@@ -898,11 +899,26 @@ test("a walking branch spanning an internal native door can centre only with its
       continue;
     }
     assert.ok(route);
-    assert.ok(route.edges.some((e) => e.id === "internal-walk"));
-    assert.ok(!route.edges.some((e) => e.id === "door"));
-    assert.equal(route.paths[0].centered, state === "connected");
-    if (state === "connected")
+    assert.equal(
+      route.edges.some((e) => e.id === "internal-walk"),
+      state === "connected",
+      "an unchecked walking fallback must not license a missing native aperture",
+    );
+    assert.equal(
+      route.edges.some((e) => e.id === "door"),
+      state !== "connected",
+      "retain the explicit original native portal when the walking shortcut is rejected",
+    );
+    if (state === "connected") {
+      assert.equal(route.paths[0].centered, true);
       assert.equal(route.paths[0].pointsFeet.length, 3);
+    } else {
+      assert.equal(
+        route.paths.find((p) => p.edgeIds.includes("door"))!.centered,
+        false,
+        "the original native portal remains a source path requiring aperture review",
+      );
+    }
   }
 });
 
@@ -1888,4 +1904,133 @@ test("an open neighboring front cannot erase the selected native doorway from fo
   );
   d.edges.find((edge) => edge.kind === "door")!.enabled = false;
   assert.equal(findProjectRoute(d, "a", "b"), null);
+});
+
+test("fixed stair and doorway anchors do not create microscopic orthogonal approach spurs", () => {
+  const d = fixture(0);
+  d.records = d.records.filter((r) => r.key === "b");
+  const stair = {
+    ...d.nodes[0],
+    id: "stair",
+    roomKey: "b",
+    kind: "stair" as const,
+    pointFeet: [4, 11, 0] as [number, number, number],
+  };
+  const door = {
+    ...d.nodes[1],
+    id: "door",
+    roomKey: "b",
+    kind: "portal" as const,
+    pointFeet: [4.02, 12.2, 0] as [number, number, number],
+  };
+  d.nodes = [stair, door];
+  const walk: IndoorEdge = {
+    ...d.edges[0],
+    id: "approach",
+    from: stair.id,
+    to: door.id,
+    roomKeys: ["b"],
+    pointsFeet: [stair.pointFeet, [4, 12.2, 0], door.pointFeet],
+  };
+  d.edges = [walk];
+  const paths = centeredRoutePaths(d, d.edges, [stair.id, door.id]);
+  assert.equal(paths[0].centered, true);
+  assert.deepEqual(paths[0].pointsFeet, [stair.pointFeet, door.pointFeet]);
+  assert.deepEqual(
+    walk.pointsFeet,
+    [stair.pointFeet, [4, 12.2, 0], door.pointFeet],
+    "the saved stair and doorway connection remains unchanged",
+  );
+  d.walls.push({
+    kind: "column",
+    levelId: 1,
+    nativeElementId: 777,
+    ringsFeet: [rect(4.008, 11.595, 0.006, 0.01)],
+  });
+  const blocked = centeredRoutePaths(d, d.edges, [stair.id, door.id]);
+  assert.ok(
+    blocked[0].pointsFeet.length > 2,
+    "a small native obstruction keeps the supported orthogonal approach",
+  );
+});
+
+test("short native stair vestibules use a direct supported approach without inventing an axis elbow", () => {
+  const d = fixture(0);
+  d.records = d.records.filter((r) => r.key === "b");
+  d.records[0].stair = true;
+  d.nodes = [
+    {
+      ...d.nodes[0],
+      id: "stair",
+      roomKey: "b",
+      kind: "stair",
+      pointFeet: [4, 11, 0],
+    },
+    {
+      ...d.nodes[1],
+      id: "door",
+      roomKey: "b",
+      kind: "portal",
+      pointFeet: [6.5, 20, 0],
+    },
+  ];
+  const [start, end] = d.nodes;
+  d.edges = [
+    {
+      ...d.edges[0],
+      id: "vestibule",
+      from: start.id,
+      to: end.id,
+      roomKeys: ["b"],
+      pointsFeet: [start.pointFeet, [4, 20, 0], end.pointFeet],
+    },
+  ];
+  d.walkingSupport = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    floors: [
+      {
+        nativeElementId: 100,
+        elevationFeet: 0,
+        ringsFeet: [rect(0, 8, 8, 22)],
+      },
+    ],
+  };
+  d.circulationGeometry = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    sourceGeometryKey: nativeCirculationGeometryKey(d),
+    cells: [
+      {
+        id: "landing",
+        levelIds: [1],
+        elevationFeet: 0,
+        roomKeys: ["b"],
+        nativeFloorIds: [100],
+        ringsFeet: [rect(0, 8, 8, 22)],
+        sourceCoverage: 1,
+      },
+    ],
+  };
+  const paths = centeredRoutePaths(d, d.edges, [start.id, end.id]);
+  assert.deepEqual(paths[0].pointsFeet, [start.pointFeet, end.pointFeet]);
+  assert.equal(paths[0].nativeFloorSupported, true);
+  d.walls.push({
+    kind: "column",
+    levelId: 1,
+    nativeElementId: 778,
+    ringsFeet: [rect(5.15, 15.4, 0.2, 0.2)],
+  });
+  d.circulationGeometry.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  const blocked = centeredRoutePaths(d, d.edges, [start.id, end.id]);
+  assert.ok(
+    blocked[0].pointsFeet.length > 2,
+    "a pillar prevents the direct landing shortcut",
+  );
+  delete d.circulationGeometry;
+  const legacy = centeredRoutePaths(d, d.edges, [start.id, end.id]);
+  assert.ok(
+    legacy[0].pointsFeet.length > 2,
+    "raw source outlines alone cannot enable a direct landing shortcut",
+  );
 });

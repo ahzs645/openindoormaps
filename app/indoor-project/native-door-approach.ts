@@ -1,7 +1,30 @@
 import pc from "polygon-clipping";
+import { indoorExclusionParts } from "./indoor-exclusions";
+import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 type Point = [number, number];
 type Rings = Point[][];
+type IndexedPart = {
+  rings: Rings;
+  box: [number, number, number, number];
+  nativeId?: number;
+  column?: boolean;
+  roomKey?: string;
+};
+const indexed = (rings: Rings): IndexedPart => {
+  const points = rings.flat();
+  return {
+    rings,
+    box: [
+      Math.min(...points.map((p) => p[0])),
+      Math.min(...points.map((p) => p[1])),
+      Math.max(...points.map((p) => p[0])),
+      Math.max(...points.map((p) => p[1])),
+    ],
+  };
+};
+const overlaps = (a: number[], b: number[]) =>
+  a[0] <= b[2] && a[2] >= b[0] && a[1] <= b[3] && a[3] >= b[1];
 
 /** A saved portal may sit inside the door thickness rather than outside it.
  * Permit only its own half of the exact native footprint as approach support.
@@ -18,9 +41,111 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
     support.sourceModelSha256 !== data.source.modelSha256
   )
     return (_edge: IndoorEdge) => [] as { z: number; rings: Rings }[];
+  const envelopes = createNativeIndoorEnvelopeIndex(
+    data.nativeIndoorEnvelopes,
+    data.source.modelSha256,
+  );
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const edges = new Map(data.edges.map((e) => [e.id, e]));
   const records = new Map(data.records.map((r) => [r.key, r]));
+  // This query belongs to one immutable calculation. Index each physical
+  // elevation once, then prune irrelevant parts before exact clipping.
+  const levels = new Map<
+    string,
+    { floors: IndexedPart[]; envelopes: IndexedPart[]; masks: IndexedPart[] }
+  >();
+  const levelParts = (z: number, levelId: number) => {
+    const key = JSON.stringify([z, levelId]);
+    let level = levels.get(key);
+    if (level) return level;
+    level = {
+      floors: support.floors
+        .filter((f) => Math.abs(f.elevationFeet - z) < 0.05)
+        .flatMap((f) => f.partsFeet ?? [f.ringsFeet])
+        .map(indexed),
+      envelopes: envelopes.parts(z).map(indexed),
+      masks: [
+        ...data.walls
+          .filter((w) => w.levelId === levelId)
+          .map((w) => ({
+            ...indexed(w.ringsFeet),
+            nativeId: w.nativeElementId,
+            column: w.kind === "column",
+          })),
+        ...(data.nativeIndoorEnvelopes
+          ? []
+          : data.records
+              .filter(
+                (r) =>
+                  Math.abs(r.elevationFeet - z) < 0.05 &&
+                  (!r.circulation || !r.walkable || r.access === "staff"),
+              )
+              .map((r) => ({ ...indexed(r.ringsFeet), roomKey: r.key }))),
+        ...(data.circulationGeometry?.fixtures ?? [])
+          .filter((f) => Math.abs(f.elevationFeet - z) < 0.05)
+          .map((f) => indexed(f.ringsFeet)),
+        ...indoorExclusionParts(data, z).map(indexed),
+        ...data.records
+          .filter((r) => Math.abs(r.elevationFeet - z) < 0.05)
+          .flatMap((r) =>
+            (
+              (r.properties.floorOpeningsFeet as Point[][] | undefined) ?? []
+            ).map((h) => indexed([h])),
+          ),
+      ],
+    };
+    levels.set(key, level);
+    return level;
+  };
+  const supportTiles = new Map<string, Rings[] | undefined>();
+  const localSupport = (
+    z: number,
+    box: number[],
+    level: ReturnType<typeof levelParts>,
+  ): Rings[] | undefined => {
+    // Every threshold half is inside its tile rectangle. Intersecting source
+    // support with that rectangle removes only distant geometry; it cannot
+    // create floor, fill a hole or move a physical boundary. Nearby portals
+    // share the costly overlay of whole-building slab profiles.
+    const size = 32,
+      tile = [
+        Math.floor(box[0] / size) * size,
+        Math.floor(box[1] / size) * size,
+        (Math.floor(box[2] / size) + 1) * size,
+        (Math.floor(box[3] / size) + 1) * size,
+      ];
+    const key = JSON.stringify([z, tile]);
+    if (supportTiles.has(key)) return supportTiles.get(key);
+    const rect: Rings = [
+      [
+        [tile[0], tile[1]],
+        [tile[2], tile[1]],
+        [tile[2], tile[3]],
+        [tile[0], tile[3]],
+      ],
+    ];
+    const floors = level.floors
+        .filter((p) => overlaps(tile, p.box))
+        .map((p) => p.rings),
+      envelope = level.envelopes
+        .filter((p) => overlaps(tile, p.box))
+        .map((p) => p.rings);
+    let parts: Rings[] = [];
+    try {
+      if (floors.length && (!data.nativeIndoorEnvelopes || envelope.length)) {
+        parts = pc.intersection(rect, floors);
+        if (data.nativeIndoorEnvelopes)
+          parts = pc.intersection(parts, envelope);
+      }
+    } catch {
+      // If the sweep cannot overlay a tile, retry the original exact half
+      // below. This fallback still uses native evidence, never a room trace.
+      supportTiles.set(key, undefined);
+      return;
+    }
+    supportTiles.set(key, parts);
+    return parts;
+  };
   for (const door of data.doors ?? []) {
     const edge = edges.get(door.id),
       footprint = door.footprintFeet,
@@ -37,6 +162,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
       edge.roomKeys.some((key) => !door.roomKeys.includes(key))
     )
       continue;
+    if (data.nativeIndoorEnvelopes && !door.hostWallNativeElementId) continue;
     const pair = [nodes.get(edge.from), nodes.get(edge.to)];
     if (
       pair.some(
@@ -72,15 +198,17 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
     const side = (p: number[]) =>
       (p[0] - center[0]) * normal[0] + (p[1] - center[1]) * normal[1];
     if (side(pair[0]!.pointFeet) * side(pair[1]!.pointFeet) >= -1e-10) continue;
-    const floors = support.floors
-      .filter((f) => Math.abs(f.elevationFeet - z) < 0.05)
-      .flatMap((f) => f.partsFeet ?? [f.ringsFeet]);
-    if (floors.length === 0) continue;
+    const level = levelParts(z, door.levelId);
+    if (level.floors.length === 0) continue;
     for (const node of pair) {
       // A room-to-hallway door has the same measured threshold thickness as
       // a hallway-to-hallway door. Only the hallway half needs extra support:
       // the room interior retains its separate room-boundary validation.
-      if (!records.get(node!.roomKey)?.circulation) continue;
+      if (
+        !data.nativeIndoorEnvelopes &&
+        !records.get(node!.roomKey)?.circulation
+      )
+        continue;
       const sign = Math.sign(side(node!.pointFeet)),
         half: Point[] = [];
       // Exact half-plane intersection, no widened doorway or distance snap.
@@ -96,56 +224,40 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
         }
       }
       if (half.length < 3) continue;
-      const masks = [
-        ...data.walls
-          .filter((w) => w.levelId === door.levelId && w.kind === "column")
-          .map((w) => w.ringsFeet),
-        ...data.records
-          .filter(
-            (r) =>
-              Math.abs(r.elevationFeet - z) < 0.05 &&
-              !door.roomKeys.includes(r.key) &&
-              (!r.circulation || !r.walkable || r.access === "staff"),
-          )
-          .map((r) => r.ringsFeet),
-        ...(data.circulationGeometry?.fixtures ?? [])
-          .filter((f) => Math.abs(f.elevationFeet - z) < 0.05)
-          .map((f) => f.ringsFeet),
-        ...data.records
-          .filter((r) => Math.abs(r.elevationFeet - z) < 0.05)
-          .flatMap((r) =>
-            (
-              (r.properties.floorOpeningsFeet as Point[][] | undefined) ?? []
-            ).map((h) => [h]),
-          ),
-      ];
+      const box = indexed([half]).box;
+      const near = level.masks
+        .filter(
+          (p) =>
+            overlaps(box, p.box) &&
+            (!p.roomKey || !door.roomKeys.includes(p.roomKey)) &&
+            (p.nativeId === undefined ||
+              p.column ||
+              (!!data.nativeIndoorEnvelopes &&
+                p.nativeId !== door.hostWallNativeElementId)),
+        )
+        .map((p) => p.rings);
       try {
-        let rings = pc.intersection([half], floors);
-        // Bounds prune irrelevant masks; exact clipping remains authoritative.
-        const lo = [
-            Math.min(...half.map((p) => p[0])),
-            Math.min(...half.map((p) => p[1])),
-          ],
-          hi = [
-            Math.max(...half.map((p) => p[0])),
-            Math.max(...half.map((p) => p[1])),
-          ];
-        const near = masks.filter(
-          (r) =>
-            r
-              .flat()
-              .some(
-                (p) =>
-                  p[0] >= lo[0] &&
-                  p[0] <= hi[0] &&
-                  p[1] >= lo[1] &&
-                  p[1] <= hi[1],
-              ) ||
-            (Math.min(...r.flat().map((p) => p[0])) <= hi[0] &&
-              Math.max(...r.flat().map((p) => p[0])) >= lo[0] &&
-              Math.min(...r.flat().map((p) => p[1])) <= hi[1] &&
-              Math.max(...r.flat().map((p) => p[1])) >= lo[1]),
-        );
+        const support = localSupport(z, box, level);
+        let rings;
+        if (support === undefined) {
+          const floors = level.floors
+              .filter((p) => overlaps(box, p.box))
+              .map((p) => p.rings),
+            envelope = level.envelopes
+              .filter((p) => overlaps(box, p.box))
+              .map((p) => p.rings);
+          if (
+            !floors.length ||
+            (data.nativeIndoorEnvelopes && !envelope.length)
+          )
+            continue;
+          rings = pc.intersection([half], floors);
+          if (data.nativeIndoorEnvelopes)
+            rings = pc.intersection(rings, envelope);
+        } else {
+          if (!support.length) continue;
+          rings = pc.intersection([half], support);
+        }
         if (near.length > 0) rings = pc.difference(rings, ...near);
         if (rings.length > 0)
           approaches.set(node!.id, {

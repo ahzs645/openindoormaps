@@ -26,6 +26,7 @@ import {
 import { useTheme } from "~/hooks/use-theme";
 import { cn } from "~/lib/utils";
 import "~/maplibre.css";
+import { registerBasemapSymbolImages } from "~/utils/basemap-symbol-images";
 
 type MapStyleOption = string | StyleSpecification;
 
@@ -102,6 +103,7 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
       container: containerElement,
       style: initialStyle,
     });
+    const unregisterBasemapSymbols = registerBasemapSymbolImages(map);
 
     const handleLoad = () => {
       setHasLoaded(true);
@@ -123,6 +125,7 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
 
     return () => {
       clearStyleTimeout();
+      unregisterBasemapSymbols();
       map.off("load", handleLoad);
       map.off("styledata", handleStyleData);
       map.remove();

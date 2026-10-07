@@ -25,6 +25,7 @@ const defaultConfig = {
   layouts: {
     usePaperSpaceViewports: false,
     requireContext: false,
+    allowMissingViewportStatus: false,
   },
   buildings: {
     codeMap: {},

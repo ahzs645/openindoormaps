@@ -102,13 +102,13 @@ assert.ok(
   recovered > 0,
   "Recover clear floor missing from the source trace at pin",
 );
-const cases = [
+const cases: readonly (readonly [string, string, number, string, number])[] = [
   ["Library corridor to upper stair", "05-120", 311, "05-S203", 694],
   ["Library stair", "05-S101", 311, "05-S201", 694],
   ["Tea Lab stair", "08-S101", 1_487_816, "08-S201", 694],
   ["Conference stair", "06-S204", 694, "06-S204", 1_487_353],
   ["Meeting to classroom", "03-015", 311, "05-154", 311],
-] as const;
+];
 const routes = cases.map(([name, a, al, b, bl]) => {
   const from = data.records.find((r) => r.number === a && r.levelId === al)!,
     to = data.records.find((r) => r.number === b && r.levelId === bl)!;

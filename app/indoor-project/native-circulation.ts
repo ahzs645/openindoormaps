@@ -1,4 +1,5 @@
 import type { IndoorDataset, IndoorRecord } from "./contract";
+import { NATIVE_BARRIER_TOPOLOGY_VERSION } from "./native-barrier-topology";
 import { routingCalculationValue } from "./routing-cache";
 import { createNativeDoorApproachQuery } from "./native-door-approach";
 export type NativeCirculationCell = NonNullable<
@@ -160,6 +161,10 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
   return routingCalculationValue(data, "native-circulation-binding", () =>
     JSON.stringify([
       data.source.modelSha256,
+      NATIVE_BARRIER_TOPOLOGY_VERSION,
+      ...(data.nativeIndoorEnvelopes
+        ? ["native-indoor-envelope-v1", data.nativeIndoorEnvelopes]
+        : []),
       data.records.map((r) => [
         r.key,
         r.levelId,
@@ -198,7 +203,11 @@ export function nativeCirculationSurfaces(
   data: IndoorDataset,
   records: IndoorRecord[],
 ) {
-  const keys = new Set(records.filter((r) => r.circulation).map((r) => r.key));
+  const keys = new Set(
+    records
+      .filter((r) => data.nativeIndoorEnvelopes || r.circulation)
+      .map((r) => r.key),
+  );
   const cells = nativeCirculationCells(data).filter(
     (c) =>
       c.roomKeys.some((k) => keys.has(k)) &&
@@ -213,11 +222,12 @@ export function nativeCirculationSurfaces(
     data.circulationGeometry?.sourceGeometryKey ===
       nativeCirculationGeometryKey(data) &&
     data.circulationGeometry.sourceModelSha256 === data.source.modelSha256;
-  const reviewSurfaces = valid
-    ? (data.circulationGeometry?.reviewSurfaces ?? []).filter((s) =>
-        keys.has(s.roomKey),
-      )
-    : [];
+  const reviewSurfaces =
+    valid && !data.nativeIndoorEnvelopes
+      ? (data.circulationGeometry?.reviewSurfaces ?? []).filter((s) =>
+          keys.has(s.roomKey),
+        )
+      : [];
   const covered = new Set(
     valid && data.circulationGeometry?.preparedRoomKeys
       ? data.circulationGeometry.preparedRoomKeys.filter((k) => keys.has(k))
@@ -239,9 +249,11 @@ export function nativeCirculationSurfaces(
     rings: [
       ...cells.map((c) => c.ringsFeet),
       ...reviewSurfaces.map((s) => s.ringsFeet),
-      ...records
-        .filter((r) => !r.circulation || !covered.has(r.key))
-        .map((r) => r.ringsFeet),
+      ...(data.nativeIndoorEnvelopes
+        ? []
+        : records
+            .filter((r) => !r.circulation || !covered.has(r.key))
+            .map((r) => r.ringsFeet)),
     ],
   };
 }
@@ -269,7 +281,12 @@ const insideRing = (p: number[], ring: number[][]) => {
 
 type Bounds = [number, number, number, number];
 type IndexedRing = { points: number[][]; bounds: Bounds };
-type IndexedSurface = { z: number; rings: IndexedRing[]; bounds: Bounds };
+type IndexedSurface = {
+  id?: string;
+  z: number;
+  rings: IndexedRing[];
+  bounds: Bounds;
+};
 const ringBounds = (points: number[][]): Bounds => {
   let minX = Infinity,
     minY = Infinity,
@@ -309,32 +326,53 @@ export function nativeCirculationWalkBlockers(
 ): Set<string> {
   const cells = nativeCirculationCells(data),
     prepared = data.circulationGeometry;
-  const blocked = new Set<string>();
+  const blocked = new Set<string>(
+    data.nativeIndoorEnvelopes
+      ? data.edges
+          .filter((e) => e.kind === "walk" && !e.nativeCellId)
+          .map((e) => e.id)
+      : [],
+  );
   if (
     !prepared?.preparedRoomKeys ||
     prepared.sourceGeometryKey !== nativeCirculationGeometryKey(data) ||
     prepared.sourceModelSha256 !== data.source.modelSha256
-  )
+  ) {
+    if (data.nativeIndoorEnvelopes)
+      for (const edge of data.edges)
+        if (edge.kind === "walk") blocked.add(edge.id);
     return blocked;
+  }
   const keys = new Set(prepared.preparedRoomKeys);
   const doorApproaches = createNativeDoorApproachQuery(data);
   const surfaces = [
-    ...cells.map((c) => ({ z: c.elevationFeet, rings: c.ringsFeet })),
-    ...(prepared.reviewSurfaces ?? []).map((s) => ({
-      z: s.elevationFeet,
-      rings: s.ringsFeet,
-    })),
+    ...cells.map((c) => ({ id: c.id, z: c.elevationFeet, rings: c.ringsFeet })),
+    ...(data.nativeIndoorEnvelopes ? [] : (prepared.reviewSurfaces ?? [])).map(
+      (s) => ({
+        z: s.elevationFeet,
+        rings: s.ringsFeet,
+      }),
+    ),
   ].map((surface): IndexedSurface => {
     const rings = surface.rings.map((points) => ({
       points,
       bounds: ringBounds(points),
     }));
-    return { z: surface.z, rings, bounds: rings[0].bounds };
+    return {
+      id:
+        "id" in surface && typeof surface.id === "string"
+          ? surface.id
+          : undefined,
+      z: surface.z,
+      rings,
+      bounds: rings[0].bounds,
+    };
   });
+  const byCell = new Map(surfaces.filter((s) => s.id).map((s) => [s.id!, s]));
   for (const edge of data.edges) {
     if (
       edge.kind !== "walk" ||
-      edge.nativeCellId ||
+      (edge.nativeCellId && !data.nativeIndoorEnvelopes) ||
       edge.roomKeys.length === 0 ||
       !edge.roomKeys.every((k) => keys.has(k))
     )
@@ -359,7 +397,19 @@ export function nativeCirculationWalkBlockers(
       ];
       // Bounds only reject irrelevant geometry. The exact boundary cuts and
       // interval checks below still veto gaps and arbitrarily thin obstacles.
-      const local = [...surfaces, ...approachSurfaces].filter(
+      // A generated branch is certified by its own physical native face, not
+      // a neighbouring room's floor. This also avoids scanning every campus
+      // enclosure for every segment during worker warmup.
+      const ownedSurface = edge.nativeCellId
+        ? byCell.get(edge.nativeCellId)
+        : undefined;
+      const candidates =
+        data.nativeIndoorEnvelopes && edge.nativeCellId
+          ? ownedSurface
+            ? [ownedSurface]
+            : []
+          : surfaces;
+      const local = [...candidates, ...approachSurfaces].filter(
         (s) =>
           Math.abs(s.z - a[2]) < 0.05 &&
           Math.abs(s.z - b[2]) < 0.05 &&

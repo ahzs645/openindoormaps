@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { gapProject } from '../fixtures/native-area-project';
+import { pinRecommendationGeometryHash, pinRecommendations, savePinDecision, readPinDecisions } from '../../app/indoor-project/pin-recommendations';
+import { saveReviewCompanion } from '../../app/indoor-project/review-companion-save';
+import { readIndoorProject, exportIndoorProject, exportCampusViewer } from '../../app/indoor-project/package';
+import { compileNativeExploreMapping, nativeExploreDatasetGeometrySha256 } from '../../app/indoor-project/native-explore-mapping';
+test('pin decisions bind to reviewed evidence, survive ZIP and do not apply geometry or access',async()=>{
+ let p=await gapProject();p.rooms.reviewPins={version:1,sourceModelSha256:p.dataset.source.modelSha256,pins:[{id:'pin-one',label:'Review pin',notes:'',levelId:1,pointFeet:[15,10]}]};
+ const geometrySha256=await pinRecommendationGeometryHash(p.dataset);
+ p=await saveReviewCompanion(p,'pin-review/pin-recommendations.json',{geometrySha256,format:'openindoormaps-pin-recommendations',version:1,sourceModelSha256:p.dataset.source.modelSha256,roomsSha256:p.dataset.source.roomsSha256,entries:[{id:'r1',pinId:'pin-one',title:'Review gap',recommendation:'Inspect wall continuation',question:'Is it an intentional opening?',evidencePaths:['scan.json'],patchIds:[]}]});
+ const before=JSON.stringify(p.dataset),entry=pinRecommendations(p,geometrySha256)[0];assert.ok(entry.current);
+ const next=await savePinDecision(p,'r1','accept','The partition should continue here.');
+ assert.equal(JSON.stringify(next.dataset),before);assert.equal(next.rooms.nativeBoundaryPatches,undefined);
+ const reopened=await readIndoorProject(await exportIndoorProject(next));
+ assert.equal(readPinDecisions(reopened).decisions[0].decision,'accept');
+ assert.equal(readPinDecisions(reopened).decisions[0].evidenceSha256,entry.evidenceSha256);
+ const viewer=await readIndoorProject(await exportCampusViewer(next));assert.equal(viewer.rooms.reviewBundle,undefined);
+ reopened.dataset.walls[0].ringsFeet[0][0][0]+=1;
+ assert.equal(pinRecommendations(reopened,await pinRecommendationGeometryHash(reopened.dataset))[0].current,false);
+ await assert.rejects(savePinDecision(reopened,'r1','accept','Still applicable'),/older geometry/);
+ await assert.rejects(savePinDecision(p,'r1','accept',''),/add a note/);
+});
+
+test('published native mapping keeps note-only pin decisions current while actual mapping changes invalidate them',async()=>{
+ let p=await gapProject();
+ p.dataset.nativeExploreMapping=await compileNativeExploreMapping(p.dataset,await nativeExploreDatasetGeometrySha256(p.dataset));
+ assert.ok(p.dataset.nativeExploreMapping.levels[0].regions.length);
+ p.rooms.reviewPins={version:1,sourceModelSha256:p.dataset.source.modelSha256,pins:[{id:'pin-mapped',label:'Mapped pin',notes:'',levelId:1,pointFeet:[15,10]}]};
+ const geometrySha256=await pinRecommendationGeometryHash(p.dataset);
+ const oldBinding=p.dataset.nativeExploreMapping.datasetGeometrySha256;
+ p=await saveReviewCompanion(p,'pin-review/pin-recommendations.json',{format:'openindoormaps-pin-recommendations',version:1,sourceModelSha256:p.dataset.source.modelSha256,roomsSha256:p.dataset.source.roomsSha256,geometrySha256,entries:[{id:'mapped-recommendation',pinId:'pin-mapped',title:'Check native gap',recommendation:'Keep the measured boundary.',question:'Confirm its intended layout.',evidencePaths:[],patchIds:[]}]});
+ const next=await savePinDecision(p,'mapped-recommendation','more-evidence','Check this boundary on site.');
+ const reopened=await readIndoorProject(await exportIndoorProject(next));
+ assert.notEqual(reopened.dataset.nativeExploreMapping!.datasetGeometrySha256,oldBinding);
+ assert.equal(await pinRecommendationGeometryHash(reopened.dataset),geometrySha256);
+ assert.ok(pinRecommendations(reopened,await pinRecommendationGeometryHash(reopened.dataset))[0].current);
+ assert.equal(readPinDecisions(reopened).decisions[0].notes,'Check this boundary on site.');
+ const altered=structuredClone(reopened.dataset);
+ altered.nativeExploreMapping!.levels[0].regions[0].ringsFeet[0][0][0]+=.01;
+ assert.notEqual(await pinRecommendationGeometryHash(altered),geometrySha256);
+ altered.nativeExploreMapping!.levels[0].regions[0].ringsFeet[0][0][0]-=.01;
+ altered.nativeExploreMapping!.mappingSha256='a'.repeat(64);
+ assert.notEqual(await pinRecommendationGeometryHash(altered),geometrySha256);
+});

@@ -28,7 +28,19 @@ export function useProjectRoute(
   }>();
   useEffect(() => () => client.dispose(), [client]);
   useEffect(() => {
-    if (!data || !start || !end) return;
+    client.resetData(data);
+    setResult(undefined);
+    if (!data) return;
+    // Prepare the policy graph while the imported map is being explored. It is
+    // off-thread, shares the route worker, and never prepares a fictitious path.
+    const preparation = client.request(data, "", "", mode);
+    void preparation.promise.catch(() => {
+      /* A real request supersedes warmup. */
+    });
+    return preparation.cancel;
+  }, [client, data, mode]);
+  useEffect(() => {
+    if (!data || !start) return;
     let active = true;
     const request = client.request(data, start, end, mode);
     void request.promise
@@ -58,10 +70,16 @@ export function useProjectRoute(
     result.mode === mode
       ? result
       : undefined;
+  const coverage =
+    result?.data === data && result?.start === start && result?.mode === mode
+      ? result.value?.reachable
+      : undefined;
   return {
     route: current?.value?.route ?? null,
     diagnostic: current?.value?.diagnostic,
     error: current?.error,
+    reachable: coverage,
+    arrivals: current?.value?.arrivals,
     calculating: !!data && !!start && !!end && !current,
   };
 }

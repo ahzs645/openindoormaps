@@ -33,6 +33,7 @@ const inside = (p: Point, ring: Point[]) => {
 export function displayDoorwayClosures(
   walls: Wall[],
   maxWidthFeet = DISPLAY_DOORWAY_MAX_WIDTH_FEET,
+  minWidthFeet = 0.5,
 ): DisplayDoorwayClosure[] {
   const caps = walls.flatMap((wall) => {
     if (wall.kind !== "wall" || wall.approximate || wall.ringsFeet.length !== 1)
@@ -45,7 +46,9 @@ export function displayDoorwayClosures(
     return ring.flatMap((a, i) => {
       const size = lengths[i],
         b = ring[(i + 1) % 4];
-      if (size < 0.1 || size > 2 || size * 3 > Math.max(...lengths)) return [];
+      const longest = Math.max(...lengths);
+      if (size < 0.1 || size > 2 || (longest > 2 && size * 3 > longest))
+        return [];
       return [
         {
           wall,
@@ -55,6 +58,9 @@ export function displayDoorwayClosures(
           size,
           mid: [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2] as Point,
           unit: [(b[0] - a[0]) / size, (b[1] - a[1]) / size] as Point,
+          // A tiny native jamb has no reliable long axis by itself. Its cap
+          // can participate only when a neighbouring long wall fixes the axis.
+          axisSupported: size * 3 <= longest,
         },
       ];
     });
@@ -66,6 +72,7 @@ export function displayDoorwayClosures(
         b = caps[j];
       if (
         a.wall === b.wall ||
+        (!a.axisSupported && !b.axisSupported) ||
         a.wall.levelId !== b.wall.levelId ||
         Math.abs(a.size - b.size) > precision ||
         Math.abs(dot(a.unit, b.unit)) < 0.9999
@@ -74,7 +81,7 @@ export function displayDoorwayClosures(
       const delta: Point = [b.mid[0] - a.mid[0], b.mid[1] - a.mid[1]],
         width = length(a.mid, b.mid);
       if (
-        width < 0.5 ||
+        width < minWidthFeet ||
         width > maxWidthFeet ||
         Math.abs(dot(a.unit, delta)) > precision
       )

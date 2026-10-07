@@ -4,6 +4,9 @@ import {
   sourceStairId,
   sourceStairKind,
 } from "./source-stairs";
+import { interiorLabelPoint } from "./interior-label-point";
+import { validShaft } from "./connector-review";
+import { hiddenLectureStairIds } from "./lecture-stair-display";
 import { floorHeightDatum } from "./relative-heights";
 import type { FeatureCollection, Point } from "geojson";
 import pointInPolygon from "@turf/boolean-point-in-polygon";
@@ -21,6 +24,47 @@ const connectorSvgs: Record<ConnectorKind, string> = {
 export const connectorSvg = (kind: ConnectorKind) => connectorSvgs[kind];
 /** A display anchor is never an arrival or authorization to route. In particular
  * disconnected source stairs still get an icon, with their review state intact. */
+export function liftDisplayPoint(
+  data: IndoorDataset,
+  connectorId: string | undefined,
+  levelId: number,
+  entrancePoint: [number, number, number],
+): [number, number, number] {
+  const connector = data.connectors?.find((c) => c.id === connectorId);
+  if (
+    !connector ||
+    connector.kind !== "elevator" ||
+    connector.sourceModelSha256 !== data.source.modelSha256 ||
+    !validShaft(connector) ||
+    !connector.entrances.some((e) => e.levelId === levelId)
+  )
+    return entrancePoint;
+  const shaftPoint = connector.reviewedShaft!.pointFeet;
+  const footprints =
+    data.indoorExclusions?.sourceModelSha256 === data.source.modelSha256
+      ? data.indoorExclusions.areas
+          .filter(
+            (a) =>
+              a.reason === "off-limits" &&
+              a.connectorId === connector.id &&
+              a.levelId === levelId &&
+              Math.abs(a.elevationFeet - entrancePoint[2]) < 0.15,
+          )
+          .flatMap((a) => a.partsFeet)
+          .filter((rings) =>
+            pointInPolygon(shaftPoint, {
+              type: "Polygon",
+              coordinates: rings.map((r) => [...r, r[0]]),
+            }),
+          )
+      : [];
+  // Exact reviewed shaft interiors determine display only. An old review without
+  // a footprint uses its certified shaft reference, never the hallway arrival.
+  const centre =
+    footprints.length === 1 ? interiorLabelPoint(footprints[0]) : undefined;
+  return [...(centre ?? shaftPoint), entrancePoint[2]];
+}
+
 export function stairDisplayPoint(
   data: IndoorDataset,
   room: IndoorRecord,
@@ -122,6 +166,7 @@ export function projectConnectorMarkers(
   building: string,
   review?: SourceConnectorReview,
   _relativeHeights = false,
+  visitor = false,
 ): FeatureCollection<Point> {
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const source =
@@ -245,7 +290,7 @@ export function projectConnectorMarkers(
     });
   }
   for (const stair of source ?? []) {
-    const p = sourceStairAnchor(data, stair, levelIds),
+    const p = sourceStairAnchor(data, stair, levelIds, building),
       edge = sourceStairEdges(data, stair).find((e) => e.enabled);
     features.push({
       type: "Feature",
@@ -307,7 +352,9 @@ export function projectConnectorMarkers(
       const point =
         ramp && levelIds.includes(other.levelId)
           ? ramp.anchorPointFeet
-          : n.pointFeet;
+          : kind === "elevator"
+            ? liftDisplayPoint(data, edge.connectorId, n.levelId, n.pointFeet)
+            : n.pointFeet;
       features.push({
         type: "Feature",
         properties: {
@@ -355,7 +402,16 @@ export function projectConnectorMarkers(
       });
     }
   }
-  return { type: "FeatureCollection", features };
+  const hidden = visitor ? hiddenLectureStairIds(data) : new Set<number>();
+  return {
+    type: "FeatureCollection",
+    features: features.filter(
+      (f) =>
+        !hidden.has(
+          Number(f.properties?.stairElementId ?? f.properties?.nativeElementId),
+        ),
+    ),
+  };
 }
 
 /** The source scene uses a shared native datum, unlike the flattened room

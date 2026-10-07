@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { IndoorDataset } from "./contract";
+import { hiddenLectureStairIds } from "./lecture-stair-display";
 import {
   sourceStairEdges,
   sourceStairKind,
@@ -8,7 +9,7 @@ import {
 function stairAccessLabel(data: IndoorDataset, stair: SourceStair) {
   if (sourceStairEdges(data, stair).some((e) => e.enabled))
     return "Route connection available";
-  if (stair.context === "tiered-seating")
+  if (hiddenLectureStairIds(data).has(stair.stairElementId))
     return "Seating / aisle access needs review";
   return "Entrance connection needs review";
 }
@@ -21,6 +22,11 @@ export function NativeStairReview({
 }) {
   const [search, setSearch] = useState("");
   const stairs = data.stairDisplay?.sourceFlights ?? [];
+  const internal = hiddenLectureStairIds(data);
+  const displayKind = (s: SourceStair) =>
+    internal.has(s.stairElementId)
+      ? "Tiered seating / internal aisle steps"
+      : sourceStairKind(s);
   if (stairs.length === 0) return null;
   const connected = stairs.filter((s) =>
     sourceStairEdges(data, s).some((e) => e.enabled),
@@ -48,7 +54,7 @@ export function NativeStairReview({
         </label>
         {stairs
           .filter((s) =>
-            `${s.stairElementId} ${s.buildings.join(" ")} ${sourceStairKind(s)}`
+            `${s.stairElementId} ${s.buildings.join(" ")} ${displayKind(s)}`
               .toLowerCase()
               .includes(search.trim().toLowerCase()),
           )
@@ -60,7 +66,7 @@ export function NativeStairReview({
               onClick={() => onLocate(s)}
             >
               <strong>
-                {sourceStairKind(s)} #{s.stairElementId}
+                {displayKind(s)} #{s.stairElementId}
               </strong>
               <small>
                 {s.context === "outdoor" ? "Near building" : "Building"}{" "}
@@ -83,6 +89,7 @@ export function NativeStairInspector({
 }) {
   const edges = sourceStairEdges(data, stair),
     nodes = new Map(data.nodes.map((n) => [n.id, n]));
+  const internal = hiddenLectureStairIds(data).has(stair.stairElementId);
   const elevations = [
     ...new Set(
       stair.treads.map((t) => Math.round(t.elevationFeet * 10_000) / 10_000),
@@ -93,7 +100,7 @@ export function NativeStairInspector({
   if (edges.some((e) => e.enabled))
     connectionMessage =
       "Route connection available. Stairs are excluded from wheelchair paths.";
-  else if (stair.context === "tiered-seating")
+  else if (internal)
     connectionMessage =
       "Seating and aisle access needs review. These tiers are excluded from wheelchair paths.";
   return (
@@ -103,6 +110,14 @@ export function NativeStairInspector({
         {stair.context ? sourceStairKind(stair).toLowerCase() : "staircase"} #
         {stair.stairElementId}
       </h3>
+      {internal && (
+        <p>
+          <strong>Tiered seating / internal aisle steps</strong> · part of the
+          lecture-room display. Native steps remain visible in Source model;
+          supported offset floor pieces share the room identity in Native floor
+          map. Real floor openings remain excluded.
+        </p>
+      )}
       <p>
         {stair.context === "outdoor" ? "Near building" : "Building"}{" "}
         {stair.buildings.join(" / ")} · {elevations.length} measured

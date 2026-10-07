@@ -1,3 +1,22 @@
+/** Explicit reviewed footprints excluded from indoor selection and routing.
+ * Source floors/model geometry remain intact; missing reasons mean outdoors. */
+export type IndoorExclusions = {
+  version: 1;
+  sourceModelSha256: string;
+  areas: {
+    id: string;
+    /** Older masks without a reason are confirmed outdoor footprints. */
+    reason?: "outdoor" | "off-limits";
+    /** Reviewed lift shaft owner; display centering never moves its lobby stop. */
+    connectorId?: string;
+    levelId: number;
+    elevationFeet: number;
+    label: string;
+    notes?: string;
+    nativeFloorIds: number[];
+    partsFeet: [number, number][][][];
+  }[];
+};
 /** Portable contract consumed by OpenIndoorMaps. Coordinates never identify a node. */
 export type IndoorNode = {
   id: string;
@@ -106,6 +125,18 @@ export type IndoorIssue = {
   levelId?: number;
 };
 export type IndoorDataset = {
+  nativeIndoorEnvelopes?: import("./native-indoor-envelopes").NativeIndoorEnvelopes;
+  /** Checked presentation coverage only; native selections and routes stay unchanged. */
+  nativeDisplayScopes?: import("./native-display-scopes").NativeDisplayScopes;
+  /** Published exact native floor outlines; derived display/selection only, never routing. */
+  nativeExploreMapping?: import("./native-explore-mapping").PublishedNativeExploreMapping;
+  doorAperturePatchState?: { regenerated: boolean; sourceGeometryKey: string };
+  nativeDoorBoundaryClosures?: import("./native-door-boundary-closures").NativeDoorBoundaryClosures;
+  nativeWallPositionRepairs?: import("./native-wall-position-repairs").NativeWallPositionRepairs;
+  selectionDoorThresholds?: import("./selection-door-thresholds").SelectionDoorThresholds;
+  /** Portable logical outlines for authoring selection only; no navigation or physical walls. */
+  reviewedAreaPartitions?: import("./reviewed-area-partitions").ReviewedAreaPartitions;
+  indoorExclusions?: IndoorExclusions;
   format: "reviter-indoor";
   version: 1;
   generator: "reviter/indoor-pipeline-1";
@@ -176,6 +207,7 @@ export type IndoorDataset = {
   nodes: IndoorNode[];
   edges: IndoorEdge[];
   walls: {
+    reviewPatchId?: string;
     kind?: "wall" | "column";
     /** Bounding envelope rather than a verified native wall face. Display only. */
     approximate?: boolean;
@@ -183,6 +215,39 @@ export type IndoorDataset = {
     nativeElementId: number;
     ringsFeet: [number, number][][];
   }[];
+  /** Optional native fenestration comparison. This does not replace routing barriers. */
+  windowDisplay?: {
+    version: 1;
+    sourceModelSha256: string;
+    mode: "native" | "simplified";
+    routing: "original-barriers";
+    elements: {
+      nativeElementId: number;
+      hostId: number;
+      levelId: number;
+      role: "glazing" | "frame" | "opaque-panel" | "unknown-panel";
+      footprintFeet: [number, number][];
+      baseElevationFeet: number;
+      topElevationFeet: number;
+      assemblyTopElevationFeet: number;
+      materialId?: number;
+      transparency?: number;
+      materialColorSrgb?: [number, number, number];
+      materialEvidence: "native-material" | "category-or-type";
+    }[];
+    wallCuts: {
+      hostId: number;
+      nativeWallId: number;
+      levelId: number;
+      wallGeometryKey: string;
+      ringsFeet: [number, number][][];
+      baseElevationFeet: number;
+      topElevationFeet: number;
+      assemblyTopElevationFeet: number;
+    }[];
+    unresolvedNativeElementIds: number[];
+  };
+  boundaryPatchState?: { patchIds: string[]; regenerated: boolean };
   /** Native wall ownership; repeated floor slices are one physical element. */
   wallDisplay?: {
     version: 1;
@@ -200,6 +265,8 @@ export type IndoorDataset = {
     levelId: number;
     nativeElementId: number;
     pointFeet: [number, number];
+    /** Original persisted InsertableInst host; never inferred from proximity. */
+    hostWallNativeElementId?: number;
     footprintFeet?: [number, number][];
     /** Unit native traversal direction; host depth is not doorway width. */
     normalFeet?: [number, number];
@@ -250,6 +317,21 @@ export type IndoorDataset = {
         wallSegmentIndices: number[];
         doorSegmentIndices: number[];
         nativeFloorCoveredSquareFeet: number;
+        /** Registered architectural swing symbols, closed for display only. */
+        omittedNativeEdgeFragments?: {
+          ringsFeet: [number, number][][][];
+          squareFeet: number;
+        };
+        modelReviewedDividerIndices?: number[];
+        closedDoorSwings?: {
+          arcSegmentIndices: number[];
+          leafSegmentIndices: number[];
+          supportingWallSegmentIndices: number[];
+          hingeFeet: [number, number];
+          radiusFeet: number;
+          closedLeafFeet: [[number, number], [number, number]];
+          thresholdSegments: [[number, number], [number, number]][];
+        }[];
         jointRepairs?: {
           nativeWallElementId: number;
           supportingElementId: number;

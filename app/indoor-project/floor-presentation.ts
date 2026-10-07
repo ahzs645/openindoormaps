@@ -1,4 +1,8 @@
 import {
+  nativeWindowGeometry,
+  nativeWindowDisplayInput,
+} from "./native-window-display";
+import {
   generalizedRoomGeometry,
   generalizedRoomDoorways,
   generalizedRoomWalls,
@@ -26,10 +30,12 @@ import { rampFloorApertures } from "./ramp-floor-apertures";
 
 export type FloorPresentationOptions = {
   relativeHeights?: boolean;
+  visitorStairs?: boolean;
   showPillars: boolean;
   showPassThroughPlaces: boolean;
   showVestibuleDoors: boolean;
   showStructures: boolean;
+  showDoorwayRecesses?: boolean;
 };
 
 function buildFloorPresentation(
@@ -38,8 +44,9 @@ function buildFloorPresentation(
   building: string,
   options: FloorPresentationOptions,
 ) {
+  const wallDisplayData = nativeWindowDisplayInput(data);
   const display = projectDisplayGeometry(
-    data,
+    wallDisplayData,
     levelIds,
     building,
     "",
@@ -47,7 +54,10 @@ function buildFloorPresentation(
     true,
     options.showPassThroughPlaces,
     options.showVestibuleDoors,
-    options.relativeHeights ? physicalWallCopies(data, levelIds) : undefined,
+    options.relativeHeights
+      ? physicalWallCopies(wallDisplayData, levelIds)
+      : undefined,
+    options.showDoorwayRecesses ?? true,
   );
   const visitorWalls = visitorWallGeometry(
     data,
@@ -86,10 +96,35 @@ function buildFloorPresentation(
       levelIds,
       building,
       options.relativeHeights,
+      options.visitorStairs ?? false,
     ),
   };
-  if (!options.relativeHeights) return result;
-  return {
+  const finish = (view: typeof result) => {
+    const windows = nativeWindowGeometry(
+      data,
+      levelIds,
+      building,
+      options.relativeHeights,
+    );
+    return {
+      ...view,
+      nativeWindows: windows.features,
+      nativeWindowPlanWalls: {
+        exposed: windows.cutWalls(view.display.exposedWalls, false),
+        visitor: windows.cutWalls(view.visitorWalls, false),
+        simple: windows.cutWalls(view.simpleWalls, false),
+      },
+      display: {
+        ...view.display,
+        walls: windows.cutWalls(view.display.walls, false),
+        exposedWalls: windows.cutWalls(view.display.exposedWalls, true),
+      },
+      visitorWalls: windows.cutWalls(view.visitorWalls, true),
+      simpleWalls: windows.cutWalls(view.simpleWalls, true),
+    };
+  };
+  if (!options.relativeHeights) return finish(result);
+  return finish({
     ...result,
     display: {
       ...display,
@@ -168,7 +203,7 @@ function buildFloorPresentation(
       levelIds,
       relativeHeightGeometry(data, levelIds, result.simpleAreas, "floor"),
     ),
-  };
+  });
 }
 
 /** Only immutable presentation data is shared. Project edits/imports replace the
@@ -195,6 +230,8 @@ export function createFloorPresentationCache(capacity = 12) {
       options.showPassThroughPlaces,
       options.showVestibuleDoors,
       options.showStructures,
+      options.showDoorwayRecesses ?? true,
+      options.visitorStairs ?? false,
     ]);
     let floors = datasets.get(data);
     if (!floors) {

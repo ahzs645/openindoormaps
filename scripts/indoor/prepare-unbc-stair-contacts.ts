@@ -89,7 +89,7 @@ for (const s of d.stairDisplay!.sourceFlights!) {
     s.context = "tiered-seating";
 }
 validateIndoorDataset(d);
-for (const key of Object.keys(original).filter(
+for (const key of (Object.keys(original) as (keyof typeof original)[]).filter(
   (k) => k !== "stairDisplay" && !(inventoryZip && k === "rampDisplay"),
 ))
   assert.deepEqual(d[key], original[key]);

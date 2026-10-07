@@ -166,7 +166,8 @@ class LayoutContextAgent extends BaseAgent {
     try {
       const stdout = execFileSync(
         "python3",
-        [scriptPath, context.artifacts.dxfPath],
+        [scriptPath, context.artifacts.dxfPath,
+          ...(context.config.layouts.allowMissingViewportStatus ? ["--allow-missing-status"] : [])],
         {
           encoding: "utf8",
         },
@@ -179,6 +180,11 @@ class LayoutContextAgent extends BaseAgent {
         );
 
       context.artifacts.layoutWindows = layouts;
+      if (context.config.layouts.requireContext && layouts.length === 0) {
+        throw new Error("No usable model viewports; refusing an unscoped floor import.");
+      }
+      const inferredCount = layouts.filter((layout) => layout.statusInferred).length;
+      if (inferredCount) context.warnings.push(`${inferredCount} viewport windows inferred from converted geometry; original viewport status unavailable.`);
       context.stats.layoutWindowCount = layouts.length;
       this.log(
         context,
@@ -234,6 +240,7 @@ class WallRecoveryAgent extends BaseAgent {
       const parsed = JSON.parse(stdout);
 
       context.artifacts.recoveredRoomPolygons = parsed.recoveredPolygons ?? [];
+      writeJson(join(context.outputDir, "recovered-room-polygons.json"), parsed);
       context.stats.wallRecovery = parsed.stats ?? null;
       this.log(
         context,
@@ -769,8 +776,10 @@ function buildStructuredRoomFeatures({
           displayPoint: anchor.coordinates,
           extraProperties: {
             match_mode: polygonCandidate.matchMode ?? null,
+            geometry_provenance: "drawing-derived candidate; enclosure and access unverified",
           },
         }),
+        polygonCandidate.interiorRings ?? [],
       );
 
       indoorMapFeatures.push(polygonFeature);
@@ -868,12 +877,14 @@ function indexRecoveredPolygonCandidates(
       rawBounds: recoveredPolygon.rawBounds ?? null,
       matchMode: recoveredPolygon.matchMode ?? null,
       points: transformedPoints,
+      interiorRings: (recoveredPolygon.cadRings ?? []).slice(1).map((ring) => ring.map(transformPoint)),
       feature: createPolygonFeature(
         `recovered-${recoveredPolygon.anchorId}`,
         transformedPoints,
         {
           source_layer: recoveredPolygon.sourceLayer ?? "wall-recovery",
         },
+        (recoveredPolygon.cadRings ?? []).slice(1).map((ring) => ring.map(transformPoint)),
       ),
     });
   }

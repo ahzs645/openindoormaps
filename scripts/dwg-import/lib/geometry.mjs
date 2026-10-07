@@ -31,14 +31,14 @@ export function createLineFeature(id, coordinates, properties = {}) {
   };
 }
 
-export function createPolygonFeature(id, coordinates, properties = {}) {
+export function createPolygonFeature(id, coordinates, properties = {}, interiorRings = []) {
   return {
     type: "Feature",
     id,
     properties,
     geometry: {
       type: "Polygon",
-      coordinates: [closeRing(coordinates)],
+      coordinates: [closeRing(coordinates), ...interiorRings.map(closeRing)],
     },
   };
 }

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import MapComponent from "~/components/map-component";
-import locations from "~/data/locations";
+import { useLocation } from "~/hooks/use-location";
 import useSessionStore from "~/stores/session-store";
 
 export default function LocationPage() {
@@ -9,7 +9,7 @@ export default function LocationPage() {
   const [searchParams] = useSearchParams();
   const setToken = useSessionStore((state) => state.setToken);
 
-  const location = locationId ? locations[locationId] : undefined;
+  const { location, loading, error, retry } = useLocation(locationId);
 
   useEffect(() => {
     const token = searchParams.get("token");
@@ -18,6 +18,14 @@ export default function LocationPage() {
     }
   }, [searchParams, setToken]);
 
+  if (loading) return <div role="status">Loading venue map…</div>;
+  if (error)
+    return (
+      <div role="alert">
+        Could not load this venue map.{" "}
+        <button onClick={retry}>Retry venue map</button>
+      </div>
+    );
   if (!location) {
     return <Navigate to="/" replace />;
   }

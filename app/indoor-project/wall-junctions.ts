@@ -3,10 +3,10 @@ import type { IndoorDataset } from "./contract";
 type Point = [number, number];
 type Rings = Point[][];
 type Wall = IndoorDataset["walls"][number];
-const tolerance = 0.02; // feet: 6.1 mm, smaller than a doorway or wall thickness
+const defaultTolerance = 0.02; // feet: 6.1 mm, smaller than a doorway or wall thickness
 const overlap = 0.0002; // avoid zero-width contacts after display rounding
 type Edge = { a: Point; b: Point; box: number[] };
-const edges = (rings: Rings): Edge[] =>
+const edges = (rings: Rings, tolerance: number): Edge[] =>
   rings.flatMap((ring) =>
     ring.map((a, i) => {
       const b = ring[(i + 1) % ring.length];
@@ -24,7 +24,11 @@ const edges = (rings: Rings): Edge[] =>
   );
 // A joint is allowed only within tolerance. Long/curved walls may have hundreds
 // of remote segments; skip those without changing nearest-face selection.
-const nearest = (p: Point, segments: Edge[]): Point | undefined => {
+const nearest = (
+  p: Point,
+  segments: Edge[],
+  tolerance: number,
+): Point | undefined => {
   let best: Point | undefined,
     distance = Infinity;
   for (const { a, b, box } of segments) {
@@ -48,7 +52,7 @@ const nearest = (p: Point, segments: Edge[]): Point | undefined => {
   }
   return best;
 };
-const box = (rings: Rings) => {
+const box = (rings: Rings, tolerance: number) => {
   const p = rings.flat();
   return [
     Math.min(...p.map((p) => p[0])) - tolerance,
@@ -79,15 +83,22 @@ const extend = (p: Point, q: Point, distance: number): Point =>
         q[1] + ((q[1] - p[1]) / distance) * overlap,
       ];
 
-/** Display-only closure of tiny native wall end-cap gaps. Extend only a short
- * end cap whose two corners are within 6.1 mm of another same-floor wall face.
- * Neither annotations, door thresholds nor columns supply missing walls. */
+/** Closure of native wall end-cap gaps. The physical display renderer defaults
+ * to 6.1 mm numerical cleanup. Identified room-display enclosures can explicitly
+ * allow 0.3 ft corner continuations; those remain labelled display assumptions.
+ * Extend only a short end cap whose two corners meet an existing same-floor
+ * wall face. Annotations, door thresholds and columns cannot supply walls. */
 export function wallJunctionPatches(
   walls: Wall[],
+  tolerance = defaultTolerance,
 ): { levelId: number; rings: Rings }[] {
   const native = walls
     .filter((w) => w.kind === "wall")
-    .map((w) => ({ ...w, box: box(w.ringsFeet), edges: edges(w.ringsFeet) }));
+    .map((w) => ({
+      ...w,
+      box: box(w.ringsFeet, tolerance),
+      edges: edges(w.ringsFeet, tolerance),
+    }));
   // Query near each end cap instead of comparing every pair of campus walls.
   const grid = new Map<string, Set<(typeof native)[number]>>();
   for (const wall of native)
@@ -108,7 +119,7 @@ export function wallJunctionPatches(
     for (const [i, a] of ring.entries()) {
       if (lengths[i] > 2 || lengths[i] * 3 > longest) continue;
       const b = ring[(i + 1) % ring.length];
-      const capBox = box([[a, b]]);
+      const capBox = box([[a, b]], tolerance);
       const nearby = new Set(
         cells(wall.levelId, capBox).flatMap((key) => [
           ...(grid.get(key) ?? []),
@@ -121,9 +132,9 @@ export function wallJunctionPatches(
           !intersects(capBox, other.box)
         )
           continue;
-        const qa = nearest(a, other.edges);
+        const qa = nearest(a, other.edges, tolerance);
         if (!qa) continue;
-        const qb = nearest(b, other.edges);
+        const qb = nearest(b, other.edges, tolerance);
         if (!qb) continue;
         const da = Math.hypot(qa[0] - a[0], qa[1] - a[1]),
           db = Math.hypot(qb[0] - b[0], qb[1] - b[1]);

@@ -1,3 +1,4 @@
+import { createIndoorExclusionQuery } from "./indoor-exclusions";
 import {
   nativeCirculationCells,
   nativeCirculationWalkBlockers,
@@ -9,6 +10,7 @@ import {
   routingArrays,
   sameRoutingArrays,
   withRoutingCalculation,
+  routingCalculationValue,
 } from "./routing-cache";
 import type { RouteBlocker } from "./route-policy";
 
@@ -77,8 +79,16 @@ function buildProjectRoutingGraph(
   const adjacency = new Map<string, ProjectRoutingLink[]>();
   const allAdjacency = new Map<string, ProjectRoutingLink[]>();
   const crossings = walkPassages(data);
-  const nativeCellIds = new Set(nativeCirculationCells(data).map((c) => c.id));
-  const nativeWalkBlockers = nativeCirculationWalkBlockers(data);
+  const nativeCellIds = routingCalculationValue(
+    data,
+    "routing-native-cell-ids",
+    () => new Set(nativeCirculationCells(data).map((c) => c.id)),
+  );
+  const nativeWalkBlockers = routingCalculationValue(
+    data,
+    "routing-native-walk-blockers",
+    () => nativeCirculationWalkBlockers(data),
+  );
   for (const edge of data.edges) {
     const passages = crossings.get(edge.id) ?? [];
     for (const forward of [true, false]) {
@@ -125,7 +135,16 @@ export function reachableProjectDestinations(
   }
   const start = graph.records.get(startKey);
   const destinations = new Set<string>();
-  if (!start?.arrivalNodeId || !isProjectDestination(start))
+  const outside = binding ? createIndoorExclusionQuery(binding.data) : () => [];
+  const outsideArrival = (r: IndoorRecord) => {
+    const node = binding?.data.nodes.find((n) => n.id === r.arrivalNodeId);
+    return node && outside([node.pointFeet]).length > 0;
+  };
+  if (
+    !start?.arrivalNodeId ||
+    !isProjectDestination(start) ||
+    outsideArrival(start)
+  )
     return destinations;
   let coverage = coverageCache.get(graph);
   if (!coverage) {
@@ -150,6 +169,7 @@ export function reachableProjectDestinations(
     if (
       room.arrivalNodeId &&
       isProjectDestination(room) &&
+      !outsideArrival(room) &&
       reached.has(room.arrivalNodeId)
     )
       destinations.add(room.key);

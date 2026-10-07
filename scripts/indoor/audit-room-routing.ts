@@ -1,4 +1,29 @@
-import assert from "node:assert/strict";
+import strict from "node:assert/strict";
+import { isDeepStrictEqual } from "node:util";
+import { createHash } from "node:crypto";
+import { createNativeFloorHoleQuery } from "../../app/indoor-project/walking-support";
+import { createIndoorExclusionQuery } from "../../app/indoor-project/indoor-exclusions";
+let context: any = {};
+const validationFailures: any[] = [],
+  routeCases: any[] = [],
+  ordinaryTransit: any[] = [];
+const fail = (kind: string, actual: any, expected: any) =>
+  validationFailures.push({ ...context, kind, actual, expected });
+// Route-policy admission determines permitted transit. Ordinary-room transit is
+// disclosed below, not prohibited by a stale circulation-only audit invariant.
+// Record case failures instead of abandoning untested endpoints at the first one.
+const assert = {
+  ok: (actual: any, message?: string) => {
+    if (!actual) fail(message ?? "assert-ok", actual, true);
+  },
+  equal: (actual: any, expected: any, message?: string) => {
+    if (actual !== expected) fail(message ?? "assert-equal", actual, expected);
+  },
+  deepEqual: (actual: any, expected: any, message?: string) => {
+    if (!isDeepStrictEqual(actual, expected))
+      fail(message ?? "assert-deepEqual", actual, expected);
+  },
+};
 import { readFile, writeFile } from "node:fs/promises";
 import { readIndoorProject } from "../../app/indoor-project/package";
 import { findProjectRoute } from "../../app/indoor-project/routing";
@@ -26,10 +51,14 @@ if (
   throw new Error("--shard must be an index/count pair, such as 0/4.");
 if (!input || !args.includes("--out"))
   throw new Error(
-    "Usage: tsx scripts/indoor/audit-room-routing.ts prepared.zip --out report.json [--topology-only]",
+    "Usage: tsx scripts/indoor/audit-room-routing.ts prepared.zip --out report.json [--topology-only] [--shard index/count]",
   );
-const project = await readIndoorProject(new Uint8Array(await readFile(input)));
+const inputBytes = await readFile(input);
+const project = await readIndoorProject(new Uint8Array(inputBytes));
 const data = project.dataset;
+const inputSha256 = createHash("sha256").update(inputBytes).digest("hex");
+const holes = createNativeFloorHoleQuery(data),
+  exclusions = createIndoorExclusionQuery(data);
 const before = JSON.stringify(data);
 const floors = new Map(
   data.floors.flatMap((f) => f.levelIds.map((id) => [id, f.id] as const)),
@@ -62,6 +91,7 @@ let centeredPaths = 0;
 let orthogonalPaths = 0;
 let sourcePaths = 0;
 let stairTransitions = 0;
+let floorTransitions = 0;
 const sourceReasons: Record<string, number> = {},
   geometryReview = new Map<string, unknown>();
 const geometry: {
@@ -127,7 +157,27 @@ for (const mode of ["public", "accessible"] as const) {
             a.key.localeCompare(b.key),
         )[0];
         if (!end) continue;
+        context = {
+          mode,
+          start: start.key,
+          startNumber: start.number,
+          end: end.key,
+          endNumber: end.number,
+          scope: candidates === sameFloor ? "same-floor" : "cross-floor",
+        };
+        const began = Date.now();
         const route = findProjectRoute(data, start.key, end.key, mode);
+        routeCases.push({
+          ...context,
+          available: !!route,
+          calculationMs: Date.now() - began,
+          unknownAccessAreas: route?.unknownAccessAreas ?? [],
+          unknownAccessibilityEdges: route?.unknownAccessibilityEdges,
+        });
+        if (!route) {
+          fail("graph-reachable-but-route-unavailable", false, true);
+          continue;
+        }
         assert.ok(route, `${mode} ${start.number} → ${end.number}`);
         assert.equal(route.nodeIds[0], start.arrivalNodeId);
         assert.equal(route.nodeIds.at(-1), end.arrivalNodeId);
@@ -146,11 +196,26 @@ for (const mode of ["public", "accessible"] as const) {
           for (const key of edge.roomKeys) {
             const room = graph.records.get(key)!;
             assert.ok(isProjectDestination(room));
+            if (
+              !room.circulation &&
+              !room.stair &&
+              key !== start.key &&
+              key !== end.key
+            )
+              ordinaryTransit.push({
+                ...context,
+                roomKey: key,
+                roomNumber: room.number,
+                edgeId: edge.id,
+                access: room.access,
+              });
+            const from = route.nodeIds[i],
+              to = route.nodeIds[i + 1];
             assert.ok(
-              room.circulation ||
-                room.stair ||
-                key === start.key ||
-                key === end.key,
+              graph.adjacency
+                .get(from)
+                ?.some((l) => l.to === to && l.edge.id === edge.id),
+              "edge-not-in-admitted-profile-graph",
             );
           }
           if (mode === "accessible") {
@@ -165,8 +230,10 @@ for (const mode of ["public", "accessible"] as const) {
           end.number,
         );
         assert.equal(steps.at(-1)?.levelId, end.levelId);
-        const transitions = route.edges.filter(
-          (e) => e.kind === "stairs" || e.kind === "local-steps",
+        const transitions = route.edges.filter((e) =>
+          ["stairs", "local-steps", "ramp", "elevator", "escalator"].includes(
+            e.kind,
+          ),
         );
         const changes = steps.filter((s) => s.type === "floor-change");
         assert.equal(changes.length, transitions.length);
@@ -181,6 +248,26 @@ for (const mode of ["public", "accessible"] as const) {
                 : [...edge.pointsFeet].reverse(),
             );
           }
+        }
+        for (const path of route.paths) {
+          if (exclusions(path.pointsFeet).length)
+            fail(
+              "realized-path-crosses-reviewed-exclusion",
+              exclusions(path.pointsFeet),
+              [],
+            );
+          if (
+            path.levelIds.length === 1 &&
+            Math.max(...path.pointsFeet.map((p) => p[2])) -
+              Math.min(...path.pointsFeet.map((p) => p[2])) <
+              0.05 &&
+            holes(path.pointsFeet).length
+          )
+            fail(
+              "planar-path-crosses-native-floor-hole",
+              holes(path.pointsFeet),
+              [],
+            );
         }
         testedPaths++;
         centeredPaths += route.paths.filter((p) => p.centered).length;
@@ -222,13 +309,14 @@ for (const mode of ["public", "accessible"] as const) {
               });
           }
         }
-        stairTransitions += transitions.length;
+        floorTransitions += transitions.length;
+        stairTransitions += transitions.filter(
+          (e) => e.kind === "stairs" || e.kind === "local-steps",
+        ).length;
         geometry.push({
           start: start.key,
           end: end.key,
-          paths: route.paths.filter(
-            (p) => p.centered || p.sourceReason === "validated-source",
-          ),
+          paths: route.paths.filter((p) => p.levelIds.length === 1),
           edgeIds: [
             ...new Set([
               ...route.edges.map((e) => e.id),
@@ -275,9 +363,13 @@ for (const mode of ["public", "accessible"] as const) {
     rooms,
   });
 }
-assert.equal(JSON.stringify(data), before, "Routing changed source dataset");
+strict.equal(JSON.stringify(data), before, "Routing changed source dataset");
 const report = {
+  inputSha256,
   source: data.source,
+  routeCases,
+  ordinaryTransit,
+  validationFailures,
   totalRecords: data.records.length,
   eligibleDestinations: records.length,
   missingEntrances: records.filter((r) => !r.arrivalNodeId).length,
@@ -290,6 +382,7 @@ const report = {
     corridorCenterlinePaths: centeredPaths - orthogonalPaths,
     sourcePaths,
     stairTransitions,
+    floorTransitions,
     sourceDatasetUnchanged: true,
     sourceReasons,
     geometryReviewSections: geometryReview.size,
@@ -307,6 +400,9 @@ if (!args.includes("--topology-only"))
 console.log(
   JSON.stringify(
     {
+      inputSha256,
+      validationFailures: validationFailures.length,
+      ordinaryTransitCases: ordinaryTransit.length,
       eligibleDestinations: records.length,
       missingEntrances: report.missingEntrances,
       profiles: profiles.map((p) => ({

@@ -2,6 +2,22 @@ import type { IndoorDataset } from "./contract";
 
 const calculations = new WeakMap<IndoorDataset, Map<string, unknown>>();
 
+/** Only for a privately cloned worker snapshot, which is never edited in place.
+ * Source-review callers still use the per-calculation guards below. Replacing
+ * the worker's snapshot creates a new session and discards every cached binding. */
+export function createImmutableRoutingSession(data: IndoorDataset) {
+  const values = new Map<string, unknown>();
+  return <T>(run: () => T): T => {
+    if (calculations.has(data)) return run();
+    calculations.set(data, values);
+    try {
+      return run();
+    } finally {
+      calculations.delete(data);
+    }
+  };
+}
+
 /** Reuse exact bindings only within one synchronous calculation. A later
  * request always rechecks the dataset, including in-place door/access edits. */
 export function withRoutingCalculation<T>(
@@ -50,11 +66,14 @@ export function routingSnapshot(data: IndoorDataset): string {
         r.properties.generatedLanding,
         r.properties.dwg,
       ]),
-      data.nodes.map((n) => [n.id, n.levelId, n.pointFeet]),
+      data.nodes.map((n) => [n.id, n.levelId, n.roomKey, n.kind, n.pointFeet]),
       data.edges,
       data.doors,
+      data.connectors,
       data.walkingSupport,
+      ...(data.indoorExclusions ? [data.indoorExclusions] : []),
       data.circulationGeometry,
+      ...(data.nativeIndoorEnvelopes ? ["native-indoor-envelope-v1", data.nativeIndoorEnvelopes] : []),
     ]),
   );
 }

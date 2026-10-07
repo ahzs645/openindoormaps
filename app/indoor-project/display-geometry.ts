@@ -1,3 +1,4 @@
+import { fillMeasuredDoorwayRecesses } from "./display-doorway-recesses";
 import { unresolvedRoomBoundaryKeys } from "./boundary-evidence";
 import polygonClipping from "polygon-clipping";
 import type { FeatureCollection, Polygon, MultiPolygon, Point } from "geojson";
@@ -14,6 +15,7 @@ import {
 
 import {
   isDisplayPassage,
+  isDisplayStair,
   isFlatArea,
   isRoomSizedWallEnvelope,
   isPassThroughPlace,
@@ -261,11 +263,12 @@ export function roomDisplayColor(r: IndoorRecord, selected: boolean): string {
   if (isRestrictedArea(r)) return RESTRICTED_AREA_COLOR;
   if (selected) return "#ffe09d";
   if (!r.walkable) return "#ffffff";
-  if (r.stair && !r.circulation) return "#cfd9e4";
+  if (isDisplayStair(r)) return HALLWAY_COLOR;
   if (isDisplayPassage(r)) return HALLWAY_COLOR;
 
   if (/washroom|toilet|\bwc\b|all gender/i.test(r.name)) return "#bce7f1";
   if (/library|study|reading/i.test(r.name)) return "#b8d5a5";
+  if (/coffee|caf[eé]|food|dining|kitchen/i.test(r.name)) return "#eee7d5";
   if (/class|lecture|seminar|meeting|hall\b/i.test(r.name)) return "#eee7d5";
   return "#f5f5f4";
 }
@@ -306,6 +309,7 @@ export function projectDisplayGeometry(
   showPassThroughPlaces = false,
   showVestibuleDoors = false,
   physicalWalls?: Set<IndoorDataset["walls"][number]>,
+  showDoorwayRecesses = true,
 ): ProjectDisplayGeometry {
   // A room/wall is queried repeatedly while carving roofs and thresholds.
   // Keep this cache local: edits between invocations must see new coordinates.
@@ -394,6 +398,7 @@ export function projectDisplayGeometry(
   const cutters = doors
     .filter((d) => d.footprintFeet)
     .map((d) => ({
+      nativeDoorId: d.nativeElementId,
       levelId: d.levelId,
       // One physical wall element can be repeated on the native split levels
       // grouped into a campus floor. Its door must cut every copy of that wall.
@@ -428,10 +433,16 @@ export function projectDisplayGeometry(
       box: cachedBounds([d.footprintFeet!]).map((n, i) => n + (i < 2 ? -1 : 1)),
     }));
   let uncutSurfaces = 0;
-  const cut = (rings: Rings, levelId: number, wall = false): Rings[] => {
+  const cut = (
+    rings: Rings,
+    levelId: number,
+    wall = false,
+    preservedDoors?: Set<number>,
+  ): Rings[] => {
     const box = cachedBounds(rings);
     const nearby = cutters.filter(
       (d) =>
+        !preservedDoors?.has(d.nativeDoorId) &&
         (wall ? d.wallLevels.has(levelId) : d.levelId === levelId) &&
         intersects(d.box, box),
     );
@@ -446,6 +457,53 @@ export function projectDisplayGeometry(
       uncutSurfaces++;
       return [rings.map((ring) => close(ring))];
     }
+  };
+  const filledDoorIds = new Set<number>();
+  const fillRoomRecesses = (r: IndoorRecord, parts: Rings[]) => {
+    if (showDoorwayRecesses || isFlatArea(r) || isOpenDrop(r) || r.stair)
+      return { partsFeet: parts, closures: [] };
+    const scope = bounds(parts.flat());
+    const localDoors = doors.filter((d) => d.roomKeys.includes(r.key));
+    if (!localDoors.length) return { partsFeet: parts, closures: [] };
+    const support =
+      data.walkingSupport?.sourceModelSha256 === data.source.modelSha256
+        ? data
+            .walkingSupport!.floors.filter(
+              (f) => Math.abs(f.elevationFeet - r.elevationFeet) < 0.15,
+            )
+            .flatMap((f) => f.partsFeet ?? [f.ringsFeet])
+            .filter((p) => intersects(cachedBounds(p), scope))
+        : [];
+    const near = records.filter(
+      (other) =>
+        other.key !== r.key &&
+        other.levelId === r.levelId &&
+        intersects(cachedBounds(other.ringsFeet), scope),
+    );
+    const result = fillMeasuredDoorwayRecesses({
+      roomKey: r.key,
+      levelId: r.levelId,
+      partsFeet: parts,
+      doors: localDoors,
+      floorSupportPartsFeet: support,
+      wallPartsFeet: (wallsByLevel.get(r.levelId) ?? [])
+        .filter((w) => intersects(w.box, scope))
+        .flatMap((w) => cut(w.wall.ringsFeet, r.levelId, true)),
+      protectedPartsFeet: near
+        .filter((other) => isOpenDrop(other) || other.stair)
+        .map((other) => other.ringsFeet),
+      neighbouringPartsFeet: near
+        .filter(
+          (other) => !isFlatArea(other) && !isOpenDrop(other) && !other.stair,
+        )
+        .map(
+          (other) =>
+            prepared.get(other.key)?.interiorRingsFeet ?? other.ringsFeet,
+        ),
+    });
+    for (const closure of result.closures)
+      filledDoorIds.add(closure.nativeDoorId);
+    return result;
   };
   const polygon = (parts: Rings[]): MultiPolygon => ({
     type: "MultiPolygon",
@@ -681,9 +739,17 @@ export function projectDisplayGeometry(
         );
         let parts: Rings[] = [original];
         const preparedParts = prepared.get(r.key)?.blockPartsFeet;
-        if (preparedParts)
-          parts = preparedParts.flatMap((part) => cut(part, r.levelId, true));
-        else
+        const preparedRecesses = preparedParts
+          ? fillRoomRecesses(r, preparedParts)
+          : undefined;
+        if (preparedParts) {
+          const preservedDoors = new Set(
+            preparedRecesses!.closures.map((c) => c.nativeDoorId),
+          );
+          parts = preparedRecesses!.partsFeet.flatMap((part) =>
+            cut(part, r.levelId, true, preservedDoors),
+          );
+        } else
           try {
             const nearby = (wallSurfacesByLevel.get(r.levelId) ?? [])
               .filter((wall) => intersects(wall.box, roomBounds))
@@ -782,6 +848,10 @@ export function projectDisplayGeometry(
                 .slice(0, 1);
             }
           }
+        const recesses = preparedRecesses
+          ? { ...preparedRecesses, partsFeet: parts }
+          : fillRoomRecesses(r, parts);
+        parts = recesses.partsFeet;
         if (parts.length > 0) roofs.set(r.key, parts);
         if (!preparedParts)
           blockPartsByLevel.set(r.levelId, [
@@ -796,12 +866,28 @@ export function projectDisplayGeometry(
             access: r.access,
             color: placeDisplayColor(data, r, r.key === selected),
             height: ROOM_BLOCK_HEIGHT_METRES,
+            measuredDoorwayFills: recesses.closures,
             boundarySource: boundarySource(r.key),
           },
           geometry: polygon(parts),
         };
       }),
   };
+  // Use the identical closed display footprint for first-click selection. Door
+  // metadata and the original navigation interior remain in the dataset.
+  for (const block of roomBlocks.features) {
+    if (!block.properties?.measuredDoorwayFills?.length) continue;
+    const area = areas.features.find(
+      (f) => f.properties?.key === block.properties?.key,
+    );
+    if (area) {
+      area.geometry = block.geometry;
+      area.properties = {
+        ...area.properties,
+        measuredDoorwayFills: block.properties.measuredDoorwayFills,
+      };
+    }
+  }
   // Partition each hidden column by the continuation of all touching roofs,
   // independently of record/key order. Competing continuations stay neutral.
   const neutralColumns: FeatureCollection<MultiPolygon>["features"] = [];
@@ -1029,6 +1115,7 @@ export function projectDisplayGeometry(
               properties: {
                 id: d.id,
                 nativeElementId: d.nativeElementId,
+                roomDisplayFilled: filledDoorIds.has(d.nativeElementId),
                 state: d.state,
                 color: d.state === "connected" ? "#bce7f1" : "#ffdca3",
               },
@@ -1150,6 +1237,8 @@ export function projectDisplayGeometry(
         false,
         showPassThroughPlaces,
         showVestibuleDoors,
+        undefined,
+        showDoorwayRecesses,
       );
       lowerBlockCache.set(cacheKey, lowerDisplay);
     }

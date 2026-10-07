@@ -66,3 +66,65 @@ test("compiler-recovered routing enclosures are distinguished from display-only 
     /^Recovered native wall interior/,
   );
 });
+test("registered door-symbol closure is described as display evidence without claiming native routing", () => {
+  const data = structuredClone(desk) as unknown as IndoorDataset;
+  const record = data.records[0];
+  record.circulation = false;
+  record.properties.nativeRoutingBoundary = undefined;
+  data.presentation = {
+    version: 1,
+    generator: "test",
+    sourceModelSha256: data.source.modelSha256,
+    junctionToleranceFeet: 0.08,
+    diagnostics: [],
+    rooms: [
+      {
+        roomKey: record.key,
+        levelId: record.levelId,
+        sourceGeometryKey: JSON.stringify([record.levelId, record.ringsFeet]),
+        interiorRingsFeet: record.ringsFeet,
+        blockPartsFeet: [record.ringsFeet],
+        boundarySource: "registered-source-wall-enclosure",
+        boundaryElementIds: [],
+        sourceCoverage: 1,
+        cellCoverage: 1,
+        sourceProof: {
+          sourceSha256: "survey",
+          sectionId: "sheet",
+          registrationErrorFeet: 0,
+          wallSegmentIndices: [],
+          doorSegmentIndices: [],
+          nativeFloorCoveredSquareFeet: 100,
+          closedDoorSwings: [
+            {
+              arcSegmentIndices: [1, 2, 3],
+              leafSegmentIndices: [4],
+              supportingWallSegmentIndices: [5, 6],
+              hingeFeet: [0, 0],
+              radiusFeet: 3,
+              closedLeafFeet: [
+                [0, 0],
+                [3, 0],
+              ],
+              thresholdSegments: [
+                [
+                  [0, 0],
+                  [3, 0],
+                ],
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  };
+  assert.match(
+    projectBoundaryEvidence(data, source(data)).get(record.key)!,
+    /^Registered architectural walls · door swings closed for display; original navigation interior$/,
+  );
+  data.presentation.rooms[0].sourceProof!.closedDoorSwings = [];
+  assert.match(
+    projectBoundaryEvidence(data, source(data)).get(record.key)!,
+    /^Registered architectural walls · display only/,
+  );
+});

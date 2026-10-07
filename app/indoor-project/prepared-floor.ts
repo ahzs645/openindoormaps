@@ -19,6 +19,7 @@ import {
 import { sourceStairAreaKeys } from "./source-stairs";
 import { stairPlaceGround } from "./stair-place-ground";
 import { stairSurroundGround } from "./stair-surround-ground";
+import { stairSlabGround } from "./stair-slab-ground";
 import { stairsAboveDisplayedGround } from "./stair-ground-occlusion";
 import { stairFloorApertures } from "./stair-floor-apertures";
 
@@ -35,7 +36,10 @@ export function prepareFloor(
   building: string,
   options: FloorPreparationOptions,
 ) {
-  const presentation = floorPresentation(data, levelIds, building, options);
+  const presentation = floorPresentation(data, levelIds, building, {
+    ...options,
+    visitorStairs: !options.review,
+  });
   const unoccluded = presentation.nativeStairs;
   const places = new Set(data.records.filter((r) => r.stair).map((r) => r.key));
   const nativeStairKeys = [
@@ -168,7 +172,13 @@ export function prepareFloor(
     options.review ? stairPlaceGround : stairSurroundGround
   )(data, {
     ...shownAreas,
-    features: [...nativeSurfaces, ...shownAreas.features],
+    features: [
+      ...nativeSurfaces,
+      ...(options.review
+        ? []
+        : stairSlabGround(data, nativeSurfaces, unoccluded)),
+      ...shownAreas.features,
+    ],
   });
   const nativeStairs = stairsAboveDisplayedGround(
     unoccluded,

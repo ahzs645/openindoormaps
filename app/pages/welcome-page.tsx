@@ -1,10 +1,10 @@
 import { Building2, FileArchive, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
-import locations from "~/data/locations";
+import { locationCatalog } from "~/data/locations";
 import revitImports from "~/data/revit-imports";
 
 export default function WelcomePage() {
-  const locationEntries = Object.values(locations);
+  const locationEntries = locationCatalog;
   const revitImportEntries = Object.values(revitImports);
 
   return (

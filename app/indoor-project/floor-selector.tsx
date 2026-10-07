@@ -1,3 +1,4 @@
+import { floorDisplayName } from "./floor-display-name";
 import { useState } from "react";
 import * as Menu from "@radix-ui/react-dropdown-menu";
 import { ChevronsUpDown, X, ArrowLeft } from "lucide-react";
@@ -6,6 +7,7 @@ import { projectBuildingName } from "./visitor-metadata";
 
 export function floorBadge(floor: IndoorDataset["floors"][number] | undefined) {
   if (!floor) return "";
+  if (/^basement$/i.test(floor.name)) return "B";
   const number = floor.name.match(/(?:floor|level)\s*([\d.-]+)/i)?.[1];
   if (number) return `L${number}`;
   return Math.abs(floor.elevationFeet) < 0.1 ? "G" : "L";
@@ -68,7 +70,7 @@ export function ProjectFloorSelector({
         >
           <span className="project-level-badge">{floorBadge(floor)}</span>
           <span>
-            <strong>{floor?.name}</strong>
+            <strong>{floor ? floorDisplayName(floor.name) : ""}</strong>
             <small>{buildingName}</small>
           </span>
           <ChevronsUpDown size={17} />
@@ -107,7 +109,7 @@ export function ProjectFloorSelector({
                 <strong>{buildingName}</strong>
                 <span>Change</span>
               </Menu.Item>
-              <Menu.Label className="project-level-heading">Level</Menu.Label>
+              <Menu.Label className="project-level-heading">Floor</Menu.Label>
               <Menu.RadioGroup
                 value={floorId}
                 onValueChange={(value) => onChange(value, building)}
@@ -118,13 +120,13 @@ export function ProjectFloorSelector({
                     <Menu.RadioItem
                       key={entry.id}
                       value={entry.id}
-                      aria-label={entry.name}
+                      aria-label={floorDisplayName(entry.name)}
                       className="project-level-row"
                     >
                       <span className="project-level-badge">
                         {floorBadge(entry)}
                       </span>
-                      {entry.name}
+                      {floorDisplayName(entry.name)}
                     </Menu.RadioItem>
                   ))}
               </Menu.RadioGroup>

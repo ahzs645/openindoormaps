@@ -56,7 +56,7 @@ for (const [from, to] of [
       doors = data.doors!.filter((d) => d.levelId === level);
     const repairs = recoverNativeWallJunctionRepairs(walls, doors);
     const apertures = doors
-      .filter((d) => d.footprintFeet && route.doorEdgeIds.includes(d.id))
+      .filter((d) => d.footprintFeet && route.doorEdgeIds?.includes(d.id))
       .map((d) => ({
         rooms: d.roomKeys.slice(0, 2) as [string, string],
         point: d.pointFeet,

@@ -77,3 +77,16 @@ The sample config at `scripts/dwg-import/config.example.json` is a template. It 
 - [OpenStreetMap `level` key](https://wiki.openstreetmap.org/wiki/Key:level): reference for multi-floor semantics.
 - [OGC IndoorGML overview](https://www.ogc.org/standards/indoorgml/): useful if you later want a formal indoor topology model instead of app-specific GeoJSON.
 - [osmAG-from-cad](https://github.com/jiajiezhang7/osmAG-from-cad): an open-source example of extracting structured indoor maps from CAD drawings.
+
+## Checksummed folder comparison with an existing master
+
+See [Local floor-plan folder review](dwg-floorplan-folder.md) for the separate
+per-sheet review, saved Reviter registration, missing-coverage inventory and
+portable candidate ZIP. That workflow disables global composite GIS placement,
+retains interior polygon holes, and separates campus path edges from route graphs.
+
+LibreDWG-converted files can lose viewport status and ID. Opt in to
+`layouts.allowMissingViewportStatus` only for those conversions: scaled finite
+model windows are accepted with an explicit inferred-status warning; scale-1
+paper views and perspective views are rejected. `requireContext` now also rejects
+an empty viewport result instead of silently importing the whole composite.

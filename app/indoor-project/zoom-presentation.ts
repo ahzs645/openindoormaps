@@ -1,6 +1,14 @@
 import type { FeatureCollection, Point, Polygon, MultiPolygon } from "geojson";
 import buffer from "@turf/buffer";
-import { isDisplayPassage } from "./display-passages";
+import polygonClipping, {
+  type Polygon as ClipPolygon,
+  type MultiPolygon as ClipMultiPolygon,
+} from "polygon-clipping";
+import {
+  HALLWAY_COLOR,
+  OVERVIEW_SOLID_COLOR,
+  isOverviewWalkway,
+} from "./display-passages";
 import type { IndoorDataset, IndoorRecord } from "./contract";
 import { geographicPoint } from "./routing";
 import { projectBuildingName } from "./visitor-metadata";
@@ -9,6 +17,9 @@ import { projectBuildingName } from "./visitor-metadata";
 export const ROOM_DETAIL_ZOOM = 18;
 export const ROOM_DETAIL_START = ROOM_DETAIL_ZOOM - 0.5;
 export const ROOM_DETAIL_END = ROOM_DETAIL_ZOOM + 0.5;
+/** Room tint arrives first; architectural edges wait until the overview is gone. */
+export const WALL_DETAIL_START = ROOM_DETAIL_END;
+export const WALL_DETAIL_END = ROOM_DETAIL_END + 0.5;
 /** Continuous zoom progress works identically when zooming in or out. */
 export const zoomFade = (zoom: number, start: number, end: number) =>
   Math.max(0, Math.min(1, (zoom - start) / (end - start)));
@@ -41,7 +52,7 @@ export function buildingOverviewGeometry(
   for (const building of new Set(records.map((room) => room.building))) {
     const rooms = records.filter((room) => room.building === building);
     for (const circulation of [false, true]) {
-      const chosen = circulation ? rooms.filter(isDisplayPassage) : rooms;
+      const chosen = circulation ? rooms.filter(isOverviewWalkway) : rooms;
       if (chosen.length === 0) continue;
       const source: MultiPolygon = {
         type: "MultiPolygon",
@@ -59,12 +70,66 @@ export function buildingOverviewGeometry(
         const closed =
           expanded && buffer(expanded, -radius, { units: "meters", steps: 4 });
         if (!closed) continue;
+        const levels = new Set(rooms.map((room) => room.levelId));
+        const protectedRings = circulation
+          ? rooms
+              .filter((room) => room.access === "staff" || !room.walkable)
+              .map((room) => room.ringsFeet)
+          : [];
+        // The overview is illustrative, but smoothing must never paint a known
+        // exterior footprint or actual floor opening as indoor circulation.
+        if (
+          data.indoorExclusions?.sourceModelSha256 === data.source.modelSha256
+        )
+          for (const area of data.indoorExclusions.areas)
+            if (
+              levels.has(area.levelId) &&
+              (circulation || area.reason !== "off-limits")
+            )
+              protectedRings.push(...area.partsFeet);
+        for (const room of rooms) {
+          const openings = room.properties.floorOpeningsFeet as
+            | [number, number][][]
+            | undefined;
+          if (openings) protectedRings.push(...openings.map((ring) => [ring]));
+        }
+        if (
+          data.walkingSupport?.sourceModelSha256 === data.source.modelSha256
+        ) {
+          const elevations = data.nativeLevels
+            .filter((level) => levels.has(level.id))
+            .map((level) => level.elevationFeet);
+          for (const floor of data.walkingSupport.floors)
+            if (
+              elevations.some(
+                (elevation) => Math.abs(elevation - floor.elevationFeet) < 0.05,
+              )
+            )
+              for (const part of floor.partsFeet ?? [floor.ringsFeet])
+                protectedRings.push(...part.slice(1).map((ring) => [ring]));
+        }
+        const geometry = protectedRings.length
+          ? {
+              type: "MultiPolygon" as const,
+              coordinates: polygonClipping.difference(
+                closed.geometry.coordinates as ClipPolygon | ClipMultiPolygon,
+                ...protectedRings.map((rings) =>
+                  rings.map((ring) =>
+                    [...ring, ring[0]].map((point) =>
+                      geographicPoint(data, point),
+                    ),
+                  ),
+                ),
+              ),
+            }
+          : closed.geometry;
         features.push({
           ...closed,
+          geometry,
           properties: {
             building,
             circulation,
-            color: circulation ? "#bfd1cd" : "#8d9395",
+            color: circulation ? HALLWAY_COLOR : OVERVIEW_SOLID_COLOR,
           },
         });
       } catch {

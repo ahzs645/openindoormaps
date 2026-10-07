@@ -4,7 +4,17 @@ import type { IndoorDataset, IndoorRecord } from "./contract";
 
 export const isVestibule = (room: IndoorRecord) =>
   /\bvestibule\b/i.test(room.name);
-export const HALLWAY_COLOR = "#d7e2e5";
+export const HALLWAY_COLOR = "#bdd5c9";
+export const OVERVIEW_SOLID_COLOR = "#8d9395";
+/** Green denotes circulation, never a grant of access to a restricted space. */
+export const isOverviewWalkway = (room: IndoorRecord) =>
+  room.walkable &&
+  !isRestrictedArea(room) &&
+  (isDisplayPassage(room) || isDisplayStair(room));
+/** Ordinary stair areas share the circulation palette. Lecture seating remains
+ * a room; this does not reclassify either place or authorize an edge. */
+export const isDisplayStair = (room: IndoorRecord) =>
+  room.stair && !/lecture|tiered|seating/i.test(room.name);
 export const RESTRICTED_AREA_COLOR = "#dfb6bd";
 export const isRestrictedArea = (room: IndoorRecord) => room.access === "staff";
 /** Source access restrictions remain authoritative even when a corridor's
@@ -13,11 +23,22 @@ export const isHallway = (room: IndoorRecord) =>
   !room.stair &&
   (room.circulation || /\b(?:corridor|hallway)\b/i.test(room.name));
 /** Visitor presentation only. Preserve the source room classification and graph. */
-export const isDisplayPassage = (room: IndoorRecord) =>
-  room.circulation ||
-  isHallway(room) ||
-  isVestibule(room) ||
-  /^rotunda$/i.test(room.name.trim());
+export const isDisplayPassage = (room: IndoorRecord) => {
+  const use = room.properties.spaceUse as
+    | { kind?: string; evidence?: string }
+    | undefined;
+  if (
+    use?.evidence === "user-reported" &&
+    ["hallway", "atrium", "room"].includes(use.kind ?? "")
+  )
+    return use.kind !== "room";
+  return (
+    room.circulation ||
+    isHallway(room) ||
+    isVestibule(room) ||
+    /^rotunda$/i.test(room.name.trim())
+  );
+};
 /** Flat presentation does not change source access, room type, or routing. */
 export const isFlatArea = (room: IndoorRecord) =>
   isRestrictedArea(room) || isDisplayPassage(room);

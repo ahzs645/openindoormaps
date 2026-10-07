@@ -1,3 +1,10 @@
+import { validateNativeIndoorEnvelopes } from "./native-indoor-envelopes";
+import { validateNativeDisplayScopes } from "./native-display-scopes";
+import { validateNativeWindowDisplay } from "./native-window-display";
+import {
+  createIndoorExclusionQuery,
+  validateIndoorExclusions,
+} from "./indoor-exclusions";
 import type { ProjectRouteArrival } from "./route-arrival";
 import {
   withRoutingCalculation,
@@ -5,6 +12,7 @@ import {
 } from "./routing-cache";
 import { createProjectRouteDiagnostics } from "./route-diagnostics";
 import { createNativeFloorHoleQuery } from "./walking-support";
+import { sourceFallbackBarrierHits } from "./source-fallback-barriers";
 import { validateNativeCirculationGeometry } from "./native-circulation";
 import { validShaft } from "./connector-review";
 import { validateVisitorMetadata } from "./visitor-metadata";
@@ -62,6 +70,11 @@ export function projectRouteFailure(
   endKey: string,
   mode: "public" | "accessible",
 ): string {
+  if (
+    data.boundaryPatchState?.regenerated === false ||
+    data.doorAperturePatchState?.regenerated === false
+  )
+    return "Boundary patches changed the source geometry. Regenerate this reviewed ZIP in Reviter before directions are available.";
   return createProjectRouteDiagnostics(data, mode).inspect(startKey, endKey)
     .message;
 }
@@ -90,6 +103,11 @@ export function findProjectRoute(
   endKey: string,
   mode: "public" | "accessible" = "public",
 ): ProjectRoute | null {
+  if (
+    data.boundaryPatchState?.regenerated === false ||
+    data.doorAperturePatchState?.regenerated === false
+  )
+    return null;
   return withRoutingCalculation(data, () => {
     let excluded = new Set<string>();
     for (;;) {
@@ -169,6 +187,11 @@ function resolveProjectRoute(
   };
   const start = records.get(startKey),
     end = records.get(endKey);
+  const scopeQuery = createIndoorExclusionQuery(data);
+  const arrivalPoints = data.nodes
+    .filter((n) => n.id === start?.arrivalNodeId || n.id === end?.arrivalNodeId)
+    .map((n) => n.pointFeet);
+  if (arrivalPoints.some((p) => scopeQuery([p]).length)) return remember(null);
   if (
     !start?.arrivalNodeId ||
     !end?.arrivalNodeId ||
@@ -252,6 +275,25 @@ function resolveProjectRoute(
   const reviewedEdges = [...dependencies.values()],
     used = [...new Set(reviewedEdges.flatMap((e) => e.roomKeys))];
   const paths = centeredRoutePaths(data, edges, nodeIds, mode === "public");
+  const outside = createIndoorExclusionQuery(data);
+  const pathExclusions = (path: RoutePath) => {
+    const edge =
+      path.edgeIds.length === 1
+        ? dependencies.get(path.edgeIds[0]!)
+        : undefined;
+    return edge?.kind === "elevator"
+      ? outside.forEdge(path.pointsFeet, edge)
+      : outside(path.pointsFeet);
+  };
+  // Refinement must not replace a safe source walk with an exterior shortcut.
+  // A safe saved geometry remains usable when a refined guide is rejected.
+  for (let i = 0; i < paths.length; i++) {
+    if (!pathExclusions(paths[i]).length) continue;
+    const source = centeredRoutePaths(data, edges, nodeIds, false);
+    if (source.some((p) => pathExclusions(p).length)) return remember(null);
+    paths.splice(0, paths.length, ...source);
+    break;
+  }
   const nativeFloorHoleCrossings = createNativeFloorHoleQuery(data);
   const unsafe = paths.filter(
     (path) =>
@@ -285,6 +327,37 @@ function resolveProjectRoute(
     // Every retry excludes at least one positively unsupported saved link.
     // Iterate rather than recurse, so many bad fragments cannot overflow the
     // stack or impose an arbitrary limit that hides a viable alternative.
+    if (next.size > excluded.size) return { retry: next };
+    return remember(null);
+  }
+  const blockedFallbacks = paths.filter(
+    (path) => sourceFallbackBarrierHits(data, path, reviewedEdges).length > 0,
+  );
+  if (blockedFallbacks.length > 0) {
+    const candidateIds = new Set(
+      blockedFallbacks.flatMap((path) => path.edgeIds),
+    );
+    const rejected = edges
+      .filter((edge) => {
+        if (
+          !candidateIds.has(edge.id) ||
+          !["walk", "door", "opening"].includes(edge.kind)
+        )
+          return false;
+        const path = blockedFallbacks.find((p) => p.edgeIds.includes(edge.id))!;
+        return (
+          sourceFallbackBarrierHits(
+            data,
+            { ...path, pointsFeet: edge.pointsFeet },
+            reviewedEdges,
+          ).length > 0
+        );
+      })
+      .map((edge) => edge.id);
+    const next = new Set([
+      ...excluded,
+      ...(rejected.length ? rejected : candidateIds),
+    ]);
     if (next.size > excluded.size) return { retry: next };
     return remember(null);
   }
@@ -336,6 +409,8 @@ function resolveProjectRoute(
 export function validateIndoorDataset(
   value: unknown,
 ): asserts value is IndoorDataset {
+  validateNativeIndoorEnvelopes((value as IndoorDataset)?.nativeIndoorEnvelopes, (value as IndoorDataset)?.source?.modelSha256);
+  validateNativeDisplayScopes((value as IndoorDataset)?.nativeDisplayScopes, (value as IndoorDataset)?.source?.modelSha256);
   const d = value as IndoorDataset,
     finitePoint = (p: unknown, n: number) =>
       Array.isArray(p) &&
@@ -377,6 +452,18 @@ export function validateIndoorDataset(
   )
     throw new Error("Unsupported or invalid prepared indoor dataset.");
   if (d.visitor !== undefined) validateVisitorMetadata(d.visitor, d.records);
+  if (
+    d.boundaryPatchState !== undefined &&
+    (!d.boundaryPatchState ||
+      typeof d.boundaryPatchState.regenerated !== "boolean" ||
+      !Array.isArray(d.boundaryPatchState.patchIds) ||
+      !d.boundaryPatchState.patchIds.length ||
+      d.boundaryPatchState.patchIds.length > 5000 ||
+      d.boundaryPatchState.patchIds.some(
+        (p) => !id(p) || !d.walls.some((w) => w.reviewPatchId === p),
+      ))
+  )
+    throw new Error("Invalid applied native-boundary patch binding.");
   if (d.walkingSupport !== undefined) {
     const support = d.walkingSupport;
     if (
@@ -431,6 +518,11 @@ export function validateIndoorDataset(
     }
   }
   validateNativeCirculationGeometry(d);
+  validateIndoorExclusions(
+    d.indoorExclusions,
+    d.source.modelSha256,
+    d.nativeLevels,
+  );
   if (d.doors !== undefined) {
     if (!Array.isArray(d.doors) || d.doors.length > 60_000)
       throw new Error("Invalid native doors.");
@@ -441,6 +533,7 @@ export function validateIndoorDataset(
         doors.has(door.id) ||
         !Number.isSafeInteger(door.levelId) ||
         !Number.isSafeInteger(door.nativeElementId) ||
+        (door.hostWallNativeElementId !== undefined && (!Number.isSafeInteger(door.hostWallNativeElementId) || door.hostWallNativeElementId <= 0)) ||
         !finitePoint(door.pointFeet, 2) ||
         !["connected", "unmatched", "ambiguous"].includes(door.state) ||
         !Array.isArray(door.roomKeys) ||
@@ -559,6 +652,7 @@ export function validateIndoorDataset(
       seen.add(ramp.nativeElementId);
     }
   }
+  validateNativeWindowDisplay(d);
   if (d.wallDisplay !== undefined) {
     const display = d.wallDisplay;
     const seen = new Set<number>();
@@ -844,6 +938,77 @@ export function validateIndoorDataset(
                 : 3) ||
             !Number.isFinite(room.sourceProof.nativeFloorCoveredSquareFeet) ||
             room.sourceProof.nativeFloorCoveredSquareFeet <= 0 ||
+            (room.sourceProof.modelReviewedDividerIndices !== undefined &&
+              (room.boundarySource !== "registered-source-wall-enclosure" ||
+                !Array.isArray(room.sourceProof.modelReviewedDividerIndices) ||
+                room.sourceProof.modelReviewedDividerIndices.length === 0 ||
+                room.sourceProof.modelReviewedDividerIndices.length > 16 ||
+                new Set(room.sourceProof.modelReviewedDividerIndices).size !==
+                  room.sourceProof.modelReviewedDividerIndices.length ||
+                room.sourceProof.modelReviewedDividerIndices.some(
+                  (i) =>
+                    !Number.isSafeInteger(i) ||
+                    i < 0 ||
+                    room.sourceProof!.wallSegmentIndices.includes(i),
+                ))) ||
+            (room.sourceProof.omittedNativeEdgeFragments !== undefined &&
+              (room.boundarySource !== "registered-source-wall-enclosure" ||
+                !Number.isFinite(
+                  room.sourceProof.omittedNativeEdgeFragments.squareFeet,
+                ) ||
+                room.sourceProof.omittedNativeEdgeFragments.squareFeet < 0 ||
+                room.sourceProof.omittedNativeEdgeFragments.squareFeet > 2 ||
+                !Array.isArray(
+                  room.sourceProof.omittedNativeEdgeFragments.ringsFeet,
+                ) ||
+                room.sourceProof.omittedNativeEdgeFragments.ringsFeet.length ===
+                  0 ||
+                room.sourceProof.omittedNativeEdgeFragments.ringsFeet.length >
+                  100 ||
+                !room.sourceProof.omittedNativeEdgeFragments.ringsFeet.every(
+                  (r) =>
+                    Array.isArray(r) &&
+                    r.length > 0 &&
+                    r.every(
+                      (ring) =>
+                        Array.isArray(ring) &&
+                        ring.length >= 3 &&
+                        ring.every((p) => finitePoint(p, 2)),
+                    ),
+                ))) ||
+            (room.sourceProof.closedDoorSwings !== undefined &&
+              (room.boundarySource !== "registered-source-wall-enclosure" ||
+                !Array.isArray(room.sourceProof.closedDoorSwings) ||
+                room.sourceProof.closedDoorSwings.length > 100 ||
+                !room.sourceProof.closedDoorSwings.every(
+                  (s) =>
+                    s &&
+                    Number.isFinite(s.radiusFeet) &&
+                    s.radiusFeet >= 0.9 &&
+                    s.radiusFeet <= 8 &&
+                    finitePoint(s.hingeFeet, 2) &&
+                    [
+                      s.arcSegmentIndices,
+                      s.leafSegmentIndices,
+                      s.supportingWallSegmentIndices,
+                    ].every(
+                      (indices, i) =>
+                        Array.isArray(indices) &&
+                        indices.length >= (i === 0 ? 8 : i === 1 ? 1 : 2) &&
+                        indices.length <= 60_000 &&
+                        new Set(indices).size === indices.length &&
+                        indices.every((n) => Number.isSafeInteger(n) && n >= 0),
+                    ) &&
+                    Array.isArray(s.thresholdSegments) &&
+                    s.thresholdSegments.length > 0 &&
+                    s.thresholdSegments.length <= 100 &&
+                    [s.closedLeafFeet, ...s.thresholdSegments].every(
+                      (line) =>
+                        Array.isArray(line) &&
+                        line.length === 2 &&
+                        line.every((p) => finitePoint(p, 2)),
+                    ),
+                ))) ||
             (room.sourceProof.jointRepairs !== undefined &&
               (!Array.isArray(room.sourceProof.jointRepairs) ||
                 room.sourceProof.jointRepairs.length > 60_000 ||

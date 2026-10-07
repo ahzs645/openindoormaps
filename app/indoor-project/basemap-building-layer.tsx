@@ -76,6 +76,7 @@ export function BasemapBuildingLayer({
     return () => {
       cancelAnimationFrame(frame);
       map.off("sourcedata", changed);
+      if (!map.getStyle()) return;
       for (const layer of layers) {
         if (!map.getLayer(layer.id)) continue;
         // A replacement style owns its own filters; only undo our last value.
@@ -275,6 +276,7 @@ export function BasemapAreaDrawing({
       controls.current = undefined;
       map.getCanvas().style.cursor = cursor;
       if (doubleClickZoom) map.doubleClickZoom.enable();
+      if (!map.getStyle()) return;
       for (const id of ids) if (map.getLayer(id)) map.removeLayer(id);
       if (map.getSource(sourceId)) map.removeSource(sourceId);
     };

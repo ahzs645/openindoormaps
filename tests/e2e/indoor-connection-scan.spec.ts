@@ -1,0 +1,34 @@
+import { test, expect } from '@playwright/test';
+import { mkdirSync, readFileSync } from 'node:fs';
+import { gapProject } from '../fixtures/native-area-project';
+import { saveReviewCompanion } from '../../app/indoor-project/review-companion-save';
+import { exportIndoorProject, readIndoorProject } from '../../app/indoor-project/package';
+import { pinRecommendationGeometryHash, readPinDecisions } from '../../app/indoor-project/pin-recommendations';
+for (const mobile of [false,true]) test(`connection scan and recommendation decisions on ${mobile?'mobile':'desktop'}`,async({page})=>{
+ test.setTimeout(180000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
+ let p=await gapProject();p.rooms.reviewPins={version:1,sourceModelSha256:p.dataset.source.modelSha256,pins:[{id:'pin-one',label:'Review pin',notes:'',levelId:1,pointFeet:[15,10]}]};
+ const geometrySha256=await pinRecommendationGeometryHash(p.dataset);
+ p=await saveReviewCompanion(p,'pin-review/pin-recommendations.json',{geometrySha256,format:'openindoormaps-pin-recommendations',version:1,sourceModelSha256:p.dataset.source.modelSha256,roomsSha256:p.dataset.source.roomsSha256,entries:[{id:'r1',pinId:'pin-one',title:'Review gap',recommendation:'Inspect the native divider before applying a closure.',question:'Is this an intentional opening?',evidencePaths:['scan.json'],patchIds:[]}]});
+ await page.setViewportSize(mobile?{width:390,height:844}:{width:1440,height:1000});await page.goto('/openindoormaps/#/projects/indoor');
+ const chooser=page.waitForEvent('filechooser');await page.getByRole('button',{name:'Import project ZIP',exact:true}).click();await(await chooser).setFiles({name:'gap-scan.reviter.zip',mimeType:'application/zip',buffer:Buffer.from(await exportIndoorProject(p))});
+ await expect(page.locator('.project-status')).toContainText('Loaded',{timeout:30000});
+ if(await page.getByRole('button',{name:'Review project',exact:true}).isVisible())await page.getByRole('button',{name:'Review project',exact:true}).click();
+ await page.getByRole('button',{name:'Pin review',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Review gap · unanswered',exact:true})).toBeVisible();
+ await page.getByLabel('Decision Review gap',{exact:true}).selectOption('reject');await page.getByLabel('Reason Review gap',{exact:true}).fill('Keep this opening: it is a deliberate through passage.');
+ await page.getByRole('button',{name:'Save decision: Review gap',exact:true}).click();await expect(page.getByText('Review gap · reject',{exact:true})).toBeVisible();
+ await page.getByText('Share or save your answers',{exact:true}).click();await page.getByRole('button',{name:'Copy review decisions',exact:true}).click();await expect(page.getByLabel('Decisions to paste')).toContainText('reject');
+ mkdirSync('work/native-connection-tool/browser',{recursive:true});await page.screenshot({path:`work/native-connection-tool/browser/decisions-${mobile?'mobile':'desktop'}.png`,fullPage:true});
+ await page.getByRole('button',{name:'Close pin review',exact:true}).click();
+ await page.getByRole('button',{name:'Native areas',exact:true}).click();const panel=page.getByRole('region',{name:'Native area decisions'});
+ await expect(panel).toContainText('1 native regions',{timeout:30000});await panel.getByText('Find narrow connections',{exact:true}).click();
+ await panel.getByLabel('Maximum connection width (feet)',{exact:true}).fill('5');await panel.getByRole('button',{name:'Scan connections',exact:true}).click();await expect(panel).toContainText('Scan finished · 0 narrow connections',{timeout:30000});
+ await panel.getByLabel('Maximum connection width (feet)',{exact:true}).fill('6');await expect(panel).not.toContainText('Scan finished');await panel.getByRole('button',{name:'Scan connections',exact:true}).click();await expect(panel).toContainText('Scan finished · 1 narrow connections',{timeout:30000});
+ await expect(panel).toContainText('5.500 ft');await expect(panel).toContainText('01-0 Office');await expect(panel).toContainText('01-1 Corridor');
+ await panel.getByRole('button',{name:/^Preview connection neck:/}).click();
+ await page.waitForTimeout(700); // The camera eases for 450 ms; capture its completed position.
+ await panel.getByRole('button',{name:'Save scan with project',exact:true}).click();await expect(panel).toContainText('Connection scan saved');
+ await page.screenshot({path:`work/native-connection-tool/browser/scan-${mobile?'mobile':'desktop'}.png`,fullPage:true});
+ await page.getByRole('button',{name:'Export reviewed project',exact:true}).click();const link=page.getByRole('link',{name:/Download reviewed/});await expect(link).toBeVisible({timeout:30000});const download=page.waitForEvent('download');await link.click();
+ const reopened=await readIndoorProject(new Uint8Array(readFileSync((await(await download).path())!)));expect(readPinDecisions(reopened).decisions[0].decision).toBe('reject');expect(reopened.rooms.reviewBundle!.files.some(f=>f.path==='connection-scans/level-1.json')).toBeTruthy();expect(reopened.rooms.nativeBoundaryPatches).toBeUndefined();expect(reopened.dataset.source.modelSha256).toEqual(p.dataset.source.modelSha256);expect(errors).toEqual([]);
+});

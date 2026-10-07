@@ -14,6 +14,7 @@ import {
 export function precisionWallLayer(
   walls: FeatureCollection<MultiPolygon>,
   originGeographic: [number, number],
+  options: { id?: string; opacity?: number; windowOpacity?: boolean } = {},
 ): CustomLayerInterface {
   const origin = MercatorCoordinate.fromLngLat(originGeographic),
     metre = origin.meterInMercatorCoordinateUnits();
@@ -36,6 +37,9 @@ export function precisionWallLayer(
       top = Number(f.properties?.height ?? EXPOSED_WALL_HEIGHT_METRES);
     if (!Number.isFinite(base) || !Number.isFinite(top) || top <= base)
       continue;
+    const nativeColor = f.properties?.nativeWindowColor
+      ? new THREE.Color(String(f.properties.nativeWindowColor))
+      : undefined;
     for (const polygon of f.geometry.coordinates) {
       const shape = new THREE.Shape(polygon[0].map(xy));
       for (const hole of polygon.slice(1))
@@ -48,8 +52,14 @@ export function precisionWallLayer(
         n = part.getAttribute("normal");
       for (let i = 0; i < p.count; i++) {
         positions.push(p.getX(i), p.getY(i), p.getZ(i) + base);
-        const color = Math.abs(n.getZ(i)) > 0.5 ? topColor : sideColor;
+        const color = nativeColor
+          ? nativeColor
+          : Math.abs(n.getZ(i)) > 0.5
+            ? topColor
+            : sideColor;
         colors.push(color.r, color.g, color.b);
+        if (options.windowOpacity)
+          colors.push(Number(f.properties?.opacity ?? 1));
       }
       part.dispose();
     }
@@ -59,7 +69,10 @@ export function precisionWallLayer(
     "position",
     new THREE.Float32BufferAttribute(positions, 3),
   );
-  geometry.setAttribute("color", new THREE.Float32BufferAttribute(colors, 3));
+  geometry.setAttribute(
+    "color",
+    new THREE.Float32BufferAttribute(colors, options.windowOpacity ? 4 : 3),
+  );
   const material = new THREE.MeshBasicMaterial({
     vertexColors: true,
     side: THREE.DoubleSide,
@@ -77,7 +90,7 @@ export function precisionWallLayer(
   let renderer: THREE.WebGLRenderer | undefined,
     mapInstance: Parameters<NonNullable<CustomLayerInterface["onAdd"]>>[0];
   return {
-    id: "project-precision-walls",
+    id: options.id ?? "project-precision-walls",
     type: "custom",
     renderingMode: "3d",
     onAdd(map, gl) {
@@ -96,8 +109,10 @@ export function precisionWallLayer(
         ROOM_DETAIL_END,
       );
       if (!fade) return;
-      material.opacity = fade;
-      material.transparent = fade < 1;
+      material.opacity = fade * (options.opacity ?? 1);
+      material.transparent = !!options.windowOpacity || material.opacity < 1;
+      material.depthWrite =
+        !options.windowOpacity && (!options.opacity || options.opacity === 1);
       camera.projectionMatrix
         .fromArray(args.defaultProjectionData.mainMatrix as number[])
         .multiply(transform);

@@ -57,6 +57,34 @@
   background: #e2eee9;
   font-size: 12px;
 }
+.project-package {
+  position: relative;
+  font-size: 12px;
+}
+.project-package summary {
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid #becdd2;
+  border-radius: 18px;
+  background: white;
+}
+.project-package > div {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(320px, calc(100vw - 24px));
+  padding: 14px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 4px 18px #0002;
+  overflow-wrap: anywhere;
+  display: grid;
+  gap: 6px;
+}
+.project-package span {
+  color: #58676d;
+}
 .project-layout {
   display: grid;
   grid-template-columns: 300px minmax(300px, 1fr) 292px;
@@ -230,6 +258,240 @@
 
 .indoor-project input[hidden] {
   display: none;
+}
+
+.project-room-review-layout.project-layout {
+  grid-template-columns: 380px minmax(0, 1fr);
+}
+.project-room-review-layout .project-inspector {
+  display: none;
+}
+.enclosure-heading h2 {
+  font-size: 23px;
+  margin: 4px 0;
+}
+.enclosure-counts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 16px 0 10px;
+}
+.enclosure-counts > div {
+  background: #f4f7f9;
+  border-radius: 12px;
+  padding: 10px;
+}
+.enclosure-counts strong {
+  display: block;
+  font-size: 25px;
+  color: #006ca2;
+}
+.enclosure-counts span {
+  display: block;
+  font-size: 11px;
+  line-height: 1.2;
+}
+.enclosure-revision {
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.enclosure-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+.enclosure-actions button {
+  flex: 1;
+  font-size: 12px;
+}
+.enclosure-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.indoor-project button.enclosure-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  width: 100%;
+  gap: 6px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+.enclosure-filter small {
+  display: block;
+  color: #708088;
+  font-size: 10px;
+}
+.enclosure-filter-menu {
+  z-index: 70;
+  max-height: min(400px, 60dvh);
+  min-width: 180px;
+  overflow: auto;
+  background: white;
+  color: #35444c;
+  border: 1px solid #d6e0e5;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px #0002;
+  padding: 8px;
+}
+.enclosure-filter-menu [role="menuitemradio"] {
+  padding: 9px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.enclosure-filter-menu [data-highlighted],
+.enclosure-filter-menu [data-state="checked"] {
+  background: #e6f3fa;
+  color: #006ba1;
+  outline: none;
+}
+.enclosure-list {
+  max-height: 32dvh;
+  min-height: 70px;
+  overflow: auto;
+  border-top: 1px solid #e0e7eb;
+  border-bottom: 1px solid #e0e7eb;
+}
+.indoor-project button.enclosure-room {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #ecf0f2;
+  border-radius: 0;
+  text-align: left;
+  padding: 12px 10px;
+}
+.enclosure-room span {
+  font-size: 12px;
+  color: #596e77;
+}
+.enclosure-room small {
+  font-size: 10px;
+  color: #95631d;
+}
+.indoor-project button.enclosure-room[aria-pressed="true"] {
+  background: #fff0c9;
+  box-shadow: inset 3px 0 #f39216;
+}
+.enclosure-detail dl {
+  font-size: 12px;
+}
+.enclosure-detail dt {
+  color: #708088;
+  margin-top: 8px;
+}
+.enclosure-detail dd {
+  margin: 1px 0;
+  overflow-wrap: anywhere;
+}
+.enclosure-detail ul {
+  padding-left: 18px;
+  font-size: 12px;
+}
+.enclosure-detail li {
+  margin: 6px 0;
+}
+.enclosure-detail details {
+  margin: 10px 0;
+}
+.enclosure-views {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.enclosure-views button {
+  font-size: 11px;
+  flex: 1;
+}
+.indoor-project .enclosure-views button[aria-pressed="true"] {
+  background: #006ca2;
+  color: white;
+}
+.enclosure-finding {
+  background: #fff3db;
+  border-radius: 8px;
+  padding: 8px;
+}
+.enclosure-progress progress {
+  width: 100%;
+}
+.enclosure-proposal {
+  margin: 16px 0;
+  padding: 14px;
+  background: #eef7fb;
+  border: 1px solid #c6e0ee;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.enclosure-proposal-heading h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #005b89;
+}
+.enclosure-proposal-heading span,
+.enclosure-proposal-disclaimer,
+.enclosure-proposal-status {
+  font-size: 11px;
+  color: #566e7c;
+}
+.enclosure-related-areas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 8px 0;
+}
+.enclosure-related-areas button {
+  font-size: 11px;
+  text-align: left;
+}
+.enclosure-room .enclosure-proposal-badge {
+  color: #006ca2;
+}
+@media (max-width: 650px) {
+  .project-room-review-layout.project-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(260px, 42dvh) minmax(0, 1fr);
+    overflow: hidden;
+    padding: 6px;
+    gap: 6px;
+  }
+  .project-room-review-layout > .project-map {
+    grid-row: 1;
+    min-height: 0;
+    height: 100%;
+  }
+  .project-room-review-layout > .project-sidebar {
+    grid-row: 2;
+    min-height: 0;
+    overflow: auto;
+    padding: 14px;
+  }
+  .enclosure-list {
+    max-height: 200px;
+  }
+  .project-enclosure-review > header {
+    display: block;
+    padding: 10px;
+  }
+  .project-enclosure-review > header nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-top: 8px;
+  }
+  .project-enclosure-review > header nav > * {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
 }
 
 /* The indoor presentation shares the hospital map's white surfaces and low blocks. */
@@ -411,6 +673,17 @@
   overflow: hidden;
   clip-path: inset(50%);
   padding: 0;
+}
+.project-explore > .project-status.project-import-notice {
+  z-index: 35;
+  top: 120px;
+  right: 12px;
+  width: min(360px, calc(100vw - 24px));
+  height: auto;
+  clip-path: none;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
 }
 .project-explore .project-map-legend {
   display: none;
@@ -660,6 +933,11 @@
   border: 1px solid #eee;
 }
 @media (max-width: 767px) {
+  .project-package > div {
+    position: fixed;
+    top: 158px;
+    right: 12px;
+  }
   .project-explore .project-layout {
     overflow: hidden;
   }
@@ -668,8 +946,22 @@
     height: 100%;
   }
   .project-explore > header {
-    top: 72px;
+    top: 116px;
+    left: 12px;
     right: 12px;
+    display: block;
+  }
+  .project-explore > header nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-block: 3px;
+  }
+  .project-explore > header nav > * {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .project-explore > .project-status.project-import-notice {
+    top: 158px;
   }
   .project-explore > header button {
     padding: 7px 10px;
@@ -696,7 +988,7 @@
   }
   .project-explore .project-map > div > button {
     left: 12px !important;
-    top: var(--project-mobile-follow-top, 115px) !important;
+    top: var(--project-mobile-follow-top, 168px) !important;
   }
   .project-explore .project-category-grid button {
     min-height: 62px;
@@ -1250,6 +1542,8 @@
   white-space: pre-line;
 }
 .project-point-location-card {
+  max-height: calc(100% - 110px);
+  overflow-y: auto;
   position: absolute;
   top: 85px;
   right: 15px;
@@ -1263,6 +1557,45 @@
 }
 .project-point-location-card > button {
   float: right;
+}
+
+.project-connected-floor-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.project-connected-floor-links p {
+  flex-basis: 100%;
+  margin: 0;
+}
+.project-connected-floor-links button {
+  min-height: 44px;
+  border: 1px solid #c9d6db;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #075e86;
+  background: #eef6f3;
+}
+.project-connected-floor-links button:focus-visible {
+  outline: 3px solid #006c9c;
+  outline-offset: 2px;
+}
+@media (max-width: 650px) {
+  .project-map:has([aria-label="Selected connector"])
+    .project-visitor-ui:not(.project-directions) {
+    display: none;
+  }
+  .project-point-location-card[aria-label="Selected connector"] {
+    top: auto;
+    bottom: 15px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    max-height: 48%;
+    z-index: 6;
+  }
 }
 .project-location-preview {
   border: 1px solid #d6e1e3;
@@ -1507,4 +1840,394 @@
   .project-floor-spinner {
     animation: none;
   }
+}
+
+.native-area-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  min-width: 0;
+}
+.native-area-panel h2,
+.native-area-panel h3,
+.native-area-panel p {
+  margin: 0;
+}
+.native-area-panel p,
+.native-area-panel li,
+.enclosure-decision-guidance {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #52616a;
+}
+.native-area-panel button {
+  padding: 10px 12px;
+  text-align: left;
+  background: #f1f4f5;
+  border: 1px solid #d7e2e5;
+  border-radius: 10px;
+}
+.native-area-panel button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.native-area-panel button[aria-pressed="true"] {
+  border-color: #f58a16;
+  background: #fff2d6;
+}
+.native-area-panel label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 13px;
+  align-items: center;
+}
+.native-area-panel label > input:not([type="checkbox"]),
+.native-area-panel textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #c8d7dd;
+  border-radius: 8px;
+  padding: 9px;
+  background: white;
+}
+.native-area-panel textarea {
+  min-height: 75px;
+}
+.reviewed-area-partitions-panel select {
+  width: 100%;
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid #c8d7dd;
+  border-radius: 8px;
+  background: white;
+}
+.reviewed-area-partitions-panel > button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+}
+.area-partition-coordinates {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #d7e2e5;
+  border-radius: 8px;
+}
+.area-partition-coordinates legend {
+  font-size: 12px;
+  color: #52616a;
+}
+.native-area-panel small {
+  display: block;
+  color: #65737a;
+  font-size: 11px;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.native-area-region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 190px;
+  overflow: auto;
+}
+.native-area-panel details {
+  border-top: 1px solid #d7e2e5;
+  padding-top: 10px;
+}
+.native-area-panel details p,
+.native-area-panel details label {
+  margin: 8px 0;
+}
+.native-area-label {
+  color: #203e49;
+  background: #fffffff0;
+  padding: 4px 7px;
+  border-radius: 7px;
+  font-size: 12px;
+  border: 1px solid #90adb7;
+  max-width: 230px;
+}
+.native-area-map-level {
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 180px;
+  font-size: 12px;
+}
+.project-view-switch[hidden] {
+  display: none;
+}
+.project-review-files {
+  background: #fff;
+  border: 1px solid #d7e2e5;
+  padding: 8px 16px;
+  font-size: 13px;
+}
+.project-review-files summary {
+  cursor: pointer;
+}
+.project-review-files > div {
+  display: flex;
+  gap: 12px;
+  max-height: 250px;
+  overflow: auto;
+  margin-top: 10px;
+}
+.project-review-files nav {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.project-review-files button {
+  text-align: left;
+  padding: 5px;
+  overflow-wrap: anywhere;
+}
+.project-review-files pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 11px;
+}
+.project-review-files img {
+  max-width: 100%;
+  max-height: 230px;
+  object-fit: contain;
+}
+@media (max-width: 600px) {
+  .native-area-panel {
+    padding: 14px;
+  }
+  .project-review-files > div {
+    flex-direction: column;
+  }
+  .project-review-files nav {
+    flex-basis: auto;
+    max-height: 100px;
+    overflow: auto;
+  }
+}
+.project-review-file-list {
+  flex-wrap: wrap;
+}
+.project-review-file-list button {
+  max-width: 240px;
+  border: 1px solid #d7e2e5;
+  border-radius: 5px;
+}
+.project-review-file-list button[aria-pressed="true"] {
+  background: #e1f3f8;
+}
+.native-area-menu {
+  max-width: calc(100vw - 24px);
+  max-height: min(400px, var(--radix-dropdown-menu-content-available-height));
+}
+.native-area-menu [data-disabled] {
+  opacity: 0.45;
+  cursor: default;
+}
+.native-door-check-list {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.project-window-export {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  max-width: 290px;
+  font-size: 12px;
+}
+.project-window-export select {
+  max-width: 100%;
+  min-height: 32px;
+}
+.project-window-export span {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.native-gap-scan-panel > label,
+.pin-recommendations-panel label {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.65rem 0;
+}
+.pin-recommendations-panel {
+  margin: 0.5rem 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border, #d9e0e4);
+  border-radius: 0.75rem;
+  max-height: 55vh;
+  overflow: auto;
+}
+.pin-recommendations-panel > details {
+  margin: 0.8rem 0;
+  padding: 0.6rem;
+  border: 1px solid #d9e0e4;
+  border-radius: 0.5rem;
+}
+.pin-recommendations-panel textarea,
+.pin-recommendations-panel select {
+  width: 100%;
+  max-width: 45rem;
+  min-height: 2.5rem;
+}
+.pin-recommendations-panel textarea {
+  min-height: 5rem;
+}
+.pin-recommendations-panel small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.native-gap-scan-panel .native-door-check-list button {
+  overflow-wrap: anywhere;
+}
+
+/* Pin review owns one independently scrolling sidebar; the map keeps the
+   remaining viewport instead of competing with a disclosure above it. */
+.project-pin-review-layout.project-layout {
+  grid-template-columns: 370px minmax(0, 1fr);
+  overflow: hidden;
+}
+.project-pin-review-layout > .project-map {
+  height: 100%;
+  min-height: 0;
+}
+.pin-review-sidebar {
+  min-height: 0;
+}
+.pin-review-sidebar .pin-recommendations-panel {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  max-height: none;
+  overflow: visible;
+}
+.pin-review-entry[hidden] {
+  display: none;
+}
+.pin-review-entry fieldset {
+  margin: 14px 0;
+  padding: 10px;
+  border: 1px solid #d9e0e4;
+  border-radius: 10px;
+}
+.pin-review-entry legend {
+  font-weight: 650;
+}
+.pin-review-actions,
+.pin-review-comparison-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.pin-review-comparison-buttons button[aria-pressed="true"] {
+  color: #fff;
+  background: #087887;
+  border-color: #087887;
+}
+.pin-review-transfer {
+  margin-top: 16px;
+}
+.pin-review-transfer button {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+}
+.pin-review-sidebar .review-bundle-panel {
+  margin: 16px 0 0;
+}
+@media (max-width: 650px) {
+  .project-pin-review-layout.project-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(260px, 42dvh) minmax(0, 1fr);
+    padding: 6px;
+    gap: 6px;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .project-pin-review-layout > .project-map {
+    grid-row: 1;
+    height: 100%;
+    min-height: 0;
+  }
+  .project-pin-review-layout > .pin-review-sidebar {
+    grid-row: 2;
+    overflow: auto;
+    min-height: 0;
+    padding: 12px;
+  }
+}
+
+.project-native-explore-status {
+  position: absolute;
+  top: 80px;
+  left: 400px;
+  z-index: 3;
+  width: min(340px, calc(100% - 80px));
+  max-height: min(40vh, 320px);
+  overflow: auto;
+  padding: 10px 12px;
+  background: #fffffff2;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+  font-size: 12px;
+  pointer-events: auto;
+}
+.project-native-explore-status summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.project-native-explore-status p {
+  margin: 8px 0;
+}
+.project-native-explore-places {
+  display: grid;
+  gap: 4px;
+}
+.project-native-explore-places button {
+  text-align: left;
+  padding: 7px;
+}
+.project-native-explore-places button[aria-pressed="true"] {
+  background: #fff0cb;
+}
+@media (max-width: 1000px) {
+  .project-native-explore-status {
+    top: 160px;
+    left: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .project-native-explore-status {
+    top: 160px;
+    left: 8px;
+    max-height: 28vh;
+    width: min(300px, calc(100% - 70px));
+  }
+}
+
+.patch-comparison-controls {
+  border: 1px solid #b8c9cd;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 12px 0;
+  background: #fff;
+}
+.patch-comparison-legend ul {
+  list-style: none;
+  padding: 0;
+  max-height: 180px;
+  overflow: auto;
+}
+.patch-comparison-legend li {
+  margin: 7px 0;
+  overflow-wrap: anywhere;
 }

@@ -1,3 +1,4 @@
+import { indoorExclusionParts } from "./indoor-exclusions";
 import { preparedWalkingGuides } from "./prepared-routing";
 import { centeredJunctions } from "./centered-junction";
 import { nativeJointBarriers } from "./native-joint-barriers";
@@ -727,7 +728,7 @@ function refine(
         doorCoverage(d.footprintFeet!, apertureEdges.get(d.id)!, d.normalFeet),
       ),
     ];
-    const masks = data.records
+    const masks = data.nativeIndoorEnvelopes ? [] : data.records
       .filter(
         (r) =>
           r.levelId === levelId &&
@@ -738,11 +739,12 @@ function refine(
           overlaps(bounds, box(r.ringsFeet)),
       )
       .map((r) => r.ringsFeet);
+    masks.push(...indoorExclusionParts(data, path.pointsFeet[0][2]));
     const holes = data.records
       .filter(
         (r) => r.levelId === levelId && overlaps(bounds, box(r.ringsFeet)),
       )
-      .flatMap((r) => r.ringsFeet.slice(1).map((h) => [h] as Rings));
+      .flatMap((r) => (data.nativeIndoorEnvelopes ? (r.properties.floorOpeningsFeet as XY[][] | undefined) ?? [] : r.ringsFeet.slice(1)).map((h) => [h] as Rings));
     const support = data.walkingSupport;
     if (
       support &&
@@ -893,6 +895,25 @@ function refine(
     const candidates: XY[][] = [];
     let sourceGuide = false;
     let preparedCandidate = false;
+    // Short, open landing/vestibule crossings need no manufactured hallway
+    // elbow. Keep both actual threshold anchors and require a model-bound
+    // native circulation region, exact-height slab and continuous clearance.
+    // The normal threshold/access checks below still reject a bypass.
+    if (
+      nativeSurfaces.cells.length > 0 &&
+      supportedFloors?.length &&
+      records.some((r) => r.stair) &&
+      records.every((r) => r.circulation || r.stair) &&
+      [firstId, lastId].every((id) =>
+        ["portal", "stair", "connector"].includes(
+          data.nodes.find((n) => n.id === id)?.kind ?? "",
+        ),
+      ) &&
+      Math.hypot(end[0] - start[0], end[1] - start[1]) <= 24 &&
+      validSegment(start, end, free)
+    )
+      candidates.push([start, end]);
+
     if (
       preparedGuide &&
       length(preparedGuide) <= sourceLength * 1.15 + 0.6 &&
@@ -1167,6 +1188,30 @@ function refine(
           if (i > 1) i--;
         } else i++;
       }
+    // A fixed stair/door anchor can differ from the centred lane by only a
+    // fraction of an inch. Keep that anchor, but offer a straight approach
+    // instead of a microscopic right-angle spur. Retain the original candidate
+    // until the native threshold and access checks below accept the shortcut.
+    for (const original of candidates.slice()) {
+      const simplified = [...original];
+      for (let i = 1; i < simplified.length - 1; ) {
+        const a = simplified[i - 1],
+          b = simplified[i],
+          c = simplified[i + 1];
+        const incoming = Math.hypot(b[0] - a[0], b[1] - a[1]),
+          outgoing = Math.hypot(c[0] - b[0], c[1] - b[1]);
+        // At most one inch: meaningful doorway/stair approaches keep their
+        // geometry. A tiny obstacle or floor hole still vetoes the chord.
+        if (
+          Math.min(incoming, outgoing) <= 1 / 12 &&
+          validSegment(a, c, free)
+        ) {
+          simplified.splice(i, 1);
+          if (i > 1) i--;
+        } else i++;
+      }
+      if (simplified.length < original.length) candidates.push(simplified);
+    }
     const originalPassages = passageQuery(levelId, path.pointsFeet),
       permitted = new Set([
         ...edges.filter((e) => e.kind === "door").map((e) => e.id),
@@ -1257,7 +1302,7 @@ function refine(
           candidates[0],
           nativeSurfaces.cells.length > 0
             ? nativeSurfaces.cells.flatMap((cell) => cell.ringsFeet)
-            : records
+            : data.nativeIndoorEnvelopes ? [] : records
                 .filter((record) => record.circulation && !record.stair)
                 .flatMap((record) => record.ringsFeet),
           (point, normal) => center(point, normal, free, span),
