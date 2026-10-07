@@ -1,3 +1,5 @@
+import {nativeMaterialPlanWalls} from "./native-material-plan";
+import {verifyNativeMaterialSections} from "./native-material-sections";
 import { nativeSelectionTopology, NATIVE_SELECTION_TOPOLOGY_VERSION } from "./native-selection-topology";
 import {validateDoorApertureBinding} from "./reviewed-door-apertures";
 import { nativeDoorBoundaryClosureFootprints } from "./native-door-boundary-closures";
@@ -400,7 +402,7 @@ function nativeInputs(data: IndoorDataset, levelId: number) {
   );
   if (!floors.length) throw new Error("No native slabs support this level.");
   const walls = data.walls.filter((w) => w.levelId === levelId);
-  const precise = walls.filter((w) => !w.approximate);
+  const precise = nativeMaterialPlanWalls(data,levelId).filter((w) => !w.approximate);
   const doors = (data.doors ?? []).filter(
     (d) =>
       d.levelId === levelId &&
@@ -431,6 +433,7 @@ export async function nativeAreaGeometrySha256(
       data.source.modelSha256,
       NATIVE_BARRIER_TOPOLOGY_VERSION,
       NATIVE_SELECTION_TOPOLOGY_VERSION,
+      ...(data.nativeMaterialSections ? [data.nativeMaterialSections] : []),
       data.nativeDoorBoundaryClosures,
       data.nativeWallPositionRepairs,
       ...(data.reviewedAreaPartitions ? [data.reviewedAreaPartitions] : []),
@@ -476,6 +479,7 @@ export async function deriveNativeAreas(
   levelId: number,
   options: NativeAreaOptions = {},
 ): Promise<NativeAreaResult> {
+  await verifyNativeMaterialSections(data.nativeMaterialSections,data.source.modelSha256);
   validateReviewedAreaPartitions(data.reviewedAreaPartitions, data.source.modelSha256);
   if (options.passThroughDoorIds === undefined) {
     const reviewed = selectionDoorIds(data, levelId);

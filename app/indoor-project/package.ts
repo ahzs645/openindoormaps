@@ -1,3 +1,4 @@
+import {validateNativeMaterialSections,verifyNativeMaterialSections,type NativeMaterialSections} from "./native-material-sections";
 import {validateNativeIndoorEnvelopes,verifyNativeIndoorEnvelopes,type NativeIndoorEnvelopes} from "./native-indoor-envelopes";
 import {validateNativeDisplayScopes, type NativeDisplayScopes} from "./native-display-scopes";
 import { MAX_REVIEW_CONTAINER_BYTES } from "./review-bundle-limits";
@@ -79,6 +80,9 @@ function validateIndoorScopeBinding(
   dataset: IndoorDataset,
 ) {
   validateNativeDisplayScopes(rooms.nativeDisplayScopes, dataset.source.modelSha256);
+  validateNativeMaterialSections(rooms.nativeMaterialSections, dataset.source.modelSha256);
+  validateNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
+  if (JSON.stringify(rooms.nativeMaterialSections) !== JSON.stringify(dataset.nativeMaterialSections)) throw new Error("Source and prepared original native materials do not match.");
   validateNativeIndoorEnvelopes(rooms.nativeIndoorEnvelopes, dataset.source.modelSha256);
   if (JSON.stringify(rooms.nativeIndoorEnvelopes) !== JSON.stringify(dataset.nativeIndoorEnvelopes))
     throw new Error("Source and prepared native indoor enclosures do not match. Regenerate the master.");
@@ -151,6 +155,7 @@ export type ProjectRooms = {
   reviewedAreaPartitions?: ReviewedAreaPartitions;
   indoorExclusions?: IndoorExclusions;
   nativeDisplayScopes?: NativeDisplayScopes;
+  nativeMaterialSections?: NativeMaterialSections;
   nativeIndoorEnvelopes?: NativeIndoorEnvelopes;
   nativeAreaReviews?: NativeAreaReviews;
   nativeBoundaryPatches?: NativeBoundaryPatches;
@@ -305,6 +310,7 @@ export async function readIndoorProject(
     );
   rooms.reviewBundle = await unpackReviewBundle(rooms.reviewBundle, files);
   validateIndoorDataset(dataset);
+  await verifyNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
   await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
   validatePreparedRouting(dataset);
   await validatePublishedNativeExploreMapping(dataset);
@@ -397,6 +403,7 @@ export async function exportIndoorProject(
   validateEnclosureProposals(project.rooms.enclosureProposals);
   await verifyReviewBundle(project.rooms.reviewBundle);
   validateNativeAreaReviews(project.rooms.nativeAreaReviews, project.dataset);
+  await verifyNativeMaterialSections(project.dataset.nativeMaterialSections, project.dataset.source.modelSha256);
   await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
   validateIndoorScopeBinding(project.rooms, project.dataset);
   validateSupplementalBoundaryBinding(project.rooms, project.dataset);
@@ -537,6 +544,7 @@ async function readViewerFiles(
   }
   const dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
   validateIndoorDataset(dataset);
+  await verifyNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
   await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
   validatePreparedRouting(dataset);
   await validatePublishedNativeExploreMapping(dataset);
@@ -603,6 +611,7 @@ export async function exportCampusViewer(
       "Regenerate applied boundary patches in Reviter before exporting a campus viewer.",
     );
   validateIndoorDataset(project.dataset);
+  await verifyNativeMaterialSections(project.dataset.nativeMaterialSections, project.dataset.source.modelSha256);
   await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
   validateSharedStairBinding(project.dataset, project.rooms.annotations);
   if (project.rooms.mapEdits !== undefined)
@@ -629,6 +638,7 @@ export async function exportCampusViewer(
       })),
     georeference: project.rooms.georeference,
     visitorMetadata: project.dataset.visitor,
+    nativeMaterialSections: project.dataset.nativeMaterialSections,
     nativeIndoorEnvelopes: project.dataset.nativeIndoorEnvelopes,
     mapEdits: project.rooms.mapEdits,
     campusStoreys: project.rooms.campusStoreys,

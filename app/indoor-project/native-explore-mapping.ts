@@ -56,6 +56,7 @@ export async function nativeExploreDatasetGeometrySha256(
     data.nativeLevels,
     data.walkingSupport,
     ...(data.nativeIndoorEnvelopes ? [data.nativeIndoorEnvelopes] : []),
+    ...(data.nativeMaterialSections ? [data.nativeMaterialSections] : []),
     data.walls,
     data.doors,
     data.records.map((r) => [

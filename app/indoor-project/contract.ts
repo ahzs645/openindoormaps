@@ -29,6 +29,15 @@ export type IndoorNode = {
   kind: "arrival" | "junction" | "portal" | "stair" | "connector";
 };
 export type IndoorEdge = {
+  /** Source-bound ramp profile; rechecked independently by each route calculation. */
+  nativeRampSurface?: {
+    version: 1;
+    sourceModelSha256: string;
+    nativeRampId: number;
+    nativeFloorElementIds: number[];
+    pointsFeet: [number, number, number][];
+    widthCertificate: import("./native-ramp-crossfall").NativeRampCrossfallCertificate;
+  };
   id: string;
   from: string;
   to: string;
@@ -125,6 +134,7 @@ export type IndoorIssue = {
   levelId?: number;
 };
 export type IndoorDataset = {
+  nativeMaterialSections?: import("./native-material-sections").NativeMaterialSections;
   nativeIndoorEnvelopes?: import("./native-indoor-envelopes").NativeIndoorEnvelopes;
   /** Checked presentation coverage only; native selections and routes stay unchanged. */
   nativeDisplayScopes?: import("./native-display-scopes").NativeDisplayScopes;

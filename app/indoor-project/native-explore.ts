@@ -29,6 +29,7 @@ import {
   nativeIndoorEnvelopeParts,
   verifyNativeIndoorEnvelopes,
 } from "./native-indoor-envelopes";
+import {verifyNativeMaterialSections} from "./native-material-sections";
 import {
   nativeLectureFloorOwners,
   nativeLectureFloorOwner,
@@ -153,6 +154,7 @@ export async function deriveNativeExplore(
   levels: number[],
   building = "all",
 ): Promise<NativeExploreResult> {
+  await verifyNativeMaterialSections(data.nativeMaterialSections,data.source.modelSha256);
   await verifyNativeIndoorEnvelopes(
     data.nativeIndoorEnvelopes,
     data.source.modelSha256,

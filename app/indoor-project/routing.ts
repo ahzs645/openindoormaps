@@ -1,4 +1,5 @@
 import { validateNativeIndoorEnvelopes } from "./native-indoor-envelopes";
+import {validNativeRampSurfaceBinding} from "./native-ramp-surface";
 import { validateNativeDisplayScopes } from "./native-display-scopes";
 import { validateNativeWindowDisplay } from "./native-window-display";
 import {
@@ -1188,6 +1189,7 @@ export function validateIndoorDataset(
       )
         throw new Error("Invalid or stale registered source doorway.");
     }
+    if(e.nativeRampSurface!==undefined&&!validNativeRampSurfaceBinding(d,e))throw new Error("Invalid or stale native ramp surface binding.");
     if (e.openingSpan !== undefined) {
       const span = e.openingSpan;
       const profiles = d.walkingSupport?.floors;
