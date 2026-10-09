@@ -1,3 +1,4 @@
+import { nativeMaterialSectionsHash } from "../../app/indoor-project/native-material-sections";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { project } from "../fixtures/native-area-project";
@@ -10,6 +11,7 @@ import {
 } from "../../app/indoor-project/native-explore";
 import { pointInNativeArea } from "../../app/indoor-project/native-area-review";
 import { nativeIndoorEnvelopeHash } from "../../app/indoor-project/native-indoor-envelopes";
+import { nativeDisplayRegionHash } from "../../app/indoor-project/native-display-scopes";
 import {
   reviewedAreaPartitionGeometrySha256,
   saveReviewedAreaPartition,
@@ -274,7 +276,7 @@ test("published native map keeps pass-through selection and excluded footprint w
     normalFeet: [1, 0] as [number, number],
     footprintFeet: rect(14.8, 8, 0.4, 4),
     roomKeys: ["0", "1"],
-    state: "connected",
+    state: "connected" as const,
   };
   d.doors = [door];
   d.nodes = ["0", "1"].map((roomKey, i) => ({
@@ -383,7 +385,7 @@ test("main native map default retains explicit comparison links and legacy fallb
     assert.equal(initialMapPresentation(p.dataset, view).view, view);
   assert.deepEqual(initialMapPresentation(p.dataset, "2d"), {
     view: "2d",
-    nativeFloor: false,
+    nativeFloor: true,
   });
   for (const inheritedView of ["2d", "3d", "relative", "native"])
     assert.deepEqual(initialMapPresentation(p.dataset, inheritedView, true), {
@@ -392,6 +394,11 @@ test("main native map default retains explicit comparison links and legacy fallb
     });
   p.dataset.walkingSupport!.sourceModelSha256 = "stale";
   assert.equal(initialMapPresentation(p.dataset, null).view, "3d");
+  delete p.dataset.nativeIndoorEnvelopes;
+  assert.deepEqual(initialMapPresentation(p.dataset, "2d"), {
+    view: "2d",
+    nativeFloor: false,
+  });
 });
 
 test("native playback reports unavailable levels without inventing native faces", async () => {
@@ -498,9 +505,10 @@ test("shared walkway tint uses source native enclosure evidence, preserving hole
     "native face continues beyond the old hallway outline",
   );
   assert.equal(isGreen([29, 18]), false, "unclaimed exterior slab is hidden");
-  assert.ok(
-    (result.regions[0].enclosureReviewAreaSquareFeet ?? 0) > 0,
-    "a cropped native extent is disclosed as pending enclosure evidence",
+  assert.equal(
+    result.regions[0].enclosureReviewAreaSquareFeet ?? 0,
+    0,
+    "indoor regions are resolved inside native enclosure evidence before identity assignment",
   );
   const overviewGreen = result.overview.features.filter(
     (f) => f.properties?.circulation,
@@ -569,8 +577,41 @@ test("verified unlabelled native interiors keep their geometry without metadata 
   assert.ok(result.fills.features.length);
   assert.ok(result.overview.features.length);
   assert.ok(result.outlines.features.length);
-  assert.deepEqual(nativeExplorePickRegions(p.dataset, result.regions, [2, 2]), []);
+  assert.deepEqual(
+    nativeExplorePickRegions(p.dataset, result.regions, [2, 2]),
+    [],
+  );
   assert.equal(JSON.stringify(p.dataset), before);
+});
+
+test("historical display crops cannot restore geometry outside a strict native source envelope", async () => {
+  const p = await fixture();
+  await enclose(p, [[rect(0, 0, 10, 20)]]);
+  const before = await deriveNativeExplore(p.dataset, [1]);
+  const region = before.regions[0];
+  p.dataset.nativeDisplayScopes = {
+    version: 1,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    scopes: [
+      {
+        id: "historical-crop",
+        levelId: 1,
+        regionId: region.id,
+        regionRingsSha256: await nativeDisplayRegionHash(region.ringsFeet),
+        partsFeet: [region.ringsFeet],
+        evidence: "reviewed-source-enclosure",
+      },
+    ],
+  };
+  const after = await deriveNativeExplore(p.dataset, [1]);
+  assert.deepEqual(after.fills, before.fills);
+  assert.deepEqual(after.overview, before.overview);
+  assert.deepEqual(after.outlines, before.outlines);
+  assert.deepEqual(after.regions, before.regions);
+  assert.deepEqual(
+    nativeExplorePickRegions(p.dataset, after.regions, [25, 10]),
+    [],
+  );
 });
 
 test("native enclosure visibility is independent of label count and old room extent", async () => {
@@ -580,15 +621,25 @@ test("native enclosure visibility is independent of label count and old room ext
   const physical = (r: Awaited<ReturnType<typeof deriveNativeExplore>>) =>
     r.outlines.features.map((f) => f.geometry);
   p.dataset.records = [p.dataset.records[0]];
-  assert.deepEqual(physical(await deriveNativeExplore(p.dataset, [1])), physical(before));
+  assert.deepEqual(
+    physical(await deriveNativeExplore(p.dataset, [1])),
+    physical(before),
+  );
   p.dataset.records[0].ringsFeet = [rect(-50, -50, 100, 100)];
-  assert.deepEqual(physical(await deriveNativeExplore(p.dataset, [1])), physical(before));
+  assert.deepEqual(
+    physical(await deriveNativeExplore(p.dataset, [1])),
+    physical(before),
+  );
   p.dataset.records = [];
   const unlabelled = await deriveNativeExplore(p.dataset, [1]);
   assert.deepEqual(physical(unlabelled), physical(before));
-  assert.ok(unlabelled.regions.every((r) =>
-    !r.visitorPartsFeet?.some((part) => pointInNativeArea([29, 18], part))),
-    "removing labels cannot expose the outside slab");
+  assert.ok(
+    unlabelled.regions.every(
+      (r) =>
+        !r.visitorPartsFeet?.some((part) => pointInNativeArea([29, 18], part)),
+    ),
+    "removing labels cannot expose the outside slab",
+  );
 });
 
 test("vestibule metadata colors its full native enclosure rather than the old inset outline", async () => {
@@ -831,4 +882,64 @@ test("metadata contours and their holes cannot cut the physical native map", asy
         !r.visitorPartsFeet?.some((part) => pointInNativeArea([4, 15], part)),
     ),
   );
+});
+
+test("native flat wall rendering uses recovered sections and leaves old prepared jamb evidence untouched", async () => {
+  const p = await fixture();
+  const original = JSON.stringify(p.dataset.walls);
+  const value = {
+    version: 1 as const,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        cutElevationFeet: 4,
+        evidenceSha256: "e".repeat(64),
+        sourceElementIds: [200, 201],
+        sections: [
+          {
+            nativeElementId: 200,
+            categoryId: -2000011,
+            kind: "wall" as const,
+            baseElevationFeet: 0,
+            topElevationFeet: 10,
+            partsFeet: [[rect(15, 0, 0.25, 20)]],
+          },
+        ],
+      },
+    ],
+  };
+  p.dataset.nativeMaterialSections = {
+    ...value,
+    geometrySha256: await nativeMaterialSectionsHash(value),
+  };
+  const result = await deriveNativeExplore(p.dataset, [1]);
+  assert.equal(result.walls!.features.length, 1);
+  assert.equal(result.walls!.features[0].properties!.nativeElementId, 200);
+  assert.equal(result.regions.length, 2);
+  assert.equal(JSON.stringify(p.dataset.walls), original);
+  const another = structuredClone(p.dataset);
+  another.records[0].ringsFeet = [rect(-50, -50, 100, 100)];
+  assert.deepEqual(
+    (await deriveNativeExplore(another, [1])).walls,
+    result.walls,
+  );
+  const bad = structuredClone(p.dataset);
+  bad.nativeMaterialSections!.levels[0].sections[0].partsFeet[0][0][0][0] += 0.1;
+  await assert.rejects(deriveNativeExplore(bad, [1]), /checksum changed/);
+});
+
+test("a regenerated native floor remains native when its ordinary 2D URL is reopened", async () => {
+  const p = await fixture();
+  await enclose(p, [[rect(0, 0, 30, 20)]]);
+  assert.deepEqual(initialMapPresentation(p.dataset, "2d"), {
+    view: "2d",
+    nativeFloor: true,
+  });
+  for (const view of ["2d", "3d", "relative", "native"])
+    assert.deepEqual(initialMapPresentation(p.dataset, view, true), {
+      view: "2d",
+      nativeFloor: true,
+    });
 });

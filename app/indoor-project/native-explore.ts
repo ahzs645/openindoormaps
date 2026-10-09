@@ -1,4 +1,16 @@
 import {
+  nativeRationalOverlay,
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+  type NativeRationalParts,
+} from "./native-rational-overlay";
+import {
+  createNativeExactTopologyIndex,
+  nativeRationalAreaCompare,
+  type NativeExactPlanarTopology,
+} from "./native-exact-planar-topology";
+import { nativeExploreWallFeatures } from "./native-explore-wall-drawing";
+export { nativeExploreWallFeatures } from "./native-explore-wall-drawing";
+import {
   nativeSlabFloorOwners,
   nativeSlabFloorOwner,
 } from "./native-slab-ownership";
@@ -29,7 +41,7 @@ import {
   nativeIndoorEnvelopeParts,
   verifyNativeIndoorEnvelopes,
 } from "./native-indoor-envelopes";
-import {verifyNativeMaterialSections} from "./native-material-sections";
+import { verifyNativeMaterialSections } from "./native-material-sections";
 import {
   nativeLectureFloorOwners,
   nativeLectureFloorOwner,
@@ -48,8 +60,16 @@ export type NativeExploreRegion = NativeAreaRegion & {
   enclosureReviewAreaSquareFeet?: number;
 };
 export type NativeExploreResult = {
+  /** Full exact faces survive worker transfer independently of render proposals. */
+  exactTopologies?: {
+    levelId: number;
+    geometrySha256: string;
+    topology: NativeExactPlanarTopology;
+  }[];
   regions: NativeExploreRegion[];
   fills: FeatureCollection<Polygon>;
+  /** Exact original material at the native plan cut; computed off the UI thread. */
+  walls?: FeatureCollection<Polygon>;
   overview: FeatureCollection<Polygon>;
   outlines: FeatureCollection<Polygon>;
   partitions: FeatureCollection<LineString>;
@@ -91,7 +111,39 @@ export function nativeExploreRegionStyle(
   region: NativeAreaRegion,
   places: IndoorRecord[],
   displayPartsFeet = [region.ringsFeet],
+  exactParts?: NativeRationalParts,
 ) {
+  if (exactParts) {
+    // Even a lone corridor label cannot recolor a large unresolved source slab.
+    // Old named contours choose a type only; they never create any floor edge.
+    const positive = nativeRationalAreaCompare(exactParts, []) > 0;
+    const grouped = new Map<string, IndoorRecord[]>();
+    for (const room of places) {
+      const color = isRestrictedArea(room)
+        ? RESTRICTED_AREA_COLOR
+        : roomDisplayColor(room, false);
+      grouped.set(color, [...(grouped.get(color) ?? []), room]);
+    }
+    const majority: { color: string; circulation: boolean }[] = [];
+    for (const [color, rooms] of grouped) {
+      const coverageParts = nativeRationalOverlay(
+        "intersection",
+        exactParts,
+        nativeRationalOverlay(
+          "union",
+          rooms.map((r) => r.ringsFeet),
+        ),
+      );
+      if (
+        positive &&
+        nativeRationalAreaCompare(coverageParts, exactParts, 2n, 1n) > 0
+      )
+        majority.push({ color, circulation: rooms.every(isOverviewWalkway) });
+    }
+    return majority.length === 1
+      ? majority[0]
+      : { color: "#e9edef", circulation: false };
+  }
   const uniform = new Set(places.map((r) => roomDisplayColor(r, false)));
   if (places.length < 2 || uniform.size === 1)
     return {
@@ -141,7 +193,8 @@ export function initialMapPresentation(
   if (freshImport) requested = null;
   if (requested === "relative" || requested === "3d" || requested === "native")
     return { view: requested, nativeFloor: true } as const;
-  if (requested === "2d") return { view: "2d", nativeFloor: false } as const;
+  if (requested === "2d")
+    return { view: "2d", nativeFloor: !!data.nativeIndoorEnvelopes } as const;
   return {
     view: hasNativeExploreGeometry(data) ? "2d" : "3d",
     nativeFloor: true,
@@ -153,8 +206,12 @@ export async function deriveNativeExplore(
   data: IndoorDataset,
   levels: number[],
   building = "all",
+  options: { includeWalls?: boolean } = {},
 ): Promise<NativeExploreResult> {
-  await verifyNativeMaterialSections(data.nativeMaterialSections,data.source.modelSha256);
+  await verifyNativeMaterialSections(
+    data.nativeMaterialSections,
+    data.source.modelSha256,
+  );
   await verifyNativeIndoorEnvelopes(
     data.nativeIndoorEnvelopes,
     data.source.modelSha256,
@@ -214,11 +271,37 @@ export async function deriveNativeExplore(
                 ]
               : [],
             logicalPartitionIds: published.boundaries.map((b) => b.id),
+            exactTopology: published.exactTopology,
           }
         : await deriveNativeAreas(data, levelId, {
             mode: "connected",
             maxGapFeet: 0,
           });
+      const exactIndex = traced.exactTopology
+        ? createNativeExactTopologyIndex(traced.exactTopology, {
+            sourceModelSha256: data.source.modelSha256,
+            sourceGeometryKey: traced.exactTopology.sourceGeometryKey,
+            kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+          })
+        : undefined;
+      if (traced.exactTopology) {
+        result.exactTopologies ??= [];
+        result.exactTopologies.push({
+          levelId,
+          geometrySha256: traced.exactTopology.sourceGeometryKey,
+          topology: traced.exactTopology,
+        });
+      }
+      if (data.nativeMaterialSections && options.includeWalls !== false) {
+        result.walls ??= { type: "FeatureCollection", features: [] };
+        result.walls.features.push(
+          ...nativeExploreWallFeatures(
+            data,
+            [levelId],
+            exactIndex ? [levelId] : [],
+          ).features,
+        );
+      }
       result.levelIds.push(levelId);
       result.warningCount += published?.warningCount ?? traced.warnings.length;
       result.warnings.push(
@@ -229,11 +312,13 @@ export async function deriveNativeExplore(
         data.source.modelSha256,
         data.nativeLevels.find((level) => level.id === levelId)!.elevationFeet,
       );
-      for (const originalRegion of data.nativeExploreMapping?.version === 2
+      for (const originalRegion of (data.nativeExploreMapping?.version ?? 0) >=
+        2 || !!traced.exactTopology
         ? traced.regions
         : associateNativeRooms(
             traced.regions,
             data.records.filter((r) => r.levelId === levelId),
+            data,
           )) {
         const lectureRoomKey = !originalRegion.roomKeys.length
           ? nativeLectureFloorOwner(
@@ -265,16 +350,25 @@ export async function deriveNativeExplore(
         // An exposed shared slab needs independently checked native enclosure
         // evidence. Registered room contours never create a display boundary.
         const needsDisplayScope =
-          !!data.nativeIndoorEnvelopes || !places.length ||
+          !!data.nativeIndoorEnvelopes ||
+          !places.length ||
           (places.length > 1 && region.exposedFloorEdgeFeet > 0);
-        let visitorPartsFeet = !places.length && !data.nativeIndoorEnvelopes
-          ? []
-          : needsDisplayScope
-            ? displayCoverage.length
-              ? polygonClipping.intersection(region.ringsFeet, displayCoverage)
-              : []
-            : [region.ringsFeet];
-        if (data.nativeDisplayScopes) {
+        let visitorPartsFeet = exactIndex
+          ? region.displayPartsFeet
+          : !places.length && !data.nativeIndoorEnvelopes
+            ? []
+            : needsDisplayScope
+              ? displayCoverage.length
+                ? polygonClipping.intersection(
+                    region.ringsFeet,
+                    displayCoverage,
+                  )
+                : []
+              : [region.ringsFeet];
+        // A strict source envelope replaces historical presentation approvals.
+        // Retain those records for authoring review, but never use their crops
+        // to restore geometry missing from the current physical floor trace.
+        if (data.nativeDisplayScopes && !data.nativeIndoorEnvelopes) {
           const scoped = await nativeDisplayScopeParts(
             data.nativeDisplayScopes,
             data.source.modelSha256,
@@ -298,7 +392,10 @@ export async function deriveNativeExplore(
           ...region,
           levelId,
           visitorPartsFeet,
-          ...(needsDisplayScope
+          // Exact faces already use the source enclosure domain. Their
+          // contained paint remainder is representation metadata, not a
+          // missing enclosure or an authoring outline crop.
+          ...(needsDisplayScope && !exactIndex
             ? {
                 enclosureReviewAreaSquareFeet: Math.max(
                   0,
@@ -317,6 +414,7 @@ export async function deriveNativeExplore(
           region,
           places,
           visitorPartsFeet,
+          exactIndex?.parts(region.exactFaceId!),
         );
         const color = style.color;
         // A mixed restricted face cannot be cut up with metadata polygons.
@@ -344,12 +442,19 @@ export async function deriveNativeExplore(
             ),
           },
         });
-        result.outlines.features.push(...visitorPartsFeet.map(feature));
+        // The native perimeter is a stroke proposal only. Drawing each convex
+        // fill piece as an outline would expose artificial interior seams.
+        result.outlines.features.push(
+          ...(exactIndex ? [region.ringsFeet] : visitorPartsFeet).map(feature),
+        );
         // Whole faces survive overview tile quantization; the detailed pass
         // keeps the prepared small triangles for robust architectural holes.
         result.overview.features.push(...visitorPartsFeet.map(feature));
         result.fills.features.push(
-          ...visitorPartsFeet.flatMap(nativeAreaDisplayParts).map(feature),
+          ...(exactIndex
+            ? visitorPartsFeet
+            : visitorPartsFeet.flatMap(nativeAreaDisplayParts)
+          ).map(feature),
         );
         // A dominant type colors the connected native face. An unresolved mixed
         // restricted face remains neutral until its native separation is known.

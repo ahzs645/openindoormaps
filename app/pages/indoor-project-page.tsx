@@ -1,6 +1,12 @@
+import type { NativeExploreResult } from "../indoor-project/native-explore";
 import type { PatchComparisonView } from "../indoor-project/patch-comparison-controls";
-import type { IndoorDataset } from "../indoor-project/contract";
+import {
+  nativePhysicalDisplayPlanes,
+  nativePhysicalDisplayPlaneLevelIds,
+  nativePhysicalDisplayPlaneForLevel,
+} from "../indoor-project/native-display-planes";
 import { NativeExploreLayer } from "../indoor-project/native-explore-layer";
+import { registerPreparedDisplayArchive } from "../indoor-project/prepared-display-registry";
 import {
   hasNativeExploreGeometry,
   initialMapPresentation,
@@ -28,7 +34,6 @@ import {
   type BoundaryPatchPreviewPlan,
   type ProposalDisplayPreviewPlan,
 } from "../indoor-project/enclosure-proposals";
-import { readProjectFolder } from "../indoor-project/review-bundle";
 import { ReviewBundlePanel } from "../indoor-project/review-bundle-panel";
 import { NativeAreaPanel } from "../indoor-project/native-area-panel";
 import { NativeAreaLayer } from "../indoor-project/native-area-layer";
@@ -80,8 +85,15 @@ import { geographicPoint } from "~/indoor-project/routing";
 import { useProjectRoute } from "~/indoor-project/use-project-route";
 import {
   readIndoorProject,
+  readProjectFolder,
   exportIndoorProject,
   exportCampusViewer,
+} from "~/indoor-project/project-package-client";
+import {
+  PROJECT_IMPORT_STAGES,
+  type ProjectImportProgress,
+} from "~/indoor-project/project-import-progress";
+import {
   isViewerProject,
   persistProject,
   clearProject,
@@ -119,10 +131,10 @@ import {
 } from "~/indoor-project/review-pin-panel";
 import {
   nearbyPinWall,
-  preserveReviewPins,
   setReviewPins,
   type ReviewPin,
 } from "~/indoor-project/review-pins";
+import { preserveReviewPinsOnImport } from "~/indoor-project/import-review-pins";
 import {
   connectionName,
   connectionAreaName,
@@ -277,6 +289,7 @@ export default function IndoorProjectPage() {
       kind?: "viewer";
     } | null>(null),
     [floorId, setFloorId] = useState(""),
+    [nativePlaneId, setNativePlaneId] = useState("main"),
     [building, setBuilding] = useState("all"),
     [selected, setSelected] = useState(""),
     [edgeId, setEdgeId] = useState(""),
@@ -312,12 +325,43 @@ export default function IndoorProjectPage() {
     [throughNavigation, setThroughNavigation] = useState(false),
     [enabled, setEnabled] = useState(true),
     [accessible, setAccessible] = useState<"yes" | "no" | "unknown">("unknown");
+  const [preparedNativeDisplay, setPreparedNativeDisplay] = useState<{
+    data: IndoorProject["dataset"];
+    levelIds: number[];
+    building: string;
+    result?: NativeExploreResult;
+    error?: string;
+    retry: () => void;
+  }>();
+  const receivePreparedNativeDisplay = useCallback(
+    (snapshot: NonNullable<typeof preparedNativeDisplay>) =>
+      setPreparedNativeDisplay(snapshot),
+    [],
+  );
   const latestProject = useRef(project);
   latestProject.current = project;
   // An explicit import owns this page from the moment the file is selected.
   // A slow startup restore or an earlier ZIP must never replace it afterwards.
   const projectLoad = useRef(0);
+  const packageLoadController = useRef<AbortController>();
   const [importNotice, setImportNotice] = useState(false);
+  const [importProgress, setImportProgress] = useState<{
+    fileName: string;
+    startedAt: number;
+    progress?: ProjectImportProgress;
+  } | null>(null);
+  const [importElapsed, setImportElapsed] = useState(0);
+  const importStartedAt = importProgress?.startedAt;
+  useEffect(() => {
+    if (importStartedAt === undefined) return;
+    const update = () =>
+      setImportElapsed(
+        Math.floor((performance.now() - importStartedAt) / 1000),
+      );
+    update();
+    const timer = window.setInterval(update, 1000);
+    return () => window.clearInterval(timer);
+  }, [importStartedAt]);
   const [packageInfo, setPackageInfo] = useState<{
     fileName: string;
     restored: boolean;
@@ -516,6 +560,7 @@ export default function IndoorProjectPage() {
       setDraftPoints([]);
       setEditTool("select");
       setFullSourceContext(false);
+      setNativePlaneId("main");
       const presentation = initialMapPresentation(
         p.dataset,
         new URLSearchParams(routeSearch()).get("view"),
@@ -557,29 +602,55 @@ export default function IndoorProjectPage() {
     const loads = projectLoad;
     const request = loads.current;
     const current = () => active && loads.current === request;
+    const controller = new AbortController();
+    packageLoadController.current = controller;
     void restoreProjectSnapshot()
       .then(async (snapshot) => {
         if (snapshot && current()) {
-          const p = await readIndoorProject(snapshot.bytes);
-          if (current()) accept(p, snapshot.fileName, true);
+          setImportProgress({
+            fileName: snapshot.fileName ?? "Saved project",
+            startedAt: performance.now(),
+          });
+          const p = await readIndoorProject(
+            snapshot.bytes,
+            (progress) => {
+              if (current())
+                setImportProgress((previous) =>
+                  previous ? { ...previous, progress } : previous,
+                );
+            },
+            controller.signal,
+          );
+          if (current()) {
+            accept(p, snapshot.fileName, true);
+            setImportProgress(null);
+          }
         }
       })
       .catch(() => {
-        if (current())
+        if (current()) {
+          setImportProgress(null);
           setMessage(
             "Saved project could not be restored. Import a prepared ZIP.",
           );
+        }
       });
     return () => {
       active = false;
+      controller.abort();
       loads.current++;
     };
   }, [accept]);
   async function load(file: File, folderFiles?: File[]) {
     const request = ++projectLoad.current;
+    packageLoadController.current?.abort();
+    const controller = new AbortController();
+    packageLoadController.current = controller;
     const current = () => projectLoad.current === request;
     setBusy(true);
     setImportNotice(true);
+    const startedAt = performance.now();
+    setImportProgress(folderFiles ? null : { fileName: file.name, startedAt });
     setMessage(
       folderFiles
         ? "Checking the master folder, companion hashes and floor maps…"
@@ -587,20 +658,30 @@ export default function IndoorProjectPage() {
     );
     try {
       const folder = folderFiles
-        ? await readProjectFolder(folderFiles)
+        ? await readProjectFolder(folderFiles, controller.signal)
         : undefined;
       const bytes = folder
         ? await exportIndoorProject(folder.project)
         : new Uint8Array(await file.arrayBuffer());
       if (!current()) return;
-      const loaded = folder?.project ?? (await readIndoorProject(bytes));
+      const loaded =
+        folder?.project ??
+        (await readIndoorProject(
+          bytes,
+          (progress) => {
+            if (current())
+              setImportProgress({ fileName: file.name, startedAt, progress });
+          },
+          controller.signal,
+        ));
       if (!current()) return;
-      const next = preserveReviewPins(loaded, latestProject.current);
+      const next = preserveReviewPinsOnImport(loaded, latestProject.current);
       const saved = next === loaded ? bytes : await exportIndoorProject(next);
       if (!current()) return;
       // Queue the write before making the map available for navigation away.
       const writing = persistProject(saved, folder?.fileName ?? file.name);
       accept(next, folder?.fileName ?? file.name);
+      setImportProgress(null);
       try {
         await writing;
       } catch {
@@ -619,11 +700,16 @@ export default function IndoorProjectPage() {
         );
       }
     } finally {
-      if (current()) setBusy(false);
+      if (current()) {
+        setImportProgress(null);
+        setBusy(false);
+      }
     }
   }
   async function clearMap() {
     const request = ++projectLoad.current;
+    packageLoadController.current?.abort();
+    setImportProgress(null);
     // Queue deletion before allowing a fresh import or a page remount.
     const clearing = clearProject();
     latestProject.current = null;
@@ -846,9 +932,15 @@ export default function IndoorProjectPage() {
     if (!project) return undefined;
     const data = editorVisitorDataset(project);
     const previewMode = roomReview && roomWindowPreview ? "native" : windowMode;
-    return data.windowDisplay && previewMode
-      ? { ...data, windowDisplay: { ...data.windowDisplay, mode: previewMode } }
-      : data;
+    const display =
+      data.windowDisplay && previewMode
+        ? {
+            ...data,
+            windowDisplay: { ...data.windowDisplay, mode: previewMode },
+          }
+        : data;
+    registerPreparedDisplayArchive(display, project.preparedDisplay);
+    return display;
   }, [
     presentationKey,
     project?.dataset,
@@ -865,10 +957,32 @@ export default function IndoorProjectPage() {
       () =>
         nativeAreas && nativeAreaLevel !== undefined
           ? [nativeAreaLevel]
-          : (floor?.levelIds ?? []),
-      [floor, nativeAreas, nativeAreaLevel],
+          : displayData?.nativeIndoorEnvelopes && !review && view === "2d"
+            ? nativePhysicalDisplayPlaneLevelIds(
+                displayData,
+                floorId,
+                nativePlaneId,
+              )
+            : (floor?.levelIds ?? []),
+      [
+        floor,
+        nativeAreas,
+        nativeAreaLevel,
+        displayData,
+        floorId,
+        nativePlaneId,
+        review,
+        view,
+      ],
     ),
     data = displayData;
+  const physicalPlanes = useMemo(
+    () =>
+      data?.nativeIndoorEnvelopes
+        ? nativePhysicalDisplayPlanes(data, floorId)
+        : [],
+    [data, floorId],
+  );
   const nativeExplore =
     !!data &&
     !review &&
@@ -1442,7 +1556,12 @@ export default function IndoorProjectPage() {
   const chooseLevel = useCallback(
     (levelId: number) => {
       const next = data?.floors.find((f) => f.levelIds.includes(levelId));
-      if (next) setFloorId(next.id);
+      if (next && data) {
+        setFloorId(next.id);
+        setNativePlaneId(
+          nativePhysicalDisplayPlaneForLevel(data, next.id, levelId),
+        );
+      }
       setBuilding("all");
     },
     [data],
@@ -1730,7 +1849,9 @@ export default function IndoorProjectPage() {
         role="status"
       >
         {dirty && <strong>Unsaved edits · </strong>}
-        {message}
+        {importProgress
+          ? `${importProgress.fileName} · ${importProgress.progress ? PROJECT_IMPORT_STAGES[importProgress.progress.stage] : "Reading ZIP"}… · ${importElapsed}s elapsed`
+          : message}
       </p>
       {project && review && !pinReview && (
         <ReviewBundlePanel bundle={project.rooms.reviewBundle} />
@@ -2439,11 +2560,18 @@ export default function IndoorProjectPage() {
                   onChange={setArrivalMode}
                   reasons={arrivalReasons}
                 />
+                {routeCalculation.preparing && (
+                  <p role="status" data-testid="project-route-preparing">
+                    Preparing indoor routes…
+                  </p>
+                )}
                 {start &&
                   end &&
                   (routeCalculation.calculating ? (
                     <p role="status" data-testid="project-route-calculating">
-                      Calculating directions…
+                      {routeCalculation.preparing
+                        ? "Your selected directions will run when preparation finishes."
+                        : "Calculating directions…"}
                     </p>
                   ) : route ? (
                     <div
@@ -2539,12 +2667,7 @@ export default function IndoorProjectPage() {
                         key={r.key}
                         onClick={() => {
                           pick("area", r.key);
-                          setFloorId(
-                            data.floors.find((f) =>
-                              f.levelIds.includes(r.levelId),
-                            )!.id,
-                          );
-                          setBuilding("all");
+                          chooseLevel(r.levelId);
                           fitted.current = false;
                         }}
                       >
@@ -2646,25 +2769,31 @@ export default function IndoorProjectPage() {
                 aria-label="Map presentation"
               >
                 <button
-                  aria-pressed={view === "2d" && !nativeExplore}
+                  aria-pressed={
+                    view === "2d" &&
+                    (!nativeExplore || !!data.nativeIndoorEnvelopes)
+                  }
                   onClick={() => {
-                    if (!review) setNativeExploreEnabled(false);
+                    if (!review)
+                      setNativeExploreEnabled(!!data.nativeIndoorEnvelopes);
                     changeView("2d");
                   }}
                 >
-                  2D rooms
+                  {data.nativeIndoorEnvelopes ? "2D floor map" : "2D rooms"}
                 </button>
-                {!review && hasNativeExploreGeometry(data) && (
-                  <button
-                    aria-pressed={nativeExplore}
-                    onClick={() => {
-                      setNativeExploreEnabled(true);
-                      changeView("2d");
-                    }}
-                  >
-                    Native floor map
-                  </button>
-                )}
+                {!review &&
+                  !data.nativeIndoorEnvelopes &&
+                  hasNativeExploreGeometry(data) && (
+                    <button
+                      aria-pressed={nativeExplore}
+                      onClick={() => {
+                        setNativeExploreEnabled(true);
+                        changeView("2d");
+                      }}
+                    >
+                      Native floor map
+                    </button>
+                  )}
                 <button
                   aria-pressed={view === "3d"}
                   onClick={() => changeView("3d")}
@@ -2744,6 +2873,7 @@ export default function IndoorProjectPage() {
                     floorId={floorId}
                     building={building}
                     onChange={(nextFloor, nextBuilding) => {
+                      if (nextFloor !== floorId) setNativePlaneId("main");
                       setFloorId(nextFloor);
                       setBuilding(nextBuilding);
                       // Keep the selected place, but fit the floor/building
@@ -2753,6 +2883,33 @@ export default function IndoorProjectPage() {
                     }}
                   />
                 </div>
+              )}
+              {nativeExplore && physicalPlanes.length > 1 && (
+                <label className="project-physical-plane-picker">
+                  Level detail
+                  <select
+                    aria-label="Physical level detail"
+                    value={
+                      physicalPlanes.some((p) => p.id === nativePlaneId)
+                        ? nativePlaneId
+                        : "main"
+                    }
+                    onChange={(e) => {
+                      setNativePlaneId(e.target.value);
+                      setBuilding("all");
+                      setSelected("");
+                      setEdgeId("");
+                      fitSelection.current = false;
+                      fitted.current = false;
+                    }}
+                  >
+                    {physicalPlanes.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               )}
             </div>
             <MapProvider
@@ -2766,6 +2923,7 @@ export default function IndoorProjectPage() {
             >
               <MapCanvas>
                 <ProjectMapLayers
+                  onNativeDisplay={receivePreparedNativeDisplay}
                   data={data}
                   nativeFloorLevels={nativeFloorLevels}
                   geometryOpacity={
@@ -2804,6 +2962,31 @@ export default function IndoorProjectPage() {
                 />
                 {nativeExplore && (
                   <NativeExploreLayer
+                    usePreparedDisplay={!!data.nativeIndoorEnvelopes}
+                    onRetryPreparedDisplay={
+                      preparedNativeDisplay?.data === data &&
+                      preparedNativeDisplay.building === building &&
+                      preparedNativeDisplay.levelIds.join(",") ===
+                        levelIds.join(",")
+                        ? preparedNativeDisplay.retry
+                        : undefined
+                    }
+                    preparedDisplay={
+                      preparedNativeDisplay?.data === data &&
+                      preparedNativeDisplay.building === building &&
+                      preparedNativeDisplay.levelIds.join(",") ===
+                        levelIds.join(",")
+                        ? preparedNativeDisplay.result
+                        : undefined
+                    }
+                    preparedDisplayError={
+                      preparedNativeDisplay?.data === data &&
+                      preparedNativeDisplay.building === building &&
+                      preparedNativeDisplay.levelIds.join(",") ===
+                        levelIds.join(",")
+                        ? preparedNativeDisplay.error
+                        : undefined
+                    }
                     data={data}
                     levelIds={levelIds}
                     building={building}
@@ -3061,6 +3244,13 @@ export default function IndoorProjectPage() {
                     nativeElementId={sourceStair?.stairElementId}
                     onNavigate={(target) => {
                       setFloorId(target.floorId);
+                      setNativePlaneId(
+                        nativePhysicalDisplayPlaneForLevel(
+                          data,
+                          target.floorId,
+                          target.node.levelId,
+                        ),
+                      );
                       setBuilding("all");
                       setSelected("");
                       setEdgeId(connectorFloorSelectionId(data, target));
@@ -3166,6 +3356,13 @@ export default function IndoorProjectPage() {
                 nativeElementId={sourceStair?.stairElementId}
                 onNavigate={(target) => {
                   setFloorId(target.floorId);
+                  setNativePlaneId(
+                    nativePhysicalDisplayPlaneForLevel(
+                      data,
+                      target.floorId,
+                      target.node.levelId,
+                    ),
+                  );
                   if (nativeAreas) setNativeAreaLevel(target.node.levelId);
                   setBuilding("all");
                   setSelected("");

@@ -1,3 +1,6 @@
+import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
+import { nativeRationalOverlay } from "./native-rational-overlay";
+import { nativeRenderProperties } from "./native-render-parts";
 import polygonClipping from "polygon-clipping";
 import type { Feature, MultiPolygon } from "geojson";
 import type { IndoorDataset } from "./contract";
@@ -14,6 +17,56 @@ export function nativeFloorGround(
 ): Feature<MultiPolygon>[] {
   const support = data.walkingSupport;
   if (support?.sourceModelSha256 !== data.source.modelSha256) return [];
+  if (data.nativeIndoorEnvelopes) {
+    const enclosure = createNativeIndoorEnvelopeIndex(
+      data.nativeIndoorEnvelopes,
+      data.source.modelSha256,
+    );
+    return support.floors.flatMap((floor) => {
+      const level = data.nativeLevels.find(
+        (l) =>
+          levelIds.includes(l.id) &&
+          Math.abs(l.elevationFeet - floor.elevationFeet) < 0.05,
+      );
+      if (!level) return [];
+      const certified = enclosure.parts(floor.elevationFeet);
+      if (!certified.length) return [];
+      const exactParts = nativeRationalOverlay(
+        "intersection",
+        floor.partsFeet ?? [floor.ringsFeet],
+        certified,
+      );
+      if (!exactParts.length) return [];
+      const drawing = nativeRenderProperties(exactParts);
+      const parts = drawing.nativeDisplayPartsFeet;
+      return [
+        {
+          type: "Feature" as const,
+          id: `native-floor:${floor.nativeElementId}`,
+          properties: {
+            ...drawing,
+            nativeFloor: true,
+            nativePhysical: true,
+            nativeFloorId: floor.nativeElementId,
+            levelId: level.id,
+            elevationFeet: floor.elevationFeet,
+            color: "#faf9f5",
+            circulation: false,
+            walkable: true,
+            boundarySource: "native-floor-material",
+          },
+          geometry: {
+            type: "MultiPolygon" as const,
+            coordinates: parts.map((rings) =>
+              rings.map((ring) =>
+                [...ring, ring[0]].map((p) => geographicPoint(data, p)),
+              ),
+            ),
+          },
+        },
+      ];
+    });
+  }
   const records = data.records.filter(
     (r) =>
       levelIds.includes(r.levelId) &&

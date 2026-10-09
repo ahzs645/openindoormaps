@@ -1,4 +1,9 @@
-import {preparedReviewedDoorApertures,validateDoorApertureBinding} from "./reviewed-door-apertures";
+import { nativeMaterialPlanWalls } from "./native-material-plan";
+import { verifyNativeMaterialSections } from "./native-material-sections";
+import {
+  preparedReviewedDoorApertures,
+  validateDoorApertureBinding,
+} from "./reviewed-door-apertures";
 import type { IndoorProject } from "./package";
 import type { IndoorDataset } from "./contract";
 import type { VolumeAudit } from "./volume-coverage";
@@ -9,6 +14,7 @@ import { nativeBarrierTopology } from "./native-barrier-topology";
 import { indoorExclusionParts } from "./indoor-exclusions";
 import { nativeBoundaryPatchFloorSupport } from "./native-boundary-patch-floor-support";
 import {
+  boundaryPatchMaterialParts,
   reviewedBoundaryWalls,
   type NativeBoundaryPatch,
 } from "./native-boundary-patches";
@@ -338,7 +344,10 @@ export function boundaryPatchPreviewPlan(
     throw new Error(
       "Choose a proposed boundary correction on this room's native level.",
     );
-  validateDoorApertureBinding(project.rooms.reviewedDoorApertures,project.dataset);
+  validateDoorApertureBinding(
+    project.rooms.reviewedDoorApertures,
+    project.dataset,
+  );
   reviewedBoundaryWalls(
     project.dataset.walls,
     {
@@ -348,6 +357,10 @@ export function boundaryPatchPreviewPlan(
     project.dataset.source.modelSha256,
     undefined,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   const nativeLevel = project.dataset.nativeLevels.find(
     (l) => l.id === p.levelId,
@@ -469,7 +482,24 @@ export async function deriveExactBoundaryPatchGroupPreview(
     new Set(patches.map((p) => p.id)).size !== patches.length
   )
     throw new Error("Choose a unique exact correction set.");
+  await verifyNativeMaterialSections(
+    data.nativeMaterialSections,
+    data.source.modelSha256,
+  );
   const checkedWalls: IndoorDataset["walls"] = [];
+  const actualWalls = nativeMaterialPlanWalls(data, levelId);
+  const groupWalls = reviewedBoundaryWalls(
+    data.walls,
+    { version: 1, patches: patches.map((p) => ({ ...p, status: "applied" })) },
+    data.source.modelSha256,
+    undefined,
+    preparedReviewedDoorApertures(data),
+    data.nativeMaterialSections,
+    data.nativeMaterialSections
+      ? (id) =>
+          id === levelId ? actualWalls : nativeMaterialPlanWalls(data, id)
+      : undefined,
+  );
   const contactChecks: ((rings: Rings) => boolean)[] = [];
   for (const patch of patches) {
     if (
@@ -486,13 +516,7 @@ export async function deriveExactBoundaryPatchGroupPreview(
       throw new Error(
         "Choose exact proposed wall continuations for this floor.",
       );
-    const walls = reviewedBoundaryWalls(
-      data.walls,
-      { version: 1, patches: [{ ...patch, status: "applied" }] },
-      data.source.modelSha256,
-      undefined,
-      preparedReviewedDoorApertures(data),
-    );
+    const walls = groupWalls.filter((w) => w.reviewPatchId === patch.id);
     const level = data.nativeLevels.find((l) => l.id === levelId);
     const floors =
       data.walkingSupport?.sourceModelSha256 === data.source.modelSha256 &&
@@ -531,21 +555,26 @@ export async function deriveExactBoundaryPatchGroupPreview(
       rings.map((ring) =>
         ring.map((p) => [p[0] - origin[0], p[1] - origin[1]]),
       );
-    const intersects = (rings: Rings) => {
-      const [a, b] = nativeBarrierTopology(
-        [local(patch.ringsFeet), local(rings)],
-        1e8,
-      );
-      return area(pc.intersection(a, b)) > 1e-8;
-    };
-    const openings = data.records
-      .filter((r) => r.levelId === levelId)
-      .flatMap((r) => (r.properties.floorOpeningsFeet ?? []) as Point[][]);
+    const effectiveParts = boundaryPatchMaterialParts(
+      patch,
+      preparedReviewedDoorApertures(data),
+      data.source.modelSha256,
+    );
+    const intersects = (rings: Rings) =>
+      effectiveParts.some((part) => {
+        const [a, b] = nativeBarrierTopology([local(part), local(rings)], 1e8);
+        return area(pc.intersection(a, b)) > 1e-8;
+      });
+    const openings = data.nativeIndoorEnvelopes
+      ? []
+      : data.records
+          .filter((r) => r.levelId === levelId)
+          .flatMap((r) => (r.properties.floorOpeningsFeet ?? []) as Point[][]);
     const floorSupport = nativeBoundaryPatchFloorSupport(patch, parts);
     if (
       !floorSupport.supported ||
       (floorSupport.originalContactAllowance &&
-        data.walls.some(
+        nativeMaterialPlanWalls(data, levelId).some(
           (w) =>
             w.levelId === levelId &&
             !patch.wallEvidence.some(
@@ -562,7 +591,7 @@ export async function deriveExactBoundaryPatchGroupPreview(
           d.footprintFeet &&
           intersects([d.footprintFeet]),
       ) ||
-      data.walls.some(
+      nativeMaterialPlanWalls(data, levelId).some(
         (w) =>
           w.levelId === levelId &&
           w.kind === "column" &&
@@ -617,7 +646,16 @@ export async function deriveExactBoundaryPatchGroupPreview(
     }
     if (
       patches[i].wallEvidence.some(
-        (wall) => ![...reachable].some((j) => contactChecks[j](wall.ringsFeet)),
+        (wall) =>
+          ![...reachable].some((j) =>
+            nativeMaterialPlanWalls(data, levelId).some(
+              (current) =>
+                !current.reviewPatchId &&
+                !current.approximate &&
+                current.nativeElementId === wall.nativeElementId &&
+                contactChecks[j](current.ringsFeet),
+            ),
+          ),
       )
     )
       throw new Error(
@@ -795,6 +833,13 @@ export function proposalDisplayPreviewPlan(
   const preview = catalog.records.find(
     (r) => r.key === roomKey,
   )?.displayPreview;
+  if (
+    project.dataset.nativeIndoorEnvelopes &&
+    preview?.kind !== "native-enclosure-walkway"
+  )
+    throw new Error(
+      "This native-only project requires a full native-region preview; historical outline crops cannot define its floor geometry.",
+    );
   const level =
     preview &&
     project.dataset.nativeLevels.find((l) => l.id === preview.levelId);
@@ -1011,6 +1056,14 @@ export function assertProposalDisplayPreviewPlan(
   project: IndoorProject,
   plan: ProposalDisplayPreviewPlan,
 ) {
+  if (
+    project.dataset.nativeIndoorEnvelopes &&
+    (plan.kind !== "native-enclosure-walkway" ||
+      plan.boundaryProvenance !== "full-native-region")
+  )
+    throw new Error(
+      "This native-only project requires a full native-region preview; historical outline crops cannot define its floor geometry.",
+    );
   const catalog = project.rooms.enclosureProposals;
   const proposal = catalog?.records.find((r) => r.key === plan.roomKey);
   if (

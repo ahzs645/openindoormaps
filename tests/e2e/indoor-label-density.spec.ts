@@ -59,6 +59,8 @@ for (const mobile of [false, true])
       const labels = await (
         map.getSource("project-labels") as GeoJSONSource
       ).getData();
+      if (labels.type !== "FeatureCollection")
+        throw new Error("Expected label FeatureCollection");
       const destination = labels.features.find((f) => f.properties?.selected);
       map.jumpTo({
         padding: {
@@ -124,6 +126,8 @@ for (const mobile of [false, true])
       const labels = await (
         map.getSource("project-labels") as GeoJSONSource
       ).getData();
+      if (labels.type !== "FeatureCollection")
+        throw new Error("Expected label FeatureCollection");
       const center = map.getCenter();
       const ordinary = labels.features
         .filter(

@@ -1,3 +1,4 @@
+import { nativeMaterialPlanWalls } from "./native-material-plan";
 import pc from "polygon-clipping";
 import type { IndoorDataset } from "./contract";
 import type { NativeBoundaryPatch } from "./native-boundary-patches";
@@ -124,6 +125,10 @@ export async function comparePinBoundary(
     data.source.modelSha256,
     levelId,
     preparedReviewedDoorApertures(data),
+    data.nativeMaterialSections,
+    data.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(data, levelId)
+      : undefined,
   );
   const elevation = data.nativeLevels.find(
     (l) => l.id === levelId,

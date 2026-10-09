@@ -14,15 +14,23 @@ export function nativeExploreLabels(
       .flatMap((l) =>
         l.regions.flatMap((r) =>
           (r.associations ?? [])
-            .filter((a) => a.method === "majority-overlap" && a.labelPointFeet)
+            .filter((a) => a.method !== "seed-fallback" && a.labelPointFeet)
             .map((a) => [a.roomKey, a.labelPointFeet!] as const),
         ),
       ) ?? [],
   );
-  if (!points.size) return labels;
+  const records = new Map(data.records.map((r) => [r.key, r]));
+  const features = data.nativeIndoorEnvelopes
+    ? labels.features.filter((f) => {
+        const key = String(f.properties?.key),
+          room = records.get(key);
+        return !room || !readyLevels.includes(room.levelId) || points.has(key);
+      })
+    : labels.features;
+  if (!points.size && features === labels.features) return labels;
   return {
     ...labels,
-    features: labels.features.map((f) => {
+    features: features.map((f) => {
       const p = points.get(String(f.properties?.key));
       return p
         ? {

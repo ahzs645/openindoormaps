@@ -3,6 +3,11 @@ export { MAX_REVIEW_FILES, MAX_REVIEW_BYTES } from "./review-bundle-limits";
 import { deflateSync } from "fflate";
 import { boundedInflate } from "./review-bundle-inflate";
 import {
+  hasVerifiedReviewFile,
+  rememberVerifiedReviewFile,
+  reviewFileVerificationSnapshot,
+} from "./review-file-verification";
+import {
   readIndoorProject,
   isViewerProject,
   type IndoorProject,
@@ -94,9 +99,12 @@ export async function verifyReviewBundle(value: unknown) {
   validateReviewBundle(value);
   if (value)
     for (const file of value.files) {
+      if (hasVerifiedReviewFile(file)) continue;
+      const proof = reviewFileVerificationSnapshot(file);
       const bytes = reviewFileBytes(file);
       if (bytes.length !== file.bytes || (await digest(bytes)) !== file.sha256)
         throw new Error(`Damaged review companion: ${file.path}`);
+      rememberVerifiedReviewFile(file, proof);
     }
 }
 

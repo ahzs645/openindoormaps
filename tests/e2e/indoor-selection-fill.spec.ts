@@ -118,10 +118,7 @@ for (const mobile of [false, true]) {
         const room = data.features.find(
           (f) => f.properties?.key === "rm-1487816-1942e041e15e",
         )!;
-        const ring =
-          room.geometry.type === "MultiPolygon"
-            ? room.geometry.coordinates[0][0]
-            : room.geometry.coordinates[0];
+        const ring = room.geometry.coordinates[0][0];
         const x = ring.map((p) => p[0]),
           y = ring.map((p) => p[1]);
         const center: [number, number] = [

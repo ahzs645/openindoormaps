@@ -4,7 +4,7 @@ module.exports = {
   // `npm run lint` passes --ignore-path .gitignore, which disables
   // .eslintignore, so extra ignores live here.
   // Vendored Draco decoder (three.js DRACOLoader runtime).
-  ignorePatterns: ["public/draco/"],
+  ignorePatterns: ["public/draco/", "app/indoor-project/vendor/"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",

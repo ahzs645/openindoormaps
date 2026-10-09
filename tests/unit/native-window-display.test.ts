@@ -185,6 +185,37 @@ test("preserved window display cuts only its level, retains sill/head and leaves
     wall,
   );
 });
+test("strict material sections preserve the original window/host inventory instead of legacy comparison omission", () => {
+  const d = displayData();
+  d.walls.push({
+    nativeElementId: 20,
+    levelId: 1,
+    kind: "wall",
+    approximate: true,
+    ringsFeet: [rectangle(3, -2, 3, 4)],
+  });
+  assert.notEqual(
+    nativeWindowDisplayInput(d),
+    d,
+    "legacy comparison can omit the independently covered proxy",
+  );
+  d.nativeIndoorEnvelopes = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    geometrySha256: "a".repeat(64),
+    levels: [],
+  };
+  d.nativeMaterialSections = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    geometrySha256: "b".repeat(64),
+    elements: [],
+  } as unknown as NonNullable<typeof d.nativeMaterialSections>;
+  const before = JSON.stringify(d);
+  assert.equal(nativeWindowDisplayInput(d), d);
+  assert.equal(nativeWindowDisplayInput(d).walls, d.walls);
+  assert.equal(JSON.stringify(d), before);
+});
 test("both viewer exports round-trip with identical rooms, doors, graph and original source, while simplified omits detail", async () => {
   const p = await project();
   const d = displayData();

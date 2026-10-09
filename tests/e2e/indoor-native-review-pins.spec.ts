@@ -142,7 +142,9 @@ for (const mobile of [false, true]) {
       new Uint8Array(readFileSync((await (await download).path())!)),
     );
     expect(geometry(saved)).toBe(original);
-    expect(saved.model).toEqual(project.model);
+    expect(saved.files["model/" + saved.manifest.model.fileName]).toEqual(
+      project.files["model/" + project.manifest.model.fileName],
+    );
     expect(saved.rooms.reviewPins!.pins).toHaveLength(1);
     expect(saved.rooms.reviewPins!.pins[0]).toMatchObject({
       levelId: 2,

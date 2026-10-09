@@ -1,3 +1,19 @@
+import {
+  nativeRationalOverlay,
+  type NativeRationalParts,
+} from "./native-rational-overlay";
+import {
+  freezeNativeRationalParts,
+  nativeRationalPointInParts,
+  nativeRationalPathSupported,
+} from "./native-exact-planar-topology";
+import { createNativeDoorApproachQuery } from "./native-door-approach";
+import { routingCalculationValue } from "./routing-cache";
+import { createNativeBoundaryMaterialQuery } from "./native-boundary-material";
+import {
+  createNativeHostApertureQuery,
+  createNativeRoutingMaterialQuery,
+} from "./native-routing-material";
 import { indoorExclusionParts } from "./indoor-exclusions";
 import { preparedWalkingGuides } from "./prepared-routing";
 import { centeredJunctions } from "./centered-junction";
@@ -6,6 +22,7 @@ import { createRingPointQuery } from "./ring-point-query";
 import {
   nativeCirculationCells,
   nativeCirculationSurfaces,
+  nativeCirculationExactCellParts,
 } from "./native-circulation";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import { createDoorPassageQuery } from "./route-passages";
@@ -30,6 +47,7 @@ type XY = [number, number];
 type XYZ = [number, number, number];
 type Rings = XY[][];
 type WalkableArea = {
+  exactParts?: NativeRationalParts;
   boundaries: Rings[];
   contains: (point: XY) => boolean;
   boundaryRings?: (bounds: number[]) => XY[][];
@@ -284,6 +302,8 @@ const interpolate = (a: XY, b: XY, t: number): XY => [
   a[1] + (b[1] - a[1]) * t,
 ];
 const validSegment = (a: XY, b: XY, area: WalkableArea) => {
+  if (area.exactParts)
+    return nativeRationalPathSupported([a, b], area.exactParts);
   if (Math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-7) return area.contains(a);
   const ts = breaks(a, b, area.boundaries, area.boundaryRings);
   return (
@@ -601,6 +621,10 @@ function nativeCellConnection(data: IndoorDataset, edge: IndoorEdge): boolean {
       edge.pointsFeet.slice(1).every((p, i) => {
         const a: XY = [edge.pointsFeet[i][0], edge.pointsFeet[i][1]],
           b: XY = [p[0], p[1]];
+        if (data.nativeIndoorEnvelopes) {
+          const exact = nativeCirculationExactCellParts(data, cell);
+          return !!exact && nativeRationalPathSupported([a, b], exact);
+        }
         const ts = breaks(a, b, [cell.ringsFeet]);
         return (
           inside(a, [cell.ringsFeet]) &&
@@ -678,9 +702,34 @@ function refine(
     return source("stair-landing");
   const nativeSurfaces = nativeCirculationSurfaces(data, records);
   const bounds = box(nativeSurfaces.rings.flat());
-  const walls = [...data.walls, ...nativeJointBarriers(data, levelId)].filter(
-    (w) => w.levelId === levelId && overlaps(bounds, box(w.ringsFeet)),
-  );
+  const material = data.nativeIndoorEnvelopes
+    ? routingCalculationValue(data, "native-route-material-query", () =>
+        createNativeRoutingMaterialQuery(data),
+      )(path.pointsFeet[0][2])
+    : undefined;
+  const walls: IndoorDataset["walls"] = [
+    ...(material?.parts.map((part) => ({
+      levelId,
+      nativeElementId: part.nativeElementId,
+      kind: part.column ? ("column" as const) : ("wall" as const),
+      ringsFeet: part.rings,
+    })) ?? []),
+    ...data.walls
+      .filter(
+        (w) =>
+          !material?.known.has(w.nativeElementId) ||
+          (w.reviewPatchId && material.present.has(w.nativeElementId)),
+      )
+      .flatMap((w) =>
+        routingCalculationValue(data, "native-route-boundary-material", () =>
+          createNativeBoundaryMaterialQuery(data),
+        )(w).map((ringsFeet) => ({ ...w, ringsFeet })),
+      ),
+    ...nativeJointBarriers(data, levelId),
+  ].filter((w) => w.levelId === levelId && overlaps(bounds, box(w.ringsFeet)));
+  const ownsAperture = material
+    ? createNativeHostApertureQuery(material)
+    : undefined;
   const apertureEdges = new Map(
     [...edges, ...portalEdges].map((e) => [e.id, e]),
   );
@@ -728,23 +777,26 @@ function refine(
         doorCoverage(d.footprintFeet!, apertureEdges.get(d.id)!, d.normalFeet),
       ),
     ];
-    const masks = data.nativeIndoorEnvelopes ? [] : data.records
-      .filter(
-        (r) =>
-          r.levelId === levelId &&
-          !keys.has(r.key) &&
-          (!r.walkable ||
-            r.access === "staff" ||
-            (!r.circulation && !r.stair)) &&
-          overlaps(bounds, box(r.ringsFeet)),
-      )
-      .map((r) => r.ringsFeet);
+    const masks = data.nativeIndoorEnvelopes
+      ? []
+      : data.records
+          .filter(
+            (r) =>
+              r.levelId === levelId &&
+              !keys.has(r.key) &&
+              (!r.walkable ||
+                r.access === "staff" ||
+                (!r.circulation && !r.stair)) &&
+              overlaps(bounds, box(r.ringsFeet)),
+          )
+          .map((r) => r.ringsFeet);
     masks.push(...indoorExclusionParts(data, path.pointsFeet[0][2]));
-    const holes = data.records
+    masks.push(...(material?.derivedParts ?? []));
+    const holes = (data.nativeIndoorEnvelopes ? [] : data.records)
       .filter(
         (r) => r.levelId === levelId && overlaps(bounds, box(r.ringsFeet)),
       )
-      .flatMap((r) => (data.nativeIndoorEnvelopes ? (r.properties.floorOpeningsFeet as XY[][] | undefined) ?? [] : r.ringsFeet.slice(1)).map((h) => [h] as Rings));
+      .flatMap((r) => r.ringsFeet.slice(1).map((h) => [h] as Rings));
     const support = data.walkingSupport;
     if (
       support &&
@@ -761,7 +813,7 @@ function refine(
           Math.abs(floor.elevationFeet - path.pointsFeet[0][2]) <= 0.05 &&
           overlaps(bounds, box(floor.ringsFeet)),
       )
-      .map((floor) => floor.ringsFeet);
+      .flatMap((floor) => floor.partsFeet ?? [floor.ringsFeet]);
     const boundaries = [
       ...(supportedFloors ?? []),
       ...allowed,
@@ -777,25 +829,66 @@ function refine(
       maskedPoint = indexedContains(masks),
       holePoint = indexedContains(holes),
       aperturePoint = indexedContains(apertures),
+      apertureAllowsWall = (point: XY, nativeId: number) =>
+        data.nativeIndoorEnvelopes
+          ? selectedDoors.some(
+              (d) =>
+                ownsAperture?.(
+                  d.hostWallNativeElementId,
+                  d.nativeElementId,
+                  nativeId,
+                ) && inside(point, [[d.footprintFeet!]]),
+            )
+          : aperturePoint(point),
       nearbyWalls = geometryIndex(walls, (w) => box(w.ringsFeet));
+    const selectedExactFaces = data.nativeIndoorEnvelopes
+      ? nativeSurfaces.cells
+          .filter((c) => edges.some((e) => e.nativeCellId === c.id))
+          .flatMap((c) => nativeCirculationExactCellParts(data, c) ?? [])
+      : [];
+    const selectedExactHalves = data.nativeIndoorEnvelopes
+      ? edges
+          .filter((e) => e.kind === "walk")
+          .flatMap((e) =>
+            routingCalculationValue(data, "native-door-approach-query", () =>
+              createNativeDoorApproachQuery(data),
+            )(e).flatMap((a) => a.exactParts ?? []),
+          )
+      : [];
+    const exactParts = data.nativeIndoorEnvelopes
+      ? freezeNativeRationalParts(
+          nativeRationalOverlay(
+            "union",
+            selectedExactFaces,
+            selectedExactHalves,
+          ),
+        )
+      : undefined;
+    if (data.nativeIndoorEnvelopes && !exactParts?.length)
+      return source("missing-native-geometry");
     const free: WalkableArea = {
+      ...(exactParts ? { exactParts } : {}),
       boundaries,
       boundaryRings: geometryIndex(boundaries.flat(), boundsOfRing),
       contains: (point) =>
-        allowedPoint(point) &&
-        (!floorPoint || floorPoint(point)) &&
-        !maskedPoint(point) &&
-        !holePoint(point) &&
-        !nearbyWalls([
-          point[0] - 1e-8,
-          point[1] - 1e-8,
-          point[0] + 1e-8,
-          point[1] + 1e-8,
-        ]).some(
-          (w) =>
-            inside(point, [w.ringsFeet]) &&
-            (w.kind === "column" || !aperturePoint(point)),
-        ),
+        exactParts
+          ? nativeRationalPointInParts(point, exactParts)
+          : allowedPoint(point) &&
+            (!floorPoint || floorPoint(point)) &&
+            !maskedPoint(point) &&
+            !holePoint(point) &&
+            !nearbyWalls([
+              point[0] - 1e-8,
+              point[1] - 1e-8,
+              point[0] + 1e-8,
+              point[1] + 1e-8,
+            ]).some(
+              (w) =>
+                inside(point, [w.ringsFeet]) &&
+                (w.kind === "column" ||
+                  w.reviewPatchId ||
+                  !apertureAllowsWall(point, w.nativeElementId)),
+            ),
     };
     const openingBodySupported = (
       edge: IndoorEdge,
@@ -834,10 +927,23 @@ function refine(
         for (const wall of walls) {
           if (!overlaps(stripBounds, box(wall.ringsFeet))) continue;
           const overlap = polygonClipping.intersection(strip, wall.ringsFeet);
+          const wallApertures = data.nativeIndoorEnvelopes
+            ? selectedDoors
+                .filter(
+                  (d) =>
+                    !wall.reviewPatchId &&
+                    ownsAperture?.(
+                      d.hostWallNativeElementId,
+                      d.nativeElementId,
+                      wall.nativeElementId,
+                    ),
+                )
+                .map((d) => [d.footprintFeet!] as Rings)
+            : apertures;
           const solid =
-            wall.kind === "column" || apertures.length === 0
+            wall.kind === "column" || wallApertures.length === 0
               ? overlap
-              : polygonClipping.difference(overlap, relevant(apertures));
+              : polygonClipping.difference(overlap, relevant(wallApertures));
           if (polygonArea(solid) > 1e-7) return false;
         }
         // The oblique body footprint inside the source's normal crossing band
@@ -1302,9 +1408,11 @@ function refine(
           candidates[0],
           nativeSurfaces.cells.length > 0
             ? nativeSurfaces.cells.flatMap((cell) => cell.ringsFeet)
-            : data.nativeIndoorEnvelopes ? [] : records
-                .filter((record) => record.circulation && !record.stair)
-                .flatMap((record) => record.ringsFeet),
+            : data.nativeIndoorEnvelopes
+              ? []
+              : records
+                  .filter((record) => record.circulation && !record.stair)
+                  .flatMap((record) => record.ringsFeet),
           (point, normal) => center(point, normal, free, span),
           (a, b) => validSegment(a, b, free),
           Math.min(

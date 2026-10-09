@@ -1,3 +1,8 @@
+import { encodeNativeExactTopology } from "../../app/indoor-project/native-exact-planar-topology";
+import {
+  nativeRationalOverlay,
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+} from "../../app/indoor-project/native-rational-overlay";
 import test from "node:test";
 import { routingSnapshot } from "../../app/indoor-project/routing-cache";
 import assert from "node:assert/strict";
@@ -19,13 +24,131 @@ import {
 import { projectRoutingGraph } from "../../app/indoor-project/routing-graph";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
+import { nativeAuthoredStairRoleFixture } from "../fixtures/native-authored-stair-role";
+import { nativeAuthoredStairTreadRolesHash } from "../../app/indoor-project/native-authored-stair-treads";
 type Point = [number, number];
+test("scoped walk validation agrees with the full blocker set and cannot pollute it", async () => {
+  const data = fixture();
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const source = {
+    version: 1 as const,
+    sourceModelSha256: data.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 20, 6)]],
+        sourceElementIds: [100],
+        cutElevationsFeet: [4, 8],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  data.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  data.circulationGeometry!.preparedRoomKeys = ["hall"];
+  const cell = data.circulationGeometry!.cells[0];
+  data.edges = [
+    {
+      ...data.edges[0],
+      id: "supported",
+      nativeCellId: cell.id,
+      pointsFeet: [
+        [2, 2, 0],
+        [18, 2, 0],
+      ],
+    },
+    {
+      ...data.edges[0],
+      id: "unsupported",
+      nativeCellId: cell.id,
+      pointsFeet: [
+        [2, 2, 0],
+        [22, 2, 0],
+      ],
+    },
+    { ...data.edges[0], id: "old-outline", nativeCellId: undefined },
+  ];
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
+  const full = nativeCirculationWalkBlockers(data);
+  assert.equal(full.has("supported"), false);
+  assert.equal(full.has("unsupported"), true);
+  assert.equal(full.has("old-outline"), true);
+  for (const edge of data.edges)
+    assert.deepEqual(
+      [...nativeCirculationWalkBlockers(data, [edge])],
+      [...full].filter((id) => id === edge.id),
+    );
+  assert.deepEqual(nativeCirculationWalkBlockers(data, []), new Set());
+  assert.deepEqual(nativeCirculationWalkBlockers(data), full);
+  data.circulationGeometry!.sourceGeometryKey = "stale";
+  assert.deepEqual(
+    [...nativeCirculationWalkBlockers(data, [data.edges[0]])],
+    ["supported"],
+  );
+});
+test("source and worker circulation bindings retain full authored physical roles and detect in-place mutation", async () => {
+  const data = fixture(),
+    legacyKey = nativeCirculationGeometryKey(data);
+  const { routeWorkerDataset } = await import(
+    "../../app/indoor-project/route-worker-dataset"
+  );
+  const roles = nativeAuthoredStairRoleFixture();
+  data.nativeSourceStairMaterials = {
+    version: 1,
+    sourceModelSha256: data.source.modelSha256,
+    flights: [],
+    authoredTreadRoles: roles,
+  };
+  const originalKey = nativeCirculationGeometryKey(data);
+  assert.notEqual(originalKey, legacyKey);
+  assert.equal(compilerKey(data as any), originalKey);
+  const workerData = routeWorkerDataset(data);
+  assert.deepEqual(
+    workerData.nativeSourceStairMaterials?.authoredTreadRoles,
+    roles,
+  );
+  assert.equal(nativeCirculationGeometryKey(workerData), originalKey);
+  // An actual primitive changes even if a stale declared SHA is retained.
+  roles.runs[0].faces[0].originalTrianglesFeet[0][0][0] += 0.01;
+  assert.notEqual(nativeCirculationGeometryKey(data), originalKey);
+  roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
+  assert.equal(compilerKey(data as any), nativeCirculationGeometryKey(data));
+  delete data.nativeSourceStairMaterials;
+  assert.equal(nativeCirculationGeometryKey(data), legacyKey);
+});
 const rect = (x0: number, y0: number, x1: number, y1: number): Point[] => [
   [x0, y0],
   [x1, y0],
   [x1, y1],
   [x0, y1],
 ];
+function compileLiteralFixtureTopology(data: IndoorDataset) {
+  if (!data.nativeIndoorEnvelopes || !data.circulationGeometry) return;
+  // These rectangles are literal independent test geometry, not old prepared
+  // campus cells being rebound. Production always regenerates from originals.
+  const geometry = data.circulationGeometry;
+  geometry.exactTopology = encodeNativeExactTopology(
+    {
+      sourceModelSha256: data.source.modelSha256,
+      sourceGeometryKey: geometry.sourceGeometryKey,
+      kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+    },
+    geometry.cells.map((c) => {
+      c.exactFaceId = `fixture-face:${c.id}`;
+      return {
+        id: c.exactFaceId,
+        parts: nativeRationalOverlay("union", [c.ringsFeet]),
+      };
+    }),
+  );
+}
 function fixture(): IndoorDataset {
   const data = {
     source: { modelSha256: "a".repeat(64) },
@@ -314,6 +437,7 @@ function seamFixture(): IndoorDataset {
   data.circulationGeometry!.cells[0].roomKeys.push("other");
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
   return data;
 }
 test("semantic corridor seams within one native cell do not impose artificial crossing-point doglegs", () => {
@@ -355,11 +479,13 @@ test("real thresholds, access changes and stale/disconnected native cells cannot
       d.records[1].access = "public";
       d.circulationGeometry!.sourceGeometryKey =
         nativeCirculationGeometryKey(d);
+      compileLiteralFixtureTopology(d);
     },
     (d: IndoorDataset) => {
       d.records[1].circulation = false;
       d.circulationGeometry!.sourceGeometryKey =
         nativeCirculationGeometryKey(d);
+      compileLiteralFixtureTopology(d);
     },
     (d: IndoorDataset) => {
       d.circulationGeometry!.sourceModelSha256 = "b".repeat(64);
@@ -491,6 +617,7 @@ test("native approach joins require current continuous ownership and retain phys
       d.records[1].access = "public";
       d.circulationGeometry!.sourceGeometryKey =
         nativeCirculationGeometryKey(d);
+      compileLiteralFixtureTopology(d);
     },
   ]) {
     const data = nativeApproachFixture();
@@ -541,6 +668,7 @@ test("joining native approaches cannot straighten through a wall or column", () 
   data.circulationGeometry!.cells[0].ringsFeet.push(wall, column);
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
   const blocked = nativeRouteBlocker(
     { walls: [{ polygon: wall }], columns: [{ polygon: column }] },
     [],
@@ -737,12 +865,27 @@ test("strict native evidence never restores legacy route or contour surfaces aft
   assert.equal(nativeCirculationGeometryKey(data), compilerKey(data));
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
   assert.ok(nativeCirculationSurfaces(data, data.records).cells.length);
   assert.ok(
     nativeCirculationWalkBlockers(data).has("walk"),
     "legacy outline branches require native regeneration",
   );
   const snapshot = routingSnapshot(data);
+  const beforeAperture = nativeCirculationGeometryKey(data);
+  data.doorAperturePatchState = { regenerated: true, sourceGeometryKey: "[]" };
+  assert.equal(nativeCirculationGeometryKey(data), compilerKey(data));
+  assert.notEqual(
+    nativeCirculationGeometryKey(data),
+    beforeAperture,
+    "checked cap-aperture composition binds native cells",
+  );
+  assert.notEqual(
+    routingSnapshot(data),
+    snapshot,
+    "an aperture state mutation invalidates private policy binding",
+  );
+  delete data.doorAperturePatchState;
   data.nativeIndoorEnvelopes.levels[0]!.partsFeet[0]![0]![0]![0] += 0.1;
   assert.notEqual(
     routingSnapshot(data),
@@ -791,6 +934,7 @@ test("strict native branches cannot borrow an adjacent cell to extend their cert
   });
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
   data.edges[0]!.nativeCellId = cell.id;
   assert.ok(
     nativeCirculationWalkBlockers(data).has("walk"),
@@ -804,4 +948,470 @@ test("strict native branches cannot borrow an adjacent cell to extend their cert
     !nativeCirculationWalkBlockers(data).has("walk"),
     "the unchanged exact own-face route remains available",
   );
+});
+
+test("separate derived frame coordinates invalidate cells and worker caches without changing absent-descriptor legacy bytes", async () => {
+  const { routeWorkerDataset } = await import(
+    "../../app/indoor-project/route-worker-dataset"
+  );
+  const data = fixture();
+  const oldKey = nativeCirculationGeometryKey(data),
+    oldSnapshot = routingSnapshot(data);
+  assert.equal(compilerKey(data), oldKey);
+  // This is a binding-only mutation fixture, not an authorized material recipe.
+  const descriptor = {
+    version: 1,
+    sourceModelSha256: data.source.modelSha256,
+    geometrySha256: "a".repeat(64),
+    rows: [
+      {
+        partsFeet: [[rect(1, 0, 2, 1)]],
+        baseElevationFeet: 0,
+        topElevationFeet: 0.164,
+      },
+    ],
+  } as unknown as NonNullable<IndoorDataset["nativeDerivedFrameReturns"]>;
+  data.nativeDerivedFrameReturns = descriptor;
+  const added = nativeCirculationGeometryKey(data);
+  assert.notEqual(added, oldKey);
+  assert.equal(compilerKey(data), added);
+  assert.notEqual(routingSnapshot(data), oldSnapshot);
+  assert.equal(
+    nativeCirculationCells(data).length,
+    0,
+    "old physical cells cannot be reused after a new material layer",
+  );
+  const projected = routeWorkerDataset(data);
+  assert.deepEqual(
+    projected.nativeDerivedFrameReturns,
+    descriptor,
+    "routing worker retains complete finite material proof",
+  );
+  assert.equal(nativeCirculationGeometryKey(projected), added);
+  descriptor.rows[0]!.partsFeet[0]![0]![0]![0] += 0.01;
+  assert.notEqual(
+    nativeCirculationGeometryKey(data),
+    added,
+    "changed coordinates invalidate even when declared SHA stays unchanged",
+  );
+  delete data.nativeDerivedFrameReturns;
+  assert.equal(nativeCirculationGeometryKey(data), oldKey);
+  assert.equal(routingSnapshot(data), oldSnapshot);
+});
+
+test("same-original-slab aliases accept only certified own doorway halves, never foreign masks or floor holes", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { nativeCellSharedFloorAlias } = await import(
+    "../../app/indoor-project/native-circulation"
+  );
+  const data = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: data.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  data.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  data.records.push({
+    ...data.records[0],
+    key: "right",
+    ringsFeet: [rect(10, 0, 20, 6)],
+  });
+  data.nodes[0].surfaceId = "original-room";
+  data.nodes[1] = {
+    ...data.nodes[1],
+    kind: "portal",
+    surfaceId: "original-door",
+    pointFeet: [9.5, 2, 0],
+  };
+  data.nodes.push({
+    ...data.nodes[1],
+    id: "other",
+    roomKey: "right",
+    pointFeet: [10.5, 2, 0],
+  });
+  data.walls.push({
+    kind: "wall",
+    nativeElementId: 103,
+    levelId: 1,
+    ringsFeet: [rect(9, 0, 11, 6)],
+  });
+  data.doors!.push({
+    id: "door",
+    nativeElementId: 104,
+    hostWallNativeElementId: 103,
+    levelId: 1,
+    state: "connected",
+    roomKeys: ["hall", "right"],
+    pointFeet: [10, 2],
+    normalFeet: [1, 0],
+    footprintFeet: rect(9, 1, 11, 3),
+  } as NonNullable<IndoorDataset["doors"]>[number]);
+  data.edges[0].pointsFeet = [
+    [2, 2, 0],
+    [9.5, 2, 0],
+  ];
+  data.edges[0].nativeCellId = "native-cell";
+  data.edges.push({
+    id: "door",
+    nativeElementId: 104,
+    from: "b",
+    to: "other",
+    kind: "door",
+    evidence: "Measured original door",
+    roomKeys: ["hall", "right"],
+    enabled: true,
+    accessible: "unknown",
+    lengthMetres: 0.3048,
+    pointsFeet: [
+      [9.5, 2, 0],
+      [10.5, 2, 0],
+    ],
+  });
+  data.circulationGeometry!.cells[0].ringsFeet = [rect(0, 0, 9, 6)];
+  data.circulationGeometry!.preparedRoomKeys = ["hall", "right"];
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
+  assert.ok(
+    nativeCellSharedFloorAlias(data, data.edges[0]),
+    "unchanged own portal sits outside masked face but on the same checked physical slab and enclosure",
+  );
+  data.walls.push({
+    kind: "wall",
+    nativeElementId: 105,
+    levelId: 1,
+    ringsFeet: [rect(9.2, 1, 9.20000001, 3)],
+  });
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
+  assert.equal(
+    nativeCellSharedFloorAlias(data, data.edges[0]),
+    false,
+    "arbitrarily thin foreign material blocks the entire approach",
+  );
+  data.walls.pop();
+  data.walkingSupport!.floors[0].ringsFeet.push(rect(9.2, 1, 9.20000001, 3));
+  data.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(data);
+  compileLiteralFixtureTopology(data);
+  assert.equal(
+    nativeCellSharedFloorAlias(data, data.edges[0]),
+    false,
+    "an actual native floor hole cannot be supplied by a source portal alias",
+  );
+});
+
+test("a rehashed prepared carrier cannot erase a current original floor hole or foreign material", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const d = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  d.circulationGeometry!.preparedRoomKeys = ["hall"];
+  d.edges[0].nativeCellId = d.circulationGeometry!.cells[0].id;
+  d.edges[0].pointsFeet = [
+    [2, 2, 0],
+    [18, 2, 0],
+  ];
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.ok(!nativeCirculationWalkBlockers(d).has("walk"));
+  // Independently current physical floor changes; malicious recomputation of
+  // the prepared checksum still cannot replace actual source support.
+  d.walkingSupport!.floors[0].ringsFeet.push(rect(9, 1, 9 + 1e-12, 3));
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.ok(nativeCirculationWalkBlockers(d).has("walk"));
+  d.walkingSupport!.floors[0].ringsFeet.pop();
+  d.walls.push({
+    levelId: 1,
+    nativeElementId: 99,
+    kind: "wall",
+    ringsFeet: [rect(9, 1, 9 + 1e-12, 3)],
+  });
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.ok(nativeCirculationWalkBlockers(d).has("walk"));
+});
+test("source-face majority keeps contained restricted identities unavailable despite forged public roomKeys", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const d = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  d.records.push({
+    ...d.records[0],
+    key: "private",
+    access: "staff",
+    circulation: false,
+    ringsFeet: [rect(3, 3, 4, 4)],
+  });
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.deepEqual(nativeCirculationCells(d), []);
+  d.records.at(-1)!.ringsFeet = [rect(3, 3, 3.125, 3.125)];
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.deepEqual(
+    nativeCirculationCells(d),
+    [],
+    "a wholly contained 0.015625 square-foot restricted identity still vetoes the shared face",
+  );
+  d.records.at(-1)!.access = "public";
+  d.records.at(-1)!.walkable = false;
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.deepEqual(
+    nativeCirculationCells(d),
+    [],
+    "a positive nonwalkable claim cannot disappear below a numerical area cutoff",
+  );
+});
+test("rehashed native face cannot erase independently replayed original typed tread material", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const d = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  const roles = nativeAuthoredStairRoleFixture();
+  for (const face of roles.runs[0].faces) {
+    for (const t of face.originalTrianglesFeet)
+      for (const p of t) {
+        p[0] += 8;
+        p[1] += 1;
+      }
+    if (face.typed) {
+      face.typed.origin[0] += 8;
+      face.typed.origin[1] += 1;
+      for (const l of [face.typed.startLine, face.typed.endLine]) {
+        l.origin[0] += 8;
+        l.origin[1] += 1;
+      }
+    }
+  }
+  roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
+  d.nativeSourceStairMaterials = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    flights: [],
+    authoredTreadRoles: roles,
+  };
+  d.edges[0].nativeCellId = d.circulationGeometry!.cells[0].id;
+  d.edges[0].pointsFeet = [
+    [2, 1.5, 0],
+    [18, 1.5, 0],
+  ];
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  assert.ok(nativeCirculationWalkBlockers(d).has("walk"));
+});
+
+test("worker projection preserves exact carrier and immutable preparations while a later edit gets fresh validation", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { routeWorkerDataset } = await import(
+    "../../app/indoor-project/route-worker-dataset"
+  );
+  const { withRoutingCalculation, createImmutableRoutingSession } =
+    await import("../../app/indoor-project/routing-cache");
+  const { nativeCirculationExactIndex } = await import(
+    "../../app/indoor-project/native-circulation"
+  );
+  const d = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  d.circulationGeometry!.preparedRoomKeys = ["hall"];
+  d.edges[0].nativeCellId = d.circulationGeometry!.cells[0].id;
+  d.edges[0].pointsFeet = [
+    [2, 2, 0],
+    [18, 2, 0],
+  ];
+  d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+  compileLiteralFixtureTopology(d);
+  const projected = structuredClone(routeWorkerDataset(d));
+  assert.deepEqual(
+    projected.circulationGeometry!.exactTopology,
+    d.circulationGeometry!.exactTopology,
+  );
+  assert.equal(nativeCirculationGeometryKey(projected), compilerKey(d));
+  const session = createImmutableRoutingSession(projected);
+  const first = session(() => nativeCirculationExactIndex(projected));
+  for (let i = 0; i < 25; i++)
+    session(() => {
+      assert.equal(nativeCirculationExactIndex(projected), first);
+      assert.ok(!nativeCirculationWalkBlockers(projected).has("walk"));
+    });
+  const originalSnapshot = routingSnapshot(d);
+  d.circulationGeometry!.exactTopology!.coordinates[0].x[0] = "17";
+  assert.notEqual(routingSnapshot(d), originalSnapshot);
+  assert.throws(
+    () => withRoutingCalculation(d, () => nativeCirculationExactIndex(d)),
+    /checksum|native ring|rings|polygon|hole/,
+  );
+});
+test("worker retains current native tread vetoes but omits contained drawing buffers and never binds authoring history", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { routeWorkerDataset } = await import(
+    "../../app/indoor-project/route-worker-dataset"
+  );
+  const { prepareNativeContainedCellDisplay } = await import(
+    "../../app/indoor-project/native-contained-cell-display"
+  );
+  const { createNativeExactTopologyIndex } = await import(
+    "../../app/indoor-project/native-exact-planar-topology"
+  );
+  const d = fixture(),
+    source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 20, 6)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  d.stairDisplay = {
+    version: 1,
+    generator: "reviter/native-stair-display-1",
+    sourceModelSha256: d.source.modelSha256,
+    flights: [],
+    sourceFlights: [
+      {
+        stairElementId: 20,
+        levelIds: [1],
+        buildings: ["1"],
+        floorElevationFeet: 0,
+        sourceGeometry: "native-cache",
+        treads: [
+          { runElementId: 10, elevationFeet: 1, ringFeet: rect(8, 1, 12, 2) },
+        ],
+      },
+    ],
+  };
+  const key = nativeCirculationGeometryKey(d);
+  d.stairDisplay.sourceFlights![0].historicalPreparedTreads = [
+    { runElementId: 10, elevationFeet: 4, ringFeet: rect(0, 0, 20, 6) },
+  ];
+  assert.equal(nativeCirculationGeometryKey(d), key);
+  assert.equal(compilerKey(d), key);
+  d.circulationGeometry!.sourceGeometryKey = key;
+  compileLiteralFixtureTopology(d);
+  const carrier = d.circulationGeometry!.exactTopology!,
+    cell = d.circulationGeometry!.cells[0];
+  const parts = createNativeExactTopologyIndex(carrier, {
+    sourceModelSha256: d.source.modelSha256,
+    sourceGeometryKey: key,
+    kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+  }).parts(cell.exactFaceId!)!;
+  cell.containedDisplay = prepareNativeContainedCellDisplay(
+    cell.id,
+    parts,
+  ).display;
+  const worker = routeWorkerDataset(d);
+  assert.equal(
+    worker.circulationGeometry!.cells[0].containedDisplay,
+    undefined,
+  );
+  assert.deepEqual(worker.circulationGeometry!.exactTopology, carrier);
+  assert.equal(nativeCirculationGeometryKey(worker), key);
+  assert.deepEqual(
+    worker.stairDisplay!.sourceFlights![0].treads,
+    d.stairDisplay.sourceFlights![0].treads,
+  );
+  d.stairDisplay.sourceFlights![0].treads[0].ringFeet[0][0] += 1e-4;
+  assert.notEqual(nativeCirculationGeometryKey(d), key);
 });

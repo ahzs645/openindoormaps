@@ -121,6 +121,16 @@ The browser test checks desktop/mobile filtering, floor selection, view comparis
 
 The native-cache regeneration command is `indoor:regenerate-cache`; inspect its arguments and model hash before use. See Reviter's `docs/indoor-project-pipeline.md` for full source preparation/export. Audit commands produce reports and never silently repair the archive.
 
+Native-cache regeneration also accepts `--native-workers 2` and an optional
+`--checkpoint-dir /absolute/path/native-floor-checkpoints` after its three
+positional paths. Omit these flags to retain sequential calculation. The
+default checkpoint directory is `<output-directory>/native-plane-checkpoints`.
+Only completed native physical floor calculations are reused with identical
+input/compiler bindings; conversion and earlier connection checks still rerun.
+Source identity, retained arrivals, physical connectors and export guards remain
+active. See the sibling pipeline guide for deterministic merging and memory
+limits; worker checkpoints do not approve geometry or routes.
+
 ## Scan curtain-host rectangle fallbacks
 
 `scripts/indoor/audit-curtain-fallbacks.py` compares actual approximate exported host polygons with native bounds and persisted precise panel/frame members. Run it in a task-local Python environment with Shapely 2.x:

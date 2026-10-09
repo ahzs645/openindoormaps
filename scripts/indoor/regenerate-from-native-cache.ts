@@ -10,6 +10,7 @@ import path from "node:path";
 const { join, resolve } = path;
 import { readProjectPackage } from "../../../reviter/lib/reviter/project-package.ts";
 import { prepareIndoorDataset } from "../../../reviter/lib/reviter/indoor-pipeline.ts";
+import { createNativeParallelCompiler } from "../../../reviter/scripts/indoor/parallel-native-circulation.ts";
 import type { ConvertResult } from "../../../reviter/lib/reviter/types.ts";
 import { validatePublishedNativeExploreMapping } from "../../app/indoor-project/native-explore-mapping";
 import {
@@ -18,14 +19,46 @@ import {
   exportCampusViewer,
 } from "../../app/indoor-project/package";
 
-const [input, nativeCache, destination] = process.argv.slice(2);
+const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--checkpoint-dir directory]",
   );
+const workerOptions = new Map<string, string>();
+for (let i = 0; i < workerArgs.length; i += 2) {
+  const flag = workerArgs[i]!,
+    value = workerArgs[i + 1];
+  if (
+    !["--native-workers", "--checkpoint-dir"].includes(flag) ||
+    workerOptions.has(flag) ||
+    !value ||
+    value.startsWith("--")
+  )
+    throw Error(
+      "Expected unique --native-workers 1|2 and optional --checkpoint-dir directory",
+    );
+  workerOptions.set(flag, value);
+}
+const workerCount = workerOptions.has("--native-workers")
+  ? Number(workerOptions.get("--native-workers"))
+  : undefined;
+if (workerCount !== undefined && workerCount !== 1 && workerCount !== 2)
+  throw Error("--native-workers must be 1 or 2");
+if (workerOptions.has("--checkpoint-dir") && !workerCount)
+  throw Error("--checkpoint-dir requires --native-workers");
 const inputPath = resolve(input),
   cachePath = resolve(nativeCache),
   output = resolve(destination);
+const nativeCirculationCompiler = workerCount
+  ? createNativeParallelCompiler({
+      maxWorkers: workerCount as 1 | 2,
+      checkpointDir: resolve(
+        workerOptions.get("--checkpoint-dir") ??
+          join(output, "native-plane-checkpoints"),
+      ),
+      onProgress: (message) => console.log(message),
+    })
+  : undefined;
 const originalBytes = new Uint8Array(await readFile(inputPath));
 const original = await readProjectPackage(originalBytes);
 const before = await readIndoorProject(originalBytes);
@@ -51,6 +84,7 @@ const dataset = await prepareIndoorDataset(
     if (!message.includes("region") || /region (?:[0-9]*00)\//.test(message))
       console.log(message);
   },
+  { physicalDoorSource: original.indoor, nativeCirculationCompiler },
 );
 // The compiler hashes hydrated annotations. A portable package binds the exact
 // preserved source entry, whose review companions may use archive wire storage.

@@ -99,7 +99,7 @@ function nativeDoorThresholds(data: IndoorDataset, records: IndoorRecord[]) {
                 .length === 0,
           )
           .map((w) => w.ringsFeet),
-        ...data.records
+        ...(data.nativeIndoorEnvelopes ? [] : data.records)
           .filter(
             (r) =>
               Math.abs(r.elevationFeet - z) < 0.05 &&
@@ -108,7 +108,7 @@ function nativeDoorThresholds(data: IndoorDataset, records: IndoorRecord[]) {
               (!r.circulation || !r.walkable || r.access === "staff"),
           )
           .map((r) => r.ringsFeet),
-        ...data.records
+        ...(data.nativeIndoorEnvelopes ? [] : data.records)
           .filter(
             (r) =>
               Math.abs(r.elevationFeet - z) < 0.05 &&
@@ -155,6 +155,9 @@ export function circulationThresholds(
   parts: Rings[];
   boundarySource: string;
 }[] {
+  // Strict native faces and checked pass-through closures supply the floor.
+  // Historical threshold paint must not reintroduce outline-based surfaces.
+  if (data.nativeIndoorEnvelopes) return [];
   const byKey = new Map(records.map((r) => [r.key, r]));
   const walls = data.walls.map((w) => ({ ...w, box: bounds(w.ringsFeet) }));
   const places = data.records.map((r) => ({ ...r, box: bounds(r.ringsFeet) }));
@@ -179,7 +182,7 @@ export function circulationThresholds(
       ...walls
         .filter((w) => w.levelId === span.levelId && overlaps(box, w.box))
         .map((w) => w.ringsFeet),
-      ...places
+      ...(data.nativeIndoorEnvelopes ? [] : places)
         .filter(
           (r) =>
             r.levelId === span.levelId &&
@@ -188,7 +191,7 @@ export function circulationThresholds(
             (!r.circulation || !r.walkable || r.access === "staff"),
         )
         .map((r) => r.ringsFeet),
-      ...places
+      ...(data.nativeIndoorEnvelopes ? [] : places)
         .filter((r) => r.levelId === span.levelId && overlaps(box, r.box))
         .flatMap((r) => r.ringsFeet.slice(1).map((h) => [h])),
     ];

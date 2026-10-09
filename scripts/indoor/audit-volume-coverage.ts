@@ -1,3 +1,4 @@
+import { deriveNativeExplore } from "../../app/indoor-project/native-explore";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile, writeFile } from "node:fs/promises";
@@ -27,13 +28,20 @@ const archive = await readFile(input);
 const { dataset: data } = await readIndoorProject(archive);
 const archiveHash = hash(archive),
   datasetHash = hash(JSON.stringify(data));
-const views = volumeScopes(data).map((scope) => {
-  const view = auditVolumeScope(data, scope);
+const views = [];
+for (const scope of volumeScopes(data)) {
+  const view = auditVolumeScope(
+    data,
+    scope,
+    data.nativeIndoorEnvelopes
+      ? await deriveNativeExplore(data, scope.levelIds, "all")
+      : undefined,
+  );
   process.stderr.write(
     `${scope.scope} ${scope.name}: ${view.records.length} records audited\n`,
   );
-  return view;
-});
+  views.push(view);
+}
 assert.equal(
   hash(JSON.stringify(data)),
   datasetHash,

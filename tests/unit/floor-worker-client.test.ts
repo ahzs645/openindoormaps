@@ -12,6 +12,7 @@ import {
   floorWorkerKey,
   type FloorWorker,
 } from "../../app/indoor-project/floor-worker-client";
+import type { NativeExploreResult } from "../../app/indoor-project/native-explore";
 const options: FloorPreparationOptions = {
   showPillars: false,
   showPassThroughPlaces: false,
@@ -34,19 +35,27 @@ class ControlledWorker implements FloorWorker {
   terminate() {
     this.terminated = true;
   }
-  reply(value: PreparedFloor, requestId = this.messages.at(-1)!.requestId) {
+  reply(
+    value: PreparedFloor,
+    requestId = this.messages.at(-1)!.requestId,
+    memoryCostBytes = 100,
+  ) {
     this.onmessage?.({
-      data: { requestId, value },
+      data: { requestId, value, memoryCostBytes },
     } as MessageEvent<FloorPreparationResponse>);
   }
 }
-function setup(capacity = 12) {
+function setup(capacity = 12, maximumBytes?: number) {
   const workers: ControlledWorker[] = [];
-  const client = new FloorWorkerClient(() => {
-    const w = new ControlledWorker();
-    workers.push(w);
-    return w;
-  }, capacity);
+  const client = new FloorWorkerClient(
+    () => {
+      const w = new ControlledWorker();
+      workers.push(w);
+      return w;
+    },
+    capacity,
+    maximumBytes,
+  );
   return { client, workers };
 }
 test("rapid floor changes terminate obsolete CPU work and reject late replies", async () => {
@@ -194,4 +203,81 @@ test("doorway recess display options cannot reuse the opposite cached mask", () 
     floorWorkerKey([694], "10", options),
     "older callers retain detailed doorway masks",
   );
+});
+
+test("supplied native face changes cannot reuse a completed client result", async () => {
+  const { client, workers } = setup();
+  const a = {} as NativeExploreResult,
+    b = {} as NativeExploreResult;
+  const first = client.request(project, [1], "all", {
+    ...options,
+    nativeFaces: a,
+  });
+  const value = floor("first carrier");
+  workers[0].reply(value);
+  await first.promise;
+  assert.equal(
+    await client.request(project, [1], "all", { ...options, nativeFaces: a })
+      .promise,
+    value,
+  );
+  const second = client.request(project, [1], "all", {
+    ...options,
+    nativeFaces: b,
+  });
+  workers[0].reply(floor("second carrier"));
+  assert.notEqual(await second.promise, value);
+  assert.equal(workers[0].messages.length, 2);
+  client.dispose();
+});
+
+test("worker byte costs bound retained floors; oversized and older replies still display without UI geometry traversal", async () => {
+  const { client, workers } = setup(12, 250);
+  for (const n of [1, 2, 3]) {
+    const job = client.request(project, [n], "all", options);
+    workers[0].reply(floor(String(n)), undefined, 100);
+    await job.promise;
+  }
+  assert.equal(
+    client.peek(project, floorWorkerKey([1], "all", options)),
+    undefined,
+  );
+  assert.equal(client.cacheStatistics().memoryCostBytes, 200);
+  const object = Object.defineProperty({}, "geometry", {
+    enumerable: true,
+    get() {
+      throw Error("UI walked geometry");
+    },
+  }) as PreparedFloor;
+  const big = client.request(project, [4], "all", options);
+  workers[0].reply(object, undefined, 300);
+  assert.equal(await big.promise, object);
+  assert.equal(
+    client.peek(project, floorWorkerKey([4], "all", options)),
+    undefined,
+  );
+  const legacy = client.request(project, [5], "all", options);
+  workers[0].onmessage?.({
+    data: { requestId: workers[0].messages.at(-1)!.requestId, value: object },
+  } as MessageEvent<FloorPreparationResponse>);
+  assert.equal(await legacy.promise, object);
+  assert.equal(
+    client.peek(project, floorWorkerKey([5], "all", options)),
+    undefined,
+  );
+  const edited = {} as IndoorDataset;
+  const next = client.request(edited, [2], "all", options);
+  assert.equal(
+    client.cacheStatistics().entries,
+    0,
+    "new immutable dataset releases old retained results",
+  );
+  workers[0].reply(floor("edited"));
+  await next.promise;
+  assert.equal(
+    client.peek(project, floorWorkerKey([2], "all", options)),
+    undefined,
+  );
+  client.dispose();
+  assert.equal(client.cacheStatistics().entries, 0);
 });

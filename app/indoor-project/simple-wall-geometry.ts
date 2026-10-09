@@ -43,6 +43,7 @@ export function compactWallDetails(
   data: IndoorDataset,
   records: IndoorRecord[],
 ): Mask[] {
+  if (data.nativeIndoorEnvelopes) return [];
   const masks: Mask[] = [];
   const extents = records.map((r) => ({
     levelId: r.levelId,
@@ -158,6 +159,7 @@ export function simpleWallGeometry(
   walls: FeatureCollection<MultiPolygon>,
   masks: Mask[],
 ): FeatureCollection<MultiPolygon> {
+  if (data.nativeIndoorEnvelopes) return walls;
   const features = walls.features.flatMap((f) => {
     if (
       f.properties?.kind === "column" ||
@@ -236,6 +238,7 @@ export function simpleRoomGeometry(
   collection: FeatureCollection<MultiPolygon>,
   masks: Mask[],
 ): FeatureCollection<MultiPolygon> {
+  if (data.nativeIndoorEnvelopes) return collection;
   return {
     ...collection,
     features: collection.features.map((feature) => {

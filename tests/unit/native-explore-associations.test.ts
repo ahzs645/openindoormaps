@@ -176,17 +176,253 @@ test("native fill colors follow room types independently of custom outline color
   );
 });
 
-test("publication saves triangles and invalidates changed identity anchors",async()=>{
- const p=await gapProject();
- const room=p.dataset.records[0];
- p.dataset.nodes=[{id:'anchor',roomKey:room.key,levelId:1,building:room.building,surfaceId:room.surfaceId,pointFeet:[5,5,0],geographic:[-122,53],kind:'arrival'}];
- room.arrivalNodeId='anchor';
- const {compileNativeExploreMapping,nativeExploreDatasetGeometrySha256,validatePublishedNativeExploreMapping}=await import('../../app/indoor-project/native-explore-mapping');
- p.dataset.nativeExploreMapping=await compileNativeExploreMapping(p.dataset,await nativeExploreDatasetGeometrySha256(p.dataset));
- assert.equal(p.dataset.nativeExploreMapping.version,2);
- assert.ok(p.dataset.nativeExploreMapping.levels.length);
- assert.ok(p.dataset.nativeExploreMapping.levels.every(l=>l.regions.every(r=>r.displayPartsFeet?.length)));
- await validatePublishedNativeExploreMapping(p.dataset);
- p.dataset.nodes[0].pointFeet[0]+=.1;
- await assert.rejects(validatePublishedNativeExploreMapping(p.dataset),/stale source geometry/);
+test("publication saves triangles and invalidates changed identity anchors", async () => {
+  const p = await gapProject();
+  const room = p.dataset.records[0];
+  p.dataset.nodes = [
+    {
+      id: "anchor",
+      roomKey: room.key,
+      levelId: 1,
+      building: room.building,
+      surfaceId: room.surfaceId,
+      pointFeet: [5, 5, 0],
+      geographic: [-122, 53],
+      kind: "arrival",
+    },
+  ];
+  room.arrivalNodeId = "anchor";
+  const {
+    compileNativeExploreMapping,
+    nativeExploreDatasetGeometrySha256,
+    validatePublishedNativeExploreMapping,
+  } = await import("../../app/indoor-project/native-explore-mapping");
+  p.dataset.nativeExploreMapping = await compileNativeExploreMapping(
+    p.dataset,
+    await nativeExploreDatasetGeometrySha256(p.dataset),
+  );
+  assert.equal(p.dataset.nativeExploreMapping.version, 2);
+  assert.ok(p.dataset.nativeExploreMapping.levels.length);
+  assert.ok(
+    p.dataset.nativeExploreMapping.levels.every((l) =>
+      l.regions.every((r) => r.displayPartsFeet?.length),
+    ),
+  );
+  await validatePublishedNativeExploreMapping(p.dataset);
+  p.dataset.nodes[0].pointFeet[0] += 0.1;
+  await assert.rejects(
+    validatePublishedNativeExploreMapping(p.dataset),
+    /stale source geometry/,
+  );
+});
+
+test("published native mapping rejects stale authored tread geometry after a valid role is rehashed", async () => {
+  const p = await gapProject();
+  const { nativeAuthoredStairRoleFixture } = await import(
+    "../fixtures/native-authored-stair-role"
+  );
+  const { nativeAuthoredStairTreadRolesHash } = await import(
+    "../../app/indoor-project/native-authored-stair-treads"
+  );
+  const {
+    compileNativeExploreMapping,
+    nativeExploreDatasetGeometrySha256,
+    validatePublishedNativeExploreMapping,
+  } = await import("../../app/indoor-project/native-explore-mapping");
+  const roles = nativeAuthoredStairRoleFixture();
+  roles.sourceModelSha256 = p.dataset.source.modelSha256;
+  roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
+  p.dataset.nativeSourceStairMaterials = {
+    version: 1,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    flights: [],
+    authoredTreadRoles: roles,
+  };
+  const geometryKey = await nativeExploreDatasetGeometrySha256(p.dataset);
+  p.dataset.nativeExploreMapping = await compileNativeExploreMapping(
+    p.dataset,
+    geometryKey,
+  );
+  await validatePublishedNativeExploreMapping(p.dataset);
+  // Translate the actual primitive and both finite controls together. The
+  // independent role remains valid, but the old published geometry is stale.
+  for (const face of roles.runs[0].faces) {
+    for (const triangle of face.originalTrianglesFeet)
+      for (const point of triangle) point[0] += 1;
+    if (face.typed) {
+      face.typed.origin[0] += 1;
+      face.typed.startLine.origin[0] += 1;
+      face.typed.endLine.origin[0] += 1;
+    }
+  }
+  roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
+  assert.notEqual(
+    await nativeExploreDatasetGeometrySha256(p.dataset),
+    geometryKey,
+  );
+  await assert.rejects(
+    validatePublishedNativeExploreMapping(p.dataset),
+    /stale source geometry/,
+  );
+});
+
+test("a source-bound void name uses its real slab hole and cannot claim supported neighbouring floor through an old outline or seed", async () => {
+  const p = await project(),
+    data = p.dataset,
+    room = data.records[0];
+  room.walkable = false;
+  room.ringsFeet = [rect(0, 0, 10, 10)];
+  const hole = rect(2, 2, 2, 2);
+  data.walkingSupport = {
+    version: 1,
+    sourceModelSha256: data.source.modelSha256,
+    floors: [
+      {
+        nativeElementId: 123,
+        elevationFeet: room.elevationFeet,
+        ringsFeet: [rect(0, 0, 10, 10), hole],
+      },
+    ],
+  };
+  const floor = data.walkingSupport!.floors[0];
+  floor.elevationFeet = room.elevationFeet;
+  floor.partsFeet = [[rect(0, 0, 10, 10), hole]];
+  room.properties.nativeFloorOpeningOwnership = {
+    version: 1,
+    sourceModelSha256: data.source.modelSha256,
+    nativeFloorElementId: floor.nativeElementId,
+    elevationFeet: room.elevationFeet,
+    holeFeet: hole,
+  };
+  const face = region("supported-floor", 0, [room.key]);
+  face.ringsFeet.push(hole);
+  const before = JSON.stringify([face, room, floor]);
+  assert.deepEqual(associateNativeRooms([face], [room], data)[0].roomKeys, []);
+  assert.equal(JSON.stringify([face, room, floor]), before);
+  room.properties.nativeFloorOpeningOwnership = {
+    ...(room.properties.nativeFloorOpeningOwnership as object),
+    sourceModelSha256: "0".repeat(64),
+  };
+  assert.deepEqual(associateNativeRooms([face], [room], data)[0].roomKeys, [
+    room.key,
+  ]);
+});
+
+test("strict native identity requires majority overlap even when an old label seed names the component", async () => {
+  const p = await project(),
+    d = p.dataset;
+  const room = d.records[0];
+  room.ringsFeet = [rect(0, 0, 30, 10)];
+  const faces = [region("left", 0, [room.key]), region("right", 10)];
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const evidence = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 30, 10)]],
+        sourceElementIds: [123],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...evidence,
+    geometrySha256: await nativeIndoorEnvelopeHash(evidence),
+  };
+  assert.ok(
+    associateNativeRooms(faces, [room], d).every(
+      (r) => r.roomKeys.length === 0,
+    ),
+  );
+  room.ringsFeet = [rect(1, 1, 8, 8)];
+  assert.deepEqual(associateNativeRooms(faces, [room], d)[0].roomKeys, [
+    room.key,
+  ]);
+});
+
+test("strict visitor labels use only published majority identities, preserving independent map markers", async () => {
+  const p = await project(),
+    d = p.dataset;
+  const { nativeExploreLabels } = await import(
+    "../../app/indoor-project/native-explore-labels"
+  );
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const evidence = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 10, 10)]],
+        sourceElementIds: [123],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...evidence,
+    geometrySha256: await nativeIndoorEnvelopeHash(evidence),
+  };
+  d.nativeExploreMapping = {
+    format: "openindoormaps-native-explore-mapping",
+    version: 2,
+    sourceModelSha256: d.source.modelSha256,
+    datasetGeometrySha256: "b".repeat(64),
+    mappingSha256: "c".repeat(64),
+    unavailableLevelIds: [],
+    levels: [
+      {
+        levelId: 1,
+        warningCount: 0,
+        boundaries: [],
+        regions: [
+          {
+            ...region("left", 0),
+            associations: [
+              {
+                roomKey: "0",
+                coverage: 0.8,
+                method: "majority-overlap",
+                labelPointFeet: [2, 2],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const labels = {
+    type: "FeatureCollection" as const,
+    features: ["0", "1", "location:independent"].map((key) => ({
+      type: "Feature" as const,
+      properties: { key },
+      geometry: { type: "Point" as const, coordinates: [-122, 53] },
+    })),
+  };
+  const before = JSON.stringify(labels);
+  const result = nativeExploreLabels(d, labels, [1]);
+  assert.deepEqual(
+    result.features.map((f) => f.properties?.key),
+    ["0", "location:independent"],
+  );
+  assert.notDeepEqual(
+    result.features[0].geometry.coordinates,
+    labels.features[0].geometry.coordinates,
+  );
+  assert.equal(JSON.stringify(labels), before);
+  d.nativeExploreMapping.levels[0].regions[0].associations = [];
+  assert.deepEqual(
+    nativeExploreLabels(d, labels, [1]).features.map((f) => f.properties?.key),
+    ["location:independent"],
+  );
 });

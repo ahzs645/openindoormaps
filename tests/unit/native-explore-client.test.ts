@@ -89,3 +89,62 @@ test("startup, cloning, unreadable replies and worker errors produce a retryable
     assert.ok(responses[0].error, failure);
   }
 });
+
+test("verified floor responses remain live until fine wall detail completes", () => {
+  const worker = new ControlledWorker(),
+    responses: NativeExploreResponse[] = [];
+  startNativeExploreTrace(
+    request,
+    () => worker,
+    (value) => responses.push(value),
+  );
+  const floor = {} as NativeExploreResult;
+  worker.reply({ result: floor, complete: false });
+  assert.equal(worker.terminated, false);
+  assert.deepEqual(responses, [{ result: floor, complete: false }]);
+  const detailed = {
+    ...floor,
+    walls: { type: "FeatureCollection", features: [] },
+  } as NativeExploreResult;
+  worker.reply({ walls: detailed.walls, complete: true });
+  assert.equal(worker.terminated, true);
+  worker.reply({ error: "late" });
+  assert.equal(responses.length, 2);
+  assert.equal(responses[1].result, undefined);
+  assert.equal((responses[1] as NativeExploreResponse).walls, detailed.walls);
+});
+
+test("a floor switch cancels pending wall detail without publishing stale geometry", () => {
+  const worker = new ControlledWorker(),
+    responses: NativeExploreResponse[] = [];
+  const cancel = startNativeExploreTrace(
+    request,
+    () => worker,
+    (value) => responses.push(value),
+  );
+  worker.reply({ result: {} as NativeExploreResult, complete: false });
+  cancel();
+  worker.reply({ result: {} as NativeExploreResult, complete: true });
+  assert.equal(worker.terminated, true);
+  assert.equal(responses.length, 1);
+});
+
+test("wall failure retains the verified floor and closes the worker", () => {
+  const worker = new ControlledWorker(),
+    responses: NativeExploreResponse[] = [];
+  startNativeExploreTrace(
+    request,
+    () => worker,
+    (value) => responses.push(value),
+  );
+  const floor = {} as NativeExploreResult;
+  worker.reply({ result: floor, complete: false });
+  worker.reply({
+    result: floor,
+    complete: true,
+    error: "Native wall detail failed",
+  });
+  assert.equal(worker.terminated, true);
+  assert.equal(responses[1].result, floor);
+  assert.match(responses[1].error!, /wall detail/);
+});

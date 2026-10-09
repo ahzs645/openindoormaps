@@ -108,6 +108,10 @@ export function withWindowExportMode(
  * The returned display input shares all original navigation/source collections.
  */
 export function nativeWindowDisplayInput(data: IndoorDataset): IndoorDataset {
+  // Strict sections already carry measured retained wall/window material.
+  // Legacy comparison heuristics must not alter their original owner inventory
+  // or the source binding used by exact aperture/material queries.
+  if (data.nativeIndoorEnvelopes && data.nativeMaterialSections) return data;
   const detail = data.windowDisplay;
   if (
     detail?.mode !== "native" ||
@@ -240,7 +244,7 @@ export function nativeWindowGeometry(
   });
   const visible = (id: number, rings: number[][][]) => {
     if (!levelIds.includes(id)) return false;
-    if (building === "all") return true;
+    if (building === "all" || data.nativeIndoorEnvelopes) return true;
     const q = rings.flat(),
       b = [
         Math.min(...q.map((p) => p[0])),
@@ -326,7 +330,7 @@ export function nativeWindowGeometry(
     walls: FeatureCollection<MultiPolygon>,
     three: boolean,
   ): FeatureCollection<MultiPolygon> => {
-    if (!cuts.length) return walls;
+    if (data.nativeIndoorEnvelopes || !cuts.length) return walls;
     return stableWallGeometry({
       ...walls,
       features: stableWallGeometry(walls).features.flatMap((f) => {

@@ -1,9 +1,66 @@
-import {validateNativeMaterialSections,verifyNativeMaterialSections,type NativeMaterialSections} from "./native-material-sections";
-import {validateNativeIndoorEnvelopes,verifyNativeIndoorEnvelopes,type NativeIndoorEnvelopes} from "./native-indoor-envelopes";
-import {validateNativeDisplayScopes, type NativeDisplayScopes} from "./native-display-scopes";
+import {
+  validateNativeSelectionContactRepairs,
+  deriveNativeSelectionContactRepairs,
+  type NativeSelectionContactRepairs,
+} from "./native-selection-contact-repairs";
+import { assertNativeSelectionContactRepairsPhysicalGuards } from "./native-selection-contact-guards";
+import { beginNativeImportValidation } from "./native-import-validation";
+import {
+  projectImportReporter,
+  type ProjectImportObserver,
+} from "./project-import-progress";
+import {
+  validateNativeProvisionalCornerSeals,
+  verifyNativeProvisionalCornerSeals,
+  type NativeProvisionalCornerSeals,
+} from "./native-provisional-corner-seals";
+import {
+  preparedDisplayArchiveEntryLimit,
+  readPreparedDisplayArchive,
+  serializePreparedDisplayArchive,
+  type PreparedDisplayIndexEntry,
+} from "./prepared-display-archive";
+import type { PreparedDisplayArchive } from "./prepared-display-registry";
+import { preparedDisplayDatasetSha256 } from "./prepared-display-assets";
+import { PREPARED_DISPLAY_ENGINE_SHA256 } from "./prepared-display-engine-binding";
+import { editorVisitorDataset } from "./map-edits";
+import {
+  validateNativeDerivedFrameReturns,
+  verifyNativeDerivedFrameReturns,
+  type NativeDerivedFrameReturns,
+} from "./native-derived-frame-returns";
+import { hydrateRoomNativeMaterials } from "./native-material-wire";
+import {
+  hydrateViewerMetadata,
+  packViewerMetadata,
+} from "./viewer-metadata-wire";
+import {
+  nativeSourceStairPhysicalEvidence,
+  validateNativeSourceStairMaterials,
+  type NativeSourceStairMaterials,
+} from "./native-source-stair-material";
+import { nativeMaterialPlanWalls } from "./native-material-plan";
+import { validateNativeFloorOpeningOwnershipBinding } from "./native-floor-opening-ownership";
+import {
+  validateNativeMaterialSections,
+  verifyNativeMaterialSections,
+  type NativeMaterialSections,
+} from "./native-material-sections";
+import {
+  validateNativeIndoorEnvelopes,
+  verifyNativeIndoorEnvelopes,
+  type NativeIndoorEnvelopes,
+} from "./native-indoor-envelopes";
+import {
+  validateNativeDisplayScopes,
+  type NativeDisplayScopes,
+} from "./native-display-scopes";
 import { MAX_REVIEW_CONTAINER_BYTES } from "./review-bundle-limits";
 import { floorDisplayName } from "./floor-display-name";
-import { publishNativeExploreMapping, validatePublishedNativeExploreMapping } from "./native-explore-mapping";
+import {
+  publishNativeExploreMapping,
+  validatePublishedNativeExploreMapping,
+} from "./native-explore-mapping";
 import {
   nativeDoorBoundaryClosureFootprints,
   validateNativeDoorBoundaryClosures,
@@ -15,7 +72,10 @@ import {
   type NativeWallPositionRepairs,
 } from "./native-wall-position-repairs";
 import { validateDoorApertureBinding } from "./reviewed-door-apertures";
-import { validateReviewedAreaPartitionBinding, type ReviewedAreaPartitions } from "./reviewed-area-partitions";
+import {
+  validateReviewedAreaPartitionBinding,
+  type ReviewedAreaPartitions,
+} from "./reviewed-area-partitions";
 import {
   validateSelectionDoorBinding,
   type SelectionDoorThresholds,
@@ -79,14 +139,84 @@ function validateIndoorScopeBinding(
   rooms: ProjectRooms,
   dataset: IndoorDataset,
 ) {
-  validateNativeDisplayScopes(rooms.nativeDisplayScopes, dataset.source.modelSha256);
-  validateNativeMaterialSections(rooms.nativeMaterialSections, dataset.source.modelSha256);
-  validateNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
-  if (JSON.stringify(rooms.nativeMaterialSections) !== JSON.stringify(dataset.nativeMaterialSections)) throw new Error("Source and prepared original native materials do not match.");
-  validateNativeIndoorEnvelopes(rooms.nativeIndoorEnvelopes, dataset.source.modelSha256);
-  if (JSON.stringify(rooms.nativeIndoorEnvelopes) !== JSON.stringify(dataset.nativeIndoorEnvelopes))
-    throw new Error("Source and prepared native indoor enclosures do not match. Regenerate the master.");
-  if (rooms.format !== "openindoormaps-viewer-metadata" && JSON.stringify(rooms.nativeDisplayScopes) !== JSON.stringify(dataset.nativeDisplayScopes))
+  validateNativeDisplayScopes(
+    rooms.nativeDisplayScopes,
+    dataset.source.modelSha256,
+  );
+  validateNativeSourceStairMaterials(
+    rooms.nativeSourceStairMaterials,
+    dataset.source.modelSha256,
+  );
+  validateNativeSourceStairMaterials(
+    dataset.nativeSourceStairMaterials,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeSourceStairMaterials) !==
+    JSON.stringify(dataset.nativeSourceStairMaterials)
+  )
+    throw new Error("Source and prepared native stair materials do not match.");
+  validateNativeProvisionalCornerSeals(
+    rooms.nativeProvisionalCornerSeals,
+    dataset.source.modelSha256,
+  );
+  validateNativeProvisionalCornerSeals(
+    dataset.nativeProvisionalCornerSeals,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeProvisionalCornerSeals) !==
+    JSON.stringify(dataset.nativeProvisionalCornerSeals)
+  )
+    throw new Error(
+      "Source and prepared provisional native corner assumptions do not match.",
+    );
+  validateNativeDerivedFrameReturns(
+    rooms.nativeDerivedFrameReturns,
+    dataset.source.modelSha256,
+  );
+  validateNativeDerivedFrameReturns(
+    dataset.nativeDerivedFrameReturns,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeDerivedFrameReturns) !==
+    JSON.stringify(dataset.nativeDerivedFrameReturns)
+  )
+    throw new Error(
+      "Source and prepared derived native frame material do not match.",
+    );
+  validateNativeMaterialSections(
+    rooms.nativeMaterialSections,
+    dataset.source.modelSha256,
+  );
+  validateNativeMaterialSections(
+    dataset.nativeMaterialSections,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeMaterialSections) !==
+    JSON.stringify(dataset.nativeMaterialSections)
+  )
+    throw new Error(
+      "Source and prepared original native materials do not match.",
+    );
+  validateNativeIndoorEnvelopes(
+    rooms.nativeIndoorEnvelopes,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeIndoorEnvelopes) !==
+    JSON.stringify(dataset.nativeIndoorEnvelopes)
+  )
+    throw new Error(
+      "Source and prepared native indoor enclosures do not match. Regenerate the master.",
+    );
+  if (
+    rooms.format !== "openindoormaps-viewer-metadata" &&
+    JSON.stringify(rooms.nativeDisplayScopes) !==
+      JSON.stringify(dataset.nativeDisplayScopes)
+  )
     throw new Error("Source and prepared native display scopes do not match.");
   validateIndoorExclusions(
     rooms.indoorExclusions,
@@ -94,8 +224,10 @@ function validateIndoorScopeBinding(
     dataset.nativeLevels,
   );
   if (
+    (rooms.format !== "openindoormaps-viewer-metadata" ||
+      rooms.indoorExclusions !== undefined) &&
     JSON.stringify(rooms.indoorExclusions) !==
-    JSON.stringify(dataset.indoorExclusions)
+      JSON.stringify(dataset.indoorExclusions)
   )
     throw new Error(
       "Source and prepared outdoor exclusions do not match. Regenerate the reviewed master.",
@@ -113,6 +245,7 @@ type ArchiveManifest = {
   indoor: Entry;
   scene?: Entry;
   reviewBundle?: Entry;
+  preparedDisplay?: PreparedDisplayIndexEntry;
 };
 /** Viewer assets are derived from a master; model identity is retained without model bytes. */
 type ViewerManifest = {
@@ -125,6 +258,7 @@ type ViewerManifest = {
   floors: Entry;
   georeference: Entry;
   indoor: Entry;
+  preparedDisplay?: PreparedDisplayIndexEntry;
 };
 type Manifest = ArchiveManifest | ViewerManifest;
 export const isViewerProject = (project: IndoorProject) =>
@@ -149,13 +283,17 @@ export type ProjectRooms = {
   enclosureReviews?: EnclosureReview;
   enclosureProposals?: EnclosureProposals;
   reviewBundle?: ReviewBundle;
+  nativeSelectionContactRepairs?: NativeSelectionContactRepairs;
   nativeDoorBoundaryClosures?: NativeDoorBoundaryClosures;
   nativeWallPositionRepairs?: NativeWallPositionRepairs;
   selectionDoorThresholds?: SelectionDoorThresholds;
   reviewedAreaPartitions?: ReviewedAreaPartitions;
   indoorExclusions?: IndoorExclusions;
   nativeDisplayScopes?: NativeDisplayScopes;
+  nativeProvisionalCornerSeals?: NativeProvisionalCornerSeals;
+  nativeDerivedFrameReturns?: NativeDerivedFrameReturns;
   nativeMaterialSections?: NativeMaterialSections;
+  nativeSourceStairMaterials?: NativeSourceStairMaterials;
   nativeIndoorEnvelopes?: NativeIndoorEnvelopes;
   nativeAreaReviews?: NativeAreaReviews;
   nativeBoundaryPatches?: NativeBoundaryPatches;
@@ -190,6 +328,7 @@ export type IndoorProject = {
   rooms: ProjectRooms;
   dataset: IndoorDataset;
   scene?: Uint8Array;
+  preparedDisplay?: PreparedDisplayArchive;
 };
 const MB = 1024 * 1024,
   MAX = 900 * MB,
@@ -197,7 +336,9 @@ const MB = 1024 * 1024,
     "manifest.json": 65_536,
     "floors/rooms.json": 64 * MB,
     "gis/reference-points.json": MB,
-    "viewer/indoor.json": 128 * MB,
+    // Exact native floor faces and their source-bound routing proofs can exceed
+    // 128 MiB. Keep a bounded entry allowance within the 900 MiB archive cap.
+    "viewer/indoor.json": 192 * MB,
     "viewer/metadata.json": 16 * MB,
     "model/scene.glb": 256 * MB,
     // Literal avoids the existing package/review-bundle initialization cycle.
@@ -207,7 +348,8 @@ const MB = 1024 * 1024,
 const modelPath = (p: string) =>
   // eslint-disable-next-line no-control-regex
   /^model\/[^/\\\u0000-\u001F]+\.(rvt|rfa|rte|rft)$/i.test(p);
-const limit = (p: string) => (modelPath(p) ? 512 * MB : limits[p]);
+const limit = (p: string) =>
+  modelPath(p) ? 512 * MB : (limits[p] ?? preparedDisplayArchiveEntryLimit(p));
 const hash = async (bytes: Uint8Array) =>
   [
     ...new Uint8Array(
@@ -221,7 +363,10 @@ const hash = async (bytes: Uint8Array) =>
     .join("");
 export async function readIndoorProject(
   bytes: Uint8Array,
+  onProgress?: ProjectImportObserver,
 ): Promise<IndoorProject> {
+  const progress = projectImportReporter(onProgress);
+  progress("archive");
   if (bytes.length === 0 || bytes.length > MAX)
     throw new Error("Project ZIP exceeds the 900 MB limit.");
   const seen = new Set<string>();
@@ -248,7 +393,7 @@ export async function readIndoorProject(
   if (!files["manifest.json"]) throw new Error("Missing Reviter manifest.");
   const manifest = JSON.parse(strFromU8(files["manifest.json"])) as Manifest;
   if (manifest.format === "openindoormaps-viewer")
-    return readViewerFiles(manifest, files);
+    return readViewerFiles(manifest, files, progress);
   if (
     manifest.format === "reviter-project" &&
     (manifest as { version: number }).version === 1
@@ -283,8 +428,18 @@ export async function readIndoorProject(
       ...(manifest.scene ? ["model/scene.glb"] : []),
       ...(manifest.reviewBundle ? [REVIEW_BUNDLE_ARCHIVE_PATH] : []),
     ];
+  progress("checksums");
+  const preparedDisplay = readPreparedDisplayArchive(
+    manifest.preparedDisplay,
+    files,
+  );
   if (
-    Object.keys(files).some((p) => p !== "manifest.json" && !paths.includes(p))
+    Object.keys(files).some(
+      (p) =>
+        p !== "manifest.json" &&
+        !paths.includes(p) &&
+        !(preparedDisplay && preparedDisplayArchiveEntryLimit(p)),
+    )
   )
     throw new Error("Unlisted project entry.");
   for (const [i, e] of entries.entries()) {
@@ -298,22 +453,52 @@ export async function readIndoorProject(
     )
       throw new Error(`Damaged project entry: ${paths[i]}`);
   }
-  const rooms = JSON.parse(
-      strFromU8(files["floors/rooms.json"]),
-    ) as ProjectRooms,
-    dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
-  const reviewWire=rooms.reviewBundle as unknown as {format?:string;storage?:string}|undefined;
-  const wireReferencesBinary = reviewWire?.format === "openindoormaps-review-bundle-wire" && reviewWire.storage === "archive-entry";
+  progress("decode");
+  const rooms = await hydrateRoomNativeMaterials(
+      JSON.parse(strFromU8(files["floors/rooms.json"])) as ProjectRooms,
+    ),
+    dataset = JSON.parse(
+      strFromU8(files["viewer/indoor.json"]),
+    ) as IndoorDataset;
+  const reviewWire = rooms.reviewBundle as unknown as
+    | { format?: string; storage?: string }
+    | undefined;
+  const wireReferencesBinary =
+    reviewWire?.format === "openindoormaps-review-bundle-wire" &&
+    reviewWire.storage === "archive-entry";
   if (wireReferencesBinary !== !!manifest.reviewBundle)
     throw new Error(
       "Review bundle archive binding does not match source rooms.",
     );
+  progress("companions");
   rooms.reviewBundle = await unpackReviewBundle(rooms.reviewBundle, files);
-  validateIndoorDataset(dataset);
-  await verifyNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
-  await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
-  validatePreparedRouting(dataset);
-  await validatePublishedNativeExploreMapping(dataset);
+  const nativeValidation = beginNativeImportValidation(dataset);
+  try {
+    progress("geometry");
+    validateIndoorDataset(dataset);
+    progress("materials");
+    await verifyNativeMaterialSections(
+      dataset.nativeMaterialSections,
+      dataset.source.modelSha256,
+    );
+    await verifyNativeProvisionalCornerSeals(dataset);
+    verifyNativeDerivedFrameReturns(dataset);
+    await verifyNativeIndoorEnvelopes(
+      dataset.nativeIndoorEnvelopes,
+      dataset.source.modelSha256,
+    );
+    progress("routes");
+    validatePreparedRouting(dataset);
+    progress("mapping");
+    if (nativeValidation) {
+      const result = await nativeValidation.result;
+      if (result.error) throw new Error(result.error);
+    } else await validatePublishedNativeExploreMapping(dataset);
+  } catch (error) {
+    nativeValidation?.cancel();
+    throw error;
+  }
+  progress("reviews");
   validateEnclosureReviews(rooms.enclosureReviews);
   validateEnclosureProposals(rooms.enclosureProposals);
   await verifyReviewBundle(rooms.reviewBundle);
@@ -323,6 +508,7 @@ export async function readIndoorProject(
   validateSelectionDoorBinding(rooms, dataset);
   validateReviewedAreaPartitionBinding(rooms, dataset);
   validateDoorApertureBinding(rooms.reviewedDoorApertures, dataset);
+  progress("patches");
   validateNativeBoundaryPatches(
     rooms.nativeBoundaryPatches,
     dataset.source.modelSha256,
@@ -333,7 +519,12 @@ export async function readIndoorProject(
     dataset.source.modelSha256,
     dataset.boundaryPatchState,
     rooms.reviewedDoorApertures,
+    dataset.nativeMaterialSections,
+    dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(dataset, levelId)
+      : undefined,
   );
+  progress("identity");
   if (rooms.reviewPins !== undefined)
     validateReviewPins(rooms.reviewPins, dataset);
   if (rooms.mapEdits !== undefined) validateMapEdits(rooms.mapEdits, dataset);
@@ -342,6 +533,7 @@ export async function readIndoorProject(
       rooms.indoorConnectors,
       dataset.source.modelSha256,
     );
+  validateNativeFloorOpeningOwnershipBinding(dataset, rooms.annotations);
   validateSharedStairBinding(dataset, rooms.annotations);
   validateConnectorBinding(
     dataset,
@@ -362,6 +554,7 @@ export async function readIndoorProject(
     throw new Error(
       "Model, reviews and prepared graph do not share the same source identity.",
     );
+  progress("scene");
   const scene = files["model/scene.glb"];
   if (scene) {
     const header = new DataView(
@@ -390,7 +583,59 @@ export async function readIndoorProject(
         "Prepared GLB must embed every resource; external model resources are unsupported.",
       );
   }
-  return { manifest, rooms, dataset, files, scene };
+  progress("transfer");
+  return {
+    manifest,
+    rooms,
+    dataset,
+    files,
+    scene,
+    ...(preparedDisplay ? { preparedDisplay } : {}),
+  };
+}
+function currentPreparedDisplayArchive(
+  data: IndoorDataset,
+  archive: PreparedDisplayArchive | undefined,
+) {
+  if (!archive) return undefined;
+  const fingerprint = preparedDisplayDatasetSha256(data);
+  const descriptors = archive.descriptors.filter(
+    ({ binding }) =>
+      binding.datasetSha256 === fingerprint &&
+      binding.enginePreparationSha256 === PREPARED_DISPLAY_ENGINE_SHA256,
+  );
+  return descriptors.length ? { ...archive, descriptors } : undefined;
+}
+
+/** CLI/package worker finalization: attach only currently prepared display
+ * assets, preserving every model/GIS/source/dataset entry byte. */
+export async function attachPreparedDisplayArchiveToPackage(
+  bytes: Uint8Array,
+  archive: PreparedDisplayArchive,
+): Promise<Uint8Array> {
+  const project = await readIndoorProject(bytes);
+  const current = currentPreparedDisplayArchive(
+    editorVisitorDataset(project),
+    archive,
+  );
+  if (!current || current.descriptors.length !== archive.descriptors.length)
+    throw new Error(
+      "Prepared display assets do not match the current package and engine.",
+    );
+  const display = serializePreparedDisplayArchive(current);
+  const manifest = { ...project.manifest, preparedDisplay: display.entry };
+  const files: AsyncZippable = {};
+  for (const [name, value] of Object.entries(project.files))
+    if (name !== "manifest.json" && !name.startsWith("viewer/display/"))
+      files[name] = [value, { level: modelPath(name) ? 0 : 6 }];
+  for (const [name, value] of Object.entries(display.files))
+    files[name] = [value, { level: 0 }];
+  files["manifest.json"] = strToU8(JSON.stringify(manifest));
+  return new Promise((resolve, reject) =>
+    zip(files, { level: 6 }, (error, value) =>
+      error ? reject(error) : resolve(value),
+    ),
+  );
 }
 export async function exportIndoorProject(
   project: IndoorProject,
@@ -403,8 +648,16 @@ export async function exportIndoorProject(
   validateEnclosureProposals(project.rooms.enclosureProposals);
   await verifyReviewBundle(project.rooms.reviewBundle);
   validateNativeAreaReviews(project.rooms.nativeAreaReviews, project.dataset);
-  await verifyNativeMaterialSections(project.dataset.nativeMaterialSections, project.dataset.source.modelSha256);
-  await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
+  await verifyNativeMaterialSections(
+    project.dataset.nativeMaterialSections,
+    project.dataset.source.modelSha256,
+  );
+  await verifyNativeProvisionalCornerSeals(project.dataset);
+  verifyNativeDerivedFrameReturns(project.dataset);
+  await verifyNativeIndoorEnvelopes(
+    project.dataset.nativeIndoorEnvelopes,
+    project.dataset.source.modelSha256,
+  );
   validateIndoorScopeBinding(project.rooms, project.dataset);
   validateSupplementalBoundaryBinding(project.rooms, project.dataset);
   validateSelectionDoorBinding(project.rooms, project.dataset);
@@ -423,6 +676,10 @@ export async function exportIndoorProject(
     project.dataset.source.modelSha256,
     project.dataset.boundaryPatchState,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   if (project.rooms.reviewPins !== undefined)
     validateReviewPins(project.rooms.reviewPins, project.dataset);
@@ -449,7 +706,14 @@ export async function exportIndoorProject(
     sha256: await hash(rooms),
   };
   dataset.source.roomsSha256 = manifest.floors.sha256;
-  dataset.nativeExploreMapping = await publishNativeExploreMapping(dataset, dataset);
+  dataset.nativeExploreMapping = await publishNativeExploreMapping(
+    dataset,
+    dataset,
+  );
+  const preparedDisplay = currentPreparedDisplayArchive(
+    editorVisitorDataset({ ...project, dataset }),
+    project.preparedDisplay,
+  );
   const indoor = strToU8(JSON.stringify(dataset));
   manifest.indoor = {
     path: "viewer/indoor.json",
@@ -457,8 +721,19 @@ export async function exportIndoorProject(
     sha256: await hash(indoor),
   };
   for (const [name, bytes] of Object.entries(project.files))
-    if (name !== "manifest.json" && name !== REVIEW_BUNDLE_ARCHIVE_PATH)
+    if (
+      name !== "manifest.json" &&
+      name !== REVIEW_BUNDLE_ARCHIVE_PATH &&
+      !name.startsWith("viewer/display/")
+    )
       files[name] = [bytes, { level: modelPath(name) ? 0 : 6 }];
+  delete manifest.preparedDisplay;
+  if (preparedDisplay) {
+    const display = serializePreparedDisplayArchive(preparedDisplay);
+    manifest.preparedDisplay = display.entry;
+    for (const [name, bytes] of Object.entries(display.files))
+      files[name] = [bytes, { level: 0 }];
+  }
   files["floors/rooms.json"] = rooms;
   files["viewer/indoor.json"] = indoor;
   files["manifest.json"] = strToU8(JSON.stringify(manifest, null, 2));
@@ -488,6 +763,7 @@ export async function exportPreparedRoutingProject(
   if (indoor.length > limits["viewer/indoor.json"])
     throw new Error("Prepared indoor dataset exceeds the package size limit.");
   const manifest = structuredClone(project.manifest);
+  delete manifest.preparedDisplay;
   manifest.indoor = {
     path: "viewer/indoor.json",
     bytes: indoor.length,
@@ -495,7 +771,8 @@ export async function exportPreparedRoutingProject(
   };
   const files: AsyncZippable = {};
   for (const [name, bytes] of Object.entries(project.files))
-    files[name] = [bytes, { level: modelPath(name) ? 0 : 6 }];
+    if (!name.startsWith("viewer/display/"))
+      files[name] = [bytes, { level: modelPath(name) ? 0 : 6 }];
   files["viewer/indoor.json"] = indoor;
   files["manifest.json"] = strToU8(JSON.stringify(manifest));
   return new Promise((resolve, reject) =>
@@ -508,7 +785,13 @@ export async function exportPreparedRoutingProject(
 async function readViewerFiles(
   manifest: ViewerManifest,
   files: Unzipped,
+  progress: ReturnType<typeof projectImportReporter>,
 ): Promise<IndoorProject> {
+  progress("checksums");
+  const preparedDisplay = readPreparedDisplayArchive(
+    manifest.preparedDisplay,
+    files,
+  );
   const paths = [
     "viewer/metadata.json",
     "gis/reference-points.json",
@@ -521,7 +804,12 @@ async function readViewerFiles(
     typeof manifest.model.fileName !== "string" ||
     !/^[a-f0-9]{64}$/.test(manifest.model.sha256) ||
     !/^[a-f0-9]{64}$/.test(manifest.sourceRoomsSha256) ||
-    Object.keys(files).some((p) => p !== "manifest.json" && !paths.includes(p))
+    Object.keys(files).some(
+      (p) =>
+        p !== "manifest.json" &&
+        !paths.includes(p) &&
+        !(preparedDisplay && preparedDisplayArchiveEntryLimit(p)),
+    )
   )
     throw new Error(
       "Invalid campus viewer manifest or unexpected source assets.",
@@ -542,15 +830,31 @@ async function readViewerFiles(
     )
       throw new Error(`Damaged viewer entry: ${paths[i]}`);
   }
+  progress("decode");
   const dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
+  progress("geometry");
   validateIndoorDataset(dataset);
-  await verifyNativeMaterialSections(dataset.nativeMaterialSections, dataset.source.modelSha256);
-  await verifyNativeIndoorEnvelopes(dataset.nativeIndoorEnvelopes, dataset.source.modelSha256);
+  progress("materials");
+  await verifyNativeMaterialSections(
+    dataset.nativeMaterialSections,
+    dataset.source.modelSha256,
+  );
+  await verifyNativeProvisionalCornerSeals(dataset);
+  verifyNativeDerivedFrameReturns(dataset);
+  await verifyNativeIndoorEnvelopes(
+    dataset.nativeIndoorEnvelopes,
+    dataset.source.modelSha256,
+  );
+  progress("routes");
   validatePreparedRouting(dataset);
+  progress("mapping");
   await validatePublishedNativeExploreMapping(dataset);
-  const rooms = JSON.parse(
-    strFromU8(files["viewer/metadata.json"]),
-  ) as ProjectRooms;
+  progress("identity");
+  const rooms = await hydrateRoomNativeMaterials(
+    await hydrateViewerMetadata(
+      JSON.parse(strFromU8(files["viewer/metadata.json"])) as ProjectRooms,
+    ),
+  );
   if (
     !rooms ||
     rooms.format !== "openindoormaps-viewer-metadata" ||
@@ -567,12 +871,22 @@ async function readViewerFiles(
     throw new Error(
       "Viewer geometry, metadata and source identity do not match.",
     );
+  validateNativeFloorOpeningOwnershipBinding(dataset, rooms.annotations);
   validateSharedStairBinding(dataset, rooms.annotations);
   if (rooms.mapEdits !== undefined) validateMapEdits(rooms.mapEdits, dataset);
+  validateIndoorScopeBinding(rooms, dataset);
   validateEnclosureReviews(rooms.enclosureReviews);
   validateEnclosureProposals(rooms.enclosureProposals);
   if (
     rooms.reviewBundle !== undefined ||
+    JSON.stringify(rooms.nativeSourceStairMaterials) !==
+      JSON.stringify(
+        nativeSourceStairPhysicalEvidence(rooms.nativeSourceStairMaterials),
+      ) ||
+    JSON.stringify(dataset.nativeSourceStairMaterials) !==
+      JSON.stringify(
+        nativeSourceStairPhysicalEvidence(dataset.nativeSourceStairMaterials),
+      ) ||
     rooms.nativeAreaReviews !== undefined ||
     rooms.nativeBoundaryPatches !== undefined ||
     rooms.selectionDoorThresholds !== undefined ||
@@ -594,14 +908,21 @@ async function readViewerFiles(
     rooms.indoorConnectors,
     rooms.indoorReviews,
   );
-  return { manifest, rooms, dataset, files };
+  progress("transfer");
+  return {
+    manifest,
+    rooms,
+    dataset,
+    files,
+    ...(preparedDisplay ? { preparedDisplay } : {}),
+  };
 }
 
 /** Lossless display/routing data with only the metadata required by the visitor.
  * Source room geometry and safety bindings are preserved, never regenerated or rounded. */
 export async function exportCampusViewer(
   project: IndoorProject,
-  options: { windows?: WindowExportMode } = {},
+  options: { windows?: WindowExportMode; preparedDisplay?: boolean } = {},
 ): Promise<Uint8Array> {
   if (
     project.dataset.boundaryPatchState?.regenerated === false ||
@@ -611,8 +932,20 @@ export async function exportCampusViewer(
       "Regenerate applied boundary patches in Reviter before exporting a campus viewer.",
     );
   validateIndoorDataset(project.dataset);
-  await verifyNativeMaterialSections(project.dataset.nativeMaterialSections, project.dataset.source.modelSha256);
-  await verifyNativeIndoorEnvelopes(project.dataset.nativeIndoorEnvelopes, project.dataset.source.modelSha256);
+  await verifyNativeMaterialSections(
+    project.dataset.nativeMaterialSections,
+    project.dataset.source.modelSha256,
+  );
+  await verifyNativeProvisionalCornerSeals(project.dataset);
+  verifyNativeDerivedFrameReturns(project.dataset);
+  await verifyNativeIndoorEnvelopes(
+    project.dataset.nativeIndoorEnvelopes,
+    project.dataset.source.modelSha256,
+  );
+  validateNativeFloorOpeningOwnershipBinding(
+    project.dataset,
+    project.rooms.annotations,
+  );
   validateSharedStairBinding(project.dataset, project.rooms.annotations);
   if (project.rooms.mapEdits !== undefined)
     validateMapEdits(project.rooms.mapEdits, project.dataset);
@@ -631,15 +964,33 @@ export async function exportCampusViewer(
     version: 1,
     model: { fileName: project.dataset.source.modelFileName },
     annotations: project.rooms.annotations
-      .filter((a) => Array.isArray(a.stairDisplayOnlyFlightIds))
+      .filter(
+        (a) =>
+          Array.isArray(a.stairDisplayOnlyFlightIds) ||
+          a.nativeFloorOpeningOwnership !== undefined,
+      )
       .map((a) => ({
         key: a.key,
         stairDisplayOnlyFlightIds: a.stairDisplayOnlyFlightIds,
+        ...(a.nativeFloorOpeningOwnership !== undefined
+          ? {
+              nativeFloorOpeningOwnership: a.nativeFloorOpeningOwnership,
+              walkability: a.walkability,
+              access: a.access && {
+                kind: (a.access as { kind: unknown }).kind,
+              },
+            }
+          : {}),
       })),
     georeference: project.rooms.georeference,
     visitorMetadata: project.dataset.visitor,
+    nativeProvisionalCornerSeals: project.dataset.nativeProvisionalCornerSeals,
+    nativeDerivedFrameReturns: project.dataset.nativeDerivedFrameReturns,
     nativeMaterialSections: project.dataset.nativeMaterialSections,
     nativeIndoorEnvelopes: project.dataset.nativeIndoorEnvelopes,
+    nativeSourceStairMaterials: nativeSourceStairPhysicalEvidence(
+      project.dataset.nativeSourceStairMaterials,
+    ),
     mapEdits: project.rooms.mapEdits,
     campusStoreys: project.rooms.campusStoreys,
     indoorConnectors: project.rooms.indoorConnectors,
@@ -665,18 +1016,55 @@ export async function exportCampusViewer(
   const visitorDataset = options.windows
     ? withWindowExportMode(project.dataset, options.windows)
     : structuredClone(project.dataset);
-  visitorDataset.floors = visitorDataset.floors.map(f => ({...f, name: project.rooms.mapEdits?.floorNames?.[f.id] ?? floorDisplayName(f.name)}));
+  visitorDataset.floors = visitorDataset.floors.map((f) => ({
+    ...f,
+    name:
+      project.rooms.mapEdits?.floorNames?.[f.id] ?? floorDisplayName(f.name),
+  }));
+  visitorDataset.nativeSourceStairMaterials = nativeSourceStairPhysicalEvidence(
+    project.dataset.nativeSourceStairMaterials,
+  );
+  // Retain the source role and exact current faces needed by physical routing;
+  // superseded cached tread geometry stays in the authoring master.
+  for (const flight of visitorDataset.stairDisplay?.sourceFlights ?? [])
+    delete flight.historicalPreparedTreads;
+  for (const flight of visitorDataset.stairDisplay?.flights ?? [])
+    delete flight.historicalPreparedTreads;
   delete visitorDataset.nativeDoorBoundaryClosures;
-  delete visitorDataset.nativeWallPositionRepairs;
+  if (
+    visitorDataset.nativeIndoorEnvelopes &&
+    visitorDataset.nativeWallPositionRepairs
+  )
+    visitorDataset.nativeWallPositionRepairs.walls =
+      visitorDataset.nativeWallPositionRepairs.walls.map((w) => ({
+        ...w,
+        notes: "Source-bound physical wall placement.",
+      }));
+  else delete visitorDataset.nativeWallPositionRepairs;
   delete visitorDataset.selectionDoorThresholds;
   delete visitorDataset.reviewedAreaPartitions;
-  delete visitorDataset.doorAperturePatchState;
+  if (!visitorDataset.nativeIndoorEnvelopes)
+    delete visitorDataset.doorAperturePatchState;
   if (options.windows === "simplified") delete visitorDataset.windowDisplay;
   for (const area of visitorDataset.indoorExclusions?.areas ?? [])
     delete area.notes;
-  visitorDataset.nativeExploreMapping = await publishNativeExploreMapping(project.dataset, visitorDataset);
+  if (visitorDataset.nativeSelectionContactRepairs)
+    visitorDataset.nativeSelectionContactRepairs.repairs =
+      visitorDataset.nativeSelectionContactRepairs.repairs
+        .filter((r) => r.status === "applied")
+        .map((r) => ({
+          ...r,
+          notes:
+            "Provisional source-bound native selection contact; physical geometry and access unchanged. Revisit required.",
+        }));
+  visitorDataset.nativeExploreMapping = await publishNativeExploreMapping(
+    project.dataset,
+    visitorDataset,
+  );
   const files: AsyncZippable = {
-    "viewer/metadata.json": strToU8(JSON.stringify(metadata)),
+    "viewer/metadata.json": strToU8(
+      JSON.stringify(await packViewerMetadata(metadata)),
+    ),
     "gis/reference-points.json": strToU8(JSON.stringify(metadata.georeference)),
     "viewer/indoor.json": strToU8(JSON.stringify(visitorDataset)),
   };
@@ -698,6 +1086,27 @@ export async function exportCampusViewer(
     georeference: await entry("gis/reference-points.json"),
     indoor: await entry("viewer/indoor.json"),
   };
+  // Viewer projection changes dataset bytes and removes authoring metadata.
+  // Prepare it independently; master payloads cannot be relabelled or copied.
+  if (
+    (options.preparedDisplay ?? !!project.preparedDisplay) &&
+    visitorDataset.nativeExploreMapping?.version === 3
+  ) {
+    const { prepareDatasetDisplayAssets } = await import(
+      "./prepared-display-preparation"
+    );
+    const prepared = await prepareDatasetDisplayAssets(
+      editorVisitorDataset({
+        ...project,
+        rooms: metadata,
+        dataset: visitorDataset,
+      }),
+    );
+    const display = serializePreparedDisplayArchive(prepared.archive);
+    manifest.preparedDisplay = display.entry;
+    for (const [name, bytes] of Object.entries(display.files))
+      files[name] = [bytes, { level: 0 }];
+  }
   files["manifest.json"] = strToU8(JSON.stringify(manifest));
   return new Promise((resolve, reject) =>
     zip(files, { level: 6 }, (error, bytes) =>
@@ -960,6 +1369,26 @@ function validateSupplementalBoundaryBinding(
   rooms: ProjectRooms,
   data: IndoorDataset,
 ) {
+  validateNativeSelectionContactRepairs(
+    rooms.nativeSelectionContactRepairs,
+    data.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.nativeSelectionContactRepairs) !==
+    JSON.stringify(data.nativeSelectionContactRepairs)
+  )
+    throw new Error(
+      "Native selection contact source and prepared geometry differ. Regenerate the source master.",
+    );
+  const contacts = (data.nativeSelectionContactRepairs?.repairs ?? []).filter(
+    (r) => r.status === "applied",
+  );
+  if (contacts.length)
+    assertNativeSelectionContactRepairsPhysicalGuards(
+      data,
+      contacts,
+      deriveNativeSelectionContactRepairs(data, contacts),
+    );
   validateNativeDoorBoundaryClosures(
     rooms.nativeDoorBoundaryClosures,
     data.source.modelSha256,

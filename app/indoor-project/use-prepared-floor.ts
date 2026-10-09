@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { bridgeFloorDisplayWorker } from "./floor-display-worker-bridge";
+import { useCallback, useEffect, useState } from "react";
 import type { IndoorDataset } from "./contract";
 import type { FloorPreparationOptions, PreparedFloor } from "./prepared-floor";
 import { FloorWorkerClient, floorWorkerKey } from "./floor-worker-client";
@@ -11,15 +12,20 @@ export function usePreparedFloor(
 ) {
   const [client] = useState(
     () =>
-      new FloorWorkerClient(
-        () =>
+      new FloorWorkerClient(() =>
+        bridgeFloorDisplayWorker(
           new Worker(new URL("floor-presentation.worker.ts", import.meta.url), {
             type: "module",
           }),
+        ),
       ),
   );
   const key = floorWorkerKey(levels, building, options);
   const [attempt, retry] = useState(0);
+  const retryFloor = useCallback(() => {
+    client.dispose();
+    retry((n) => n + 1);
+  }, [client]);
   const [result, setResult] = useState<{
     data: IndoorDataset;
     key: string;
@@ -34,7 +40,12 @@ export function usePreparedFloor(
     const request = client.request(data, levels, building, options);
     request.promise.then(
       (value) => {
-        if (active) setResult({ data, key, value });
+        if (active) {
+          // Oversized floors are not cached. Release their worker's full source
+          // dataset and decoded payload before preparing another large scope.
+          if (!client.peek(data, key)) client.dispose();
+          setResult({ data, key, value });
+        }
       },
       (error) => {
         if (active && error?.name !== "AbortError")
@@ -59,6 +70,6 @@ export function usePreparedFloor(
   return {
     value: cached ?? current?.value,
     error: current?.error,
-    retry: () => retry((n) => n + 1),
+    retry: retryFloor,
   };
 }

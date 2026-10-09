@@ -13,7 +13,10 @@ import {
   exportIndoorProject,
   readIndoorProject,
 } from "../../app/indoor-project/package";
-import { validateNativeBoundaryPatches } from "../../app/indoor-project/native-boundary-patches";
+import {
+  reviewedBoundaryWalls,
+  validateNativeBoundaryPatches,
+} from "../../app/indoor-project/native-boundary-patches";
 
 async function prepared(apply = false) {
   const source = await gapProject();
@@ -121,4 +124,88 @@ test("malformed or duplicate evidence cannot enter saved source patches", async 
   assert.throws(() => validateNativeBoundaryPatches(value), /Invalid native/);
   value.patches[0].wallEvidence = [null, null] as never;
   assert.throws(() => validateNativeBoundaryPatches(value), /Invalid native/);
+});
+
+test("original material sections supplement source cap evidence without replacing prepared walls", async () => {
+  const { changed } = await prepared(true);
+  const patch = changed.rooms.nativeBoundaryPatches!.patches[0];
+  const original = changed.dataset.walls.filter((w) => !w.reviewPatchId);
+  const evidence = patch.wallEvidence[0];
+  const omitted = original.filter(
+    (w) => w.nativeElementId !== evidence.nativeElementId,
+  );
+  const material = {
+    version: 1 as const,
+    sourceModelSha256: changed.dataset.source.modelSha256,
+    geometrySha256: "a".repeat(64),
+    levels: [
+      {
+        levelId: patch.levelId,
+        elevationFeet: 0,
+        cutElevationFeet: 4,
+        evidenceSha256: "b".repeat(64),
+        sourceElementIds: [evidence.nativeElementId],
+        sections: [
+          {
+            nativeElementId: evidence.nativeElementId,
+            categoryId: -2000011,
+            kind: "wall" as const,
+            baseElevationFeet: 0,
+            topElevationFeet: 10,
+            partsFeet: [evidence.ringsFeet],
+          },
+        ],
+      },
+    ],
+  };
+  const bytes = JSON.stringify(omitted);
+  assert.throws(
+    () =>
+      reviewedBoundaryWalls(
+        omitted,
+        { version: 1, patches: [patch] },
+        changed.dataset.source.modelSha256,
+      ),
+    /stale native wall/,
+  );
+  assert.equal(
+    reviewedBoundaryWalls(
+      omitted,
+      { version: 1, patches: [patch] },
+      changed.dataset.source.modelSha256,
+      undefined,
+      undefined,
+      material,
+    ).length,
+    1,
+  );
+  assert.equal(JSON.stringify(omitted), bytes);
+  const wrongHeight = structuredClone(material);
+  wrongHeight.levels[0].cutElevationFeet = 8;
+  assert.throws(
+    () =>
+      reviewedBoundaryWalls(
+        omitted,
+        { version: 1, patches: [patch] },
+        changed.dataset.source.modelSha256,
+        undefined,
+        undefined,
+        wrongHeight,
+      ),
+    /stale native wall/,
+  );
+  const wrongModel = structuredClone(material);
+  wrongModel.sourceModelSha256 = "c".repeat(64);
+  assert.throws(
+    () =>
+      reviewedBoundaryWalls(
+        omitted,
+        { version: 1, patches: [patch] },
+        changed.dataset.source.modelSha256,
+        undefined,
+        undefined,
+        wrongModel,
+      ),
+    /Invalid original native material/,
+  );
 });

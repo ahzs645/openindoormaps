@@ -1,8 +1,11 @@
+import { nativeDoorFloorBlockers } from "./native-door-floor-support";
+import { nativeStairRouteQualified } from "./native-source-stair";
 import { createIndoorExclusionQuery } from "./indoor-exclusions";
 import { routingCalculationValue } from "./routing-cache";
 import { hasReviewedThroughNavigation } from "./through-navigation";
 import type { IndoorEdge, IndoorRecord, IndoorDataset } from "./contract";
 import { validatedSourceDoorProof } from "./routing-apertures";
+import { validatedNativeRampSurface } from "./native-ramp-surface";
 import {
   nativeCirculationCells,
   nativeCirculationWalkBlockers,
@@ -90,7 +93,22 @@ export function projectLinkPolicy(
     "routing-node-points",
     () => new Map(data.nodes.map((n) => [n.id, n.pointFeet])),
   );
+  const doorFloorBlockers = routingCalculationValue(
+    data,
+    "native-door-floor-blockers",
+    () => nativeDoorFloorBlockers(data),
+  );
   for (const dependency of dependencies) {
+    if (doorFloorBlockers.has(dependency.id))
+      add("native-floor-hole", dependency);
+    if (!nativeStairRouteQualified(data, dependency))
+      add("source-proof", dependency);
+    if (
+      (dependency.nativeRampSurface ||
+        (data.nativeIndoorEnvelopes && dependency.kind === "ramp")) &&
+      !validatedNativeRampSurface(data, dependency)
+    )
+      add("source-proof", dependency);
     const exclusions = new Set([
       ...outside.forEdge(dependency.pointsFeet, dependency),
       ...[dependency.from, dependency.to].flatMap((id) => {

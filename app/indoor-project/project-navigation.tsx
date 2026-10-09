@@ -39,9 +39,7 @@ import { ProjectRouteArrivalMenu } from "./route-arrival-menu";
 import type { ProjectArrivalMode } from "./route-arrival";
 import { ProjectRouteProfileMenu } from "./route-profile-menu";
 import { routeTransitRooms } from "./route-review-summary";
-import {
-  isProjectDestination,
-} from "./routing-graph";
+import { isProjectDestination } from "./routing-graph";
 
 import type { MapLocation } from "./map-edits";
 import { LocationDetails } from "./location-details";
@@ -343,10 +341,19 @@ export function ProjectNavigation({
       return;
     }
     onPick("area", r.key);
-    onFloor(r.levelId);
+    const arrival = data.nodes.find((n) => n.id === r.arrivalNodeId);
+    onFloor(
+      data.nativeIndoorEnvelopes && arrival ? arrival.levelId : r.levelId,
+    );
     if (map) {
       const bounds = new LngLatBounds();
-      for (const p of r.ringsFeet[0]) bounds.extend(geographicPoint(data, p));
+      const points = data.nativeIndoorEnvelopes
+        ? arrival
+          ? [arrival.pointFeet]
+          : []
+        : r.ringsFeet[0];
+      for (const p of points) bounds.extend(geographicPoint(data, p));
+      if (bounds.isEmpty()) return;
       fitProjectPlaceBounds(map, bounds, {
         maxZoom: 21,
         // A room selection can interrupt the view-mode camera animation.

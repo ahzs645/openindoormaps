@@ -1,3 +1,10 @@
+import type { NativeExploreResult } from "./native-explore";
+import { floorNativeFaceIdentity } from "./floor-cache-identity";
+import {
+  FloorMemoryCache,
+  NATIVE_FACE_CACHE_BYTES,
+} from "./floor-memory-cache";
+import { floorMemoryCostBytes } from "./floor-memory-cost";
 import {
   nativeWindowGeometry,
   nativeWindowDisplayInput,
@@ -29,6 +36,7 @@ import { physicalWallCopies } from "./physical-walls";
 import { rampFloorApertures } from "./ramp-floor-apertures";
 
 export type FloorPresentationOptions = {
+  nativeFaces?: NativeExploreResult;
   relativeHeights?: boolean;
   visitorStairs?: boolean;
   showPillars: boolean;
@@ -44,6 +52,8 @@ function buildFloorPresentation(
   building: string,
   options: FloorPresentationOptions,
 ) {
+  const physicalHeights =
+    !!data.nativeIndoorEnvelopes || !!options.relativeHeights;
   const wallDisplayData = nativeWindowDisplayInput(data);
   const display = projectDisplayGeometry(
     wallDisplayData,
@@ -54,10 +64,9 @@ function buildFloorPresentation(
     true,
     options.showPassThroughPlaces,
     options.showVestibuleDoors,
-    options.relativeHeights
-      ? physicalWallCopies(wallDisplayData, levelIds)
-      : undefined,
+    physicalHeights ? physicalWallCopies(wallDisplayData, levelIds) : undefined,
     options.showDoorwayRecesses ?? true,
+    options.nativeFaces,
   );
   const visitorWalls = visitorWallGeometry(
     data,
@@ -89,13 +98,18 @@ function buildFloorPresentation(
       display.doorFootprints,
       ROOM_BLOCK_HEIGHT_METRES,
     ),
-    overviewGeometry: buildingOverviewGeometry(data, display.records),
+    overviewGeometry: data.nativeIndoorEnvelopes
+      ? (options.nativeFaces?.overview ?? {
+          type: "FeatureCollection" as const,
+          features: [],
+        })
+      : buildingOverviewGeometry(data, display.records),
     overviewLabels: buildingOverviewLabels(data, display.records),
     nativeStairs: projectStairDisplay(
       data,
       levelIds,
       building,
-      options.relativeHeights,
+      physicalHeights,
       options.visitorStairs ?? false,
     ),
   };
@@ -104,7 +118,7 @@ function buildFloorPresentation(
       data,
       levelIds,
       building,
-      options.relativeHeights,
+      physicalHeights,
     );
     return {
       ...view,
@@ -123,7 +137,7 @@ function buildFloorPresentation(
       simpleWalls: windows.cutWalls(view.simpleWalls, true),
     };
   };
-  if (!options.relativeHeights) return finish(result);
+  if (!physicalHeights) return finish(result);
   return finish({
     ...result,
     display: {
@@ -210,11 +224,15 @@ function buildFloorPresentation(
  * dataset, so they get a fresh cache; selection, routes and label preferences
  * stay outside it. Limit retained floor/settings combinations for large models.
  * Three.js layers remain owned and disposed by the map, never by this cache. */
-export function createFloorPresentationCache(capacity = 12) {
-  const datasets = new WeakMap<
-    IndoorDataset,
-    Map<string, ReturnType<typeof buildFloorPresentation>>
-  >();
+export function createFloorPresentationCache(
+  capacity = 12,
+  maximumBytes = NATIVE_FACE_CACHE_BYTES,
+) {
+  let dataset: IndoorDataset | undefined;
+  const floors = new FloorMemoryCache<
+    string,
+    ReturnType<typeof buildFloorPresentation>
+  >(capacity, maximumBytes);
   return (
     data: IndoorDataset,
     levelIds: number[],
@@ -232,16 +250,14 @@ export function createFloorPresentationCache(capacity = 12) {
       options.showStructures,
       options.showDoorwayRecesses ?? true,
       options.visitorStairs ?? false,
+      floorNativeFaceIdentity(options.nativeFaces),
     ]);
-    let floors = datasets.get(data);
-    if (!floors) {
-      floors = new Map();
-      datasets.set(data, floors);
+    if (dataset !== data) {
+      dataset = data;
+      floors.clear();
     }
     const cached = floors.get(key);
     if (cached) {
-      floors.delete(key);
-      floors.set(key, cached);
       return cached;
     }
     const presentation = buildFloorPresentation(
@@ -250,8 +266,7 @@ export function createFloorPresentationCache(capacity = 12) {
       building,
       options,
     );
-    floors.set(key, presentation);
-    if (floors.size > capacity) floors.delete(floors.keys().next().value!);
+    floors.set(key, presentation, floorMemoryCostBytes(presentation));
     return presentation;
   };
 }

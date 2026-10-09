@@ -4,6 +4,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { nativeCirculationGeometryKey } from "../../app/indoor-project/native-circulation";
+import { encodeNativeExactTopology } from "../../app/indoor-project/native-exact-planar-topology";
+import {
+  nativeRationalOverlay,
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+} from "../../app/indoor-project/native-rational-overlay";
 import { routeLanes } from "../../app/indoor-project/route-lanes";
 import { centeredRoutePaths } from "../../app/indoor-project/centered-route";
 import {
@@ -27,7 +32,7 @@ const rect = (
   y: number,
   w: number,
   h: number,
-): [number, number][] => [
+): [[number, number], [number, number], [number, number], [number, number]] => [
   [x, y],
   [x + w, y],
   [x + w, y + h],
@@ -134,6 +139,7 @@ test("a source-proved door has a fixed threshold without a manufactured native e
   assert.equal(edge.nativeElementId, undefined);
   assert.deepEqual(d.doors, []);
   assert.equal(routingDoorApertures(d)[0].nativeElementId, undefined);
+  assert.ok(route.doorEdgeIds);
   assert.ok(route.doorEdgeIds.includes(edge.id));
   assert.ok(
     createDoorPassageQuery(d)(1, fixed.pointsFeet).some(
@@ -1408,8 +1414,10 @@ test("actual Agora room-to-washroom route joins native corridor axes and preserv
       "precise door and proven doorless opening anchors remain fixed",
     );
   }
-  const start = c.data.nodes.find((n) => n.id === route.nodeIds[0]);
-  const end = c.data.nodes.find((n) => n.id === route.nodeIds.at(-1));
+  const start = c.data.nodes.find((n: IndoorNode) => n.id === route.nodeIds[0]);
+  const end = c.data.nodes.find(
+    (n: IndoorNode) => n.id === route.nodeIds.at(-1),
+  );
   assert.deepEqual(route.paths[0].pointsFeet[0], start.pointFeet);
   assert.deepEqual(route.paths.at(-1)!.pointsFeet.at(-1), end.pointFeet);
   assert.ok(
@@ -1486,6 +1494,7 @@ test("actual Agora apertures retain fixed thresholds when local body support can
         query(311, p.pointsFeet).map((c) => c.edge.id),
       ),
     );
+  assert.ok(route.doorEdgeIds);
   assert.deepEqual([...crossed].sort(), [...route.doorEdgeIds].sort());
   const physicalDoor = route.edges.find((e) => e.id === "door:311:1736144")!;
   assert.ok(physicalDoor);
@@ -2032,5 +2041,153 @@ test("short native stair vestibules use a direct supported approach without inve
   assert.ok(
     legacy[0].pointsFeet.length > 2,
     "raw source outlines alone cannot enable a direct landing shortcut",
+  );
+});
+
+test("strict centering uses original ankle sections rather than a raised historical wall proxy", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { nativeMaterialSectionsHash } = await import(
+    "../../app/indoor-project/native-material-sections"
+  );
+  const d = fixture(0);
+  d.source.modelSha256 = "a".repeat(64);
+  d.records = d.records.filter((r) => r.key === "b");
+  d.nodes = [
+    { ...d.nodes[0], id: "start", roomKey: "b", pointFeet: [4, 11, 0] },
+    { ...d.nodes[1], id: "end", roomKey: "b", pointFeet: [6.5, 20, 0] },
+  ];
+  d.edges = [
+    {
+      ...d.edges[0],
+      id: "approach",
+      from: "start",
+      to: "end",
+      roomKeys: ["b"],
+      pointsFeet: [
+        [4, 11, 0],
+        [4, 20, 0],
+        [6.5, 20, 0],
+      ],
+    },
+  ];
+  d.walkingSupport = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    floors: [
+      {
+        nativeElementId: 501,
+        elevationFeet: 0,
+        ringsFeet: [rect(0, 8, 8, 22)],
+      },
+    ],
+  };
+  const envelope = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 8, 8, 22)]],
+        sourceElementIds: [501],
+        cutElevationsFeet: [4, 8],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...envelope,
+    geometrySha256: await nativeIndoorEnvelopeHash(envelope),
+  };
+  const material = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        cutElevationFeet: 0.1,
+        evidenceSha256: "c".repeat(64),
+        sourceElementIds: [778],
+        sections: [] as NonNullable<
+          IndoorDataset["nativeMaterialSections"]
+        >["levels"][0]["sections"],
+      },
+    ],
+  };
+  d.nativeMaterialSections = {
+    ...material,
+    geometrySha256: await nativeMaterialSectionsHash(material),
+  };
+  d.walls.push({
+    kind: "wall",
+    levelId: 1,
+    nativeElementId: 778,
+    ringsFeet: [rect(0, 15, 8, 0.2)],
+  });
+  const refresh = () => {
+    d.edges[0].nativeCellId = "native";
+    d.circulationGeometry = {
+      version: 1,
+      sourceModelSha256: d.source.modelSha256,
+      sourceGeometryKey: nativeCirculationGeometryKey(d),
+      cells: [
+        {
+          id: "native",
+          exactFaceId: "literal-native-face",
+          levelIds: [1],
+          elevationFeet: 0,
+          roomKeys: ["b"],
+          nativeFloorIds: [501],
+          ringsFeet: [rect(0, 8, 8, 22)],
+          sourceCoverage: 1,
+        },
+      ],
+    };
+    d.circulationGeometry.exactTopology = encodeNativeExactTopology(
+      {
+        sourceModelSha256: d.source.modelSha256,
+        sourceGeometryKey: d.circulationGeometry.sourceGeometryKey,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      },
+      [
+        {
+          id: "literal-native-face",
+          // Independent literal test face; the runtime must still intersect it
+          // with current original ankle material rather than trusting the carrier.
+          parts: nativeRationalOverlay("union", [[rect(0, 8, 8, 22)]]),
+        },
+      ],
+    );
+  };
+  refresh();
+  const original = JSON.stringify(d.walls);
+  assert.ok(
+    centeredRoutePaths(d, d.edges, ["start", "end"])[0].centered,
+    "original certified absence keeps the lower approach available for centering",
+  );
+  material.levels[0].sections.push({
+    nativeElementId: 778,
+    categoryId: -2000011,
+    kind: "wall",
+    baseElevationFeet: 0,
+    topElevationFeet: 8,
+    partsFeet: [[rect(0, 15, 8, 0.2)]],
+  });
+  d.nativeMaterialSections = {
+    ...material,
+    geometrySha256: await nativeMaterialSectionsHash(material),
+  };
+  refresh();
+  assert.ok(
+    !centeredRoutePaths(d, d.edges, ["start", "end"])[0].centered,
+    "actual ankle material cannot be crossed by centering",
+  );
+  assert.equal(
+    JSON.stringify(d.walls),
+    original,
+    "historical source jamb/proxy evidence remains unchanged",
   );
 });

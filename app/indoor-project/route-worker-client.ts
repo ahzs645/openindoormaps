@@ -112,8 +112,17 @@ export class RouteWorkerClient {
     }
     return {
       promise,
-      cancel: () => {
-        if (this.pending?.id === id) this.stop();
+      cancel: (keepPreparation = false) => {
+        if (this.pending?.id !== id) return;
+        if (keepPreparation && this.pending.warmup) {
+          // React cleans up a start-only effect before choosing a destination.
+          // Reject its obsolete reply, retaining the same-snapshot graph work.
+          const pending = this.pending;
+          this.pending = undefined;
+          pending.reject(
+            new DOMException("Route preparation superseded.", "AbortError"),
+          );
+        } else this.stop();
       },
     };
   }

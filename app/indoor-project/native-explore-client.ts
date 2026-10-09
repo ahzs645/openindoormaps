@@ -1,14 +1,25 @@
 import type { IndoorDataset } from "./contract";
 import type { NativeExploreResult } from "./native-explore";
+import {
+  preparedDisplayAssetRequest,
+  type PreparedDisplayAssetRequest,
+} from "./prepared-display-registry";
 
 export type NativeExploreResponse = {
   result?: NativeExploreResult;
+  /** Final wall-only response leaves the already-mounted floor carrier intact. */
+  walls?: NativeExploreResult["walls"];
   error?: string;
+  /** False only while exact floor faces are ready and wall detail is computing. */
+  complete?: boolean;
+  /** Worker-only conservative cost of the complete merged floor/wall DAG. */
+  memoryCostBytes?: number;
 };
 export type NativeExploreRequest = {
   data: IndoorDataset;
   levelIds: number[];
   building: string;
+  preparedDisplay?: PreparedDisplayAssetRequest;
 };
 export interface NativeExploreWorker {
   onmessage: ((event: MessageEvent<NativeExploreResponse>) => void) | null;
@@ -39,12 +50,14 @@ export function startNativeExploreTrace(
   try {
     worker = factory();
     worker.onmessage = ({ data }) => {
-      if (!data || (!data.result && !data.error))
+      if (!data || (!data.result && !data.walls && !data.error))
         finish({
           error:
             "Native tracing returned no floor map. Retry the native floor map.",
         });
-      else finish(data);
+      else if (data.result && !data.error && data.complete === false) {
+        if (active) receive(data);
+      } else finish(data);
     };
     worker.onerror = (event) => {
       event.preventDefault();
@@ -58,7 +71,16 @@ export function startNativeExploreTrace(
         error:
           "Native tracing returned unreadable data. Retry the native floor map.",
       });
-    worker.postMessage(request);
+    const preparedDisplay =
+      request.preparedDisplay ??
+      preparedDisplayAssetRequest(
+        request.data,
+        request.levelIds,
+        request.building,
+      );
+    worker.postMessage(
+      preparedDisplay ? { ...request, preparedDisplay } : request,
+    );
   } catch (error) {
     finish({ error: error instanceof Error ? error.message : String(error) });
   }

@@ -1,5 +1,6 @@
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import type { IndoorProject } from "./package";
+import { nativeCirculationCells } from "./native-circulation";
 /** Same version-1 source review consumed by Reviter's --connectors option. */
 export type SourceConnectorReview = {
   version: 1;
@@ -148,13 +149,23 @@ export function reviewConnector(
       e.nativeElementId <= 0 ||
       e.pointFeet.length !== 2 ||
       !e.pointFeet.every((p) => Number.isFinite(p) && Math.abs(p) < 1e7) ||
-      !booleanPointInPolygon(e.pointFeet, {
-        type: "Polygon",
-        coordinates: r.ringsFeet.map((ring) => [...ring, ring[0]]),
-      })
+      !(project.dataset.nativeIndoorEnvelopes
+        ? nativeCirculationCells(project.dataset).some(
+            (cell) =>
+              cell.roomKeys.includes(r.key) &&
+              Math.abs(cell.elevationFeet - r.elevationFeet) < 0.05 &&
+              booleanPointInPolygon(e.pointFeet, {
+                type: "Polygon",
+                coordinates: cell.ringsFeet.map((ring) => [...ring, ring[0]]),
+              }),
+          )
+        : booleanPointInPolygon(e.pointFeet, {
+            type: "Polygon",
+            coordinates: r.ringsFeet.map((ring) => [...ring, ring[0]]),
+          }))
     )
       throw new Error(
-        "Each entrance needs its native element ID and a point inside a walkable public room on its served floor.",
+        "Each entrance needs its native element ID and a point inside a walkable public room on its served floor. Native projects require a current native floor face; the old room outline cannot approve an entrance.",
       );
     buildings.add(r.building);
   }

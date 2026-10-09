@@ -239,9 +239,11 @@ export function nativeWallPositionRepairedWalls(
               )
               .flatMap((f) => f.partsFeet ?? [f.ringsFeet])
           : [];
-    const openings = data.records
-      .filter((x) => x.levelId === r.levelId)
-      .flatMap((x) => (x.properties.floorOpeningsFeet ?? []) as Point[][]);
+    const openings = data.nativeIndoorEnvelopes
+      ? []
+      : data.records
+          .filter((x) => x.levelId === r.levelId)
+          .flatMap((x) => (x.properties.floorOpeningsFeet ?? []) as Point[][]);
     if (
       !options.deferPhysicalChecks &&
       (!parts.length ||
@@ -276,4 +278,18 @@ export function nativeWallPositionRepairedWalls(
     const rs = replacements.get(`${w.levelId}:${w.nativeElementId}`);
     return rs ? { ...w, ringsFeet: structuredClone(rs) } : w;
   });
+}
+
+/** Physical source binding excludes authoring prose only. All original and
+ * translated material, identity, support and evidence bytes remain relevant. */
+export function nativeWallPositionMaterialBinding(
+  value: NativeWallPositionRepairs | undefined,
+) {
+  return (
+    value && {
+      version: value.version,
+      sourceModelSha256: value.sourceModelSha256,
+      walls: value.walls.map(({ notes: _, ...physical }) => physical),
+    }
+  );
 }

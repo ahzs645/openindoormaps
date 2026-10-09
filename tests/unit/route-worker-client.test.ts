@@ -143,3 +143,30 @@ test("choosing a destination retains in-flight departure coverage but rejects it
   assert.equal(await route.promise, current);
   client.dispose();
 });
+
+test("effect cleanup retains same-snapshot coverage preparation and rejects its stale reply before the next destination", async () => {
+  const { client, workers } = setup();
+  const coverage = client.request(data, "a", "", "public");
+  const rejected = assert.rejects(coverage.promise, { name: "AbortError" }),
+    oldId = workers[0].messages[0].requestId;
+  coverage.cancel(true);
+  await rejected;
+  assert.equal(workers[0].terminated, false);
+  const destination = client.request(data, "a", "b", "public");
+  assert.equal(workers.length, 1);
+  assert.equal(workers[0].messages[1].data, undefined);
+  workers[0].reply({ route: null, reachable: new Set(["obsolete"]) }, oldId);
+  const actual = { route: null, reachable: new Set(["b"]) };
+  workers[0].reply(actual);
+  assert.equal(await destination.promise, actual);
+  const next = client.request(data, "b", "c", "public"),
+    cancelled = assert.rejects(next.promise, { name: "AbortError" });
+  next.cancel(true);
+  await cancelled;
+  assert.equal(
+    workers[0].terminated,
+    true,
+    "the preparation option never retains a cancelled actual destination route",
+  );
+  client.dispose();
+});

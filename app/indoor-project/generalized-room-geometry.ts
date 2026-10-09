@@ -454,6 +454,7 @@ export function generalizedRoomGeometry(
   data: IndoorDataset,
   collection: FeatureCollection<MultiPolygon>,
 ): FeatureCollection<MultiPolygon> {
+  if (data.nativeIndoorEnvelopes) return collection;
   const rooms = cachedRooms(data);
   return {
     ...collection,
@@ -486,6 +487,7 @@ export function generalizedRoomWalls(
   data: IndoorDataset,
   collection: FeatureCollection<MultiPolygon>,
 ): FeatureCollection<MultiPolygon> {
+  if (data.nativeIndoorEnvelopes) return collection;
   const rooms = cachedRooms(data),
     records = new Map(data.records.map((r) => [r.key, r]));
   const roofs = [...rooms.values()]
@@ -538,6 +540,7 @@ export function generalizedRoomDoorways(
   collection: FeatureCollection<Polygon>,
   roofHeight: number,
 ): FeatureCollection<Polygon> {
+  if (data.nativeIndoorEnvelopes) return collection;
   const rooms = cachedRooms(data),
     doors = new Map(data.doors?.map((d) => [d.id, d]));
   return {

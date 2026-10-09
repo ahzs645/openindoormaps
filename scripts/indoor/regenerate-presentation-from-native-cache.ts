@@ -58,7 +58,7 @@ const floorsByRecord = new Map(
   d.records.map((r) => [
     r.key,
     routingFloorPlateRecords(cache.nativeModel, r.elevationFeet).flatMap(
-      nativeFloorPolygons,
+      (floor) => nativeFloorPolygons(floor, !!d.nativeIndoorEnvelopes),
     ),
   ]),
 );

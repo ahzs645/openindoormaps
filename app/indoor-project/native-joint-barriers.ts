@@ -265,6 +265,9 @@ export function nativeJointBarriers(
   data: IndoorDataset,
   levelId: number,
 ): Wall[] {
+  // Strict physical material already includes only checked, explicitly applied
+  // corrections. A proximity candidate must not become shadow construction.
+  if (data.nativeIndoorEnvelopes) return [];
   let floors = repairCache.get(data);
   if (!floors) {
     floors = new Map();

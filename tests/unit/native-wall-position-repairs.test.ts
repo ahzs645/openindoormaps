@@ -186,3 +186,18 @@ test("standalone metadata shape checks never replace runtime source model bindin
     /different native source/,
   );
 });
+
+test("strict physical placements use original native floor holes rather than drawing opening masks", () => {
+  const d = setup();
+  d.records = [
+    {
+      levelId: 1,
+      properties: { floorOpeningsFeet: [quad(0, 0.9, 10, 0.5)[0]] },
+    } as any,
+  ];
+  assert.throws(() => nativeWallPositionRepairedWalls(d), /unsupported/);
+  d.nativeIndoorEnvelopes = { version: 1, sourceModelSha256: sha } as any;
+  assert.doesNotThrow(() => nativeWallPositionRepairedWalls(d));
+  d.walkingSupport!.floors[0]!.ringsFeet.push(quad(1, 1, 1, 0.2)[0]);
+  assert.throws(() => nativeWallPositionRepairedWalls(d), /unsupported/);
+});

@@ -8,10 +8,14 @@ export function floorHeightDatum(
   data: IndoorDataset,
   levelIds: readonly number[],
 ) {
-  const heights = data.records
-    .filter((r) => levelIds.includes(r.levelId))
-    .map((r) => r.elevationFeet)
-    .filter((z) => Number.isFinite(z));
+  const heights = data.nativeIndoorEnvelopes
+    ? data.nativeLevels
+        .filter((l) => levelIds.includes(l.id))
+        .map((l) => l.elevationFeet)
+    : data.records
+        .filter((r) => levelIds.includes(r.levelId))
+        .map((r) => r.elevationFeet)
+        .filter((z) => Number.isFinite(z));
   if (heights.length === 0)
     heights.push(
       ...data.nativeLevels
@@ -19,6 +23,27 @@ export function floorHeightDatum(
         .map((l) => l.elevationFeet),
     );
   return heights.length > 0 ? Math.min(...heights) : 0;
+}
+
+/** Native ramp meshes share the physical floor datum in both visitor modes. */
+export function nativeRampHeightDatum(
+  data: IndoorDataset,
+  levelIds: readonly number[],
+  edgeId: string | undefined,
+  nativeModel = false,
+  relativeHeights = false,
+) {
+  const shared = floorHeightDatum(data, levelIds);
+  const edge = data.edges.find((e) => e.id === edgeId);
+  if (data.nativeIndoorEnvelopes || nativeModel || relativeHeights || !edge)
+    return shared;
+  const heights = data.nodes
+    .filter(
+      (n) =>
+        [edge.from, edge.to].includes(n.id) && levelIds.includes(n.levelId),
+    )
+    .map((n) => n.pointFeet[2]);
+  return heights.length ? Math.min(...heights) : shared;
 }
 
 export function relativeHeightGeometry<T extends Geometry>(
@@ -42,8 +67,18 @@ export function relativeHeightGeometry<T extends Geometry>(
       // Door thresholds use their connected graph's actual height when present.
       const doorZ =
         door && data.edges.find((e) => e.id === door.id)?.pointsFeet[0]?.[2];
-      const levelId = record?.levelId ?? door?.levelId ?? Number(p.levelId);
+      const physical =
+        data.nativeIndoorEnvelopes &&
+        (p.nativePhysical === true || p.nativeFloor === true);
+      const levelId = physical
+        ? Number(p.levelId)
+        : (record?.levelId ?? door?.levelId ?? Number(p.levelId));
+      const physicalZ =
+        physical && Number.isFinite(Number(p.elevationFeet))
+          ? Number(p.elevationFeet)
+          : undefined;
       const z =
+        physicalZ ??
         record?.elevationFeet ??
         doorZ ??
         (p.nativeFloor === true ? Number(p.elevationFeet) : undefined) ??

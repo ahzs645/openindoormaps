@@ -153,7 +153,12 @@ export function buildingOverviewLabels(
     features: [...new Set(records.map((room) => room.building))].flatMap(
       (building) => {
         const rooms = records.filter((room) => room.building === building);
-        const points = rooms.flatMap((room) => room.ringsFeet[0]);
+        const points = data.nativeIndoorEnvelopes
+          ? rooms.flatMap((room) => {
+              const node = byNode.get(room.arrivalNodeId ?? "");
+              return node ? [node.pointFeet] : [];
+            })
+          : rooms.flatMap((room) => room.ringsFeet[0]);
         if (points.length === 0) return [];
         const center = [
           (Math.min(...points.map((p) => p[0])) +

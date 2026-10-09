@@ -28,7 +28,8 @@
     "indoor:prepare-routing": "node --max-old-space-size=4096 --import tsx scripts/indoor/prepare-routing.ts",
     "indoor:audit-room-generalization": "node --import tsx scripts/indoor/audit-room-generalization.ts",
     "indoor:audit-rendering": "node --max-old-space-size=4096 --import tsx scripts/indoor/audit-rendering.ts",
-    "indoor:audit-volumes": "node --max-old-space-size=4096 --import tsx scripts/indoor/audit-volume-coverage.ts"
+    "indoor:audit-volumes": "node --max-old-space-size=4096 --import tsx scripts/indoor/audit-volume-coverage.ts",
+    "test:unit": "node --import tsx --test --test-concurrency=4 tests/unit/*.test.ts app/indoor-project/original-curtain-door-threshold.test.ts"
   },
   "dependencies": {
     "@maplibre/maplibre-gl-inspect": "^1.8.2",
@@ -42,6 +43,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fflate": "^0.8.3",
+    "jsts": "2.12.1",
     "lucide-react": "^0.513.0",
     "maplibre-gl": "^5.23.0",
     "minisearch": "^7.1.1",

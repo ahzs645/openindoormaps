@@ -1101,6 +1101,45 @@
   right: 0;
   pointer-events: auto;
 }
+.indoor-project label.project-physical-plane-picker {
+  position: absolute;
+  top: 66px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 7px 10px;
+  max-width: 100%;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 2px 12px #0002;
+  font-size: 12px;
+  pointer-events: auto;
+}
+.indoor-project .project-physical-plane-picker select {
+  width: auto;
+  min-width: 0;
+  max-width: 180px;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .indoor-project label.project-physical-plane-picker {
+    top: 0;
+    left: 0;
+    right: auto;
+    width: min(148px, calc(100% - 236px));
+    min-height: 56px;
+    box-sizing: border-box;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px 6px;
+  }
+  .indoor-project .project-physical-plane-picker select {
+    max-width: 100%;
+  }
+}
 .project-level-trigger {
   display: flex;
   align-items: center;
@@ -2188,6 +2227,36 @@
 .project-native-explore-status p {
   margin: 8px 0;
 }
+.project-mixed-hallway-toggle {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #9d1588;
+  border-radius: 7px;
+  color: #85116f;
+  background: #fff;
+  text-align: left;
+  font-weight: 600;
+}
+.project-mixed-hallway-toggle[aria-pressed="true"] {
+  background: #fce9f8;
+}
+.project-mixed-hallway-review label {
+  display: grid;
+  gap: 5px;
+  margin: 8px 0;
+}
+.project-mixed-hallway-review select {
+  min-width: 0;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #d5b4ce;
+  border-radius: 6px;
+  background: white;
+}
+.project-mixed-hallway-review ul {
+  padding-left: 18px;
+}
 .project-native-explore-places {
   display: grid;
   gap: 4px;
@@ -2202,13 +2271,15 @@
 @media (max-width: 1000px) {
   .project-native-explore-status {
     top: 160px;
-    left: 12px;
+    left: auto;
+    right: 12px;
   }
 }
 @media (max-width: 600px) {
   .project-native-explore-status {
     top: 160px;
     left: 8px;
+    right: auto;
     max-height: 28vh;
     width: min(300px, calc(100% - 70px));
   }

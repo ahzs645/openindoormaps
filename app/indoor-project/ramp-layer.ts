@@ -1,7 +1,7 @@
 import { MercatorCoordinate, type CustomLayerInterface } from "maplibre-gl";
 import * as THREE from "three";
 import { routeRibbonPositions } from "./route-ribbon";
-import { floorHeightDatum } from "./relative-heights";
+import { floorHeightDatum, nativeRampHeightDatum } from "./relative-heights";
 import { HALLWAY_COLOR } from "./display-passages";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
@@ -23,6 +23,7 @@ export function nativeRampLayer(
   nativeModel = false,
   relativeHeights = false,
 ): CustomLayerInterface {
+  const physicalHeights = relativeHeights || !!data.nativeIndoorEnvelopes;
   const origin = MercatorCoordinate.fromLngLat(data.alignment.originGeographic);
   const metre = origin.meterInMercatorCoordinateUnits();
   const transform = new THREE.Matrix4()
@@ -69,24 +70,19 @@ export function nativeRampLayer(
     number
   >();
   const sharedDatum = floorHeightDatum(data, levelIds);
-  if (relativeHeights)
+  if (physicalHeights && (three || nativeModel))
     for (const path of route?.paths ?? [])
       if (path.levelIds.some((id) => levelIds.includes(id)))
         routePaths.set(path, sharedDatum);
   for (const ramp of data.rampDisplay?.ramps ?? []) {
     const edge = data.edges.find((e) => e.id === ramp.edgeId);
-    const datum =
-      nativeModel || relativeHeights || !edge
-        ? sharedDatum
-        : Math.min(
-            ...data.nodes
-              .filter(
-                (n) =>
-                  [edge.from, edge.to].includes(n.id) &&
-                  levelIds.includes(n.levelId),
-              )
-              .map((n) => n.pointFeet[2]),
-          );
+    const datum = nativeRampHeightDatum(
+      data,
+      levelIds,
+      ramp.edgeId,
+      nativeModel,
+      physicalHeights,
+    );
     if (
       !ramp.levelIds.some((id) => levelIds.includes(id)) ||
       (building !== "all" &&
@@ -98,7 +94,7 @@ export function nativeRampLayer(
         ))
     )
       continue;
-    if (three && relativeHeights && !nativeModel) {
+    if (three && physicalHeights && !nativeModel) {
       const faces = [
         ...(ramp.bodyTrianglesFeet ?? []),
         ...(ramp.platforms?.flatMap((p) => p.trianglesFeet) ?? []),
@@ -127,18 +123,19 @@ export function nativeRampLayer(
         scene.add(platform);
       }
     }
-    const positions = ramp.trianglesFeet.flatMap((triangle) =>
-      triangle.flatMap((p) => {
-        const point = MercatorCoordinate.fromLngLat(geographicPoint(data, p));
-        return [
-          (point.x - origin.x) / metre,
-          -(point.y - origin.y) / metre,
-          three
-            ? (p[2] - datum) * data.alignment.verticalMetresPerFoot +
-              (relativeHeights && ramp.bodyTrianglesFeet ? 0.026 : 0.025)
-            : 0.025,
-        ];
-      }),
+    const positions = (ramp.displayTrianglesFeet ?? ramp.trianglesFeet).flatMap(
+      (triangle) =>
+        triangle.flatMap((p) => {
+          const point = MercatorCoordinate.fromLngLat(geographicPoint(data, p));
+          return [
+            (point.x - origin.x) / metre,
+            -(point.y - origin.y) / metre,
+            three
+              ? (p[2] - datum) * data.alignment.verticalMetresPerFoot +
+                (physicalHeights && ramp.bodyTrianglesFeet ? 0.026 : 0.025)
+              : 0.025,
+          ];
+        }),
     );
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute(

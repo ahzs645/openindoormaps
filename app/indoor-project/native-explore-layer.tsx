@@ -1,3 +1,5 @@
+import { useNativeExactHits } from "./use-native-exact-hits";
+import { mapDrawingFeatures } from "./map-drawing-features";
 import { projectPlaceDisplayName } from "./visitor-metadata";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -17,6 +19,7 @@ import {
   type NativeExploreResult,
 } from "./native-explore";
 import { startNativeExploreTrace } from "./native-explore-client";
+import { FloorMemoryCache } from "./floor-memory-cache";
 import {
   ROOM_DETAIL_START,
   ROOM_DETAIL_END,
@@ -32,19 +35,25 @@ import {
 } from "./native-explore-selection";
 import { geographicPoint } from "./routing";
 import { fitProjectPlaceBounds } from "./place-camera";
+import {
+  nativeMixedHallwayIssues,
+  nativeMixedHallwayFeatures,
+} from "./native-mixed-hallway-review";
 
-// Dataset identity is the invalidation boundary. Keep only three read-only
-// floor/building results per dataset; cancelled workers never populate this cache.
-const nativeExploreCache = new WeakMap<
-  IndoorDataset,
-  Map<string, NativeExploreResult>
->();
+// Retain one immutable dataset's complete results within both count/byte
+// budgets; pending walls and cancelled workers never populate this cache.
+let nativeExploreCacheData: IndoorDataset | undefined;
+let nativeExploreCacheConsumers = 0;
+const nativeExploreCache = new FloorMemoryCache<string, NativeExploreResult>(5);
 const empty = { type: "FeatureCollection" as const, features: [] };
 const sources = [
   "native-explore-fill",
   "native-explore-outline",
   "native-explore-partitions",
   "native-explore-overview",
+  "native-explore-material",
+  "native-explore-mixed-hallways",
+  "native-explore-mixed-hallway-perimeters",
 ];
 const layers = [
   "native-explore-floor",
@@ -52,6 +61,9 @@ const layers = [
   "native-explore-selection",
   "native-explore-boundaries",
   "native-explore-overview-floor",
+  "native-explore-material-fill",
+  "native-explore-mixed-hallway-fill",
+  "native-explore-mixed-hallway-line",
 ];
 export function NativeExploreLayer({
   data,
@@ -61,7 +73,15 @@ export function NativeExploreLayer({
   onPick,
   onFitReady,
   fitRequest = 0,
+  usePreparedDisplay = false,
+  preparedDisplay,
+  preparedDisplayError,
+  onRetryPreparedDisplay,
 }: {
+  onRetryPreparedDisplay?: () => void;
+  usePreparedDisplay?: boolean;
+  preparedDisplay?: NativeExploreResult;
+  preparedDisplayError?: string;
   data: IndoorDataset;
   levelIds: number[];
   building: string;
@@ -77,23 +97,84 @@ export function NativeExploreLayer({
     scope: string;
     result?: NativeExploreResult;
     error?: string;
+    complete?: boolean;
   }>();
   const [picked, setPicked] = useState<string[]>([]);
   const [retry, setRetry] = useState(0);
   const [placeQuery, setPlaceQuery] = useState("");
   const [placeLimit, setPlaceLimit] = useState(20);
+  const [showMixedHallways, setShowMixedHallways] = useState(false);
+  const [mixedHallwayId, setMixedHallwayId] = useState("all");
   const scope = `${building}:${levelIds.join(",")}`;
   const current =
     state?.data === data && state.scope === scope ? state : undefined;
   const result = current?.result;
+  const mixedHallwayIssues = useMemo(
+    () => (result ? nativeMixedHallwayIssues(data, result) : []),
+    [data, result],
+  );
+  const mixedHallwayIds = useMemo(
+    () =>
+      showMixedHallways
+        ? mixedHallwayIssues
+            .filter(
+              (issue) =>
+                mixedHallwayId === "all" || issue.id === mixedHallwayId,
+            )
+            .map((issue) => issue.id)
+        : [],
+    [showMixedHallways, mixedHallwayIssues, mixedHallwayId],
+  );
+  const mixedHallway = mixedHallwayIssues.find(
+    (issue) => issue.id === mixedHallwayId,
+  );
+  useEffect(() => setMixedHallwayId("all"), [data, scope]);
+  const exactScopes = useMemo(
+    () =>
+      result?.exactTopologies?.map((entry) => ({
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: entry.geometrySha256,
+        topology: entry.topology,
+        faceIds: result.regions
+          .filter((r) => r.levelId === entry.levelId)
+          .map((r) => r.exactFaceId!),
+      })),
+    [data.source.modelSha256, result?.exactTopologies, result?.regions],
+  );
+  const exactHits = useNativeExactHits(exactScopes);
+  useEffect(() => {
+    nativeExploreCacheConsumers++;
+    return () => {
+      if (--nativeExploreCacheConsumers === 0) {
+        nativeExploreCache.clear();
+        nativeExploreCacheData = undefined;
+      }
+    };
+  }, []);
   useEffect(() => {
     setState(undefined);
     setPicked([]);
-    const cached = nativeExploreCache.get(data)?.get(scope);
+    if (usePreparedDisplay) {
+      if (preparedDisplay || preparedDisplayError)
+        setState({
+          data,
+          scope,
+          result: preparedDisplay,
+          error: preparedDisplayError,
+          complete: true,
+        });
+      return;
+    }
+    if (nativeExploreCacheData !== data) {
+      nativeExploreCache.clear();
+      nativeExploreCacheData = data;
+    }
+    const cached = nativeExploreCache.get(scope);
     if (cached) {
       setState({ data, scope, result: cached });
       return;
     }
+    let floorResult: NativeExploreResult | undefined;
     return startNativeExploreTrace(
       { data, levelIds, building },
       () =>
@@ -101,21 +182,33 @@ export function NativeExploreLayer({
           type: "module",
         }),
       (response) => {
-        if (response.result) {
-          const cache =
-            nativeExploreCache.get(data) ??
-            new Map<string, NativeExploreResult>();
-          cache.delete(scope);
-          cache.set(scope, response.result);
-          while (cache.size > 3) cache.delete(cache.keys().next().value!);
-          nativeExploreCache.set(data, cache);
+        floorResult =
+          response.result ??
+          (response.walls && floorResult
+            ? { ...floorResult, walls: response.walls }
+            : floorResult);
+        const update = { ...response, result: floorResult };
+        if (update.result && update.complete !== false && !update.error) {
+          if (nativeExploreCacheData === data)
+            nativeExploreCache.set(
+              scope,
+              update.result,
+              response.memoryCostBytes,
+            );
         }
-        setState({ data, scope, ...response });
+        setState({ data, scope, ...update });
       },
     );
     // Scope includes every level and building; dataset identity invalidates imports/edits.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, scope, retry]);
+  }, [
+    data,
+    scope,
+    retry,
+    usePreparedDisplay,
+    preparedDisplay,
+    preparedDisplayError,
+  ]);
   const selectedRegions = useMemo(
     () => (result ? nativeExploreSelectionIds(result, selected, picked) : []),
     [result, picked, selected],
@@ -154,6 +247,7 @@ export function NativeExploreLayer({
     map,
     isLoaded,
     result,
+    exactHits,
     onFitReady,
     selected,
     data,
@@ -221,6 +315,28 @@ export function NativeExploreLayer({
       },
       before,
     );
+    map.addLayer(
+      {
+        id: layers[5],
+        type: "fill",
+        source: sources[4],
+        minzoom: WALL_DETAIL_START,
+        paint: {
+          "fill-color": "#d6d7d7",
+          "fill-antialias": false,
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            WALL_DETAIL_START,
+            0,
+            WALL_DETAIL_END,
+            1,
+          ],
+        },
+      },
+      before,
+    );
     // Keep exact native polygons under the detail triangles at every zoom.
     // Tile quantization may collapse a slender display triangle; it must not
     // expose a false white opening through an otherwise complete floor face.
@@ -271,6 +387,32 @@ export function NativeExploreLayer({
       },
       before,
     );
+    map.addLayer(
+      {
+        id: layers[6],
+        type: "fill",
+        source: sources[5],
+        paint: {
+          "fill-color": "#c026a8",
+          "fill-opacity": 0.28,
+          "fill-antialias": false,
+        },
+      },
+      before,
+    );
+    map.addLayer(
+      {
+        id: layers[7],
+        type: "line",
+        source: sources[6],
+        paint: {
+          "line-color": "#9d1588",
+          "line-width": 2,
+          "line-opacity": 0.9,
+        },
+      },
+      before,
+    );
     // Keep named-place labels, connector markers and route paths above floor tint.
     for (const layer of map.getStyle().layers ?? []) {
       if (
@@ -296,9 +438,10 @@ export function NativeExploreLayer({
       result?.outlines,
       result?.partitions,
       result?.overview,
+      result?.walls,
     ].forEach((value, i) =>
       (map.getSource(sources[i]) as GeoJSONSource | undefined)?.setData(
-        value ?? empty,
+        mapDrawingFeatures(value ?? empty),
       ),
     );
     for (const id of [layers[0], layers[4]])
@@ -334,17 +477,51 @@ export function NativeExploreLayer({
       ]);
   }, [map, isLoaded, result, selectedRegions]);
   useEffect(() => {
+    if (!map || !isLoaded) return;
+    (map.getSource(sources[5]) as GeoJSONSource | undefined)?.setData(
+      nativeMixedHallwayFeatures(result, mixedHallwayIds),
+    );
+    (map.getSource(sources[6]) as GeoJSONSource | undefined)?.setData(
+      nativeMixedHallwayFeatures(result, mixedHallwayIds, "outlines"),
+    );
+  }, [map, isLoaded, result, mixedHallwayIds]);
+  const focusMixedHallway = (id: string) => {
+    setMixedHallwayId(id);
+    if (!result || id === "all") return;
+    const bounds = new LngLatBounds();
+    for (const feature of nativeMixedHallwayFeatures(result, [id]).features)
+      for (const point of feature.geometry.coordinates[0])
+        bounds.extend(point as [number, number]);
+    if (map && !bounds.isEmpty())
+      fitProjectPlaceBounds(map, bounds, {
+        maxZoom: 21,
+        pitch: 0,
+        duration: 650,
+      });
+  };
+  useEffect(() => {
     if (!map || !isLoaded || !result) return;
-    const click = (event: MapMouseEvent) => {
+    let active = true,
+      clickSequence = 0;
+    const click = async (event: MapMouseEvent) => {
+      const request = ++clickSequence;
       // Keep route/connector controls and markers' own click handling intact.
       const hitLayers = map
         .queryRenderedFeatures(event.point)
         .filter((f) => nativeExploreControlHit(f.layer.id));
       if (hitLayers.length) return;
       const point = nativeEditPoint(data, [event.lngLat.lng, event.lngLat.lat]);
+      const exactIds = exactHits.enabled
+        ? new Set(await exactHits.hit(point))
+        : undefined;
+      if (!active || request !== clickSequence) return;
       const hits = nativeExplorePickRegions(
         data,
-        result.regions.filter((r) => pointInNativeArea(point, r.ringsFeet)),
+        result.regions.filter((r) =>
+          exactIds
+            ? exactIds.has(r.exactFaceId!)
+            : pointInNativeArea(point, r.ringsFeet),
+        ),
         point,
         building,
       );
@@ -367,18 +544,84 @@ export function NativeExploreLayer({
     };
     map.on("click", click);
     return () => {
+      active = false;
       map.off("click", click);
     };
-  }, [map, isLoaded, result, data, building, selected, onPick]);
+  }, [map, isLoaded, result, data, building, selected, onPick, exactHits]);
   return (
     <aside
       className="project-native-explore-status"
       aria-label="Native floor map"
     >
+      {result && !!mixedHallwayIssues.length && (
+        <div className="project-mixed-hallway-review">
+          <button
+            className="project-mixed-hallway-toggle"
+            aria-pressed={showMixedHallways}
+            onClick={() => setShowMixedHallways((shown) => !shown)}
+          >
+            {showMixedHallways ? "Hide" : "Highlight"} mixed hallways ·{" "}
+            {mixedHallwayIssues.length}
+          </button>
+          {showMixedHallways && (
+            <>
+              <p>
+                Magenta marks connected native areas containing circulation and
+                room or staff labels. It is an issue overlay, not an applied
+                repair.
+              </p>
+              <label>
+                Mixed hallway area
+                <select
+                  value={mixedHallwayId}
+                  onChange={(event) => focusMixedHallway(event.target.value)}
+                >
+                  <option value="all">All mixed hallway areas</option>
+                  {mixedHallwayIssues.map((issue) => (
+                    <option key={issue.id} value={issue.id}>
+                      {issue.hallways[0].number ||
+                        `Building ${issue.hallways[0].building}`}{" "}
+                      · {issue.hallways[0].name} ·{" "}
+                      {issue.hallways.length + issue.otherPlaces.length} places
+                      · #{issue.levelId}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {mixedHallway && (
+                <>
+                  <p>
+                    {mixedHallway.hallways.length} circulation labels ·{" "}
+                    {mixedHallway.otherPlaces.length} other place labels ·{" "}
+                    {mixedHallway.staffCount} staff labels.
+                  </p>
+                  <details>
+                    <summary>Labels in this connected area</summary>
+                    <ul>
+                      {[
+                        ...mixedHallway.hallways,
+                        ...mixedHallway.otherPlaces,
+                      ].map((room) => (
+                        <li key={room.key}>
+                          {room.number || `Building ${room.building}`} ·{" "}
+                          {projectPlaceDisplayName(data, room)}
+                          {room.access === "staff" ? " · Staff" : ""}
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </>
+              )}
+            </>
+          )}
+        </div>
+      )}
       <details open={!!region || !current || !!current.error}>
         <summary>
           {current?.error
-            ? "Native floor map unavailable"
+            ? result
+              ? "Native wall detail unavailable"
+              : "Native floor map unavailable"
             : !result
               ? "Loading native floor map…"
               : `Native floor map · ${result.regions.length} areas${result.warningCount ? ` · ${result.warningCount} warnings` : ""}`}
@@ -389,13 +632,24 @@ export function NativeExploreLayer({
             map trace walls and measured thresholds in the background.
           </p>
         )}
+        {current?.complete === false && result && (
+          <p role="status">Native floor ready. Loading wall detail…</p>
+        )}
         {current?.error && (
           <>
             <p role="alert">
-              {current.error} Native floor geometry is hidden until the trace
-              succeeds. Retry or choose 2D rooms to inspect the prepared map.
+              {current.error}{" "}
+              {result
+                ? "The verified native floor remains visible. Retry to load its wall detail."
+                : "Native floor geometry is hidden until the trace succeeds. Retry or open Native areas to review the source evidence."}
             </p>
-            <button onClick={() => setRetry((n) => n + 1)}>
+            <button
+              onClick={() =>
+                usePreparedDisplay
+                  ? onRetryPreparedDisplay?.()
+                  : setRetry((n) => n + 1)
+              }
+            >
               Retry native floor map
             </button>
           </>
@@ -405,15 +659,14 @@ export function NativeExploreLayer({
             <p>
               Native inside faces and floor openings. Dashed lines mark applied
               area boundaries. Door closures define areas; directions keep their
-              existing door connections.
+              physical door connections over the supported native floor.
             </p>
             <p>
               Names and room types use the old outlines as metadata hints. Green
-              hallways and vestibules follow native faces. Unlabelled slabs are
-              hidden; open shared slabs use checked native enclosure evidence.
-              Areas without that evidence stay hidden. Shared faces remain
-              shared; their color does not establish separate rooms or public
-              access. Hallways remain non-selectable.
+              hallways and vestibules follow native faces. Unnamed enclosed
+              areas appear grey. Areas without enclosure evidence stay hidden.
+              Shared faces remain shared; their color does not establish
+              separate rooms or public access. Hallways remain non-selectable.
             </p>
             {result.regions.some(
               (r) => (r.enclosureReviewAreaSquareFeet ?? 0) > 0.01,

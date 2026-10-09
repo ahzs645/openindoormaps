@@ -100,7 +100,7 @@ for (const mobile of [false, true]) {
     );
     // Observe real prepared geometry, rather than only the changed text in React.
     await page.addInitScript(() => {
-      const probe = ((
+      const probe: ImportProbe = ((
         globalThis as unknown as { importProbe: ImportProbe }
       ).importProbe = { preparedColors: [] });
       const post = Worker.prototype.postMessage;
@@ -203,7 +203,7 @@ test("a delayed saved ZIP cannot overwrite a fresh import or reappear after Clea
   await page.goto(`${base}#/projects/indoor`);
   await upload(page, oldBytes);
   await page.addInitScript(() => {
-    const probe = ((
+    const probe: ImportProbe = ((
       globalThis as unknown as { importProbe: ImportProbe }
     ).importProbe = { preparedColors: [] });
     const original = Blob.prototype.arrayBuffer;
@@ -286,7 +286,7 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     .getByRole("button", { name: "Review project", exact: true })
     .click();
   await page.evaluate(() => {
-    const probe = ((
+    const probe: ImportProbe = ((
       globalThis as unknown as { importProbe: ImportProbe }
     ).importProbe = { preparedColors: [] });
     const arrayBuffer = File.prototype.arrayBuffer;

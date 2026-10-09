@@ -1,3 +1,4 @@
+import { useNativeExactHits } from "./use-native-exact-hits";
 import { useEffect, useMemo } from "react";
 import {
   type GeoJSONSource,
@@ -39,6 +40,21 @@ export function NativeAreaLayer({
   interactive?: boolean;
 }) {
   const { map, isLoaded } = useMap();
+  const exactScopes = useMemo(
+    () =>
+      result?.exactTopology
+        ? [
+            {
+              sourceModelSha256: data.source.modelSha256,
+              sourceGeometryKey: result.geometrySha256,
+              topology: result.exactTopology,
+              faceIds: result.regions.map((r) => r.exactFaceId!),
+            },
+          ]
+        : undefined,
+    [data.source.modelSha256, result],
+  );
+  const exactHits = useNativeExactHits(exactScopes);
   const features = useMemo<FeatureCollection<Polygon>>(
     () => ({
       type: "FeatureCollection",
@@ -199,22 +215,33 @@ export function NativeAreaLayer({
   }, [map, isLoaded]);
   useEffect(() => {
     if (!map || !isLoaded) return;
-    (map.getSource("native-area-partitions") as GeoJSONSource | undefined)?.setData({
+    (
+      map.getSource("native-area-partitions") as GeoJSONSource | undefined
+    )?.setData({
       type: "FeatureCollection",
       features: (data.reviewedAreaPartitions?.partitions ?? [])
-        .filter((p) => p.levelId === result?.levelId &&
-          result.logicalPartitionIds?.includes(p.id))
+        .filter(
+          (p) =>
+            p.levelId === result?.levelId &&
+            result.logicalPartitionIds?.includes(p.id),
+        )
         .map((p) => ({
           type: "Feature" as const,
-          properties: {id:p.id, preview: result?.options?.previewPartitionIds?.includes(p.id) ?? false},
+          properties: {
+            id: p.id,
+            preview:
+              result?.options?.previewPartitionIds?.includes(p.id) ?? false,
+          },
           geometry: {
             type: "LineString" as const,
-            coordinates: (p.closed ? [...p.pointsFeet,p.pointsFeet[0]] : p.pointsFeet)
-              .map((point) => geographicPoint(data,point)),
+            coordinates: (p.closed
+              ? [...p.pointsFeet, p.pointsFeet[0]]
+              : p.pointsFeet
+            ).map((point) => geographicPoint(data, point)),
           },
         })),
     });
-  }, [map,isLoaded,data,result]);
+  }, [map, isLoaded, data, result]);
   useEffect(() => {
     if (!map || !isLoaded) return;
     const points = draft.map((p) => geographicPoint(data, p));
@@ -294,7 +321,10 @@ export function NativeAreaLayer({
       if (raising) return;
       const layers = map.getStyle()?.layers ?? [];
       if (
-        layers.at(-1)?.id !== (map.getLayer("native-connection-preview-line") ? "native-connection-preview-line" : "native-area-draft-point") &&
+        layers.at(-1)?.id !==
+          (map.getLayer("native-connection-preview-line")
+            ? "native-connection-preview-line"
+            : "native-area-draft-point") &&
         map.getLayer("native-area-region-outline")
       ) {
         raising = true;
@@ -305,7 +335,10 @@ export function NativeAreaLayer({
           map.moveLayer("native-area-partition-lines");
           map.moveLayer("native-area-draft-line");
           map.moveLayer("native-area-draft-point");
-          for (const id of ["native-connection-preview-fill", "native-connection-preview-line"])
+          for (const id of [
+            "native-connection-preview-fill",
+            "native-connection-preview-line",
+          ])
             if (map.getLayer(id)) map.moveLayer(id);
         } finally {
           raising = false;
@@ -350,10 +383,17 @@ export function NativeAreaLayer({
         onPoint(point);
         return;
       }
-      const region = result?.regions.find((r) =>
-        pointInNativeArea(point, r.ringsFeet),
-      );
-      if (region) onSelect(region.id, !!e.originalEvent.shiftKey);
+      if (exactHits.enabled) {
+        const additive = !!e.originalEvent.shiftKey;
+        void exactHits.hit(point).then((ids) => {
+          if (ids[0]) onSelect(ids[0], additive);
+        });
+      } else {
+        const region = result?.regions.find((r) =>
+          pointInNativeArea(point, r.ringsFeet),
+        );
+        if (region) onSelect(region.id, !!e.originalEvent.shiftKey);
+      }
     };
     map.on("click", pick);
     const markers = decisions
@@ -388,6 +428,7 @@ export function NativeAreaLayer({
     isLoaded,
     data,
     result,
+    exactHits,
     decisions,
     onSelect,
     drawing,

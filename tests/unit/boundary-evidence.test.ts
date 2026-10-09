@@ -73,7 +73,7 @@ test("registered door-symbol closure is described as display evidence without cl
   record.properties.nativeRoutingBoundary = undefined;
   data.presentation = {
     version: 1,
-    generator: "test",
+    generator: "reviter/native-room-presentation-1",
     sourceModelSha256: data.source.modelSha256,
     junctionToleranceFeet: 0.08,
     diagnostics: [],
@@ -122,7 +122,7 @@ test("registered door-symbol closure is described as display evidence without cl
     projectBoundaryEvidence(data, source(data)).get(record.key)!,
     /^Registered architectural walls · door swings closed for display; original navigation interior$/,
   );
-  data.presentation.rooms[0].sourceProof!.closedDoorSwings = [];
+  data.presentation!.rooms[0].sourceProof!.closedDoorSwings = [];
   assert.match(
     projectBoundaryEvidence(data, source(data)).get(record.key)!,
     /^Registered architectural walls · display only/,

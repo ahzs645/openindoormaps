@@ -1,5 +1,26 @@
 import { prepareRouting } from "../../app/indoor-project/prepare-routing";
 import {
+  encodeNativeExactTopology,
+  nativeRationalPoint,
+} from "../../app/indoor-project/native-exact-planar-topology";
+import { NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION } from "../../app/indoor-project/native-rational-overlay";
+function bindFixtureExactCells(data: IndoorDataset) {
+  const geometry = data.circulationGeometry!;
+  for (const cell of geometry.cells) cell.exactFaceId = cell.id;
+  geometry.exactTopology = encodeNativeExactTopology(
+    {
+      sourceModelSha256: data.source.modelSha256,
+      sourceGeometryKey: geometry.sourceGeometryKey,
+      kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+    },
+    geometry.cells.map((cell) => ({
+      id: cell.id,
+      parts: [cell.ringsFeet.map((ring) => ring.map(nativeRationalPoint))],
+    })),
+  );
+}
+import { nativeMaterialSectionsHash } from "../../app/indoor-project/native-material-sections";
+import {
   exportPreparedRoutingProject,
   readIndoorProject,
   exportIndoorProject,
@@ -527,6 +548,57 @@ test("campus viewer keeps exact geometry and routes without model bytes or autho
     master.dataset,
   );
   await assert.rejects(exportIndoorProject(viewer), /full reviewed master ZIP/);
+});
+test("viewer exports pack large exact native materials within the existing metadata limit", async () => {
+  const master = await readIndoorProject(await archive());
+  const level = master.dataset.nativeLevels[0];
+  const descriptor = {
+    version: 1 as const,
+    sourceModelSha256: master.dataset.source.modelSha256,
+    geometrySha256: "",
+    levels: [
+      {
+        levelId: level.id,
+        elevationFeet: level.elevationFeet,
+        cutElevationFeet: level.elevationFeet + 0.1,
+        evidenceSha256: "b".repeat(64),
+        sourceElementIds: [7],
+        sections: [
+          {
+            nativeElementId: 7,
+            categoryId: -2000011,
+            kind: "wall" as const,
+            baseElevationFeet: level.elevationFeet,
+            topElevationFeet: level.elevationFeet + 9,
+            partsFeet: [
+              [
+                [
+                  [0.123456789012345, 0],
+                  [2, 0],
+                  [2, 1],
+                  [0.123456789012345, 1],
+                ],
+              ],
+            ] as [number, number][][][],
+          },
+        ],
+      },
+    ],
+    sourceEvidence: "original source provenance\n".repeat(700000),
+  };
+  descriptor.geometrySha256 = await nativeMaterialSectionsHash(descriptor);
+  master.rooms.nativeMaterialSections = descriptor;
+  master.dataset.nativeMaterialSections = descriptor;
+  const exported = await exportCampusViewer(master);
+  const files = unzipSync(exported);
+  assert(files["viewer/metadata.json"].length < 16 * 1024 * 1024);
+  const wire = JSON.parse(strFromU8(files["viewer/metadata.json"]));
+  assert.equal(wire.format, "openindoormaps-viewer-metadata-wire");
+  const viewer = await readIndoorProject(exported);
+  assert.deepEqual(viewer.rooms.nativeMaterialSections, descriptor);
+  assert.deepEqual(viewer.dataset.nativeMaterialSections, descriptor);
+  assert.equal(viewer.rooms.reviewBundle, undefined);
+  assert.deepEqual(master.rooms.nativeMaterialSections, descriptor);
 });
 test("viewer export preserves combined campus floor selections without joining routing levels", async () => {
   const master = await readIndoorProject(await archive());
@@ -2094,7 +2166,7 @@ test("source stair markers include unresolved stairs and use the actual served f
   assert.equal(source.features.length, 1);
   assert.equal(source.features[0].properties?.review, true);
   assert.ok(
-    booleanPointInPolygon(stairDisplayPoint(d, d.records[0]), {
+    booleanPointInPolygon(stairDisplayPoint(d, d.records[0])!, {
       type: "Polygon",
       coordinates: d.records[0].ringsFeet.map((ring) => [...ring, ring[0]]),
     }),
@@ -2187,6 +2259,117 @@ test("elevator reviews survive ZIP export without authorizing invented graph con
         ],
       }),
     /distinct served floors/,
+  );
+});
+test("native connector reviews require current owned floor faces rather than old label outlines", async () => {
+  const p = await readIndoorProject(await archive());
+  const { nativeCirculationGeometryKey } = await import(
+    "../../app/indoor-project/native-circulation"
+  );
+  const rect = (
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
+  ): [number, number][] => [
+    [x0, y0],
+    [x1, y0],
+    [x1, y1],
+    [x0, y1],
+  ];
+  const envelope = {
+    version: 1 as const,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    geometrySha256: "a".repeat(64),
+    levels: [],
+  };
+  p.dataset.nativeIndoorEnvelopes = envelope;
+  p.dataset.circulationGeometry = {
+    version: 1,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    sourceGeometryKey: nativeCirculationGeometryKey(p.dataset),
+    cells: [
+      {
+        id: "lower",
+        roomKeys: ["a"],
+        levelIds: [1],
+        elevationFeet: 0,
+        nativeFloorIds: [100],
+        sourceCoverage: 1,
+        ringsFeet: [rect(0, 0, 5, 5), rect(1, 1, 2, 2)],
+      },
+      {
+        id: "upper",
+        roomKeys: ["upper"],
+        levelIds: [2],
+        elevationFeet: 10,
+        nativeFloorIds: [101],
+        sourceCoverage: 1,
+        ringsFeet: [rect(0, 0, 15, 5)],
+      },
+    ],
+  };
+  const review = {
+    id: "Native lift",
+    kind: "elevator" as const,
+    nativeElementId: 900,
+    evidence: "Checked native lobby faces",
+    accessible: "unknown" as const,
+    direction: "both" as const,
+    entrances: [
+      {
+        roomKey: "a",
+        levelId: 1,
+        nativeElementId: 901,
+        pointFeet: [3, 3] as [number, number],
+      },
+      {
+        roomKey: "upper",
+        levelId: 2,
+        nativeElementId: 902,
+        pointFeet: [12, 3] as [number, number],
+      },
+    ],
+  };
+  bindFixtureExactCells(p.dataset);
+  const graphBefore = JSON.stringify([p.dataset.nodes, p.dataset.edges]);
+  assert.equal(
+    sourceConnectorReview(reviewConnector(p, review)).connectors.length,
+    1,
+  );
+  assert.equal(JSON.stringify([p.dataset.nodes, p.dataset.edges]), graphBefore);
+  for (const pointFeet of [
+    [8, 3],
+    [1.5, 1.5],
+  ] as [number, number][]) {
+    assert.throws(
+      () =>
+        reviewConnector(p, {
+          ...review,
+          entrances: [
+            { ...review.entrances[0], pointFeet },
+            review.entrances[1],
+          ],
+        }),
+      /current native floor face/,
+    );
+  }
+  const wrongOwner = structuredClone(p);
+  wrongOwner.dataset.circulationGeometry!.cells[0].roomKeys = ["b"];
+  assert.throws(
+    () => reviewConnector(wrongOwner, review),
+    /current native floor face/,
+  );
+  const stale = structuredClone(p);
+  stale.dataset.walls.push({
+    nativeElementId: 999,
+    levelId: 1,
+    kind: "wall",
+    ringsFeet: [rect(4, 0, 5, 5)],
+  });
+  assert.throws(
+    () => reviewConnector(stale, review),
+    /current native floor face/,
   );
 });
 test("visitor presentation hides isolated unmapped wall components while preserving actual room walls and holes", () => {
@@ -2807,6 +2990,281 @@ test("routing preparation preserves every source asset in master and viewer pack
     await assert.rejects(
       exportPreparedRoutingProject(project, edited),
       /cannot modify source/,
+    );
+  }
+});
+
+test("strict visitor physical bindings preserve native cells and routes while stripping private notes", async () => {
+  const p = await readIndoorProject(await archive()),
+    d = p.dataset;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { nativeMaterialSectionsHash } = await import(
+    "../../app/indoor-project/native-material-sections"
+  );
+  const { nativeCirculationGeometryKey, nativeCirculationCells } = await import(
+    "../../app/indoor-project/native-circulation"
+  );
+  const { nativeSourceStairPlacementHash } = await import(
+    "../../app/indoor-project/native-source-stair-material"
+  );
+  const pc = (await import("polygon-clipping")).default;
+  const rect = (
+    x: number,
+    y: number,
+    w: number,
+    h: number,
+  ): [number, number][][] => [
+    [
+      [x, y],
+      [x + w, y],
+      [x + w, y + h],
+      [x, y + h],
+    ],
+  ];
+  const original = rect(0, 10.002, 10, 0.3),
+    corrected = rect(0, 9.9998, 10, 0.3),
+    support = rect(0, 9, 10, 1),
+    floor = rect(-2, -2, 24, 15);
+  d.walkingSupport = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    floors: [0, 10].map((z, i) => ({
+      nativeElementId: 1000 + i,
+      elevationFeet: z,
+      ringsFeet: floor,
+    })),
+  };
+  const env = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [0, 10].map((z, i) => ({
+      levelId: i + 1,
+      elevationFeet: z,
+      partsFeet: [floor],
+      sourceElementIds: [1000 + i, 10, 11],
+      cutElevationsFeet: [z + 4],
+      evidenceSha256: "a".repeat(64),
+    })),
+  };
+  d.nativeIndoorEnvelopes = {
+    ...env,
+    geometrySha256: await nativeIndoorEnvelopeHash(env),
+  };
+  d.walls = [
+    { levelId: 1, nativeElementId: 10, kind: "wall", ringsFeet: original },
+    { levelId: 1, nativeElementId: 11, kind: "wall", ringsFeet: support },
+  ];
+  d.nativeWallPositionRepairs = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    walls: [
+      {
+        id: "placement",
+        levelId: 1,
+        nativeElementId: 10,
+        originalRingsFeet: original,
+        ringsFeet: corrected,
+        supportEvidence: { nativeElementId: 11, ringsFeet: support },
+        evidenceSha256: "a".repeat(64),
+        notes: "Private authoring conversation",
+      },
+    ],
+  };
+  const mats = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [0.1, 4].map((cut) => ({
+      levelId: 1,
+      elevationFeet: 0,
+      cutElevationFeet: cut,
+      evidenceSha256: "b".repeat(64),
+      sourceElementIds: [10, 11],
+      sections: [original, support].map((r, i) => ({
+        nativeElementId: 10 + i,
+        categoryId: -2000011,
+        kind: "wall" as const,
+        baseElevationFeet: 0,
+        topElevationFeet: 8,
+        partsFeet: [r],
+      })),
+    })),
+  };
+  d.nativeMaterialSections = {
+    ...mats,
+    geometrySha256: await nativeMaterialSectionsHash(mats),
+  };
+  d.doorAperturePatchState = {
+    regenerated: true,
+    sourceGeometryKey: "[]",
+  };
+  const parts = pc.difference(floor, corrected, support) as [
+    number,
+    number,
+  ][][][];
+  d.circulationGeometry = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    sourceGeometryKey: nativeCirculationGeometryKey(d),
+    cells: [
+      {
+        id: "native-lower",
+        levelIds: [1],
+        elevationFeet: 0,
+        roomKeys: ["a", "b", "c"],
+        nativeFloorIds: [1000],
+        ringsFeet: parts[0]!,
+        sourceCoverage: 1,
+      },
+      {
+        id: "native-upper",
+        levelIds: [2],
+        elevationFeet: 10,
+        roomKeys: ["upper"],
+        nativeFloorIds: [1001],
+        ringsFeet: floor,
+        sourceCoverage: 1,
+      },
+    ],
+    preparedRoomKeys: d.records.map((r) => r.key),
+  };
+  bindFixtureExactCells(d);
+  d.edges[0]!.nativeCellId = "native-lower";
+  const beforeKey = nativeCirculationGeometryKey(d),
+    beforeRoute = findProjectRoute(d, "a", "b");
+  assert.ok(beforeRoute);
+  const viewer = await readIndoorProject(await exportCampusViewer(p));
+  assert.equal(
+    viewer.dataset.nativeWallPositionRepairs!.walls[0]!.notes,
+    "Source-bound physical wall placement.",
+  );
+  assert.deepEqual(
+    viewer.dataset.doorAperturePatchState,
+    d.doorAperturePatchState,
+  );
+  assert.equal(viewer.rooms.nativeWallPositionRepairs, undefined);
+  assert.equal(
+    nativeSourceStairPlacementHash(viewer.dataset.nativeWallPositionRepairs),
+    nativeSourceStairPlacementHash(d.nativeWallPositionRepairs),
+  );
+  assert.equal(nativeCirculationGeometryKey(viewer.dataset), beforeKey);
+  assert.equal(nativeCirculationCells(viewer.dataset).length, 2);
+  assert.deepEqual(findProjectRoute(viewer.dataset, "a", "b"), beforeRoute);
+  assert.equal(
+    JSON.stringify(viewer.dataset).includes("Private authoring conversation"),
+    false,
+  );
+  assert.equal(
+    d.nativeWallPositionRepairs.walls[0]!.notes,
+    "Private authoring conversation",
+  );
+});
+
+test("visitor exports retain exact authored physical tread evidence and omit cached authoring history", async () => {
+  const { nativeAuthoredStairRoleFixture } = await import(
+    "../fixtures/native-authored-stair-role"
+  );
+  const { nativeAuthoredStairTreadRolesHash, nativeAuthoredStairTreads } =
+    await import("../../app/indoor-project/native-authored-stair-treads");
+  const { nativeCirculationGeometryKey } = await import(
+    "../../app/indoor-project/native-circulation"
+  );
+  const { routeWorkerDataset } = await import(
+    "../../app/indoor-project/route-worker-dataset"
+  );
+  const p = await readIndoorProject(await archive()),
+    roles = nativeAuthoredStairRoleFixture();
+  roles.sourceModelSha256 = p.dataset.source.modelSha256;
+  roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
+  p.dataset.nativeSourceStairMaterials = {
+    version: 1,
+    sourceModelSha256: roles.sourceModelSha256,
+    flights: [],
+    authoredTreadRoles: roles,
+  };
+  p.rooms.nativeSourceStairMaterials = structuredClone(
+    p.dataset.nativeSourceStairMaterials,
+  );
+  const treads = nativeAuthoredStairTreads(roles, roles.sourceModelSha256).get(
+    10,
+  )!;
+  p.dataset.stairDisplay = {
+    version: 1,
+    generator: "reviter/native-stair-display-1",
+    sourceModelSha256: roles.sourceModelSha256,
+    flights: [],
+    sourceFlights: [
+      {
+        stairElementId: 20,
+        levelIds: [1],
+        buildings: ["01"],
+        floorElevationFeet: 0,
+        sourceGeometry: "native-cache",
+        authoredTreadRolesSha256: roles.geometrySha256,
+        treads,
+        historicalPreparedTreads: [
+          { ...structuredClone(treads[0]), elevationFeet: 1.000001 },
+        ],
+      },
+    ],
+  };
+  const before = structuredClone(p.dataset),
+    key = nativeCirculationGeometryKey(p.dataset),
+    master = await readIndoorProject(await exportIndoorProject(p));
+  assert.deepEqual(
+    master.dataset.stairDisplay?.sourceFlights?.[0].historicalPreparedTreads,
+    before.stairDisplay!.sourceFlights![0].historicalPreparedTreads,
+  );
+  const bytes = await exportCampusViewer(master),
+    viewer = await readIndoorProject(bytes);
+  assert.deepEqual(
+    viewer.rooms.nativeSourceStairMaterials,
+    viewer.dataset.nativeSourceStairMaterials,
+  );
+  assert.deepEqual(
+    viewer.dataset.nativeSourceStairMaterials?.authoredTreadRoles,
+    roles,
+  );
+  assert.deepEqual(
+    viewer.dataset.stairDisplay?.sourceFlights?.[0].treads,
+    treads,
+  );
+  assert.equal(
+    viewer.dataset.stairDisplay?.sourceFlights?.[0].authoredTreadRolesSha256,
+    roles.geometrySha256,
+  );
+  assert.equal(
+    viewer.dataset.stairDisplay?.sourceFlights?.[0].historicalPreparedTreads,
+    undefined,
+  );
+  assert.deepEqual(p.dataset, before);
+  assert.deepEqual(viewer.dataset.nodes, before.nodes);
+  assert.deepEqual(viewer.dataset.edges, before.edges);
+  assert.equal(nativeCirculationGeometryKey(viewer.dataset), key);
+  assert.equal(
+    nativeCirculationGeometryKey(routeWorkerDataset(viewer.dataset)),
+    key,
+  );
+  for (const mutate of [
+    (d: IndoorDataset) => {
+      d.nativeSourceStairMaterials!.authoredTreadRoles!.runs[0].faces[0].originalTrianglesFeet[0][0][0] += 0.01;
+    },
+    (d: IndoorDataset) => {
+      delete d.nativeSourceStairMaterials;
+    },
+  ]) {
+    const raw = unzipSync(bytes),
+      manifest = JSON.parse(strFromU8(raw["manifest.json"])),
+      d = JSON.parse(strFromU8(raw["viewer/indoor.json"]));
+    mutate(d);
+    raw["viewer/indoor.json"] = strToU8(JSON.stringify(d));
+    manifest.indoor.bytes = raw["viewer/indoor.json"].length;
+    manifest.indoor.sha256 = await hash(raw["viewer/indoor.json"]);
+    raw["manifest.json"] = strToU8(JSON.stringify(manifest));
+    await assert.rejects(
+      () => readIndoorProject(zipSync(raw)),
+      /stair|material|match|source/i,
     );
   }
 });

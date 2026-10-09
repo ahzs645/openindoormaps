@@ -78,7 +78,7 @@ export function fitProjectPlaceBounds(
   const panel = container.ownerDocument
     .querySelector('[data-testid="project-navigation"]')
     ?.getBoundingClientRect();
-  const nativeStatus = container
+  const nativeStatus = container.ownerDocument
     .querySelector(".project-native-explore-status")
     ?.getBoundingClientRect();
   map.stop();

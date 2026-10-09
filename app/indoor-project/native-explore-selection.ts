@@ -29,7 +29,8 @@ export function nativeExploreSelectionFeatures(
 }
 
 /** Search may choose a record deliberately absent from the prepared display
- * list. Its outline can locate that identity without drawing an enclosure. */
+ * list. Strict native maps require an actual arrival; legacy comparisons may
+ * locate the original identity outline without drawing an enclosure. */
 export function nativeExploreIdentityLocation(
   data: IndoorDataset,
   selected: string,
@@ -39,8 +40,14 @@ export function nativeExploreIdentityLocation(
   const room = data.records.find(
     (r) =>
       r.key === selected &&
-      levels.includes(r.levelId) &&
+      (data.nativeIndoorEnvelopes || levels.includes(r.levelId)) &&
       (building === "all" || r.building === building),
   );
+  if (data.nativeIndoorEnvelopes) {
+    const node = data.nodes.find((n) => n.id === room?.arrivalNodeId);
+    return node && levels.includes(node.levelId)
+      ? [[node.pointFeet[0], node.pointFeet[1]] as [number, number]]
+      : undefined;
+  }
   return room?.ringsFeet[0];
 }

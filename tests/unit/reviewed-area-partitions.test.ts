@@ -530,3 +530,172 @@ test("reversible logical boundary history archives each before and after without
     /Invalid logical boundary/,
   );
 });
+
+test("strict logical entrance checks retain even a sub-grid native floor hole and source/runtime parity", async () => {
+  const p = await fixture(),
+    d = p.dataset;
+  const hole: [number, number][] = [
+    [15.00003, 9],
+    [15.00003 + 3.8e-14, 9],
+    [15.00003 + 3.8e-14, 10],
+    [15.00003, 10],
+  ];
+  d.walkingSupport!.floors[0].ringsFeet.push(hole);
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  d.nativeIndoorEnvelopes = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    geometrySha256: "",
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        cutElevationsFeet: [1],
+        sourceElementIds: [100],
+        evidenceSha256: "a".repeat(64),
+        partsFeet: [structuredClone(d.walkingSupport!.floors[0].ringsFeet)],
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes.geometrySha256 = await nativeIndoorEnvelopeHash(
+    d.nativeIndoorEnvelopes,
+  );
+  const { initializeNativeExactGeosOverlay } = await import(
+    "../../app/indoor-project/native-exact-geos-overlay"
+  );
+  const source = await import(
+    "../../../reviter/lib/reviter/reviewed-area-partitions"
+  );
+  const sourceEngine = await import(
+    "../../../reviter/lib/reviter/native-exact-geos-overlay"
+  );
+  await Promise.all([
+    initializeNativeExactGeosOverlay(),
+    sourceEngine.initializeNativeExactGeosOverlay(),
+  ]);
+  const proposal = await entry(p),
+    before = JSON.stringify(d);
+  const check = checkReviewedAreaPartition(
+    d,
+    proposal,
+    proposal.geometrySha256,
+  );
+  assert.equal(check.valid, false);
+  assert(check.errors.some((e) => e.includes("protected floor")));
+  assert.deepEqual(
+    source.checkReviewedAreaPartition(d, proposal, proposal.geometrySha256),
+    check,
+  );
+  assert.equal(
+    await source.reviewedAreaPartitionGeometrySha256(d, 1),
+    proposal.geometrySha256,
+  );
+  assert.equal(JSON.stringify(d), before);
+});
+
+test("strict entrance snapping follows current original material faces instead of stale prepared endpoints", async () => {
+  const p = await fixture(),
+    d = p.dataset;
+  const elevationFeet = 14;
+  d.nativeLevels.find((l) => l.id === 1)!.elevationFeet = elevationFeet;
+  d.walkingSupport!.floors[0].elevationFeet = elevationFeet;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { nativeMaterialSectionsHash } = await import(
+    "../../app/indoor-project/native-material-sections"
+  );
+  const envelope = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet,
+        cutElevationsFeet: [elevationFeet + 4],
+        sourceElementIds: [100],
+        evidenceSha256: "a".repeat(64),
+        partsFeet: [structuredClone(d.walkingSupport!.floors[0].ringsFeet)],
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...envelope,
+    geometrySha256: await nativeIndoorEnvelopeHash(envelope),
+  };
+  const material = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [elevationFeet + 0.1, elevationFeet + 4].map(
+      (cutElevationFeet) => ({
+        levelId: 1,
+        elevationFeet,
+        cutElevationFeet,
+        evidenceSha256: "b".repeat(64),
+        sourceElementIds: [200, 201],
+        sections: [
+          {
+            nativeElementId: 200,
+            categoryId: -2000011,
+            kind: "wall" as const,
+            baseElevationFeet: elevationFeet,
+            topElevationFeet: elevationFeet + 8,
+            partsFeet: [[rect(14.8, 0, 0.4, 7.8)]],
+          },
+          {
+            nativeElementId: 201,
+            categoryId: -2000011,
+            kind: "wall" as const,
+            baseElevationFeet: elevationFeet,
+            topElevationFeet: elevationFeet + 8,
+            partsFeet: [[rect(14.8, 12.2, 0.4, 7.8)]],
+          },
+        ],
+      }),
+    ),
+  };
+  d.nativeMaterialSections = {
+    ...material,
+    geometrySha256: await nativeMaterialSectionsHash(material),
+  };
+  const proposal = { ...(await entry(p)), elevationFeet };
+  // A historical drawing opening is identity metadata in strict mode. It
+  // cannot override the original floor's independently preserved apertures.
+  d.records[0].properties.floorOpeningsFeet = [rect(14.8, 8, 0.4, 4)];
+  assert.equal(
+    await reviewedAreaPartitionGeometrySha256(d, 1),
+    proposal.geometrySha256,
+  );
+  const before = JSON.stringify(d);
+  assert.equal(
+    checkReviewedAreaPartition(d, proposal, proposal.geometrySha256).valid,
+    false,
+  );
+  const snapped = snapReviewedAreaPartitionPoints(d, 1, [
+    [15, 8],
+    [15, 12],
+  ]);
+  assert.deepEqual(snapped.pointsFeet, [
+    [15, 7.8],
+    [15, 12.2],
+  ]);
+  proposal.pointsFeet = snapped.pointsFeet;
+  proposal.evidence.nativeElementIds = snapped.nativeElementIds;
+  assert.equal(
+    checkReviewedAreaPartition(d, proposal, proposal.geometrySha256).valid,
+    true,
+  );
+  const source = await import(
+    "../../../reviter/lib/reviter/reviewed-area-partitions"
+  );
+  assert.deepEqual(
+    source.snapReviewedAreaPartitionPoints(d, 1, [
+      [15, 8],
+      [15, 12],
+    ]),
+    snapped,
+  );
+  assert.equal(JSON.stringify(d), before);
+});

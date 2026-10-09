@@ -84,7 +84,9 @@ for (const [from, to] of [
     const floors = routingFloorPlateRecords(
       cache.nativeModel,
       path.pointsFeet[0][2],
-    ).flatMap(nativeFloorPolygons);
+    ).flatMap((floor) =>
+      nativeFloorPolygons(floor, !!data.nativeIndoorEnvelopes),
+    );
     for (let i = 1; i < path.pointsFeet.length; i++) {
       const a = path.pointsFeet[i - 1].slice(0, 2) as RoomPoint,
         b = path.pointsFeet[i].slice(0, 2) as RoomPoint;

@@ -1,3 +1,5 @@
+import { strictNativeDisplay } from "./strict-native-display";
+import type { NativeExploreResult } from "./native-explore";
 import { fillMeasuredDoorwayRecesses } from "./display-doorway-recesses";
 import { unresolvedRoomBoundaryKeys } from "./boundary-evidence";
 import polygonClipping from "polygon-clipping";
@@ -310,7 +312,17 @@ export function projectDisplayGeometry(
   showVestibuleDoors = false,
   physicalWalls?: Set<IndoorDataset["walls"][number]>,
   showDoorwayRecesses = true,
+  nativeFaces?: NativeExploreResult,
 ): ProjectDisplayGeometry {
+  if (data.nativeIndoorEnvelopes)
+    return strictNativeDisplay(
+      data,
+      levelIds,
+      building,
+      selected,
+      showVestibuleDoors,
+      nativeFaces,
+    );
   // A room/wall is queried repeatedly while carving roofs and thresholds.
   // Keep this cache local: edits between invocations must see new coordinates.
   const boxes = new WeakMap<Rings, number[]>();

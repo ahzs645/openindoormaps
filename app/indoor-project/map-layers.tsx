@@ -1,4 +1,8 @@
+import { preparedFloorNativeDisplay } from "./floor-display-worker-bridge";
+import type { NativeExploreResult } from "./native-explore";
 import { nativeExploreLabels } from "./native-explore-labels";
+import { nativeSurfacePerimeters } from "./native-surface-perimeters";
+import { mapDrawingFeatures } from "./map-drawing-features";
 import { nativeStairZoomStyle } from "./native-stair-style";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { isVisitorHallway } from "./place-discovery";
@@ -30,7 +34,6 @@ import {
   HALLWAY_COLOR,
   OVERVIEW_SOLID_COLOR,
   RESTRICTED_AREA_COLOR,
-  isRestrictedArea,
   isPassThroughPlace,
 } from "./display-passages";
 import { lowerFloorLayer } from "./lower-floor-layer";
@@ -355,6 +358,14 @@ function PreparedProjectMapLayers({
       layers.roomBlocks,
     ],
   );
+  const areaPerimeters = useMemo(
+    () => nativeSurfacePerimeters(data, stairCutAreas),
+    [data, stairCutAreas],
+  );
+  const roomPerimeters = useMemo(
+    () => nativeSurfacePerimeters(data, stairCutRooms),
+    [data, stairCutRooms],
+  );
   useEffect(() => {
     if (!map || !isLoaded) return;
     const overviewSource = map.getSource("project-overview") as
@@ -366,11 +377,11 @@ function PreparedProjectMapLayers({
         uploaded?.source !== overviewSource ||
         uploaded.value !== overviewGeometry
       )
-        overviewSource.setData(overviewGeometry);
+        overviewSource.setData(mapDrawingFeatures(overviewGeometry));
     } else
       map.addSource("project-overview", {
         type: "geojson",
-        data: overviewGeometry,
+        data: mapDrawingFeatures(overviewGeometry),
         tolerance: 0,
         maxzoom: 22,
       });
@@ -391,6 +402,8 @@ function PreparedProjectMapLayers({
         "project-exposed-walls",
         "project-native-stairs",
         "project-selection-areas",
+        "project-area-perimeters",
+        "project-block-perimeters",
       ],
       ids = [
         "project-room-fill",
@@ -416,6 +429,8 @@ function PreparedProjectMapLayers({
       layers.exposedWalls,
       nativeStairs,
       prepared.selectionAreas,
+      areaPerimeters,
+      roomPerimeters,
     ];
     for (const [i, id] of sources.entries()) {
       const value = values[i];
@@ -423,11 +438,11 @@ function PreparedProjectMapLayers({
       if (source) {
         const uploaded = uploadedSources.current.get(id);
         if (uploaded?.source !== source || uploaded.value !== value)
-          source.setData(value);
+          source.setData(mapDrawingFeatures(value));
       } else
         map.addSource(id, {
           type: "geojson",
-          data: value,
+          data: mapDrawingFeatures(value),
           maxzoom: 22,
           tolerance: 0,
         });
@@ -490,7 +505,7 @@ function PreparedProjectMapLayers({
       map.addLayer({
         id: ids[1],
         type: "line",
-        source: sources[0],
+        source: "project-area-perimeters",
         paint: {
           "line-color": [
             "case",
@@ -516,7 +531,7 @@ function PreparedProjectMapLayers({
       map.addLayer({
         id: "project-block-outline",
         type: "line",
-        source: sources[8],
+        source: "project-block-perimeters",
         paint: { "line-color": "#d9d9d6", "line-width": 0.45 },
       });
       map.addLayer({
@@ -952,13 +967,13 @@ function PreparedProjectMapLayers({
     if (!map.getSource("project-native-windows"))
       map.addSource("project-native-windows", {
         type: "geojson",
-        data: windows.features,
+        data: mapDrawingFeatures(windows.features),
         tolerance: 0,
         maxzoom: 22,
       });
     else
       (map.getSource("project-native-windows") as GeoJSONSource).setData(
-        windows.features,
+        mapDrawingFeatures(windows.features),
       );
     if (!map.getLayer("project-native-window-plan"))
       map.addLayer(
@@ -978,7 +993,11 @@ function PreparedProjectMapLayers({
     map.setLayoutProperty(
       "project-native-window-plan",
       "visibility",
-      !roomThree && !nativeModel ? "visible" : "none",
+      !roomThree &&
+        !nativeModel &&
+        !(nativeFloorLevels.length && data.nativeMaterialSections)
+        ? "visible"
+        : "none",
     );
     if (roomThree && !nativeModel)
       for (const glass of [true, false]) {
@@ -1225,7 +1244,11 @@ function PreparedProjectMapLayers({
     map.setLayoutProperty(
       "project-exposed-wall-fill",
       "visibility",
-      !review && !roomThree ? "visible" : "none",
+      !review &&
+        !roomThree &&
+        !(nativeFloorLevels.length && data.nativeMaterialSections)
+        ? "visible"
+        : "none",
     );
     // Both visitor views use the same prepared block footprint. Review exposes
     // architectural interiors and native entrance metadata separately.
@@ -1474,9 +1497,22 @@ function PreparedProjectMapLayers({
                 (building === "all" || r.building === building),
             ))
           : undefined;
-        for (const r of chosen ? [chosen] : layers.records)
-          for (const p of r.ringsFeet[0])
-            bounds.extend(geographicPoint(data, p));
+        if (data.nativeIndoorEnvelopes) {
+          const physical = prepared.selectionAreas.features.filter(
+            (f) =>
+              !chosen ||
+              f.properties?.key === chosen.key ||
+              f.properties?.roomKeys?.includes(chosen.key),
+          );
+          for (const f of physical)
+            for (const polygon of f.geometry.coordinates)
+              for (const ring of polygon)
+                for (const point of ring)
+                  bounds.extend(point as [number, number]);
+        } else
+          for (const r of chosen ? [chosen] : layers.records)
+            for (const p of r.ringsFeet[0])
+              bounds.extend(geographicPoint(data, p));
         if (chosen)
           for (const f of nativeStairs.features.filter(
             (f) => f.properties?.key === chosen.key,
@@ -1521,6 +1557,8 @@ function PreparedProjectMapLayers({
     stairCutRooms,
     display,
     connectorMarkers,
+    areaPerimeters,
+    roomPerimeters,
     nativeStairs,
     nativeStairKeys,
     overviewGeometry,
@@ -1755,7 +1793,16 @@ function PreparedProjectMapLayers({
 type ProjectMapLayersProps = Omit<
   Parameters<typeof PreparedProjectMapLayers>[0],
   "prepared" | "basemapVisibility"
->;
+> & {
+  onNativeDisplay?: (snapshot: {
+    data: IndoorDataset;
+    levelIds: number[];
+    building: string;
+    result?: NativeExploreResult;
+    error?: string;
+    retry: () => void;
+  }) => void;
+};
 const floorSources = [
   "project-overview",
   "project-areas",
@@ -1792,6 +1839,32 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
       simplifyGeometry: props.simplifyGeometry,
     },
   );
+  const displayScope = props.levelIds.join(",");
+  useEffect(() => {
+    const nativeDisplay = preparedFloorNativeDisplay(value);
+    props.onNativeDisplay?.({
+      data: props.data,
+      levelIds: props.levelIds,
+      building: props.building,
+      result: nativeDisplay,
+      retry,
+      error:
+        error ??
+        (value && props.data.nativeIndoorEnvelopes && !nativeDisplay
+          ? "The prepared floor did not include its native area display. Retry floor preparation."
+          : undefined),
+    });
+    // Scope is the complete level inventory; original array references vary independently.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    props.onNativeDisplay,
+    props.data,
+    props.building,
+    displayScope,
+    value,
+    error,
+    retry,
+  ]);
   useEffect(() => {
     if (!map || !isLoaded || value) return;
     // The selected level must never display or accept clicks on an old level.

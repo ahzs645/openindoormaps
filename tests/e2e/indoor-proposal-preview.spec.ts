@@ -114,8 +114,12 @@ for (const mobile of [false, true])
     await expect
       .poll(async () => JSON.stringify(await overlay()))
       .toContain("patch");
-    const joined = (await overlay()) as { features: { properties: { kind: string } }[] };
-    expect(joined.features.filter(f => f.properties.kind === "region")).toHaveLength(1);
+    const joined = await overlay();
+    if (joined?.type !== "FeatureCollection")
+      throw new Error("Expected proposal FeatureCollection");
+    expect(
+      joined.features.filter((f) => f.properties?.kind === "region"),
+    ).toHaveLength(1);
     await capture("wall-preview");
     await detail
       .getByRole("button", { name: "Show original geometry", exact: true })

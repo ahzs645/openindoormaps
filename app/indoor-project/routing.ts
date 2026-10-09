@@ -1,5 +1,13 @@
+import { validateNativeSourceStairMaterials } from "./native-source-stair-material";
+import { validateNativePhysicalLevels } from "./native-physical-levels";
+import {
+  validNativeSourceStairBinding,
+  nativeSourceStairNodeIds,
+} from "./native-source-stair";
+import { nativeCirculationBinding } from "./native-circulation-binding";
+import { validateNativeFloorOpeningOwnership } from "./native-floor-opening-ownership";
 import { validateNativeIndoorEnvelopes } from "./native-indoor-envelopes";
-import {validNativeRampSurfaceBinding} from "./native-ramp-surface";
+import { validNativeRampSurfaceBinding } from "./native-ramp-surface";
 import { validateNativeDisplayScopes } from "./native-display-scopes";
 import { validateNativeWindowDisplay } from "./native-window-display";
 import {
@@ -14,7 +22,10 @@ import {
 import { createProjectRouteDiagnostics } from "./route-diagnostics";
 import { createNativeFloorHoleQuery } from "./walking-support";
 import { sourceFallbackBarrierHits } from "./source-fallback-barriers";
-import { validateNativeCirculationGeometry } from "./native-circulation";
+import {
+  validateNativeCirculationGeometry,
+  nativeCellSharedFloorAlias,
+} from "./native-circulation";
 import { validShaft } from "./connector-review";
 import { validateVisitorMetadata } from "./visitor-metadata";
 import type { IndoorDataset, IndoorEdge } from "./contract";
@@ -152,14 +163,21 @@ function resolveProjectRoute(
     data,
     "resolved-route-geometry",
     () =>
-      JSON.stringify([
-        data.walls,
-        data.nodes,
-        data.alignment,
-        data.walkingSupport,
-        data.circulationGeometry,
-        (data as IndoorDataset & { preparedRouting?: unknown }).preparedRouting,
-      ]),
+      nativeCirculationBinding(
+        [
+          data.walls,
+          data.nodes,
+          data.alignment,
+          data.walkingSupport,
+          data.circulationGeometry,
+          ...(data.nativeIndoorEnvelopes && data.doorAperturePatchState
+            ? [data.doorAperturePatchState]
+            : []),
+          (data as IndoorDataset & { preparedRouting?: unknown })
+            .preparedRouting,
+        ],
+        !!data.nativeIndoorEnvelopes,
+      ),
   );
   let resolved = resolvedRouteCache.get(graph);
   if (!resolved || resolved.geometry !== geometry) {
@@ -410,8 +428,25 @@ function resolveProjectRoute(
 export function validateIndoorDataset(
   value: unknown,
 ): asserts value is IndoorDataset {
-  validateNativeIndoorEnvelopes((value as IndoorDataset)?.nativeIndoorEnvelopes, (value as IndoorDataset)?.source?.modelSha256);
-  validateNativeDisplayScopes((value as IndoorDataset)?.nativeDisplayScopes, (value as IndoorDataset)?.source?.modelSha256);
+  if (value && typeof value === "object")
+    withRoutingCalculation(value as IndoorDataset, () =>
+      validateIndoorDatasetSnapshot(value),
+    );
+  else validateIndoorDatasetSnapshot(value);
+}
+// Validation is a single read-only operation. Reuse exact native evidence and
+// aperture indexes here, then discard them so later in-place edits are rechecked.
+function validateIndoorDatasetSnapshot(
+  value: unknown,
+): asserts value is IndoorDataset {
+  validateNativeIndoorEnvelopes(
+    (value as IndoorDataset)?.nativeIndoorEnvelopes,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
+  validateNativeDisplayScopes(
+    (value as IndoorDataset)?.nativeDisplayScopes,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
   const d = value as IndoorDataset,
     finitePoint = (p: unknown, n: number) =>
       Array.isArray(p) &&
@@ -518,7 +553,13 @@ export function validateIndoorDataset(
       floorIds.add(floor.nativeElementId);
     }
   }
+  validateNativeFloorOpeningOwnership(d);
   validateNativeCirculationGeometry(d);
+  validateNativePhysicalLevels(d);
+  validateNativeSourceStairMaterials(
+    d.nativeSourceStairMaterials,
+    d.source.modelSha256,
+  );
   validateIndoorExclusions(
     d.indoorExclusions,
     d.source.modelSha256,
@@ -534,7 +575,9 @@ export function validateIndoorDataset(
         doors.has(door.id) ||
         !Number.isSafeInteger(door.levelId) ||
         !Number.isSafeInteger(door.nativeElementId) ||
-        (door.hostWallNativeElementId !== undefined && (!Number.isSafeInteger(door.hostWallNativeElementId) || door.hostWallNativeElementId <= 0)) ||
+        (door.hostWallNativeElementId !== undefined &&
+          (!Number.isSafeInteger(door.hostWallNativeElementId) ||
+            door.hostWallNativeElementId <= 0)) ||
         !finitePoint(door.pointFeet, 2) ||
         !["connected", "unmatched", "ambiguous"].includes(door.state) ||
         !Array.isArray(door.roomKeys) ||
@@ -1066,11 +1109,13 @@ export function validateIndoorDataset(
         throw new Error("Invalid prepared room diagnostic.");
     }
   }
+  const originalSourceStairNodes = nativeSourceStairNodeIds(d);
   for (const n of d.nodes) {
     if (
       !id(n.id) ||
       nodes.has(n.id) ||
-      !records.has(n.roomKey) ||
+      (!records.has(n.roomKey) &&
+        !(n.roomKey === "" && originalSourceStairNodes.has(n.id))) ||
       !Number.isSafeInteger(n.levelId) ||
       !finitePoint(n.pointFeet, 3) ||
       !finitePoint(n.geographic, 2)
@@ -1089,7 +1134,21 @@ export function validateIndoorDataset(
       !Number.isFinite(e.lengthMetres) ||
       e.lengthMetres < 0 ||
       !Array.isArray(e.roomKeys) ||
-      e.roomKeys.length === 0 ||
+      (e.roomKeys.length === 0 &&
+        !e.nativeSourceStair &&
+        !(
+          d.nativeIndoorEnvelopes &&
+          e.nativeCellId &&
+          d.circulationGeometry?.cells.some(
+            (c) =>
+              c.id === e.nativeCellId &&
+              c.roomKeys.length === 0 &&
+              c.connectorAnchors?.length &&
+              [e.from, e.to].every((id) =>
+                c.connectorAnchors?.some((a) => a.nodeId === id),
+              ),
+          )
+        )) ||
       e.roomKeys.some((k) => !records.has(k)) ||
       !Array.isArray(e.pointsFeet) ||
       e.pointsFeet.length < 2 ||
@@ -1117,7 +1176,11 @@ export function validateIndoorDataset(
     )
       throw new Error("Invalid indoor graph edge.");
     const from = byNode.get(e.from)!,
-      to = byNode.get(e.to)!;
+      to = byNode.get(e.to)!,
+      nativeFloorAlias =
+        e.kind === "walk" &&
+        (from.surfaceId !== to.surfaceId || from.levelId !== to.levelId) &&
+        nativeCellSharedFloorAlias(d, e);
     if (e.sourceDoorProof !== undefined) {
       const p = e.sourceDoorProof;
       const indices = (v: number[], minimum: number) =>
@@ -1189,7 +1252,16 @@ export function validateIndoorDataset(
       )
         throw new Error("Invalid or stale registered source doorway.");
     }
-    if(e.nativeRampSurface!==undefined&&!validNativeRampSurfaceBinding(d,e))throw new Error("Invalid or stale native ramp surface binding.");
+    if (
+      e.nativeRampSurface !== undefined &&
+      !validNativeRampSurfaceBinding(d, e)
+    )
+      throw new Error("Invalid or stale native ramp surface binding.");
+    if (
+      e.nativeSourceStair !== undefined &&
+      !validNativeSourceStairBinding(d, e)
+    )
+      throw new Error("Invalid or stale original native stair flight.");
     if (e.openingSpan !== undefined) {
       const span = e.openingSpan;
       const profiles = d.walkingSupport?.floors;
@@ -1256,8 +1328,10 @@ export function validateIndoorDataset(
     }
     if (
       (e.kind === "walk" &&
-        (from.surfaceId !== to.surfaceId || from.levelId !== to.levelId)) ||
+        (from.surfaceId !== to.surfaceId || from.levelId !== to.levelId) &&
+        !nativeFloorAlias) ||
       (["walk", "door", "opening"].includes(e.kind) &&
+        !nativeFloorAlias &&
         (from.levelId !== to.levelId ||
           Math.abs(from.pointFeet[2] - to.pointFeet[2]) > 0.05)) ||
       (["stairs", "local-steps", "escalator"].includes(e.kind) &&

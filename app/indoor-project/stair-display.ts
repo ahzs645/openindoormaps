@@ -4,7 +4,10 @@ import { geographicPoint } from "./routing";
 import { floorHeightDatum } from "./relative-heights";
 import { hiddenLectureStairIds } from "./lecture-stair-display";
 import { HALLWAY_COLOR } from "./display-passages";
-import { visibleTreadPolygons } from "./stair-occlusion";
+import {
+  visibleTreadPolygons,
+  exactVisibleTreadDrawing,
+} from "./stair-occlusion";
 
 /** Full native tread projections. A selectable overhead flight is a stair
  * place, never permission to walk across its projected surface on this floor. */
@@ -184,10 +187,26 @@ export function projectStairDisplay(
           bottom: topMetres,
           top: (run.topElevationFeet - displayDatum) * scale,
         });
-      for (const polygon of visibleTreadPolygons(flight, t))
+      const exactDrawing = data.nativeIndoorEnvelopes
+        ? exactVisibleTreadDrawing(flight, t)
+        : undefined;
+      const polygons =
+        exactDrawing?.nativeDisplayPartsFeet ?? visibleTreadPolygons(flight, t);
+      for (const [partIndex, polygon] of polygons.entries())
         features.push({
           type: "Feature",
           properties: {
+            ...(exactDrawing
+              ? {
+                  nativeDisplayPartsFeet: [polygon],
+                  ...(partIndex === 0
+                    ? {
+                        nativeDisplayResidualParts:
+                          exactDrawing.nativeDisplayResidualParts,
+                      }
+                    : {}),
+                }
+              : {}),
             ...(source ? { id: flight.roomKey } : { key: flight.roomKey }),
             stairElementId: flight.stairElementId,
             runElementId: t.runElementId,

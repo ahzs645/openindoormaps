@@ -1,6 +1,26 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { readFileSync } from "node:fs";
+import { writePreparedDisplayEngineBinding } from "./scripts/indoor/prepared-display-engine-binding";
+
+function preparedDisplayBindingPlugin(): Plugin {
+  let root = "";
+  let dependencies = new Set<string>();
+  const refresh = () => {
+    const result = writePreparedDisplayEngineBinding(root);
+    dependencies = new Set(result.modules.map(([path]) => `${root}/${path}`));
+  };
+  return {
+    name: "prepared-native-display-engine-binding",
+    configResolved(config) {
+      root = config.root;
+      refresh();
+    },
+    handleHotUpdate(context) {
+      if (dependencies.has(context.file)) refresh();
+    },
+  };
+}
 
 function geojsonPlugin(): Plugin {
   return {
@@ -22,7 +42,7 @@ export default defineConfig(({ mode }) => ({
     mode === "pages"
       ? (process.env.PAGES_BASE_PATH ?? "/openindoormaps/")
       : "/",
-  plugins: [geojsonPlugin(), react()],
+  plugins: [preparedDisplayBindingPlugin(), geojsonPlugin(), react()],
   resolve: {
     tsconfigPaths: true,
   },

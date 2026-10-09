@@ -6,6 +6,12 @@ Open **Review project → Import master folder**, then choose the master directo
 
 The **Review files** disclosure opens saved recommendations, JSON scan reports, text and PNG/JPEG evidence. These are source material, not instructions or applied corrections. Folder files are compressed into the project's authoring metadata and survive **Export reviewed project**. Campus viewer exports omit the reports and proposed decisions. Original model, scene and GIS bytes are preserved.
 
+Large exact native datasets allow up to 192 MiB for `viewer/indoor.json`; the whole ZIP and expanded archive remain capped at 900 MiB, and the other entry caps and source/checksum checks remain in force. Import validation runs in the package worker. A separate diagnostic preview can retain the existing pending boundary state to block directions and campus viewer export while source release checks remain unresolved. Its route worker skips graph warmup and returns no reachable destinations. Import such a preview with **Import project ZIP**; importing the master folder still selects the manifest's published master, not a newer preview archive.
+
+ZIP loading reports the current validation stage and elapsed time. Choosing another ZIP, clearing the map or leaving the page cancels obsolete import work. Archive checks, bounded review-companion expansion and actual content hashes remain mandatory. Inside the import worker, exact saved-map validation runs in a second worker while the package checks geometry and material bindings; import awaits both proofs and cancels the parallel proof if another check fails. Historical raised-room meshes are still independently validated, but are omitted from the native-map proof snapshot because that validator does not read them. Within one process, a previously expanded review file can reuse its content proof only while its full compressed string, path, byte count and checksum remain identical. Changed native geometry, source bindings, display certificates or companion bytes require fresh validation. Prepared display assets remain tied to the current preparation engine and dataset; changes to validation code require regenerating them rather than rewriting their binding.
+
+The floor presentation worker supplies both the prepared room display and native area display in one validated response. The map shares that original object graph rather than decoding the same complete asset in a second worker. Cache costs include both graphs, charging shared subtrees once; oversized floors remain displayable but are not cached, and their worker releases its full source dataset after completion. Floor changes cancel old exact picking and never display an old floor under a new level. Retrying native display delegates to the owning floor worker and clears its cache. These transport and retention changes do not change source geometry, access or prepared display bindings.
+
 ## Drawing a native selection
 
 Choose **Native areas**, then use **Native area floor** to choose an exact native level (not just a campus floor group). Computation runs in a worker. It unions native slabs, preserves slab openings, and subtracts precise native wall/column faces, fixtures and measured door footprints. Doors are considered closed solely to separate selection regions; their route portals remain intact.
@@ -14,7 +20,17 @@ Click a native floor region on the map or find it by room number/name in the reg
 
 Use **Drop pin** or **Reference pins** to mark an area of interest while keeping the native outline visible. Placement temporarily pauses region selection and uses the selected exact native level. Add notes, move the dot, or copy/download its review context from the pin panel. Pins and notes travel with the exported reviewed project ZIP; they do not approve geometry or change routes.
 
-Unlabelled gaps stay open. Approximate curtain-host envelopes are excluded and reported, not treated as certified walls. Missing walls can therefore cause a shared candidate region. The selection is a review aid, not automatic enclosure certification. Native selection nodes original slab and obstacle contacts together on a 0.0000000001-foot comparison grid. It does not buffer walls or fill real gaps; source coordinates remain unchanged. The sibling circulation compiler retains its own numerical precision and physical routing checks.
+Unlabelled gaps stay open. Approximate curtain-host envelopes are excluded and reported, not treated as certified walls. Missing walls can therefore cause a shared candidate region. The selection is a review aid, not automatic enclosure certification. Strict native projects preserve original IEEE floor vertices, nested holes and original material inputs; selection and source circulation use the same bound overlay engine. Legacy projects retain their existing 0.0000000001-foot selection comparison grid. Neither mode authorizes buffering walls or filling a real gap.
+
+Strict native selections now retain exact rational intersection vertices through wall, opening, threshold and enclosure operations. Every positive native face survives, including a face smaller than one square foot; a real narrow connection remains open until a separately checked correction is applied. The published version 3 floor map carries those exact faces alongside its render representation. Map picking validates and queries the exact faces in a dedicated worker, with old requests cancelled when the floor or dataset changes.
+
+Version 3 rendering decomposes each native face into exact finite-edge vertical cells, then constructs convex numeric drawing pieces wholly inside those cells. Both exact differences must prove that the cells reproduce the source face; numeric pieces may not cross a source wall or floor opening. Every positive portion missing from the drawing pieces is stored in a separate exact residual carrier, without an area cutoff. Original representable vertices are retained unchanged in the source carrier and anchor inventory. Fill pieces never supply routing, exclusion or hit-test geometry. Their interior edges are not drawn as room boundaries. Import validation runs in a worker and checks subset containment, residual equality, per-face inventory and unchanged anchors before accepting the saved map.
+
+Flat walls on strict maps use the exact native material sections and exact checked doorway subtraction before constructing contained drawing cells. Their original material descriptor remains authoritative, including portions too small for a numeric drawing cell. Concave wall shapes are not replaced with bounding boxes, and drawing pieces never refill their doorway cuts or alter original jamb evidence.
+
+Registered room contours supply majority-overlap names and room-type colors only. A small corridor claim cannot color a large unresolved native component green. Exact overlap fractions accompany strict name assignments, including fractions too close to one half to distinguish in a display number. Display approximations cannot become exclusion footprints: applying an IEEE footprint requires an exact equality check against its selected source face; otherwise a separate exact footprint correction is required. None of these selection or rendering operations establishes a new entrance or public access.
+
+**Applied provisional seals** lists human-authorized construction assumptions on the current native level. Each remains labelled **Provisional · revisit required**; **Show provisional seal** locates its measured native contacts. Its authorization, source evidence and assumption state travel with the reviewed master. A later correction requires reviewing the source recipe and regenerating the map and routes; locating it in the interface leaves geometry and access unchanged.
 
 **Check the enclosure** reports measured doors whose two sides occupy the same connected native region. Probes sit 0.25 feet outside the aperture's measured depth on its normal axis. **Show door #ID** centres the map on the native door reference. A bypass at another wall join or opening can produce this result; the count does not mean that those doors are defective in Revit. Missing probe support is inconclusive, and distinct regions alone do not certify the enclosure or access. Orange boundaries also trace excluded holes. Contained source place labels are location hints, not proof that the whole room belongs to the selected region. Unselected candidate areas have a faint neutral fill to distinguish them from selected areas.
 
@@ -36,6 +52,15 @@ Use **Native areas → Define open entrances and partitions** when a real area h
 5. Export the reviewed project to carry `reviewedAreaPartitions` in the authoring ZIP. Reviter preserves the same source/prepared metadata when regenerating. Visitor exports omit these authoring descriptors. Physical evidence changes invalidate a boundary; stale applications are omitted with a warning until reviewed again.
 
 The analytical strip has an explicit numerical width, not construction thickness. Every segment must remain on supported native floor and avoid real floor/stair openings, excluded footprints, measured doors, fixtures and wall interiors. A declared native endpoint must touch an exact non-approximate wall/column face. An explicitly recorded reviewed assumption remains provisional. A **Missing partition** entry is a virtual review boundary; actual wall construction still uses the separately checked reconstruction/patch workflow.
+
+Strict native projects snap and validate against the current original material
+faces at the plan and floor-contact cuts. A historical prepared wall or column
+box cannot supply an endpoint when its original material section is available.
+The checks retain original slab vertices and every real slab hole; old room
+drawing opening annotations do not create additional physical holes. Changed
+material, indoor-domain or provisional-correction evidence invalidates saved
+boundary bindings. Recheck an old boundary against those faces, retain its
+history, and preview its effect before applying the updated selection line.
 
 For **07-252/253**, inspect the pickup-front wall returns and separately identify the public pickup frontage and the back work area. Do not infer staff access or a solid partition merely from the separation line. For **07-240 Bookstore** and cafeteria openings, record the actual shutter span and operating context in the notes; an open/closed shutter policy is a separate access decision. Doorless washroom paths should be outlined across their actual entrance, keeping the original public/restricted access and circulation unchanged.
 
@@ -82,7 +107,7 @@ Do not overwrite a newer canonical master with a browser test export. Compare ha
 
 **Room focus** limits inspection to one source identity. The crop uses a bound prepared interior when available, otherwise the source outline, explicitly labelled unverified. A focused crop is not proof that the native wall enclosure has been repaired. **Show existing hallway mapping** compares the current bound prepared cells in light blue with teal selection geometry. Native selection includes supported non-circulation areas; it does not infer hallway ownership. Stale or absent prepared cells are not substituted with old outlines.
 
-Complex native overlays are clipped into exact 32-foot pieces and triangulated in native feet before map-tile quantization; smaller regions are triangulated too. Sources use tolerance zero and higher tile precision. Original rings drive outlines, hit testing and decisions. This avoids simplifying one giant many-hole polygon into triangles; clipping preserves its filled area and every hole. It is a rendering operation, not a source-wall repair.
+Legacy version 1/2 comparison overlays use 32-foot display pieces and native-foot triangulation before map-tile quantization. Strict version 3 maps use the contained finite-edge cells and explicit exact residuals described above. Sources use tolerance zero and higher tile precision. Native perimeter strokes stay separate from fill subdivisions; exact source faces drive strict hit testing and decisions. Rendering is not a source-wall repair.
 
 Choose individual Patch checkboxes, record evidence and use one of these actions:
 
@@ -227,7 +252,7 @@ Historical companion scans may be collected into a checksummed `openindoormaps-l
 
 A full-cap continuation at a convex native column may declare `targetContactPathFeet`: two first-hit cap-ray contacts joined by consecutive actual original column vertices. Rectangular corners and certified curved sections use the same checks; every intermediate point must be an original vertex and each segment must follow a finite original face. The path progresses strictly across the original cap width. Its footprint retains the original cap width and axis, follows parallel bounded contact overlaps and cannot pass through the column or target its far side. An arbitrary notch, omitted corner, self-crossing polygon or invented support path is rejected.
 
-Native wall selection uses the same 1/10,000-foot numerical grid as native room recovery (approximately 30 micrometres). Exact supported slab contacts are noded and unioned separately on a local-origin 1/10,000,000,000-foot grid before subtraction, avoiding artificial cracks from independently rounded slab edges. Real nonzero floor gaps and floor holes remain excluded; source slab coordinates stay unchanged. Source footprints, floors, doorway metadata and saved corrections retain their original coordinates. The numerical grid is distinct from the user’s gap-size control; it does not raise the automatic closure threshold or apply a physical repair. Exact native edge contacts and crossings receive shared nodes before rounding. Tests preserve a measured 1 mm wall gap and a protected slab void; source-backed physical corrections still require the ordinary geometry and routing checks.
+Legacy comparison recovery used a 1/10,000-foot wall grid and a separate 1/10,000,000,000-foot slab-contact grid. Those grids are not used by strict version 3 native selection or native route authority. Strict operations retain original IEEE coordinates as exact dyadic rationals and generated intersections as exact rational values through serialization. Real nonzero gaps and floor holes remain; no display rounding establishes a contact. The gap-size diagnostic remains separate from physical repair and source-backed corrections still require the ordinary geometry and routing checks.
 
 When a certified native curved column section replaces an approximate box, compare all previously raised visitor blocks before promotion. Keep the certified curve. A missing wall-to-column join may require extending the original full-thickness wall cap to the first native face contacts, following only consecutive convex source faces inside that cap's original strip. Never restore an inaccurate column box or copy stale prepared blocks to hide a preservation regression. Preserve original physical doors and rerun native selection plus ordinary/native-height visitor checks.
 
@@ -261,15 +286,15 @@ The native explorer shares the reviewed region tracer with Native areas, using c
 
 Click a native area to inspect its associated named places. A singleton selects the existing place; a shared region offers individual named-place buttons without merging identities or inventing destinations. Overlapping native levels offer their places with native-level IDs. Search, entrance arrivals, physical door portals, access rules and every directions profile continue to use the same prepared graph. The native outline is a flat map presentation, not approval of a raised room or a routing repair.
 
-Shared areas expose **Find a named place in this area**, matching room number, name, building or native-level ID. The first 20 matches remain visible; **Show more named places** exposes subsequent matches without removing destinations. Physical door and stair controls retain their routing selection when clicked above a native area. Published warning summaries display the full source evidence warning count, even when several warnings are represented by one level summary; unavailable levels add their own warning and retain the prepared fallback.
+Shared areas expose **Find a named place in this area**, matching room number, name, building or native-level ID. The first 20 matches remain visible; **Show more named places** exposes subsequent matches without removing destinations. Physical door and stair controls retain their routing selection when clicked above a native area. Published warning summaries display the full source evidence warning count, even when several warnings are represented by one level summary; unavailable levels add their own warning; strict native levels never retain an outline-based fallback.
 
-Floor tracing and exact display tessellation run in a cancellable worker. Changing campus floor/building, importing a project or editing its dataset immediately invalidates old results; a result from an earlier dataset cannot be displayed or selected. Until the native worker finishes, the prepared room map remains visible and interactive. Successfully traced native levels replace their prepared fills and selection; unavailable levels retain the prepared map with an explicit fallback notice. Errors allow retry without leaving a blank map. Failed native levels are disclosed individually, rather than receiving silently labelled native approximations. Explicit `view=2d`, `view=3d`, `view=relative` and `view=native` comparison links override the import default (`native` is the source-model view). Retain actual desktop/mobile proof when changing this mode.
+Floor tracing and exact display tessellation run in a cancellable worker. Changing floor/building, importing a project or editing its dataset invalidates old results. Strict native mode owns the requested floor immediately: loading, failure and unavailable geometry never expose old prepared room outlines. Worker errors permit retry; failed native levels remain individually flagged. Legacy non-strict projects retain their historical presentation for comparison. Explicit `view=2d`, `view=3d`, `view=relative` and `view=native` links override the import default (`native` is the source-model view). Retain desktop/mobile proof when changing this mode.
 
 New campus viewer exports include a derived `nativeExploreMapping`: exact native region rings and applied dashed boundary lines compiled from the full master, with native floor/door IDs and place associations. It contains no authoring notes, support-proof paths, proposals, decisions or change history. The viewer's physical source/alignment/floor/wall/door/place/fixture/exclusion geometry and supported door ownership are hashed, and the mapping has its own checksum. Viewer import and native playback reject changed or stale bindings. Display preferences can change without changing that physical hash. Older viewer ZIPs can show their available native geometry, but must be re-exported from the current master to reproduce its applied area-selection boundaries and pass-through choices.
 
 Browser viewer export compiles native outlines in a separate worker; the CLI performs the same compilation directly. Export remains asynchronous. These published flat selection outlines are separate from the prepared graph and raised-room presentation: exact master/viewer outline parity does not certify new routes or room volumes.
 
-Native trace workers are one-shot: completion, failure or scope cancellation releases their cloned dataset. Startup/clone/message failures show a retryable native-map error while the prepared map stays available. Route workers reuse a completed graph for endpoint or profile changes on the same dataset; importing, editing or clearing a dataset releases the previous graph even before new route endpoints are chosen. Route coverage and destination arrival checks run in that worker too: the directions sidebar never builds a routing graph during React rendering. Import starts an off-thread graph warmup, and a real request can reuse its same-snapshot work while ignoring the obsolete readiness reply. Active route changes still terminate pending CPU work and reject stale responses. Worker input omits only display meshes, native selection tessellation and authoring issue text; physical floor/wall/door/connector evidence and access data remain exact. Persistent policy/geometry caches are confined to the worker's private, immutable clone. Mutable authoring and CLI calls retain per-calculation evidence checks. Profile switches reuse exact ordered physical/access blocker templates and supported native walking checks; public mode removes only step-free vetoes, and wheelchair mode still requires explicit confirmation on every connection.
+Native trace workers are one-shot: completion, failure or scope cancellation releases their cloned dataset. Startup/clone/message failures show a retryable native-map error; strict native scopes keep their verified native pieces and never expose old contours. Route workers reuse a completed graph for endpoint or profile changes on the same dataset; importing, editing or clearing a dataset releases the previous graph even before new route endpoints are chosen. Route coverage and destination arrival checks run in that worker too: the directions sidebar never builds a routing graph during React rendering. Import starts an off-thread graph warmup, and a real request can reuse its same-snapshot work while ignoring the obsolete readiness reply. Active route changes still terminate pending CPU work and reject stale responses. Worker input omits only display meshes, native selection tessellation and authoring issue text; physical floor/wall/door/connector evidence and access data remain exact. Persistent policy/geometry caches are confined to the worker's private, immutable clone. Mutable authoring and CLI calls retain per-calculation evidence checks. Profile switches reuse exact ordered physical/access blocker templates and supported native walking checks; public mode removes only step-free vetoes, and wheelchair mode still requires explicit confirmation on every connection.
 
 ### Color-coded patch effects
 
@@ -277,17 +302,23 @@ Native trace workers are one-shot: completion, failure or scope cancellation rel
 
 ### Published Explore map and patch colors
 
-Explore uses native floor faces by default when the project has matching source floor geometry. Version 2 of `nativeExploreMapping` stores each supported native level's exact rings, precomputed display triangles and room associations. Export reviewed project saves this mapping in the authoring ZIP; Export campus viewer carries the same read-only mapping. For command-line preparation, run `node --max-old-space-size=6144 --import tsx scripts/indoor/prepare-native-explore.ts input.master.zip output.master.zip`, then export the viewer from that candidate. Validate and compare before promoting the canonical package.
+Explore uses native floor faces by default when the project has matching source floor geometry. Version 3 of `nativeExploreMapping` retains complete exact rational topology, all positive native faces, contained numeric drawing pieces, positive residual authority, unchanged anchors and room associations for each supported native level. Export reviewed project saves this mapping in the authoring ZIP; Export campus viewer carries the same read-only mapping. For command-line preparation, run `node --max-old-space-size=6144 --import tsx scripts/indoor/prepare-native-explore.ts input.master.zip output.master.zip`, then export the viewer from that candidate. Validate and compare before promoting the canonical package.
 
 Named source outlines assign metadata when strictly more than half their area overlaps one native region. Real holes are subtracted from the overlap. Several identities matching one component stay several identities in one shared area; their names never authorize a partition or replace route ownership. Original seed associations without a majority are retained explicitly as `seed-fallback` for review. Label points lie in the overlap, and only validated displayed levels use them. This changes display positions, never arrival nodes. Native fills use the existing room-type palette independently of custom outline paint; the overview/detail transition uses the existing zoom thresholds. Hallways remain non-selectable. Floor menus use Basement and Floor 1–4 consistently while keeping actual level IDs and graph connectors.
 
-Publication binds both original native geometry and applied analytical partitions. Source edits invalidate the saved mapping and trigger recompilation on export; legacy version 1 remains readable and upgrades when exported. Unsupported native levels retain their prepared fallback. No fallback is evidence that a room has been repaired.
+Publication binds original native geometry and applied analytical partitions. Source edits invalidate the saved mapping and require recompilation. Strict native projects never substitute prepared room contours for a missing trace: unsupported scopes remain flagged and unavailable. Older non-strict packages remain readable for review; their historical presentation is not evidence of a repaired enclosure.
 
 Patch comparisons color each actual connected component separately in Before patch and After patch. A multi-patch room proposal compares the whole checked patch group and shows all resulting components, including unlabelled ones. A single patch comparison removes only that patch from a disposable before view. Several labels in one color are still connected; four colors require four actual resulting areas. Current 07-145 / 07-148 / 07-148A / 07-148B remains a shared native enclosure awaiting a supported boundary solution, not a certified four-room split.
 
 ### Quiet campus overview
 
-Explore shows light green public circulation against grey non-circulation building areas at campus scale. The overview is a simplified illustration, not a routing or access mask. Restricted corridors and non-walkable shafts remain outside the green tint; reviewed exterior footprints and verified floor openings stay clear. Buffer smoothing joins wall-width visual seams only in this illustration. A single hallway or vestibule identity colors its native face. Mixed shared components use a unique strict majority of the visible native face, measured from the union of existing room-type metadata claims clipped to that face and its real holes. Overlapping identities of one type cannot double-count their footprints; conflicting majorities remain neutral regardless of record order. A small circulation label cannot turn a dining hall green. A component without a majority uses neutral grey. This determines only the fill type, never the native boundary or room separation. The same native faces supply the green overview and detail view; whole-face polygons back the prepared display triangles at every zoom to prevent long thin triangles disappearing during tile quantization, retaining the original architectural holes; old buffered hallway illustrations are suppressed once that building has a validated native map. Visitor Explore hides unlabelled slab components. For an open shared component with an exposed floor edge, its display is conservatively intersected with registered building coverage from all named room types (including wall-width seam closing), rather than colouring an unclaimed slab apron. Sub-square-foot internal gaps in that temporary metadata coverage are filled before its intersection with the exact native component; real native holes and reviewed exclusions remain authoritative and are never filled. Narrow residuals where an internal metadata hole intersects an existing named native face are also restored when they have no core after an inward buffer at the same 1.22 m overview tolerance. This restores only the exact native face, never a separate unlabelled body, true native hole, exclusion or exterior apron. Broad internal residuals and the exterior perimeter remain conservative. This is a temporary presentation crop, not a recovered facade or an outdoor classification. The complete native component remains available in authoring review, and routes and saved geometry remain unchanged. Outdoor basemap landcover, landuse, park and water fill layers are hidden in native visitor Explore; roads remain contextual and authoring review retains its full background. Closed named enclosures retain their full native faces. Restricted/non-walkable authoring footprints retain their grey scope within shared faces. A shared face remains shared; this tint does not create independent rooms, certify its enclosure or grant access. Detailed native room-type fills arrive first; walls, window details, doorway edges, selection borders and applied analytical boundary lines appear only at closer architectural zoom. Review modes keep their full evidence detail at any zoom. This presentation changes neither physical source bytes nor directions.
+Strict native Explore uses the same contained native floor pieces at overview and detail zoom. Light green identifies public circulation; other areas use their room-type palette or neutral grey. Restricted corridors, non-walkable shafts, real floor openings and checked exclusions remain outside the public circulation tint. The complete exact carrier, positive drawing residuals and original anchors are retained separately from the numeric drawing.
+
+**Highlight mixed hallways** in the Native floor map status panel adds a magenta review overlay for displayed non-green native components containing both circulation identities and other room or staff identities. Choose **Mixed hallway area** to focus one component and inspect its labels. The overlay uses existing native drawing pieces and original perimeters, preserving holes without drawing old identity contours or paint subdivision edges. A missing enclosure or a lone unclassified hallway is outside this mixed-component highlight. Hiding the overlay restores the usual map; it does not apply a patch, alter access, select a destination or change routes. Floor/building changes refresh its issue scope.
+
+Names and type claims come from old room outlines, but those outlines never crop, buffer, restore or supply native floor geometry. Mixed shared components use exact overlap and a unique strict type majority; a small hallway label cannot turn an entire dining hall green. Overlapping claims of the same type cannot double-count their area, and unresolved conflicting claims stay neutral. Unlabelled native faces remain distinguishable from missing geometry. This coloring does not separate rooms, certify an enclosure or change access.
+
+Architectural walls, windows, doorway edges and selection borders appear at closer zoom; review modes retain their evidence detail. Floor borders follow original outer and hole perimeters rather than contained-paint subdivision seams. Outdoor basemap fills are hidden in visitor Explore, with roads retained as context. Source model view keeps the original scene and explicit correction evidence without historical contour or rounded route-cell floor overlays, including when a required native material descriptor is missing. Ordinary and native-height visitor modes share the physical floor datum for floors, stairs and ramps. No display adjustment changes source coordinates or directions.
 
 ### Visitor stairs and linked floors
 
@@ -367,6 +398,20 @@ The exclusion query retains strict walking and arrival checks. Only an exact ena
 
 ### Source-defined indoor routing coverage
 
+An explicitly authorized incomplete corner uses the separate
+`nativeProvisionalCornerSeals` descriptor. It binds the exact original finite
+contact faces, model and material checksums, physical owner census, immutable
+floor support and openings, foreign obstacles and unchanged physical door
+portals. Its supplemental footprint does not move or rewrite either original
+body, and does not weaken the full-width original-axis continuation contract.
+Applied rows require a recorded human authorization checksum, retain
+`sourceVerified: false` and `revisitRequired: true`, and can be restored by
+removing only that supplemental correction and regenerating. Enclosure rows
+using it explicitly bind its descriptor checksum and applied IDs at the actual
+finite section heights. Record the human statement and revisit note in the
+authoring companion; visitor assets carry only the technical safety binding.
+Report these assumption-based enclosures separately from source-verified ones.
+
 A regenerated project can include `nativeIndoorEnvelopes` version 1 in both its source room file and prepared dataset. These model-bound, independently checked native BRep enclosure sections intersect exact native slab support; they do not inherit room trace contours. Each elevation retains native element IDs, section heights, evidence checksums and a checksum of its exact geometry. Import and export reject altered geometry or mismatched source/prepared evidence.
 
 With this evidence present, the compiler builds complete native room/circulation faces, retains physical slab holes and barrier/threshold exclusions, and replaces old walk branches with checked native-cell branches. Source room contours classify ownership only. An ambiguous face overlapping a restricted or nonwalkable identity is unavailable as a whole; clipping the old restricted contour cannot create a public passage. Unproved components remain unavailable, rather than falling back to old outline paths. Existing physical door and vertical connector identities remain separate and keep their access rules. Legacy archives without this evidence retain their earlier bindings until regeneration.
@@ -390,8 +435,125 @@ extents stay hidden instead of receiving a registered-outline fallback.
 
 Regeneration removes legacy walking links and rebuilds them within these native
 cells while retaining original measured portals and source-supported connectors.
+Both stairs and local steps require the same complete original flight, walking
+body, width, foreign-material and terminal evidence before routing. A local-step
+label or a direct link between room annotations cannot bypass those checks.
+Internal tiered-seating steps remain part of the room display rather than an
+inter-floor connector. The strict circulation policy binding changes when this
+qualification policy changes; an older compiled graph must be regenerated.
 An offset native-level alias is valid only on the same independently checked
 original slab and physical elevation. A fresh ZIP import opens the native floor
-map; explicit authoring comparison links can still inspect historical outlines.
+map. Historical contours remain identity evidence; even authoring proposal
+previews must use complete native regions in a native-only project.
 Preparing the map and routing graph runs in workers. Route profile warmup and
 bounded private caches do not change permission or wheelchair-access evidence.
+Within a source preparation phase, complete native slab/enclosure intersections
+may be reused by exact operand bytes, model, kernel and elevation. This bounded
+cache retains every floor hole and positive component; each doorway still
+recomputes its own host opening, foreign barriers and complete-face ownership.
+Exact orientation predicates compare integer determinants without rounding or
+reducing intermediate fractions. These optimizations never approve a connector
+or replace missing native geometry.
+Local path and footprint checks omit only support shells and holes whose exact
+bounds are strictly disjoint from the query tile, before the existing exact tile
+intersection. Tangent contacts, intersecting holes and every positive
+component remain in that intersection. This broadphase changes no source
+coordinates, floor coverage, walking width or permissions.
+Exact area comparisons may reuse determinant terms from complete, recursively
+frozen rings within a 512-ring, 16 MiB cache. Mutable rings recompute their terms;
+every hole, exact multiplier and full-fraction equality check remains unchanged.
+
+For regenerated native projects, reopening the ordinary `view=2d` URL also keeps
+the native floor map. The main **2D floor map** control cannot switch that project
+back to registered room footprints. A named-room focus selects its complete
+native connected component; the registered contour supplies only its identity.
+Historical presentation crops can be retired with checksummed source evidence
+when their old approval did not establish an enclosure. Retirement preserves
+the old review, creates no replacement geometry and does not classify the
+uncertified remainder as outdoors.
+
+Strict native mode ignores legacy `record.properties.floorOpeningsFeet` as a
+physical mask; original `walkingSupport` slab inner loops already contain the
+model openings. Historical doorway paint is likewise omitted. Exact measured
+portals remain navigation evidence, and reviewed selection closures still
+control how the native floor is partitioned.
+
+A non-traversable named void whose historical outline extends onto supported
+floor can carry `nativeFloorOpeningOwnership` in its source annotation and
+prepared properties. This is identity evidence, not a new exclusion or access
+change. It binds the model checksum, original slab element, actual elevation and
+every coordinate of one existing original slab hole. Cyclic start and winding
+may differ; displaced coordinates, a different hole, or a walkable identity are
+rejected. Name/type association then uses that exact hole instead of the old
+void contour. Source floor geometry, physical portals and permission metadata
+remain unchanged, and its old review evidence travels with the authoring ZIP.
+
+Strict native publication resolves connected regions within exact native slab support intersected with the verified physical indoor envelope **before** assigning room identities or colors. An exterior apron therefore cannot merge indoor rooms that are separate within the actual enclosure. Registered room outlines supply majority identity/type claims only. The enclosure, floor holes, physical barriers and measured display thresholds supply geometry. **Native slab focus** remains a full-support diagnostic so authors can investigate unenclosed pieces; this diagnostic does not certify them as indoor or outdoor. The source slab bytes stay unchanged, and changes to the verified indoor domain invalidate stored selection and published-map checksums.
+
+Large original material descriptors use a lossless archive representation inside
+room metadata. `openindoormaps-native-material-wire` carries bounded DEFLATE JSON,
+the exact expanded byte count and SHA-256. Both package readers hydrate and verify
+the descriptor before validating source/prepared parity or compiling geometry.
+No coordinate is rounded, and the existing 64 MB metadata entry limit stays in
+place. This archive representation is separate from review decisions and native
+geometry approval.
+
+Separately preserved native frame continuations use `nativeDerivedFrameReturns`.
+They retain original native member, host and target identities, original finite
+body profiles, exact source floor bindings and a physical-placement checksum.
+Original material sections never include the derived continuation. The runtime
+replays the measured original full-width axis against the first consecutive
+finite target contacts; changing a footprint and recomputing a checksum does
+not authorize additional material. Upper rails and headers retain their actual
+height and refer to an independently checked floor-supported sibling. They do
+not become full-height selection walls. Selection, physical plan material and
+routing use only the portion present at the actual queried cut. New descriptor
+bytes invalidate native region, published map, route worker and foreign stair
+clearance bindings. Removing a correction requires source regeneration.
+
+The native map worker sends verified floor faces and their exact picking carrier before fine wall detail. Its final response contains only wall drawing features, so adding detail does not replace the mounted floor carrier or restart exact picking. Cancelling or changing the floor discards unfinished detail; only a successful complete response enters the floor cache. If wall drawing fails, the verified native floor remains visible with a retry message. Ordinary and native-height visitor modes reuse the same contained native wall pieces rather than repeating rounded plan cuts. A missing strict floor trace never falls back to prepared contour surfaces or rounded route cells.
+
+Finalized packages can retain pre-generated native display assets separately from
+source geometry. After source regeneration, exact mapping validation and final
+metadata edits, run `node --expose-gc --import tsx
+scripts/indoor/prepare-display-assets.ts input.zip candidate.zip`; add
+`--native-levels` to prepare individual native scopes as well as public floors.
+The command writes a new candidate, prepares the actual visitor defaults, checks
+full payload round trips and verifies that every existing source entry byte is
+unchanged. Public floor composites, their actual main physical planes and offset
+planes receive separate assets; missing published scopes remain unavailable.
+Generate viewer assets from the finalized viewer package separately, or request
+`exportCampusViewer(project, { preparedDisplay: true })` in the package worker.
+Viewer export prepares its stripped, published metadata projection independently,
+including edited public names and colors. It never copies or rebinds master
+display payloads. Existing prepared masters regenerate viewer assets by default.
+
+`viewer/display/index.json` declares bounded, checksummed compressed chunks.
+Only the selected worker inflates them. Exact topology, positive residuals,
+source anchors, room associations and contained drawing pieces remain in the
+complete payload. Current dataset bytes, preparation engine, floor scope,
+building, windows and settings must match. Edits invalidate the assets; damaged
+matching assets produce an explicit failure. Cache loading also compares the
+native drawing directly with the complete current published exact face inventory,
+contained pieces, unchanged anchors and deterministic type fills; a rehashed
+payload cannot invent or omit native floor pieces. Wall and raised-room approval
+remain separate physical checks. These are display assets, not
+geometry approval, enclosure certification or route reconstruction. Unprepared
+scopes run current native preparation in workers and never use room outlines as
+a floor fallback. Complete in-memory caches also have byte budgets; an oversized
+result may display without being retained for reuse.
+
+Importing a ZIP with identical saved review pins keeps the validated project and
+original archive bytes. It does not run a pin merge or authoring export merely
+to preserve unchanged notes: rewriting the room file changes its source hash and
+can invalidate the saved display assets. Genuine pin changes still use the
+normal merge and export rules. Folder imports additionally reconcile companion
+files; changed companions can therefore require a fresh authoring export.
+
+### Provisional source contact repairs
+
+`nativeSelectionContactRepairs` records individual selection-only corrections for positive gaps no larger than `1e-7` feet between verified original native member caps and finite supporting faces. The exact rational mask is reconstructed from current source coordinates; it does not move a wall, add a physical wall or change a doorway, route, access rule or raised room. The original material checksum, model, level, elevation, full source rings and contact edges must still match. Entire gap coverage by original floor and exact positive-intersection vetoes for openings, doors, fixtures and foreign material are replayed on import and selection. A sub-epsilon forbidden intersection still rejects the repair.
+
+Each entry remains a provisional construction-contact assumption with evidence and a revisit flag. `applied` affects native outlining; `proposed` and `restored` do not. A complete group must be traced again before calling its rooms independent: one accepted contact can leave another connection. Keep intentional shared open reception/circulation areas shared. These authoring corrections travel with the master and invalidate native mapping and prepared display bindings. Visitor exports retain only applied source evidence and generic provenance, without the author’s notes. They do not establish public access or certify reconstructed physical routes.
+
+An individual contact may explicitly declare `contactMode: "finite-cap-overlap"` for a documented finite wall-corner incidence. The descriptor still stores the full original cap and full original source/target rings. The exact maximal lateral interval is recomputed from that cap and the named original finite face; each omitted end is bounded to `1e-7` feet, independently of the same normal-depth limit. Every projected target vertex and interval midpoint must reach that face as the first actual material. Both whole original cap retention and whole-cap original floor support are required; an overlapping slab cannot hide a protected aperture beneath an omitted end. The exact gap mask must contact the complete derived source interval and retained target interval. The default remains full-cap contact and still rejects partial-width cases. No outside-corner wedge, invented subcap coordinates, rounding, extrapolated face, penetration or source vertex change is authorized. Independently registered drawing incidence may support the provisional assumption through the checksummed evidence, but does not substitute drawing wall thickness for native material. A local contact is not a complete enclosure claim; combined exact selection and physical visitor checks remain separate.

@@ -131,7 +131,7 @@ for (const [name, validate] of [
 
 test("independent drawing reconstruction can join real native supports through a complete linked set, while a floating or widened body fails", async () => {
   const project = await gapProject();
-  const evidence = [
+  const evidence: NativeBoundaryPatch["wallEvidence"] = [
     {
       nativeElementId: 1,
       ringsFeet: [
@@ -160,7 +160,7 @@ test("independent drawing reconstruction can join real native supports through a
     levelId: 1,
     kind: "wall",
   })) as typeof project.dataset.walls;
-  const pieces = [4, 8, 12].map((y, i) => ({
+  const pieces = [4, 8, 12].map<NativeBoundaryPatch>((y, i) => ({
     id: "drawing-piece-" + i,
     levelId: 1,
     sourceModelSha256: model,
@@ -192,7 +192,7 @@ test("independent drawing reconstruction can join real native supports through a
       ],
       contactAdaptationFeet: 0.0002,
     },
-  })) as NativeBoundaryPatch[];
+  }));
   for (const piece of pieces)
     piece.sourceModelSha256 = project.dataset.source.modelSha256;
   validateNativeBoundaryPatches(
@@ -581,13 +581,49 @@ for (const [name, validate] of [
   );
 }
 
-for(const[name,validate]of[['runtime',validateNativeBoundaryPatches],['compiler',compilerValidate]] as const){
- test(name+' preserves genuine off-cap column notches and certifies only the full first contacted native face chain',async()=>{
-  const{readFile}=await import('node:fs/promises');const p=JSON.parse(await readFile(new URL('../fixtures/native-notched-column-cap.json',import.meta.url),'utf8')) as NativeBoundaryPatch;
-  const original=structuredClone(p);validate({version:1,patches:[p]},p.sourceModelSha256);assert.deepEqual(p,original);
-  const missing=structuredClone(p);missing.continuationProof!.targetContactPathFeet!.splice(1,1);assert.throws(()=>validate({version:1,patches:[missing]},p.sourceModelSha256));
-  const selfTouch=structuredClone(p);selfTouch.wallEvidence[1].ringsFeet[0][5]=[...selfTouch.wallEvidence[1].ringsFeet[0][0]];assert.throws(()=>validate({version:1,patches:[selfTouch]},p.sourceModelSha256));
-  const unsupported=structuredClone(p);unsupported.continuationProof!.targetContactPathFeet![1][0]+=.01;assert.throws(()=>validate({version:1,patches:[unsupported]},p.sourceModelSha256));
-  const penetration=structuredClone(p);penetration.ringsFeet[0][3][0]+=.1;assert.throws(()=>validate({version:1,patches:[penetration]},p.sourceModelSha256));
- });
+for (const [name, validate] of [
+  ["runtime", validateNativeBoundaryPatches],
+  ["compiler", compilerValidate],
+] as const) {
+  test(
+    name +
+      " preserves genuine off-cap column notches and certifies only the full first contacted native face chain",
+    async () => {
+      const { readFile } = await import("node:fs/promises");
+      const p = JSON.parse(
+        await readFile(
+          new URL(
+            "../fixtures/native-notched-column-cap.json",
+            import.meta.url,
+          ),
+          "utf8",
+        ),
+      ) as NativeBoundaryPatch;
+      const original = structuredClone(p);
+      validate({ version: 1, patches: [p] }, p.sourceModelSha256);
+      assert.deepEqual(p, original);
+      const missing = structuredClone(p);
+      missing.continuationProof!.targetContactPathFeet!.splice(1, 1);
+      assert.throws(() =>
+        validate({ version: 1, patches: [missing] }, p.sourceModelSha256),
+      );
+      const selfTouch = structuredClone(p);
+      selfTouch.wallEvidence[1].ringsFeet[0][5] = [
+        ...selfTouch.wallEvidence[1].ringsFeet[0][0],
+      ];
+      assert.throws(() =>
+        validate({ version: 1, patches: [selfTouch] }, p.sourceModelSha256),
+      );
+      const unsupported = structuredClone(p);
+      unsupported.continuationProof!.targetContactPathFeet![1][0] += 0.01;
+      assert.throws(() =>
+        validate({ version: 1, patches: [unsupported] }, p.sourceModelSha256),
+      );
+      const penetration = structuredClone(p);
+      penetration.ringsFeet[0][3][0] += 0.1;
+      assert.throws(() =>
+        validate({ version: 1, patches: [penetration] }, p.sourceModelSha256),
+      );
+    },
+  );
 }

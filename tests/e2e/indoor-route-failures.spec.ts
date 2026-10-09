@@ -132,7 +132,7 @@ for (const mobile of [false, true])
             String(expectedSteps.length - 1),
           );
           const cameras: number[][] = [];
-          const captures = new Map<number, string[]>();
+          const captures = new globalThis.Map<number, string[]>();
           if (start === "10-1016") {
             const sourceDoor = expectedRoute.edges.find(
               (e) => e.sourceDoorProof,

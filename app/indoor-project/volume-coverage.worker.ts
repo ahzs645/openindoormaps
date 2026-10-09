@@ -1,3 +1,4 @@
+import { deriveNativeExplore } from "./native-explore";
 import {
   auditVolumeScope,
   volumeScopes,
@@ -37,7 +38,15 @@ scope.onmessage = async ({ data }) => {
           name: item.name,
         },
       });
-      views.push(auditVolumeScope(data, item));
+      views.push(
+        auditVolumeScope(
+          data,
+          item,
+          data.nativeIndoorEnvelopes
+            ? await deriveNativeExplore(data, item.levelIds, "all")
+            : undefined,
+        ),
+      );
     }
     scope.postMessage({
       result: {

@@ -262,19 +262,22 @@ for (const mobile of [false, true]) {
     const draft = await page.evaluate(async () => {
       const map = (globalThis as unknown as { basemapTestMap: Map })
         .basemapTestMap;
-      return await (
+      const draft = await (
         map.getSource(
           "project-basemap-area-draft",
         ) as import("maplibre-gl").GeoJSONSource
       ).getData();
+      if (draft.type !== "FeatureCollection")
+        throw new Error("Expected area draft FeatureCollection");
+      return draft;
     });
     expect(
       draft.features.filter((f) => f.geometry.type === "Point"),
     ).toHaveLength(6);
-    expect(
-      draft.features.find((f) => f.geometry.type === "Polygon")?.geometry
-        .coordinates[0],
-    ).toHaveLength(7);
+    const polygon = draft.features.find((f) => f.geometry.type === "Polygon");
+    if (polygon?.geometry.type !== "Polygon")
+      throw new Error("Expected draft Polygon");
+    expect(polygon.geometry.coordinates[0]).toHaveLength(7);
     await page.screenshot({
       path: `docs/screenshots/unbc-basemap-polygon-${mobile ? "mobile" : "desktop"}.png`,
     });

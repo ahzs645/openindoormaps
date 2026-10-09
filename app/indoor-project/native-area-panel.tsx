@@ -1,4 +1,7 @@
-import { PatchComparisonControls, type PatchComparisonView } from "./patch-comparison-controls";
+import {
+  PatchComparisonControls,
+  type PatchComparisonView,
+} from "./patch-comparison-controls";
 import { selectionDoorIds } from "./selection-door-thresholds";
 import { ProposalDecisionControls } from "./proposal-decision-controls";
 import { NativeGapScanPanel } from "./native-gap-scan-panel";
@@ -86,7 +89,9 @@ export function NativeAreaPanel({
   const [busy, setBusy] = useState(false);
   const [query, setQuery] = useState("");
   const [comparisonPatchId, setComparisonPatchId] = useState("");
-  const comparisonPatch = project.rooms.nativeBoundaryPatches?.patches.find(p => p.id === comparisonPatchId && p.levelId === levelId);
+  const comparisonPatch = project.rooms.nativeBoundaryPatches?.patches.find(
+    (p) => p.id === comparisonPatchId && p.levelId === levelId,
+  );
   const [pendingDecision, setPendingDecision] = useState("");
   const [gapNotes, setGapNotes] = useState("");
   const [patchIds, setPatchIds] = useState<string[]>([]);
@@ -150,6 +155,13 @@ export function NativeAreaPanel({
   }, [levelId]);
   const regions = result?.regions.filter((r) => selected.includes(r.id)) ?? [];
   const decisions = project.rooms.nativeAreaReviews?.decisions ?? [];
+  const provisionalSeals =
+    project.rooms.nativeProvisionalCornerSeals?.sourceModelSha256 ===
+    project.dataset.source.modelSha256
+      ? project.rooms.nativeProvisionalCornerSeals.rows.filter(
+          (row) => row.levelId === levelId && row.state === "applied",
+        )
+      : [];
   const decisionProposal = project.rooms.enclosureProposals?.records.find((r) =>
     r.boundaryPatchIds?.includes(reviewPatchId),
   );
@@ -258,7 +270,14 @@ export function NativeAreaPanel({
   return (
     <section aria-label="Native area decisions" className="native-area-panel">
       <h2>Select native floor areas</h2>
-      {comparisonPatch && <PatchComparisonControls data={project.dataset} patch={comparisonPatch} onView={onPatchComparison} onClose={()=>setComparisonPatchId("")} />}
+      {comparisonPatch && (
+        <PatchComparisonControls
+          data={project.dataset}
+          patch={comparisonPatch}
+          onView={onPatchComparison}
+          onClose={() => setComparisonPatchId("")}
+        />
+      )}
       <button disabled={locked || busy || !canUndo} onClick={onUndo}>
         Undo area edit
       </button>
@@ -528,6 +547,44 @@ export function NativeAreaPanel({
         <p role="status">Tracing native slabs, walls and door thresholds…</p>
       )}
       {error && <p role="alert">{error}</p>}
+      {!!provisionalSeals.length && (
+        <details>
+          <summary>
+            Applied provisional seals · {provisionalSeals.length}
+          </summary>
+          <p>
+            These repairs use recorded human assumptions and still need a later
+            source review. Their evidence travels with the reviewed ZIP.
+          </p>
+          <div className="native-door-check-list">
+            {provisionalSeals.map((seal) => (
+              <div key={seal.id}>
+                <strong>
+                  Assumed sealed · #
+                  {seal.carrierContactNativeElementIds.join(" / #")}
+                  {" / #"}
+                  {seal.targetNativeElementId}
+                </strong>
+                <small>Provisional · revisit required</small>
+                <button
+                  onClick={() =>
+                    onLocateDoor([
+                      (seal.nearestCarrierContactFeet[0] +
+                        seal.nearestTargetContactFeet[0]) /
+                        2,
+                      (seal.nearestCarrierContactFeet[1] +
+                        seal.nearestTargetContactFeet[1]) /
+                        2,
+                    ])
+                  }
+                >
+                  Show provisional seal
+                </button>
+              </div>
+            ))}
+          </div>
+        </details>
+      )}
       {result && (
         <>
           <p>

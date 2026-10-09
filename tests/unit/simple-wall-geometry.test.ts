@@ -1,4 +1,5 @@
 import test from "node:test";
+import type { Feature, MultiPolygon } from "geojson";
 import assert from "node:assert/strict";
 import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import fixture from "../fixtures/unbc-agora-wall-posts.json";
@@ -92,7 +93,7 @@ test("room edges flatten locally at posts without filling courtyard openings", (
     ] as [number, number][],
   };
   const contains = (
-    features: typeof collection.features,
+    features: Feature<MultiPolygon>[],
     point: [number, number],
   ) =>
     features.some((f) =>

@@ -102,9 +102,11 @@ export function validateNativeDoorBoundaryClosures(
       !validFoot(d.originalDoor.footprintFeet) ||
       !validFoot(d.footprintFeet) ||
       !Array.isArray(d.originalDoor.roomKeys) ||
-      (d.selectionBarrierOnly !== undefined && d.selectionBarrierOnly !== true) ||
+      (d.selectionBarrierOnly !== undefined &&
+        d.selectionBarrierOnly !== true) ||
       d.originalDoor.roomKeys.length !== (d.selectionBarrierOnly ? 1 : 2) ||
-      new Set(d.originalDoor.roomKeys).size !== d.originalDoor.roomKeys.length ||
+      new Set(d.originalDoor.roomKeys).size !==
+        d.originalDoor.roomKeys.length ||
       d.originalDoor.roomKeys.some((k) => typeof k !== "string" || !k) ||
       !Array.isArray(d.jambEvidence) ||
       d.jambEvidence.length !== 2 ||
@@ -142,7 +144,9 @@ export function validateNativeDoorBoundaryClosures(
       newT[1] - oldT[1] > (d.measuredTangentLimitFeet ?? 0.15) + 1e-9 ||
       (oldT[0] - newT[0] < 1e-7 && newT[1] - oldT[1] < 1e-7)
     )
-      error("only a measured tangent extension within its checked limit is permitted");
+      error(
+        "only a measured tangent extension within its checked limit is permitted",
+      );
     const rectangle = (
       r: Point[],
       ab: [number, number],
@@ -216,9 +220,18 @@ export function closedBoundaryDoors(
     if (saved.selectionBarrierOnly) {
       // An unmatched physical door may still close a measured selection boundary.
       // It cannot acquire a pass-through permission or route through this metadata.
-      if (data.edges.some((e) => e.enabled && (e.id === door!.id || (e.kind === "door" && e.nativeElementId === door!.nativeElementId))))
+      if (
+        data.edges.some(
+          (e) =>
+            e.enabled &&
+            (e.id === door!.id ||
+              (e.kind === "door" &&
+                e.nativeElementId === door!.nativeElementId)),
+        )
+      )
         error("unmatched selection barrier cannot have an enabled portal");
-    } else if (!supportedPortal) error("missing original supported door portal");
+    } else if (!supportedPortal)
+      error("missing original supported door portal");
     const jambs = saved.jambEvidence.map((j) => {
       const wall = data.walls.find(
         (w) =>
@@ -237,7 +250,7 @@ export function closedBoundaryDoors(
     const extension = pc.difference(proposed, original);
     if (area(pc.difference(proposed, ground)) > 1e-6)
       error("threshold crosses a native slab opening or unsupported floor");
-    const holes = data.records
+    const holes = (data.nativeIndoorEnvelopes ? [] : data.records)
       .filter((r) => r.levelId === levelId)
       .flatMap((r) =>
         ((r.properties.floorOpeningsFeet ?? []) as Point[][]).map((h) => [h]),

@@ -1,0 +1,165 @@
+{
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceMaterialGeometrySha256": "19f71f592feae63946a4b7ff17abb05ff7e5096c30bc611594114f5aa9892aa4",
+  "patch": {
+    "id": "explore0408-cap:694:1107919-1008886:-79.050412:388.387866",
+    "levelId": 694,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "applied",
+    "widthFeet": 0.013123359579651606,
+    "ringsFeet": [
+      [
+        [
+          -79.46051746275151,
+          388.38766615251546
+        ],
+        [
+          -78.64030748899822,
+          388.38766615251546
+        ],
+        [
+          -78.64030748899822,
+          388.40118951209513
+        ],
+        [
+          -79.46051746275151,
+          388.40118951209513
+        ]
+      ]
+    ],
+    "wallEvidence": [
+      {
+        "nativeElementId": 1107919,
+        "ringsFeet": [
+          [
+            [
+              -79.46051746275147,
+              383.3701695623081
+            ],
+            [
+              -79.46051746275151,
+              388.38786615251547
+            ],
+            [
+              -78.64030748899822,
+              388.38786615251547
+            ],
+            [
+              -78.64030748899818,
+              383.15039496221704
+            ]
+          ]
+        ]
+      },
+      {
+        "nativeElementId": 1008886,
+        "ringsFeet": [
+          [
+            [
+              -75.8917915749543,
+              388.4009895120951
+            ],
+            [
+              -83.93313015763171,
+              388.40098951209507
+            ],
+            [
+              -83.93313015763171,
+              388.79469029949666
+            ],
+            [
+              -75.8917915749543,
+              388.7946902994967
+            ]
+          ]
+        ]
+      }
+    ],
+    "nativeDoorIds": [],
+    "notes": "Source-verified original-axis cap continuation for 04-233: original basic wall #1107919 to original face #1008886; gap 4.000000 mm, measured original width 250.000000 mm, 0.0002 ft contact overlap. Exact source/finite-contact, native floor/hole, physical door, foreign column and fixture guards passed. All14 requested04/08 places are isolated after joint original wall/floor source-precision contact noding plus nine checked caps;04-231 retained already isolated,08-215 corrected solely in comparison precision. Both visitor raised-height modes verified by sibling scoped compiler. Original source records, physical portals, RVT/GLB/GIS and access unchanged. Scoped proof: review-recommendations/native-explore-gap-batch-20261006/rooms04_08/scoped-compiler-proof.json; application/full regeneration pending. Applied under user request to fix these areas, 2026-10-06. Scoped combined physical checks passed; original source assets, native openings, physical portals, identities and access retained. Receipt: review-recommendations/native-explore-gap-batch-20261006/application.json.",
+    "continuationProof": {
+      "sourceWallId": 1107919,
+      "sourceCapFeet": [
+        [
+          -79.46051746275151,
+          388.38786615251547
+        ],
+        [
+          -78.64030748899822,
+          388.38786615251547
+        ]
+      ],
+      "targetContactFeet": [
+        [
+          -79.46051746275151,
+          388.4009895120951
+        ],
+        [
+          -78.64030748899822,
+          388.4009895120951
+        ]
+      ],
+      "evidenceSha256": "2a1648248d5175c28b7887e399e89f8e63b17b04607863cbdf1769385f908072"
+    }
+  },
+  "walls": [
+    {
+      "levelId": 694,
+      "nativeElementId": 1008886,
+      "kind": "wall",
+      "geometrySource": "original-native-material-section",
+      "ringsFeet": [
+        [
+          [
+            -83.93313015763171,
+            388.79469029949666
+          ],
+          [
+            -75.8917915749543,
+            388.7946902994967
+          ],
+          [
+            -75.8917915749543,
+            388.4009895120951
+          ],
+          [
+            -83.93313015763171,
+            388.40098951209507
+          ]
+        ]
+      ]
+    },
+    {
+      "levelId": 694,
+      "nativeElementId": 1107919,
+      "kind": "wall",
+      "geometrySource": "original-native-material-section",
+      "ringsFeet": [
+        [
+          [
+            -78.6403074889982,
+            384.7908149097235
+          ],
+          [
+            -78.64030748899823,
+            388.38786615251547
+          ],
+          [
+            -79.46051746275151,
+            388.38786615251547
+          ],
+          [
+            -79.46051746275147,
+            383.37016956230815
+          ]
+        ]
+      ]
+    }
+  ],
+  "rawSweepFailures": [
+    {
+      "id": 1107919,
+      "message": "Error: Unable to complete output ring starting at [-79.46051746275151, 388.38766615251546]. Last matching segment found ends at [-79.46051746275151, 388.38786615251547]."
+    }
+  ]
+}

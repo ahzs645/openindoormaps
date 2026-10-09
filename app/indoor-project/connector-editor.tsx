@@ -108,6 +108,10 @@ export function ConnectorEditor({
                     return;
                   }
                   const p = stairDisplayPoint(project.dataset, r);
+                  if (!p) {
+                    update(i, { roomKey: r.key, x: "", y: "" });
+                    return;
+                  }
                   update(i, {
                     roomKey: r.key,
                     x: String(p[0]),

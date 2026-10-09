@@ -9,6 +9,7 @@ import {
   wallFaceSelectionSurfaces,
 } from "./wall-face-floor-masks";
 import type { IndoorDataset } from "./contract";
+import type { PreparedDisplayAssetRequest } from "./prepared-display-registry";
 import type { FeatureCollection, MultiPolygon } from "geojson";
 import { ROOM_BLOCK_HEIGHT_METRES, roomDisplayColor } from "./display-geometry";
 import { projectPlaceColor } from "./visitor-metadata";
@@ -36,6 +37,8 @@ export function prepareFloor(
   building: string,
   options: FloorPreparationOptions,
 ) {
+  const physicalHeights =
+    !!data.nativeIndoorEnvelopes || !!options.relativeHeights;
   const presentation = floorPresentation(data, levelIds, building, {
     ...options,
     visitorStairs: !options.review,
@@ -76,9 +79,10 @@ export function prepareFloor(
     ),
   };
   const visitorAreas = visitorRoomSurfaces(areas, options.review);
-  const floorMasks = options.review
-    ? new Map()
-    : wallFaceRoomFloorMasks(data, presentation.display.records);
+  const floorMasks =
+    options.review || data.nativeIndoorEnvelopes
+      ? new Map()
+      : wallFaceRoomFloorMasks(data, presentation.display.records);
   const selectionAreas = wallFaceSelectionSurfaces(
     data,
     presentation.display.areas,
@@ -108,7 +112,7 @@ export function prepareFloor(
         };
       }),
   };
-  if (options.relativeHeights)
+  if (physicalHeights)
     assumedRoomBlocks = relativeHeightGeometry(
       data,
       levelIds,
@@ -153,7 +157,7 @@ export function prepareFloor(
         floorMasks,
       );
   const nativeGround = nativeFloorGround(data, levelIds, building);
-  const nativeSurfaces = options.relativeHeights
+  const nativeSurfaces = physicalHeights
     ? rampFloorApertures(
         data,
         levelIds,
@@ -168,22 +172,29 @@ export function prepareFloor(
         ),
       ).features
     : nativeGround;
-  const physicalGround = (
-    options.review ? stairPlaceGround : stairSurroundGround
-  )(data, {
+  const sourceGround = {
     ...shownAreas,
     features: [
       ...nativeSurfaces,
       ...(options.review
         ? []
-        : stairSlabGround(data, nativeSurfaces, unoccluded)),
+        : data.nativeIndoorEnvelopes
+          ? []
+          : stairSlabGround(data, nativeSurfaces, unoccluded)),
       ...shownAreas.features,
     ],
-  });
+  };
+  const physicalGround = data.nativeIndoorEnvelopes
+    ? sourceGround
+    : (options.review ? stairPlaceGround : stairSurroundGround)(
+        data,
+        sourceGround,
+      );
   const nativeStairs = stairsAboveDisplayedGround(
     unoccluded,
     physicalGround,
-    options.relativeHeights ?? false,
+    physicalHeights,
+    data,
   );
   return {
     presentation: withRaisedLabels,
@@ -199,12 +210,14 @@ export function prepareFloor(
     stairCutAreas: stairFloorApertures(
       physicalGround,
       nativeStairs,
-      options.relativeHeights ?? false,
+      physicalHeights,
+      data,
     ),
     stairCutRooms: stairFloorApertures(
       roomBlocks,
       nativeStairs,
-      options.relativeHeights ?? false,
+      physicalHeights,
+      data,
     ),
   };
 }
@@ -215,7 +228,8 @@ export type FloorPreparationRequest = {
   levelIds: number[];
   building: string;
   options: FloorPreparationOptions;
+  preparedDisplay?: PreparedDisplayAssetRequest;
 };
 export type FloorPreparationResponse =
-  | { requestId: number; value: PreparedFloor }
+  | { requestId: number; value: PreparedFloor; memoryCostBytes?: number }
   | { requestId: number; error: string };

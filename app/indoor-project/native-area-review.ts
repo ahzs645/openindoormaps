@@ -1,7 +1,47 @@
-import {nativeMaterialPlanWalls} from "./native-material-plan";
-import {verifyNativeMaterialSections} from "./native-material-sections";
-import { nativeSelectionTopology, NATIVE_SELECTION_TOPOLOGY_VERSION } from "./native-selection-topology";
-import {validateDoorApertureBinding} from "./reviewed-door-apertures";
+import {
+  validateNativeSelectionContactRepairs,
+  deriveNativeSelectionContactRepairs,
+} from "./native-selection-contact-repairs";
+import { assertNativeSelectionContactRepairsPhysicalGuards } from "./native-selection-contact-guards";
+import {
+  nativeRationalOverlay,
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+  type NativeRationalParts,
+} from "./native-rational-overlay";
+import { nativeRationalIntersectionOperand } from "./native-rational-intersection-broadphase";
+import {
+  createNativeContainedDisplay,
+  type NativeContainedDisplay,
+} from "./native-contained-display";
+import {
+  encodeNativeExactTopology,
+  createNativeExactTopologyIndex,
+  nativeExactPartsForProposals,
+  nativeRationalAreaCompare,
+  nativeRationalMeasuredArea,
+  nativeRationalPointInParts,
+  type NativeExactPlanarTopology,
+} from "./native-exact-planar-topology";
+import { nativeRoomIdentityRings } from "./native-floor-opening-ownership";
+import {
+  nativeMaterialPlanWalls,
+  nativeMaterialPlanExactWalls,
+  NATIVE_FLOOR_CONTACT_SELECTION_VERSION,
+} from "./native-material-plan";
+import {
+  createNativeHostApertureQuery,
+  createNativeRoutingMaterialQuery,
+} from "./native-routing-material";
+import { verifyNativeMaterialSections } from "./native-material-sections";
+import {
+  nativeIndoorEnvelopeParts,
+  verifyNativeIndoorEnvelopes,
+} from "./native-indoor-envelopes";
+import {
+  nativeSelectionTopology,
+  NATIVE_SELECTION_TOPOLOGY_VERSION,
+} from "./native-selection-topology";
+import { validateDoorApertureBinding } from "./reviewed-door-apertures";
 import { nativeDoorBoundaryClosureFootprints } from "./native-door-boundary-closures";
 import { selectionDoorIds } from "./selection-door-thresholds";
 import {
@@ -31,6 +71,9 @@ import {
   type NativeBoundaryPatches,
 } from "./native-boundary-patches";
 import { nativeCirculationCells } from "./native-circulation";
+import { nativeExactHallwayDisplayParts } from "./native-hallway-display";
+import { nativeSelectionBoolean } from "./native-selection-boolean";
+import { associateNativeRooms } from "./native-explore-associations";
 type Point = [number, number];
 type Rings = Point[][];
 export const nativeAreaKinds = {
@@ -45,8 +88,15 @@ export const nativeAreaKinds = {
 export type NativeAreaKind = keyof typeof nativeAreaKinds;
 export type NativeAreaRegion = {
   id: string;
+  /** Exact strict-selection face; numeric rings are presentation proposals only. */
+  exactFaceId?: string;
   ringsFeet: Rings;
   displayPartsFeet: Rings[];
+  /** Certified render subset; complete authority remains in exactTopology. */
+  containedDisplay?: Pick<
+    NativeContainedDisplay,
+    "certificate" | "faces" | "unchangedIEEEAnchorsFeet"
+  >;
   roomKeys: string[];
   nativeFloorIds: number[];
   nativeDoorIds: number[];
@@ -54,6 +104,10 @@ export type NativeAreaRegion = {
   exposedFloorEdgeFeet: number;
 };
 export type NativeAreaResult = {
+  /** Exact strict topology survives worker/ZIP serialization without rounded intersections. */
+  exactTopology?: NativeExactPlanarTopology;
+  /** All positive source portions not representable by the contained render pieces. */
+  displayResidualTopology?: NativeExactPlanarTopology;
   /** Analytical boundaries used for selection; these certify no physical wall or route. */
   logicalPartitionIds?: string[];
   /** Current full-project audit evidence, computed on the native review worker. */
@@ -92,11 +146,15 @@ export function validateNativeAreaOptions(
     !o ||
     typeof o !== "object" ||
     Array.isArray(o) ||
-    (o.ignoreAppliedPartitions !== undefined && typeof o.ignoreAppliedPartitions !== "boolean") ||
+    (o.ignoreAppliedPartitions !== undefined &&
+      typeof o.ignoreAppliedPartitions !== "boolean") ||
     (o.previewPartitionIds !== undefined &&
-      (!Array.isArray(o.previewPartitionIds) || o.previewPartitionIds.length > 5000 ||
+      (!Array.isArray(o.previewPartitionIds) ||
+        o.previewPartitionIds.length > 5000 ||
         new Set(o.previewPartitionIds).size !== o.previewPartitionIds.length ||
-        o.previewPartitionIds.some((id) => typeof id !== "string" || !id || id.length > 200))) ||
+        o.previewPartitionIds.some(
+          (id) => typeof id !== "string" || !id || id.length > 200,
+        ))) ||
     (o.passThroughDoorIds !== undefined &&
       (!Array.isArray(o.passThroughDoorIds) ||
         o.passThroughDoorIds.length > 10000 ||
@@ -402,7 +460,55 @@ function nativeInputs(data: IndoorDataset, levelId: number) {
   );
   if (!floors.length) throw new Error("No native slabs support this level.");
   const walls = data.walls.filter((w) => w.levelId === levelId);
-  const precise = nativeMaterialPlanWalls(data,levelId).filter((w) => !w.approximate);
+  // A raised opening in a plan cut is not a passage through material at floor
+  // level. Use both independently recovered source sections for selection;
+  // neither the room outline nor a projected wall box supplies missing faces.
+  const strict = data.nativeIndoorEnvelopes && data.nativeMaterialSections;
+  const query = strict ? createNativeRoutingMaterialQuery(data) : undefined;
+  const seen = new Set<string>();
+  const unique = <
+    T extends IndoorDataset["walls"][number] & {
+      exactParts?: NativeRationalParts;
+    },
+  >(
+    cuts: T[],
+  ) =>
+    cuts.filter((w) => {
+      if (w.approximate) return false;
+      const key = JSON.stringify([
+        w.nativeElementId,
+        w.kind,
+        w.reviewPatchId,
+        w.ringsFeet,
+        ...(w.exactParts
+          ? [
+              w.exactParts.map((part) =>
+                part.map((ring) =>
+                  ring.map((p) => p.map((q) => [String(q.n), String(q.d)])),
+                ),
+              ),
+            ]
+          : []),
+      ]);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  const precise = unique(
+    strict
+      ? nativeMaterialPlanExactWalls(data, levelId, query!)
+      : nativeMaterialPlanWalls(data, levelId, query),
+  );
+  const floorContactPrecise = strict
+    ? unique(
+        nativeMaterialPlanExactWalls(
+          data,
+          levelId,
+          query!,
+          level.elevationFeet + 0.1,
+        ),
+      )
+    : [];
   const doors = (data.doors ?? []).filter(
     (d) =>
       d.levelId === levelId &&
@@ -410,30 +516,76 @@ function nativeInputs(data: IndoorDataset, levelId: number) {
       d.footprintFeet.length >= 3 &&
       d.normalFeet,
   );
-  const holes = data.records
-    .filter((r) => r.levelId === levelId)
-    .flatMap((r) =>
-      ((r.properties.floorOpeningsFeet ?? []) as Point[][]).map((h) => [h]),
-    );
+  // Strict native slabs already retain their original inner loops. Legacy room
+  // holes are metadata and cannot cut this physical floor a second time.
+  const holes = data.nativeIndoorEnvelopes
+    ? []
+    : data.records
+        .filter((r) => r.levelId === levelId)
+        .flatMap((r) =>
+          ((r.properties.floorOpeningsFeet ?? []) as Point[][]).map((h) => [h]),
+        );
   const fixtures = (
     data.circulationGeometry?.sourceModelSha256 === data.source.modelSha256
       ? (data.circulationGeometry.fixtures ?? [])
       : []
   ).filter((f) => f.levelIds.includes(levelId));
-  return { floors, walls, precise, doors, holes, fixtures };
+  return {
+    floors,
+    walls,
+    precise,
+    floorContactPrecise,
+    doors,
+    holes,
+    fixtures,
+  };
 }
 export async function nativeAreaGeometrySha256(
   data: IndoorDataset,
   levelId: number,
   options?: NativeAreaOptions,
 ) {
+  if (
+    data.nativeIndoorEnvelopes &&
+    data.nativeMaterialSections &&
+    options?.passThroughDoorIds === undefined
+  ) {
+    const reviewed = selectionDoorIds(data, levelId);
+    if (reviewed.length) options = { ...options, passThroughDoorIds: reviewed };
+  }
   const { floors, walls, doors, holes, fixtures } = nativeInputs(data, levelId);
   return hash(
     JSON.stringify([
       data.source.modelSha256,
-      NATIVE_BARRIER_TOPOLOGY_VERSION,
-      NATIVE_SELECTION_TOPOLOGY_VERSION,
+      ...(data.nativeIndoorEnvelopes && data.nativeMaterialSections
+        ? [
+            NATIVE_FLOOR_CONTACT_SELECTION_VERSION,
+            NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+            "native-selection-rational-authority-v1",
+          ]
+        : [NATIVE_BARRIER_TOPOLOGY_VERSION, NATIVE_SELECTION_TOPOLOGY_VERSION]),
       ...(data.nativeMaterialSections ? [data.nativeMaterialSections] : []),
+      ...(data.nativeDerivedFrameReturns
+        ? [data.nativeDerivedFrameReturns]
+        : []),
+      ...(data.nativeProvisionalCornerSeals
+        ? [data.nativeProvisionalCornerSeals]
+        : []),
+      ...(data.nativeIndoorEnvelopes
+        ? ["native-enclosed-selection-domain-v1", data.nativeIndoorEnvelopes]
+        : []),
+      ...(data.nativeIndoorEnvelopes && data.doorAperturePatchState
+        ? [data.doorAperturePatchState]
+        : []),
+      ...(data.nativeSelectionContactRepairs?.repairs.some(
+        (r) => r.status === "applied" && r.levelId === levelId,
+      )
+        ? [
+            data.nativeSelectionContactRepairs.repairs
+              .filter((r) => r.status === "applied" && r.levelId === levelId)
+              .map(({ notes: _, ...r }) => r),
+          ]
+        : []),
       data.nativeDoorBoundaryClosures,
       data.nativeWallPositionRepairs,
       ...(data.reviewedAreaPartitions ? [data.reviewedAreaPartitions] : []),
@@ -443,7 +595,7 @@ export async function nativeAreaGeometrySha256(
       doors,
       ...(options?.passThroughDoorIds?.length
         ? [
-            "native-pass-through-portals-v1",
+            "native-pass-through-own-host-portals-v2",
             data.edges.filter(
               (e) =>
                 e.kind === "door" &&
@@ -456,7 +608,14 @@ export async function nativeAreaGeometrySha256(
       ...(data.indoorExclusions ? [data.indoorExclusions] : []),
       data.records
         .filter((r) => r.levelId === levelId)
-        .map((r) => [r.key, r.ringsFeet, roomLabelPoint(data, r.key)]),
+        .map((r) => [
+          r.key,
+          r.ringsFeet,
+          roomLabelPoint(data, r.key),
+          ...(r.properties.nativeFloorOpeningOwnership
+            ? [r.properties.nativeFloorOpeningOwnership]
+            : []),
+        ]),
       ...(options &&
       (options.roomKey ||
         options.manualGapPoints ||
@@ -479,8 +638,32 @@ export async function deriveNativeAreas(
   levelId: number,
   options: NativeAreaOptions = {},
 ): Promise<NativeAreaResult> {
-  await verifyNativeMaterialSections(data.nativeMaterialSections,data.source.modelSha256);
-  validateReviewedAreaPartitions(data.reviewedAreaPartitions, data.source.modelSha256);
+  const strict = !!(data.nativeIndoorEnvelopes && data.nativeMaterialSections);
+  await verifyNativeMaterialSections(
+    data.nativeMaterialSections,
+    data.source.modelSha256,
+  );
+  await verifyNativeIndoorEnvelopes(
+    data.nativeIndoorEnvelopes,
+    data.source.modelSha256,
+  );
+  validateNativeSelectionContactRepairs(
+    data.nativeSelectionContactRepairs,
+    data.source.modelSha256,
+  );
+  if (
+    data.nativeSelectionContactRepairs?.repairs.some(
+      (r) => r.status === "applied",
+    ) &&
+    !strict
+  )
+    throw new Error(
+      "Applied native selection contacts require verified exact material and enclosure authority.",
+    );
+  validateReviewedAreaPartitions(
+    data.reviewedAreaPartitions,
+    data.source.modelSha256,
+  );
   if (options.passThroughDoorIds === undefined) {
     const reviewed = selectionDoorIds(data, levelId);
     if (reviewed.length) options = { ...options, passThroughDoorIds: reviewed };
@@ -494,18 +677,32 @@ export async function deriveNativeAreas(
     (options.maxGapFeet ?? 0) > 6
   )
     throw new Error("Choose a wall-gap limit between 0 and 6 feet.");
-  const { floors, walls, precise, doors, holes, fixtures } = nativeInputs(
-    data,
-    levelId,
-  );
+  const {
+    floors,
+    walls,
+    precise,
+    floorContactPrecise,
+    doors,
+    holes,
+    fixtures,
+  } = nativeInputs(data, levelId);
   const savedPartitions = data.reviewedAreaPartitions?.partitions ?? [];
-  if (options.previewPartitionIds?.some((id) =>
-    !savedPartitions.some((p) => p.id === id && p.levelId === levelId)))
+  if (
+    options.previewPartitionIds?.some(
+      (id) =>
+        !savedPartitions.some((p) => p.id === id && p.levelId === levelId),
+    )
+  )
     throw new Error("Choose a saved area boundary on this native floor.");
-  const activePartitions = savedPartitions.filter((p) => p.levelId === levelId &&
-    ((!options.ignoreAppliedPartitions && p.status === "applied") || options.previewPartitionIds?.includes(p.id)));
+  const activePartitions = savedPartitions.filter(
+    (p) =>
+      p.levelId === levelId &&
+      ((!options.ignoreAppliedPartitions && p.status === "applied") ||
+        options.previewPartitionIds?.includes(p.id)),
+  );
   const partitionGeometryHash = activePartitions.length
-    ? await reviewedAreaPartitionGeometrySha256(data, levelId) : undefined;
+    ? await reviewedAreaPartitionGeometrySha256(data, levelId)
+    : undefined;
   const checkedPartitionIds: string[] = [];
   const partitionWarnings: string[] = [];
   const partitionMasks = activePartitions.flatMap((p) => {
@@ -545,7 +742,14 @@ export async function deriveNativeAreas(
   // keep this fine floor grid independent of the coarser barrier grid. Real
   // separated plates and inner openings must not be snapped or buffered.
   const floorOrigin = support[0]?.[0]?.[0] ?? [0, 0];
-  const ground = pc.union(nativeBarrierTopology(support, 1e10, floorOrigin, 1e-12));
+  const exactGround = strict
+    ? nativeRationalOverlay("union", support)
+    : undefined;
+  // Numeric copies are legacy/proposal inputs only. Strict subtraction below
+  // always starts from unchanged source vertices and retains exact intersections.
+  const ground = exactGround
+    ? nativeExactPartsForProposals(exactGround)
+    : pc.union(nativeBarrierTopology(support, 1e10, floorOrigin, 1e-12));
   const exterior = indoorExclusionParts(
     data,
     data.nativeLevels.find((l) => l.id === levelId)!.elevationFeet,
@@ -606,34 +810,61 @@ export async function deriveNativeAreas(
       d.footprintFeet,
     ]),
   );
+  const elevation = data.nativeLevels.find(
+    (l) => l.id === levelId,
+  )!.elevationFeet;
+  const ownsAperture = createNativeHostApertureQuery(
+    createNativeRoutingMaterialQuery(data)(elevation, elevation + 4),
+  );
+  const apertureMasks = (w: IndoorDataset["walls"][number]): Rings[] => {
+    if (w.kind !== "wall" || w.reviewPatchId) return [];
+    return doors
+      .filter(
+        (d) =>
+          options.passThroughDoorIds?.includes(d.nativeElementId) &&
+          ownsAperture(
+            d.hostWallNativeElementId,
+            d.nativeElementId,
+            w.nativeElementId,
+          ) &&
+          d.state === "connected" &&
+          d.roomKeys.length === 2 &&
+          data.edges.some(
+            (e) =>
+              e.id === d.id &&
+              e.kind === "door" &&
+              e.enabled &&
+              e.nativeElementId === d.nativeElementId &&
+              e.roomKeys.length === 2 &&
+              e.roomKeys.every((k) => d.roomKeys.includes(k)),
+          ),
+      )
+      .map((d) => [d.footprintFeet!]);
+  };
+  const wallMasks = (sourceWalls: IndoorDataset["walls"]) =>
+    sourceWalls.flatMap((w) => {
+      const apertures = apertureMasks(w);
+      // Strict cuts are kept rational by exactWallMasks; this copy is only used
+      // for broad-phase/proposal bookkeeping and cannot authorize the subtraction.
+      return !strict && apertures.length
+        ? pc.difference(w.ringsFeet, ...apertures)
+        : [w.ringsFeet];
+    });
+  const exactWallMasks = (
+    sourceWalls: (IndoorDataset["walls"][number] & {
+      exactParts?: NativeRationalParts;
+    })[],
+  ): NativeRationalParts =>
+    sourceWalls.flatMap((w) => {
+      const apertures = apertureMasks(w);
+      return nativeRationalOverlay(
+        apertures.length ? "difference" : "union",
+        w.exactParts ?? [w.ringsFeet],
+        ...apertures.map((a) => [a]),
+      );
+    });
   const masks = [
-    // Analytical wall plans can span their own measured doorway. Only an
-    // existing connected native portal proves its aperture for this selection
-    // comparison. Unmatched doors cannot erase walls; columns, applied repairs,
-    // fixtures and protected slab openings always remain obstacles.
-    ...precise.flatMap((w) => {
-        if (w.kind !== "wall" || w.reviewPatchId) return [w.ringsFeet];
-        const apertures = doors
-          .filter(
-            (d) =>
-              options.passThroughDoorIds?.includes(d.nativeElementId) &&
-              d.state === "connected" &&
-              d.roomKeys.length === 2 &&
-              data.edges.some(
-                (e) =>
-                  e.id === d.id &&
-                  e.kind === "door" &&
-                  e.enabled &&
-                  e.nativeElementId === d.nativeElementId &&
-                  e.roomKeys.length === 2 &&
-                  e.roomKeys.every((k) => d.roomKeys.includes(k)),
-              ),
-          )
-          .map((d) => [d.footprintFeet!]);
-        return apertures.length
-          ? pc.difference(w.ringsFeet, ...apertures)
-          : [w.ringsFeet];
-      }),
+    ...wallMasks(precise),
     ...doors
       .filter((d) => !options.passThroughDoorIds?.includes(d.nativeElementId))
       .map((d) => [
@@ -646,15 +877,104 @@ export async function deriveNativeAreas(
       .filter((c) => options.previewGapIds?.includes(c.id))
       .map((c) => c.ringsFeet),
   ];
-  const sourceTopology = nativeSelectionTopology(support, [
-    ...masks, ...exterior,
-  ]);
-  let remaining = sourceTopology.ground;
-  for (let i = 0; i < sourceTopology.masks.length; i += 100)
-    remaining = pc.difference(
-      remaining,
-      ...sourceTopology.masks.slice(i, i + 100),
+  const groundBounds = bounds(ground.flat());
+  let remainingExact: NativeRationalParts | undefined;
+  let remaining: Rings[];
+  if (strict) {
+    const contacts = (data.nativeSelectionContactRepairs?.repairs ?? []).filter(
+      (r) => r.status === "applied" && r.levelId === levelId,
     );
+    const contactMasks = deriveNativeSelectionContactRepairs(data, contacts);
+    assertNativeSelectionContactRepairsPhysicalGuards(
+      data,
+      contacts,
+      contactMasks,
+    );
+    const exactMasks: NativeRationalParts = [
+      ...contactMasks.flat(),
+      ...exactWallMasks(precise),
+      ...exactWallMasks(floorContactPrecise),
+      ...nativeRationalOverlay("union", [
+        ...doors
+          .filter(
+            (d) => !options.passThroughDoorIds?.includes(d.nativeElementId),
+          )
+          .map((d) => [
+            closedDoorOverrides.get(d.nativeElementId) ?? d.footprintFeet!,
+          ]),
+        ...holes,
+        ...fixtures.map((f) => f.ringsFeet),
+        ...partitionMasks,
+        ...gapCandidates
+          .filter((c) => options.previewGapIds?.includes(c.id))
+          .map((c) => c.ringsFeet),
+        ...exterior,
+      ]),
+    ];
+    remainingExact = nativeRationalOverlay(
+      "difference",
+      exactGround!,
+      exactMasks,
+    );
+    remaining = nativeExactPartsForProposals(remainingExact);
+  } else {
+    const sourceTopology = nativeSelectionTopology(
+      support,
+      [...masks, ...exterior].filter((part) =>
+        overlaps(groundBounds, bounds(part)),
+      ),
+    );
+    remaining = sourceTopology.ground;
+    for (let i = 0; i < sourceTopology.masks.length; i += 100)
+      remaining = nativeSelectionBoolean(
+        "difference",
+        remaining,
+        ...sourceTopology.masks.slice(i, i + 100).map((part) => [part]),
+      );
+    if (floorContactPrecise.length) {
+      const floorContactMasks = wallMasks(floorContactPrecise);
+      // Adding real low material must only subtract from the plan selection.
+      // Renoding the previous faces together with new vertices can move a shared
+      // floating-point contact. Retain the independently noded plan floor/masks,
+      // and subtract only the additional source sections in the common frame.
+      const contactTopology = nativeSelectionTopology(
+        support,
+        [...masks, ...exterior, ...floorContactMasks].filter((part) =>
+          overlaps(groundBounds, bounds(part)),
+        ),
+      );
+      const retainedBaseCount = [...masks, ...exterior].filter((part) =>
+        overlaps(groundBounds, bounds(part)),
+      ).length;
+      const additional = contactTopology.masks.slice(retainedBaseCount);
+      for (let i = 0; i < additional.length; i += 100)
+        remaining = nativeSelectionBoolean(
+          "difference",
+          remaining,
+          ...additional.slice(i, i + 100).map((part) => [part]),
+        );
+    }
+  }
+  // Resolve connected indoor components before attaching identities. Otherwise
+  // a leak onto an unbounded source slab can merge separate indoor rooms through
+  // the exterior, even when that exterior is later hidden by the visitor map.
+  // Explicit slab focus remains the uncropped physical support diagnostic.
+  if (data.nativeIndoorEnvelopes && !options.nativeFloorId) {
+    const indoor = nativeIndoorEnvelopeParts(
+      data.nativeIndoorEnvelopes,
+      data.source.modelSha256,
+      elevation,
+    );
+    if (remainingExact) {
+      remainingExact = indoor.length
+        ? nativeRationalOverlay("intersection", remainingExact, indoor)
+        : [];
+      remaining = nativeExactPartsForProposals(remainingExact);
+    } else
+      remaining = indoor.length
+        ? nativeSelectionBoolean("intersection", remaining, indoor)
+        : [];
+  }
   let cropEvidence: string | undefined = options.nativeFloorId
     ? `Exact native slab #${options.nativeFloorId}; verify which part is enclosed before classification.`
     : undefined;
@@ -667,51 +987,101 @@ export async function deriveNativeAreas(
       data.presentation?.sourceModelSha256 === data.source.modelSha256
         ? data.presentation.rooms.find((r) => r.roomKey === room.key)
         : undefined;
-    remaining = pc.intersection(
-      remaining,
-      prepared?.interiorRingsFeet ?? room.ringsFeet,
-    );
-    cropEvidence = prepared
-      ? "Prepared native interior crop; inspect current walls and doors."
-      : "Source-outline crop only; enclosure remains unverified.";
+    if (data.nativeIndoorEnvelopes) {
+      // The name identifies a complete native component below. Its old contour
+      // cannot trim that component or manufacture a room-shaped selection.
+      cropEvidence =
+        "Complete native component; the registered room identifies it only.";
+    } else {
+      const identity = nativeRoomIdentityRings(data, room);
+      remaining = pc.intersection(
+        remaining,
+        identity !== room.ringsFeet
+          ? identity
+          : (prepared?.interiorRingsFeet ?? room.ringsFeet),
+      );
+      cropEvidence =
+        identity !== room.ringsFeet
+          ? "Original native slab opening identity; this non-traversable void has no supported selectable floor."
+          : prepared
+            ? "Prepared native interior crop; inspect current walls and doors."
+            : "Source-outline crop only; enclosure remains unverified.";
+    }
   }
   if (options.cropPolygonFeet) {
-    remaining = pc.intersection(remaining, [options.cropPolygonFeet]);
+    if (remainingExact) {
+      remainingExact = nativeRationalOverlay("intersection", remainingExact, [
+        [options.cropPolygonFeet],
+      ]);
+      remaining = nativeExactPartsForProposals(remainingExact);
+    } else remaining = pc.intersection(remaining, [options.cropPolygonFeet]);
     cropEvidence =
       "User-drawn boundary clipped to native floor support. Verify the excluded extent in the full source model before applying; real floor holes remain.";
   }
   const geometrySha256 = await nativeAreaGeometrySha256(data, levelId, options);
   const records = data.records.filter((r) => r.levelId === levelId);
-  const regions = remaining
+  const containedDisplays = remainingExact?.map((part) =>
+    createNativeContainedDisplay([part]),
+  );
+  let regions = remaining
     .filter(
       (r) =>
+        strict ||
         ringArea(r[0]) - r.slice(1).reduce((n, h) => n + ringArea(h), 0) >= 1,
     )
     .map((rings, index) => {
       const b = bounds(rings);
       return {
         id: `native-region:${levelId}:${index}`,
+        ...(strict ? { exactFaceId: `native-region:${levelId}:${index}` } : {}),
         ringsFeet: rings,
-        displayPartsFeet: nativeAreaDisplayParts(rings),
+        displayPartsFeet:
+          containedDisplays?.[index].partsFeet ?? nativeAreaDisplayParts(rings),
+        ...(containedDisplays
+          ? {
+              containedDisplay: {
+                certificate: containedDisplays[index].certificate,
+                faces: containedDisplays[index].faces,
+                unchangedIEEEAnchorsFeet:
+                  containedDisplays[index].unchangedIEEEAnchorsFeet,
+              },
+            }
+          : {}),
         exposedFloorEdgeFeet: exposedNativeFloorEdgeFeet(rings, ground),
-        areaSquareFeet:
-          ringArea(rings[0]) -
-          rings.slice(1).reduce((n, h) => n + ringArea(h), 0),
-        roomKeys: options.roomKey
-          ? [options.roomKey]
-          : records
-              .filter((r) =>
-                pointInNativeArea(roomLabelPoint(data, r.key), rings),
-              )
-              .map((r) => r.key),
+        areaSquareFeet: remainingExact
+          ? nativeRationalMeasuredArea([remainingExact[index]])
+          : ringArea(rings[0]) -
+            rings.slice(1).reduce((n, h) => n + ringArea(h), 0),
+        roomKeys:
+          options.roomKey && !data.nativeIndoorEnvelopes
+            ? [options.roomKey]
+            : records
+                .filter(
+                  (r) =>
+                    nativeRoomIdentityRings(data, r) === r.ringsFeet &&
+                    pointInNativeArea(roomLabelPoint(data, r.key), rings),
+                )
+                .map((r) => r.key),
         nativeFloorIds: scopedFloors
           .filter(
             (f) =>
-              overlaps(b, bounds(f.ringsFeet)) &&
-              nativeAreaOverlapsSupportedFloor(
-                rings,
-                f.partsFeet ?? [f.ringsFeet],
-              ),
+              (remainingExact || overlaps(b, bounds(f.ringsFeet))) &&
+              (remainingExact
+                ? nativeRationalAreaCompare(
+                    nativeRationalOverlay(
+                      "intersection",
+                      [remainingExact[index]],
+                      nativeRationalIntersectionOperand(
+                        [remainingExact[index]],
+                        f.partsFeet ?? [f.ringsFeet],
+                      ),
+                    ),
+                    [],
+                  ) > 0
+                : nativeAreaOverlapsSupportedFloor(
+                    rings,
+                    f.partsFeet ?? [f.ringsFeet],
+                  )),
           )
           .map((f) => f.nativeElementId),
         nativeDoorIds: doors
@@ -719,6 +1089,89 @@ export async function deriveNativeAreas(
           .map((d) => d.nativeElementId),
       };
     });
+  if (data.nativeIndoorEnvelopes && !options.nativeFloorId) {
+    regions = associateNativeRooms(
+      regions,
+      records,
+      data,
+      remainingExact
+        ? new Map(regions.map((r, i) => [r.id, [remainingExact![i]]]))
+        : undefined,
+    );
+  }
+  if (options.roomKey && data.nativeIndoorEnvelopes) {
+    const room = records.find((r) => r.key === options.roomKey)!;
+    const identity = nativeRoomIdentityRings(data, room);
+    const exactById = remainingExact
+      ? new Map(
+          remainingExact.map((p, i) => [`native-region:${levelId}:${i}`, [p]]),
+        )
+      : undefined;
+    const area = (parts: Rings[]) =>
+      parts.reduce(
+        (sum, rings) =>
+          sum +
+          ringArea(rings[0]) -
+          rings.slice(1).reduce((n, hole) => n + ringArea(hole), 0),
+        0,
+      );
+    const identityArea = area([identity]);
+    const ranked = regions
+      .map((region) => ({
+        region,
+        overlap: exactById
+          ? nativeRationalMeasuredArea(
+              nativeRationalOverlay("intersection", exactById.get(region.id)!, [
+                identity,
+              ]),
+            )
+          : area(
+              nativeSelectionBoolean(
+                "intersection",
+                [region.ringsFeet],
+                [identity],
+              ),
+            ),
+      }))
+      .sort((a, b) => b.overlap - a.overlap);
+    const strictMajority = exactById
+      ? regions.find((r) =>
+          (
+            r as NativeAreaRegion & {
+              associations?: { roomKey: string; method: string }[];
+            }
+          ).associations?.some(
+            (a) => a.roomKey === room.key && a.method === "majority-overlap",
+          ),
+        )
+      : undefined;
+    const majority = exactById
+      ? strictMajority
+      : ranked[0] && ranked[0].overlap > identityArea * (0.5 + 1e-8)
+        ? ranked[0].region
+        : undefined;
+    const seed =
+      !remainingExact && identity === room.ringsFeet
+        ? regions.find((region) =>
+            exactById
+              ? nativeRationalPointInParts(
+                  roomLabelPoint(data, room.key),
+                  exactById.get(region.id)!,
+                )
+              : pointInNativeArea(
+                  roomLabelPoint(data, room.key),
+                  region.ringsFeet,
+                ),
+          )
+        : undefined;
+    const selected = majority ?? seed;
+    regions = selected ? [selected] : [];
+    if (selected && !selected.roomKeys.includes(room.key))
+      selected.roomKeys.push(room.key);
+    if (!selected)
+      cropEvidence =
+        "No supported native component matches this identity; no registered outline crop was used.";
+  }
   const regionBounds = regions.map((r) => bounds(r.ringsFeet));
   // Probe just outside each measured aperture. The same connected component
   // on both sides reveals a boundary to investigate, not a defective door:
@@ -759,7 +1212,11 @@ export async function deriveNativeAreas(
         const index = regions.findIndex(
           (r, i) =>
             overlaps(regionBounds[i], [p[0], p[1], p[0], p[1]]) &&
-            pointInNativeArea(p, r.ringsFeet),
+            (remainingExact
+              ? nativeRationalPointInParts(p, [
+                  remainingExact[Number(r.id.split(":").at(-1))],
+                ])
+              : pointInNativeArea(p, r.ringsFeet)),
         );
         return index < 0 ? null : regions[index].id;
       }) as [string | null, string | null];
@@ -778,25 +1235,63 @@ export async function deriveNativeAreas(
     levelId,
     sourceModelSha256: data.source.modelSha256,
     geometrySha256,
+    ...(remainingExact
+      ? {
+          exactTopology: encodeNativeExactTopology(
+            {
+              sourceModelSha256: data.source.modelSha256,
+              sourceGeometryKey: geometrySha256,
+              kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+            },
+            remainingExact.map((part, i) => ({
+              id: `native-region:${levelId}:${i}`,
+              parts: [part],
+            })),
+          ),
+          displayResidualTopology: encodeNativeExactTopology(
+            {
+              sourceModelSha256: data.source.modelSha256,
+              sourceGeometryKey: geometrySha256,
+              kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+            },
+            containedDisplays!.flatMap((display, i) =>
+              display.exactResidualParts.length
+                ? [
+                    {
+                      id: `native-region:${levelId}:${i}:render-residual`,
+                      parts: display.exactResidualParts,
+                    },
+                  ]
+                : [],
+            ),
+          ),
+        }
+      : {}),
     regions,
     doorChecks,
     options,
     gapCandidates,
-    ...(checkedPartitionIds.length ? {logicalPartitionIds: checkedPartitionIds} : {}),
+    ...(checkedPartitionIds.length
+      ? { logicalPartitionIds: checkedPartitionIds }
+      : {}),
     cropEvidence,
-    hallwayPartsFeet: nativeCirculationCells(data)
-      .filter((c) => c.levelIds.includes(levelId))
-      .flatMap((c) =>
-        (exterior.length
-          ? pc.difference(c.ringsFeet, ...exterior.map(topology))
-          : [c.ringsFeet]
-        ).flatMap(nativeAreaDisplayParts),
-      ),
+    hallwayPartsFeet: strict
+      ? nativeExactHallwayDisplayParts(data, levelId, exterior)
+      : nativeCirculationCells(data)
+          .filter((c) => c.levelIds.includes(levelId))
+          .flatMap((c) =>
+            (exterior.length
+              ? pc.difference(c.ringsFeet, ...exterior.map(topology))
+              : [c.ringsFeet]
+            ).flatMap(nativeAreaDisplayParts),
+          ),
     warnings: [
       ...partitionWarnings,
-      ...(checkedPartitionIds.length ? [
-        `${checkedPartitionIds.length} reviewed area boundaries separate this selection. Dashed lines are analytical boundaries across open entrances or shutters, not source walls. Physical geometry, access, routing and raised room certification are unchanged.`,
-      ] : []),
+      ...(checkedPartitionIds.length
+        ? [
+            `${checkedPartitionIds.length} reviewed area boundaries separate this selection. Dashed lines are analytical boundaries across open entrances or shutters, not source walls. Physical geometry, access, routing and raised room certification are unchanged.`,
+          ]
+        : []),
       "Native floor support does not certify indoor enclosure. Open slab edges can indicate an outdoor walkway or missing wall/curtain geometry; compare the full source model, including enclosure above the floor section.",
       ...(walls.some((w) => w.approximate)
         ? [
@@ -932,13 +1427,20 @@ export async function saveNativeBoundaryPatches(
       })),
     ],
   };
-  validateDoorApertureBinding(project.rooms.reviewedDoorApertures,project.dataset);
+  validateDoorApertureBinding(
+    project.rooms.reviewedDoorApertures,
+    project.dataset,
+  );
   const walls = reviewedBoundaryWalls(
     project.dataset.walls,
     patches,
     project.dataset.source.modelSha256,
     undefined,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   if (!apply)
     return {
@@ -1049,12 +1551,30 @@ export async function applyNativeAreaDecision(
       "Apply the checked boundary patches and retrace before applying place classifications.",
     );
   if (result.options?.previewPartitionIds?.length)
-    throw new Error("Apply the reviewed area boundary to selection and retrace before applying a place classification.");
+    throw new Error(
+      "Apply the reviewed area boundary to selection and retrace before applying a place classification.",
+    );
   if (patch.kind === "unclassified")
     throw new Error("Needs investigation can only be saved as a proposal.");
   let next = await saveNativeAreaDecision(project, result, ids, patch);
   const decision = next.rooms.nativeAreaReviews!.decisions.at(-1)!;
   if (patch.kind === "outdoor" || patch.kind === "non-traversable") {
+    if (result.exactTopology) {
+      const index = createNativeExactTopologyIndex(result.exactTopology, {
+        sourceModelSha256: result.sourceModelSha256,
+        sourceGeometryKey: result.geometrySha256,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      });
+      const selectedExact = ids.flatMap((id) => index.parts(id) ?? []);
+      // Exclusion v1 carries IEEE footprints. Never turn a rounded display
+      // approximation into a new source/navigation veto.
+      if (
+        nativeRationalOverlay("xor", selectedExact, decision.partsFeet).length
+      )
+        throw new Error(
+          "This exact native boundary needs an exact footprint correction; the display proposal cannot be applied as an exclusion.",
+        );
+    }
     if (result.options?.roomKey)
       throw new Error(
         "Use a complete native region for footprint review; a room crop does not verify the exclusion boundary.",

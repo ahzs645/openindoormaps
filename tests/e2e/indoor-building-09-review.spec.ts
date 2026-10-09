@@ -5,6 +5,7 @@ import path from "node:path";
 import { unzipSync } from "fflate";
 import type { Map, GeoJSONSource } from "maplibre-gl";
 import type { FeatureCollection } from "geojson";
+import type { ProjectRooms } from "../../app/indoor-project/package";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import { geographicPoint } from "../../app/indoor-project/routing";
 import { HALLWAY_COLOR } from "../../app/indoor-project/display-passages";
@@ -26,7 +27,7 @@ const files =
 const data: IndoorDataset | undefined = files
   ? JSON.parse(new TextDecoder().decode(files["viewer/indoor.json"]))
   : undefined;
-const source = files
+const source: ProjectRooms | undefined = files
   ? JSON.parse(new TextDecoder().decode(files["floors/rooms.json"]))
   : undefined;
 type ReviewWindow = typeof globalThis & { reviewMap: Map };
@@ -142,9 +143,15 @@ for (const mobile of [false, true])
           { timeout: 30_000 },
         )
         .toBe(true);
-      const seed = source.annotations.find(
+      const seed = source!.annotations.find(
         (a) => a.key === target.key,
-      ).labelPointFeet;
+      )!.labelPointFeet!;
+      if (
+        !Array.isArray(seed) ||
+        seed.length !== 2 ||
+        seed.some((n) => typeof n !== "number")
+      )
+        throw new Error("Expected original room label coordinates");
       const center = geographicPoint(data!, seed);
       const pixel = await page.evaluate(
         ({ center, mobile }) => {

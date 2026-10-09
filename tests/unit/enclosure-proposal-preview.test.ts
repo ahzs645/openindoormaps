@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import pc from "polygon-clipping";
+import { nativeIndoorEnvelopeHash } from "../../app/indoor-project/native-indoor-envelopes";
 import { gapProject, coupledGapProject } from "../fixtures/native-area-project";
 import {
   deriveNativeAreas,
@@ -266,6 +267,36 @@ async function landingRecommendation() {
   };
   return { p, report, catalog };
 }
+
+test("native-only projects reject even previously approved historical outline-crop previews", async () => {
+  const { p, report, catalog } = await landingRecommendation();
+  const oldPlan = proposalDisplayPreviewPlan(p, catalog, report, "0");
+  p.dataset.nativeIndoorEnvelopes = {
+    version: 1,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    geometrySha256: "",
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [p.dataset.walkingSupport!.floors[0].ringsFeet],
+        sourceElementIds: [p.dataset.walkingSupport!.floors[0].nativeElementId],
+        cutElevationsFeet: [4],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  p.dataset.nativeIndoorEnvelopes.geometrySha256 =
+    await nativeIndoorEnvelopeHash(p.dataset.nativeIndoorEnvelopes);
+  assert.throws(
+    () => proposalDisplayPreviewPlan(p, catalog, report, "0"),
+    /native-only.*full native-region/,
+  );
+  assert.throws(
+    () => assertProposalDisplayPreviewPlan(p, oldPlan),
+    /native-only.*full native-region/,
+  );
+});
 
 test("portable landing previews bind audit and exact floor/level geometry without authoring or routing mutation", async () => {
   const { p, report, catalog } = await landingRecommendation();

@@ -33,6 +33,7 @@ export function visitorWallGeometry(
   walls: FeatureCollection<MultiPolygon>,
   records: IndoorRecord[],
 ): FeatureCollection<MultiPolygon> {
+  if (data.nativeIndoorEnvelopes) return walls;
   const a = data.alignment,
     cos = Math.cos(a.rotationRadians),
     sin = Math.sin(a.rotationRadians);

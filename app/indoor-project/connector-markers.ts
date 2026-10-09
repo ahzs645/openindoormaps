@@ -68,7 +68,7 @@ export function liftDisplayPoint(
 export function stairDisplayPoint(
   data: IndoorDataset,
   room: IndoorRecord,
-): [number, number] {
+): [number, number] | undefined {
   const node = data.nodes.find((n) => n.id === room.arrivalNodeId);
   if (node) return [node.pointFeet[0], node.pointFeet[1]];
   const flight =
@@ -106,6 +106,7 @@ export function stairDisplayPoint(
       return centre;
     return tread.ringFeet[0];
   }
+  if (data.nativeIndoorEnvelopes) return undefined;
   const ring = room.ringsFeet[0],
     polygon = {
       type: "Polygon" as const,
@@ -209,26 +210,39 @@ export function projectConnectorMarkers(
     .filter(
       (r) =>
         r.stair &&
+        (!data.nativeIndoorEnvelopes ||
+          data.nodes.some((n) => n.id === r.arrivalNodeId) ||
+          nativeFlights.some((f) => f.roomKey === r.key)) &&
         !sourceRooms.has(r.key) &&
         !multipleFlights.has(r.key) &&
         levelIds.includes(r.levelId) &&
         (building === "all" || r.building === building),
     )
-    .map((r) => ({
-      type: "Feature",
-      properties: {
-        key: r.key,
-        kind: "stairs",
-        name: `Stairs · ${r.number || r.name}`,
-        heightMetres: r.circulation ? 0.04 : 0.64,
-        elevationFeet: r.elevationFeet,
-        review: !r.arrivalNodeId,
-      },
-      geometry: {
-        type: "Point",
-        coordinates: geographicPoint(data, stairDisplayPoint(data, r)),
-      },
-    }));
+    .flatMap((r) => {
+      const point = stairDisplayPoint(data, r);
+      if (!point) return [];
+      const arrival = data.nodes.find((n) => n.id === r.arrivalNodeId);
+      return [
+        {
+          type: "Feature" as const,
+          properties: {
+            key: r.key,
+            kind: "stairs",
+            name: `Stairs · ${r.number || r.name}`,
+            heightMetres: r.circulation ? 0.04 : 0.64,
+            elevationFeet:
+              data.nativeIndoorEnvelopes && arrival
+                ? arrival.pointFeet[2]
+                : r.elevationFeet,
+            review: !r.arrivalNodeId,
+          },
+          geometry: {
+            type: "Point" as const,
+            coordinates: geographicPoint(data, point),
+          },
+        },
+      ];
+    });
   for (const f of nativeFlights) {
     if (sourceIds.has(f.stairElementId)) continue;
     if (!f.displayOnly && !multipleFlights.has(f.roomKey)) continue;

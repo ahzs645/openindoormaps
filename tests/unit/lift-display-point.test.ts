@@ -64,10 +64,13 @@ function shaftFixture() {
       nativeElementId: 900,
       roomKeys: ["lobby", "lobby2"],
       enabled: true,
-      lengthFeet: 10,
+      lengthMetres: 3.048,
+      pointsFeet: [
+        [12, 4, 0],
+        [12, 4, 10],
+      ],
+      evidence: "Original served shaft and measured lobby entrances",
       accessible: "unknown",
-      direction: "both",
-      clearanceFeet: 3,
     },
   ];
   d.indoorExclusions = {
@@ -154,7 +157,9 @@ test("stale or unserved lift cannot move its icon; legacy certified shaft refere
 test("shaft ownership metadata has app/compiler exclusion-schema parity", () => {
   const d = shaftFixture();
   for (const validate of [validateIndoorExclusions, compilerValidate]) {
-    validate(d.indoorExclusions, d.source.modelSha256);
+    assert.doesNotThrow(() =>
+      validate(d.indoorExclusions, d.source.modelSha256),
+    );
     assert.throws(
       () =>
         validate(

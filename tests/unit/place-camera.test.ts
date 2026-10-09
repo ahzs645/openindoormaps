@@ -59,7 +59,7 @@ const rect = (left: number, top: number, width: number, height: number) => ({
 test("native phone search clears retained desktop padding and frames the selected place above its actual card", () => {
   const viewport = rect(0, 0, 390, 844);
   const panel = rect(10, 410.516, 370, 421.484);
-  const status = rect(8, 160, 300, 37.39);
+  const status = rect(8, 160, 300, 80.797);
   const padding = projectPlaceCameraPadding(viewport, panel, status);
   const transform = {
     width: viewport.width,
@@ -94,9 +94,13 @@ test("native phone search clears retained desktop padding and frames the selecte
     getContainer: () => ({
       getBoundingClientRect: () => viewport,
       ownerDocument: {
-        querySelector: () => ({ getBoundingClientRect: () => panel }),
+        querySelector: (selector: string) => ({
+          getBoundingClientRect: () =>
+            selector === ".project-native-explore-status" ? status : panel,
+        }),
       },
-      querySelector: () => ({ getBoundingClientRect: () => status }),
+      // The native status card is a sibling of the MapLibre canvas.
+      querySelector: () => undefined,
     }),
     stop: () => calls.push("stop"),
     resize: () => calls.push("resize"),
@@ -128,6 +132,10 @@ test("native phone search clears retained desktop padding and frames the selecte
   assert(x > padding.left && x < viewport.width - padding.right);
   assert(y > padding.top && y < viewport.height - padding.bottom);
   assert(y < panel.top - 24, "room is visible above the selected mobile sheet");
+  assert(
+    y > status.bottom + 24,
+    "room is visible below the native-status sibling card",
+  );
 });
 
 test("place padding preserves a usable canvas on small phones and constrained desktop widths", () => {

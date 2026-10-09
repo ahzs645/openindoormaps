@@ -1,3 +1,4 @@
+import { packRoomNativeMaterials } from "./native-material-wire";
 import { MAX_REVIEW_BYTES } from "./review-bundle-limits";
 import { deflateSync } from "fflate";
 import {
@@ -6,6 +7,11 @@ import {
   type ReviewBundle,
 } from "./review-bundle";
 import { boundedInflate } from "./review-bundle-inflate";
+import {
+  hasVerifiedReviewFile,
+  rememberVerifiedReviewFile,
+  reviewFileVerificationSnapshot,
+} from "./review-file-verification";
 
 const MAX_FILE = 32 * 1024 * 1024;
 const MAX_TOTAL = MAX_REVIEW_BYTES;
@@ -54,8 +60,11 @@ export type PackedReviewBundle = {
 export async function verifyReviewBundleContent(value: unknown) {
   validateReviewBundle(value);
   for (const file of value?.files ?? []) {
+    if (hasVerifiedReviewFile(file)) continue;
+    const proof = reviewFileVerificationSnapshot(file);
     const raw = boundedInflate(unbase64(file.compressedBase64), file.bytes);
     if ((await hash(raw)) !== file.sha256) fail();
+    rememberVerifiedReviewFile(file, proof);
   }
 }
 type HeaderFile = Omit<ReviewBundle["files"][number], "compressedBase64"> & {
@@ -253,6 +262,10 @@ export async function unpackReviewBundle(
         fail();
     }
     files[i].compressedBase64 = compressedBase64;
+    rememberVerifiedReviewFile(
+      files[i],
+      reviewFileVerificationSnapshot(files[i]),
+    );
   }
   validateReviewBundle(bundle);
   return bundle;
@@ -308,7 +321,8 @@ export async function serializeRoomsForArchive<
     sha256: string;
   };
 }> {
-  const legacy = encoder.encode(JSON.stringify(rooms));
+  const archiveRooms = await packRoomNativeMaterials(rooms);
+  const legacy = encoder.encode(JSON.stringify(archiveRooms));
   if (legacy.length <= maxBytes) {
     await verifyReviewBundleContent(rooms.reviewBundle);
     return { rooms: legacy };
@@ -317,7 +331,7 @@ export async function serializeRoomsForArchive<
     throw new Error("Source rooms JSON exceeds its size limit.");
   const wire = await packReviewBundle(rooms.reviewBundle);
   const inline = encoder.encode(
-    JSON.stringify({ ...rooms, reviewBundle: wire }),
+    JSON.stringify({ ...archiveRooms, reviewBundle: wire }),
   );
   if (inline.length <= maxBytes) return { rooms: inline };
   const bytes = unbase64(wire.compressedBase64);
@@ -332,7 +346,7 @@ export async function serializeRoomsForArchive<
     compressedSha256: sha256,
   };
   const serialized = encoder.encode(
-    JSON.stringify({ ...rooms, reviewBundle: ref }),
+    JSON.stringify({ ...archiveRooms, reviewBundle: ref }),
   );
   if (serialized.length > maxBytes)
     throw new Error(

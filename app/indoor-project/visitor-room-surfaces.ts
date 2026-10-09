@@ -11,7 +11,9 @@ export function visitorRoomSurfaces<T extends Polygon | MultiPolygon>(
     : {
         ...areas,
         features: areas.features.filter(
-          (f) => f.properties?.boundaryReviewRequired !== true,
+          (f) =>
+            f.properties?.nativePhysical === true ||
+            f.properties?.boundaryReviewRequired !== true,
         ),
       };
 }

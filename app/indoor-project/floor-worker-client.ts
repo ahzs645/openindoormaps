@@ -1,4 +1,10 @@
 import type { IndoorDataset } from "./contract";
+import { preparedDisplayAssetRequest } from "./prepared-display-registry";
+import { floorNativeFaceIdentity } from "./floor-cache-identity";
+import {
+  COMPLETE_FLOOR_CACHE_BYTES,
+  FloorMemoryCache,
+} from "./floor-memory-cache";
 import type {
   FloorPreparationOptions,
   FloorPreparationRequest,
@@ -24,6 +30,7 @@ export const floorWorkerKey = (
     o.showDoorwayRecesses ?? true,
     o.review,
     o.simplifyGeometry,
+    floorNativeFaceIdentity(o.nativeFaces),
   ]);
 
 export interface FloorWorker {
@@ -52,20 +59,23 @@ export class FloorWorkerClient {
   private workerData?: IndoorDataset;
   private pending?: Pending;
   private sequence = 0;
-  private cache = new WeakMap<IndoorDataset, Map<string, PreparedFloor>>();
+  private cacheData?: IndoorDataset;
+  private cache: FloorMemoryCache<string, PreparedFloor>;
+  private readonly factory: () => FloorWorker;
   constructor(
-    private readonly factory: () => FloorWorker,
-    private readonly capacity = 12,
-  ) {}
+    factory: () => FloorWorker,
+    capacity = 12,
+    maximumBytes = COMPLETE_FLOOR_CACHE_BYTES,
+  ) {
+    this.factory = factory;
+    this.cache = new FloorMemoryCache(capacity, maximumBytes);
+  }
 
   peek(data: IndoorDataset, key: string) {
-    const floors = this.cache.get(data),
-      value = floors?.get(key);
-    if (value) {
-      floors!.delete(key);
-      floors!.set(key, value);
-    }
-    return value;
+    return this.cacheData === data ? this.cache.get(key) : undefined;
+  }
+  cacheStatistics() {
+    return this.cache.statistics();
   }
   private stop(reason: unknown = abort()) {
     const pending = this.pending;
@@ -85,6 +95,10 @@ export class FloorWorkerClient {
     // A map's previous effect cancels before its replacement starts. Also stop
     // here so callers cannot accidentally queue two competing floor requests.
     if (this.pending) this.stop();
+    if (this.cacheData !== data) {
+      this.cache.clear();
+      this.cacheData = data;
+    }
     const cached = this.peek(data, key);
     if (cached) return { promise: Promise.resolve(cached), cancel: () => {} };
     const id = ++this.sequence;
@@ -110,14 +124,9 @@ export class FloorWorkerClient {
             this.stop(new Error(response.error));
             return;
           }
-          let floors = this.cache.get(pending.data);
-          if (!floors) {
-            floors = new Map();
-            this.cache.set(pending.data, floors);
-          }
-          floors.set(pending.key, response.value);
-          if (floors.size > this.capacity)
-            floors.delete(floors.keys().next().value!);
+          // Missing/oversized costs still display successfully, but never
+          // trigger a synchronous UI traversal or an unbounded retention.
+          this.cache.set(pending.key, response.value, response.memoryCostBytes);
           this.pending = undefined;
           pending.resolve(response.value);
         };
@@ -141,6 +150,12 @@ export class FloorWorkerClient {
         levelIds: [...levels],
         building,
         options,
+        preparedDisplay: preparedDisplayAssetRequest(
+          data,
+          levels,
+          building,
+          options,
+        ),
       });
       this.workerData = data;
     } catch (error) {
@@ -155,5 +170,7 @@ export class FloorWorkerClient {
   }
   dispose() {
     this.stop();
+    this.cache.clear();
+    this.cacheData = undefined;
   }
 }

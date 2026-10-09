@@ -126,14 +126,17 @@ for (const mobile of [false, true]) {
     await page.getByRole("button", { name: "2D rooms", exact: true }).click();
     const style = await page.evaluate(async () => {
       const map = (globalThis as unknown as { zoomTestMap: Map }).zoomTestMap;
+      const overview = await (
+        map.getSource("project-overview") as GeoJSONSource
+      ).getData();
+      if (overview.type !== "FeatureCollection")
+        throw new Error("Expected overview FeatureCollection");
       return {
         outline: map.getFilter("project-area-outline"),
         labelOpacity: map.getPaintProperty("project-label", "text-opacity"),
         roomColor: map.getPaintProperty("project-room-fill", "fill-color"),
         detailMinZoom: map.getLayer("project-room-fill")?.minzoom,
-        overviewFeatures: (
-          await (map.getSource("project-overview") as GeoJSONSource).getData()
-        ).features.length,
+        overviewFeatures: overview.features.length,
       };
     });
     expect(style.outline).toEqual(["==", ["get", "key"], "__review_only"]);

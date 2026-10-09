@@ -1,4 +1,5 @@
-import {validateDoorApertureBinding} from "./reviewed-door-apertures";
+import { nativeMaterialPlanWalls } from "./native-material-plan";
+import { validateDoorApertureBinding } from "./reviewed-door-apertures";
 import type { IndoorProject } from "./package";
 import {
   reviewedBoundaryWalls,
@@ -21,13 +22,20 @@ export type NativeBoundaryPatchFile = {
 export function nativeBoundaryPatchFile(
   project: IndoorProject,
 ): NativeBoundaryPatchFile {
-  validateDoorApertureBinding(project.rooms.reviewedDoorApertures,project.dataset);
+  validateDoorApertureBinding(
+    project.rooms.reviewedDoorApertures,
+    project.dataset,
+  );
   validateNativeBoundaryBinding(
     project.dataset.walls,
     project.rooms.nativeBoundaryPatches,
     project.dataset.source.modelSha256,
     project.dataset.boundaryPatchState,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   return structuredClone({
     format: "openindoormaps-native-boundary-patches",
@@ -87,13 +95,20 @@ export function importNativeBoundaryPatchFile(
     file.nativeBoundaryPatches,
     file.source.modelSha256,
   );
-  validateDoorApertureBinding(project.rooms.reviewedDoorApertures,project.dataset);
+  validateDoorApertureBinding(
+    project.rooms.reviewedDoorApertures,
+    project.dataset,
+  );
   validateNativeBoundaryBinding(
     project.dataset.walls,
     project.rooms.nativeBoundaryPatches,
     project.dataset.source.modelSha256,
     project.dataset.boundaryPatchState,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   // Check even proposed evidence against exact original wall faces.
   reviewedBoundaryWalls(
@@ -108,6 +123,10 @@ export function importNativeBoundaryPatchFile(
     file.source.modelSha256,
     undefined,
     project.rooms.reviewedDoorApertures,
+    project.dataset.nativeMaterialSections,
+    project.dataset.nativeMaterialSections
+      ? (levelId) => nativeMaterialPlanWalls(project.dataset, levelId)
+      : undefined,
   );
   for (const p of file.nativeBoundaryPatches.patches) {
     if (

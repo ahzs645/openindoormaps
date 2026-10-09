@@ -65,6 +65,8 @@ for (const mobile of [false, true])
         const data = await (
           map.getSource("project-labels") as GeoJSONSource
         ).getData();
+        if (data.type !== "FeatureCollection")
+          throw new Error("Expected label FeatureCollection");
         return data.features.find((f) => f.properties?.priority === 2)
           ?.properties?.minZoom;
       });

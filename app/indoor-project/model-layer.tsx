@@ -127,25 +127,32 @@ export function ProjectModelLayer({
             const visibleRecords = data.records.filter(
               (r) => levelIds.includes(r.levelId) && r.walkable,
             );
-            const nativeSurfaces = nativeCirculationSurfaces(
-              data,
-              visibleRecords,
-            );
-            const overlayRecords = [
-              ...visibleRecords.filter(
-                (r) => !r.circulation || !nativeSurfaces.covered.has(r.key),
-              ),
-              ...nativeSurfaces.cells.map((cell) => ({
-                ...visibleRecords.find((r) => cell.roomKeys.includes(r.key))!,
-                key: cell.id,
-                elevationFeet: cell.elevationFeet,
-                ringsFeet: cell.ringsFeet,
-              })),
-              ...nativeSurfaces.reviewSurfaces.map((surface) => ({
-                ...visibleRecords.find((r) => r.key === surface.roomKey)!,
-                ringsFeet: surface.ringsFeet,
-              })),
-            ];
+            // The strict map uses contours only for identity. The original
+            // source scene is evidence, so do not paint historical contour
+            // floors or rounded navigation-cell overlays on top of it.
+            const strictNative = !!data.nativeIndoorEnvelopes;
+            const nativeSurfaces = strictNative
+              ? { covered: new Set<string>(), cells: [], reviewSurfaces: [] }
+              : nativeCirculationSurfaces(data, visibleRecords);
+            const overlayRecords = strictNative
+              ? []
+              : [
+                  ...visibleRecords.filter(
+                    (r) => !r.circulation || !nativeSurfaces.covered.has(r.key),
+                  ),
+                  ...nativeSurfaces.cells.map((cell) => ({
+                    ...visibleRecords.find((r) =>
+                      cell.roomKeys.includes(r.key),
+                    )!,
+                    key: cell.id,
+                    elevationFeet: cell.elevationFeet,
+                    ringsFeet: cell.ringsFeet,
+                  })),
+                  ...nativeSurfaces.reviewSurfaces.map((surface) => ({
+                    ...visibleRecords.find((r) => r.key === surface.roomKey)!,
+                    ringsFeet: surface.ringsFeet,
+                  })),
+                ];
             for (const record of overlayRecords) {
               const loop = (points: number[][]) =>
                 points.map(

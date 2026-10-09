@@ -13,6 +13,7 @@ import {
   pointInNativeArea,
   saveNativeAreaDecision,
   applyNativeAreaDecision,
+  nativeAreaGeometrySha256,
 } from "../../app/indoor-project/native-area-review";
 import {
   readProjectFolder,
@@ -91,6 +92,78 @@ const patch = {
   label: "Shared passage",
   notes: "Measured slab, partition and door checked.",
 };
+test("contact repairs invalidate only their native level and exclude review notes", async () => {
+  const { dataset } = await nativeProject();
+  const before = await nativeAreaGeometrySha256(dataset, 1);
+  // Hash binding only: derivation separately requires verified source contacts.
+  const repair = {
+    id: "other-level-contact",
+    sourceModelSha256: dataset.source.modelSha256,
+    sourceMaterialGeometrySha256: "a".repeat(64),
+    levelId: 2,
+    elevationFeet: 10,
+    status: "applied" as const,
+    source: {
+      nativeElementId: 200,
+      ringsFeet: [rect(0, 0, 1, 2)],
+      capFeet: [
+        [0, 0],
+        [1, 0],
+      ] as [[number, number], [number, number]],
+    },
+    target: {
+      nativeElementId: 201,
+      ringsFeet: [rect(0, -1, 1, 1)],
+      faceFeet: [
+        [0, 0],
+        [1, 0],
+      ] as [[number, number], [number, number]],
+    },
+    evidenceSha256: "b".repeat(64),
+    notes: "First evidence note",
+    assumption: {
+      kind: "provisional-extracted-native-contact" as const,
+      revisitRequired: true as const,
+    },
+  };
+  dataset.nativeSelectionContactRepairs = {
+    version: 1,
+    sourceModelSha256: dataset.source.modelSha256,
+    repairs: [repair],
+  };
+  assert.equal(
+    await nativeAreaGeometrySha256(dataset, 1),
+    before,
+    "other native floor stays reusable",
+  );
+  repair.levelId = 1;
+  const applied = await nativeAreaGeometrySha256(dataset, 1);
+  assert.notEqual(applied, before, "own floor invalidates");
+  repair.notes = "Revised review note";
+  assert.equal(
+    await nativeAreaGeometrySha256(dataset, 1),
+    applied,
+    "notes are not geometry",
+  );
+  dataset.nativeSelectionContactRepairs.repairs[0] = {
+    ...repair,
+    status: "restored",
+  };
+  assert.equal(
+    await nativeAreaGeometrySha256(dataset, 1),
+    before,
+    "restoration returns original binding",
+  );
+  dataset.nativeSelectionContactRepairs.repairs[0] = {
+    ...repair,
+    status: "proposed",
+  };
+  assert.equal(
+    await nativeAreaGeometrySha256(dataset, 1),
+    before,
+    "proposal does not invalidate applied geometry",
+  );
+});
 test("explicit pass-through tracing preserves physical door, solid barriers, holes and graph", async () => {
   const p = await nativeProject(),
     before = JSON.stringify(p);
@@ -549,7 +622,7 @@ test("a user-drawn native wall repair previews, applies and survives ZIP round t
   const p = await nativeProject();
   p.dataset.doors = [];
   const original = JSON.stringify([
-    p.model,
+    p.files["model/" + p.manifest.model.fileName],
     p.scene,
     p.dataset.walkingSupport,
     p.dataset.records,
@@ -582,7 +655,7 @@ test("a user-drawn native wall repair previews, applies and survives ZIP round t
   assert.equal(next.dataset.boundaryPatchState!.regenerated, false);
   assert.equal(
     JSON.stringify([
-      next.model,
+      next.files["model/" + next.manifest.model.fileName],
       next.scene,
       next.dataset.walkingSupport,
       next.dataset.records,
@@ -736,6 +809,7 @@ test("drawn outdoor scope removes only checked portion of a leaked region and re
 
 test("a connected native aperture can cross its analytical wall plan without cutting a column or unproved door", async () => {
   const p = await nativeProject();
+  p.dataset.doors![0].hostWallNativeElementId = 200;
   p.dataset.walls[0].ringsFeet = [rect(14.8, 0, 0.4, 20)];
   p.dataset.edges = [
     {
@@ -746,7 +820,8 @@ test("a connected native aperture can cross its analytical wall plan without cut
       enabled: true,
       nativeElementId: 300,
       roomKeys: ["0", "1"],
-      distanceMetres: 1,
+      lengthMetres: 1,
+      evidence: "Measured fixture door",
       pointsFeet: [
         [14.5, 10, 0],
         [15.5, 10, 0],
@@ -777,6 +852,25 @@ test("a connected native aperture can cross its analytical wall plan without cut
     !disabled.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
   );
   p.dataset.edges[0].enabled = true;
+  delete p.dataset.doors![0].hostWallNativeElementId;
+  const noHost = await deriveNativeAreas(p.dataset, 1, options);
+  assert.ok(
+    !noHost.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
+    "a connected portal cannot erase an unproved host",
+  );
+  p.dataset.doors![0].hostWallNativeElementId = 200;
+  p.dataset.walls.push({
+    kind: "wall",
+    nativeElementId: 998,
+    levelId: 1,
+    ringsFeet: [rect(14.8, 9, 0.4, 2)],
+  });
+  const foreign = await deriveNativeAreas(p.dataset, 1, options);
+  assert.ok(
+    !foreign.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
+    "the own-host aperture cannot remove overlapping foreign wall material",
+  );
+  p.dataset.walls.pop();
   p.dataset.walls.push({
     kind: "column",
     nativeElementId: 999,
@@ -787,4 +881,300 @@ test("a connected native aperture can cross its analytical wall plan without cut
   assert.ok(
     !column.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
   );
+  p.dataset.walls.pop();
+  p.dataset.walls.push({
+    kind: "wall",
+    nativeElementId: 200,
+    levelId: 1,
+    reviewPatchId: "retained-host-repair",
+    ringsFeet: [rect(14.8, 9, 0.4, 2)],
+  });
+  const repaired = await deriveNativeAreas(p.dataset, 1, options);
+  assert.ok(
+    !repaired.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
+    "a matching host ID cannot erase an applied source repair",
+  );
+});
+
+test("strict native selection retains original slab holes while ignoring legacy annotation holes", async () => {
+  const p = await nativeProject(),
+    d = p.dataset;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const evidence = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 30, 20)]],
+        sourceElementIds: [200, 201],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...evidence,
+    geometrySha256: await nativeIndoorEnvelopeHash(evidence),
+  };
+  const before = await deriveNativeAreas(d, 1);
+  d.records[0].properties.floorOpeningsFeet = [rect(4, 4, 3, 3)];
+  const after = await deriveNativeAreas(d, 1);
+  assert.deepEqual(after.regions, before.regions);
+  assert.equal(after.geometrySha256, before.geometrySha256);
+  assert.ok(after.regions.some((r) => pointInNativeArea([5, 5], r.ringsFeet)));
+  assert.ok(
+    !after.regions.some((r) => pointInNativeArea([4, 15], r.ringsFeet)),
+  );
+});
+
+test("strict native selection includes actual floor-contact material below a raised plan opening", async () => {
+  const p = await nativeProject(),
+    d = p.dataset;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const { nativeMaterialSectionsHash } = await import(
+    "../../app/indoor-project/native-material-sections"
+  );
+  const { nativeMaterialPlanWalls } = await import(
+    "../../app/indoor-project/native-material-plan"
+  );
+  const envelope = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 30, 20)]],
+        sourceElementIds: [200],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...envelope,
+    geometrySha256: await nativeIndoorEnvelopeHash(envelope),
+  };
+  d.walls = [
+    {
+      levelId: 1,
+      nativeElementId: 200,
+      kind: "wall",
+      ringsFeet: [rect(14.8, 0, 0.4, 20)],
+    },
+  ];
+  // The physical door is on the raised native plane. Its identity and geometry
+  // must remain there; this selection correction cannot move or invent a portal.
+  d.nativeLevels.push({ id: 2, name: "Raised landing", elevationFeet: 3.28 });
+  d.doors![0].levelId = 2;
+  const sections = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [0.1, 4].map((cut) => ({
+      levelId: 1,
+      elevationFeet: 0,
+      cutElevationFeet: cut,
+      evidenceSha256: "d".repeat(64),
+      sourceElementIds: [200],
+      sections: [
+        {
+          nativeElementId: 200,
+          categoryId: -2000011,
+          kind: "wall" as const,
+          baseElevationFeet: 0,
+          topElevationFeet: 8,
+          partsFeet:
+            cut === 0.1
+              ? [[rect(14.8, 0, 0.4, 20)]]
+              : [[rect(14.8, 0, 0.4, 8)], [rect(14.8, 12, 0.4, 8)]],
+        },
+      ],
+    })),
+  };
+  d.nativeMaterialSections = {
+    ...sections,
+    geometrySha256: await nativeMaterialSectionsHash(sections),
+  };
+  const before = JSON.stringify(d);
+  assert.equal(nativeMaterialPlanWalls(d, 1).length, 2);
+  const native = await deriveNativeAreas(d, 1);
+  assert.equal(native.regions.length, 2);
+  assert.deepEqual(native.regions.map((r) => r.roomKeys).sort(), [
+    ["0"],
+    ["1"],
+  ]);
+  assert.ok(
+    !native.regions.some((r) => pointInNativeArea([15, 10], r.ringsFeet)),
+    "actual low wall stays excluded",
+  );
+  assert.ok(
+    !native.regions.some((r) => pointInNativeArea([4, 15], r.ringsFeet)),
+    "original slab hole stays excluded",
+  );
+  assert.equal(
+    JSON.stringify(d),
+    before,
+    "source material, physical doors, graph, and outline identity bytes remain unchanged",
+  );
+  // A genuine floor-level doorway is still openable for selection. Low cuts
+  // must not project a solid host through an actual supported opening.
+  d.doors![0].levelId = 1;
+  d.nativeMaterialSections.levels[0].sections[0].partsFeet = structuredClone(
+    d.nativeMaterialSections.levels[1].sections[0].partsFeet,
+  );
+  d.nativeMaterialSections.geometrySha256 = await nativeMaterialSectionsHash(
+    d.nativeMaterialSections,
+  );
+  const closed = await deriveNativeAreas(d, 1);
+  const open = await deriveNativeAreas(d, 1, { passThroughDoorIds: [300] });
+  assert.equal(closed.regions.length, 2);
+  assert.equal(open.regions.length, 1);
+  assert.ok(pointInNativeArea([15, 10], open.regions[0].ringsFeet));
+});
+
+test("strict named-room focus chooses a full native component instead of clipping it to the registered outline", async () => {
+  const p = await nativeProject(),
+    d = p.dataset;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const evidence = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 30, 20)]],
+        sourceElementIds: [200, 201],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...evidence,
+    geometrySha256: await nativeIndoorEnvelopeHash(evidence),
+  };
+  const full = await deriveNativeAreas(d, 1);
+  const native = full.regions.find((r) =>
+    pointInNativeArea([5, 5], r.ringsFeet),
+  )!;
+  d.records[0].ringsFeet = [rect(2, 2, 2, 2)];
+  const focused = await deriveNativeAreas(d, 1, {
+    mode: "room",
+    roomKey: d.records[0].key,
+  });
+  assert.equal(focused.regions.length, 1);
+  assert.deepEqual(focused.regions[0].ringsFeet, native.ringsFeet);
+  assert.ok(pointInNativeArea([12, 9], focused.regions[0].ringsFeet));
+  assert.match(focused.cropEvidence!, /Complete native component/);
+  d.records[0].ringsFeet = [rect(3, 3, 3, 3)];
+  const moved = await deriveNativeAreas(d, 1, {
+    mode: "room",
+    roomKey: d.records[0].key,
+  });
+  assert.deepEqual(moved.regions[0].ringsFeet, native.ringsFeet);
+});
+
+test("strict indoor components cannot share an identity through unenclosed native slab support", async () => {
+  const p = await nativeProject(),
+    d = p.dataset;
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  d.walkingSupport!.floors[0].ringsFeet = [
+    rect(0, 0, 30, 20),
+    rect(3, 14, 3, 3),
+  ];
+  d.walls = [
+    {
+      kind: "wall",
+      nativeElementId: 200,
+      levelId: 1,
+      ringsFeet: [rect(14, 0, 1, 12)],
+    },
+  ];
+  d.doors = [];
+  const evidence = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 30, 12)]],
+        sourceElementIds: [200],
+        cutElevationsFeet: [4],
+        evidenceSha256: "c".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...evidence,
+    geometrySha256: await nativeIndoorEnvelopeHash(evidence),
+  };
+  const input = JSON.stringify(d);
+  const enclosed = await deriveNativeAreas(d, 1);
+  assert.equal(enclosed.regions.length, 2);
+  assert.ok(
+    !enclosed.regions.some(
+      (r) =>
+        pointInNativeArea([5, 5], r.ringsFeet) &&
+        pointInNativeArea([20, 5], r.ringsFeet),
+    ),
+  );
+  assert.ok(
+    !enclosed.regions.some((r) => pointInNativeArea([5, 18], r.ringsFeet)),
+  );
+  const physical = await deriveNativeAreas(d, 1, { nativeFloorId: 100 });
+  assert.ok(
+    physical.regions.some(
+      (r) =>
+        pointInNativeArea([5, 5], r.ringsFeet) &&
+        pointInNativeArea([20, 5], r.ringsFeet),
+    ),
+  );
+  assert.equal(
+    JSON.stringify(d),
+    input,
+    "source slab and identities remain unchanged",
+  );
+  const oldHash = enclosed.geometrySha256;
+  d.nativeIndoorEnvelopes.levels[0].partsFeet = [[rect(0, 0, 30, 20)]];
+  d.nativeIndoorEnvelopes.geometrySha256 = await nativeIndoorEnvelopeHash(
+    d.nativeIndoorEnvelopes,
+  );
+  const changed = await deriveNativeAreas(d, 1);
+  assert.notEqual(changed.geometrySha256, oldHash);
+  assert.ok(
+    changed.regions.some(
+      (r) =>
+        pointInNativeArea([5, 5], r.ringsFeet) &&
+        pointInNativeArea([20, 5], r.ringsFeet),
+    ),
+  );
+  d.nativeIndoorEnvelopes.geometrySha256 = "d".repeat(64);
+  await assert.rejects(deriveNativeAreas(d, 1), /checksum changed/);
+});
+
+test("one-slab native selection ignores wholly disjoint masks without replacing their source geometry", async () => {
+  const p = await nativeProject(),
+    d = p.dataset;
+  const before = await deriveNativeAreas(d, 1, { nativeFloorId: 100 });
+  d.walls.push({
+    kind: "wall",
+    nativeElementId: 500,
+    levelId: 1,
+    ringsFeet: [rect(1000000, 1000000, 5, 5)],
+  });
+  const after = await deriveNativeAreas(d, 1, { nativeFloorId: 100 });
+  assert.deepEqual(after.regions, before.regions);
+  assert.deepEqual(d.walls.at(-1)!.ringsFeet, [rect(1000000, 1000000, 5, 5)]);
 });

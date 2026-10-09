@@ -1,10 +1,138 @@
+import { nativeRoomIdentityRings } from "./native-floor-opening-ownership";
+import { validateNativeContainedCellDisplay } from "./native-contained-cell-display";
+import { createNativeExactRoutingAuthority } from "./native-exact-routing-authority";
+import {
+  createNativeExactTopologyIndex,
+  freezeNativeRationalParts,
+  nativeRationalPointInParts,
+  nativeRationalPathSupported,
+  nativeRationalAreaCompare,
+  type NativeExactTopologyIndex,
+} from "./native-exact-planar-topology";
+import {
+  nativeRationalOverlay,
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+  type NativeRationalParts,
+} from "./native-rational-overlay";
+import { nativeRationalIntersectionOperand } from "./native-rational-intersection-broadphase";
+import { NATIVE_EXACT_GEOS_BINDING } from "./native-exact-geos-overlay";
+import { nativePlanarPointInRing } from "./native-planar-path-support";
+import { nativeWallPositionMaterialBinding } from "./native-wall-position-repairs";
+import { nativeCirculationBinding } from "./native-circulation-binding";
 import type { IndoorDataset, IndoorRecord } from "./contract";
+import { nativeConnectorAnchors } from "./native-connector-anchors";
+import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import { NATIVE_BARRIER_TOPOLOGY_VERSION } from "./native-barrier-topology";
 import { routingCalculationValue } from "./routing-cache";
 import { createNativeDoorApproachQuery } from "./native-door-approach";
 export type NativeCirculationCell = NonNullable<
   IndoorDataset["circulationGeometry"]
 >["cells"][number];
+function nativeCellAccessIsSupported(
+  data: IndoorDataset,
+  cell: NativeCirculationCell,
+  index: NativeExactTopologyIndex,
+): boolean {
+  return routingCalculationValue(
+    data,
+    `native-exact-face-access:${cell.id}`,
+    () => {
+      const face = cell.exactFaceId ? index.parts(cell.exactFaceId) : undefined;
+      if (!face) return false;
+      const points = cell.ringsFeet.flat(),
+        loX = Math.min(...points.map((p) => p[0])),
+        hiX = Math.max(...points.map((p) => p[0])),
+        loY = Math.min(...points.map((p) => p[1])),
+        hiY = Math.max(...points.map((p) => p[1]));
+      const broadAllowance =
+        8 *
+        Number.EPSILON *
+        Math.max(1, Math.abs(loX), Math.abs(hiX), Math.abs(loY), Math.abs(hiY));
+      for (const record of data.records) {
+        if (
+          Math.abs(record.elevationFeet - cell.elevationFeet) > 0.05 ||
+          (record.walkable && record.access !== "staff")
+        )
+          continue;
+        const identity = nativeRoomIdentityRings(data, record),
+          ps = identity.flat();
+        if (!ps.length) continue;
+        if (
+          Math.max(...ps.map((p) => p[0])) < loX - broadAllowance ||
+          Math.min(...ps.map((p) => p[0])) > hiX + broadAllowance ||
+          Math.max(...ps.map((p) => p[1])) < loY - broadAllowance ||
+          Math.min(...ps.map((p) => p[1])) > hiY + broadAllowance
+        )
+          continue;
+        const overlap = nativeRationalOverlay("intersection", face, [identity]);
+        if (
+          nativeRationalAreaCompare(overlap, []) > 0 &&
+          (nativeRationalAreaCompare(overlap, face, 2n) >= 0 ||
+            nativeRationalAreaCompare(
+              overlap,
+              nativeRationalOverlay("union", [identity]),
+              2n,
+            ) >= 0)
+        )
+          return false;
+      }
+      return true;
+    },
+  );
+}
+/** Decode once per immutable routing calculation; an edited snapshot gets a
+ * new calculation context and complete descriptor checksum verification. */
+export function nativeCirculationExactIndex(
+  data: IndoorDataset,
+): NativeExactTopologyIndex | undefined {
+  if (!data.nativeIndoorEnvelopes || !data.circulationGeometry?.exactTopology)
+    return;
+  return routingCalculationValue(
+    data,
+    "native-exact-circulation-topology",
+    () =>
+      createNativeExactTopologyIndex(data.circulationGeometry!.exactTopology!, {
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: nativeCirculationGeometryKey(data),
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      }),
+  );
+}
+export function nativeCirculationExactCellParts(
+  data: IndoorDataset,
+  cell: NativeCirculationCell,
+): NativeRationalParts | undefined {
+  if (!cell.exactFaceId) return;
+  const face = nativeCirculationExactIndex(data)?.parts(cell.exactFaceId);
+  if (!face) return;
+  return routingCalculationValue(
+    data,
+    `native-exact-supported-cell:${cell.id}`,
+    () => {
+      const authority = routingCalculationValue(
+        data,
+        "native-exact-routing-authority",
+        () => createNativeExactRoutingAuthority(data),
+      )(cell.elevationFeet);
+      return freezeNativeRationalParts(
+        nativeRationalOverlay(
+          "intersection",
+          face,
+          nativeRationalIntersectionOperand(face, authority),
+        ),
+      );
+    },
+  );
+}
+function exactOriginalParts(
+  data: IndoorDataset,
+  key: string,
+  parts: [number, number][][][],
+): NativeRationalParts {
+  return routingCalculationValue(data, `native-exact-original:${key}`, () =>
+    nativeRationalOverlay("union", parts),
+  );
+}
 export function validateNativeCirculationGeometry(data: IndoorDataset): void {
   const value = data.circulationGeometry;
   if (value === undefined) return;
@@ -13,11 +141,38 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
     value.version !== 1 ||
     value.sourceModelSha256 !== data.source.modelSha256 ||
     typeof value.sourceGeometryKey !== "string" ||
-    value.sourceGeometryKey.length > 32 * 1024 * 1024 ||
+    // Exact original material cuts remain bound here; whole-campus descriptors
+    // can exceed the older 32 MiB limit without exceeding package input caps.
+    value.sourceGeometryKey.length > 64 * 1024 * 1024 ||
     !Array.isArray(value.cells) ||
     value.cells.length > 60_000
   )
     throw new Error("Invalid prepared native circulation geometry.");
+  const exactIndex = value.exactTopology
+    ? createNativeExactTopologyIndex(value.exactTopology, {
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: value.sourceGeometryKey,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      })
+    : undefined;
+  const displayIndex = value.displayResidualTopology
+    ? createNativeExactTopologyIndex(value.displayResidualTopology, {
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: value.sourceGeometryKey,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      })
+    : undefined;
+  if (
+    data.nativeIndoorEnvelopes &&
+    value.sourceGeometryKey === nativeCirculationGeometryKey(data) &&
+    !exactIndex
+  )
+    throw new Error("Current native circulation lacks exact topology.");
+  if (
+    exactIndex &&
+    value.cells.some((c) => !c.exactFaceId || !exactIndex.parts(c.exactFaceId))
+  )
+    throw new Error("Native cell lacks its exact physical face.");
   const ids = new Set<string>();
   if (
     value.fixtures !== undefined &&
@@ -103,6 +258,18 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
   )
     throw new Error("Invalid native floor-clipped review surface.");
   for (const cell of value.cells) {
+    if (cell.containedDisplay) {
+      const source = cell.exactFaceId
+        ? exactIndex?.parts(cell.exactFaceId)
+        : undefined;
+      if (!source)
+        throw Error("Contained native cell drawing lacks its exact authority.");
+      validateNativeContainedCellDisplay(
+        cell.containedDisplay,
+        source,
+        displayIndex,
+      );
+    }
     if (
       !cell ||
       typeof cell.id !== "string" ||
@@ -110,20 +277,25 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
       ids.has(cell.id) ||
       !Number.isFinite(cell.elevationFeet) ||
       !Number.isFinite(cell.sourceCoverage) ||
-      cell.sourceCoverage < 0.65 ||
+      cell.sourceCoverage < (data.nativeIndoorEnvelopes ? 0 : 0.65) ||
       cell.sourceCoverage > 1.000_001 ||
       !Array.isArray(cell.levelIds) ||
       cell.levelIds.length === 0 ||
       cell.levelIds.some((id) => !data.nativeLevels.some((l) => l.id === id)) ||
       !Array.isArray(cell.roomKeys) ||
-      cell.roomKeys.length === 0 ||
+      (cell.roomKeys.length === 0 &&
+        (!data.nativeIndoorEnvelopes ||
+          !validConnectorCellAnchors(data, cell))) ||
       cell.roomKeys.some(
         (key) =>
           !data.records.some(
             (r) =>
               r.key === key &&
-              cell.levelIds.includes(r.levelId) &&
-              Math.abs(r.elevationFeet - cell.elevationFeet) < 0.05,
+              ((cell.levelIds.includes(r.levelId) &&
+                Math.abs(r.elevationFeet - cell.elevationFeet) < 0.05) ||
+                (!!data.nativeIndoorEnvelopes &&
+                  cell.connectorAnchors?.some((a) => a.roomKey === r.key) &&
+                  validConnectorCellAnchors(data, cell))),
           ),
       ) ||
       !Array.isArray(cell.nativeFloorIds) ||
@@ -153,35 +325,98 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
       )
     )
       throw new Error("Invalid native circulation cell or floor ownership.");
+    if (
+      cell.connectorAnchors !== undefined &&
+      (!Array.isArray(cell.connectorAnchors) ||
+        !cell.connectorAnchors.length ||
+        cell.connectorAnchors.length > 1000 ||
+        !validConnectorCellAnchors(data, cell))
+    )
+      throw new Error("Invalid source native connector landing ownership.");
     ids.add(cell.id);
   }
 }
 /** Keep this wire binding identical to Reviter's preparation function. */
 export function nativeCirculationGeometryKey(data: IndoorDataset): string {
   return routingCalculationValue(data, "native-circulation-binding", () =>
-    JSON.stringify([
-      data.source.modelSha256,
-      NATIVE_BARRIER_TOPOLOGY_VERSION,
-      ...(data.nativeIndoorEnvelopes
-        ? ["native-indoor-envelope-v1", data.nativeIndoorEnvelopes]
-        : []),
-      data.records.map((r) => [
-        r.key,
-        r.levelId,
-        r.elevationFeet,
-        r.circulation,
-        r.stair,
-        r.walkable,
-        r.access,
-        r.ringsFeet,
-        r.properties.floorOpeningsFeet,
-        r.properties.spaceUse,
-        r.properties.stairAccess,
-      ]),
-      data.walls,
-      data.doors,
-      data.walkingSupport,
-    ]),
+    nativeCirculationBinding(
+      [
+        data.source.modelSha256,
+        NATIVE_BARRIER_TOPOLOGY_VERSION,
+        ...(data.nativeIndoorEnvelopes
+          ? [
+              "native-indoor-envelope-v1",
+              data.nativeIndoorEnvelopes,
+              "native-source-intermediate-landings-v5",
+              "native-source-exact-free-face-v12-qualified-steps-exact-approach-identities",
+              "native-door-approach-original-source-bounds-v1",
+              NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+              NATIVE_EXACT_GEOS_BINDING,
+              nativeConnectorAnchors(data),
+              ...(data.nativePhysicalLevels ? [data.nativePhysicalLevels] : []),
+            ]
+          : []),
+        ...(data.nativeMaterialSections
+          ? [
+              "native-material-sections-v1",
+              data.nativeMaterialSections,
+              data.nativeIndoorEnvelopes
+                ? nativeWallPositionMaterialBinding(
+                    data.nativeWallPositionRepairs,
+                  )
+                : data.nativeWallPositionRepairs,
+            ]
+          : []),
+        ...(data.nativeDerivedFrameReturns
+          ? ["native-derived-frame-returns-v1", data.nativeDerivedFrameReturns]
+          : []),
+        ...(data.nativeSourceStairMaterials?.authoredTreadRoles
+          ? [
+              "native-authored-stair-tread-roles-v1",
+              data.nativeSourceStairMaterials.authoredTreadRoles,
+            ]
+          : []),
+        ...(data.nativeIndoorEnvelopes && data.stairDisplay?.sourceFlights
+          ? [
+              "native-source-stair-mask-inventory-v1",
+              data.stairDisplay.sourceModelSha256,
+              data.stairDisplay.sourceFlights.map((f) => [
+                f.stairElementId,
+                f.treads,
+              ]),
+            ]
+          : []),
+        ...(data.nativeProvisionalCornerSeals
+          ? [
+              "native-provisional-corner-seals-v1",
+              data.nativeProvisionalCornerSeals,
+            ]
+          : []),
+        data.records.map((r) => [
+          r.key,
+          r.levelId,
+          r.elevationFeet,
+          r.circulation,
+          r.stair,
+          r.walkable,
+          r.access,
+          r.ringsFeet,
+          r.properties.floorOpeningsFeet,
+          ...(r.properties.nativeFloorOpeningOwnership !== undefined
+            ? [r.properties.nativeFloorOpeningOwnership]
+            : []),
+          r.properties.spaceUse,
+          r.properties.stairAccess,
+        ]),
+        data.walls,
+        data.doors,
+        data.walkingSupport,
+        ...(data.nativeIndoorEnvelopes && data.doorAperturePatchState
+          ? [data.doorAperturePatchState]
+          : []),
+      ],
+      !!data.nativeIndoorEnvelopes,
+    ),
   );
 }
 export function nativeCirculationCells(
@@ -192,10 +427,197 @@ export function nativeCirculationCells(
     !prepared ||
     prepared.version !== 1 ||
     prepared.sourceModelSha256 !== data.source.modelSha256 ||
-    prepared.sourceGeometryKey !== nativeCirculationGeometryKey(data)
+    prepared.sourceGeometryKey !== nativeCirculationGeometryKey(data) ||
+    (data.nativeIndoorEnvelopes && !prepared.exactTopology)
   )
     return [];
-  return prepared.cells;
+  const index = data.nativeIndoorEnvelopes
+    ? nativeCirculationExactIndex(data)
+    : undefined;
+  return prepared.cells.filter(
+    (cell) =>
+      (!data.nativeIndoorEnvelopes ||
+        !!(
+          cell.exactFaceId &&
+          index?.parts(cell.exactFaceId) &&
+          nativeCellAccessIsSupported(data, cell, index)
+        )) &&
+      (!cell.connectorAnchors || validConnectorCellAnchors(data, cell)),
+  );
+}
+
+function physicalCellPoint(
+  data: IndoorDataset,
+  cell: NativeCirculationCell,
+  point: number[],
+) {
+  const inside = (rings: number[][][]) =>
+    insideRing(point, rings[0]!) &&
+    !rings.slice(1).some((h) => insideRing(point, h));
+  const index = routingCalculationValue(
+    data,
+    "native-connector-envelopes",
+    () =>
+      createNativeIndoorEnvelopeIndex(
+        data.nativeIndoorEnvelopes,
+        data.source.modelSha256,
+      ),
+  );
+  return (
+    Math.abs(point[2]! - cell.elevationFeet) < 0.05 &&
+    (data.nativeIndoorEnvelopes
+      ? !!nativeCirculationExactCellParts(data, cell) &&
+        nativeRationalPointInParts(
+          point,
+          nativeCirculationExactCellParts(data, cell)!,
+        )
+      : inside(cell.ringsFeet)) &&
+    data.walkingSupport?.sourceModelSha256 === data.source.modelSha256 &&
+    data.walkingSupport.floors.some(
+      (f) =>
+        cell.nativeFloorIds.includes(f.nativeElementId) &&
+        Math.abs(f.elevationFeet - cell.elevationFeet) < 0.05 &&
+        (data.nativeIndoorEnvelopes
+          ? nativeRationalPointInParts(
+              point,
+              exactOriginalParts(
+                data,
+                `floor:${f.nativeElementId}`,
+                f.partsFeet ?? [f.ringsFeet],
+              ),
+            )
+          : (f.partsFeet ?? [f.ringsFeet]).some(inside)),
+    ) &&
+    (data.nativeIndoorEnvelopes
+      ? nativeRationalPointInParts(
+          point,
+          exactOriginalParts(
+            data,
+            `envelope:${cell.elevationFeet}`,
+            index.parts(cell.elevationFeet),
+          ),
+        )
+      : index.parts(cell.elevationFeet).some(inside))
+  );
+}
+/** Metadata floor/building aliases never move physical endpoints. Crossing
+ * them requires the same original slab and independently bound native face. */
+export function nativeCellSharedFloorAlias(
+  data: IndoorDataset,
+  edge: IndoorDataset["edges"][number],
+): boolean {
+  if (!data.nativeIndoorEnvelopes || !edge.nativeCellId || edge.kind !== "walk")
+    return false;
+  const cell = nativeCirculationCells(data).find(
+      (c) => c.id === edge.nativeCellId,
+    ),
+    from = data.nodes.find((n) => n.id === edge.from),
+    to = data.nodes.find((n) => n.id === edge.to);
+  if (!cell || !from || !to) return false;
+  const inside = (point: number[], rings: number[][][]) =>
+    insideRing(point, rings[0]!) &&
+    !rings.slice(1).some((h) => insideRing(point, h));
+  // Native selection masks the door itself. An unchanged source portal can
+  // therefore lie in its independently checked own threshold half rather than
+  // the base face. It still needs the complete physical native branch and the
+  // same original slab/enclosure; no neighbouring half or metadata surface ID
+  // can supply that support.
+  const approaches = routingCalculationValue(
+    data,
+    "native-door-approach-query",
+    () => createNativeDoorApproachQuery(data),
+  )(edge);
+  if (
+    [from, to].some(
+      (node) =>
+        !physicalCellPoint(data, cell, node.pointFeet) &&
+        !(
+          node.kind === "portal" &&
+          approaches.some(
+            (a) =>
+              Math.abs(a.z - cell.elevationFeet) < 0.05 &&
+              (a.exactParts
+                ? nativeRationalPointInParts(node.pointFeet, a.exactParts)
+                : inside(node.pointFeet, a.rings)),
+          )
+        ),
+    )
+  )
+    return false;
+  if (
+    routingCalculationValue(
+      data,
+      `routing-native-alias-walk-blocker:${edge.id}`,
+      () => nativeCirculationWalkBlockers(data, [edge]).has(edge.id),
+    )
+  )
+    return false;
+  return (
+    data.walkingSupport?.floors.some(
+      (f) =>
+        cell.nativeFloorIds.includes(f.nativeElementId) &&
+        Math.abs(f.elevationFeet - cell.elevationFeet) < 0.05 &&
+        (f.partsFeet ?? [f.ringsFeet]).some((p) =>
+          data.nativeIndoorEnvelopes
+            ? [from, to].every((n) =>
+                nativeRationalPointInParts(
+                  n.pointFeet,
+                  exactOriginalParts(
+                    data,
+                    `alias-floor:${f.nativeElementId}`,
+                    f.partsFeet ?? [f.ringsFeet],
+                  ),
+                ),
+              )
+            : inside(from.pointFeet, p) && inside(to.pointFeet, p),
+        ) &&
+        data.nativeIndoorEnvelopes!.levels.some(
+          (scope) =>
+            Math.abs(scope.elevationFeet - cell.elevationFeet) < 0.05 &&
+            scope.sourceElementIds.includes(f.nativeElementId) &&
+            scope.partsFeet.some((p) =>
+              data.nativeIndoorEnvelopes
+                ? [from, to].every((n) =>
+                    nativeRationalPointInParts(
+                      n.pointFeet,
+                      exactOriginalParts(
+                        data,
+                        `alias-envelope:${scope.levelId}:${scope.elevationFeet}`,
+                        scope.partsFeet,
+                      ),
+                    ),
+                  )
+                : inside(from.pointFeet, p) && inside(to.pointFeet, p),
+            ),
+        ),
+    ) ?? false
+  );
+}
+function validConnectorCellAnchors(
+  data: IndoorDataset,
+  cell: NativeCirculationCell,
+) {
+  if (!data.nativeIndoorEnvelopes || !cell.connectorAnchors?.length)
+    return false;
+  const anchors = routingCalculationValue(
+    data,
+    "native-source-connector-anchors",
+    () =>
+      new Map(
+        nativeConnectorAnchors(data).map((a) => [a.edgeId + "|" + a.nodeId, a]),
+      ),
+  );
+  return cell.connectorAnchors.every((proof) => {
+    const anchor = anchors.get(proof.edgeId + "|" + proof.nodeId);
+    return (
+      !!anchor &&
+      proof.roomKey === anchor.roomKey &&
+      proof.nativeElementId === anchor.nativeElementId &&
+      (anchor.roomKey === "" ? true : cell.roomKeys.includes(anchor.roomKey)) &&
+      cell.levelIds.includes(anchor.levelId) &&
+      physicalCellPoint(data, cell, anchor.pointFeet)
+    );
+  });
 }
 /** A semantic record can identify several disconnected native cells. Preserve
  * all physical parts; never join them with a hull or a bounding rectangle. */
@@ -258,26 +680,7 @@ export function nativeCirculationSurfaces(
   };
 }
 
-const insideRing = (p: number[], ring: number[][]) => {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const a = ring[j],
-      b = ring[i],
-      dx = b[0] - a[0],
-      dy = b[1] - a[1];
-    const t =
-      ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1);
-    if (
-      t >= 0 &&
-      t <= 1 &&
-      Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy) < 1e-6
-    )
-      return true;
-    if (a[1] > p[1] !== b[1] > p[1] && p[0] < a[0] + (dx * (p[1] - a[1])) / dy)
-      inside = !inside;
-  }
-  return inside;
-};
+const insideRing = nativePlanarPointInRing;
 
 type Bounds = [number, number, number, number];
 type IndexedRing = { points: number[][]; bounds: Bounds };
@@ -323,12 +726,13 @@ const supportedNativePoint = (p: number[], surfaces: IndexedSurface[]) =>
  * Test every interval cut by a polygon edge, so even a thin fixture is a veto. */
 export function nativeCirculationWalkBlockers(
   data: IndoorDataset,
+  edges: ReadonlyArray<IndoorDataset["edges"][number]> = data.edges,
 ): Set<string> {
   const cells = nativeCirculationCells(data),
     prepared = data.circulationGeometry;
   const blocked = new Set<string>(
     data.nativeIndoorEnvelopes
-      ? data.edges
+      ? edges
           .filter((e) => e.kind === "walk" && !e.nativeCellId)
           .map((e) => e.id)
       : [],
@@ -339,12 +743,15 @@ export function nativeCirculationWalkBlockers(
     prepared.sourceModelSha256 !== data.source.modelSha256
   ) {
     if (data.nativeIndoorEnvelopes)
-      for (const edge of data.edges)
-        if (edge.kind === "walk") blocked.add(edge.id);
+      for (const edge of edges) if (edge.kind === "walk") blocked.add(edge.id);
     return blocked;
   }
   const keys = new Set(prepared.preparedRoomKeys);
-  const doorApproaches = createNativeDoorApproachQuery(data);
+  const doorApproaches = routingCalculationValue(
+    data,
+    "native-door-approach-query",
+    () => createNativeDoorApproachQuery(data),
+  );
   const surfaces = [
     ...cells.map((c) => ({ id: c.id, z: c.elevationFeet, rings: c.ringsFeet })),
     ...(data.nativeIndoorEnvelopes ? [] : (prepared.reviewSurfaces ?? [])).map(
@@ -369,14 +776,72 @@ export function nativeCirculationWalkBlockers(
     };
   });
   const byCell = new Map(surfaces.filter((s) => s.id).map((s) => [s.id!, s]));
-  for (const edge of data.edges) {
+  const rawCells = new Map(cells.map((c) => [c.id, c]));
+  const nodes = new Map(data.nodes.map((n) => [n.id, n]));
+  for (const edge of edges) {
     if (
       edge.kind !== "walk" ||
       (edge.nativeCellId && !data.nativeIndoorEnvelopes) ||
-      edge.roomKeys.length === 0 ||
+      (edge.roomKeys.length === 0 &&
+        (!data.nativeIndoorEnvelopes ||
+          !edge.nativeCellId ||
+          !rawCells.get(edge.nativeCellId)?.connectorAnchors?.length ||
+          !validConnectorCellAnchors(
+            data,
+            rawCells.get(edge.nativeCellId)!,
+          ))) ||
       !edge.roomKeys.every((k) => keys.has(k))
     )
       continue;
+    if (data.nativeIndoorEnvelopes) {
+      const cell = edge.nativeCellId
+        ? rawCells.get(edge.nativeCellId)
+        : undefined;
+      const face = cell
+        ? nativeCirculationExactCellParts(data, cell)
+        : undefined;
+      if (!cell || !face) {
+        blocked.add(edge.id);
+        continue;
+      }
+      const ownHalves = doorApproaches(edge)
+        .filter((a) => Math.abs(a.z - cell.elevationFeet) < 0.05)
+        .flatMap((a) => a.exactParts ?? []);
+      // Face already rechecks current source floor/holes/material independently
+      // of a rehashed prepared descriptor. Only checked incident halves extend it.
+      const support = ownHalves.length
+        ? freezeNativeRationalParts(
+            nativeRationalOverlay("union", face, ownHalves),
+          )
+        : face;
+      if (
+        edge.pointsFeet.some(
+          (p) => Math.abs(p[2] - cell.elevationFeet) > 0.05,
+        ) ||
+        !nativeRationalPathSupported(edge.pointsFeet, support)
+      )
+        blocked.add(edge.id);
+      // Coincident metadata aliases need the original unchanged physical point
+      // on their own face. A doorway half cannot supply that identity alias.
+      if (
+        edge.pointsFeet.length > 1 &&
+        edge.pointsFeet.every((p) =>
+          p.every((v, k) => v === edge.pointsFeet[0][k]),
+        )
+      ) {
+        const from = nodes.get(edge.from),
+          to = nodes.get(edge.to);
+        if (
+          !from ||
+          !to ||
+          from.roomKey !== to.roomKey ||
+          !physicalCellPoint(data, cell, from.pointFeet) ||
+          !physicalCellPoint(data, cell, to.pointFeet)
+        )
+          blocked.add(edge.id);
+      }
+      continue;
+    }
     const approachSurfaces = doorApproaches(edge).map(
       (surface): IndexedSurface => {
         const rings = surface.rings.map((points) => ({
@@ -389,6 +854,27 @@ export function nativeCirculationWalkBlockers(
     for (let i = 1; i < edge.pointsFeet.length; i++) {
       const a = edge.pointsFeet[i - 1],
         b = edge.pointsFeet[i];
+      if (
+        data.nativeIndoorEnvelopes &&
+        Math.hypot(...a.map((v, k) => v - b[k]!)) < 1e-8
+      ) {
+        const cell = edge.nativeCellId && rawCells.get(edge.nativeCellId),
+          from = nodes.get(edge.from),
+          to = nodes.get(edge.to);
+        if (
+          !cell ||
+          !from ||
+          !to ||
+          from.roomKey !== to.roomKey ||
+          Math.hypot(...from.pointFeet.map((v, k) => v - a[k]!)) > 1e-8 ||
+          Math.hypot(...to.pointFeet.map((v, k) => v - b[k]!)) > 1e-8 ||
+          !physicalCellPoint(data, cell, a) ||
+          !physicalCellPoint(data, cell, b)
+        ) {
+          blocked.add(edge.id);
+          break;
+        }
+      }
       const segmentBounds: Bounds = [
         Math.min(a[0], b[0]),
         Math.min(a[1], b[1]),
@@ -428,7 +914,8 @@ export function nativeCirculationWalkBlockers(
               ex = q[0] - p[0],
               ey = q[1] - p[1],
               den = dx * ey - dy * ex;
-            if (Math.abs(den) < 1e-12) continue;
+            if (data.nativeIndoorEnvelopes ? den === 0 : Math.abs(den) < 1e-12)
+              continue;
             const ox = p[0] - a[0],
               oy = p[1] - a[1],
               t = (ox * ey - oy * ex) / den,
@@ -443,7 +930,7 @@ export function nativeCirculationWalkBlockers(
           .slice(1)
           .some(
             (t, j) =>
-              t - cuts[j] > 1e-9 &&
+              t > cuts[j] &&
               !supportedNativePoint(
                 [
                   a[0] + (dx * (t + cuts[j])) / 2,

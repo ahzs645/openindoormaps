@@ -1,3 +1,4 @@
+import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   createWorkerRouteCalculator,
   type RouteRequest,
@@ -8,9 +9,17 @@ const scope = globalThis as unknown as {
   postMessage: (message: RouteResponse) => void;
 };
 let calculate: ReturnType<typeof createWorkerRouteCalculator> | undefined;
+let pending = Promise.resolve();
 scope.onmessage = ({ data: request }) => {
+  pending = pending.then(() => handle(request));
+};
+async function handle(request: RouteRequest) {
   try {
-    if (request.data) calculate = createWorkerRouteCalculator(request.data);
+    if (request.data) {
+      if (request.data.nativeIndoorEnvelopes)
+        await initializeNativeExactGeosOverlay();
+      calculate = createWorkerRouteCalculator(request.data);
+    }
     if (!calculate) throw new Error("The route worker has no project data.");
     scope.postMessage({
       requestId: request.requestId,
@@ -22,4 +31,4 @@ scope.onmessage = ({ data: request }) => {
       error: error instanceof Error ? error.message : String(error),
     });
   }
-};
+}

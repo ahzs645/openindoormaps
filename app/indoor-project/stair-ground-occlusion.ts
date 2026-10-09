@@ -1,5 +1,15 @@
 import polygonClipping from "polygon-clipping";
 import type { FeatureCollection, Polygon, MultiPolygon } from "geojson";
+import type { IndoorDataset } from "./contract";
+import {
+  indexNativeOpaqueDrawing,
+  nativeVisibleDrawingParts,
+} from "./native-render-visibility";
+import {
+  nativeRenderExactParts,
+  nativeRenderProperties,
+} from "./native-render-parts";
+import { geographicPoint } from "./routing";
 
 /** The displayed ground is opaque, even where a recovered native slab has
  * different coverage. Clip steps below that ground; never cut a new stairwell
@@ -8,6 +18,7 @@ export function stairsAboveDisplayedGround(
   treads: FeatureCollection<Polygon>,
   floors: FeatureCollection<Polygon | MultiPolygon>,
   relativeHeights = false,
+  data?: IndoorDataset,
 ): FeatureCollection<Polygon> {
   const bounds = (rings: number[][][]) => {
     const points = rings.flat();
@@ -21,6 +32,16 @@ export function stairsAboveDisplayedGround(
   const surfaces = floors.features
     .filter((f) => !f.properties?.openDrop)
     .map((f) => ({
+      native: data?.nativeIndoorEnvelopes
+        ? (() => {
+            const source = nativeRenderExactParts(f.properties);
+            if (!source)
+              throw new Error(
+                "Strict native stair visibility lacks native ground drawing coordinates.",
+              );
+            return indexNativeOpaqueDrawing(source);
+          })()
+        : undefined,
       parts:
         f.geometry.type === "Polygon"
           ? [f.geometry.coordinates]
@@ -37,6 +58,37 @@ export function stairsAboveDisplayedGround(
     features: treads.features.flatMap((tread) => {
       const box = bounds(tread.geometry.coordinates),
         top = Number(tread.properties?.topMetres);
+      if (data?.nativeIndoorEnvelopes) {
+        const covers = surfaces.filter((f) => top < f.height - 0.003);
+        if (!covers.length) return [tread];
+        const source = nativeRenderExactParts(tread.properties);
+        if (!source)
+          throw new Error(
+            "Strict native stair visibility lacks native drawing coordinates.",
+          );
+        const visible = nativeVisibleDrawingParts(
+          source,
+          covers.map((f) => f.native!),
+        );
+        if (visible === source) return [tread];
+        const drawing = nativeRenderProperties(visible);
+        return drawing.nativeDisplayPartsFeet.map((part, partIndex) => ({
+          ...tread,
+          properties: {
+            ...tread.properties,
+            nativeDisplayExactParts: undefined,
+            nativeDisplayPartsFeet: [part],
+            nativeDisplayResidualParts:
+              partIndex === 0 ? drawing.nativeDisplayResidualParts : [],
+          },
+          geometry: {
+            type: "Polygon" as const,
+            coordinates: part.map((ring) =>
+              [...ring, ring[0]].map((p) => geographicPoint(data, p)),
+            ),
+          },
+        }));
+      }
       const covers = surfaces.filter(
         (f) =>
           top < f.height - 0.003 &&

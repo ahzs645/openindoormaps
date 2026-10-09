@@ -1,3 +1,4 @@
+import type { NativeExploreResult } from "./native-explore";
 import type { IndoorDataset } from "./contract";
 import { isFlatArea } from "./display-passages";
 import { prepareFloor } from "./prepared-floor";
@@ -14,9 +15,14 @@ export const volumeScopes = (data: IndoorDataset) => [
 export type VolumeScope = ReturnType<typeof volumeScopes>[number];
 
 /** Uses the exact visitor geometry, rather than assuming prepared metadata is visible. */
-export function auditVolumeScope(data: IndoorDataset, scope: VolumeScope) {
+export function auditVolumeScope(
+  data: IndoorDataset,
+  scope: VolumeScope,
+  nativeFaces?: NativeExploreResult,
+) {
   const modes = [false, true].map((relativeHeights) => {
     const prepared = prepareFloor(data, scope.levelIds, "all", {
+      nativeFaces,
       review: false,
       simplifyGeometry: false,
       relativeHeights,

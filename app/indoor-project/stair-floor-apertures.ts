@@ -1,5 +1,12 @@
 import polygonClipping from "polygon-clipping";
 import type { FeatureCollection, Geometry, Polygon } from "geojson";
+import type { IndoorDataset } from "./contract";
+import { nativeRationalOverlay } from "./native-rational-overlay";
+import {
+  nativeRenderExactParts,
+  nativeRenderProperties,
+} from "./native-render-parts";
+import { geographicPoint } from "./routing";
 
 const box = (points: number[][]) => [
   Math.min(...points.map((p) => p[0])),
@@ -14,10 +21,14 @@ export function stairFloorApertures<T extends Geometry>(
   floors: FeatureCollection<T>,
   treads: FeatureCollection<Polygon>,
   relativeHeights = false,
+  data?: IndoorDataset,
 ): FeatureCollection<T> {
   const cuts = treads.features
     .filter((f) => relativeHeights || f.properties?.descending)
     .map((f) => ({
+      native: data?.nativeIndoorEnvelopes
+        ? nativeRenderExactParts(f.properties)
+        : undefined,
       levelId: f.properties?.levelId,
       top: Number(f.properties?.topMetres),
       coordinates: f.geometry.coordinates,
@@ -46,12 +57,36 @@ export function stairFloorApertures<T extends Geometry>(
       const nearby = cuts.filter(
         ({ box: c, top }) =>
           (!relativeHeights || top <= Number(f.properties?.base) + 0.025) &&
-          b[0] <= c[2] &&
-          b[2] >= c[0] &&
-          b[1] <= c[3] &&
-          b[3] >= c[1],
+          (data?.nativeIndoorEnvelopes ||
+            (b[0] <= c[2] && b[2] >= c[0] && b[1] <= c[3] && b[3] >= c[1])),
       );
       if (nearby.length === 0) return f;
+      if (data?.nativeIndoorEnvelopes) {
+        const source = nativeRenderExactParts(f.properties);
+        if (!source || nearby.some((c) => !c.native))
+          throw new Error(
+            "Strict native stair aperture lacks native drawing coordinates.",
+          );
+        const drawing = nativeRenderProperties(
+          nativeRationalOverlay(
+            "difference",
+            source,
+            ...nearby.map((c) => c.native!),
+          ),
+        );
+        return {
+          ...f,
+          properties: { ...f.properties, ...drawing },
+          geometry: {
+            ...f.geometry,
+            coordinates: drawing.nativeDisplayPartsFeet.map((part) =>
+              part.map((ring) =>
+                [...ring, ring[0]].map((p) => geographicPoint(data, p)),
+              ),
+            ),
+          },
+        };
+      }
       try {
         const coordinates = polygonClipping.difference(
           f.geometry.coordinates.map((polygon) =>

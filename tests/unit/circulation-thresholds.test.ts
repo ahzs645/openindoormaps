@@ -281,3 +281,23 @@ test("native thresholds keep columns, other walls, staff rooms and actual slab h
     );
   }
 });
+
+test("strict native floor rendering never restores historical threshold paint", () => {
+  const d = fixture();
+  d.nativeIndoorEnvelopes = {
+    version: 1,
+    sourceModelSha256: d.source.modelSha256,
+    geometrySha256: "a".repeat(64),
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 10, 10)]],
+        sourceElementIds: [1],
+        cutElevationsFeet: [4],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  assert.deepEqual(circulationThresholds(d, d.records), []);
+});

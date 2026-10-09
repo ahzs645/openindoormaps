@@ -18,13 +18,26 @@ jobs:
       contents: read
       pages: read
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: openindoormaps
     steps:
       - uses: actions/checkout@v7
+        with:
+          path: openindoormaps
+      - name: Check out sibling compiler for parity tests
+        uses: actions/checkout@v7
+        with:
+          repository: ahzs645/reviter
+          path: reviter
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: openindoormaps/package-lock.json
       - run: npm ci
+      - name: Install sibling compiler dependencies
+        run: npm ci --prefix ../reviter
       - name: Check prepared-project types
         run: npx tsc -p tsconfig.indoor-project.json
       - name: Check routing and worker lifecycle
@@ -45,7 +58,7 @@ jobs:
       - name: Upload site
         uses: actions/upload-pages-artifact@v5
         with:
-          path: dist
+          path: openindoormaps/dist
 
   deploy:
     needs: build
