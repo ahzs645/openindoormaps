@@ -82,11 +82,8 @@ export function precisionWallMesh(
         positions[i * 3] = p.getX(i);
         positions[i * 3 + 1] = p.getY(i);
         positions[i * 3 + 2] = p.getZ(i) + base;
-        const color = nativeColor
-          ? nativeColor
-          : Math.abs(n.getZ(i)) > 0.5
-            ? topColor
-            : sideColor;
+        const color =
+          nativeColor ?? (Math.abs(n.getZ(i)) > 0.5 ? topColor : sideColor);
         colors[i * colorSize] = color.r;
         colors[i * colorSize + 1] = color.g;
         colors[i * colorSize + 2] = color.b;

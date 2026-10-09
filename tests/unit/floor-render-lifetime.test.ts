@@ -126,11 +126,8 @@ function referenceMesh(
         n = part.getAttribute("normal");
       for (let i = 0; i < p.count; i++) {
         positions.push(p.getX(i), p.getY(i), p.getZ(i) + base);
-        const color = nativeColor
-          ? nativeColor
-          : Math.abs(n.getZ(i)) > 0.5
-            ? topColor
-            : sideColor;
+        const color =
+          nativeColor ?? (Math.abs(n.getZ(i)) > 0.5 ? topColor : sideColor);
         colors.push(color.r, color.g, color.b);
         if (windowOpacity) colors.push(Number(f.properties?.opacity ?? 1));
       }
@@ -326,7 +323,9 @@ test("diagnostics are opt-in, scalar-only and never reach the floor client", () 
     const value = {} as PreparedFloor;
     raw.reply({ requestId: 2, value, memoryCostBytes: 1 });
     assert.equal(delivered.length, 1);
-    const worker = recorded.find((e) => e.stage === "floor-worker:prepare-floor");
+    const worker = recorded.find(
+      (e) => e.stage === "floor-worker:prepare-floor",
+    );
     assert(worker);
     assert.equal(worker.ms, 5);
     assert.equal("geometry" in worker, false, "non-scalars are dropped");
