@@ -1,0 +1,63 @@
+--- a/app/indoor-project/prepared-routing.ts	2026-10-09 14:37:41.097540526 +0000
++++ app/indoor-project/prepared-routing.ts	2026-10-09 15:55:58.255453060 +0000
+@@ -2,6 +2,7 @@
+ import { bytesToHex } from "@noble/hashes/utils.js";
+ import type { IndoorDataset } from "./contract";
+ import { routingCalculationValue, routingSnapshot } from "./routing-cache";
++import { routeWorkerDataset } from "./route-worker-dataset";
+ export const ROUTING_GUIDE_VERSION = "native-walking-guides-1";
+ export type PreparedRouting = {
+   version: 1;
+@@ -15,15 +16,47 @@
+   IndoorDataset,
+   { snapshot: string; digest: string }
+ >();
++/** The routing-physical projection that master, route worker and campus viewer
++ * share. It removes ONLY fields that no route policy, blocker or guide
++ * calculation reads: render tessellation (circulation containedDisplay and
++ * displayResidualTopology, stair/ramp display bodies, explore mapping, windows),
++ * authoring note text on indoor exclusions and superseded cached stair treads.
++ * Every physical/policy input (records, nodes, edges, doors, walls, material,
++ * envelopes, seals, frame returns, exclusion footprints, walking support,
++ * exact circulation topology and cells) stays in the binding, so any physical
++ * or permission edit still invalidates the prepared guides. Validation of the
++ * removed render fields is unchanged and still runs on their own paths. */
++export function preparedRoutingBindingDataset(
++  data: IndoorDataset,
++): IndoorDataset {
++  const worker = routeWorkerDataset(data);
++  return {
++    ...worker,
++    indoorExclusions: worker.indoorExclusions && {
++      ...worker.indoorExclusions,
++      areas: worker.indoorExclusions.areas.map(({ notes: _, ...area }) => area),
++    },
++    stairDisplay: worker.stairDisplay && {
++      ...worker.stairDisplay,
++      flights: [],
++      sourceFlights: worker.stairDisplay.sourceFlights?.map(
++        ({ historicalPreparedTreads: _, ...flight }) => flight,
++      ),
++    },
++  } as IndoorDataset;
++}
+ /** Includes policy as well as geometry: a source edit may change which door
+- * an otherwise identical walking branch is allowed to cross. */
++ * an otherwise identical walking branch is allowed to cross. The digest is
++ * computed over the shared routing-physical projection, so the same prepared
++ * guides bind in the authoring master, the route worker and the viewer. */
+ export function preparedRoutingKey(data: IndoorDataset): string {
+   return routingCalculationValue(data, "prepared-routing-binding", () => {
++    const binding = preparedRoutingBindingDataset(data);
+     const snapshot = JSON.stringify([
+-      routingSnapshot(data),
+-      data.walls,
+-      data.alignment,
+-      data.nodes,
++      routingSnapshot(binding),
++      binding.walls,
++      binding.alignment,
++      binding.nodes,
+     ]);
+     const previous = bindings.get(data);
+     if (previous?.snapshot === snapshot) return previous.digest;
