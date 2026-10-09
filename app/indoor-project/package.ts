@@ -50,6 +50,7 @@ import {
   validateNativeIndoorEnvelopes,
   verifyNativeIndoorEnvelopes,
   type NativeIndoorEnvelopes,
+  nativeIndoorEnvelopeAuthored,
 } from "./native-indoor-envelopes";
 import {
   validateNativeDisplayScopes,
@@ -207,7 +208,7 @@ function validateIndoorScopeBinding(
   );
   if (
     JSON.stringify(rooms.nativeIndoorEnvelopes) !==
-    JSON.stringify(dataset.nativeIndoorEnvelopes)
+    JSON.stringify(nativeIndoorEnvelopeAuthored(dataset.nativeIndoorEnvelopes))
   )
     throw new Error(
       "Source and prepared native indoor enclosures do not match. Regenerate the master.",

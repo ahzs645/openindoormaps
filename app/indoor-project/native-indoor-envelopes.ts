@@ -104,6 +104,40 @@ export function validateNativeIndoorEnvelopes(
     }
   }
 }
+/** Authored envelope of a prepared envelope that may carry a compiler-derived supplement
+ * (reviter `native-indoor-envelope-supplement.ts`): appended parts and their `supplements` records
+ * are removed and `authoredGeometrySha256` becomes the checksum again. Source/prepared parity
+ * compares this with the source envelope byte for byte; the supplement itself stays covered by the
+ * prepared envelope checksum. */
+export function nativeIndoorEnvelopeAuthored(
+  value: NativeIndoorEnvelopes | undefined,
+): NativeIndoorEnvelopes | undefined {
+  type Supplemented = Omit<NativeIndoorEnvelopes, "levels"> & {
+    authoredGeometrySha256?: string;
+    levels: (NativeIndoorEnvelopes["levels"][number] & {
+      supplements?: { partStartIndex: number; partCount: number }[];
+    })[];
+  };
+  const v = value as unknown as Supplemented | undefined;
+  if (!v || v.authoredGeometrySha256 === undefined) return value;
+  if (!/^[a-f0-9]{64}$/.test(v.authoredGeometrySha256))
+    throw new Error("Native envelope supplement lost its authored checksum.");
+  const { authoredGeometrySha256, ...rest } = v;
+  const levels = v.levels.map((level) => {
+    if (level.supplements === undefined) return level;
+    const { supplements, ...authored } = level;
+    let next = supplements[0]?.partStartIndex;
+    for (const s of supplements) {
+      if (!Number.isSafeInteger(s.partStartIndex) || s.partStartIndex !== next || !Number.isSafeInteger(s.partCount) || s.partCount < 1)
+        throw new Error("Invalid native envelope supplement records.");
+      next = s.partStartIndex + s.partCount;
+    }
+    if (!supplements.length || next !== level.partsFeet.length || supplements[0]!.partStartIndex < 1)
+      throw new Error("Native envelope supplement parts must follow every authored part.");
+    return { ...authored, partsFeet: level.partsFeet.slice(0, supplements[0]!.partStartIndex) };
+  });
+  return { ...rest, geometrySha256: authoredGeometrySha256, levels } as unknown as NativeIndoorEnvelopes;
+}
 /** Evidence text/checksum is bound together with all exact geometry and IDs. */
 export async function nativeIndoorEnvelopeHash(
   value: Omit<NativeIndoorEnvelopes, "geometrySha256"> | NativeIndoorEnvelopes,
