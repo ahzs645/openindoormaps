@@ -87,7 +87,7 @@ test("a drawing-backed seal across a measured joint is reversible assumed materi
   assert.deepEqual(JSON.stringify(runtime.partsAt(0.1)), JSON.stringify(source.partsAt(0.1)));
   assert.ok(runtime.partsAt(0.1).length > 0, "applied row is material at its cut");
   assert.deepEqual(drawingBackedAssumptionFootprint(rowOf(data).drawingBacked.construction), sourceFootprint(rowOf(data).drawingBacked.construction));
-  assert.deepEqual(nativeProvisionalAssumptionCounts(data.nativeProvisionalCornerSeals), { humanAuthorizedCornerSeals: 0, drawingBacked: 1, drawingBackedByKind: { "dwg-continuous-seal": 1, "dwg-assumed-wall": 0, "dwg-assumed-column": 0, "exact-contact-closure": 0 }, sourceVerified: 0 });
+  assert.deepEqual(nativeProvisionalAssumptionCounts(data.nativeProvisionalCornerSeals), { humanAuthorizedCornerSeals: 0, drawingBacked: 1, drawingBackedByKind: { "dwg-continuous-seal": 1, "dwg-assumed-wall": 0, "dwg-assumed-column": 0, "exact-contact-closure": 0, "owner-authorized-seal": 0 }, sourceVerified: 0 });
   verifyDrawingBackedDrawingEvidence(data.nativeProvisionalCornerSeals, boundaryReference);
   sourceDrawingEvidence(data.nativeProvisionalCornerSeals as never, boundaryReference);
   // removing the row restores original material exactly (reversible, no source mutation)
@@ -116,7 +116,7 @@ test("guards: changed body, distant drawing, covered foreign material, oversized
   assert.throws(() => createNativeProvisionalCornerSealIndex(tampered.rehash()), /differs from its declared construction/);
   assert.throws(() => createNativeProvisionalCornerSealIndex(fixture({ segment: [[0, 1], [3, 1]] }).rehash()), /not continuous/);
   assert.throws(() => createNativeProvisionalCornerSealIndex(fixture({ extraSection: rect(1.03, -0.6, 1.07, -0.4) }).rehash()), /foreign/);
-  assert.throws(() => createNativeProvisionalCornerSealIndex(fixture({ gap: 1.6 }).rehash()), /Invalid|limit|drawing-backed/i);
+  assert.throws(() => createNativeProvisionalCornerSealIndex(fixture({ gap: 1.7 }).rehash()), /Invalid|limit|drawing-backed/i);
   assert.throws(() => createNativeProvisionalCornerSealIndex(fixture({ gap: 0.001, kind: "exact-contact-closure" }).rehash()), /Invalid|bound|drawing-backed/i);
   const exact = fixture({ gap: 1e-5, kind: "exact-contact-closure" });
   assert.ok(createNativeProvisionalCornerSealIndex(exact.rehash()).partsAt(0.1).length > 0, "an exact contact within the declared bound closes");
@@ -127,4 +127,20 @@ test("a proposed drawing-backed row adds no material", () => {
   rowOf(data).state = "proposed";
   rowOf(data).assumption.authorizationRecorded = false;
   assert.equal(createNativeProvisionalCornerSealIndex(rehash()).partsAt(0.1).length, 0);
+});
+
+test("an owner-authorized seal needs a named owner decision, not the standing policy, and no drawing", () => {
+  const make = (decisionId: string) => {
+    const f = fixture();
+    const r = rowOf(f.data);
+    r.drawingBacked.kind = "owner-authorized-seal";
+    r.drawingBacked.decisionId = decisionId;
+    delete r.drawingBacked.dwg;
+    r.assumption.evidenceSha256 = "4".repeat(64);
+    return f.rehash();
+  };
+  const ok = make("2026-10-09-round2#env-3");
+  assert.ok(createNativeProvisionalCornerSealIndex(ok).partsAt(0.1).length > 0);
+  assert.equal(nativeProvisionalAssumptionCounts(ok.nativeProvisionalCornerSeals).drawingBackedByKind["owner-authorized-seal"], 1);
+  assert.throws(() => createNativeProvisionalCornerSealIndex(make("2026-10-09-gap-review#standingPolicy")), /Invalid drawing-backed/);
 });
