@@ -52,6 +52,7 @@ import {
   type NativeIndoorEnvelopes,
   nativeIndoorEnvelopeAuthored,
 } from "./native-indoor-envelopes";
+import { validateNativeMaterialSectionSupplement } from "./native-material-section-supplement";
 import {
   validateNativeDisplayScopes,
   type NativeDisplayScopes,
@@ -202,6 +203,11 @@ function validateIndoorScopeBinding(
     throw new Error(
       "Source and prepared original native materials do not match.",
     );
+  validateNativeMaterialSectionSupplement(
+    dataset.nativeMaterialSectionSupplement,
+    dataset.nativeMaterialSections,
+    dataset.source.modelSha256,
+  );
   validateNativeIndoorEnvelopes(
     rooms.nativeIndoorEnvelopes,
     dataset.source.modelSha256,

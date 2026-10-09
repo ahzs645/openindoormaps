@@ -113,6 +113,9 @@ export function routingSnapshot(data: IndoorDataset): string {
         ...(data.nativeDerivedFrameReturns
           ? ["native-derived-frame-returns-v1", data.nativeDerivedFrameReturns]
           : []),
+        ...(data.nativeMaterialSectionSupplement
+          ? ["native-material-section-supplement-v1", data.nativeMaterialSectionSupplement.geometrySha256]
+          : []),
         ...(data.nativeProvisionalCornerSeals
           ? [
               "native-provisional-corner-seals-v1",

@@ -166,6 +166,8 @@ export type IndoorDataset = {
   nativeDerivedFrameReturns?: import("./native-derived-frame-returns").NativeDerivedFrameReturns;
   nativeProvisionalCornerSeals?: import("./native-provisional-corner-seals").NativeProvisionalCornerSeals;
   nativeMaterialSections?: import("./native-material-sections").NativeMaterialSections;
+  /** Derived production-cutter sections of owners the prepared rows omit (compiler-only, re-derived). */
+  nativeMaterialSectionSupplement?: import("./native-material-section-supplement").NativeMaterialSectionSupplement;
   nativeIndoorEnvelopes?: import("./native-indoor-envelopes").NativeIndoorEnvelopes;
   /** Checked presentation coverage only; native selections and routes stay unchanged. */
   nativeDisplayScopes?: import("./native-display-scopes").NativeDisplayScopes;
