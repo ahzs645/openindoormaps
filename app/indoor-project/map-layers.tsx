@@ -14,6 +14,11 @@ import {
   timeFloorStage,
 } from "./floor-diagnostics";
 import {
+  preparedDisplayStatus,
+  shortEngine,
+  warnStalePreparedDisplay,
+} from "./prepared-display-status";
+import {
   emptyPreparedFloorSources,
   removePreparedCustomLayers,
 } from "./prepared-layer-lifetime";
@@ -1861,20 +1866,25 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
   const { map, isLoaded } = useMap();
   // Basemap visibility belongs to the mounted map, not a transient floor child.
   const basemapVisibility = useRef(new Map<string, string>());
+  const needsNativeDisplay = (props.nativeFloorLevels?.length ?? 0) > 0;
+  const preparationOptions = {
+    relativeHeights: props.relativeHeights,
+    showPillars: props.showPillars,
+    showPassThroughPlaces: props.showPassThroughPlaces,
+    showVestibuleDoors: props.showVestibuleDoors,
+    showStructures: props.showStructures,
+    showDoorwayRecesses: props.showDoorwayRecesses,
+    review: props.review,
+    simplifyGeometry: props.simplifyGeometry,
+  };
   const { value, error, retry } = usePreparedFloor(
     props.data,
     props.levelIds,
     props.building,
-    {
-      relativeHeights: props.relativeHeights,
-      showPillars: props.showPillars,
-      showPassThroughPlaces: props.showPassThroughPlaces,
-      showVestibuleDoors: props.showVestibuleDoors,
-      showStructures: props.showStructures,
-      showDoorwayRecesses: props.showDoorwayRecesses,
-      review: props.review,
-      simplifyGeometry: props.simplifyGeometry,
-    },
+    preparationOptions,
+    // Only the 2D native floor map renders the native area display. Other
+    // views get the same prepared floor without cloning that carrier.
+    { nativeDisplay: needsNativeDisplay },
   );
   const displayScope = props.levelIds.join(",");
   useEffect(() => {
@@ -1887,7 +1897,10 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
       retry,
       error:
         error ??
-        (value && props.data.nativeIndoorEnvelopes && !nativeDisplay
+        (value &&
+        needsNativeDisplay &&
+        props.data.nativeIndoorEnvelopes &&
+        !nativeDisplay
           ? "The prepared floor did not include its native area display. Retry floor preparation."
           : undefined),
     });
@@ -1901,6 +1914,7 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
     value,
     error,
     retry,
+    needsNativeDisplay,
   ]);
   useEffect(() => {
     if (!map || !isLoaded || value) return;
@@ -1919,6 +1933,14 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
   const floor = props.data.floors.find((f) =>
     props.levelIds.some((id) => f.levelIds.includes(id)),
   );
+  // Scalar archive lookup only; the worker still verifies everything.
+  const saved = preparedDisplayStatus(
+    props.data,
+    props.levelIds,
+    props.building,
+    preparationOptions,
+  );
+  warnStalePreparedDisplay(saved);
   return (
     <div className="project-floor-preparation" data-testid="floor-preparation">
       {error ? (
@@ -1934,6 +1956,14 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
         >
           <span className="project-floor-spinner" aria-hidden="true" />
           <strong>Preparing {floor?.name ?? "floor"}…</strong>
+          {saved.state === "stale-engine" && (
+            <p data-testid="floor-preparation-live">
+              Saved floor displays in this project were prepared by another app
+              version (display engine {shortEngine(saved.assetEngine)}, this app{" "}
+              {shortEngine(saved.runtimeEngine)}), so this floor is being
+              prepared live. This can take several minutes.
+            </p>
+          )}
         </div>
       )}
     </div>

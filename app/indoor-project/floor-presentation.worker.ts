@@ -3,11 +3,12 @@ import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import { deriveNativeExplore } from "./native-explore";
 import {
   prepareFloor,
-  type FloorPreparationRequest,
   type FloorPreparationResponse,
+  type PreparedFloor,
 } from "./prepared-floor";
 import type { IndoorDataset } from "./contract";
 import { loadPreparedDisplayAsset } from "./prepared-display-loader";
+import { PREPARED_DISPLAY_ENGINE_SHA256 } from "./prepared-display-engine-binding";
 import {
   COMPLETE_FLOOR_CACHE_BYTES,
   FloorMemoryCache,
@@ -18,6 +19,7 @@ import {
   createPreparedFloorCache,
   floorWorkerPreparationOptions,
 } from "./prepared-floor-cache";
+import type { FloorWorkerRequest } from "./floor-worker-client";
 import {
   configureFloorDiagnostics,
   floorDiagnostic,
@@ -30,9 +32,7 @@ import {
 // Kept separate from the main thread: polygon unions and clipping must never
 // run as a synchronous fallback when preparing a map floor.
 const scope = globalThis as unknown as {
-  onmessage: (
-    event: MessageEvent<FloorPreparationRequest & { diagnostics?: boolean }>,
-  ) => void;
+  onmessage: (event: MessageEvent<FloorWorkerRequest>) => void;
   postMessage: (
     message:
       | (FloorPreparationResponse & { nativeFaces?: NativeExploreResult })
@@ -73,16 +73,34 @@ async function nativeFaces(
 }
 /** Structured clone runs synchronously inside postMessage. Time it as its own
  * stage so worker serialization is not attributed to preparation. */
-function post(
-  requestId: number,
-  value: FloorPreparationResponse & { nativeFaces?: NativeExploreResult },
+/** Reply with the completed floor. The native display is attached unless the
+ * UI said it will not render it; the retention cost covers exactly what is
+ * sent. Structured clone runs synchronously inside postMessage, so it is
+ * timed as its own stage rather than attributed to preparation. */
+function reply(
+  request: FloorWorkerRequest,
+  value: PreparedFloor,
+  faces: NativeExploreResult | undefined,
 ) {
+  const requestId = request.requestId;
+  const nativeFaces = request.omitNativeDisplay ? undefined : faces;
+  const memoryCost = timeFloorStage(
+    "floor-worker:memory-cost",
+    () => memoryCostBytes(nativeFaces ? { value, nativeFaces } : { value }),
+    (bytes) => ({
+      requestId,
+      memoryCostBytes: bytes,
+      nativeDisplay: !!nativeFaces,
+    }),
+  );
+  const message: FloorPreparationResponse & {
+    nativeFaces?: NativeExploreResult;
+  } = { requestId, value, memoryCostBytes: memoryCost };
+  if (nativeFaces) message.nativeFaces = nativeFaces;
   timeFloorStage(
     "floor-worker:postMessage",
-    () => scope.postMessage(value),
-    () => ({
-      requestId,
-    }),
+    () => scope.postMessage(message),
+    () => ({ requestId }),
   );
 }
 scope.onmessage = async ({ data: request }) => {
@@ -113,23 +131,17 @@ scope.onmessage = async ({ data: request }) => {
       (value) => ({ requestId, used: !!value }),
     );
     if (saved) {
-      const cost = timeFloorStage(
-        "floor-worker:memory-cost",
-        () =>
-          memoryCostBytes({
-            value: saved.preparedFloor,
-            nativeFaces: saved.nativeFaces,
-          }),
-        (bytes) => ({ requestId, memoryCostBytes: bytes }),
-      );
-      post(requestId, {
-        requestId,
-        value: saved.preparedFloor,
-        nativeFaces: saved.nativeFaces,
-        memoryCostBytes: cost,
-      });
+      reply(request, saved.preparedFloor, saved.nativeFaces);
       return;
     }
+    const offered = request.preparedDisplay?.descriptor.binding;
+    if (offered)
+      // Never relabel or partially trust a stale asset; say why it is unused.
+      console.warn(
+        offered.enginePreparationSha256 === PREPARED_DISPLAY_ENGINE_SHA256
+          ? `Prepared floor display for levels ${request.levelIds.join(",")} is bound to other dataset bytes or options; preparing live.`
+          : `Prepared floor display for levels ${request.levelIds.join(",")} uses display engine ${offered.enginePreparationSha256}; this worker runs ${PREPARED_DISPLAY_ENGINE_SHA256}. Preparing live.`,
+      );
     if (dataset.nativeIndoorEnvelopes) await initializeNativeExactGeosOverlay();
     const faces = dataset.nativeIndoorEnvelopes
       ? await timeFloorStageAsync(
@@ -147,17 +159,7 @@ scope.onmessage = async ({ data: request }) => {
         }),
       () => ({ requestId }),
     );
-    const cost = timeFloorStage(
-      "floor-worker:memory-cost",
-      () => memoryCostBytes({ value, nativeFaces: faces }),
-      (bytes) => ({ requestId, memoryCostBytes: bytes }),
-    );
-    post(requestId, {
-      requestId,
-      value,
-      nativeFaces: faces,
-      memoryCostBytes: cost,
-    });
+    reply(request, value, faces);
   } catch (error) {
     floorDiagnostic("floor-worker:error", { requestId });
     scope.postMessage({
