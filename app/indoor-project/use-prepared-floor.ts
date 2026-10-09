@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { IndoorDataset } from "./contract";
 import type { FloorPreparationOptions, PreparedFloor } from "./prepared-floor";
 import { FloorWorkerClient, floorWorkerKey } from "./floor-worker-client";
+import { floorDiagnostic } from "./floor-diagnostics";
 
 export function usePreparedFloor(
   data: IndoorDataset,
@@ -35,15 +36,27 @@ export function usePreparedFloor(
   const cached = client.peek(data, key);
   useEffect(() => {
     let active = true;
-    if (client.peek(data, key)) return;
+    if (client.peek(data, key)) {
+      floorDiagnostic("floor-main:cache-hit", { levels: levels.length });
+      return;
+    }
     setResult(undefined);
+    const started = performance.now();
+    floorDiagnostic("floor-main:request", { levels: levels.length });
     const request = client.request(data, levels, building, options);
     request.promise.then(
       (value) => {
         if (active) {
           // Oversized floors are not cached. Release their worker's full source
           // dataset and decoded payload before preparing another large scope.
-          if (!client.peek(data, key)) client.dispose();
+          const cached = !!client.peek(data, key);
+          if (!cached) client.dispose();
+          floorDiagnostic("floor-main:resolved", {
+            levels: levels.length,
+            cached,
+            workerDisposed: !cached,
+            ms: performance.now() - started,
+          });
           setResult({ data, key, value });
         }
       },

@@ -18,13 +18,25 @@ import {
   createPreparedFloorCache,
   floorWorkerPreparationOptions,
 } from "./prepared-floor-cache";
+import {
+  configureFloorDiagnostics,
+  floorDiagnostic,
+  floorDiagnosticsEnabled,
+  timeFloorStage,
+  timeFloorStageAsync,
+  type FloorDiagnosticEntry,
+} from "./floor-diagnostics";
 
 // Kept separate from the main thread: polygon unions and clipping must never
 // run as a synchronous fallback when preparing a map floor.
 const scope = globalThis as unknown as {
-  onmessage: (event: MessageEvent<FloorPreparationRequest>) => void;
+  onmessage: (
+    event: MessageEvent<FloorPreparationRequest & { diagnostics?: boolean }>,
+  ) => void;
   postMessage: (
-    message: FloorPreparationResponse & { nativeFaces?: NativeExploreResult },
+    message:
+      | (FloorPreparationResponse & { nativeFaces?: NativeExploreResult })
+      | { requestId: number; diagnostic: FloorDiagnosticEntry },
   ) => void;
 };
 let data: IndoorDataset | undefined;
@@ -59,48 +71,101 @@ async function nativeFaces(
     nativeCache.set(key, result, memoryCostBytes(result));
   return result;
 }
+/** Structured clone runs synchronously inside postMessage. Time it as its own
+ * stage so worker serialization is not attributed to preparation. */
+function post(
+  requestId: number,
+  value: FloorPreparationResponse & { nativeFaces?: NativeExploreResult },
+) {
+  timeFloorStage(
+    "floor-worker:postMessage",
+    () => scope.postMessage(value),
+    () => ({
+      requestId,
+    }),
+  );
+}
 scope.onmessage = async ({ data: request }) => {
+  const requestId = request.requestId;
+  configureFloorDiagnostics(request.diagnostics === true, (diagnostic) =>
+    scope.postMessage({ requestId, diagnostic }),
+  );
   try {
+    floorDiagnostic("floor-worker:request", {
+      requestId,
+      datasetIncluded: !!request.data,
+      levels: request.levelIds.length,
+      preparedAssetOffered: !!request.preparedDisplay,
+    });
     if (request.data) data = request.data;
     if (!data) throw new Error("The floor worker has no project data.");
     const dataset = data;
-    const saved = await loadPreparedDisplayAsset(
-      dataset,
-      request.levelIds,
-      request.building,
-      request.preparedDisplay,
-      request.options,
+    const saved = await timeFloorStageAsync(
+      "floor-worker:prepared-asset",
+      () =>
+        loadPreparedDisplayAsset(
+          dataset,
+          request.levelIds,
+          request.building,
+          request.preparedDisplay,
+          request.options,
+        ),
+      (value) => ({ requestId, used: !!value }),
     );
     if (saved) {
-      scope.postMessage({
-        requestId: request.requestId,
+      const cost = timeFloorStage(
+        "floor-worker:memory-cost",
+        () =>
+          memoryCostBytes({
+            value: saved.preparedFloor,
+            nativeFaces: saved.nativeFaces,
+          }),
+        (bytes) => ({ requestId, memoryCostBytes: bytes }),
+      );
+      post(requestId, {
+        requestId,
         value: saved.preparedFloor,
         nativeFaces: saved.nativeFaces,
-        memoryCostBytes: memoryCostBytes({
-          value: saved.preparedFloor,
-          nativeFaces: saved.nativeFaces,
-        }),
+        memoryCostBytes: cost,
       });
       return;
     }
     if (dataset.nativeIndoorEnvelopes) await initializeNativeExactGeosOverlay();
     const faces = dataset.nativeIndoorEnvelopes
-      ? await nativeFaces(dataset, request.levelIds, request.building)
+      ? await timeFloorStageAsync(
+          "floor-worker:native-faces",
+          () => nativeFaces(dataset, request.levelIds, request.building),
+          (result) => ({ requestId, regions: result.regions.length }),
+        )
       : undefined;
-    const value = preparedFloor(dataset, request.levelIds, request.building, {
-      ...floorWorkerPreparationOptions(dataset, request.options),
-      ...(faces ? { nativeFaces: faces } : {}),
-    });
-    scope.postMessage({
-      requestId: request.requestId,
+    const value = timeFloorStage(
+      "floor-worker:prepare-floor",
+      () =>
+        preparedFloor(dataset, request.levelIds, request.building, {
+          ...floorWorkerPreparationOptions(dataset, request.options),
+          ...(faces ? { nativeFaces: faces } : {}),
+        }),
+      () => ({ requestId }),
+    );
+    const cost = timeFloorStage(
+      "floor-worker:memory-cost",
+      () => memoryCostBytes({ value, nativeFaces: faces }),
+      (bytes) => ({ requestId, memoryCostBytes: bytes }),
+    );
+    post(requestId, {
+      requestId,
       value,
       nativeFaces: faces,
-      memoryCostBytes: memoryCostBytes({ value, nativeFaces: faces }),
+      memoryCostBytes: cost,
     });
   } catch (error) {
+    floorDiagnostic("floor-worker:error", { requestId });
     scope.postMessage({
-      requestId: request.requestId,
+      requestId,
       error: error instanceof Error ? error.message : String(error),
     });
+  } finally {
+    if (floorDiagnosticsEnabled())
+      floorDiagnostic("floor-worker:done", { requestId });
   }
 };

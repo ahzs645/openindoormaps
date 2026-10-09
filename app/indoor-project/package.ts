@@ -361,6 +361,7 @@ const hash = async (bytes: Uint8Array) =>
   ]
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
+const EMPTY_ARCHIVE = new Uint8Array(0);
 export async function readIndoorProject(
   bytes: Uint8Array,
   onProgress?: ProjectImportObserver,
@@ -390,6 +391,11 @@ export async function readIndoorProject(
   const files = await new Promise<Unzipped>((resolve, reject) =>
     unzip(bytes, (err, f) => (err ? reject(err) : resolve(f))),
   );
+  // Every entry is inflated. Drop this frame's archive reference so a caller
+  // that handed over ownership (the package worker) does not keep the whole
+  // compressed ZIP alive through the remaining validation. Callers that keep
+  // their own reference are unaffected.
+  bytes = EMPTY_ARCHIVE;
   if (!files["manifest.json"]) throw new Error("Missing Reviter manifest.");
   const manifest = JSON.parse(strFromU8(files["manifest.json"])) as Manifest;
   if (manifest.format === "openindoormaps-viewer")

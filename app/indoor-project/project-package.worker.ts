@@ -15,9 +15,14 @@ worker.onmessage = async ({
   data: request,
 }: MessageEvent<ProjectPackageRequest>) => {
   try {
+    // The transferred ZIP is owned by this job only. Detach it from the
+    // retained message object so it can be collected once it is inflated.
+    const archive = request.kind === "import" ? request.bytes : undefined;
+    if (request.kind === "import")
+      (request as { bytes?: Uint8Array }).bytes = undefined;
     const result =
       request.kind === "import"
-        ? await readIndoorProject(request.bytes, (progress) =>
+        ? await readIndoorProject(archive!, (progress) =>
             worker.postMessage({ kind: request.kind, progress }),
           )
         : request.kind === "folder"

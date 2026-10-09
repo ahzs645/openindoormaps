@@ -11,6 +11,7 @@ import {
   type ProjectImportObserver,
   type ProjectImportProgress,
 } from "./project-import-progress";
+import { floorDiagnostic } from "./floor-diagnostics";
 
 export type ProjectPackageRequest =
   | { kind: "import"; bytes: Uint8Array }
@@ -87,6 +88,9 @@ export function runProjectPackageJob<T>(
             new Error("Invalid indoor import progress response."),
           );
         } else {
+          floorDiagnostic(`import:${data.progress.stage}`, {
+            elapsedMs: data.progress.elapsedMs,
+          });
           try {
             onProgress?.(data.progress);
           } catch (error) {
@@ -98,6 +102,9 @@ export function runProjectPackageJob<T>(
         }
         return;
       }
+      floorDiagnostic(`package:${request.kind}:result`, {
+        error: !!data.error,
+      });
       if (data.error) finish(undefined, new Error(data.error));
       else if (data.result === undefined)
         finish(

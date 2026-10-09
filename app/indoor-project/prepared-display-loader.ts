@@ -8,6 +8,11 @@ import {
 } from "./prepared-display-assets";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "./prepared-display-engine-binding";
 import {
+  floorDiagnostic,
+  timeFloorStage,
+  timeFloorStageAsync,
+} from "./floor-diagnostics";
+import {
   preparedDisplayOptions,
   type PreparedDisplayAssetRequest,
 } from "./prepared-display-registry";
@@ -23,8 +28,16 @@ export async function loadPreparedDisplayAsset(
 ) {
   if (!asset || building !== "all") return undefined;
   const binding = asset.descriptor.binding;
+  const engineMatches =
+    binding.enginePreparationSha256 === PREPARED_DISPLAY_ENGINE_SHA256;
+  floorDiagnostic("prepared-asset:offered", {
+    engineMatches,
+    levels: levelIds.length,
+    logicalJsonBytes: asset.descriptor.logicalJsonBytes,
+    pooledJsonBytes: asset.descriptor.pooledJsonBytes,
+  });
   if (
-    binding.enginePreparationSha256 !== PREPARED_DISPLAY_ENGINE_SHA256 ||
+    !engineMatches ||
     binding.building !== building ||
     binding.windowMode !== (data.windowDisplay?.mode ?? "none") ||
     binding.levelIds.length !== levelIds.length ||
@@ -43,23 +56,31 @@ export async function loadPreparedDisplayAsset(
   }
   // Source objects can be edited in place by CLI callers. Hash actual bytes
   // in this worker, rather than treating object identity as source authority.
-  const datasetSha256 = preparedDisplayDatasetSha256(data);
-  if (binding.datasetSha256 !== datasetSha256) return undefined;
-  const value = await decodePreparedDisplayAsset(
-    asset.descriptor,
-    {
-      version: 1,
-      datasetSha256,
-      enginePreparationSha256: PREPARED_DISPLAY_ENGINE_SHA256,
-      levelIds,
-      building,
-      windowMode: data.windowDisplay?.mode ?? "none",
-      options: options
-        ? preparedDisplayOptions(data, options)
-        : binding.options,
-    },
-    (sha) => Promise.resolve(asset.blobs[sha]),
+  const datasetSha256 = timeFloorStage("prepared-asset:dataset-hash", () =>
+    preparedDisplayDatasetSha256(data),
   );
+  if (binding.datasetSha256 !== datasetSha256) {
+    floorDiagnostic("prepared-asset:dataset-mismatch");
+    return undefined;
+  }
+  const value = await timeFloorStageAsync("prepared-asset:decode", () =>
+    decodePreparedDisplayAsset(
+      asset.descriptor,
+      {
+        version: 1,
+        datasetSha256,
+        enginePreparationSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+        levelIds,
+        building,
+        windowMode: data.windowDisplay?.mode ?? "none",
+        options: options
+          ? preparedDisplayOptions(data, options)
+          : binding.options,
+      },
+      (sha) => Promise.resolve(asset.blobs[sha]),
+    ),
+  );
+  const sourceComparisonStart = performance.now();
   if (data.nativeExploreMapping?.version === 3) {
     // A cached hit-test carrier cannot replace the validated native mapping.
     const topologies = value.nativeFaces.exactTopologies ?? [];
@@ -129,7 +150,12 @@ export async function loadPreparedDisplayAsset(
         "cached native mapping omitted a positive source face",
       );
   }
+  floorDiagnostic("prepared-asset:source-comparison", {
+    ms: performance.now() - sourceComparisonStart,
+  });
   if (data.nativeExploreMapping?.version === 3)
-    validateNativeCachedDrawing(data, levelIds, value.nativeFaces, building);
+    timeFloorStage("prepared-asset:cached-drawing-validation", () =>
+      validateNativeCachedDrawing(data, levelIds, value.nativeFaces, building),
+    );
   return value;
 }
