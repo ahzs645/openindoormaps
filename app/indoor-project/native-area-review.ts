@@ -43,6 +43,10 @@ import {
 } from "./native-selection-topology";
 import { validateDoorApertureBinding } from "./reviewed-door-apertures";
 import { nativeDoorBoundaryClosureFootprints } from "./native-door-boundary-closures";
+import {
+  NATIVE_SELECTION_POINT_CONTACT_VERSION,
+  splitNativeSelectionPointContacts,
+} from "./native-selection-point-contacts";
 import { selectionDoorIds } from "./selection-door-thresholds";
 import {
   checkReviewedAreaPartition,
@@ -562,6 +566,7 @@ export async function nativeAreaGeometrySha256(
             NATIVE_FLOOR_CONTACT_SELECTION_VERSION,
             NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
             "native-selection-rational-authority-v1",
+            NATIVE_SELECTION_POINT_CONTACT_VERSION,
           ]
         : [NATIVE_BARRIER_TOPOLOGY_VERSION, NATIVE_SELECTION_TOPOLOGY_VERSION]),
       ...(data.nativeMaterialSections ? [data.nativeMaterialSections] : []),
@@ -1017,6 +1022,15 @@ export async function deriveNativeAreas(
     } else remaining = pc.intersection(remaining, [options.cropPolygonFeet]);
     cropEvidence =
       "User-drawn boundary clipped to native floor support. Verify the excluded extent in the full source model before applying; real floor holes remain.";
+  }
+  if (remainingExact) {
+    // Selection only: interiors that meet at isolated exact points are
+    // separate areas. Physical geometry, holes, doors and routes are untouched.
+    const pointContacts = splitNativeSelectionPointContacts(remainingExact);
+    if (pointContacts.splitParts) {
+      remainingExact = pointContacts.parts;
+      remaining = nativeExactPartsForProposals(remainingExact);
+    }
   }
   const geometrySha256 = await nativeAreaGeometrySha256(data, levelId, options);
   const records = data.records.filter((r) => r.levelId === levelId);
