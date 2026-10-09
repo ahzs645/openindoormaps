@@ -1,0 +1,18 @@
+{
+  "format": "openindoormaps-user-decisions",
+  "version": 1,
+  "recordedAt": "2026-10-09T17:00:00Z",
+  "source": "Answers page https://claude.ai/artifact/6j9Q7hsq1tMxPCreDqMAs2 (collection answers), written by the project owner",
+  "evidence": "scratchpad question images rendered from RUN/routing-followup/b9, RUN/shared-extracts (compiled 2fad94…, registered DWG sections), RUN/routing-followup/b78; see questions.json beside this file",
+  "standingPolicy": "Where the Revit model (built by a first-time Revit user) is missing or incomplete, the registered DWG floor plan is the authority. Implement corrections as separate, reversible, tagged patches labelled as drawing-backed assumptions (never by mutating the original RVT/GLB/GIS bytes), so the model stays reusable elsewhere, and make the mechanism generic so the same class of defect is handled everywhere, not just at these locations.",
+  "decisions": {
+    "q1a": {"choice": "Seal provisionally", "subject": "B9 Floor 0.5 63.5 mm gap wall #1521222 / mullion #1948433 beside door #1948341", "note": "same problem as 1D comments"},
+    "q1b": {"choice": "Seal provisionally", "subject": "B9 east facade hairline 0.0016 mm mullion #1522662 / end of wall #1521392 (previously misreported as 50 mm)", "note": "see 1D since its the same problem"},
+    "q1c": {"choice": "Seal provisionally", "subject": "B9 west 11.9 mm wall #1521468 / mullion #1521453", "note": "look at 1D"},
+    "q1d": {"choice": "Seal provisionally", "subject": "B9 +8 ft 1.03 ft opening, column #1521242 has no cut at 8 ft", "note": "again can you make it like the dwg floorplan I provided and because this wasnt done properly can you implement all the changes necessary? so that there arent issues in the future?"},
+    "q2": {"choice": "Yes, use an exact-contact rule", "subject": "13 micro-gaps <= 1.4e-5 ft (curtain joints, jambs of doors #1964672/#1521412/#1951047)", "note": "can you make it still patches so that future use of this model in other places wont have an issue?"},
+    "q3": {"choice": "Treat as an assumed wall", "subject": "B9 Floor 2 facades: reconstructed display-only walls #1521701/#1521704/#1522479, uncut columns #1521703/#1521705/#1521706/#1521707, DWG facade line #710", "note": "I want you to do what we need to based on the drawings since the revit model was done by someone who just learned how to use it so I want you to add the patches necessary"},
+    "q4": {"choice": "Yes, it connects them", "subject": "B7/8 Floor 1.25 door #1630256 connects ramp #1622190 upper landing and stair 08-S101", "note": ""},
+    "q5": {"choice": "Modelling gap, keep 08-106 separate", "subject": "08-106 corner seam, walls #2017986/#2017949, zero width, DWG corner closed", "note": ""}
+  }
+}
