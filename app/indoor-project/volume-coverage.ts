@@ -3,6 +3,35 @@ import type { IndoorDataset } from "./contract";
 import { isFlatArea } from "./display-passages";
 import { prepareFloor } from "./prepared-floor";
 
+/** Reporting provenance only. This never approves an enclosure or changes
+ * prepared geometry, block counts, access or routes. Missing evidence is not
+ * evidence of a legacy authoring outline. */
+export function volumeSelectionMaskSource(
+  properties: Record<string, unknown> | null | undefined,
+): string {
+  const mask = properties?.floorMaskSource;
+  if (typeof mask === "string" && mask.trim()) {
+    if (mask === "source-native-face")
+      return properties?.boundarySource === "source-native-face" &&
+        properties?.nativePhysical === true
+        ? mask
+        : "unverified-selection";
+    return mask;
+  }
+  const boundary = properties?.boundarySource;
+  if (boundary === "source-native-face")
+    return properties?.nativePhysical === true
+      ? "source-native-face"
+      : "unverified-selection";
+  if (boundary === "source-footprint" || boundary === "source-outline")
+    return "source-outline";
+  // Retain declared prepared/native/drawing distinctions without promoting
+  // them to a complete native face or a certified raised enclosure.
+  return typeof boundary === "string" && boundary.trim()
+    ? boundary
+    : "unverified-selection";
+}
+
 export const volumeScopes = (data: IndoorDataset) => [
   ...data.floors.map((f) => ({ ...f, scope: "campus-floor" as const })),
   ...data.nativeLevels.map((f) => ({
@@ -42,9 +71,7 @@ export function auditVolumeScope(
     for (const f of prepared.selectionAreas.features) {
       const key = String(f.properties?.key);
       if (!masks.has(key)) masks.set(key, new Set());
-      masks
-        .get(key)!
-        .add(String(f.properties?.floorMaskSource ?? "source-outline"));
+      masks.get(key)!.add(volumeSelectionMaskSource(f.properties));
     }
     return { relativeHeights, blocks, masks };
   });

@@ -56,7 +56,7 @@ function nativeCellAccessIsSupported(
           continue;
         const identity = nativeRoomIdentityRings(data, record),
           ps = identity.flat();
-        if (!ps.length) continue;
+        if (ps.length === 0) continue;
         if (
           Math.max(...ps.map((p) => p[0])) < loX - broadAllowance ||
           Math.min(...ps.map((p) => p[0])) > hiX + broadAllowance ||
@@ -64,13 +64,26 @@ function nativeCellAccessIsSupported(
           Math.min(...ps.map((p) => p[1])) > hiY + broadAllowance
         )
           continue;
-        const overlap = nativeRationalOverlay("intersection", face, [identity]);
+        // Prune only provably disjoint intersection rings. Keep the complete
+        // face and identity below as the unchanged majority-area authority.
+        const nearbyFace = nativeRationalIntersectionOperand([identity], face);
+        const overlap =
+          nearbyFace.length > 0
+            ? nativeRationalOverlay("intersection", [identity], nearbyFace)
+            : [];
         if (
           nativeRationalAreaCompare(overlap, []) > 0 &&
           (nativeRationalAreaCompare(overlap, face, 2n) >= 0 ||
             nativeRationalAreaCompare(
               overlap,
-              nativeRationalOverlay("union", [identity]),
+              routingCalculationValue(
+                data,
+                `native-exact-access-identity:${record.key}`,
+                () =>
+                  freezeNativeRationalParts(
+                    nativeRationalOverlay("union", [identity]),
+                  ),
+              ),
               2n,
             ) >= 0)
         )
@@ -263,7 +276,9 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
         ? exactIndex?.parts(cell.exactFaceId)
         : undefined;
       if (!source)
-        throw Error("Contained native cell drawing lacks its exact authority.");
+        throw new Error(
+          "Contained native cell drawing lacks its exact authority.",
+        );
       validateNativeContainedCellDisplay(
         cell.containedDisplay,
         source,
@@ -328,7 +343,7 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
     if (
       cell.connectorAnchors !== undefined &&
       (!Array.isArray(cell.connectorAnchors) ||
-        !cell.connectorAnchors.length ||
+        cell.connectorAnchors.length === 0 ||
         cell.connectorAnchors.length > 1000 ||
         !validConnectorCellAnchors(data, cell))
     )
@@ -402,9 +417,9 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
           r.access,
           r.ringsFeet,
           r.properties.floorOpeningsFeet,
-          ...(r.properties.nativeFloorOpeningOwnership !== undefined
-            ? [r.properties.nativeFloorOpeningOwnership]
-            : []),
+          ...(r.properties.nativeFloorOpeningOwnership === undefined
+            ? []
+            : [r.properties.nativeFloorOpeningOwnership]),
           r.properties.spaceUse,
           r.properties.stairAccess,
         ]),
@@ -809,11 +824,12 @@ export function nativeCirculationWalkBlockers(
         .flatMap((a) => a.exactParts ?? []);
       // Face already rechecks current source floor/holes/material independently
       // of a rehashed prepared descriptor. Only checked incident halves extend it.
-      const support = ownHalves.length
-        ? freezeNativeRationalParts(
-            nativeRationalOverlay("union", face, ownHalves),
-          )
-        : face;
+      const support =
+        ownHalves.length > 0
+          ? freezeNativeRationalParts(
+              nativeRationalOverlay("union", face, ownHalves),
+            )
+          : face;
       if (
         edge.pointsFeet.some(
           (p) => Math.abs(p[2] - cell.elevationFeet) > 0.05,

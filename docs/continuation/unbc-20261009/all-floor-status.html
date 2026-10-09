@@ -1,0 +1,3027 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  /><title>All floors · remaining native-area review</title
+  ><style>
+    body {
+      margin: 0;
+      background: #f0f4f5;
+      color: #17313b;
+      font: 16px/1.55 system-ui;
+    }
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 24px;
+    }
+    h1 {
+      line-height: 1.2;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      background: white;
+    }
+    th,
+    td {
+      text-align: left;
+      border-bottom: 1px solid #d2dde1;
+      padding: 12px;
+    }
+    .notice,
+    .entry {
+      background: white;
+      padding: 18px;
+      border: 1px solid #d2dde1;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+    .notice {
+      border-left: 5px solid #aa6a16;
+    }
+    .muted {
+      color: #4d656f;
+    }
+    .status {
+      border-left: 3px solid #64808b;
+      padding-left: 12px;
+    }
+    input,
+    select {
+      font: inherit;
+      padding: 10px;
+      border: 1px solid #aebfc8;
+      border-radius: 6px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .filters {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    .filters label {
+      display: grid;
+      gap: 5px;
+    }
+    .entry[hidden] {
+      display: none;
+    }
+    code {
+      overflow-wrap: anywhere;
+    }
+    a {
+      color: #12618b;
+    }
+    @media (max-width: 650px) {
+      main {
+        padding: 14px;
+      }
+      table {
+        font-size: 13px;
+      }
+      th,
+      td {
+        padding: 8px;
+      }
+      .filters label {
+        width: 100%;
+      }
+    }
+  </style>
+  <main>
+    <h1>All floors · remaining native-area review</h1>
+    <div class="notice">
+      <strong
+        >This is the current saved-map inventory, not a complete manual or 3D
+        sign-off.</strong
+      >
+      <p>
+        29 mixed hallway flags and 177 areas with multiple non-circulation place
+        labels. These sets overlap. Some shared spaces are intentional; each
+        needs classification before claiming a missing wall or applying a
+        repair. Warning counts are source-evidence warnings, not counts of rooms
+        needing patches.
+      </p>
+      <p>
+        Inventory uses the unchanged production hallway classifier on the
+        checked prepared native display. The Floor 1 count reproduces the actual
+        browser result: 5 flags and 22 warnings.
+      </p>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Floor</th>
+          <th>Mixed hallway flags</th>
+          <th>Multiple place-label areas</th>
+          <th>Evidence warnings</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Basement</td>
+          <td>0</td>
+          <td>1</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Floor 1 — Main floor</td>
+          <td>5</td>
+          <td>59</td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td>Floor 1.5</td>
+          <td>0</td>
+          <td>0</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Floor 2</td>
+          <td>12</td>
+          <td>47</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Floor 3</td>
+          <td>6</td>
+          <td>33</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td>Floor 4</td>
+          <td>6</td>
+          <td>37</td>
+          <td>5</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Cross-building areas appear under each affected building but count once in
+      campus totals. Empty flags do not certify complete room geometry, lifts or
+      routes.
+    </p>
+    <p>
+      <a href="all-floor-status-inventory.json">Checked metadata inventory</a> ·
+      <a href="index.html">Repair and navigation report</a>
+    </p>
+    <div class="filters">
+      <label
+        >Floor<select id="floor">
+          <option value="">All floors</option>
+          <option>Basement</option>
+          <option>Floor 1 — Main floor</option>
+          <option>Floor 1.5</option>
+          <option>Floor 2</option>
+          <option>Floor 3</option>
+          <option>Floor 4</option>
+        </select></label
+      ><label
+        >Building<select id="building">
+          <option value="">All buildings</option>
+          <option>03</option>
+          <option>04</option>
+          <option>05</option>
+          <option>06</option>
+          <option>07</option>
+          <option>08</option>
+          <option>09</option>
+          <option>10</option>
+        </select></label
+      ><label
+        >Room or location<input
+          id="query"
+          type="search"
+          placeholder="For example: 10-4034"
+      /></label>
+    </div>
+    <p id="count"></p>
+    <div id="entries">
+      <section class="entry" data-floor="Basement" data-buildings="10">
+        <h3>Basement · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:2295121:12</code>
+        </p>
+        <p>10-B502 · Storage; 10-B504 · WASHROOM</p>
+        <p class="muted">Circulation: 10-B510 · Corridor; 10-B500 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1450417:170</code>
+        </p>
+        <p>
+          09-242 · PBL Room; 09-244 · PBL Observation Room; 09-246 · PBL Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1450417:201</code>
+        </p>
+        <p>09-282 · Server Room; 09-280 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1450417:203</code>
+        </p>
+        <p>09-278 · High Density Storage; 09-279-A · Exam Closet</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:1450417:212</code>
+        </p>
+        <p>09-272 · Shared Office</p>
+        <p class="muted">Circulation: 09-271 · Corridor</p>
+        <p class="status">
+          Source-open office/corridor front; no physical divider approved.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1450417:222</code>
+        </p>
+        <p>
+          09-252 · PBL Tele Room; 09-254 · PBL Tele Room; 09-256 · Student
+          Lounge; 09-250 · PBL Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="09"
+      >
+        <h3>Floor 1 — Main floor · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1450417:30</code>
+        </p>
+        <p>09-204 · Data Room; 09-205 · Control &amp; Equip</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:110</code>
+        </p>
+        <p>08-128 · Prep Room / Research Office; 08-127 · Lab</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:116</code>
+        </p>
+        <p>08-104 · Male Washroom; 08-103 · Female Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:132</code>
+        </p>
+        <p>10-1028 · PT Breakout Room 4; 10-1030 · OT Breakout Room 2</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:138</code>
+        </p>
+        <p>08-135 · Storage; 08-134 · Comm Closet; 08-136 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:205</code>
+        </p>
+        <p>08-148 · Office; 08-147 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:27</code>
+        </p>
+        <p>
+          08-114 · Research Office; 08-116 · Applied Analytical Hub; 08-109 ·
+          Research Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:289</code>
+        </p>
+        <p>10-1006 · Washroom; 10-1005 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:35</code>
+        </p>
+        <p>08-121 · GEES Equipment Room; 08-122 · Research Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:37</code>
+        </p>
+        <p>08-165 · Classroom Support; 08-167 · Classroom Support</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="08"
+      >
+        <h3>Floor 1 — Main floor · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:44</code>
+        </p>
+        <p>08-118 · Research Meeting Room; 08-117 · Research Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:464</code>
+        </p>
+        <p>10-1513 · Storage; 10-1588 · Washroom; 10-1534 · Kitchen</p>
+        <p class="muted">
+          Circulation: 10-S103 · Stair; 10-1554 · Corridor; 10-1516 · Corridor;
+          10-1500 · Vestibule; 10-1600 · Vestibule; 10-1502 · Corridor; 10-1580
+          · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:489</code>
+        </p>
+        <p>10-1586 · Sim Tech Room; 10-1590 · Sim Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:492</code>
+        </p>
+        <p>10-1594 · Sim Tech Room; 10-1506 · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:495</code>
+        </p>
+        <p>
+          10-1532 · Photocopy,Storage; 10-1518 · Research Office; 10-1548 ·
+          Supply Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:58</code>
+        </p>
+        <p>10-1046 · Kitchen; 10-1040 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="10"
+      >
+        <h3>Floor 1 — Main floor · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487816:63</code>
+        </p>
+        <p>
+          10-1020 · OT Office; 10-1018 · OT Office; 10-1024 · PT Breakout Room
+          2; 10-1022 · PT Breakout Room 1; 10-1016 · OT Office; 10-1034 · PT
+          MPL; 10-1082 · Fire Protect , Mech
+        </p>
+        <p class="muted">
+          Circulation: 10-1021 · Lounge; 10-1031 · Corridor; 10-1060 · Corridor;
+          10-1013 · Corridor; 10-1000 · Vestibule; 10-1002 · Corridor; 10-1080 ·
+          Vestibule; 10-1090 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="03 04 05 07"
+      >
+        <h3>Floor 1 — Main floor · Building 03, 04, 05, 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:1</code>
+        </p>
+        <p>
+          07-253 · Copy Centre; 07-252 · Entrance; 07-249 · Counter; 07-251 ·
+          Office; 04-131 · Utilidor; 07-113 · Office; 07-117 · Office; 07-114 ·
+          Office; 07-247 · H,C All Gender; 05-121 · Studio; 07-246 · Washroom;
+          07-244 · Washroom; 05-123 · Multi Purpose Hall; 07-405 · Elect; 07-400
+          · Utilidor; 07-234 · Office; 07-223 · Washroom; 07-301 · Lower Dining
+          Hall; 07-227 · Storage; 07-212 · Lecture Theatre; 07-225 · Washroom;
+          07-220 · Janitor; 03-024 · Utilidor; 07-240 · Bookstore; 07-242 ·
+          Office; 07-S204 · Unnamed area; 07-317 · Dish Washing; 07-312 · Food
+          Pick Up; 07-714 · Office; 07-716 · Office; 07-400 · Unnamed area
+        </p>
+        <p class="muted">
+          Circulation: [unnumbered] · Central circulation; 07-243 · Corridor;
+          07-203 · Unnamed area; 04-133 · Corridor; 07-179 · Unnamed area;
+          07-203A · Waiting Lounge; 07-163 · Corridor; 07-201 · Vestibule;
+          07-141 · Corridor; 07-S205 · Stair; 07-S106 · Stair; 07-180 · Multi
+          Purpose Circulation Space and Hall; 07-236A · Corridor; 07-236 ·
+          Corridor; 07-206 · Corridor; 07-302 · Vestibule; 07-113A · Corridor;
+          07-224 · Corridor; 07-217 · Multi Purpose Lounge; 07-203 · Plaza
+          Street; 07-211 · Vestibule; 07-202 · Lobby; 07-231 · Lounge; 07-216 ·
+          Multi Purpose Hall; 03-027 · Corridor; 07-300 · Corridor; 07-101 ·
+          Corridor; [unnumbered] · Native ramp lower approach
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:105</code>
+        </p>
+        <p>07-156 · Storage; 07-157 · Storage</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:12</code>
+        </p>
+        <p>
+          07-238 · Lecture Theatre; 07-403 · Elect; 07-402 · Mech; 07-219 ·
+          Storage
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:142</code>
+        </p>
+        <p>07-160B · Closet; 07-162 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:145</code>
+        </p>
+        <p>07-164A · Washroom; 07-164B · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:161</code>
+        </p>
+        <p>07-144 · Copy; 07-145 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="03"
+      >
+        <h3>Floor 1 — Main floor · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:170</code>
+        </p>
+        <p>03-010 · Project Room; 03-011 · Office; 03-015 · Meeting</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="03"
+      >
+        <h3>Floor 1 — Main floor · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:224</code>
+        </p>
+        <p>
+          03-008 · Observation Room; 03-004 · Facilities Storage; 03-002 ·
+          Facilities AMA
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="03"
+      >
+        <h3>Floor 1 — Main floor · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:311:228</code>
+        </p>
+        <p>03-014 · Reception</p>
+        <p class="muted">Circulation: 03-013 · Circulation</p>
+        <p class="status">
+          Keep shared per user: internal open area, no additional wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04"
+      >
+        <h3>Floor 1 — Main floor · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:27</code>
+        </p>
+        <p>04-114 · Utilidor; 04-116 · Janitor,Mech; 04-117 · Herbarium</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:284</code>
+        </p>
+        <p>07-401 · Elec,Comm; 07-250 · Comm</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:303</code>
+        </p>
+        <p>07-754 · Office; 07-756 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="03 07"
+      >
+        <h3>Floor 1 — Main floor · Building 03, 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:304</code>
+        </p>
+        <p>03-030 · Central Stores; 07-503 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05 07"
+      >
+        <h3>Floor 1 — Main floor · Building 05, 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:307</code>
+        </p>
+        <p>
+          07-750 · Circulation; 07-751 · Circulation; 05-117 · Circulation;
+          07-706 · Circulation; 07-720 · Office; 07-704 · Circulation; 07-702 ·
+          ESR
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:309</code>
+        </p>
+        <p>07-758 · Office; 07-760 · Office; 07-762 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:310</code>
+        </p>
+        <p>07-772 · Office; 07-774 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:358</code>
+        </p>
+        <p>07-786 · Office; 07-792 · Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:359</code>
+        </p>
+        <p>07-728 · Office; 07-712 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:360</code>
+        </p>
+        <p>07-782 · Office; 07-784 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:361</code>
+        </p>
+        <p>07-778 · Office; 07-776 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:362</code>
+        </p>
+        <p>07-513 · Washroom; 07-514 · Lunch Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:363</code>
+        </p>
+        <p>
+          07-507 · Food Services; 07-508 · Storage; 07-316 · Dish Washing;
+          07-315 · Janitor; 07-314 · Freezer; 07-313 · Cooking Area
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:382</code>
+        </p>
+        <p>
+          07-105 · Computer lab; 07-110 · Elders Room; 07-108 · break room;
+          07-107 · Coffee; 07-109 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:4</code>
+        </p>
+        <p>07-407 · Comm; 07-406 · Electrical,Mechanical</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:414</code>
+        </p>
+        <p>
+          05-153 · Classroom; 05-180 · Vesibule; 05-183 · Classroom; 05-177 ·
+          Classroom; 05-184 · Classroom; 05-176 · Classroom; 05-173 · Classroom;
+          05-174 · Classroom; 05-140D · A,V Room; 05-136B · Office; 05-144 · H,C
+          All Gender; 05-132 · Storage; 05-131 · Comm; 05-133 · Bear Display;
+          05-154 · Classroom; 05-139F · Workstation; 05-136A · Reserves; 05-140E
+          · EVENT SPACE; 05-141B · Office; 05-116 · Support; 05-163B · Fax;
+          05-163 · W,C; 05-161A · Waiting; 05-164A · Exam; 05-164B · Exam;
+          05-166 · Lab / Kitchen; 05-135C · Project Room; 05-135A · Research
+          Office; 05-135B · Research Meeting Room
+        </p>
+        <p class="muted">
+          Circulation: 05-142 · Plaza; 05-186 · Corridor; 05-S103 · Stair;
+          05-137A · Hallway; 05-165 · Vestibule; 05-188 · Corridor; 05-182 ·
+          Corridor; 05-187 · Corridor; 05-140C · Computer Lab; 05-140 · Open
+          Area; 05-143 · Lobby; 05-140A · Open Area; 05-140B · Open Area; 05-134
+          · Open Area; 05-139H · Storage; 05-130 · Corridor; 05-160 · Corridor;
+          05-120 · Corridor; 05-139G · Office; 05-161 · Reception; 05-164 ·
+          Circulation; 05-135 · Vestibule; 05-136 · Library Services Desk;
+          05-137 · Open Area
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04 07"
+      >
+        <h3>Floor 1 — Main floor · Building 04, 07</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:311:45</code>
+        </p>
+        <p>04-128 · Storage; 04-125 · Storage; 07-165 · Sprinkler Mech room</p>
+        <p class="muted">
+          Circulation: [unnumbered] · Native ramp lower approach
+        </p>
+        <p class="status">
+          04-128 separation proposed and checked but not applied. 04-125 /
+          07-165 / ramp connections still need source-supported corrections.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04 07"
+      >
+        <h3>Floor 1 — Main floor · Building 04, 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:46</code>
+        </p>
+        <p>07-148A · Office; 07-208 · Office</p>
+        <p class="muted">Circulation: 04-130 · Corridor; 07-149 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:499</code>
+        </p>
+        <p>
+          07-505 · Recycling; 07-504 · Hopper Pit; 07-506A · Mech; 07-506 ·
+          Storage
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04"
+      >
+        <h3>Floor 1 — Main floor · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:50</code>
+        </p>
+        <p>04-155 · Office; 04-157 · Storage</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:523</code>
+        </p>
+        <p>05-108 · WC; 05-107 · Meeting</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:590</code>
+        </p>
+        <p>
+          07-102B · Office; 07-102 · Quiet Study Room; 07-103 · Office; 07-102A
+          · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:624</code>
+        </p>
+        <p>05-139C · Office; 05-139B · Tutor Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="07"
+      >
+        <h3>Floor 1 — Main floor · Building 07</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:311:646</code>
+        </p>
+        <p>07-305 · Office; 07-306A · Office</p>
+        <p class="muted">Circulation: 07-304 · Corridor</p>
+        <p class="status">
+          Wide open fronts in native model and drawing; preserve unless a
+          logical entrance boundary is separately requested.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:728</code>
+        </p>
+        <p>05-169A · Counsellor; 05-170E · Kitchen</p>
+        <p class="muted">
+          Circulation: 05-168 · Admin Area; 05-168B · Circulation; 05-168A ·
+          Waiting
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:736</code>
+        </p>
+        <p>05-171 · Classroom; 05-170D · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:759</code>
+        </p>
+        <p>05-151 · H,C WASHROOM; 05-155 · OFFICE; 05-152 · OFFICE</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="05"
+      >
+        <h3>Floor 1 — Main floor · Building 05</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:311:769</code>
+        </p>
+        <p>05-157 · Reception; 05-150A · KITCHEN</p>
+        <p class="muted">Circulation: 05-150 · CORRIDOR</p>
+        <p class="status">
+          Keep shared per user when no barriers exist: Reception / Corridor /
+          Kitchen.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04"
+      >
+        <h3>Floor 1 — Main floor · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:80</code>
+        </p>
+        <p>04-156 · Office; 04-154 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section
+        class="entry"
+        data-floor="Floor 1 — Main floor"
+        data-buildings="04 07"
+      >
+        <h3>Floor 1 — Main floor · Building 04, 07</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:311:84</code>
+        </p>
+        <p>
+          07-172 · Multi Purpose Seminar; 07-170 · Multi Purpose Seminar; 04-105
+          · Mech; 04-106 · Growth Chamber &amp; Cold Room plus NALS Extruder;
+          07-168 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="06">
+        <h3>Floor 2 · Building 06</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> · <code>native-region:694:1</code>
+        </p>
+        <p>
+          06-229 · Fan Room; 06-268 · Washroom; 06-270 · Kitchen; 06-272 ·
+          Sandwich Bar; 06-264 · H,C Washroom; 06-266 · Washroom; 06-276 ·
+          Washroom; 06-274 · Cooler; 06-278 · Storage; 06-276A · Storage; 06-280
+          · Dry Goods; 06-260 · Pub Entrance; 06-258 · Drinks Cooler; 06-262 ·
+          Dishwashing; 06-254 · Pub
+        </p>
+        <p class="muted">Circulation: 06-282 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="06">
+        <h3>Floor 2 · Building 06</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:100</code>
+        </p>
+        <p>
+          06-212 · Storage; 06-235 · Washroom; 06-232 · Janitor; 06-213 ·
+          Lecture Theatre
+        </p>
+        <p class="muted">Circulation: 06-220 · Vestibule</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1015</code>
+        </p>
+        <p>
+          10-2038 · Office; 10-2036 · Office; 10-2044 · Office; 10-2058 ·
+          Office; 10-2060 · Office; 10-2046 · Office; 10-2050 · Office; 10-2052
+          · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1032</code>
+        </p>
+        <p>08-225 · Storage; 08-218 · Storage</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1033</code>
+        </p>
+        <p>03-1002 · Office; 03-1003 · Office; 03-1004 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1040</code>
+        </p>
+        <p>03-1021 · Office; 03-1016 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1060</code>
+        </p>
+        <p>03-1040 · Office; 03-1039 · Filing</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1096</code>
+        </p>
+        <p>10-2004 · Elect; 10-2012 · Comm</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="05">
+        <h3>Floor 2 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1105</code>
+        </p>
+        <p>
+          05-252 · Group Study; 05-250 · Seminar; 05-255 · Group Study; 05-221 ·
+          Lounge Seating; 05-223 · Study Room; 05-222 · Micro Material
+          Collection; 05-230 · Staff Lounge; 05-219 · Study Room; 05-218 · Study
+          Room; 05-217 · Comm; 05-206 · Compact Storage; 05-207 · Study Room;
+          05-243 · Group Study; 05-227 · Janitor; 05-238 · Washroom; 05-245 ·
+          Group Study; 05-247 · Group Study; 05-248 · Group Study
+        </p>
+        <p class="muted">
+          Circulation: 05-S204 · Stair; 05-254 · Study Area; 05-204 · Stack
+          Area; 05-224 · Corridor; 05-205 · Work Area; 05-211 · Data , Map
+          Service Point; 05-233 · Open Area; 05-202 · Entrance; 05-200 ·
+          Vestibule; 05-232 · Reading Lounge; 05-210 · Open Area; 05-244 ·
+          Corridor; 05-236 · Corridor; 05-225 · Corridor; 05-241 · Corridor;
+          05-225A · Corridor; 05-242 · Lobby; 05-S203 · Stair
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1119</code>
+        </p>
+        <p>
+          08-232 · Soils Lab; 08-231 · Sediment and Soils Lab; 08-229 ·
+          Undergrad Phys Lab
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1146</code>
+        </p>
+        <p>08-234 · Comm Closet; 08-235 · Storage; 08-236 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1148</code>
+        </p>
+        <p>
+          03-1028 · Office; 03-1035 · Office; 03-1034 · Office; 03-1027 ·
+          Office; 03-1023A · Office; 03-1023B · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1150</code>
+        </p>
+        <p>03-1012A · Office; 03-1018 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:1153</code>
+        </p>
+        <p>
+          08-248 · Office; 08-239 · Research Office; 08-242 · Research Office;
+          08-244 · Office; 08-247 · Print; 08-245 · Storage; 08-249 · Office
+        </p>
+        <p class="muted">Circulation: 08-240 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1154</code>
+        </p>
+        <p>03-1042 · Storage; 03-1037 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1201</code>
+        </p>
+        <p>08-270 · Waiting; 08-268 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1218</code>
+        </p>
+        <p>
+          10-2014 · Office; 10-2020 · Office; 10-2018 · Office; 10-2024 ·
+          Office; 10-2028 · Office; 10-2022 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1227</code>
+        </p>
+        <p>08-246 · Office; 08-243 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1306</code>
+        </p>
+        <p>10-2094 · Washroom; 10-2092 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="09">
+        <h3>Floor 2 · Building 09</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:1426</code>
+        </p>
+        <p>
+          09-324 · Confocal Room; 09-321 · Glass Wash,Autoclave; 09-322 · Tissue
+          Culture Room; 09-320 · Freezer,Ref Areas; 09-326 · Research Office
+        </p>
+        <p class="muted">Circulation: 09-313 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1633</code>
+        </p>
+        <p>10-2506 · Print; 10-2608 · Office; 10-2508 · Elect</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="09">
+        <h3>Floor 2 · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1652</code>
+        </p>
+        <p>
+          09-378 · Research Office; 09-374 · Meeting Room; 09-370 · Meeting
+          Room; 09-376 · PBL Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="09">
+        <h3>Floor 2 · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1783</code>
+        </p>
+        <p>09-369 · Office; 09-368 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="09">
+        <h3>Floor 2 · Building 09</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:1822</code>
+        </p>
+        <p>09-367 · Office; 09-366 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="06">
+        <h3>Floor 2 · Building 06</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:259</code>
+        </p>
+        <p>06-204 · Service Pantry; 06-205 · Multi Purpose Seminar</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:272</code>
+        </p>
+        <p>
+          04-242C · Research Office; 04-242D · Research Office; 04-242B ·
+          Research Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:285</code>
+        </p>
+        <p>04-243 · Research Storage; 04-242 · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:312</code>
+        </p>
+        <p>
+          04-235 · Avian Research Lab; 04-234 · Wet Lab; 04-229 · NALS Lab
+          Office; 04-232 · Wet Lab
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:326</code>
+        </p>
+        <p>
+          04-224 · Compressed Gasses; 04-225 · Flammable Solvents 200L Drums;
+          04-226 · Chemicals
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:354</code>
+        </p>
+        <p>04-251 · Research Office; 04-252 · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:364</code>
+        </p>
+        <p>04-247 · Research Office; 04-248 · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:370</code>
+        </p>
+        <p>
+          04-256 · Research Office; 04-250 · Research Office; 04-257 · Tech
+          Office
+        </p>
+        <p class="muted">Circulation: 04-245 · Vestibule; 04-244 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:389</code>
+        </p>
+        <p>04-253 · Research Office; 04-254 · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:396</code>
+        </p>
+        <p>04-219 · Chemical Storage; 04-228 · Spill Kits</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:634</code>
+        </p>
+        <p>
+          04-207A · Storage; 04-207B · Research Lab Office; 04-210 · Storage;
+          04-208 · Lab; 04-209 · Environmental Change Lab; 04-207 · Research
+          lab; 04-211 · Autoclave,diswashing Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="04">
+        <h3>Floor 2 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:685</code>
+        </p>
+        <p>04-205 · Archaeology Lab; 04-203 · Chem Stores</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:781</code>
+        </p>
+        <p>
+          03-1055 · Comm; 03-1063 · Reception; 03-1056 · Workspace; 03-1062 ·
+          Office; 03-1065B · Coffee; 03-1101 · Entrance; 03-1015 · Washroom;
+          03-1079 · Senate; 03-1084 · Meeting Room; 03-1065 · Work Area;
+          03-1065A · Copy; 03-1075 · Office; 03-1072 · Office
+        </p>
+        <p class="muted">
+          Circulation: 03-S103 · Stair; 03-1052 · Vestibule; 03-1102 · Corridor;
+          03-1104 · Multi Purpose Circulation Space and Hall
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:829</code>
+        </p>
+        <p>03-1058 · Office; 03-1056A · Closet; 03-1059 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:841</code>
+        </p>
+        <p>03-1092 · Office; 03-1091 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:842</code>
+        </p>
+        <p>
+          03-1093 · Office; 03-1081 · Coffee; 03-1090 · Office; 03-1083 ·
+          Office; 03-1085 · Office
+        </p>
+        <p class="muted">
+          Circulation: 03-1089 · Corridor; 03-1082 · Corridor; 03-1099 ·
+          Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:884</code>
+        </p>
+        <p>03-1067 · Meeting Room; 03-1069 · Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:930</code>
+        </p>
+        <p>08-276 · Office; 08-275B · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:960</code>
+        </p>
+        <p>
+          08-208 · Office; 08-209 · Office; 08-206 · Office; 08-213 · Office;
+          08-211 · Research Office; 08-212 · Office
+        </p>
+        <p class="muted">Circulation: 08-210 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:694:965</code>
+        </p>
+        <p>
+          08-220 · Solvents Hazard Storage; 08-221 · Storage; 08-222 ·
+          Flammables Waste Holding; 08-219 · Acids Hazard Storage
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="08">
+        <h3>Floor 2 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:967</code>
+        </p>
+        <p>08-223 · Hazardous Materials Room</p>
+        <p class="muted">Circulation: 08-216 · Vestibule; 08-217 · Vestibule</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:986</code>
+        </p>
+        <p>
+          03-1051F · Office; 03-1051E · Storage; 03-1045 · Office; 03-1045A ·
+          Office; 03-1051B · Office; 03-1051 · Office; 03-1051A · Office;
+          03-1048 · Office; 03-1049 · Office; 03-1047 · Office; 03-1044 ·
+          Washroom; 03-1042A · Utility Closet; 03-1050 · Work Area
+        </p>
+        <p class="muted">Circulation: 03-S104 · Stair; 03-1041 · Hallway</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="10">
+        <h3>Floor 2 · Building 10</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:991</code>
+        </p>
+        <p>
+          10-2006 · Office; 10-2008 · Office; 10-2084 · Coffee; 10-2086 ·
+          Research Office; 10-2078 · Office; 10-2074 · Office; 10-2068 · Office;
+          10-2062 · Office; 10-2064 · Janitor; 10-2054 · Research Lab; 10-2056 ·
+          Office; 10-2072 · Office
+        </p>
+        <p class="muted">
+          Circulation: 10-S201 · Stair; 10-2070 · Vestibule; 10-2010 · Corridor;
+          10-2000 · Vestibule; 10-2066 · Corridor; 10-2002 · Corridor; 10-2026 ·
+          Corridor; 10-2100 · Vestibule
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 2" data-buildings="03">
+        <h3>Floor 2 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:694:997</code>
+        </p>
+        <p>
+          03-1005 · Office; 03-1012 · Office; 03-1011 · Office; 03-1022 ·
+          Office; 03-1013A · File Room; 03-1013 · File Room; 03-1009 · Office;
+          03-1008 · Office; 03-1010 · Office; 03-1010B · Coffee Room; 03-1006 ·
+          Office; 03-1032 · Comm; 03-1038 · Reception; 03-1031 · Copy Room;
+          03-1030 · Office; 03-1024 · Office
+        </p>
+        <p class="muted">
+          Circulation: 03-1038A · Hallway; 03-1020 · Corridor; 03-1010A ·
+          Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="06">
+        <h3>Floor 3 · Building 06</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487353:13</code>
+        </p>
+        <p>
+          06-346 · Crash&#x27;N Burn; 06-302 · Elect; 06-344 · Pride Centre;
+          06-340 · Coordinators Office; 06-342 · Office; 06-392 · Club Room;
+          06-354 · Reception; 06-360 · Studio A; 06-362 · Studio B; 06-350 ·
+          Reception; 06-352 · Production,Meetings
+        </p>
+        <p class="muted">
+          Circulation: 06-304 · Corridor; 06-301 · Lobby; 06-309 · Corridor;
+          06-308 · Vestibule; 06-S306 · Stair 6; 06-368 · Corridor; 06-364 ·
+          Corridor; 06-318 · Vestibule; 06-366 · Lounge
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="06">
+        <h3>Floor 3 · Building 06</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:1487353:2</code>
+        </p>
+        <p>
+          06-376 · Open Work Area; 06-380 · Storage; 06-382 · Office; 06-384 ·
+          Storage; 06-386 · Meeting Room; 06-370 · Reception; 06-372 · Reception
+        </p>
+        <p class="muted">Circulation: 06-388 · Vestibule</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="06">
+        <h3>Floor 3 · Building 06</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487353:38</code>
+        </p>
+        <p>06-398 · Washroom; 06-397 · Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="06">
+        <h3>Floor 3 · Building 06</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487353:39</code>
+        </p>
+        <p>06-358 · Office; 06-356 · Library</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="06">
+        <h3>Floor 3 · Building 06</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:1487353:69</code>
+        </p>
+        <p>
+          06-306 · Multi Purpose Seminar; 06-305 · Multi Purpose Seminar; 06-307
+          · Multi Purpose Seminar
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="04">
+        <h3>Floor 3 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:149</code>
+        </p>
+        <p>
+          04-304 · Soils Research Lab; 04-303 · Forestry Research lab; 04-305 ·
+          Forestry Research Lab; 04-309 · Dirty Soil Prep Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:201</code>
+        </p>
+        <p>03-2071 · Office; 03-2069 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:400176:213</code>
+        </p>
+        <p>
+          03-2027 · Comm; 03-2050 · Office; 03-2052 · Work Area; 03-2038 · Work
+          Area; 03-2042 · Office; 03-2041 · Display Area; 03-2037 · Reception;
+          03-2039 · Reception; 03-2053 · Exec Washroom; 03-2078B · Office;
+          03-2078A · Copy Room; 03-2068 · Project Room; 03-2007A · Copy;
+          03-2007B · Office; 03-2007C · Office; 03-2001 · Washroom; 03-2003 ·
+          Office; 03-2095 · Lounge; 03-2019 · Office; 03-2029A · Utility Closet;
+          03-2029 · Janitor; 03-2060 · Office; 03-2059 · Office; 03-2058 · Comm;
+          03-2026 · Office
+        </p>
+        <p class="muted">
+          Circulation: 03-2034 · Hallway; 03-S203 · Stair; 03-2002 · Corridor;
+          03-2010 · Corridor; 03-2064 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:220</code>
+        </p>
+        <p>03-2092 · Board Room; 03-2094 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:400176:248</code>
+        </p>
+        <p>
+          08-325 · Lab; 08-361 · Classroom; 08-362 · Computer Lab; 08-320 ·
+          Instrument Room; 08-321 · Chem Lab; 08-363 · Comm Closet; 08-309 ·
+          Office; 08-308 · Office; 08-306 · Office; 08-313 · Office; 08-315 ·
+          Office; 08-314 · Office
+        </p>
+        <p class="muted">
+          Circulation: 08-305 · Corridor; 08-366 · Corridor; 08-316 · Corridor;
+          08-310 · Corridor; 08-302 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:270</code>
+        </p>
+        <p>08-318 · Prep Room; 08-319 · Prep Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:400176:278</code>
+        </p>
+        <p>
+          10-3056 · Janitor; 10-3040 · Office; 10-3038 · Waiting; 10-3042 ·
+          Waiting Room
+        </p>
+        <p class="muted">Circulation: 10-3039 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:304</code>
+        </p>
+        <p>03-2047 · Office; 03-2046 · Meeting</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:400176:330</code>
+        </p>
+        <p>
+          10-3004 · Research Office; 10-3024 · Grad Office; 10-3014 · Grad
+          Office; 10-3026 · Grad Office; 10-3032 · Classroom; 10-3062 · Office;
+          10-3060 · Office; 10-3058 · Office; 10-3012 · Office; 10-3034 ·
+          Classroom; 10-3016 · Grad Lounge; 10-3020 · Grad Office; 10-3006 ·
+          Office; 10-3005 · Office; 10-3013 · Storage
+        </p>
+        <p class="muted">
+          Circulation: 10-3036 · Corridor; 10-3002 · Corridor; 10-3018 ·
+          Corridor; 10-3008 · Corridor; 10-3072 · Coffee,Print Room; 10-3000 ·
+          Vestibule; 10-3070 · Vestibule
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:380</code>
+        </p>
+        <p>08-328 · Storage; 08-327 · Comm Closet; 08-329 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:392</code>
+        </p>
+        <p>
+          03-2006 · Office; 03-2005 · Office; 03-2004 · Office; 03-2008 ·
+          Office; 03-2009 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:395</code>
+        </p>
+        <p>03-2015 · Office; 03-2016 · Office; 03-2022 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="03">
+        <h3>Floor 3 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:400</code>
+        </p>
+        <p>03-2033 · H,C All Gender; 03-2032 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="05">
+        <h3>Floor 3 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:403</code>
+        </p>
+        <p>
+          05-347 · Comm; 05-346 · Elect; 05-327 · Janitor; 05-308 · Admin Space;
+          05-306 · Bridge; 05-307 · Classroom; 05-309 · Office
+        </p>
+        <p class="muted">
+          Circulation: 05-S301 · Stair; 05-300 · Lobby; 05-331 · Bridge; 05-339
+          · Study Carrels; 05-330 · Corridor; 05-340 · General Collections;
+          05-343 · Corridor; 05-320 · Study Carrels; 05-330A · Corridor; 05-305
+          · Corridor; 05-S304 · Stair
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:400176:407</code>
+        </p>
+        <p>08-338 · Coffee &amp; Wait Room; 08-342 · Office; 08-337 · Print</p>
+        <p class="muted">Circulation: 08-340 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:414</code>
+        </p>
+        <p>08-334 · Office; 08-336 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="08">
+        <h3>Floor 3 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:450</code>
+        </p>
+        <p>08-335 · Office; 08-341 · Office; 08-339 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="05">
+        <h3>Floor 3 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:455</code>
+        </p>
+        <p>05-313 · Classroom; 05-318 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="05">
+        <h3>Floor 3 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:487</code>
+        </p>
+        <p>
+          05-328 · Storage; 05-324 · Multipurpose Room; 05-322 · Meeting Room;
+          05-314 · Comm
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="04 08">
+        <h3>Floor 3 · Building 04, 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:5</code>
+        </p>
+        <p>
+          04-310 · Media Prep Sterile Room,Genome Containment Room; 04-338 · Art
+          Studio Storage; 04-335 · Lab; 04-334 · Lab; 04-333 · Lab; 04-323 ·
+          Meeting Room; 04-337 · Art Studio; 04-339 · Dry Lab; 04-341 · Research
+          Office; 04-312 · Jianbing Li; 04-325 · Washroom; 04-326 · Washroom;
+          04-327 · H,C All Gender; 04-328A · Storage
+        </p>
+        <p class="muted">
+          Circulation: 04-329 · Rotunda; 04-S301 · Stair; 04-301 · Vestibule;
+          04-324 · Corridor; 04-342 · Corridor; 04-336 · Corridor; 04-330 ·
+          Corridor; 04-302 · Corridor; 08-360 · Link
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:525</code>
+        </p>
+        <p>10-3078 · Washroom; 10-3076 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="05">
+        <h3>Floor 3 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:536</code>
+        </p>
+        <p>05-344 · Washroom; 05-345 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="05">
+        <h3>Floor 3 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:592</code>
+        </p>
+        <p>05-341 · Seminar; 05-342 · Seminar</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:699</code>
+        </p>
+        <p>10-3598 · Office; 10-3530 · Office</p>
+        <p class="muted">
+          Circulation: 10-S303 · Stair; 10-3578 · Corridor; 10-3604 · Vestibule;
+          10-3600 · Corridor; 10-3500 · Vestibule; 10-3502 · Corridor; 10-3512 ·
+          Corridor; 10-3588 · Corridor; 10-3564 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:753</code>
+        </p>
+        <p>10-3548 · Embodied Cognition Lab; 10-3550 · Research Lab</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:754</code>
+        </p>
+        <p>
+          10-3558 · Research Office; 10-3556 · Research Office; 10-3612 ·
+          Research Office; 10-3566 · Research Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:758</code>
+        </p>
+        <p>
+          10-3570 · Research Office; 10-3568 · Research Office; 10-3574 ·
+          Research Office; 10-3572 · Research Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 3" data-buildings="10">
+        <h3>Floor 3 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:400176:765</code>
+        </p>
+        <p>10-3542 · Research Office; 10-3518 · Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="04">
+        <h3>Floor 4 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:176</code>
+        </p>
+        <p>04-410 · eDNA Extraction Room; 04-411 · Electrophoresis Lab</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="04">
+        <h3>Floor 4 · Building 04</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:2</code>
+        </p>
+        <p>
+          04-414 · Bio Lab Saftey; 04-415 · Lab; 04-403A · Unnamed area; 04-429
+          · Greenhouse Support; 04-427 · Greenhouse Support; 04-422 · Grad
+          Office; 04-444 · Comm; 04-443A · Mech; 04-441 · Grad Office; 04-440 ·
+          Grad Office; 04-432 · Research Office
+        </p>
+        <p class="muted">
+          Circulation: 04-402 · Corridor; 04-430 · Corridor; 04-423 · corridor;
+          04-431 · Vestibule
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:239</code>
+        </p>
+        <p>03-3070 · Office; 03-3069 · Office; 03-3063 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:248</code>
+        </p>
+        <p>
+          03-3049 · Office; 03-3046 · Research Office; 03-3087A · Lounge;
+          03-3087 · Mech; 03-3039 · Office; 03-3021 · Office; 03-3026 · Meeting
+          Room; 03-3030A · Utility; 03-3030 · Janitor; 03-3003 · Office;
+          03-3046A · Copy,Mail Room; 03-3012 · Office; 03-3007B · Copy Room;
+          03-3052 · Comm; 03-3059 · Office; 03-3066 · Office; 03-3064 · Office;
+          03-3073 · Office; 03-3073B · Copy; 03-3073A · Office; 03-3008 ·
+          Office; 03-3006 · Office; 03-3005 · Office; 03-3004 · Office; 03-3013
+          · Office
+        </p>
+        <p class="muted">
+          Circulation: 03-3045 · Corridor; 03-3046B · Corridor; 03-S303 · Stair;
+          03-3065 · Corridor; 03-3002 · Corridor; 03-3019 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="04">
+        <h3>Floor 4 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:25</code>
+        </p>
+        <p>04-438 · Grad Office; 04-437 · Grad Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:262</code>
+        </p>
+        <p>03-3080 · Office; 03-3086 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:280</code>
+        </p>
+        <p>
+          08-454 · Nucleus; 08-451 · High Performance Computing Lab; 08-452 ·
+          Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:281</code>
+        </p>
+        <p>08-456 · Undergrad Comp Sci Network Lab; 08-455 · Meeting Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:283</code>
+        </p>
+        <p>08-406 · Office; 08-420 · Chem Lab; 08-425 · Janitor</p>
+        <p class="muted">
+          Circulation: 08-S401 · Stair; 08-402 · Corridor; 08-405 · Corridor;
+          08-458 · Corridor; 08-461 · Corridor; 08-410 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:284</code>
+        </p>
+        <p>
+          08-407 · Office; 08-408 · Office; 08-409 · Office; 08-414 · Office;
+          08-412 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:294</code>
+        </p>
+        <p>08-416 · Office; 08-417 · Chem Lab</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:308</code>
+        </p>
+        <p>03-3046D · Research Office; 03-3046E · Research Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:313</code>
+        </p>
+        <p>
+          10-4064 · Office; 10-4062 · Office; 10-4060 · Office; 10-4058 ·
+          Janitor; 10-4054 · Office; 10-4008 · Office; 10-4006 · Office; 10-4072
+          · Classroom; 10-4034 · Classroom; 10-4044 · Classroom; 10-4022 ·
+          Coffee,Copy; 10-4012 · Comm; 10-4086 · Elevator Control; 10-4004 ·
+          Elect
+        </p>
+        <p class="muted">
+          Circulation: 10-4084 · Vestibule; 10-4000 · Vestibule; 10-4010 ·
+          Corridor; 10-4056 · Corridor; 10-4028 · Corridor; 10-4002 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:342</code>
+        </p>
+        <p>
+          10-4052 · Office; 10-4050 · Office; 10-4048 · Office; 10-4046 ·
+          Office; 10-4042 · Office; 10-4032 · Office; 10-4036 · Office; 10-4038
+          · Office; 10-4040 · Office; 10-4024 · Office; 10-4026 · Office;
+          10-4030 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:365</code>
+        </p>
+        <p>03-3007A · Office; 03-3007 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:403</code>
+        </p>
+        <p>05-403A · H,C All Gender; 05-405 · A,V Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:422</code>
+        </p>
+        <p>08-403 · Womens Washroom; 08-404 · Mens Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:438</code>
+        </p>
+        <p>08-427 · Storage; 08-426 · Comm Closet</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:443</code>
+        </p>
+        <p>03-3025 · Office; 03-3032 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:444</code>
+        </p>
+        <p>
+          03-3018 · Office; 03-3016 · Office; 03-3023 · Office; 03-3022 · Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:448</code>
+        </p>
+        <p>
+          03-3035 · H,C All Gender; 03-3037 · Lounge; 03-3036 · Storage;
+          03-3043C · Coffee Room
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="03">
+        <h3>Floor 4 · Building 03</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:449</code>
+        </p>
+        <p>
+          03-3034 · Office; 03-3043A · Office; 03-3043B · Office; 03-3043 ·
+          Office
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:451</code>
+        </p>
+        <p>08-441 · Office; 08-436 · Print; 08-437 · Waiting Room</p>
+        <p class="muted">Circulation: 08-440 · Corridor</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="08">
+        <h3>Floor 4 · Building 08</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:459</code>
+        </p>
+        <p>08-431 · Office; 08-433 · Office; 08-435 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:464</code>
+        </p>
+        <p>05-402 · Washroom; 05-403 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="04">
+        <h3>Floor 4 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:5</code>
+        </p>
+        <p>
+          04-417 · Lab; 04-418 · Env. Engineering Lab; 04-424 · washroom; 04-425
+          · washroom; 04-419 · Comm
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:542</code>
+        </p>
+        <p>05-423 · Archives open area; 05-425 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:543</code>
+        </p>
+        <p>
+          05-455 · Acquisitions,Receiving; 05-456 · Office; 05-430 · Archives
+          Collections Storage; 05-426 · Office
+        </p>
+        <p class="muted">
+          Circulation: 05-445 · Corridor; 05-450 · Lobby; 05-451 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:560</code>
+        </p>
+        <p>10-4018 · Office; 10-4020 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Mixed hallway flag</strong> ·
+          <code>native-region:402367:565</code>
+        </p>
+        <p>
+          05-476 · In Process Material; 05-458 · Office; 05-481 · Open Work
+          Area; 05-482 · Office; 05-483 · Office; 05-494 · Library Support Area;
+          05-495 · Office; 05-496 · Meeting Room
+        </p>
+        <p class="muted">
+          Circulation: 05-492 · Waiting Display Area; 05-400 · Lobby; 05-486 ·
+          Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:579</code>
+        </p>
+        <p>10-4078 · Washroom; 10-4076 · Washroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="05">
+        <h3>Floor 4 · Building 05</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:609</code>
+        </p>
+        <p>05-487 · Office; 05-484 · Office; 05-485 · Office</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="04">
+        <h3>Floor 4 · Building 04</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:76</code>
+        </p>
+        <p>04-412 · Technician Office; 04-413 · Microscopy Lab</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:819</code>
+        </p>
+        <p>10-4586 · Office; 10-4548 · Coffee</p>
+        <p class="muted">
+          Circulation: 10-S403 · Stair; 10-4504 · Common Area; 10-4572 ·
+          Corridor; 10-4546 · Corridor; 10-4502 · Corridor; 10-4554 · Corridor;
+          10-4516 · Corridor
+        </p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:883</code>
+        </p>
+        <p>10-4508 · Elect; 10-4598 · Elevator Control</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:923</code>
+        </p>
+        <p>10-4550 · Meeting (Syndicate); 10-4560 · Classroom</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+      <section class="entry" data-floor="Floor 4" data-buildings="10">
+        <h3>Floor 4 · Building 10</h3>
+        <p>
+          <strong>Multiple place labels in one native area</strong> ·
+          <code>native-region:402367:937</code>
+        </p>
+        <p>10-4532 · Print; 10-4538 · File Room</p>
+        <p class="status">
+          Needs individual source/selection review; coassigned labels do not by
+          themselves prove a missing wall.
+        </p>
+      </section>
+    </div>
+  </main>
+  <script>
+    const entries = [...document.querySelectorAll(".entry")],
+      floor = document.getElementById("floor"),
+      building = document.getElementById("building"),
+      query = document.getElementById("query"),
+      count = document.getElementById("count");
+    function filter() {
+      let n = 0;
+      for (const e of entries) {
+        const ok =
+          (!floor.value || e.dataset.floor === floor.value) &&
+          (!building.value ||
+            e.dataset.buildings.split(" ").includes(building.value)) &&
+          (!query.value ||
+            e.textContent.toLowerCase().includes(query.value.toLowerCase()));
+        e.hidden = !ok;
+        if (ok) n++;
+      }
+      count.textContent = n + " native areas listed";
+    }
+    for (const e of [floor, building, query])
+      e.addEventListener("input", filter);
+    filter();
+  </script>
+</html>

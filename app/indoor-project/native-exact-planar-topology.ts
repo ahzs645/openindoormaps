@@ -135,7 +135,7 @@ function exactRingAreaTerms(
   areaTermMisses++;
   const direction = BigInt(
     exactSimpleRingOrientation(
-      equal(ring[0], ring[ring.length - 1]) ? ring.slice(0, -1) : ring,
+      equal(ring[0], ring.at(-1)!) ? ring.slice(0, -1) : ring,
     ),
   );
   const origin = ring[0],
@@ -156,7 +156,7 @@ function exactRingAreaTerms(
     return terms;
   }
   while (
-    frozenAreaTerms.size &&
+    frozenAreaTerms.size > 0 &&
     (frozenAreaTerms.size >= MAX_AREA_TERM_ENTRIES ||
       areaTermBytes + bytes > MAX_AREA_TERM_BYTES)
   ) {
@@ -197,7 +197,7 @@ export function nativeRationalAreaCompare(
         }
       }
   const active = [...terms.values()].filter((t) => t.coefficient);
-  if (!active.length) return 0;
+  if (active.length === 0) return 0;
   for (const bits of [64n, 128n, 256n, 512n, 1024n]) {
     let lo = 0n,
       hi = 0n;
@@ -333,7 +333,7 @@ function outsideExactFrozenRing(
   point: NativeRationalPoint,
   ring: NativeRationalPoint[],
 ): boolean {
-  if (!ring.length || !immutableRing(ring)) return false;
+  if (ring.length === 0 || !immutableRing(ring)) return false;
   let bounds = ringBounds.get(ring);
   if (!bounds) {
     let minX = ring[0][0],
@@ -429,7 +429,7 @@ function localExactParts(
   parts: NativeRationalParts,
   points: NativeRationalPoint[],
 ): NativeRationalParts {
-  if (!Object.isFrozen(parts) || !points.length) return parts;
+  if (!Object.isFrozen(parts) || points.length === 0) return parts;
   let count = localPartCounts.get(parts);
   if (count === undefined) {
     count = parts.reduce((n, p) => n + p.reduce((n, r) => n + r.length, 0), 0);
@@ -501,7 +501,7 @@ export function nativeRationalPathSupported(
   points: readonly (readonly (number | Rational)[])[],
   parts: NativeRationalParts,
 ): boolean {
-  if (!points.length || !parts.length) return false;
+  if (points.length === 0 || parts.length === 0) return false;
   const path = points.map(nativeRationalPoint);
   parts = localExactParts(parts, path);
   if (path.some((p) => !nativeRationalPointInParts(p, parts))) return false;
@@ -510,6 +510,8 @@ export function nativeRationalPathSupported(
       b = path[i],
       v = delta(b, a);
     if (equal(a, b)) continue;
+    const lo = a.map((q, axis) => (cmp(q, b[axis]) < 0 ? q : b[axis])),
+      hi = a.map((q, axis) => (cmp(q, b[axis]) > 0 ? q : b[axis]));
     const cuts = new Map<string, Rational>();
     const put = (t: Rational) => {
       if (cmp(t, zero()) >= 0 && cmp(t, one()) <= 0)
@@ -521,8 +523,17 @@ export function nativeRationalPathSupported(
       for (const ring of part)
         for (let k = 0; k < ring.length; k++) {
           const p = ring[k],
-            q = ring[(k + 1) % ring.length],
-            w = delta(q, p),
+            q = ring[(k + 1) % ring.length];
+          // Strict rational disjointness only: finite tangencies, collinear
+          // endpoints and every positive overlap reach the original kernel.
+          if (
+            (cmp(p[0], lo[0]) < 0 && cmp(q[0], lo[0]) < 0) ||
+            (cmp(p[0], hi[0]) > 0 && cmp(q[0], hi[0]) > 0) ||
+            (cmp(p[1], lo[1]) < 0 && cmp(q[1], lo[1]) < 0) ||
+            (cmp(p[1], hi[1]) > 0 && cmp(q[1], hi[1]) > 0)
+          )
+            continue;
+          const w = delta(q, p),
             offset = delta(p, a),
             den = cross(v, w);
           if (den.n) {
@@ -552,12 +563,15 @@ export function nativeRationalFootprintSupported(
   footprint: NativeRationalParts,
   parts: NativeRationalParts,
 ): boolean {
-  if (!footprint.length || !parts.length) return false;
+  if (footprint.length === 0 || parts.length === 0) return false;
   return (
     nativeRationalOverlay(
       "difference",
       footprint,
-      localExactParts(parts, footprint.flat(2)),
+      localExactParts(
+        parts,
+        footprint.flatMap((part) => part.flat()),
+      ),
     ).length === 0
   );
 }
@@ -625,7 +639,7 @@ function validateExactPartTopology(part: NativeRationalPoint[][]) {
   const normalized = part.map(
     (r) =>
       Object.freeze(
-        equal(r[0], r[r.length - 1]) ? r.slice(0, -1) : r,
+        equal(r[0], r.at(-1)!) ? r.slice(0, -1) : r,
       ) as NativeRationalPoint[],
   );
   const intersects = (
@@ -695,7 +709,6 @@ function validateExactPartTopology(part: NativeRationalPoint[][]) {
         continue;
       if (intersects(s.a, s.b, t.a, t.b)) {
         const den = cross(delta(s.b, s.a), delta(t.b, t.a));
-        const common = [s.a, s.b].filter((p) => equal(p, t.a) || equal(p, t.b));
         // Canonical polygon topology can retain an isolated shared vertex
         // between shell and hole or between disjoint holes. No edge overlap
         // or crossing is admitted; the exact nesting checks below remain.
@@ -749,7 +762,7 @@ function validateExactPartTopology(part: NativeRationalPoint[][]) {
         continue;
       if (
         j > 0 &&
-        nativeRationalOverlay("intersection", [[hole]], [[other]]).length
+        nativeRationalOverlay("intersection", [[hole]], [[other]]).length > 0
       )
         throw new Error("Nested or overlapping exact native holes.");
     }
@@ -870,15 +883,15 @@ export function createNativeExactTopologyIndex(
       !face ||
       !keys(face, ["id", "parts"]) ||
       typeof face.id !== "string" ||
-      !face.id.length ||
+      face.id.length === 0 ||
       face.id.length > 512 ||
       faces.has(face.id) ||
       !Array.isArray(face.parts) ||
-      !face.parts.length
+      face.parts.length === 0
     )
       throw new Error("Invalid exact native topology face.");
     const parts = face.parts.map((part) => {
-      if (!Array.isArray(part) || !part.length)
+      if (!Array.isArray(part) || part.length === 0)
         throw new Error("Invalid exact native polygon.");
       return Object.freeze(
         part.map((ring) => {

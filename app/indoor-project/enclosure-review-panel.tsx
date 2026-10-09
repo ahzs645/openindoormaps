@@ -89,7 +89,9 @@ export function EnclosureReviewPanel({
   previewBoundaryPatchId,
   onExitBoundaryPreview,
   boundaryPreviewStatus,
-  boundaryComparison, boundaryAfter = true, onBoundaryAfter,
+  boundaryComparison,
+  boundaryAfter = true,
+  onBoundaryAfter,
   onPreviewWindows,
   onExitWindowPreview,
   previewingWindows,
@@ -141,11 +143,11 @@ export function EnclosureReviewPanel({
         if (value && proposalMatchesModel(value, project))
           setBundledProposals(value);
       })
-      .catch((e) => {
+      .catch((error_) => {
         if (!abort.signal.aborted)
           setProposalError(
-            e instanceof Error
-              ? e.message
+            error_ instanceof Error
+              ? error_.message
               : "Could not load proposal evidence.",
           );
       });
@@ -169,9 +171,11 @@ export function EnclosureReviewPanel({
       if (!value) throw new Error("Proposal file is empty.");
       onApply(saveEnclosureProposals(project, value));
       setProposalError("");
-    } catch (e) {
+    } catch (error_) {
       setProposalError(
-        e instanceof Error ? e.message : "Could not import proposals.",
+        error_ instanceof Error
+          ? error_.message
+          : "Could not import proposals.",
       );
     }
   }
@@ -419,10 +423,10 @@ export function EnclosureReviewPanel({
                 try {
                   onApply(saveEnclosureProposals(project, matchingProposals));
                   setProposalError("");
-                } catch (e) {
+                } catch (error_) {
                   setProposalError(
-                    e instanceof Error
-                      ? e.message
+                    error_ instanceof Error
+                      ? error_.message
                       : "Could not save proposals.",
                   );
                 }
@@ -732,7 +736,7 @@ export function EnclosureReviewPanel({
                       onApply={onApply}
                     />
                   )}
-                  {!boundaryPreviewCandidates.length &&
+                  {boundaryPreviewCandidates.length === 0 &&
                     !selectedProposal.displayPreview && (
                       <p>
                         {allReferencedWallsApplied
@@ -769,10 +773,10 @@ export function EnclosureReviewPanel({
                                 selected,
                               ),
                             );
-                          } catch (e) {
+                          } catch (error_) {
                             setProposalError(
-                              e instanceof Error
-                                ? e.message
+                              error_ instanceof Error
+                                ? error_.message
                                 : "Could not preview the measured landing.",
                             );
                           }
@@ -827,7 +831,7 @@ export function EnclosureReviewPanel({
                   </button>
                 </section>
               )}
-              {!!boundaryPreviewCandidates.length && onPreviewBoundary && (
+              {boundaryPreviewCandidates.length > 0 && onPreviewBoundary && (
                 <section
                   aria-label="Preview proposed boundary solution"
                   className="enclosure-proposal"
@@ -840,7 +844,7 @@ export function EnclosureReviewPanel({
                   </p>
                   {!selectedProposal?.boundaryPatchIds && (
                     <p>
-                      These saved corrections are near this room's outline.
+                      These saved corrections are near this room&apos;s outline.
                       Inspect the resulting regions before deciding which rooms
                       they repair.
                     </p>
@@ -851,7 +855,7 @@ export function EnclosureReviewPanel({
                         <p>
                           Compare all {boundaryPreviewCandidates.length} linked
                           joins together to see their combined effect.
-                          Individual previews below show each join's
+                          Individual previews below show each join&apos;s
                           contribution.
                         </p>
                         <button
@@ -867,10 +871,10 @@ export function EnclosureReviewPanel({
                                   report?.reviewEvidenceSha256,
                                 ),
                               );
-                            } catch (e) {
+                            } catch (error_) {
                               setProposalError(
-                                e instanceof Error
-                                  ? e.message
+                                error_ instanceof Error
+                                  ? error_.message
                                   : "Could not preview the complete correction.",
                               );
                             }
@@ -905,10 +909,10 @@ export function EnclosureReviewPanel({
                                 report?.reviewEvidenceSha256,
                               ),
                             );
-                          } catch (e) {
+                          } catch (error_) {
                             setProposalError(
-                              e instanceof Error
-                                ? e.message
+                              error_ instanceof Error
+                                ? error_.message
                                 : "Could not preview the native correction.",
                             );
                           }
@@ -923,13 +927,29 @@ export function EnclosureReviewPanel({
                       Show original geometry
                     </button>
                   )}
-                  {boundaryComparison && onBoundaryAfter && <>
-                    <div className="pin-review-comparison-buttons">
-                      <button aria-pressed={!boundaryAfter} onClick={()=>onBoundaryAfter(false)}>Before patch</button>
-                      <button aria-pressed={boundaryAfter} onClick={()=>onBoundaryAfter(true)}>After patch</button>
-                    </div>
-                    <PatchComparisonLegend data={data} result={boundaryComparison} after={boundaryAfter} />
-                  </>}
+                  {boundaryComparison && onBoundaryAfter && (
+                    <>
+                      <div className="pin-review-comparison-buttons">
+                        <button
+                          aria-pressed={!boundaryAfter}
+                          onClick={() => onBoundaryAfter(false)}
+                        >
+                          Before patch
+                        </button>
+                        <button
+                          aria-pressed={boundaryAfter}
+                          onClick={() => onBoundaryAfter(true)}
+                        >
+                          After patch
+                        </button>
+                      </div>
+                      <PatchComparisonLegend
+                        data={data}
+                        result={boundaryComparison}
+                        after={boundaryAfter}
+                      />
+                    </>
+                  )}
                   {boundaryPreviewStatus && (
                     <p role="status">{boundaryPreviewStatus}</p>
                   )}
@@ -961,7 +981,7 @@ export function EnclosureReviewPanel({
                     ...new Set(
                       selectedItem.modes.flatMap((m) => m.floorMaskSources),
                     ),
-                  ].join(" · ") || "Source outline"}
+                  ].join(" · ") || "No selection surface"}
                 </dd>
                 <dt>Source ID</dt>
                 <dd>

@@ -1,0 +1,299 @@
+UNBC NATIVE INDOOR MAP — CONTINUATION HANDOFF
+Prepared 2026-10-09 for another AI model
+Publication note: this is the pre-publication investigation snapshot. The code, tests and this compact handoff are being committed to main in both repositories. Check live Git history/status for the resulting commits; statements about uncommitted changes below describe the investigation snapshot. Large map ZIPs and bounded source extracts remain local. Companion reports in this directory are copied from the run and do not repair source geometry.
+Workspace: /Users/ahmadjalil/github/openindoormaps
+
+STARTING INSTRUCTION TO THE NEXT MODEL
+
+Continue the UNBC native indoor-map repair and finalization described below. The user has authorized parallel agents, source-supported simple repairs, regeneration, and review of every building/floor. First reconcile current files and evidence; preserve all existing source identities, physical openings, permissions, and other chats' edits. Do not restart the investigation from scratch or claim the campus is finished. The latest prepared review map works in tested Floor 1 2D views, but a 3D switch crashed and end-to-end routing remains incomplete. The canonical master is older than the latest review candidate. Apply checked corrections, investigate the remaining native boundaries and connector approaches, improve import/runtime performance without weakening validation, and promote a final master only after meaningful verification.
+
+This is a local handoff document. Its creation has not dispatched work to another model. All status below is a dated snapshot, not a substitute for reading the live repository and receipts.
+
+1. CURRENT GOAL AND THE USER'S EXPECTATIONS
+
+The user wants a finalized campus map using native physical floor, inside-wall, doorway, glazing, column, stair, ramp, and lift geometry. The old manually drawn room/corridor outlines must cease to supply physical display boundaries or fallback routes. They may supply room identities, names and classification through checked majority overlap with native regions. Do not confuse this permitted metadata use with geometric fallback.
+
+Repair unintended tiny connections so genuinely separate rooms select independently. Cover all floors and buildings, not just the five remaining Floor 1 mixed-hallway flags. Retain intentional open spaces; a room name is not proof of an enclosing wall. Use original floor drawings and native bodies to distinguish real entrances from modeling seams. Preserve actual source apertures and stairwell/shaft holes.
+
+The explore map should use native outlines by default when importing the reviewed ZIP, with pregenerated assets. Room fills follow room type, not an arbitrary old outline's fill. Native public circulation, vestibules and ordinary stairs should appear light green; nonwalkable areas grey. Reduce fine wall detail at distant zoom. Outdoor-area display is currently unwanted. Hallways should not behave like selectable named destination rooms. Steps within lecture-theatre seating belong to the room rather than appearing as a separate inter-floor staircase. Level labels should consistently use Floor 1–4, with Floor 0 named Basement; some physical intermediate levels still require their correct grouping.
+
+Building links must fit the current native floor system, particularly Building 4's vestibule/ramp, Building 7/8, Building 9, and lifts across floors. Public and wheelchair routes need separate physical and access checks. Do not manufacture connectivity by enabling source-disabled doors or inventing anchors. A working two-terminal ramp route is not proof that adjacent rooms can reach it.
+
+Patch review should show current geometry, the individual proposed correction, and resulting independent areas with different colors. Proposal acceptance, source application, selection regeneration and route regeneration are distinct states. The user has repeatedly asked that already authorized, checked repairs be applied rather than left as notes. Ask only about unresolved real layout details after exhausting native/DWG evidence and existing decisions.
+
+2. REQUIRED INSTRUCTIONS AND SAFETY OF THE GEOMETRY WORK
+
+Read these before changing geometry or routing:
+  /Users/ahmadjalil/github/openindoormaps/AGENTS.md
+  /Users/ahmadjalil/github/openindoormaps/.agents/skills/indoor-enclosure-review/SKILL.md
+  /Users/ahmadjalil/github/openindoormaps/docs/indoor-enclosure-review.md
+  /Users/ahmadjalil/github/openindoormaps/docs/native-area-review.md
+  /Users/ahmadjalil/github/reviter/docs/indoor-project-pipeline.md
+
+Essential distinctions:
+  * Floor support does not prove indoor enclosure or public access.
+  * A source outline, selection mask or boundary label does not certify a complete raised visitor room. Inspect ordinary and native-height geometry.
+  * Door closures for outlining are separate from navigation portals. Preserve real doors and existing access rules.
+  * Source corrections belong in portable room review and the sibling Reviter compiler, then a regenerated master. Display-only repairs must not mutate routes.
+  * Logical shutter/pickup/doorless-entrance partitions use reviewedAreaPartitions. They do not create a physical wall or grant access.
+  * Elevator shafts require nontraversable footprints; lift doors, landings, approaches and served floors require separate proof.
+  * User review notes/acceptance are not a geometry certificate. Bind decisions and applications to checked source identities/evidence.
+  * Use exact geometry guards, including floors, holes, physical doors, columns, foreign wall pieces and source provenance. Do not use blanket dilation/erosion to seal everything or substitute a nominal wall rectangle for a native body with hosted openings.
+  * No UNBC-specific coordinates or fixed review queue in generic UI logic.
+  * UI and CLI volume review share app/indoor-project/volume-coverage.ts. Count unique room keys, invalidate stale imports/edits, and keep heavy computation off the UI thread.
+  * Candidate/checksum comparison and backups are required before canonical consolidation. Preserve RVT, scene and GIS bytes, unique review evidence, and unrelated local changes.
+
+3. CURRENT ARTIFACTS: CANONICAL IS NOT THE LATEST REVIEW
+
+Authoritative older master:
+  /Users/ahmadjalil/Downloads/UNBC.final/UNBC.master.reviter.zip
+  SHA256 74e21697d55b2bc7b5cef3bbf271a17a3850408552ad0ac90ceebb0c04db3412
+Derived older viewer:
+  /Users/ahmadjalil/Downloads/UNBC.final/UNBC.campus-viewer.zip
+  SHA256 3e901eb2a2118d15765659aeffa8119042320d0310f8be472d81dbd1a5e07c7a
+Canonical metadata:
+  /Users/ahmadjalil/Downloads/UNBC.final/current-version.json
+  updatedAt 2026-10-07T19:05:07.230Z
+  datasetRevision cb2a8cfe28153dcd592134727f6f17c23767f0d2b8ffee0d61afd253c94d7088
+
+Latest prepared, portable REVIEW candidate:
+  /Users/ahmadjalil/Downloads/UNBC.final/previews/2026-10-09/UNBC.floor1-followup-review-ready-20261009.reviter.zip
+  SHA256 7fd503d42c435f67ddd50330c80b87da810fd60cc52c124d95d8b50b5cef930b
+  Size 292,468,803 bytes; 890 checked authoring companions; all 12 display scopes replayed.
+  Same path plus .display-report.json and .READ-ME.txt contain receipts and limitations.
+  It is NOT canonical and NOT navigation-ready. Do not replace the master merely because it loads.
+
+Current run root, abbreviated RUN below:
+  /Users/ahmadjalil/github/openindoormaps/work/floor1-followup-20261009
+Start with RUN/active-pipeline-state.json and RUN/index.html. Some old nested notes predate the completed compiler/preparation; use the newer receipts and actual browser results to resolve stale wording.
+
+Important intermediate artifacts:
+  RUN/protected-inputs/UNBC.floor1-followup-source-20261009.reviter.zip
+    SHA256 ce4d2e7149a27cde72f02cc3516abc8afe7a13779fc14d65b20bf8b3a42429f7
+  RUN/regenerated/compiled-dataset.json
+    SHA256 2fad94fdcce573407edf3cab86e63d059a4388e4b115fe1362e854db53263b90
+  RUN/building09-08/packaging/staging/UNBC.master.reviter.zip
+    SHA256 0e392dd4250628a4a0d46f91f67c039fcba94ae2f13e77b451ce3a21dc298766
+  RUN/building09-08/packaging/staging/UNBC.campus-viewer.zip
+    SHA256 0288a1775e7e91182f3447109fef87edd50f5e5e6b43d03ff5d8e45419ceaf05
+  RUN/reviewed/UNBC.floor1-followup-reviewed-20261009.reviter.zip
+    SHA256 67532990ad52727747d1075f4fac3ab1ea78e1a01fffb92e860bd138fe49a93d
+  RUN/building09-08/routing/fresh-published-dataset.json
+    SHA256 73f7c95e0e066799c15071b890892ed2950768e47e7e6fbcdcb402817bdb3b01
+
+Verify live hashes before consuming/promoting. Current-version.json records many historical batches and pin decisions; it is the starting index for those histories, not proof they survive every newer native association unchanged.
+
+4. SOURCE DRAWINGS, NATIVE CACHE AND REPRODUCIBILITY
+
+The user built the RVT on their first Revit attempt and acknowledges modeling gaps. An original floor-plan DWG is available:
+  /Users/ahmadjalil/Downloads/UNBC Floorplan/UNBC floor plan Basic.DWG
+  SHA256 5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44
+Registered conversion:
+  /Users/ahmadjalil/github/openindoormaps/work/unbc-floorplan-import-20261007/floorplans.dxf
+  SHA256 3ab479c14ebc3456a452056ed67402c627167ebbcb515e585a08bc28953ebc77
+  Registration residual below 1e-7 ft. Use independently registered partition faces; a DWG room contour alone is not wall authority.
+
+Source RVT name: UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt
+Source model SHA256: 8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178
+Scene SHA256: deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab
+GIS SHA256: c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5
+
+RUN/native-cache.json is 389,521,590 bytes:
+  SHA256 d5197e5e0fccf07e0e4b41e95e246646daa7b3cdcc52a6f8a26599b215a4bb1c
+  38,297 drawables and 26,620 curve owners.
+Reuse the cache and bounded owner extracts. Do not decode the RVT repeatedly, print entire huge JSON files, or give every agent duplicate hundreds-of-MB working copies. Hash/check receipts and read only required fields.
+
+5. WHAT HAS BEEN APPLIED AND REGENERATED
+
+The latest follow-up added 62 strictly checked selection contacts, bringing the collection to 352. These analytical selection repairs preserve physical geometry, portal identities and access. They are not proof of new physical walls.
+
+Seven newly independent named selections were established:
+  07-409, 07-218, 05-113, 08-106, 09-200, 09-200-1, 10-1007.
+09-200-1 is a flat vestibule, not a raised room. All 264 baseline named singleton keys were retained; the current scoped preservation report totals 272 including these seven and separate stair 08-S101. This is not the number of all campus rooms.
+Evidence: RUN/building07/remaining/published-selection-preservation.json.
+
+Fresh scoped actual raised-block checks passed ordinary/native heights for 08-106, 09-200 and 10-1007. 09-210/212/277 were already isolated by two registered DWG junctions; refreshed scoped presentation resolved stale blocks and passed both height modes. These CLI checks do not substitute for the failed full browser 3D proof.
+
+The full compiler pass finished across nine physical planes, producing 1,039 native cells, 6,050 edges and 1,560 arrivals. Original model/scene/GIS, nine source collections, eight lift recipes, twelve ramp triangles and arrivals were preserved; no restricted-access losses were reported. Native v3 mapping was independently exact-validated, with strict nonmapping compiler/master parity and permitted viewer redactions.
+
+Portable packaging added 50 late companions, for 890 total. Geometry/routes were unchanged by this metadata attachment; managed sourceRooms/mapping identity bindings were updated. Packaging validation was corrected to validate mapping independently rather than wrongly rejecting legitimate regenerated mapping changes through an undifferentiated full-dataset parity assertion.
+
+Prepared display compilation completed for all twelve scopes with two workers, independent import/replay and source-entry checks. It took about 22 minutes. Preserve the frozen engine/checkpoints:
+  display dataset SHA256 43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009
+  engine SHA256 14e1d7a7709bc9daf10141eed1bfa14374e155ba20b45e73c4640ef34825d050
+  RUN/display-checkpoints/<dataset SHA>-<engine SHA>/display-input.json
+  RUN/prepare-parallel-display.ts and RUN/display-preparation.log
+An engine/source/lockfile change can invalidate prepared bindings; regenerate correctly, never bypass source integrity to shorten loading.
+
+6. CURRENT ALL-FLOOR INVENTORY — THE MOST IMPORTANT SCOPE CORRECTION
+
+The previous “five flags / twenty-two warnings” described Floor 1 MAIN FLOOR ONLY. A new integrity-checked inventory reads the prepared native metadata and uses unchanged production nativeMixedHallwayIssues() classification:
+  RUN/all-floor-status.html — searchable floor/building/room report
+  RUN/all-floor-status-inventory.json — exact groups and labels
+  RUN/audit-saved-floor-inventory.py
+  RUN/summarize-saved-floor-inventory.ts
+
+Scope                 Mixed flags   Multi-place-label areas   Evidence warnings
+Basement                    0                 1                      4
+Floor 1 / main              5                59                     22
+Floor 1.5                   0                 0                      4
+Floor 2                    12                47                      4
+Floor 3                     6                33                      9
+Floor 4                     6                37                      5
+Totals                     29               177             per-scope counts above
+
+The mixed and multi-place sets overlap; their union is 180 report entries. Do not add them as 206 defects. Multi-place means more than one non-circulation place label shares a native area. It can indicate a missing partition, intentional suite, broad open front, metadata association error or source-unsupported enclosure. Warnings are evidence warnings, not room counts. Zero flags does not prove every room or route is correct. The classifier can leave majority-circulation regions green despite room-label coassignment, so the 29 mixed flags alone are not a complete queue.
+
+Affected buildings by scope:
+  Basement: 10.
+  Floor 1: 03,04,05,07,08,09,10.
+  Floor 2: 03,04,05,06,08,09,10.
+  Floor 3: 03,04,05,06,08,10.
+  Floor 4: 03,04,05,08,10.
+The report has actual labels for every group. Cross-building regions count once campus-wide, but under each affected building.
+
+Examples requiring reconciliation with prior applications:
+  Floor 1: 09-242/244/246 remain coassigned; 09-250/252/254/256 share another area. Building 7's large main face still contains bookstore, pickup, office, washroom and utility labels; Building 5 has shared library/classroom labels beyond the five mixed flags.
+  Floor 2: Building 8 groups include 08-210 and neighboring rooms, 08-216/217/223, and 08-240/248/239/242/etc.; Building 10's main face includes 10-2006/2008/2084/2086/2078/2074/2068/2062/etc.
+  Floor 3: Building 4 has a large coassigned group including 04-325/326/327. Compare saved historical repairs with current native application before claiming washrooms remain separated. Building 10 includes 10-3038/3042/3040/3056 and another large classroom/office group.
+  Floor 4: Building 4 04-437/438 remain coassigned in the current metadata; revisit pins 47/48 evidence/application. Building 10 includes 10-4034/4044/4072/etc. Building 5 includes library offices 05-458/482/483/494/495/496. Building 3 includes 03-3025/3032.
+
+These are current metadata findings, not fresh source/3D certificates. Native region sequence IDs can change with display options; bind work to room/source keys and exact geometry, not a remembered region ID alone.
+An additional raw unassociated-label diagnostic exists at RUN/all-floor-unassociated-labels.json. It is not a missing-room census and excludes some combined/intermediate display scopes. Do not present its raw count as failed enclosures.
+
+7. USER DECISIONS THAT MUST SURVIVE THE NEXT REPAIR ROUND
+
+05-157 Reception / 05-150 Corridor / 05-150A Kitchen should remain one selected space if there are no barriers. 03-014 / 03-013 are an internal open area; the user clarified there is no additional west wall to invent. 07-304/305/306A show broad open fronts in native/DWG evidence. 09-271 Corridor / 09-272 Shared Office also show a broad open front. Keep these physical openings; if the user later requests logical segmentation, make it explicitly selection-only.
+
+Bookstore/cafeteria Flexiglide shutter fronts, pickup counters and doorless washroom entrances need logical selection boundaries where supported. Do not convert them into physical doorless walls. Existing navigation/access stays separately reviewed. Earlier cafeteria investigations found a 0.12 mm curved-enclosure seam and roughly 1 mm glazing-wall seam; use saved recipes and current geometry to assess their status rather than reapplying obsolete candidate seams blindly.
+
+Pin 50 marks an inaccessible window-edge lip behind a railing, also present at the corresponding Floor 3 location. It must not be circulation. Use the source-specific off-limits exclusion workflow, not blanket glazing seals or fabricated exterior walls. Pins 54/56, and later 56/57/58, were described as generally open pass-through doors between areas. Preserve physical door metadata and check saved exact evidence. A vestibule is the space between doors, not a replacement for those doors.
+
+Pin 99's outdoor-versus-enclosed landing remains explicitly uncertain: “Not sure—keep it flagged.”
+The user authorized provisional assumed seals near 07-113A (~5 mm) and four Building 9 joins (14,19,54 and angled 55–89 mm). Preserve their reversible assumption labels; acceptance did not certify the original drawing. An assumption was also authorized for boxed entrances near 10-2082/3068, to revisit later.
+
+The user initially said the 07-145/148/148A/148B example had five rooms, then corrected it to four. Do not invent a fifth room. User coloring decision is room TYPE colors. Some historic long lists contain malformed room numbers/aliases; resolve against source keys before applying.
+
+8. NEXT CHECKED PATCH: 04-128 — READY, STILL UNAPPLIED
+
+Read:
+  RUN/building07/remaining/prototype/source-terminal-followup/integration/INTEGRATION-READINESS.txt
+  RUN/building07/remaining/prototype/source-terminal-followup/production-patchset/
+
+A new generic original-simple-terminal-cap family is prepared separately from the existing quadrilateral family. It retains the complete original wall #961042 (eight vertices) and target #961014 notch geometry. Its closure is effectively numerical (4.065690898145235e-15 sq ft); it isolates 04-128 at 173.40350936946277 sq ft. 04-125/07-165/ramp remain shared. Native floor/holes/cap/door/fixture/exclusion and 6,067 foreign-piece guards passed runtime and compiler; 45 tests and strict scoped typecheck passed.
+
+This patchset has NOT been installed or production-applied. Its source amendment preserves all 352 existing contacts, and its mask does not overlap any of 155 published named singleton interiors on level #311.
+
+IMPORTANT: the existing build-source-candidate.ts binds an older SHA3246 candidate and turns ALL proposals into applied. Do not run it unchanged. Update to the current checked base, explicitly apply only the reviewed 04-128 amendment, preserve all existing records and companion history, then regenerate invalidated circulation/mapping/display. Do not widen the older family's tolerances or crop/snap source corners. Other short doorway stubs need a proper joined-cap/aperture certificate; this family is not blanket authorization to seal them.
+
+9. BUILDING 9 NATIVE ENCLOSURE AND REAL LIFT APPROACHES
+
+Correction to an earlier mistaken blocker: wall #1521392's finished native geometry IS present in the retained cache. It was omitted by the current prepared section census. A new Revit export is not required merely to recover it. Preserve the historical note but clearly supersede it.
+
+Read:
+  RUN/building09-08/envelope-design/REPORT.txt
+  RUN/building09-08/envelope-design/WINDOW-CENSUS-REPORT.txt
+  RUN/building09-08/envelope-design/b9-complete-owner-extract.json
+  RUN/building09-08/routing/ENTRANCE-FOLLOWUP.txt
+  RUN/building09-08/routing/real-lift-aperture-proposals.json
+  RUN/building09-08/routing/real-lift-entrance-checks.json
+
+Wall #1521392 has 228 original triangles; the unchanged native mesh cutter recovers sixteen disconnected original parts at multiple Floor 1 cuts. Preserve hosted voids. The bounded 7.67 MB Building 9 extract covers 2,678 candidate owners, 33,379 triangles, 146 physical doors and both original slabs. Six height cuts were checked. There are zero regular-window category -2000014 owners in this particular scope, so adding that generic category is not a proved fix here. Floor slab support matches exactly; Floor 2 slab #1521608 preserves all four real holes.
+
+A floating GEOS diagnostic did NOT find a bounded lift-lobby cavity around pins 115/116 in original-only cuts. That diagnostic is not export authority. Next trace the full native facade intervals together with the checked existing corrections and certify a closed enclosure cycle/support/holes before regenerating lobby approaches. Do not fill a bounding box or use old room outlines as enclosure authority.
+
+Old lift terminal points are 2.48–3.59 ft outside published native faces/envelopes. Actual north/south physical apertures were located between original walls, with exact proposed landing points and supported 0.1 ft approach strips. These proposals remain unapplied because the proper indoor envelope/cell is still absent. Blindly moving the old (251.8,501) point would conceal the real problem.
+
+10. ROUTING RESULTS AND REMAINING CONNECTIVITY
+
+Read RUN/building10/performance/compiled-route-report.json and immutable-route-diagnostic-report.json. The measured suite is 44 cases: eleven selected pairs, two directions, two profiles. It is not all possible campus journeys.
+  Available: 8 / 44. Unavailable: 36 / 44.
+  Public: 6 / 22. Accessible: 2 / 22.
+The eight available routes pass scoped geometry/endpoints/floor-hole/connector checks. Building 4 ramps #1586431 and #1587605 work publicly between tested terminals. Building 7/8 ramp #1622190 works terminal-to-terminal in both profiles, but its enabled component consists only of two ramp nodes. This is not public corridor/room connectivity.
+
+04-122 to 08-107 is still disconnected in the actual enabled graph. Building 4 has a supported native doorway branch omitted through ownership association, plus mixed-cell access restrictions. Building 7/8 has staff-area whole-face policy and missing approach branches. A lossless native staff-zone partition proposal preserves geometry/holes and permissions, but a direct tested ramp-to-door path crosses a physical barrier; the proposal is NOT applied.
+  RUN/building10/performance/NATIVE-ACCESS-ZONE-PROPOSAL.md
+  RUN/building10/performance/ROUTING-AND-ACCESS-FINDINGS.md
+
+Building 9 has unresolved lobby envelope and lift-door attachment. Building 10 Floor 1→2/3 includes source-disabled doors #2474568/#1500191 and stale doorway proof; Floor 4 has source geometry gaps. Keep disabled doors disabled unless current evidence and authority justify a change. Do not invent synthetic room anchors or relax permissions to make tests pass.
+
+First measured CLI route preparation took roughly 7m16s; an immutable graph diagnostic took 6m28s. Warm repeated queries were very fast, often under 2 ms; the repeated public query was 844 ms in the broader API measurement. These are CLI timings, NOT browser startup or interaction latency. Prepared routing guide binding differs among master/worker/viewer redactions, causing cache misses; accessible routing ignores those guides. Global preflight occurs before guide reuse. Fix these systematically rather than advertising fast warm queries as solved performance.
+
+11. BROWSER IMPORT, 3D CRASH AND PERFORMANCE WORK
+
+Latest tested ZIP SHA7fd loaded after a server refresh. Project loading was observed by 192 seconds; Floor 1/main 2D by 239 seconds. These are upper observations, not exact finish timestamps. The view showed 1,782 native areas, 22 warnings, five mixed flags. 08-106 selected independently without the old long strip around 08-107. Actual desktop and 390×844 mobile 2D checks passed.
+
+Switching to 3D rooms then crashed the tab during preparation of the combined four-level Floor 1 scope. Cause is NOT proved; do not assert GPU failure or OOM. A fresh tab restored the saved project in 2D without clearing user storage. Avoid repeating the crashing switch blindly.
+Evidence:
+  RUN/browser-import-attempts.json
+  RUN/browser-memory-observations.json
+  RUN/map-recovered-08-106-native-2d.jpg
+  RUN/map-loaded-mobile.jpg
+  RUN/building10/performance/3d-crash/REPORT.md
+
+Main-page heap observations rose to around 1 GB, with roughly 572 MB backing storage at a preparing state. Worker heap was not measured. A renderer crash was observed, but unassigned process RSS cannot be bound reliably to the tab or prove the cause.
+
+The main-floor three-level display is about 407 MB logical, 107 MB pooled and 13.9 MB gzip. Four-level Floor 1 is about 416 MB logical, 110 MB pooled and 14.2 MB gzip. Compressed ZIP size is not live memory. Loader stages retain pooled bytes/text/pool/restored graph, run hashing/source comparison/topology serialization, then clone a worker envelope. A GPU-layer cleanup omission transiently retains glass/frame layers, but later cleanup removes them; this is not demonstrated cumulative duplication or the known crash cause.
+
+Next instrument scalar timings and memory at decode, source comparison, worker postMessage/receive, geometry upload and mesh creation. Then implement bounded old-scope lifetime/cache/reference disposal and complete renderer layer disposal. Consider versioned lazy 2D/3D chunks or source-content references with unchanged full inventory/parity checks. Never skip geometry/source validation to make import appear fast.
+Reports: RUN/building10/performance/import-validation/REPORT.md and prepared-payload/REPORT.md.
+
+Local browser URL: http://127.0.0.1:42431/openindoormaps/#/projects/indoor
+Stable test server command from OpenIndoorMaps root:
+  node node_modules/.bin/vite --config vite.editor-test.config.ts --mode pages --host 127.0.0.1 --port 42431 --strictPort
+Log: RUN/server-current.log.
+This configuration disables HMR/watching. RESTART the stable server after validator/code edits and reload before import. The first attempt failed after 205 seconds because a pre-change server had stale transforms and rejected the new contact validator; CLI import already passed. A build alone does not refresh this running server.
+Use documented Cua browser APIs for UI proof. Do not manipulate hidden React/IndexedDB state to force a passing view.
+
+12. CODE CHANGES AND TEST LIMITS
+
+Both repositories have related uncommitted changes. OpenIndoorMaps main HEAD:
+  631d24030e2a910c6019602d2d904ecebe870d0d
+Reviter main HEAD:
+  831198a3ab8a3ef822040244df5d756ad528f59a
+Run git status in both before editing. Previous history includes pushes, but the CURRENT changes below are not committed/pushed.
+
+OpenIndoorMaps dirty files include enclosure-review-panel.tsx, volume-coverage.ts, prepared-display-engine-binding.ts, native-circulation.ts, native-exact-planar-topology.ts, native-selection-contact-guards.ts, native-selection-contact-repairs.ts, docs/native-area-review.md, regenerate-from-native-cache.ts and tests. Reviter has corresponding topology/contact/circulation files, project-package.ts, package tests and pipeline docs. Preserve unrelated work.
+
+Implemented work includes:
+  * Original-free-cap contact validation with complete original evidence, strict finite guards and normal depth <=1e-7 ft; legacy family unchanged.
+  * Honest volume-mask provenance: source-native-face requires native physical evidence; partial/assumed/outline/unverified states remain distinguishable.
+  * Exact segment AABB pruning with original exact kernel for tangencies, collinear cases and tiny positive intersections. Primitive benchmarks improve, but no full-browser speed claim.
+  * Localized access-operand pruning and immutable operation-context reuse, retaining full identity/area denominators and access rules.
+  * Reviter JSON-entry cap 128→192 MiB, aggregate cap still 900 MiB; validation protections remain.
+
+Focused tests, scoped typechecks and build passed for those changes, with evidence in RUN/typecheck-final.log and build-final.log. Recorded suites include 36 contact tests, 16 provenance tests, 29 topology tests/140 old-new comparisons, 69 focused access tests and six package preflight tests. Counts overlap across runs; do not add them as a single full-suite count. Some connector tests were skipped because fixture environment variables were unset. Do not claim full lint, all-campus routes, or successful browser 3D.
+
+13. AGENTS AND RETENTION
+
+The user explicitly requested many agents for repair work. Existing reusable agent tasks include floor1_building07, floor1_building09_08 and floor1_building10; completed bounded findings are in this run. No current repair jobs should be assumed still running. Check live agent status before reuse. Available concurrency has been four including the parent. Assign independent buildings/diagnostics and separate output ownership; avoid simultaneous mutations of the shared canonical dataset or generic compiler files. Merge verified proposals centrally.
+
+Latest user preference: keep the last THREE work runs and THREE public preview snapshots, not endless archives. Retained work runs:
+  work/floor1-followup-20261009
+  work/floor1-remaining-review-20261008
+  work/native-navigation-finalization-20261007
+Protected original source, registered DWG/DXF helpers, runtime dependencies and unique evidence are not obsolete solely because they are older.
+Cleanup removed about 1.406 GiB of verified obsolete/rejected previews and duplicate child checkpoint batches. Keep merged parent checkpoints and SHA blobs. Current retention receipts:
+  RUN/retention-policy.json
+  RUN/retention-receipt.json
+Continue in this current run; do not create a fourth historical run for every attempt. Delete superseded duplicates only after checking references, hashes and active reproducibility inputs.
+
+14. RECOMMENDED CONTINUATION ORDER AND COMPLETION CRITERIA
+
+1) Reconcile live Git state, canonical current-version, latest candidate hashes and active pipeline. Read the instructions and the searchable all-floor inventory. Do not spend an hour rerunning finished compilation just to answer status.
+
+2) In parallel, instrument/fix the browser import/3D memory lifecycle and integrate the checked 04-128 proposal into runtime plus sibling compiler. Preserve source proof and explicitly apply only that reviewed amendment. Keep canonical unchanged.
+
+3) Divide all-floor review among agents by building/floor. For each shared native region: classify intentional opening, numerical seam, logical shutter/front boundary, missing native enclosure, wrong room ownership or restricted-domain conflict. Match historical applications against the new exact source/mapping. Verify actual walls/doorways/slab holes with DWG where useful. Apply supported repairs, retain unresolved evidence with precise remaining questions, and preserve intentional user-approved shared spaces.
+
+4) Complete Building 9 facade/lobby certificate using the bounded native extract and existing corrections, then real aperture approaches. Repair Building 4 and Building 7/8 walking branch ownership/access domains using physical routes; do not treat terminal connectivity as completion. Review Building 10 approaches/source-disabled portals and remaining upper-floor source geometry.
+
+5) Regenerate a coherent source batch, native circulation/mapping, portable review and prepared display. Check baseline singleton preservation, original source bytes/openings, room identities/permissions, compiler-master parity, checksum/companion agreement and prepared-engine binding. Old manual outline geometry must not reenter display or paths; metadata-only use remains permitted.
+
+6) Run actual end-to-end cross-building and multi-floor public/accessible journeys, including lift lobby approaches and wheelchair elevators. Measure initial preparation and destination-selection latency, not only warm solver speed. Exercise import, save/restore, floor switches and 2D/3D/native-height modes on actual desktop/mobile browser views. Fix failures before claiming a final campus map.
+
+7) Promote only a checked master/viewer pair after comparing canonical hashes and preserving newer unrelated changes. Update current-version and portable evidence, distinguish assumptions from verified physical enclosures, and obey three-run retention. The user previously authorized pushing both repositories, but check live scope/changes before publishing unrelated edits.
+
+Definition of done: every remaining flagged or coassigned group has a reviewed disposition; supported isolated rooms are actually isolated in native selection and correctly displayed; intentional shared spaces are recorded; native connectors support valid permitted end-to-end routes; import and floor/3D transitions work with acceptable measured responsiveness; source/pipeline parity and portability hold; and the final canonical master is honestly promoted. A zero mixed-flag count alone, or twelve prepared display scopes alone, does not satisfy that definition.
+
+There is no pending layout question required to begin this work. Existing user authorizations cover the checked repairs and parallel investigation. Do not claim all historical requested rooms were fixed: the current all-floor inventory explicitly shows otherwise.

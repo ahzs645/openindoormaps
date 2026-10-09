@@ -13,6 +13,8 @@ import { prepareIndoorDataset } from "../../../reviter/lib/reviter/indoor-pipeli
 import { createNativeParallelCompiler } from "../../../reviter/scripts/indoor/parallel-native-circulation.ts";
 import type { ConvertResult } from "../../../reviter/lib/reviter/types.ts";
 import { validatePublishedNativeExploreMapping } from "../../app/indoor-project/native-explore-mapping";
+import { nativeSourceStairPhysicalEvidence } from "../../app/indoor-project/native-source-stair-material";
+import { floorDisplayName } from "../../app/indoor-project/floor-display-name";
 import {
   readIndoorProject,
   exportIndoorProject,
@@ -34,7 +36,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
     !value ||
     value.startsWith("--")
   )
-    throw Error(
+    throw new Error(
       "Expected unique --native-workers 1|2 and optional --checkpoint-dir directory",
     );
   workerOptions.set(flag, value);
@@ -43,9 +45,9 @@ const workerCount = workerOptions.has("--native-workers")
   ? Number(workerOptions.get("--native-workers"))
   : undefined;
 if (workerCount !== undefined && workerCount !== 1 && workerCount !== 2)
-  throw Error("--native-workers must be 1 or 2");
+  throw new Error("--native-workers must be 1 or 2");
 if (workerOptions.has("--checkpoint-dir") && !workerCount)
-  throw Error("--checkpoint-dir requires --native-workers");
+  throw new Error("--checkpoint-dir requires --native-workers");
 const inputPath = resolve(input),
   cachePath = resolve(nativeCache),
   output = resolve(destination);
@@ -162,20 +164,59 @@ for (const path of assets)
     `Source asset changed: ${path}`,
   );
 assert.deepEqual(master.rooms, before.rooms);
+// Export publishes a checked native map cache on a cloned dataset. This is
+// derived display/selection data; every compiler geometry and graph field
+// must remain identical after removing that independently validated cache.
+await validatePublishedNativeExploreMapping(master.dataset);
+if (
+  dataset.walkingSupport?.sourceModelSha256 === dataset.source.modelSha256 &&
+  dataset.walkingSupport.floors.length > 0
+)
+  assert.ok(
+    master.dataset.nativeExploreMapping,
+    "Master native floor mapping is required for a native-supported rebuild",
+  );
+const masterComparable = structuredClone(master.dataset);
+const compilerComparable = structuredClone(dataset);
+delete masterComparable.nativeExploreMapping;
+delete compilerComparable.nativeExploreMapping;
 assert.equal(
-  sha(new TextEncoder().encode(JSON.stringify(master.dataset))),
-  sha(new TextEncoder().encode(JSON.stringify(dataset))),
-  "Portable master data must match compiler JSON",
+  sha(new TextEncoder().encode(JSON.stringify(masterComparable))),
+  sha(new TextEncoder().encode(JSON.stringify(compilerComparable))),
+  "Portable master geometry and graph must match compiler JSON",
 );
 console.time("Export viewer");
 const viewerBytes = await exportCampusViewer(master);
 console.timeEnd("Export viewer");
 const viewer = await readIndoorProject(viewerBytes);
 const visitorExpected: IndoorDataset = structuredClone(dataset);
+visitorExpected.floors = visitorExpected.floors.map((floor) => ({
+  ...floor,
+  name:
+    master.rooms.mapEdits?.floorNames?.[floor.id] ??
+    floorDisplayName(floor.name),
+}));
+visitorExpected.nativeSourceStairMaterials = nativeSourceStairPhysicalEvidence(
+  dataset.nativeSourceStairMaterials,
+);
+for (const flight of visitorExpected.stairDisplay?.sourceFlights ?? [])
+  delete flight.historicalPreparedTreads;
+for (const flight of visitorExpected.stairDisplay?.flights ?? [])
+  delete flight.historicalPreparedTreads;
 delete visitorExpected.selectionDoorThresholds;
-delete visitorExpected.doorAperturePatchState;
+if (!visitorExpected.nativeIndoorEnvelopes)
+  delete visitorExpected.doorAperturePatchState;
 delete visitorExpected.nativeDoorBoundaryClosures;
-delete visitorExpected.nativeWallPositionRepairs;
+if (
+  visitorExpected.nativeIndoorEnvelopes &&
+  visitorExpected.nativeWallPositionRepairs
+)
+  visitorExpected.nativeWallPositionRepairs.walls =
+    visitorExpected.nativeWallPositionRepairs.walls.map((wall) => ({
+      ...wall,
+      notes: "Source-bound physical wall placement.",
+    }));
+else delete visitorExpected.nativeWallPositionRepairs;
 // Logical partition descriptors and their history are authoring selections.
 // Visitor exports retain physical rooms and portals. The exact read-only native
 // floor outline is a separately validated derived publication, not this history.
@@ -184,13 +225,22 @@ delete visitorExpected.reviewedAreaPartitions;
 // the reviewed master alongside the source evidence and recommendation files.
 for (const area of visitorExpected.indoorExclusions?.areas ?? [])
   delete area.notes;
+if (visitorExpected.nativeSelectionContactRepairs)
+  visitorExpected.nativeSelectionContactRepairs.repairs =
+    visitorExpected.nativeSelectionContactRepairs.repairs
+      .filter((repair) => repair.status === "applied")
+      .map((repair) => ({
+        ...repair,
+        notes:
+          "Provisional source-bound native selection contact; physical geometry and access unchanged. Revisit required.",
+      }));
 // Native mapping is derived flat selection/display data, not a graph mutation.
 // Check its source/current geometry and output binding independently, then
 // retain strict byte-equivalent dataset parity for every remaining field.
 await validatePublishedNativeExploreMapping(viewer.dataset);
 if (
   dataset.walkingSupport?.sourceModelSha256 === dataset.source.modelSha256 &&
-  dataset.walkingSupport.floors.length
+  dataset.walkingSupport.floors.length > 0
 )
   assert.ok(
     viewer.dataset.nativeExploreMapping,

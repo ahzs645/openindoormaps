@@ -4,7 +4,10 @@ import {
   NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
 } from "../../app/indoor-project/native-rational-overlay";
 import test from "node:test";
-import { routingSnapshot } from "../../app/indoor-project/routing-cache";
+import {
+  routingSnapshot,
+  withRoutingCalculation,
+} from "../../app/indoor-project/routing-cache";
 import assert from "node:assert/strict";
 import {
   nativeCirculationGeometryKey,
@@ -108,7 +111,10 @@ test("source and worker circulation bindings retain full authored physical roles
   };
   const originalKey = nativeCirculationGeometryKey(data);
   assert.notEqual(originalKey, legacyKey);
-  assert.equal(compilerKey(data as any), originalKey);
+  assert.equal(
+    compilerKey(data as Parameters<typeof compilerKey>[0]),
+    originalKey,
+  );
   const workerData = routeWorkerDataset(data);
   assert.deepEqual(
     workerData.nativeSourceStairMaterials?.authoredTreadRoles,
@@ -119,7 +125,10 @@ test("source and worker circulation bindings retain full authored physical roles
   roles.runs[0].faces[0].originalTrianglesFeet[0][0][0] += 0.01;
   assert.notEqual(nativeCirculationGeometryKey(data), originalKey);
   roles.geometrySha256 = nativeAuthoredStairTreadRolesHash(roles);
-  assert.equal(compilerKey(data as any), nativeCirculationGeometryKey(data));
+  assert.equal(
+    compilerKey(data as Parameters<typeof compilerKey>[0]),
+    nativeCirculationGeometryKey(data),
+  );
   delete data.nativeSourceStairMaterials;
   assert.equal(nativeCirculationGeometryKey(data), legacyKey);
 });
@@ -1094,7 +1103,7 @@ test("same-original-slab aliases accept only certified own doorway halves, never
     kind: "wall",
     nativeElementId: 105,
     levelId: 1,
-    ringsFeet: [rect(9.2, 1, 9.20000001, 3)],
+    ringsFeet: [rect(9.2, 1, 9.200_000_01, 3)],
   });
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
@@ -1105,7 +1114,7 @@ test("same-original-slab aliases accept only certified own doorway halves, never
     "arbitrarily thin foreign material blocks the entire approach",
   );
   data.walls.pop();
-  data.walkingSupport!.floors[0].ringsFeet.push(rect(9.2, 1, 9.20000001, 3));
+  data.walkingSupport!.floors[0].ringsFeet.push(rect(9.2, 1, 9.200_000_01, 3));
   data.circulationGeometry!.sourceGeometryKey =
     nativeCirculationGeometryKey(data);
   compileLiteralFixtureTopology(data);
@@ -1214,6 +1223,135 @@ test("source-face majority keeps contained restricted identities unavailable des
     nativeCirculationCells(d),
     [],
     "a positive nonwalkable claim cannot disappear below a numerical area cutoff",
+  );
+});
+test("protected access intersection retains tiny native holes, tangency and complete face majority", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const epsilon = 2 ** -40;
+  const cases = [
+    {
+      name: "an identity entirely in a tiny excluded hole has no material overlap",
+      face: [rect(0, 0, 20, 10), rect(10, 2, 10 + epsilon, 2 + epsilon)],
+      identity: rect(10, 2, 10 + epsilon, 2 + epsilon),
+      blocked: false,
+    },
+    {
+      name: "half of a tiny identity outside the hole still reaches the exact majority",
+      face: [rect(0, 0, 20, 10), rect(10, 2, 10 + epsilon, 2 + epsilon)],
+      identity: rect(10 - epsilon, 2, 10 + epsilon, 2 + epsilon),
+      blocked: true,
+    },
+    {
+      name: "a finite outer tangency is not a positive-area access claim",
+      face: [rect(0, 0, 20, 10), rect(1, 1, 10, 9)],
+      identity: rect(20, 0, 21, 10),
+      blocked: false,
+    },
+    {
+      name: "a pruned distant hole still reduces the whole face majority denominator",
+      face: [rect(0, 0, 20, 10), rect(1, 1, 10, 9)],
+      identity: rect(11, 0, 60, 10),
+      blocked: true,
+    },
+  ];
+  for (const example of cases) {
+    const d = fixture();
+    const source = {
+      version: 1 as const,
+      sourceModelSha256: d.source.modelSha256,
+      levels: [
+        {
+          levelId: 1,
+          elevationFeet: 0,
+          partsFeet: [[rect(0, 0, 80, 12)]],
+          sourceElementIds: [100],
+          cutElevationsFeet: [4, 8],
+          evidenceSha256: "b".repeat(64),
+        },
+      ],
+    };
+    d.nativeIndoorEnvelopes = {
+      ...source,
+      geometrySha256: await nativeIndoorEnvelopeHash(source),
+    };
+    d.circulationGeometry!.cells[0].ringsFeet = example.face;
+    d.records.push({
+      ...d.records[0],
+      key: "protected",
+      access: "staff",
+      circulation: false,
+      ringsFeet: [example.identity],
+    });
+    d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+    compileLiteralFixtureTopology(d);
+    assert.equal(
+      withRoutingCalculation(d, () => nativeCirculationCells(d).length === 0),
+      example.blocked,
+      example.name,
+    );
+  }
+});
+test("operation-local normalized protected identity is invalidated by in-place identity and access edits", async () => {
+  const { nativeIndoorEnvelopeHash } = await import(
+    "../../app/indoor-project/native-indoor-envelopes"
+  );
+  const d = fixture();
+  const source = {
+    version: 1 as const,
+    sourceModelSha256: d.source.modelSha256,
+    levels: [
+      {
+        levelId: 1,
+        elevationFeet: 0,
+        partsFeet: [[rect(0, 0, 80, 12)]],
+        sourceElementIds: [100],
+        cutElevationsFeet: [4, 8],
+        evidenceSha256: "b".repeat(64),
+      },
+    ],
+  };
+  d.nativeIndoorEnvelopes = {
+    ...source,
+    geometrySha256: await nativeIndoorEnvelopeHash(source),
+  };
+  const identity: IndoorDataset["records"][number] = {
+    ...d.records[0],
+    key: "protected",
+    access: "staff",
+    circulation: false,
+    ringsFeet: [rect(3, 3, 4, 4)],
+  };
+  d.records.push(identity);
+  const cells = () => {
+    d.circulationGeometry!.sourceGeometryKey = nativeCirculationGeometryKey(d);
+    compileLiteralFixtureTopology(d);
+    return withRoutingCalculation(d, () => nativeCirculationCells(d));
+  };
+  assert.equal(cells().length, 0);
+  const expanded = rect(19, 3, 60, 4);
+  identity.ringsFeet[0].forEach((point, i) => {
+    point[0] = expanded[i][0];
+    point[1] = expanded[i][1];
+  });
+  assert.equal(
+    cells().length,
+    1,
+    "the old normalized one-square-foot claim cannot survive a new calculation",
+  );
+  identity.ringsFeet = [rect(3, 3, 4, 4)];
+  identity.access = "public";
+  assert.equal(
+    cells().length,
+    1,
+    "a changed public access policy is rechecked",
+  );
+  identity.access = "staff";
+  assert.equal(
+    cells().length,
+    0,
+    "restoring staff access restores the exact veto",
   );
 });
 test("rehashed native face cannot erase independently replayed original typed tread material", async () => {

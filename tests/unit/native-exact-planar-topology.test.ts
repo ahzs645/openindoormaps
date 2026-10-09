@@ -36,6 +36,97 @@ const box = (a: number, b: number, c: number, d: number) =>
     ],
   ] as [number, number][][][];
 const exact = (p: [number, number][][][]) => nativeRationalOverlay("union", p);
+test("runtime and compiler path broadphase preserves finite hole contacts and rational sub-number gaps", async () => {
+  const source = await import(
+    "../../../reviter/lib/reviter/native-exact-planar-topology"
+  );
+  const sourceOverlay = await import(
+    "../../../reviter/lib/reviter/native-rational-overlay"
+  );
+  for (const [api, R] of [
+    [{ nativeRationalPathSupported, freezeNativeRationalParts }, Rational],
+    [source, sourceOverlay.Rational],
+  ] as const) {
+    const q = (n: number) => new R(BigInt(n));
+    const gap = new R(1n, 2n ** 520n),
+      afterFour = new R(4n * gap.d + gap.n, gap.d);
+    const parts = [
+      [
+        [
+          [q(0), q(0)],
+          [q(10), q(0)],
+          [q(10), q(10)],
+          [q(0), q(10)],
+        ],
+        [
+          [q(4), q(4)],
+          [afterFour, q(4)],
+          [afterFour, q(6)],
+          [q(4), q(6)],
+        ],
+      ],
+    ] as [Rational, Rational][][][];
+    for (const frozen of [false, true]) {
+      const operand = frozen ? api.freezeNativeRationalParts(parts) : parts;
+      assert.equal(
+        api.nativeRationalPathSupported(
+          [
+            [3, 5],
+            [5, 5],
+          ],
+          operand,
+        ),
+        false,
+        "a hole narrower than a floating-point ULP still cuts the finite path",
+      );
+      assert.equal(
+        api.nativeRationalPathSupported(
+          [
+            [5, 5],
+            [3, 5],
+          ],
+          operand,
+        ),
+        false,
+        "reversed path bounds retain the same positive hole",
+      );
+      assert.equal(
+        api.nativeRationalPathSupported(
+          [
+            [3, 4],
+            [4, 4],
+            [3, 3],
+          ],
+          operand,
+        ),
+        false,
+        "finite tangent contact with a hole stays excluded",
+      );
+      assert.equal(
+        api.nativeRationalPathSupported(
+          [
+            [3, 3],
+            [5, 3],
+          ],
+          operand,
+        ),
+        true,
+        "the infinite extension of a hole edge does not block a disjoint finite path",
+      );
+      assert.equal(
+        api.nativeRationalPathSupported(
+          [
+            [10, 0],
+            [0, 0],
+          ],
+          operand,
+        ),
+        true,
+        "a reversed collinear outer boundary remains supported",
+      );
+    }
+  }
+});
 test("exact tile broadphase retains tangent shells, negative tiles and every positive hole in runtime and compiler", async () => {
   const source = await import(
     "../../../reviter/lib/reviter/native-exact-planar-topology"
@@ -145,7 +236,7 @@ test("exact tile broadphase retains tangent shells, negative tiles and every pos
     }
   }
 });
-function rehash(value: any) {
+function rehash<T extends { geometrySha256: string }>(value: T) {
   const { geometrySha256: _, ...p } = value;
   value.geometrySha256 = bytesToHex(
     sha256(new TextEncoder().encode(JSON.stringify(p))),
@@ -160,6 +251,7 @@ test("exact carrier preserves true narrow positive gaps and rejects crossing rou
   );
   const carrier = encodeNativeExactTopology(binding, [{ id: "face", parts }]);
   const index = createNativeExactTopologyIndex(
+    // eslint-disable-next-line unicorn/prefer-structured-clone -- Exercise the JSON wire round trip, not an in-memory clone.
     JSON.parse(JSON.stringify(carrier)),
     binding,
   );
@@ -284,16 +376,13 @@ test("encoder binding retains only the three declared physical keys", () => {
   const first = encodeNativeExactTopology(binding, [
     { id: "a", parts: exact(box(0, 0, 1, 1)) },
   ]);
-  const next = encodeNativeExactTopology(
-    { ...first, privateNote: "not a binding" } as any,
-    [{ id: "a", parts: exact(box(0, 0, 1, 1)) }],
-  );
+  const annotatedBinding = { ...first, privateNote: "not a binding" };
+  const next = encodeNativeExactTopology(annotatedBinding, [
+    { id: "a", parts: exact(box(0, 0, 1, 1)) },
+  ]);
   assert.deepEqual(next, first);
   assert.deepEqual(
-    createNativeExactTopologyIndex(next, {
-      ...first,
-      privateNote: "not a binding",
-    } as any).binding,
+    createNativeExactTopologyIndex(next, annotatedBinding).binding,
     binding,
   );
 });
@@ -322,7 +411,10 @@ test("area majority uses exact ordering rather than rounded half coverage", asyn
   const { nativeRationalAreaCompare } = await import(
     "../../app/indoor-project/native-exact-planar-topology"
   );
-  const q = new Rational(500000000000000000000001n, 1000000000000000000000000n);
+  const q = new Rational(
+    500_000_000_000_000_000_000_001n,
+    1_000_000_000_000_000_000_000_000n,
+  );
   const slightlyMore = nativeRationalOverlay("union", [
     [
       [
@@ -380,7 +472,7 @@ test("immutable exact routing geometry cannot retain mutable coordinate scalars"
   const parts = freezeNativeRationalParts(exact(box(0, 0, 1, 1)));
   assert.equal(Object.isFrozen(parts[0][0][0][0]), true);
   assert.throws(() => {
-    (parts[0][0][0][0] as any).n = 999n;
+    (parts[0][0][0][0] as { n: bigint }).n = 999n;
   });
   assert.throws(() => {
     parts[0][0][0][0] = rational(999);
@@ -444,7 +536,7 @@ for (const [name, classify] of [
     ring.forEach((p) => Object.freeze(p));
     Object.freeze(ring);
     assert.equal(classify([rational(0.5), rational(0.5)], ring), 1);
-    for (const p of ring) (p[1] as any).n += 10n * p[1].d;
+    for (const p of ring) (p[1] as { n: bigint }).n += 10n * p[1].d;
     assert.equal(classify([rational(0.5), rational(10.5)], ring), 1);
     assert.equal(classify([rational(0.5), rational(0.5)], ring), 0);
   });

@@ -1,0 +1,122 @@
+{
+  "format": "openindoormaps-followup-active-pipeline",
+  "version": 1,
+  "retentionLimit": 3,
+  "retentionPolicy": "retention-policy.json",
+  "retentionReceipt": "retention-receipt.json",
+  "portableReviewedZip": "reviewed/UNBC.floor1-followup-reviewed-20261009.reviter.zip",
+  "portableReviewedSha256": "67532990ad52727747d1075f4fac3ab1ea78e1a01fffb92e860bd138fe49a93d",
+  "displayPreparation": {
+    "sessionId": 85084,
+    "log": "display-preparation.log",
+    "engineFrozen": true,
+    "expectedOutput": "/Users/ahmadjalil/Downloads/UNBC.final/previews/2026-10-09/UNBC.floor1-followup-ready-20261009.reviter.zip",
+    "checkpoints": "display-checkpoints",
+    "status": "complete: 12 scopes independently replayed and source entries preserved",
+    "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+    "scopes": 12,
+    "completedReplayedScopes": 12,
+    "output": "/Users/ahmadjalil/Downloads/UNBC.final/previews/2026-10-09/UNBC.floor1-followup-review-ready-20261009.reviter.zip",
+    "outputSha256": "7fd503d42c435f67ddd50330c80b87da810fd60cc52c124d95d8b50b5cef930b"
+  },
+  "canonicalPromoted": false,
+  "navigationReady": false,
+  "nextUnappliedSourceProposal": "building07/remaining/prototype/source-terminal-followup/integration/INTEGRATION-READINESS.txt",
+  "notes": "Keep active inputs/checkpoints until final display replay and browser proof. A verified final output replaces this same run source staging snapshot, not an additional retained historical run.",
+  "protectedSourceInput": "/Users/ahmadjalil/github/openindoormaps/work/floor1-followup-20261009/protected-inputs/UNBC.floor1-followup-source-20261009.reviter.zip",
+  "protectedSourceInputSha256": "ce4d2e7149a27cde72f02cc3516abc8afe7a13779fc14d65b20bf8b3a42429f7",
+  "browserVerification": {
+    "outputSha256": "7fd503d42c435f67ddd50330c80b87da810fd60cc52c124d95d8b50b5cef930b",
+    "attempts": [
+      {
+        "elapsedSeconds": 205,
+        "success": false,
+        "visibleError": "Invalid native selection contact repair: finite original evidence, assumption, state or duplicate ID",
+        "diagnosis": "Existing local Vite editor-test server freezes module transforms and was started before current repair validator changes; current CLI importer passed."
+      },
+      {
+        "success": true,
+        "observedLoadedBySeconds": 239,
+        "projectObservedLoadedBySeconds": 192,
+        "floor": "Floor 1 / Main floor",
+        "mode": "2D floor map",
+        "nativeAreaCount": 1782,
+        "nativeWarningCount": 22,
+        "mixedHallways": 5,
+        "proof": ["map-loaded-desktop.jpg", "map-08-106-native-2d.jpg"],
+        "office08_106Independent": true,
+        "serverRestartedWithCurrentCode": true
+      }
+    ],
+    "sourceCodeGeometryChangedToResolve": false,
+    "subsequent3dCheck": {
+      "success": false,
+      "action": "Switch to 3D rooms on Floor 1",
+      "observedOutcome": "Browser tab crashed during floor preparation",
+      "cause": "Unproved; investigating",
+      "recovery": "Fresh tab at the same local workspace; original project storage preserved"
+    },
+    "recovery": {
+      "success": true,
+      "mode": "2D floor map",
+      "nativeAreaCount": 1782,
+      "warningCount": 22,
+      "mixedHallwayCount": 5,
+      "selectedRoom": "08-106",
+      "desktopProof": "map-recovered-08-106-native-2d.jpg",
+      "mobileViewportProof": "map-loaded-mobile.jpg",
+      "mobileViewport": {
+        "width": 390,
+        "height": 844
+      },
+      "defaultViewportRestored": true,
+      "scopeLimits": "Floor 1 / Main floor only; no 3D or other floor proof from this recovery."
+    }
+  },
+  "localServerSessionId": 81060,
+  "nextSourceProposalStatus": "Proposed only; current source builder older input binding must be updated before explicit application and regenerated circulation.",
+  "sourceCensusStatus": "Building 9 bounded original owner cuts complete; no enclosing lift lobby cavity certified or applied.",
+  "allFloorInventory": {
+    "report": "all-floor-status.html",
+    "inventory": "all-floor-status-inventory.json",
+    "automatedMetadataCheckOnly": true,
+    "manualCampusEnclosureSignoff": false,
+    "floors": {
+      "Basement": {
+        "mixedFlags": 0,
+        "multiPlaceAreas": 1,
+        "evidenceWarnings": 4
+      },
+      "Floor 1 \u2014 Main floor": {
+        "mixedFlags": 5,
+        "multiPlaceAreas": 59,
+        "evidenceWarnings": 22
+      },
+      "Floor 1.5": {
+        "mixedFlags": 0,
+        "multiPlaceAreas": 0,
+        "evidenceWarnings": 4
+      },
+      "Floor 2": {
+        "mixedFlags": 12,
+        "multiPlaceAreas": 47,
+        "evidenceWarnings": 4
+      },
+      "Floor 3": {
+        "mixedFlags": 6,
+        "multiPlaceAreas": 33,
+        "evidenceWarnings": 9
+      },
+      "Floor 4": {
+        "mixedFlags": 6,
+        "multiPlaceAreas": 37,
+        "evidenceWarnings": 5
+      }
+    },
+    "totalMixedFlags": 29,
+    "totalMultiPlaceAreas": 177,
+    "setsOverlap": true,
+    "productionAndZipsUnchanged": true,
+    "desktopMobileReportVerified": true
+  }
+}

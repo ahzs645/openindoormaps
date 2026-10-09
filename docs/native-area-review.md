@@ -101,6 +101,8 @@ Run `node --import tsx --test tests/unit/native-area-review.test.ts tests/unit/e
 
 Do not overwrite a newer canonical master with a browser test export. Compare hashes, preserve user pins and other chats' work, and promote a regenerated candidate only after geometry/routing validation.
 
+The local server configured with `vite.editor-test.config.ts` deliberately disables HMR and file watching. Restart that server after source or validator changes, then reload the browser before importing a newly generated ZIP. A successful build alone does not replace its already transformed worker modules; an old worker can reject a current repair mode or miss the current prepared-display engine binding.
+
 ## Wall-gap experiments and source patches
 
 **Maximum wall gap (feet)** controls unlabelled wall-end/doorway recommendations, not holes in slabs. Default 0 keeps the source unchanged; compare 5 and 6. The conservative detector pairs aligned, rectangular precise wall caps separated by 0.02–6 feet. It rejects closures without native floor support or intersecting a protected floor opening. It does not repair arbitrary corners, curved walls or an entirely missing partition. Each candidate lists its width, supporting native wall IDs and any overlapping measured doors. “Preview” closes only the selection trace; “Patch” is a separate explicit choice.
@@ -551,6 +553,10 @@ normal merge and export rules. Folder imports additionally reconcile companion
 files; changed companions can therefore require a fresh authoring export.
 
 ### Provisional source contact repairs
+
+`contactMode: "original-free-cap"` handles a checked short original member cap that already intersects its convex target over part of its width. It also admits a convex four-corner native member whose actual sides are slightly skewed. The complete original cap, source component and target component remain authority; no vertex is snapped and no saved crop is accepted. Exact target vertices and cap crossings define each free lateral interval. Each added interval must reach the first actual target material within `1e-7` feet, with the named original face participating in a positive interval. Existing target intersections remain unchanged. Long sides, nonconvex bodies, zero contacts, invented subcaps and larger gaps are rejected.
+
+Import and selection independently reconstruct the same free-interval mask from the uniquely matching retained original components. The entire original cap must remain supported by floor outside protected openings. Door, fixture, excluded-area and foreign-material vetoes still apply, including other components of either owner. This mode corrects provisional selection topology only; it does not construct a wall, certify a raised room or change navigation. A combined native region trace is required to establish which identities actually become independent.
 
 `nativeSelectionContactRepairs` records individual selection-only corrections for positive gaps no larger than `1e-7` feet between verified original native member caps and finite supporting faces. The exact rational mask is reconstructed from current source coordinates; it does not move a wall, add a physical wall or change a doorway, route, access rule or raised room. The original material checksum, model, level, elevation, full source rings and contact edges must still match. Entire gap coverage by original floor and exact positive-intersection vetoes for openings, doors, fixtures and foreign material are replayed on import and selection. A sub-epsilon forbidden intersection still rejects the repair.
 

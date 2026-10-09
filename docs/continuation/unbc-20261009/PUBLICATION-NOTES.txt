@@ -1,0 +1,12 @@
+Publication to both main branches, 2026-10-09
+
+The investigation handoff and all-floor report remain a dated snapshot. Publishing source changes does not promote the native review ZIP to canonical or resolve the reported 3D crash and route failures. Large map ZIPs and investigation datasets remain local.
+
+The pre-commit hook required lint and formatting cleanup. Runtime/compiler numerical guards remain unchanged in intent; focused geometry parity tests, scoped typechecks and Pages builds are rerun before pushing.
+
+Current prepared-display engine binding: 2ee8d4ffbd3de0bca429217c9a6b39c6f06b09f0e614037fe443bc54ec48f8aa
+The previously checked review ZIP uses engine 14e1d7a7709bc9daf10141eed1bfa14374e155ba20b45e73c4640ef34825d050. Source-text changes intentionally invalidate that prepared-display binding. Reprepare the display assets against current code before claiming a matching precompiled release; never relabel old assets with the new engine hash.
+
+See Git history and live status for publication commit IDs. The local active-pipeline-state.json continues to describe the tested earlier ZIP, not a newly regenerated release.
+
+Final focused checks: OpenIndoorMaps 86/86 tests; Reviter 52/52 tests, no skips. Scoped TypeScript checks and Pages builds passed in both repositories. Commit hooks are enforced for this publication.
