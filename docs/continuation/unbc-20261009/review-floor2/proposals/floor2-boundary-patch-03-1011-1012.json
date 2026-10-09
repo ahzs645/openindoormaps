@@ -1,0 +1,130 @@
+{
+ "format": "review-floor2-proposal",
+ "version": 1,
+ "kind": "nativeBoundaryPatches (apply existing proposed record)",
+ "checkedAgainst": {
+  "datasetSha256": "cb58e81ec8f009aa6ea06468db1f77a35cb82b50b33965e8152703332c2a03be",
+  "datasetPath": "source-candidate-dataset.json (= protected-inputs/UNBC.floor1-followup-source-20261009.reviter.zip viewer/indoor.json)",
+  "roomsJsonSha256": "93fa454652514676269e4257a70861bd2ed5ae59521bcfcd690ffee3b8e24049",
+  "materialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "levelId": 694,
+  "elevationFeet": 14.435695538057743
+ },
+ "productionFileSha256": {
+  "app/indoor-project/native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "app/indoor-project/native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "app/indoor-project/native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731"
+ },
+ "singletonPreservation": {
+  "baselineNamedSingletonsLevel694": 165,
+  "lostAfterContacts": [],
+  "changedAreaAfterContacts": [],
+  "lostAfterContactsPatchAndContinuations": []
+ },
+ "status": "proposed",
+ "applicationRequires": "Explicit application by the pipeline owner (append with status \"applied\"), then regeneration of native mapping/circulation/display. Selection-only for contacts; boundary patches add tagged derived wall faces and require Reviter regeneration before route claims.",
+ "existingRecordInRoomsJson": true,
+ "currentStatus": "proposed",
+ "proposedStatus": "applied",
+ "evidenceSha256": "b08a20d96e053061f94b87a55ea276f768335a8092454cc0e7eb972380174809",
+ "validation": "Unchanged production reviewedBoundaryWalls (validateNativeBoundaryPatches, validateCurrentBoundaryContacts with current native material) accepted it; level-694 parity of the other 233 applied patch walls held; deriveNativeAreas with it applied (on top of the checked contacts) isolates 03-1012 and loses no named singleton. Registered DWG (03 CJMH LVL 1) shows a partition-end box reaching the exterior wall at the gap.",
+ "isolatedNativeFaces": [
+  {
+   "roomKey": "rm-694-91caade3a374",
+   "number": "03-1012",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1201",
+   "regionId": "native-region:694:1201",
+   "areaSqFt": 121.63613536099638
+  }
+ ],
+ "remaining": "03-1011 stays joined through a sub-1e-6 ft seam at (93.734,-286.278) between original wall #639002 and LEGACY wall row #401864 (no original material section) - not certifiable by current contact families.",
+ "patch": {
+  "id": "manual-gap:694:639078-401864:93.2995:-276.7619:93.7342:-276.7619",
+  "levelId": 694,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "widthFeet": 0.43472476378818214,
+  "ringsFeet": [
+   [
+    [
+     93.27945000927967,
+     -276.5650567271017
+    ],
+    [
+     93.75417477306785,
+     -276.5650567271017
+    ],
+    [
+     93.75417477306785,
+     -276.9587575145033
+    ],
+    [
+     93.27945000927967,
+     -276.9587575145033
+    ]
+   ]
+  ],
+  "manualPointsFeet": [
+   [
+    93.29945000927967,
+    -276.7619071208025
+   ],
+   [
+    93.7341747730679,
+    -276.7619071208025
+   ]
+  ],
+  "wallEvidence": [
+   {
+    "nativeElementId": 639078,
+    "ringsFeet": [
+     [
+      [
+       80.74039489116886,
+       -276.56505672710165
+      ],
+      [
+       93.29945000927967,
+       -276.5650567271017
+      ],
+      [
+       93.29945000927967,
+       -276.9587575145033
+      ],
+      [
+       80.74039489116886,
+       -276.95875751450325
+      ]
+     ]
+    ]
+   },
+   {
+    "nativeElementId": 401864,
+    "ringsFeet": [
+     [
+      [
+       93.73417477306779,
+       -314.8721194305038
+      ],
+      [
+       93.73417477306806,
+       -148.6287050210645
+      ],
+      [
+       94.88246873632265,
+       -148.6287050210645
+      ],
+      [
+       94.88246873632238,
+       -314.8721194305038
+      ]
+     ]
+    ]
+   }
+  ],
+  "nativeDoorIds": [],
+  "status": "proposed",
+  "notes": "Proposed wall continuation, not applied: 03-1011 / 03-1012; native basic wall #639078 stops 0.434725 ft before native basic wall #401864. Exact original exported wall footprints bound to source model; original native cache IDs, dimensions and floor section verified. Original-cache door/column veto found no overlapping element. Preview splits one shared region into two single-label regions, protects native floor openings and measured doors. Review registered architectural drawing and full source model for intentional unlabelled opening before applying. Source master SHA a511f03ce34f8acf5a852104644282d56cd975ab8f10c01249324d31f32a90c6; supporting scan/evidence work/doorway-mask-review/shared-west."
+ }
+}

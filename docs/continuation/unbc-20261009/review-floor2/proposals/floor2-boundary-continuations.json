@@ -1,0 +1,542 @@
+{
+ "format": "review-floor2-proposal",
+ "version": 1,
+ "kind": "nativeBoundaryPatches (continuationProof)",
+ "checkedAgainst": {
+  "datasetSha256": "cb58e81ec8f009aa6ea06468db1f77a35cb82b50b33965e8152703332c2a03be",
+  "datasetPath": "source-candidate-dataset.json (= protected-inputs/UNBC.floor1-followup-source-20261009.reviter.zip viewer/indoor.json)",
+  "roomsJsonSha256": "93fa454652514676269e4257a70861bd2ed5ae59521bcfcd690ffee3b8e24049",
+  "materialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "levelId": 694,
+  "elevationFeet": 14.435695538057743
+ },
+ "productionFileSha256": {
+  "app/indoor-project/native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "app/indoor-project/native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "app/indoor-project/native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731"
+ },
+ "singletonPreservation": {
+  "baselineNamedSingletonsLevel694": 165,
+  "lostAfterContacts": [],
+  "changedAreaAfterContacts": [],
+  "lostAfterContactsPatchAndContinuations": []
+ },
+ "status": "proposed",
+ "applicationRequires": "Explicit application by the pipeline owner (append with status \"applied\"), then regeneration of native mapping/circulation/display. Selection-only for contacts; boundary patches add tagged derived wall faces and require Reviter regeneration before route claims.",
+ "evidenceSha256": "d039f21262a1cc174b7f8961833d910a39896c8eb88011f1281c8293fd65320d",
+ "evidenceFile": "review-floor2/evidence/continuation-candidates.json",
+ "validation": "Each patch accepted by unchanged production reviewedBoundaryWalls (validNativeContinuation + validateCurrentBoundaryContacts against current native material) together with all existing patches; combined deriveNativeAreas (contacts + 03-1011/1012 patch + these) loses no named singleton. Independent float vetoes: no door footprint or foreign material in the gap; gap lies inside the current native region (supported floor, no slab hole); registered DWG faces place material across each gap.",
+ "patches": [
+  {
+   "patch": {
+    "id": "floor2-review-continuation:694:734444-645855",
+    "levelId": 694,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.8041338582676474,
+    "ringsFeet": [
+     [
+      [
+       74.96359055991587,
+       -160.79556610924737
+      ],
+      [
+       74.96359055991587,
+       -160.4018653218458
+      ],
+      [
+       75.76812441818353,
+       -160.4018653218458
+      ],
+      [
+       75.76812441818353,
+       -160.79556610924737
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 734444,
+      "ringsFeet": [
+       [
+        [
+         67.07143677437193,
+         -160.79556610924735
+        ],
+        [
+         74.96379055991588,
+         -160.79556610924737
+        ],
+        [
+         74.96379055991588,
+         -160.4018653218458
+        ],
+        [
+         67.07143677437193,
+         -160.40186532184578
+        ]
+       ]
+      ],
+      "kind": "wall"
+     },
+     {
+      "nativeElementId": 645855,
+      "ringsFeet": [
+       [
+        [
+         76.1616252055851,
+         -161.2759766856384
+        ],
+        [
+         76.1616252055851,
+         -159.63555673813184
+        ],
+        [
+         75.76792441818353,
+         -159.63555673813184
+        ],
+        [
+         75.76792441818353,
+         -161.2759766856384
+        ]
+       ]
+      ],
+      "kind": "wall"
+     }
+    ],
+    "nativeDoorIds": [],
+    "notes": "Floor 2 review (agent F2): continue original native wall cap #734444 along its original axis by 245.100000 mm to first original material #645855; registered DWG faces [\"03 CJMH LVL 1#4029\",\"03 CJMH LVL 1#3943\",\"03 CJMH LVL 1#3941\",\"03 CJMH LVL 1#4223\"] place material across the gap. Doors, floors/openings, columns, identities, access and source bytes unchanged; regeneration required.",
+    "continuationProof": {
+     "sourceWallId": 734444,
+     "sourceCapFeet": [
+      [
+       74.96379055991588,
+       -160.79556610924737
+      ],
+      [
+       74.96379055991588,
+       -160.4018653218458
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       75.76792441818353,
+       -160.79556610924737
+      ],
+      [
+       75.76792441818353,
+       -160.4018653218458
+      ]
+     ],
+     "evidenceSha256": "d039f21262a1cc174b7f8961833d910a39896c8eb88011f1281c8293fd65320d"
+    }
+   },
+   "inventoryGroup": "native-region:694:1060",
+   "gapFeet": 0.8041338582676474,
+   "gapMm": 245.09999999997893,
+   "capWidthFeet": 0.39370078740157055,
+   "independentVetoes": {
+    "doorFootprints": [],
+    "foreignMaterial": [],
+    "gapInsideCurrentNativeRegion (floor support, no slab hole)": true
+   },
+   "registeredDwgSupport": {
+    "facesAcrossCap": [
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4029,
+      "axialFeet": 0.7438
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 3943,
+      "axialFeet": 0.5797
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 3941,
+      "axialFeet": 0.0876
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4223,
+      "axialFeet": 0.7848
+     }
+    ],
+    "axialSegments": [
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4244,
+      "lateralOffsetFeet": 0.4296,
+      "axialCoverFeet": 0.0194
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4215,
+      "lateralOffsetFeet": 0.3836,
+      "axialCoverFeet": 0.7847
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4030,
+      "lateralOffsetFeet": 0.3469,
+      "axialCoverFeet": 0.7437
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 3942,
+      "lateralOffsetFeet": 0.2464,
+      "axialCoverFeet": 0.4921
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4002,
+      "lateralOffsetFeet": 0.2457,
+      "axialCoverFeet": 0.4921
+     },
+     {
+      "section": "03 CJMH LVL 1",
+      "index": 4222,
+      "lateralOffsetFeet": 0.3461,
+      "axialCoverFeet": 0.7438
+     }
+    ]
+   },
+   "isolatedNativeFaces": [
+    {
+     "roomKey": "rm-694-bd4686e3bc21",
+     "number": "03-1039",
+     "name": "Filing",
+     "exactFaceId": "native-region:694:1136",
+     "regionId": "native-region:694:1136",
+     "areaSqFt": 74.91571792834466
+    },
+    {
+     "roomKey": "rm-694-bd2102e3bc01",
+     "number": "03-1040",
+     "name": "Office",
+     "exactFaceId": "native-region:694:1095",
+     "regionId": "native-region:694:1095",
+     "areaSqFt": 171.00072477639017
+    }
+   ]
+  },
+  {
+   "patch": {
+    "id": "floor2-review-continuation:694:1883236-1134166",
+    "levelId": 694,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.04894387300759665,
+    "ringsFeet": [
+     [
+      [
+       171.78171514372778,
+       185.13123002087323
+      ],
+      [
+       171.449873750009,
+       185.34308279856427
+      ],
+      [
+       171.47437452408852,
+       185.3814602562797
+      ],
+      [
+       171.80826738058687,
+       185.17282084343265
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1883236,
+      "ringsFeet": [
+       [
+        [
+         170.86372446909698,
+         183.69331021538164
+        ],
+        [
+         171.78182276493885,
+         185.13139859630124
+        ],
+        [
+         171.44998137122008,
+         185.34325137399227
+        ],
+        [
+         168.5400517126538,
+         180.78520345011484
+        ],
+        [
+         168.87189310637257,
+         180.5733506724238
+        ],
+        [
+         168.88016923969593,
+         180.58631422025434
+        ],
+        [
+         168.5934985421483,
+         180.76544595324214
+        ],
+        [
+         170.54626343436874,
+         183.89052303736528
+        ]
+       ]
+      ],
+      "kind": "wall"
+     },
+     {
+      "nativeElementId": 1134166,
+      "ringsFeet": [
+       [
+        [
+         171.9393480536269,
+         185.2841115010523
+        ],
+        [
+         171.85241904046535,
+         185.14499599971427
+        ],
+        [
+         171.43507253645123,
+         185.4057830391989
+        ],
+        [
+         171.52200154961278,
+         185.54489854053693
+        ]
+       ]
+      ],
+      "kind": "wall"
+     }
+    ],
+    "nativeDoorIds": [],
+    "notes": "Floor 2 review (agent F2): continue original native wall cap #1883236 along its original axis by 14.918092 mm to first original material #1134166; registered DWG faces [\"05 Libr LVL 2#794\"] place material across the gap. Doors, floors/openings, columns, identities, access and source bytes unchanged; regeneration required.",
+    "continuationProof": {
+     "sourceWallId": 1883236,
+     "sourceCapFeet": [
+      [
+       171.78182276493885,
+       185.13139859630124
+      ],
+      [
+       171.44998137122008,
+       185.34325137399227
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       171.8081597593758,
+       185.17265226800464
+      ],
+      [
+       171.47426690287745,
+       185.3812916808517
+      ]
+     ],
+     "evidenceSha256": "d039f21262a1cc174b7f8961833d910a39896c8eb88011f1281c8293fd65320d"
+    }
+   },
+   "inventoryGroup": "native-region:694:1105",
+   "gapFeet": 0.04894387300759665,
+   "gapMm": 14.91809249271546,
+   "capWidthFeet": 0.39370078740158343,
+   "independentVetoes": {
+    "doorFootprints": [],
+    "foreignMaterial": [],
+    "gapInsideCurrentNativeRegion (floor support, no slab hole)": true
+   },
+   "registeredDwgSupport": {
+    "facesAcrossCap": [
+     {
+      "section": "05 Libr LVL 2",
+      "index": 794,
+      "axialFeet": 0.0662
+     }
+    ],
+    "axialSegments": [
+     {
+      "section": "05 Libr LVL 2",
+      "index": 2074,
+      "lateralOffsetFeet": 0.2236,
+      "axialCoverFeet": 0.0489
+     },
+     {
+      "section": "05 Libr LVL 2",
+      "index": 795,
+      "lateralOffsetFeet": 0.1834,
+      "axialCoverFeet": 0.0
+     },
+     {
+      "section": "05 Libr LVL 2",
+      "index": 874,
+      "lateralOffsetFeet": 0.2353,
+      "axialCoverFeet": 0.0489
+     }
+    ]
+   },
+   "isolatedNativeFaces": [
+    {
+     "roomKey": "rm-694-b78b969d9505",
+     "number": "05-248",
+     "name": "Group Study",
+     "exactFaceId": "native-region:694:1430",
+     "regionId": "native-region:694:1430",
+     "areaSqFt": 122.88283521899804
+    }
+   ]
+  },
+  {
+   "patch": {
+    "id": "floor2-review-continuation:694:1522440-1521894",
+    "levelId": 694,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.26246719160144494,
+    "ringsFeet": [
+     [
+      [
+       173.27331936099182,
+       486.54574207288294
+      ],
+      [
+       173.27331936099182,
+       486.15204128548135
+      ],
+      [
+       173.01045216939036,
+       486.15204128548135
+      ],
+      [
+       173.01045216939036,
+       486.54574207288294
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1522440,
+      "ringsFeet": [
+       [
+        [
+         190.9046147022751,
+         486.54574207288294
+        ],
+        [
+         173.2731193609918,
+         486.54574207288294
+        ],
+        [
+         173.2731193609918,
+         486.15204128548135
+        ],
+        [
+         190.9046147022751,
+         486.15204128548135
+        ]
+       ]
+      ],
+      "kind": "wall"
+     },
+     {
+      "nativeElementId": 1521894,
+      "ringsFeet": [
+       [
+        [
+         172.35448419038778,
+         499.5425961414761
+        ],
+        [
+         172.35448419038772,
+         470.2283271126048
+        ],
+        [
+         173.01065216939034,
+         470.2283271126048
+        ],
+        [
+         173.0106521693904,
+         499.5425961414761
+        ]
+       ]
+      ],
+      "kind": "wall"
+     }
+    ],
+    "nativeDoorIds": [],
+    "notes": "Floor 2 review (agent F2): continue original native wall cap #1522440 along its original axis by 80.000000 mm to first original material #1521894; registered DWG faces [\"09 Med LVL 3#38\"] place material across the gap. Doors, floors/openings, columns, identities, access and source bytes unchanged; regeneration required.",
+    "continuationProof": {
+     "sourceWallId": 1522440,
+     "sourceCapFeet": [
+      [
+       173.2731193609918,
+       486.54574207288294
+      ],
+      [
+       173.2731193609918,
+       486.15204128548135
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       173.01065216939037,
+       486.54574207288294
+      ],
+      [
+       173.01065216939037,
+       486.15204128548135
+      ]
+     ],
+     "evidenceSha256": "d039f21262a1cc174b7f8961833d910a39896c8eb88011f1281c8293fd65320d"
+    }
+   },
+   "inventoryGroup": "native-region:694:1426",
+   "gapFeet": 0.26246719160144494,
+   "gapMm": 80.00000000012042,
+   "capWidthFeet": 0.393700787401599,
+   "independentVetoes": {
+    "doorFootprints": [],
+    "foreignMaterial": [],
+    "gapInsideCurrentNativeRegion (floor support, no slab hole)": true
+   },
+   "registeredDwgSupport": {
+    "facesAcrossCap": [
+     {
+      "section": "09 Med LVL 3",
+      "index": 38,
+      "axialFeet": 0.2612
+     }
+    ],
+    "axialSegments": [
+     {
+      "section": "09 Med LVL 3",
+      "index": 141,
+      "lateralOffsetFeet": 0.184,
+      "axialCoverFeet": 0.0
+     },
+     {
+      "section": "09 Med LVL 3",
+      "index": 319,
+      "lateralOffsetFeet": 0.2163,
+      "axialCoverFeet": 0.0
+     }
+    ]
+   },
+   "isolatedNativeFaces": [
+    {
+     "roomKey": "rm-694-7cfd2a717e44",
+     "number": "09-322",
+     "name": "Tissue Culture Room",
+     "exactFaceId": "native-region:694:1507",
+     "regionId": "native-region:694:1507",
+     "areaSqFt": 163.07310555843324
+    }
+   ]
+  }
+ ]
+}

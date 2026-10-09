@@ -1,0 +1,4218 @@
+{
+ "format": "review-floor2-proposal",
+ "version": 1,
+ "kind": "nativeSelectionContactRepairs",
+ "building": "03",
+ "checkedAgainst": {
+  "datasetSha256": "cb58e81ec8f009aa6ea06468db1f77a35cb82b50b33965e8152703332c2a03be",
+  "datasetPath": "source-candidate-dataset.json (= protected-inputs/UNBC.floor1-followup-source-20261009.reviter.zip viewer/indoor.json)",
+  "roomsJsonSha256": "93fa454652514676269e4257a70861bd2ed5ae59521bcfcd690ffee3b8e24049",
+  "materialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "levelId": 694,
+  "elevationFeet": 14.435695538057743
+ },
+ "productionFileSha256": {
+  "app/indoor-project/native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "app/indoor-project/native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "app/indoor-project/native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731"
+ },
+ "singletonPreservation": {
+  "baselineNamedSingletonsLevel694": 165,
+  "lostAfterContacts": [],
+  "changedAreaAfterContacts": [],
+  "lostAfterContactsPatchAndContinuations": []
+ },
+ "status": "proposed",
+ "applicationRequires": "Explicit application by the pipeline owner (append with status \"applied\"), then regeneration of native mapping/circulation/display. Selection-only for contacts; boundary patches add tagged derived wall faces and require Reviter regeneration before route claims.",
+ "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+ "evidenceFile": "review-floor2/evidence/../neck-contact-candidates-combined.json",
+ "validation": "Each descriptor re-derived by unchanged deriveNativeSelectionContactRepairAttempts (exact rational masks from current original bodies; <=1e-7 ft) and passed createNativeSelectionContactPhysicalGuard (floor/opening/door/fixture/exclusion/foreign-body vetoes); the combined set was then applied in deriveNativeAreas(694, connected, gap 0) with 0 lost named singletons.",
+ "affectedInventoryGroups": [
+  "native-region:694:1033",
+  "native-region:694:1148",
+  "native-region:694:1150",
+  "native-region:694:1154",
+  "native-region:694:781",
+  "native-region:694:841",
+  "native-region:694:842",
+  "native-region:694:884",
+  "native-region:694:986",
+  "native-region:694:997"
+ ],
+ "isolatedNativeFaces": [
+  {
+   "roomKey": "rm-694-6f473feafa7b",
+   "number": "03-1002",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1065",
+   "regionId": "native-region:694:1065",
+   "areaSqFt": 129.02619479555804
+  },
+  {
+   "roomKey": "rm-694-6f51afeafa84",
+   "number": "03-1003",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1132",
+   "regionId": "native-region:694:1132",
+   "areaSqFt": 101.84210433610563
+  },
+  {
+   "roomKey": "rm-694-6f5537eafa87",
+   "number": "03-1004",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1183",
+   "regionId": "native-region:694:1183",
+   "areaSqFt": 183.15529691065757
+  },
+  {
+   "roomKey": "rm-694-bd4982e3bc24",
+   "number": "03-1034",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1210",
+   "regionId": "native-region:694:1210",
+   "areaSqFt": 114.12870567520889
+  },
+  {
+   "roomKey": "rm-694-bd3f72e3bc1b",
+   "number": "03-1035",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1211",
+   "regionId": "native-region:694:1211",
+   "areaSqFt": 111.61451506200997
+  },
+  {
+   "roomKey": "rm-694-91afbde3a35d",
+   "number": "03-1012A",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1198",
+   "regionId": "native-region:694:1198",
+   "areaSqFt": 121.30909404621426
+  },
+  {
+   "roomKey": "rm-694-c633afe3c143",
+   "number": "03-1018",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1199",
+   "regionId": "native-region:694:1199",
+   "areaSqFt": 134.93411234919577
+  },
+  {
+   "roomKey": "rm-694-bd1d76e3bbfe",
+   "number": "03-1037",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1213",
+   "regionId": "native-region:694:1213",
+   "areaSqFt": 173.19435047695146
+  },
+  {
+   "roomKey": "rm-694-ad54a0e3b37d",
+   "number": "03-1042",
+   "name": "Storage",
+   "exactFaceId": "native-region:694:1205",
+   "regionId": "native-region:694:1205",
+   "areaSqFt": 99.14891514293443
+  },
+  {
+   "roomKey": "rm-694-91e922e3a38d",
+   "number": "03-1015",
+   "name": "Washroom",
+   "exactFaceId": "native-region:694:1072",
+   "regionId": "native-region:694:1072",
+   "areaSqFt": 18.758984696100544
+  },
+  {
+   "roomKey": "rm-694-03debc3c362d",
+   "number": "03-1055",
+   "name": "Comm",
+   "exactFaceId": "native-region:694:937",
+   "regionId": "native-region:694:937",
+   "areaSqFt": 49.22064930513598
+  },
+  {
+   "roomKey": "rm-694-b3a831f5f24a",
+   "number": "03-1091",
+   "name": "Office",
+   "exactFaceId": "native-region:694:860",
+   "regionId": "native-region:694:860",
+   "areaSqFt": 110.04394986298752
+  },
+  {
+   "roomKey": "rm-694-b3a443f5f246",
+   "number": "03-1092",
+   "name": "Office",
+   "exactFaceId": "native-region:694:863",
+   "regionId": "native-region:694:863",
+   "areaSqFt": 109.29903198973628
+  },
+  {
+   "roomKey": "rm-694-cce9b8f60063",
+   "number": "03-1083",
+   "name": "Office",
+   "exactFaceId": "native-region:694:928",
+   "regionId": "native-region:694:928",
+   "areaSqFt": 71.70405833866874
+  },
+  {
+   "roomKey": "rm-694-b3ab0ff5f24c",
+   "number": "03-1090",
+   "name": "Office",
+   "exactFaceId": "native-region:694:862",
+   "regionId": "native-region:694:862",
+   "areaSqFt": 178.08314429514311
+  },
+  {
+   "roomKey": "rm-694-b20c73f5f0ec",
+   "number": "03-1093",
+   "name": "Office",
+   "exactFaceId": "native-region:694:861",
+   "regionId": "native-region:694:861",
+   "areaSqFt": 161.56262867398866
+  },
+  {
+   "roomKey": "rm-694-04aac43c36db",
+   "number": "03-1067",
+   "name": "Meeting Room",
+   "exactFaceId": "native-region:694:929",
+   "regionId": "native-region:694:929",
+   "areaSqFt": 151.96160731308947
+  },
+  {
+   "roomKey": "rm-694-04ae463c36de",
+   "number": "03-1069",
+   "name": "Meeting Room",
+   "exactFaceId": "native-region:694:907",
+   "regionId": "native-region:694:907",
+   "areaSqFt": 403.7107821656384
+  },
+  {
+   "roomKey": "rm-694-50479be53197",
+   "number": "03-1045",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1331",
+   "regionId": "native-region:694:1331",
+   "areaSqFt": 108.94264274882399
+  },
+  {
+   "roomKey": "rm-694-510935e5323b",
+   "number": "03-1047",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1290",
+   "regionId": "native-region:694:1290",
+   "areaSqFt": 164.93284162983207
+  },
+  {
+   "roomKey": "rm-694-50ff23e53233",
+   "number": "03-1048",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1188",
+   "regionId": "native-region:694:1188",
+   "areaSqFt": 153.3415183356587
+  },
+  {
+   "roomKey": "rm-694-5102a5e53236",
+   "number": "03-1049",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1181",
+   "regionId": "native-region:694:1181",
+   "areaSqFt": 298.3028995501902
+  },
+  {
+   "roomKey": "rm-694-50fb9ce53230",
+   "number": "03-1051A",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1134",
+   "regionId": "native-region:694:1134",
+   "areaSqFt": 75.99633495085077
+  },
+  {
+   "roomKey": "rm-694-50f1ace53228",
+   "number": "03-1051B",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1133",
+   "regionId": "native-region:694:1133",
+   "areaSqFt": 87.73054929055913
+  },
+  {
+   "roomKey": "rm-694-504b25e5319a",
+   "number": "03-S104",
+   "name": "Stair",
+   "exactFaceId": "native-region:694:1330",
+   "regionId": "native-region:694:1330",
+   "areaSqFt": 168.12474597170964
+  },
+  {
+   "roomKey": "rm-694-a3b003e3adc0",
+   "number": "03-1006",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1135",
+   "regionId": "native-region:694:1135",
+   "areaSqFt": 92.92109238968689
+  },
+  {
+   "roomKey": "rm-694-9c054be3a9b0",
+   "number": "03-1008",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1090",
+   "regionId": "native-region:694:1090",
+   "areaSqFt": 94.0882793636284
+  },
+  {
+   "roomKey": "rm-694-9bfad9e3a9a7",
+   "number": "03-1009",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1102",
+   "regionId": "native-region:694:1102",
+   "areaSqFt": 93.90886363650935
+  },
+  {
+   "roomKey": "rm-694-91caade3a374",
+   "number": "03-1012",
+   "name": "Office",
+   "exactFaceId": "native-region:694:1201",
+   "regionId": "native-region:694:1201",
+   "areaSqFt": 121.63613536099638
+  },
+  {
+   "roomKey": "rm-694-bd3202e3bc10",
+   "number": "03-1032",
+   "name": "Comm",
+   "exactFaceId": "native-region:694:1075",
+   "regionId": "native-region:694:1075",
+   "areaSqFt": 113.87542261363762
+  }
+ ],
+ "perRepairMaskAreaSqFt": {
+  "floor2-review-contact:636237-649498:full-cap:5021": 5.73090743802302e-16,
+  "floor2-review-contact:636461-636583:full-cap:5033": 6.744446202880075e-15,
+  "floor2-review-contact:637914-658235:full-cap:5114": 1.3540005024598677e-15,
+  "floor2-review-contact:638311-638214:full-cap:5141": 7.542925669306972e-16,
+  "floor2-review-contact:640832-640714:original-free-cap:5274": 2.1124615180324913e-17,
+  "floor2-review-contact:642391-686182:full-cap:5336": 4.822608180023383e-16,
+  "floor2-review-contact:643492-653479:full-cap:5375": 3.0540289458881243e-16,
+  "floor2-review-contact:643853-643785:full-cap:5390": 1.2866316875284042e-16,
+  "floor2-review-contact:644142-480239:full-cap:5402": 2.6333048557749276e-15,
+  "floor2-review-contact:644273-655196:full-cap:5405": 7.035767055213024e-16,
+  "floor2-review-contact:644273-480239:full-cap:5408": 3.0163483261678065e-15,
+  "floor2-review-contact:644469-479886:full-cap:5411": 9.712118117113329e-16,
+  "floor2-review-contact:645201-734584:original-free-cap:5460": 8.65591712673721e-15,
+  "floor2-review-contact:645855-645201:full-cap:5495": 9.752533317302212e-15,
+  "floor2-review-contact:648685-664468:full-cap:5630": 2.879208028129493e-15,
+  "floor2-review-contact:649979-640714:full-cap:5651": 3.7106092790944266e-16,
+  "floor2-review-contact:650443-635408:full-cap:5675": 9.646771613149515e-15,
+  "floor2-review-contact:652253-657806:full-cap:5702": 3.729883127349567e-14,
+  "floor2-review-contact:652353-657806:full-cap:5708": 4.9947413078132414e-15,
+  "floor2-review-contact:656174-709361:full-cap:5912": 9.5982703138048e-16,
+  "floor2-review-contact:658598-653479:original-free-cap:5970": 2.0311608308543465e-15,
+  "floor2-review-contact:658598-636715:full-cap:5978": 6.465909397506722e-16,
+  "floor2-review-contact:659349-685025:full-cap:6020": 8.962265104246338e-17,
+  "floor2-review-contact:680446-674159:full-cap:6179": 8.495354017148429e-16,
+  "floor2-review-contact:708656-669301:full-cap:6521": 9.649292198302283e-16,
+  "floor2-review-contact:709357-709361:full-cap:6575": 1.8642340744624907e-15,
+  "floor2-review-contact:709361-480509:full-cap:6581": 5.866565023575138e-16,
+  "floor2-review-contact:709816-656528:full-cap:6668": 1.09393568962621e-16,
+  "floor2-review-contact:733165-639364:full-cap:8490": 7.39486055694614e-16,
+  "floor2-review-contact:733271-664468:full-cap:8496": 2.187078590129372e-15,
+  "floor2-review-contact:734584-664468:original-free-cap:8509": 1.0077856207362761e-14,
+  "floor2-review-contact:735744-644469:full-cap:8573": 1.1954753613303799e-15,
+  "floor2-review-contact:736596-480239:full-cap:8603": 3.536993751871931e-15,
+  "floor2-review-contact:737252-653479:full-cap:8639": 9.990758376829373e-16,
+  "floor2-review-contact:737451-737644:full-cap:8642": 6.993530863780438e-16,
+  "floor2-review-contact:737451-653479:full-cap:8645": 6.333631027694232e-16,
+  "floor2-review-contact:2477495-639364:full-cap:102961": 4.679888340088658e-16,
+  "floor2-review-contact:636583-636715:original-free-cap:5040": 1.670591219188931e-17,
+  "floor2-review-contact:640138-639850:full-cap:5249": 2.7509139449889698e-15,
+  "floor2-review-contact:640832-654793:original-free-cap:5271": 5.220404611948269e-18,
+  "floor2-review-contact:645855-645201:original-free-cap:5505": 6.516612639721056e-17,
+  "floor2-review-contact:684086-654168:full-cap:6410": 5.3535358661460885e-15,
+  "floor2-review-contact:735899-735744:original-free-cap:8577": 2.474000516185212e-16,
+  "floor2-review-contact:737644-643785:original-free-cap:8658": 7.850654395875828e-18
+ },
+ "collection": {
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "repairs": [
+   {
+    "id": "floor2-review-contact:636237-649498:full-cap:5021",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 636237,
+     "ringsFeet": [
+      [
+       [
+        3.0894762559988798,
+        -306.642156464634
+       ],
+       [
+        4.23777021925347,
+        -306.642156464634
+       ],
+       [
+        4.237770219253472,
+        -306.2484556772324
+       ],
+       [
+        3.08947625599888,
+        -306.2484556772324
+       ],
+       [
+        3.0894762559988798,
+        -306.642156464634
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       4.23777021925347,
+       -306.642156464634
+      ],
+      [
+       4.237770219253472,
+       -306.2484556772324
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 649498,
+     "ringsFeet": [
+      [
+       [
+        4.23777021925347,
+        -307.88395436489645
+       ],
+       [
+        4.8939381982560946,
+        -307.88395436489645
+       ],
+       [
+        4.893938198256097,
+        -306.2484556772324
+       ],
+       [
+        4.2377702192534725,
+        -306.2484556772324
+       ],
+       [
+        4.23777021925347,
+        -307.88395436489645
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       4.23777021925347,
+       -307.88395436489645
+      ],
+      [
+       4.2377702192534725,
+       -306.2484556772324
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:636461-636583:full-cap:5033",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 636461,
+     "ringsFeet": [
+      [
+       [
+        9.12622166282297,
+        -279.8655816614847
+       ],
+       [
+        9.519922450224545,
+        -279.8655816614847
+       ],
+       [
+        9.519922450224557,
+        -272.13920370872927
+       ],
+       [
+        9.126221662822983,
+        -272.13920370872927
+       ],
+       [
+        9.12622166282297,
+        -279.8655816614847
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       9.12622166282297,
+       -279.8655816614847
+      ],
+      [
+       9.519922450224545,
+       -279.8655816614847
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 636583,
+     "ringsFeet": [
+      [
+       [
+        6.796825337362889,
+        -280.2592824488863
+       ],
+       [
+        15.179371269122278,
+        -280.2592824488864
+       ],
+       [
+        15.179371269122278,
+        -279.8655816614848
+       ],
+       [
+        6.796825337362891,
+        -279.8655816614847
+       ],
+       [
+        6.796825337362889,
+        -280.2592824488863
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       15.179371269122278,
+       -279.8655816614848
+      ],
+      [
+       6.796825337362891,
+       -279.8655816614847
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:637914-658235:full-cap:5114",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 637914,
+     "ringsFeet": [
+      [
+       [
+        74.46939751584009,
+        -305.98627555912236
+       ],
+       [
+        75.12556549484269,
+        -305.98627555912236
+       ],
+       [
+        75.12556549484269,
+        -305.59257477172076
+       ],
+       [
+        74.46939751584009,
+        -305.59257477172076
+       ],
+       [
+        74.46939751584009,
+        -305.98627555912236
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.12556549484269,
+       -305.98627555912236
+      ],
+      [
+       75.12556549484269,
+       -305.59257477172076
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 658235,
+     "ringsFeet": [
+      [
+       [
+        75.12556549484269,
+        -309.5243743124031
+       ],
+       [
+        75.94577546859597,
+        -309.5243743124031
+       ],
+       [
+        75.94577546859598,
+        -294.09130344626175
+       ],
+       [
+        75.1255654948427,
+        -294.09130344626175
+       ],
+       [
+        75.12556549484269,
+        -309.5243743124031
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       75.1255654948427,
+       -294.09130344626175
+      ],
+      [
+       75.12556549484269,
+       -309.5243743124031
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:638311-638214:full-cap:5141",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 638311,
+     "ringsFeet": [
+      [
+       [
+        61.2456442350014,
+        -283.75337693707496
+       ],
+       [
+        70.29420066544765,
+        -283.753376937075
+       ],
+       [
+        70.29420066544765,
+        -283.3596761496734
+       ],
+       [
+        61.2456442350014,
+        -283.35967614967336
+       ],
+       [
+        61.2456442350014,
+        -283.75337693707496
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       61.2456442350014,
+       -283.35967614967336
+      ],
+      [
+       61.2456442350014,
+       -283.75337693707496
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 638214,
+     "ringsFeet": [
+      [
+       [
+        60.85194344759981,
+        -292.0357752310385
+       ],
+       [
+        61.245644235001386,
+        -292.0357752310385
+       ],
+       [
+        61.245644235001414,
+        -272.43466167455637
+       ],
+       [
+        60.85194344759984,
+        -272.43466167455637
+       ],
+       [
+        60.85194344759981,
+        -292.0357752310385
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       61.245644235001414,
+       -272.43466167455637
+      ],
+      [
+       61.245644235001386,
+       -292.0357752310385
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:640832-640714:original-free-cap:5274",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 640832,
+     "ringsFeet": [
+      [
+       [
+        -1.175615607518,
+        -296.8603323176523
+       ],
+       [
+        -1.1756156075179993,
+        -297.2540331050539
+       ],
+       [
+        4.401812214003378,
+        -297.2540331050539
+       ],
+       [
+        4.401812214003379,
+        -296.8603323176523
+       ],
+       [
+        -1.175615607518,
+        -296.8603323176523
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -1.175615607518,
+       -296.8603323176523
+      ],
+      [
+       -1.1756156075179993,
+       -297.2540331050539
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 640714,
+     "ringsFeet": [
+      [
+       [
+        -1.5693163949195748,
+        -296.3682063334003
+       ],
+       [
+        -1.5693163949195714,
+        -303.0496367795945
+       ],
+       [
+        -1.1756156075179967,
+        -303.0496367795945
+       ],
+       [
+        -1.175615607518,
+        -296.3682063334003
+       ],
+       [
+        -1.5693163949195748,
+        -296.3682063334003
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -1.1756156075179967,
+       -303.0496367795945
+      ],
+      [
+       -1.175615607518,
+       -296.3682063334003
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:642391-686182:full-cap:5336",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 642391,
+     "ringsFeet": [
+      [
+       [
+        -14.56383437661861,
+        -207.37441029103994
+       ],
+       [
+        -13.026585948990515,
+        -207.37441029103994
+       ],
+       [
+        -13.026585948990514,
+        -206.98070950363837
+       ],
+       [
+        -14.563834376618608,
+        -206.98070950363837
+       ],
+       [
+        -14.56383437661861,
+        -207.37441029103994
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -14.563834376618608,
+       -206.98070950363837
+      ],
+      [
+       -14.56383437661861,
+       -207.37441029103994
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 686182,
+     "ringsFeet": [
+      [
+       [
+        -14.941130964545128,
+        -212.4137803697801
+       ],
+       [
+        -14.563834376618619,
+        -212.4137803697801
+       ],
+       [
+        -14.56383437661861,
+        -206.97119749838188
+       ],
+       [
+        -14.941130964545119,
+        -206.97119749838188
+       ],
+       [
+        -14.941130964545128,
+        -212.4137803697801
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -14.563834376618619,
+       -212.4137803697801
+      ],
+      [
+       -14.56383437661861,
+       -206.97119749838188
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:643492-653479:full-cap:5375",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 643492,
+     "ringsFeet": [
+      [
+       [
+        4.893887584625709,
+        -216.52666571487265
+       ],
+       [
+        25.071103552586727,
+        -216.5266657148727
+       ],
+       [
+        25.071103552586727,
+        -216.13296492747114
+       ],
+       [
+        4.893887584625709,
+        -216.13296492747108
+       ],
+       [
+        4.893887584625709,
+        -216.52666571487265
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       25.071103552586727,
+       -216.5266657148727
+      ],
+      [
+       25.071103552586727,
+       -216.13296492747114
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 653479,
+     "ringsFeet": [
+      [
+       [
+        25.071103552586717,
+        -223.76978113654997
+       ],
+       [
+        25.563229536838683,
+        -223.76978113654997
+       ],
+       [
+        25.563229536838705,
+        -209.8993691269462
+       ],
+       [
+        25.071103552586738,
+        -209.8993691269462
+       ],
+       [
+        25.071103552586717,
+        -223.76978113654997
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       25.071103552586738,
+       -209.8993691269462
+      ],
+      [
+       25.071103552586717,
+       -223.76978113654997
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:643853-643785:full-cap:5390",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 643853,
+     "ringsFeet": [
+      [
+       [
+        15.294128988825273,
+        -180.9837577982057
+       ],
+       [
+        19.44446313263928,
+        -180.9837577982057
+       ],
+       [
+        19.44446313263928,
+        -180.59005701080412
+       ],
+       [
+        15.294128988825273,
+        -180.59005701080412
+       ],
+       [
+        15.294128988825273,
+        -180.9837577982057
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       15.294128988825273,
+       -180.59005701080412
+      ],
+      [
+       15.294128988825273,
+       -180.9837577982057
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 643785,
+     "ringsFeet": [
+      [
+       [
+        14.900428201423681,
+        -191.28992797806086
+       ],
+       [
+        15.294128988825255,
+        -191.28992797806086
+       ],
+       [
+        15.294128988825273,
+        -180.59005701080412
+       ],
+       [
+        14.900428201423699,
+        -180.59005701080412
+       ],
+       [
+        14.900428201423681,
+        -191.28992797806086
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       15.294128988825273,
+       -180.59005701080412
+      ],
+      [
+       15.294128988825255,
+       -191.28992797806086
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:644142-480239:full-cap:5402",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 644142,
+     "ringsFeet": [
+      [
+       [
+        93.59472559983105,
+        -120.48894124153725
+       ],
+       [
+        93.98842638723262,
+        -120.48894124153725
+       ],
+       [
+        93.98842638723265,
+        -104.10770764573677
+       ],
+       [
+        93.59472559983108,
+        -104.10770764573677
+       ],
+       [
+        93.59472559983105,
+        -120.48894124153725
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       93.98842638723265,
+       -104.10770764573677
+      ],
+      [
+       93.59472559983108,
+       -104.10770764573677
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 480239,
+     "ringsFeet": [
+      [
+       [
+        91.67549656439813,
+        -104.10770764573675
+       ],
+       [
+        95.67313767332186,
+        -104.10770764573677
+       ],
+       [
+        95.67313767332186,
+        -103.45153966673413
+       ],
+       [
+        91.67549656439813,
+        -103.45153966673412
+       ],
+       [
+        91.67549656439813,
+        -104.10770764573675
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       91.67549656439813,
+       -104.10770764573675
+      ],
+      [
+       95.67313767332186,
+       -104.10770764573677
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:644273-655196:full-cap:5405",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 644273,
+     "ringsFeet": [
+      [
+       [
+        103.26500119038228,
+        -120.48894124153728
+       ],
+       [
+        103.65870197778385,
+        -120.48894124153728
+       ],
+       [
+        103.65870197778388,
+        -104.10770764573681
+       ],
+       [
+        103.2650011903823,
+        -104.10770764573681
+       ],
+       [
+        103.26500119038228,
+        -120.48894124153728
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       103.26500119038228,
+       -120.48894124153728
+      ],
+      [
+       103.65870197778385,
+       -120.48894124153728
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 655196,
+     "ringsFeet": [
+      [
+       [
+        102.60883960267319,
+        -121.14510922053991
+       ],
+       [
+        109.39196993925181,
+        -121.14510922053992
+       ],
+       [
+        109.39196993925181,
+        -120.48894124153729
+       ],
+       [
+        102.60883960267319,
+        -120.48894124153728
+       ],
+       [
+        102.60883960267319,
+        -121.14510922053991
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       109.39196993925181,
+       -120.48894124153729
+      ],
+      [
+       102.60883960267319,
+       -120.48894124153728
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:644273-480239:full-cap:5408",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 644273,
+     "ringsFeet": [
+      [
+       [
+        103.26500119038228,
+        -120.48894124153728
+       ],
+       [
+        103.65870197778385,
+        -120.48894124153728
+       ],
+       [
+        103.65870197778388,
+        -104.10770764573681
+       ],
+       [
+        103.2650011903823,
+        -104.10770764573681
+       ],
+       [
+        103.26500119038228,
+        -120.48894124153728
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       103.65870197778388,
+       -104.10770764573681
+      ],
+      [
+       103.2650011903823,
+       -104.10770764573681
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 480239,
+     "ringsFeet": [
+      [
+       [
+        102.23481746334811,
+        -104.1077076457368
+       ],
+       [
+        104.89725830980488,
+        -104.10770764573681
+       ],
+       [
+        104.89725830980488,
+        -103.45153966673418
+       ],
+       [
+        102.23481746334811,
+        -103.45153966673416
+       ],
+       [
+        102.23481746334811,
+        -104.1077076457368
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       104.89725830980488,
+       -104.10770764573681
+      ],
+      [
+       102.23481746334811,
+       -104.1077076457368
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:644469-479886:full-cap:5411",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 644469,
+     "ringsFeet": [
+      [
+       [
+        112.93527678093332,
+        -137.09655279009363
+       ],
+       [
+        124.45102481242952,
+        -137.09655279009365
+       ],
+       [
+        124.45102481242952,
+        -136.70285200269208
+       ],
+       [
+        112.93527678093332,
+        -136.70285200269205
+       ],
+       [
+        112.93527678093332,
+        -137.09655279009363
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       124.45102481242952,
+       -137.09655279009365
+      ],
+      [
+       124.45102481242952,
+       -136.70285200269208
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 479886,
+     "ringsFeet": [
+      [
+       [
+        124.45102481242952,
+        -137.57224428532987
+       ],
+       [
+        125.10719279143215,
+        -137.57224428532987
+       ],
+       [
+        125.10719279143217,
+        -133.69795659586828
+       ],
+       [
+        124.45102481242954,
+        -133.69795659586828
+       ],
+       [
+        124.45102481242952,
+        -137.57224428532987
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       124.45102481242952,
+       -137.57224428532987
+      ],
+      [
+       124.45102481242954,
+       -133.69795659586828
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:645201-734584:original-free-cap:5460",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 645201,
+     "ringsFeet": [
+      [
+       [
+        80.06487815560403,
+        -149.38134723377863
+       ],
+       [
+        81.68707149549508,
+        -149.38134723377863
+       ],
+       [
+        81.68707149549508,
+        -148.98764644637706
+       ],
+       [
+        80.06487815560403,
+        -148.98764644637706
+       ],
+       [
+        80.06487815560403,
+        -149.38134723377863
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       81.68707149549508,
+       -149.38134723377863
+      ],
+      [
+       81.68707149549508,
+       -148.98764644637706
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 734584,
+     "ringsFeet": [
+      [
+       [
+        81.68707149549509,
+        -149.86182474833464
+       ],
+       [
+        93.73417477306806,
+        -149.86182474833467
+       ],
+       [
+        93.73417477306806,
+        -149.04161477458138
+       ],
+       [
+        81.6870714954951,
+        -149.04161477458135
+       ],
+       [
+        81.68707149549509,
+        -149.86182474833464
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       81.6870714954951,
+       -149.04161477458135
+      ],
+      [
+       81.68707149549509,
+       -149.86182474833464
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:645855-645201:full-cap:5495",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 645855,
+     "ringsFeet": [
+      [
+       [
+        75.76792441818354,
+        -148.98764644637703
+       ],
+       [
+        76.16162520558511,
+        -148.98764644637703
+       ],
+       [
+        76.16162520558512,
+        -141.52533461423945
+       ],
+       [
+        75.76792441818355,
+        -141.52533461423945
+       ],
+       [
+        75.76792441818354,
+        -148.98764644637703
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.76792441818354,
+       -148.98764644637703
+      ],
+      [
+       76.16162520558511,
+       -148.98764644637703
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 645201,
+     "ringsFeet": [
+      [
+       [
+        59.96235092463304,
+        -149.38134723377857
+       ],
+       [
+        77.06290965166703,
+        -149.38134723377863
+       ],
+       [
+        77.06290965166703,
+        -148.98764644637706
+       ],
+       [
+        59.96235092463304,
+        -148.987646446377
+       ],
+       [
+        59.96235092463304,
+        -149.38134723377857
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       77.06290965166703,
+       -148.98764644637706
+      ],
+      [
+       59.96235092463304,
+       -148.987646446377
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:648685-664468:full-cap:5630",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 648685,
+     "ringsFeet": [
+      [
+       [
+        81.68707149549503,
+        -187.23184204534618
+       ],
+       [
+        93.734174773068,
+        -187.23184204534618
+       ],
+       [
+        93.734174773068,
+        -186.8381412579446
+       ],
+       [
+        81.68707149549503,
+        -186.8381412579446
+       ],
+       [
+        81.68707149549503,
+        -187.23184204534618
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       81.68707149549503,
+       -186.8381412579446
+      ],
+      [
+       81.68707149549503,
+       -187.23184204534618
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 664468,
+     "ringsFeet": [
+      [
+       [
+        80.86686152174174,
+        -192.48118587736718
+       ],
+       [
+        81.68707149549502,
+        -192.48118587736718
+       ],
+       [
+        81.68707149549503,
+        -181.2607134364223
+       ],
+       [
+        80.86686152174175,
+        -181.2607134364223
+       ],
+       [
+        80.86686152174174,
+        -192.48118587736718
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       81.68707149549502,
+       -192.48118587736718
+      ],
+      [
+       81.68707149549503,
+       -181.2607134364223
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:649979-640714:full-cap:5651",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 649979,
+     "ringsFeet": [
+      [
+       [
+        -13.7458137293253,
+        -297.38526670085446
+       ],
+       [
+        -1.569316394919575,
+        -297.3852667008545
+       ],
+       [
+        -1.569316394919575,
+        -296.72909872185187
+       ],
+       [
+        -13.7458137293253,
+        -296.7290987218518
+       ],
+       [
+        -13.7458137293253,
+        -297.38526670085446
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -1.569316394919575,
+       -297.3852667008545
+      ],
+      [
+       -1.569316394919575,
+       -296.72909872185187
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 640714,
+     "ringsFeet": [
+      [
+       [
+        -1.5693163949195748,
+        -296.3682063334003
+       ],
+       [
+        -1.5693163949195714,
+        -303.0496367795945
+       ],
+       [
+        -1.1756156075179967,
+        -303.0496367795945
+       ],
+       [
+        -1.175615607518,
+        -296.3682063334003
+       ],
+       [
+        -1.5693163949195748,
+        -296.3682063334003
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -1.5693163949195748,
+       -296.3682063334003
+      ],
+      [
+       -1.5693163949195714,
+       -303.0496367795945
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:650443-635408:full-cap:5675",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 650443,
+     "ringsFeet": [
+      [
+       [
+        -1.9958255812714263,
+        -283.6565921601721
+       ],
+       [
+        -1.3396576022688016,
+        -283.6565921601721
+       ],
+       [
+        -1.339657602268783,
+        -272.13920370872927
+       ],
+       [
+        -1.9958255812714076,
+        -272.13920370872927
+       ],
+       [
+        -1.9958255812714263,
+        -283.6565921601721
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -1.339657602268783,
+       -272.13920370872927
+      ],
+      [
+       -1.9958255812714076,
+       -272.13920370872927
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 635408,
+     "ringsFeet": [
+      [
+       [
+        -13.7458137293253,
+        -272.1392037087292
+       ],
+       [
+        18.83750775206193,
+        -272.1392037087293
+       ],
+       [
+        18.83750775206193,
+        -271.64707772447736
+       ],
+       [
+        -13.745813729325299,
+        -271.64707772447724
+       ],
+       [
+        -13.7458137293253,
+        -272.1392037087292
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       18.83750775206193,
+       -272.1392037087293
+      ],
+      [
+       -13.7458137293253,
+       -272.1392037087292
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:652253-657806:full-cap:5702",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 652253,
+     "ringsFeet": [
+      [
+       [
+        65.56979121662863,
+        -326.07290683208015
+       ],
+       [
+        66.22595919563125,
+        -326.07290683208015
+       ],
+       [
+        66.22595919563126,
+        -314.77371814442415
+       ],
+       [
+        65.56979121662864,
+        -314.77371814442415
+       ],
+       [
+        65.56979121662863,
+        -326.07290683208015
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       66.22595919563126,
+       -314.77371814442415
+      ],
+      [
+       65.56979121662864,
+       -314.77371814442415
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 657806,
+     "ringsFeet": [
+      [
+       [
+        65.07766523237666,
+        -314.7737181444241
+       ],
+       [
+        66.78370197778352,
+        -314.7737181444241
+       ],
+       [
+        66.78370197778352,
+        -314.11755016542145
+       ],
+       [
+        65.07766523237666,
+        -314.11755016542145
+       ],
+       [
+        65.07766523237666,
+        -314.7737181444241
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       65.07766523237666,
+       -314.7737181444241
+      ],
+      [
+       66.78370197778352,
+       -314.7737181444241
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:652353-657806:full-cap:5708",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 652353,
+     "ringsFeet": [
+      [
+       [
+        75.18757336885966,
+        -326.07290683208015
+       ],
+       [
+        75.84374134786228,
+        -326.07290683208015
+       ],
+       [
+        75.84374134786229,
+        -314.77371814442415
+       ],
+       [
+        75.18757336885967,
+        -314.77371814442415
+       ],
+       [
+        75.18757336885966,
+        -326.07290683208015
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.84374134786229,
+       -314.77371814442415
+      ],
+      [
+       75.18757336885967,
+       -314.77371814442415
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 657806,
+     "ringsFeet": [
+      [
+       [
+        69.78567048172053,
+        -314.7737181444241
+       ],
+       [
+        76.40160716150936,
+        -314.77371814442415
+       ],
+       [
+        76.40160716150936,
+        -314.1175501654215
+       ],
+       [
+        69.78567048172053,
+        -314.11755016542145
+       ],
+       [
+        69.78567048172053,
+        -314.7737181444241
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       69.78567048172053,
+       -314.7737181444241
+      ],
+      [
+       76.40160716150936,
+       -314.77371814442415
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:656174-709361:full-cap:5912",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 656174,
+     "ringsFeet": [
+      [
+       [
+        69.82883601403526,
+        -109.98041105780995
+       ],
+       [
+        75.1137544958285,
+        -109.98041105780996
+       ],
+       [
+        75.1137544958285,
+        -109.65232706830865
+       ],
+       [
+        69.82883601403526,
+        -109.65232706830864
+       ],
+       [
+        69.82883601403526,
+        -109.98041105780995
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.1137544958285,
+       -109.98041105780996
+      ],
+      [
+       75.1137544958285,
+       -109.65232706830865
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 709361,
+     "ringsFeet": [
+      [
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323006,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323009,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582852,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       75.11375449582849,
+       -125.45941368248181
+      ],
+      [
+       75.11375449582852,
+       -99.51453179271842
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:658598-653479:original-free-cap:5970",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 658598,
+     "ringsFeet": [
+      [
+       [
+        19.231208539463506,
+        -272.47056853812524
+       ],
+       [
+        25.071103552586635,
+        -272.47056853812524
+       ],
+       [
+        25.07110355258664,
+        -271.5650567271016
+       ],
+       [
+        19.231208539463506,
+        -271.5650567271016
+       ],
+       [
+        19.231208539463506,
+        -272.47056853812524
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       25.071103552586635,
+       -272.47056853812524
+      ],
+      [
+       25.07110355258664,
+       -271.5650567271016
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 653479,
+     "ringsFeet": [
+      [
+       [
+        25.07110355258664,
+        -272.43466167455637
+       ],
+       [
+        25.563229536838605,
+        -272.43466167455637
+       ],
+       [
+        25.56322953683863,
+        -255.26584412867598
+       ],
+       [
+        25.071103552586663,
+        -255.26584412867598
+       ],
+       [
+        25.07110355258664,
+        -272.43466167455637
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       25.071103552586663,
+       -255.26584412867598
+      ],
+      [
+       25.07110355258664,
+       -272.43466167455637
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:658598-636715:full-cap:5978",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 658598,
+     "ringsFeet": [
+      [
+       [
+        19.231208539463506,
+        -272.47056853812524
+       ],
+       [
+        25.071103552586635,
+        -272.47056853812524
+       ],
+       [
+        25.07110355258664,
+        -271.5650567271016
+       ],
+       [
+        19.231208539463506,
+        -271.5650567271016
+       ],
+       [
+        19.231208539463506,
+        -272.47056853812524
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       19.231208539463506,
+       -271.5650567271016
+      ],
+      [
+       19.231208539463506,
+       -272.47056853812524
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 636715,
+     "ringsFeet": [
+      [
+       [
+        18.837507752061896,
+        -294.0913034462615
+       ],
+       [
+        19.23120853946347,
+        -294.0913034462615
+       ],
+       [
+        19.231208539463506,
+        -271.5650567271016
+       ],
+       [
+        18.83750775206193,
+        -271.5650567271016
+       ],
+       [
+        18.837507752061896,
+        -294.0913034462615
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       19.231208539463506,
+       -271.5650567271016
+      ],
+      [
+       19.23120853946347,
+       -294.0913034462615
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:659349-685025:full-cap:6020",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 659349,
+     "ringsFeet": [
+      [
+       [
+        67.0213988281779,
+        -294.09130344626175
+       ],
+       [
+        75.94577546859598,
+        -294.09130344626175
+       ],
+       [
+        75.94577546859598,
+        -293.69760265886015
+       ],
+       [
+        67.0213988281779,
+        -293.69760265886015
+       ],
+       [
+        67.0213988281779,
+        -294.09130344626175
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       67.0213988281779,
+       -294.09130344626175
+      ],
+      [
+       67.0213988281779,
+       -293.69760265886015
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 685025,
+     "ringsFeet": [
+      [
+       [
+        66.64410224025137,
+        -305.98627555912236
+       ],
+       [
+        67.02139882817788,
+        -305.98627555912236
+       ],
+       [
+        67.0213988281779,
+        -293.69760265886015
+       ],
+       [
+        66.64410224025139,
+        -293.69760265886015
+       ],
+       [
+        66.64410224025137,
+        -305.98627555912236
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       67.0213988281779,
+       -293.69760265886015
+      ],
+      [
+       67.02139882817788,
+       -305.98627555912236
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:680446-674159:full-cap:6179",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 680446,
+     "ringsFeet": [
+      [
+       [
+        58.667232161509396,
+        -293.9404668320882
+       ],
+       [
+        66.6151488281773,
+        -293.9404668320882
+       ],
+       [
+        66.6151488281773,
+        -293.71080803943727
+       ],
+       [
+        58.667232161509396,
+        -293.71080803943727
+       ],
+       [
+        58.667232161509396,
+        -293.9404668320882
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       58.667232161509396,
+       -293.71080803943727
+      ],
+      [
+       58.667232161509396,
+       -293.9404668320882
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 674159,
+     "ringsFeet": [
+      [
+       [
+        58.33914817200807,
+        -295.7759327113535
+       ],
+       [
+        58.66723216150939,
+        -295.7759327113535
+       ],
+       [
+        58.667232161509396,
+        -291.7076912415372
+       ],
+       [
+        58.33914817200808,
+        -291.7076912415372
+       ],
+       [
+        58.33914817200807,
+        -295.7759327113535
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       58.667232161509396,
+       -291.7076912415372
+      ],
+      [
+       58.66723216150939,
+       -295.7759327113535
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:708656-669301:full-cap:6521",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 708656,
+     "ringsFeet": [
+      [
+       [
+        55.01040222384609,
+        -187.25416998497633
+       ],
+       [
+        66.70382455806742,
+        -187.25416998497636
+       ],
+       [
+        66.70382455806744,
+        -186.87687339704985
+       ],
+       [
+        55.01040222384609,
+        -186.87687339704982
+       ],
+       [
+        55.01040222384609,
+        -187.25416998497633
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       55.01040222384609,
+       -186.87687339704982
+      ],
+      [
+       55.01040222384609,
+       -187.25416998497633
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 669301,
+     "ringsFeet": [
+      [
+       [
+        54.5182762395941,
+        -198.74897871042413
+       ],
+       [
+        55.01040222384607,
+        -198.74897871042413
+       ],
+       [
+        55.01040222384611,
+        -176.6217758326214
+       ],
+       [
+        54.51827623959414,
+        -176.6217758326214
+       ],
+       [
+        54.5182762395941,
+        -198.74897871042413
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       55.01040222384607,
+       -198.74897871042413
+      ],
+      [
+       55.01040222384611,
+       -176.6217758326214
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:709357-709361:full-cap:6575",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 709357,
+     "ringsFeet": [
+      [
+       [
+        66.18986998139277,
+        -121.33375751450279
+       ],
+       [
+        75.11375449582849,
+        -121.3337575145028
+       ],
+       [
+        75.11375449582849,
+        -120.94005672710124
+       ],
+       [
+        66.18986998139277,
+        -120.94005672710122
+       ],
+       [
+        66.18986998139277,
+        -121.33375751450279
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.11375449582849,
+       -121.3337575145028
+      ],
+      [
+       75.11375449582849,
+       -120.94005672710124
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 709361,
+     "ringsFeet": [
+      [
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323006,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323009,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582852,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       75.11375449582849,
+       -125.45941368248181
+      ],
+      [
+       75.11375449582852,
+       -99.51453179271842
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:709361-480509:full-cap:6581",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 709361,
+     "ringsFeet": [
+      [
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323006,
+        -125.45941368248181
+       ],
+       [
+        75.50745528323009,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582852,
+        -99.51453179271842
+       ],
+       [
+        75.11375449582849,
+        -125.45941368248181
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.11375449582852,
+       -99.51453179271842
+      ],
+      [
+       75.50745528323009,
+       -99.51453179271842
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 480509,
+     "ringsFeet": [
+      [
+       [
+        71.52954289313827,
+        -99.5145317927184
+       ],
+       [
+        75.75351825074974,
+        -99.51453179271842
+       ],
+       [
+        75.75351825074974,
+        -98.85836381371578
+       ],
+       [
+        71.52954289313827,
+        -98.85836381371577
+       ],
+       [
+        71.52954289313827,
+        -99.5145317927184
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       75.75351825074974,
+       -99.51453179271842
+      ],
+      [
+       71.52954289313827,
+       -99.5145317927184
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:709816-656528:full-cap:6668",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 709816,
+     "ringsFeet": [
+      [
+       [
+        66.54696694087613,
+        -114.24550292132695
+       ],
+       [
+        70.67477811787572,
+        -114.24550292132696
+       ],
+       [
+        70.67477811787572,
+        -113.91741893182565
+       ],
+       [
+        66.54696694087613,
+        -113.91741893182564
+       ],
+       [
+        66.54696694087613,
+        -114.24550292132695
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       66.54696694087613,
+       -113.91741893182564
+      ],
+      [
+       66.54696694087613,
+       -114.24550292132695
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 656528,
+     "ringsFeet": [
+      [
+       [
+        66.21888295137481,
+        -120.9088887480986
+       ],
+       [
+        66.54696694087612,
+        -120.9088887480986
+       ],
+       [
+        66.54696694087613,
+        -113.91741893182564
+       ],
+       [
+        66.21888295137482,
+        -113.91741893182564
+       ],
+       [
+        66.21888295137481,
+        -120.9088887480986
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       66.54696694087612,
+       -120.9088887480986
+      ],
+      [
+       66.54696694087613,
+       -113.91741893182564
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:733165-639364:full-cap:8490",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 733165,
+     "ringsFeet": [
+      [
+       [
+        80.71432469759928,
+        -217.4861514023012
+       ],
+       [
+        93.73417477306795,
+        -217.48615140230126
+       ],
+       [
+        93.73417477306795,
+        -216.66594142854797
+       ],
+       [
+        80.71432469759928,
+        -216.6659414285479
+       ],
+       [
+        80.71432469759928,
+        -217.4861514023012
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       80.71432469759928,
+       -216.6659414285479
+      ],
+      [
+       80.71432469759928,
+       -217.4861514023012
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 639364,
+     "ringsFeet": [
+      [
+       [
+        80.3206239101977,
+        -223.13007477500236
+       ],
+       [
+        80.71432469759927,
+        -223.13007477500236
+       ],
+       [
+        80.71432469759928,
+        -216.6659414285479
+       ],
+       [
+        80.32062391019771,
+        -216.6659414285479
+       ],
+       [
+        80.3206239101977,
+        -223.13007477500236
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       80.71432469759927,
+       -223.13007477500236
+      ],
+      [
+       80.71432469759928,
+       -216.6659414285479
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:733271-664468:full-cap:8496",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 733271,
+     "ringsFeet": [
+      [
+       [
+        81.68707149549502,
+        -197.54942498497854
+       ],
+       [
+        93.73417477306799,
+        -197.54942498497857
+       ],
+       [
+        93.73417477306799,
+        -196.72921501122528
+       ],
+       [
+        81.68707149549502,
+        -196.72921501122525
+       ],
+       [
+        81.68707149549502,
+        -197.54942498497854
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       81.68707149549502,
+       -196.72921501122525
+      ],
+      [
+       81.68707149549502,
+       -197.54942498497854
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 664468,
+     "ringsFeet": [
+      [
+       [
+        80.86686152174173,
+        -204.3095750145029
+       ],
+       [
+        81.687071495495,
+        -204.3095750145029
+       ],
+       [
+        81.68707149549502,
+        -195.4831543813042
+       ],
+       [
+        80.86686152174174,
+        -195.4831543813042
+       ],
+       [
+        80.86686152174173,
+        -204.3095750145029
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       81.687071495495,
+       -204.3095750145029
+      ],
+      [
+       81.68707149549502,
+       -195.4831543813042
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:734584-664468:original-free-cap:8509",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 734584,
+     "ringsFeet": [
+      [
+       [
+        81.68707149549509,
+        -149.86182474833464
+       ],
+       [
+        93.73417477306806,
+        -149.86182474833467
+       ],
+       [
+        93.73417477306806,
+        -149.04161477458138
+       ],
+       [
+        81.6870714954951,
+        -149.04161477458135
+       ],
+       [
+        81.68707149549509,
+        -149.86182474833464
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       81.6870714954951,
+       -149.04161477458135
+      ],
+      [
+       81.68707149549509,
+       -149.86182474833464
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 664468,
+     "ringsFeet": [
+      [
+       [
+        80.86686152174178,
+        -150.6936831917839
+       ],
+       [
+        81.68707149549506,
+        -150.6936831917839
+       ],
+       [
+        81.68707149549508,
+        -149.38134723377863
+       ],
+       [
+        80.8668615217418,
+        -149.38134723377863
+       ],
+       [
+        80.86686152174178,
+        -150.6936831917839
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       81.68707149549506,
+       -150.6936831917839
+      ],
+      [
+       81.68707149549508,
+       -149.38134723377863
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:735744-644469:full-cap:8573",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 735744,
+     "ringsFeet": [
+      [
+       [
+        113.96874134786287,
+        -136.70285200269205
+       ],
+       [
+        114.36244213526444,
+        -136.70285200269205
+       ],
+       [
+        114.36244213526444,
+        -136.04668402368944
+       ],
+       [
+        113.96874134786287,
+        -136.04668402368944
+       ],
+       [
+        113.96874134786287,
+        -136.70285200269205
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       113.96874134786287,
+       -136.70285200269205
+      ],
+      [
+       114.36244213526444,
+       -136.70285200269205
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 644469,
+     "ringsFeet": [
+      [
+       [
+        112.93527678093332,
+        -137.09655279009363
+       ],
+       [
+        124.45102481242952,
+        -137.09655279009365
+       ],
+       [
+        124.45102481242952,
+        -136.70285200269208
+       ],
+       [
+        112.93527678093332,
+        -136.70285200269205
+       ],
+       [
+        112.93527678093332,
+        -137.09655279009363
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       124.45102481242952,
+       -136.70285200269208
+      ],
+      [
+       112.93527678093332,
+       -136.70285200269205
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:736596-480239:full-cap:8603",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 736596,
+     "ringsFeet": [
+      [
+       [
+        113.70627415626154,
+        -120.4889412415373
+       ],
+       [
+        114.36244213526417,
+        -120.4889412415373
+       ],
+       [
+        114.3624421352642,
+        -104.10770764573685
+       ],
+       [
+        113.70627415626157,
+        -104.10770764573685
+       ],
+       [
+        113.70627415626154,
+        -120.4889412415373
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       114.3624421352642,
+       -104.10770764573685
+      ],
+      [
+       113.70627415626157,
+       -104.10770764573685
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 480239,
+     "ringsFeet": [
+      [
+       [
+        112.55800414313833,
+        -104.10770764573684
+       ],
+       [
+        114.93658911689135,
+        -104.10770764573685
+       ],
+       [
+        114.93658911689135,
+        -103.45153966673422
+       ],
+       [
+        112.55800414313833,
+        -103.4515396667342
+       ],
+       [
+        112.55800414313833,
+        -104.10770764573684
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       114.93658911689135,
+       -104.10770764573685
+      ],
+      [
+       112.55800414313833,
+       -104.10770764573684
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:737252-653479:full-cap:8639",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 737252,
+     "ringsFeet": [
+      [
+       [
+        21.79026365757393,
+        -170.3266039120473
+       ],
+       [
+        25.0711035525868,
+        -170.3266039120473
+       ],
+       [
+        25.071103552586802,
+        -169.34235194354335
+       ],
+       [
+        21.79026365757393,
+        -169.34235194354335
+       ],
+       [
+        21.79026365757393,
+        -170.3266039120473
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       25.071103552586802,
+       -169.34235194354335
+      ],
+      [
+       25.0711035525868,
+       -170.3266039120473
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 653479,
+     "ringsFeet": [
+      [
+       [
+        25.0711035525868,
+        -171.63893987005255
+       ],
+       [
+        25.563229536838765,
+        -171.63893987005255
+       ],
+       [
+        25.56322953683877,
+        -169.34235194354335
+       ],
+       [
+        25.071103552586802,
+        -169.34235194354335
+       ],
+       [
+        25.0711035525868,
+        -171.63893987005255
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       25.071103552586802,
+       -169.34235194354335
+      ],
+      [
+       25.0711035525868,
+       -171.63893987005255
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:737451-737644:full-cap:8642",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 737451,
+     "ringsFeet": [
+      [
+       [
+        19.60850512738993,
+        -186.46505821226893
+       ],
+       [
+        25.071103552586774,
+        -186.46505821226896
+       ],
+       [
+        25.071103552586774,
+        -186.0713574248674
+       ],
+       [
+        19.608505127389932,
+        -186.07135742486736
+       ],
+       [
+        19.60850512738993,
+        -186.46505821226893
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       19.608505127389932,
+       -186.07135742486736
+      ],
+      [
+       19.60850512738993,
+       -186.46505821226893
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 737644,
+     "ringsFeet": [
+      [
+       [
+        15.294128988825262,
+        -186.6733911519015
+       ],
+       [
+        19.60850512738993,
+        -186.6733911519015
+       ],
+       [
+        19.60850512738993,
+        -186.0172231728989
+       ],
+       [
+        15.294128988825264,
+        -186.0172231728989
+       ],
+       [
+        15.294128988825262,
+        -186.6733911519015
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       19.60850512738993,
+       -186.6733911519015
+      ],
+      [
+       19.60850512738993,
+       -186.0172231728989
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:737451-653479:full-cap:8645",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 737451,
+     "ringsFeet": [
+      [
+       [
+        19.60850512738993,
+        -186.46505821226893
+       ],
+       [
+        25.071103552586774,
+        -186.46505821226896
+       ],
+       [
+        25.071103552586774,
+        -186.0713574248674
+       ],
+       [
+        19.608505127389932,
+        -186.07135742486736
+       ],
+       [
+        19.60850512738993,
+        -186.46505821226893
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       25.071103552586774,
+       -186.46505821226896
+      ],
+      [
+       25.071103552586774,
+       -186.0713574248674
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 653479,
+     "ringsFeet": [
+      [
+       [
+        25.071103552586774,
+        -187.21735359873063
+       ],
+       [
+        25.56322953683874,
+        -187.21735359873063
+       ],
+       [
+        25.56322953683876,
+        -174.64090837398956
+       ],
+       [
+        25.071103552586795,
+        -174.64090837398956
+       ],
+       [
+        25.071103552586774,
+        -187.21735359873063
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       25.071103552586795,
+       -174.64090837398956
+      ],
+      [
+       25.071103552586774,
+       -187.21735359873063
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:2477495-639364:full-cap:102961",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 2477495,
+     "ringsFeet": [
+      [
+       [
+        80.71432469759921,
+        -257.58211605945047
+       ],
+       [
+        84.44269097662126,
+        -257.58211605945047
+       ],
+       [
+        84.44269097662126,
+        -257.18841527204887
+       ],
+       [
+        80.71432469759921,
+        -257.18841527204887
+       ],
+       [
+        80.71432469759921,
+        -257.58211605945047
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       80.71432469759921,
+       -257.18841527204887
+      ],
+      [
+       80.71432469759921,
+       -257.58211605945047
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 639364,
+     "ringsFeet": [
+      [
+       [
+        80.32062391019763,
+        -263.180870375396
+       ],
+       [
+        80.7143246975992,
+        -263.180870375396
+       ],
+       [
+        80.71432469759921,
+        -256.8562301424586
+       ],
+       [
+        80.32062391019764,
+        -256.8562301424586
+       ],
+       [
+        80.32062391019763,
+        -263.180870375396
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       80.7143246975992,
+       -263.180870375396
+      ],
+      [
+       80.71432469759921,
+       -256.8562301424586
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:636583-636715:original-free-cap:5040",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 636583,
+     "ringsFeet": [
+      [
+       [
+        18.181339773059285,
+        -280.2592824488864
+       ],
+       [
+        18.837507752061917,
+        -280.2592824488864
+       ],
+       [
+        18.83750775206192,
+        -279.8655816614848
+       ],
+       [
+        18.181339773059285,
+        -279.8655816614848
+       ],
+       [
+        18.181339773059285,
+        -280.2592824488864
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       18.837507752061917,
+       -280.2592824488864
+      ],
+      [
+       18.83750775206192,
+       -279.8655816614848
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 636715,
+     "ringsFeet": [
+      [
+       [
+        18.837507752061896,
+        -294.0913034462615
+       ],
+       [
+        19.23120853946347,
+        -294.0913034462615
+       ],
+       [
+        19.231208539463506,
+        -271.5650567271016
+       ],
+       [
+        18.83750775206193,
+        -271.5650567271016
+       ],
+       [
+        18.837507752061896,
+        -294.0913034462615
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       18.837507752061896,
+       -294.0913034462615
+      ],
+      [
+       18.83750775206193,
+       -271.5650567271016
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:640138-639850:full-cap:5249",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 640138,
+     "ringsFeet": [
+      [
+       [
+        75.24277774018877,
+        -212.8658939186047
+       ],
+       [
+        75.63647852759034,
+        -212.8658939186047
+       ],
+       [
+        75.63647852759036,
+        -207.39399183378376
+       ],
+       [
+        75.24277774018879,
+        -207.39399183378376
+       ],
+       [
+        75.24277774018877,
+        -212.8658939186047
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       75.63647852759036,
+       -207.39399183378376
+      ],
+      [
+       75.24277774018879,
+       -207.39399183378376
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 639850,
+     "ringsFeet": [
+      [
+       [
+        55.01040222384606,
+        -207.39399183378367
+       ],
+       [
+        77.26320461753039,
+        -207.39399183378376
+       ],
+       [
+        77.26320461753039,
+        -207.0002910463822
+       ],
+       [
+        55.01040222384606,
+        -207.0002910463821
+       ],
+       [
+        55.01040222384606,
+        -207.39399183378367
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       77.26320461753039,
+       -207.39399183378376
+      ],
+      [
+       55.01040222384606,
+       -207.39399183378367
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:640832-654793:original-free-cap:5271",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 640832,
+     "ringsFeet": [
+      [
+       [
+        -1.175615607518,
+        -296.8603323176523
+       ],
+       [
+        -1.1756156075179993,
+        -297.2540331050539
+       ],
+       [
+        4.401812214003378,
+        -297.2540331050539
+       ],
+       [
+        4.401812214003379,
+        -296.8603323176523
+       ],
+       [
+        -1.175615607518,
+        -296.8603323176523
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       4.401812214003378,
+       -297.2540331050539
+      ],
+      [
+       4.401812214003379,
+       -296.8603323176523
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 654793,
+     "ringsFeet": [
+      [
+       [
+        4.401812214003378,
+        -297.30160528353156
+       ],
+       [
+        5.057980193006003,
+        -297.30160528353156
+       ],
+       [
+        5.05798019300602,
+        -287.13100160899086
+       ],
+       [
+        4.401812214003395,
+        -287.13100160899086
+       ],
+       [
+        4.401812214003378,
+        -297.30160528353156
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       4.401812214003378,
+       -297.30160528353156
+      ],
+      [
+       4.401812214003395,
+       -287.13100160899086
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:645855-645201:original-free-cap:5505",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 645855,
+     "ringsFeet": [
+      [
+       [
+        75.76792441818354,
+        -156.63358823419483
+       ],
+       [
+        76.16162520558511,
+        -156.63358823419483
+       ],
+       [
+        76.16162520558511,
+        -149.38134723377863
+       ],
+       [
+        75.76792441818354,
+        -149.3813472337786
+       ],
+       [
+        75.76792441818354,
+        -156.63358823419483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       76.16162520558511,
+       -149.38134723377863
+      ],
+      [
+       75.76792441818354,
+       -149.3813472337786
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 645201,
+     "ringsFeet": [
+      [
+       [
+        59.96235092463304,
+        -149.38134723377857
+       ],
+       [
+        77.06290965166703,
+        -149.38134723377863
+       ],
+       [
+        77.06290965166703,
+        -148.98764644637706
+       ],
+       [
+        59.96235092463304,
+        -148.987646446377
+       ],
+       [
+        59.96235092463304,
+        -149.38134723377857
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       59.96235092463304,
+       -149.38134723377857
+      ],
+      [
+       77.06290965166703,
+       -149.38134723377863
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:684086-654168:full-cap:6410",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 684086,
+     "ringsFeet": [
+      [
+       [
+        54.52648413001468,
+        -271.9425356903044
+       ],
+       [
+        54.90378071794119,
+        -271.9425356903044
+       ],
+       [
+        54.90378071794119,
+        -269.8819858609595
+       ],
+       [
+        54.52648413001468,
+        -269.8819858609595
+       ],
+       [
+        54.52648413001468,
+        -271.9425356903044
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       54.52648413001468,
+       -271.9425356903044
+      ],
+      [
+       54.90378071794119,
+       -271.9425356903044
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 654168,
+     "ringsFeet": [
+      [
+       [
+        49.401689328509086,
+        -272.43466167455637
+       ],
+       [
+        70.68790145284922,
+        -272.4346616745564
+       ],
+       [
+        70.68790145284922,
+        -271.94253569030445
+       ],
+       [
+        49.401689328509086,
+        -271.9425356903044
+       ],
+       [
+        49.401689328509086,
+        -272.43466167455637
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       49.401689328509086,
+       -271.9425356903044
+      ],
+      [
+       70.68790145284922,
+       -271.94253569030445
+      ]
+     ]
+    },
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:735899-735744:original-free-cap:8577",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 735899,
+     "ringsFeet": [
+      [
+       [
+        114.36244213526446,
+        -125.80390187145845
+       ],
+       [
+        124.45102481242955,
+        -125.80390187145848
+       ],
+       [
+        124.45102481242955,
+        -125.41020108405691
+       ],
+       [
+        114.36244213526447,
+        -125.41020108405688
+       ],
+       [
+        114.36244213526446,
+        -125.80390187145845
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       114.36244213526446,
+       -125.80390187145845
+      ],
+      [
+       114.36244213526447,
+       -125.41020108405688
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 735744,
+     "ringsFeet": [
+      [
+       [
+        113.96874134786287,
+        -133.04471551975243
+       ],
+       [
+        114.36244213526444,
+        -133.04471551975243
+       ],
+       [
+        114.36244213526447,
+        -124.14707772447696
+       ],
+       [
+        113.9687413478629,
+        -124.14707772447696
+       ],
+       [
+        113.96874134786287,
+        -133.04471551975243
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       114.36244213526444,
+       -133.04471551975243
+      ],
+      [
+       114.36244213526447,
+       -124.14707772447696
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "floor2-review-contact:737644-643785:original-free-cap:8658",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "levelId": 694,
+    "elevationFeet": 14.435695538057743,
+    "status": "proposed",
+    "source": {
+     "nativeElementId": 737644,
+     "ringsFeet": [
+      [
+       [
+        15.294128988825262,
+        -186.6733911519015
+       ],
+       [
+        19.60850512738993,
+        -186.6733911519015
+       ],
+       [
+        19.60850512738993,
+        -186.0172231728989
+       ],
+       [
+        15.294128988825264,
+        -186.0172231728989
+       ],
+       [
+        15.294128988825262,
+        -186.6733911519015
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       15.294128988825264,
+       -186.0172231728989
+      ],
+      [
+       15.294128988825262,
+       -186.6733911519015
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 643785,
+     "ringsFeet": [
+      [
+       [
+        14.900428201423681,
+        -191.28992797806086
+       ],
+       [
+        15.294128988825255,
+        -191.28992797806086
+       ],
+       [
+        15.294128988825273,
+        -180.59005701080412
+       ],
+       [
+        14.900428201423699,
+        -180.59005701080412
+       ],
+       [
+        14.900428201423681,
+        -191.28992797806086
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       15.294128988825273,
+       -180.59005701080412
+      ],
+      [
+       15.294128988825255,
+       -191.28992797806086
+      ]
+     ]
+    },
+    "contactMode": "original-free-cap",
+    "evidenceSha256": "3057d469f58b82f3929bd0dc5bc8cee7ebe028dd267dedda39e4c05489a0681a",
+    "notes": "Floor 2 review (agent F2): sub-1e-7 ft numerical seam located by diagnostic erosion of the current production native region and confirmed by exact production derivation. Complete original cap/target bodies retained; only the exact rational gap to first original material is added for SELECTION. Original walls, doors, portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   }
+  ]
+ }
+}
