@@ -1,0 +1,613 @@
+{
+ "format": "review-floor1-checked-proposal",
+ "version": 1,
+ "status": "proposed",
+ "family": "nativeSelectionContactRepairs",
+ "regionId": "native-region:1487816:132",
+ "levelId": 1487816,
+ "evidenceSha256": "6cbc06efffe222eb4f9fccf1983f17d7cc5b880681dfaa79d7c72ff7e47738b8",
+ "validationResultSha256": "906b94cee8e071113f37104a46a673b7bb37d54616a70ef779d69c86fd0e2606",
+ "seamDiagnosticSha256": "d8d5453734426729e6629dc9ed34478c2b304aa654f811d77b02b6a9856cfa7c",
+ "datasetSha256": "cb58e81ec8f009aa6ea06468db1f77a35cb82b50b33965e8152703332c2a03be",
+ "productionFileSha256": {
+  "app/indoor-project/native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "app/indoor-project/native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "app/indoor-project/native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "app/indoor-project/reviewed-area-partitions.ts": "45a75638a98db2bf55ace8bdd5c6c2a1eb03302c765a0bd43bbb088cc4e146e2",
+  "app/indoor-project/native-material-plan.ts": "2ee7baabacb2fabf9e634552a45c9984bbd38e91e95a751e8983ed1e5dd34cf4"
+ },
+ "checks": "deriveNativeSelectionContactRepairAttempts + createNativeSelectionContactPhysicalGuard (unchanged production modules) passed for every descriptor; localImpact = exact rational subtraction of the mask from the current region face.",
+ "repairs": [
+  {
+   "id": "review-f1-proposed:original-free-cap:1501357-1501359:1487816:15:117",
+   "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+   "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+   "levelId": 1487816,
+   "elevationFeet": 3.2808398950131235,
+   "status": "proposed",
+   "source": {
+    "nativeElementId": 1501357,
+    "ringsFeet": [
+     [
+      [
+       88.56735291230287,
+       864.5880952430215
+      ],
+      [
+       107.37369741210098,
+       852.836586943649
+      ],
+      [
+       107.58232748796789,
+       853.1704638692438
+      ],
+      [
+       88.77598254389073,
+       864.9219724462326
+      ]
+     ]
+    ],
+    "capFeet": [
+     [
+      107.37369741210098,
+      852.836586943649
+     ],
+     [
+      107.58232748796789,
+      853.1704638692438
+     ]
+    ]
+   },
+   "target": {
+    "nativeElementId": 1501359,
+    "ringsFeet": [
+     [
+      [
+       105.80897141592438,
+       850.3325093180673
+      ],
+      [
+       106.1428483415189,
+       850.1238792422005
+      ],
+      [
+       108.07388094778034,
+       853.2141682483417
+      ],
+      [
+       107.74000402218587,
+       853.4227983242085
+      ]
+     ]
+    ],
+    "faceFeet": [
+     [
+      107.74000402218587,
+      853.4227983242085
+     ],
+     [
+      105.80897141592438,
+      850.3325093180673
+     ]
+    ]
+   },
+   "contactMode": "original-free-cap",
+   "evidenceSha256": "6cbc06efffe222eb4f9fccf1983f17d7cc5b880681dfaa79d7c72ff7e47738b8",
+   "notes": "Review F1 (Floor 1) numerical seam between 10-1028 and 10-1030 in native-region:1487816:132. Exact production-derived positive gap mask only; original physical bodies, door portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+   "assumption": {
+    "kind": "provisional-extracted-native-contact",
+    "revisitRequired": true
+   }
+  }
+ ],
+ "localImpact": [
+  {
+   "id": "review-f1-proposed:original-free-cap:1501357-1501359:1487816:15:117",
+   "contactMode": "original-free-cap",
+   "source": 1501357,
+   "target": 1501359,
+   "maskAreaSqFt": 1.343734685485538e-14,
+   "parts": [
+    {
+     "areaSqFt": 222.51039988312317,
+     "labels": [
+      "10-1030"
+     ]
+    },
+    {
+     "areaSqFt": 193.59771108047013,
+     "labels": [
+      "10-1028"
+     ]
+    }
+   ]
+  }
+ ],
+ "levelDerive": [
+  {
+   "levelId": 1487816,
+   "regionCountBefore": 535,
+   "regionCountAfter": 555,
+   "singletonsBefore": 80,
+   "singletonsAfter": 106,
+   "lostSingletons": [],
+   "changedSingletons": [],
+   "gainedSingletons": [
+    {
+     "key": "rm-1487816-454b14307f1f",
+     "number": "08-109",
+     "regionId": "native-region:1487816:27",
+     "areaSqFt": 123.60986658778471
+    },
+    {
+     "key": "rm-1487816-454104307f16",
+     "number": "08-114",
+     "regionId": "native-region:1487816:28",
+     "areaSqFt": 258.44692401884004
+    },
+    {
+     "key": "rm-1487816-45440c307f18",
+     "number": "08-116",
+     "regionId": "native-region:1487816:29",
+     "areaSqFt": 208.62080799508274
+    },
+    {
+     "key": "rm-1487816-f77395f50bc8",
+     "number": "08-122",
+     "regionId": "native-region:1487816:37",
+     "areaSqFt": 229.67816080075806
+    },
+    {
+     "key": "rm-1487816-46230af4164a",
+     "number": "08-165",
+     "regionId": "native-region:1487816:39",
+     "areaSqFt": 444.81913465428045
+    },
+    {
+     "key": "rm-1487816-43e29c307dec",
+     "number": "08-117",
+     "regionId": "native-region:1487816:46",
+     "areaSqFt": 171.07044936312403
+    },
+    {
+     "key": "rm-1487816-f7548ff50bad",
+     "number": "08-121",
+     "regionId": "native-region:1487816:50",
+     "areaSqFt": 124.55290591134465
+    },
+    {
+     "key": "rm-1487816-80187ffde56e",
+     "number": "08-167",
+     "regionId": "native-region:1487816:51",
+     "areaSqFt": 445.5310192793963
+    },
+    {
+     "key": "rm-1487816-43d88c307de4",
+     "number": "08-118",
+     "regionId": "native-region:1487816:64",
+     "areaSqFt": 177.09458786276872
+    },
+    {
+     "key": "rm-1487816-3e41f1f4120c",
+     "number": "08-127",
+     "regionId": "native-region:1487816:115",
+     "areaSqFt": 2202.925131722435
+    },
+    {
+     "key": "rm-1487816-3e2d71f411fb",
+     "number": "08-128",
+     "regionId": "native-region:1487816:117",
+     "areaSqFt": 692.8204078036764
+    },
+    {
+     "key": "rm-1487816-f74a8df50ba5",
+     "number": "08-104",
+     "regionId": "native-region:1487816:122",
+     "areaSqFt": 187.81812188275967
+    },
+    {
+     "key": "rm-1487816-f74e13f50ba8",
+     "number": "08-103",
+     "regionId": "native-region:1487816:123",
+     "areaSqFt": 189.11152035498165
+    },
+    {
+     "key": "rm-1487816-22e4de5b14ae",
+     "number": "10-1030",
+     "regionId": "native-region:1487816:139",
+     "areaSqFt": 222.51039988312317
+    },
+    {
+     "key": "rm-1487816-19ff3730669a",
+     "number": "08-134",
+     "regionId": "native-region:1487816:145",
+     "areaSqFt": 81.41620241921831
+    },
+    {
+     "key": "rm-1487816-19fbcf306697",
+     "number": "08-135",
+     "regionId": "native-region:1487816:184",
+     "areaSqFt": 53.05710232948156
+    },
+    {
+     "key": "rm-1487816-10293f41dc17",
+     "number": "10-1028",
+     "regionId": "native-region:1487816:196",
+     "areaSqFt": 193.59771108047013
+    },
+    {
+     "key": "rm-1487816-ee5665f5067e",
+     "number": "08-136",
+     "regionId": "native-region:1487816:206",
+     "areaSqFt": 148.91156005228646
+    },
+    {
+     "key": "rm-1487816-62ec3f40713a",
+     "number": "10-1005",
+     "regionId": "native-region:1487816:300",
+     "areaSqFt": 142.76859573788965
+    },
+    {
+     "key": "rm-1487816-62e18f407130",
+     "number": "10-1006",
+     "regionId": "native-region:1487816:302",
+     "areaSqFt": 145.71278974049721
+    },
+    {
+     "key": "rm-1487816-68cbca3fca55",
+     "number": "10-1588",
+     "regionId": "native-region:1487816:486",
+     "areaSqFt": 145.9092552796733
+    },
+    {
+     "key": "rm-1487816-cc021647fe16",
+     "number": "10-1506",
+     "regionId": "native-region:1487816:509",
+     "areaSqFt": 267.7172581576284
+    },
+    {
+     "key": "rm-1487816-4fa1cb7cb84d",
+     "number": "10-1594",
+     "regionId": "native-region:1487816:510",
+     "areaSqFt": 90.25530812938237
+    },
+    {
+     "key": "rm-1487816-cc241247fe33",
+     "number": "10-1548",
+     "regionId": "native-region:1487816:513",
+     "areaSqFt": 389.25545075027406
+    },
+    {
+     "key": "rm-1487816-cbf7e447fe0d",
+     "number": "10-1518",
+     "regionId": "native-region:1487816:514",
+     "areaSqFt": 309.1505541949016
+    },
+    {
+     "key": "rm-1487816-cbf0a047fe07",
+     "number": "10-1532",
+     "regionId": "native-region:1487816:530",
+     "areaSqFt": 137.48752208169674
+    }
+   ],
+   "watch": [
+    {
+     "regionId": "native-region:1487816:110",
+     "after": [
+      {
+       "id": "native-region:1487816:115",
+       "areaSqFt": 2202.925131722435,
+       "labels": [
+        "08-127"
+       ]
+      },
+      {
+       "id": "native-region:1487816:117",
+       "areaSqFt": 692.8204078036764,
+       "labels": [
+        "08-128"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:116",
+     "after": [
+      {
+       "id": "native-region:1487816:122",
+       "areaSqFt": 187.81812188275967,
+       "labels": [
+        "08-104"
+       ]
+      },
+      {
+       "id": "native-region:1487816:123",
+       "areaSqFt": 189.11152035498165,
+       "labels": [
+        "08-103"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:132",
+     "after": [
+      {
+       "id": "native-region:1487816:139",
+       "areaSqFt": 222.51039988312317,
+       "labels": [
+        "10-1030"
+       ]
+      },
+      {
+       "id": "native-region:1487816:196",
+       "areaSqFt": 193.59771108047013,
+       "labels": [
+        "10-1028"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:138",
+     "after": [
+      {
+       "id": "native-region:1487816:145",
+       "areaSqFt": 81.41620241921831,
+       "labels": [
+        "08-134"
+       ]
+      },
+      {
+       "id": "native-region:1487816:184",
+       "areaSqFt": 53.05710232948156,
+       "labels": [
+        "08-135"
+       ]
+      },
+      {
+       "id": "native-region:1487816:206",
+       "areaSqFt": 148.91156005228646,
+       "labels": [
+        "08-136"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:205",
+     "after": [
+      {
+       "id": "native-region:1487816:216",
+       "areaSqFt": 279.5297118372139,
+       "labels": [
+        "08-148",
+        "08-147"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:27",
+     "after": [
+      {
+       "id": "native-region:1487816:27",
+       "areaSqFt": 123.60986658778471,
+       "labels": [
+        "08-109"
+       ]
+      },
+      {
+       "id": "native-region:1487816:28",
+       "areaSqFt": 258.44692401884004,
+       "labels": [
+        "08-114"
+       ]
+      },
+      {
+       "id": "native-region:1487816:29",
+       "areaSqFt": 208.62080799508274,
+       "labels": [
+        "08-116"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:289",
+     "after": [
+      {
+       "id": "native-region:1487816:300",
+       "areaSqFt": 142.76859573788965,
+       "labels": [
+        "10-1005"
+       ]
+      },
+      {
+       "id": "native-region:1487816:302",
+       "areaSqFt": 145.71278974049721,
+       "labels": [
+        "10-1006"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:35",
+     "after": [
+      {
+       "id": "native-region:1487816:37",
+       "areaSqFt": 229.67816080075806,
+       "labels": [
+        "08-122"
+       ]
+      },
+      {
+       "id": "native-region:1487816:50",
+       "areaSqFt": 124.55290591134465,
+       "labels": [
+        "08-121"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:37",
+     "after": [
+      {
+       "id": "native-region:1487816:39",
+       "areaSqFt": 444.81913465428045,
+       "labels": [
+        "08-165"
+       ]
+      },
+      {
+       "id": "native-region:1487816:51",
+       "areaSqFt": 445.5310192793963,
+       "labels": [
+        "08-167"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:44",
+     "after": [
+      {
+       "id": "native-region:1487816:46",
+       "areaSqFt": 171.07044936312403,
+       "labels": [
+        "08-117"
+       ]
+      },
+      {
+       "id": "native-region:1487816:64",
+       "areaSqFt": 177.09458786276872,
+       "labels": [
+        "08-118"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:464",
+     "after": [
+      {
+       "id": "native-region:1487816:476",
+       "areaSqFt": 2077.8709847990076,
+       "labels": [
+        "10-1554",
+        "10-1516",
+        "10-1500",
+        "10-1600",
+        "10-1502",
+        "10-1580",
+        "10-1534"
+       ]
+      },
+      {
+       "id": "native-region:1487816:486",
+       "areaSqFt": 145.9092552796733,
+       "labels": [
+        "10-1588"
+       ]
+      },
+      {
+       "id": "native-region:1487816:504",
+       "areaSqFt": 240.74980961582568,
+       "labels": [
+        "10-1513",
+        "10-S103"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:489",
+     "after": [
+      {
+       "id": "native-region:1487816:506",
+       "areaSqFt": 230.83519905857068,
+       "labels": [
+        "10-1586",
+        "10-1590"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:492",
+     "after": [
+      {
+       "id": "native-region:1487816:509",
+       "areaSqFt": 267.7172581576284,
+       "labels": [
+        "10-1506"
+       ]
+      },
+      {
+       "id": "native-region:1487816:510",
+       "areaSqFt": 90.25530812938237,
+       "labels": [
+        "10-1594"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:495",
+     "after": [
+      {
+       "id": "native-region:1487816:513",
+       "areaSqFt": 389.25545075027406,
+       "labels": [
+        "10-1548"
+       ]
+      },
+      {
+       "id": "native-region:1487816:514",
+       "areaSqFt": 309.1505541949016,
+       "labels": [
+        "10-1518"
+       ]
+      },
+      {
+       "id": "native-region:1487816:530",
+       "areaSqFt": 137.48752208169674,
+       "labels": [
+        "10-1532"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1487816:63",
+     "after": [
+      {
+       "id": "native-region:1487816:68",
+       "areaSqFt": 4091.9585771314505,
+       "labels": [
+        "10-1020",
+        "10-1018",
+        "10-1024",
+        "10-1022",
+        "10-1016",
+        "10-1021",
+        "10-1031",
+        "10-1060",
+        "10-1034",
+        "10-1013",
+        "10-1000",
+        "10-1002",
+        "10-1080",
+        "10-1082",
+        "10-1090"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "application": "Append these descriptors (status applied) to nativeSelectionContactRepairs in both source rooms and prepared dataset, preserving the existing collection; regenerate native mapping/display. Selection-only: no physical wall, door, route or access change."
+}

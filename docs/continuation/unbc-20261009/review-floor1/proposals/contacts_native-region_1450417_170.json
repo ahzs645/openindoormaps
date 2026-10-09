@@ -1,0 +1,340 @@
+{
+ "format": "review-floor1-checked-proposal",
+ "version": 1,
+ "status": "proposed",
+ "family": "nativeSelectionContactRepairs",
+ "regionId": "native-region:1450417:170",
+ "levelId": 1450417,
+ "evidenceSha256": "6cbc06efffe222eb4f9fccf1983f17d7cc5b880681dfaa79d7c72ff7e47738b8",
+ "validationResultSha256": "906b94cee8e071113f37104a46a673b7bb37d54616a70ef779d69c86fd0e2606",
+ "seamDiagnosticSha256": "d8d5453734426729e6629dc9ed34478c2b304aa654f811d77b02b6a9856cfa7c",
+ "datasetSha256": "cb58e81ec8f009aa6ea06468db1f77a35cb82b50b33965e8152703332c2a03be",
+ "productionFileSha256": {
+  "app/indoor-project/native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "app/indoor-project/native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "app/indoor-project/native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "app/indoor-project/reviewed-area-partitions.ts": "45a75638a98db2bf55ace8bdd5c6c2a1eb03302c765a0bd43bbb088cc4e146e2",
+  "app/indoor-project/native-material-plan.ts": "2ee7baabacb2fabf9e634552a45c9984bbd38e91e95a751e8983ed1e5dd34cf4"
+ },
+ "checks": "deriveNativeSelectionContactRepairAttempts + createNativeSelectionContactPhysicalGuard (unchanged production modules) passed for every descriptor; localImpact = exact rational subtraction of the mask from the current region face.",
+ "repairs": [
+  {
+   "id": "review-f1-proposed:original-free-cap:1522001-1522002:1450417:1:9",
+   "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+   "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+   "levelId": 1450417,
+   "elevationFeet": -3.2808398950131235,
+   "status": "proposed",
+   "source": {
+    "nativeElementId": 1522001,
+    "ringsFeet": [
+     [
+      [
+       248.31785934140547,
+       546.0661226351934
+      ],
+      [
+       248.95193774283655,
+       538.8333663606696
+      ],
+      [
+       249.37682192388328,
+       538.8705620796617
+      ],
+      [
+       248.74274352245203,
+       546.1033183541876
+      ]
+     ]
+    ],
+    "capFeet": [
+     [
+      248.95193774283655,
+      538.8333663606696
+     ],
+     [
+      249.37682192388328,
+      538.8705620796617
+     ]
+    ]
+   },
+   "target": {
+    "nativeElementId": 1522002,
+    "ringsFeet": [
+     [
+      [
+       248.3143509035658,
+       538.7775499712524
+      ],
+      [
+       248.35152659719645,
+       538.3526640403845
+      ],
+      [
+       250.410543811389,
+       538.5329169872232
+      ],
+      [
+       250.37334809268046,
+       538.9578011650318
+      ]
+     ]
+    ],
+    "faceFeet": [
+     [
+      250.37334809268046,
+      538.9578011650318
+     ],
+     [
+      248.3143509035658,
+      538.7775499712524
+     ]
+    ]
+   },
+   "contactMode": "original-free-cap",
+   "evidenceSha256": "6cbc06efffe222eb4f9fccf1983f17d7cc5b880681dfaa79d7c72ff7e47738b8",
+   "notes": "Review F1 (Floor 1) numerical seam between 09-242 and 09-244/09-246 in native-region:1450417:170. Exact production-derived positive gap mask only; original physical bodies, door portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+   "assumption": {
+    "kind": "provisional-extracted-native-contact",
+    "revisitRequired": true
+   }
+  },
+  {
+   "id": "review-f1-proposed:original-free-cap:1522011-1522023:1450417:2:21",
+   "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+   "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+   "levelId": 1450417,
+   "elevationFeet": -3.2808398950131235,
+   "status": "proposed",
+   "source": {
+    "nativeElementId": 1522011,
+    "ringsFeet": [
+     [
+      [
+       259.7557612575988,
+       551.3436342322193
+      ],
+      [
+       260.13626549801535,
+       546.99072355161
+      ],
+      [
+       260.5611544506241,
+       547.0278646877455
+      ],
+      [
+       260.1806408534966,
+       551.3808824077062
+      ]
+     ]
+    ],
+    "capFeet": [
+     [
+      260.13626549801535,
+      546.99072355161
+     ],
+     [
+      260.5611544506241,
+      547.0278646877455
+     ]
+    ]
+   },
+   "target": {
+    "nativeElementId": 1522023,
+    "ringsFeet": [
+     [
+      [
+       260.1042031313828,
+       546.9879208599499
+      ],
+      [
+       260.1184881837426,
+       546.8245020320235
+      ],
+      [
+       260.60874466752193,
+       546.8673571891028
+      ],
+      [
+       260.5944596151622,
+       547.0307760170293
+      ]
+     ]
+    ],
+    "faceFeet": [
+     [
+      260.5944596151622,
+      547.0307760170293
+     ],
+     [
+      260.1042031313828,
+      546.9879208599499
+     ]
+    ]
+   },
+   "contactMode": "original-free-cap",
+   "evidenceSha256": "6cbc06efffe222eb4f9fccf1983f17d7cc5b880681dfaa79d7c72ff7e47738b8",
+   "notes": "Review F1 (Floor 1) numerical seam between 09-242 and 09-244/09-246 in native-region:1450417:170. Exact production-derived positive gap mask only; original physical bodies, door portals, access and routing unchanged. Provisional extracted contact: revisit required.",
+   "assumption": {
+    "kind": "provisional-extracted-native-contact",
+    "revisitRequired": true
+   }
+  }
+ ],
+ "localImpact": [
+  {
+   "id": "review-f1-proposed:original-free-cap:1522001-1522002:1450417:1:9",
+   "contactMode": "original-free-cap",
+   "source": 1522001,
+   "target": 1522002,
+   "maskAreaSqFt": 1.7466625729463837e-14,
+   "parts": [
+    {
+     "areaSqFt": 772.9323300648123,
+     "labels": [
+      "09-242",
+      "09-244",
+      "09-246"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "review-f1-proposed:original-free-cap:1522011-1522023:1450417:2:21",
+   "contactMode": "original-free-cap",
+   "source": 1522011,
+   "target": 1522023,
+   "maskAreaSqFt": 2.013766076469141e-14,
+   "parts": [
+    {
+     "areaSqFt": 772.9323300648124,
+     "labels": [
+      "09-242",
+      "09-244",
+      "09-246"
+     ]
+    }
+   ]
+  }
+ ],
+ "levelDerive": [
+  {
+   "levelId": 1450417,
+   "regionCountBefore": 297,
+   "regionCountAfter": 300,
+   "singletonsBefore": 37,
+   "singletonsAfter": 41,
+   "lostSingletons": [],
+   "changedSingletons": [],
+   "gainedSingletons": [
+    {
+     "key": "rm-1450417-f66d65d929f0",
+     "number": "09-205",
+     "regionId": "native-region:1450417:30",
+     "areaSqFt": 153.22956123675937
+    },
+    {
+     "key": "rm-1450417-f66679d929ea",
+     "number": "09-204",
+     "regionId": "native-region:1450417:37",
+     "areaSqFt": 78.31147271634737
+    },
+    {
+     "key": "rm-1450417-d2aa1029eb36",
+     "number": "09-279-A",
+     "regionId": "native-region:1450417:204",
+     "areaSqFt": 31.378292137052647
+    },
+    {
+     "key": "rm-1450417-d2952c29eb24",
+     "number": "09-278",
+     "regionId": "native-region:1450417:205",
+     "areaSqFt": 157.97392162487301
+    }
+   ],
+   "watch": [
+    {
+     "regionId": "native-region:1450417:170",
+     "after": [
+      {
+       "id": "native-region:1450417:171",
+       "areaSqFt": 772.9323300648123,
+       "labels": [
+        "09-242",
+        "09-244",
+        "09-246"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1450417:201",
+     "after": [
+      {
+       "id": "native-region:1450417:202",
+       "areaSqFt": 297.3172542195925,
+       "labels": [
+        "09-282",
+        "09-280"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1450417:203",
+     "after": [
+      {
+       "id": "native-region:1450417:204",
+       "areaSqFt": 31.378292137052647,
+       "labels": [
+        "09-279-A"
+       ]
+      },
+      {
+       "id": "native-region:1450417:205",
+       "areaSqFt": 157.97392162487301,
+       "labels": [
+        "09-278"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1450417:222",
+     "after": [
+      {
+       "id": "native-region:1450417:225",
+       "areaSqFt": 1098.2925614817327,
+       "labels": [
+        "09-252",
+        "09-254",
+        "09-256",
+        "09-250"
+       ]
+      }
+     ]
+    },
+    {
+     "regionId": "native-region:1450417:30",
+     "after": [
+      {
+       "id": "native-region:1450417:30",
+       "areaSqFt": 153.22956123675937,
+       "labels": [
+        "09-205"
+       ]
+      },
+      {
+       "id": "native-region:1450417:37",
+       "areaSqFt": 78.31147271634737,
+       "labels": [
+        "09-204"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "application": "Append these descriptors (status applied) to nativeSelectionContactRepairs in both source rooms and prepared dataset, preserving the existing collection; regenerate native mapping/display. Selection-only: no physical wall, door, route or access change."
+}
