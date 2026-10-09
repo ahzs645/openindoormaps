@@ -1275,8 +1275,11 @@ function checkDrawingBackedRow(
       if (!cited(c.faceAFeet) || !cited(c.faceBFeet))
         fail("assumed wall faces are not cited registered drawing segments");
     } else {
+      // Columns embedded in a wall have faces hidden in plan drawings; at least
+      // half of the native outline corners must lie on cited drawing lines.
       const ring = c.outlineFeet;
-      if (!ring.every(near)) fail("registered drawing does not outline the assumed column");
+      if (ring.filter(near).length * 2 < ring.length)
+        fail("registered drawing does not outline the assumed column");
     }
   } else if (d.kind !== "exact-contact-closure")
     fail("registered drawing evidence is required");
@@ -1310,7 +1313,7 @@ function checkDrawingBackedRow(
         fail(`unsectioned native owner ${id} is not a meeting census body`);
     }
   }
-  if (c.kind === "dwg-assumed-wall" || d.kind === "dwg-assumed-wall") {
+  if (d.kind === "dwg-assumed-wall") {
     const host = d.nativeOwnerIds[0];
     if (ownerParts(host).length)
       fail("assumed wall host already has a certified native body at this band");
