@@ -1,0 +1,225 @@
+{
+ "status": "proposed",
+ "levelId": 402367,
+ "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+ "productionModuleSha256": {
+  "native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "native-door-boundary-closures.ts": "32829153d79367e04f14ff986df5752b2b88690de9b68f40973555112c3290f9"
+ },
+ "validation": {
+  "stage1File": "evidence/validation-402367.json",
+  "stage1Sha256": "d70229e4c3b1da10ad521fe0190275bd5cb97423ea75bacf5e2e2e0ca23c88e2",
+  "physicalFile": "evidence/validation-physical-402367.json",
+  "physicalSha256": "4ab4d938c12b26d43077902b70a74e8fb4672bce3c2feebe6df12b7f1ac1a037",
+  "finalDeriveFile": "evidence/after-all-derive-402367.json",
+  "finalDeriveSha256": "c7bfb16d03cd4eee8bdb98b68d0fee867f2caafc84b8667751d1dfa59663d848",
+  "lostNamedSingletons": [],
+  "gainedSingletons": 93
+ },
+ "application": "NOT applied. Apply only through the owning pipeline agent: append to source + prepared descriptors, regenerate circulation/mapping/display, re-verify singletons.",
+ "format": "openindoormaps-f34-proposal",
+ "family": "reviewedAreaPartitions (selection only)",
+ "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a",
+ "evidenceFile": "evidence/residual-gates-402367.json",
+ "checks": "snapReviewedAreaPartitionPoints + checkReviewedAreaPartition + deriveNativeAreas(previewPartitionIds)",
+ "geometryBindingNote": "geometrySha256 is bound to the current physical geometry WITHOUT the proposed continuation walls; if continuations are applied first, rebind with reviewedAreaPartitionGeometrySha256.",
+ "collection": {
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "partitions": [
+   {
+    "id": "f34-logical-gap:402367:2362195-1016714:-94.7566:247.0501",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      -94.75662097127844,
+      247.05010534061648
+     ],
+     [
+      -94.67459997390311,
+      247.05010534061648
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 25.0 mm gap #2362195/#1016714 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.082021 ft gap between exact native faces #2362195 and #1016714 in native-region:402367:28; sides [[\"04-437\"],[\"04-438\"]]; registered DWG wall lines at gate 1. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      2362195,
+      1016714
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.082021 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   },
+   {
+    "id": "f34-logical-gap:402367:1070641-1069304:58.9872:-141.9522",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      58.987241576417865,
+      -141.95217192589328
+     ],
+     [
+      59.60779072350709,
+      -141.95217192589328
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 189.1 mm gap #1070641/#1069304 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.620549 ft gap between exact native faces #1070641 and #1069304 in native-region:402367:270; sides [[\"03-S303\"],[\"03-3045\",\"03-3046\",\"03-3046B\"]]; registered DWG wall lines at gate 3. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      1070627,
+      1069304
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.620549 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   },
+   {
+    "id": "f34-logical-gap:402367:1503790-1504011:48.3625:471.1627",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      48.36246118677813,
+      471.1627228036575
+     ],
+     [
+      48.36246118677813,
+      471.32676479840813
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 50.0 mm gap #1503790/#1504011 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.164042 ft gap between exact native faces #1503790 and #1504011 in native-region:402367:345; sides [[\"08-410\"],[\"08-406\"]]; registered DWG wall lines at gate 5. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      1503781,
+      1504011
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.164042 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   },
+   {
+    "id": "f34-logical-gap:402367:407402-1072023:94.2673:-149.5637",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      94.26729777830876,
+      -149.56372048232365
+     ],
+     [
+      94.10207097274335,
+      -149.56372048232365
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 50.4 mm gap #407402/#1072023 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.165227 ft gap between exact native faces #407402 and #1072023 in native-region:402367:504; sides [[\"03-3034\"],[\"03-3043\"]]; registered DWG wall lines at gate 2. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      407402,
+      1072023
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.165227 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   },
+   {
+    "id": "f34-logical-gap:402367:518079-1065394:190.6763:206.6142",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      190.67629599350062,
+      206.61418877486958
+     ],
+     [
+      190.44842480230884,
+      206.7565784984284
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 81.9 mm gap #518079/#1065394 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.268701 ft gap between exact native faces #518079 and #1065394 in native-region:402367:705; sides [[\"05-494\"],[\"05-483\"]]; registered DWG wall lines at gate 1. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      518079,
+      1065394
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.268701 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   }
+  ]
+ },
+ "notRecommended": [
+  {
+   "partition": {
+    "id": "f34-logical-gap:402367:2131262-501975:-65.7015:305.8739",
+    "levelId": 402367,
+    "elevationFeet": 34.120734908136484,
+    "geometrySha256": "ec5492857826effc232ce744e1ca0d1e739b76731b7b01c243d2c4eb9f368123",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      -65.70147088465525,
+      305.8739242382545
+     ],
+     [
+      -65.70147088465525,
+      305.9477431358923
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 22.5 mm gap #2131262/#501975 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.073819 ft gap between exact native faces #2131262 and #501975 in native-region:402367:5; sides [[\"04-402\",\"04-423\",\"04-444\"],[\"04-430\"]]; registered DWG wall lines at gate 0. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      2131262,
+      501975
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.073819 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   },
+   "reason": "Separates two circulation segments only (04-402/04-423 vs 04-430); no registered DWG line across the gate. Kept for transparency; do not apply."
+  }
+ ]
+}
