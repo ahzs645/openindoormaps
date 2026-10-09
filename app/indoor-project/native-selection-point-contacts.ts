@@ -27,7 +27,7 @@ const samePoint = (a: NativeRationalPoint, b: NativeRationalPoint) =>
   a[1].n === b[1].n &&
   a[1].d === b[1].d;
 const openRing = (r: Ring): Ring =>
-  r.length > 1 && samePoint(r[0], r.at(-1)) ? r.slice(0, -1) : r;
+  r.length > 1 && samePoint(r[0], r[r.length - 1]) ? r.slice(0, -1) : r;
 /** Twice the signed area numerator/denominator (exact). */
 function signedArea2(r: Ring): Rational {
   let n = 0n,
@@ -183,7 +183,7 @@ export function splitNativeSelectionPointContacts(
   const out: NativeRationalParts = [];
   for (const part of parts) {
     const rings = part.map(openRing);
-    const closed = part.map((r) => r.length > 1 && samePoint(r[0], r.at(-1)));
+    const closed = part.map((r) => r.length > 1 && samePoint(r[0], r[r.length - 1]));
     const seen = new Set<string>();
     let repeated = false;
     for (const r of rings) {
