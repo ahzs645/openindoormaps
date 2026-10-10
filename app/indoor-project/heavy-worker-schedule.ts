@@ -10,10 +10,15 @@
  * one heavy worker while the other kind is busy.
  *
  * It only orders work; it never changes what a worker computes. */
-export type HeavyJob = "floor" | "route" | "warmup";
+export type HeavyJob = "floor" | "route" | "warmup" | "teardown";
 
 export class HeavyWorkerSchedule {
-  private counts: Record<HeavyJob, number> = { floor: 0, route: 0, warmup: 0 };
+  private counts: Record<HeavyJob, number> = {
+    floor: 0,
+    route: 0,
+    warmup: 0,
+    teardown: 0,
+  };
   private listeners = new Set<() => void>();
   busy(kind: HeavyJob) {
     return this.counts[kind] > 0;
@@ -68,7 +73,10 @@ export function floorPreparationReady(
   schedule: HeavyWorkerSchedule,
   freshDatasetClone: boolean,
 ) {
-  return () => !freshDatasetClone || !schedule.busy("route");
+  // Never allocate a floor beside a worker that is still being torn down.
+  return () =>
+    !schedule.busy("teardown") &&
+    (!freshDatasetClone || !schedule.busy("route"));
 }
 /** A user route request that must clone the dataset into a fresh route worker
  * waits for floor preparation; one to a resident route worker does not. */
@@ -76,7 +84,9 @@ export function routeRequestReady(
   schedule: HeavyWorkerSchedule,
   freshDatasetClone: boolean,
 ) {
-  return () => !freshDatasetClone || !schedule.busy("floor");
+  return () =>
+    !freshDatasetClone ||
+    (!schedule.busy("floor") && !schedule.busy("teardown"));
 }
 
 export type WarmupRun = {
@@ -163,7 +173,7 @@ export function scheduleRouteWarmup(
       }
       return;
     }
-    if (schedule.busy("floor")) {
+    if (schedule.busy("floor") || schedule.busy("teardown")) {
       cancelSettle();
       return;
     }
@@ -228,4 +238,106 @@ export function releaseWhenOthersStart(
   return schedule.subscribe(() => {
     if (idle() && others.some((kind) => schedule.busy(kind))) release();
   });
+}
+
+/* ---------------------------------------------------------------------------
+ * Worker teardown tracking.
+ *
+ * Worker.terminate() returns at once, but Chromium only forcibly stops a busy
+ * worker after a grace period (measured: its Web Lock was released 2.0 s after
+ * terminate() for a synthetic busy loop; the UNBC route warmup was still
+ * allocating 5 s after terminate()). Its heap stays in the shared renderer
+ * budget until then, so new heavy allocations must wait for actual teardown.
+ * A heavy worker holds a Web Lock named after itself for its whole life; the
+ * lock is released only when the worker context is destroyed.
+ * ------------------------------------------------------------------------- */
+export const HEAVY_WORKER_PREFIX = "oim-heavy-";
+let workerSequence = 0;
+/** Unique worker name; pass as `new Worker(url, { type: "module", name })`. */
+export function heavyWorkerName(kind: string) {
+  const random = Math.random().toString(36).slice(2, 10);
+  return `${HEAVY_WORKER_PREFIX}${kind}-${++workerSequence}-${random}`;
+}
+type LockManagerLike = {
+  request: (name: string, callback: () => unknown) => Promise<unknown>;
+};
+const lockManager = (): LockManagerLike | undefined =>
+  (
+    globalThis.navigator as
+      | (Navigator & { locks?: LockManagerLike })
+      | undefined
+  )?.locks;
+/** Worker side: hold this worker's lifetime lock (no-op without a heavy name
+ * or without Web Locks). Call once at module start. */
+export function holdHeavyWorkerLifetimeLock(
+  scope: { name?: string } = globalThis as { name?: string },
+  locks: LockManagerLike | undefined = lockManager(),
+) {
+  const name = scope.name;
+  if (!name?.startsWith(HEAVY_WORKER_PREFIX) || !locks) return false;
+  void locks.request(name, () => new Promise(() => {})).catch(() => {});
+  return true;
+}
+export type TeardownOptions = {
+  locks?: LockManagerLike;
+  /** Upper bound if the lock never resolves. */
+  timeoutMs?: number;
+  /** Fixed wait when Web Locks are unavailable. */
+  fallbackMs?: number;
+  /** Extra wait after the lock is free: the context is gone then, but a
+   * multi-GB heap was measured to leave the renderer only 6–8 s after
+   * terminate() (lock released at about 2 s). */
+  releaseMs?: number;
+  setTimer?: (run: () => void, ms: number) => unknown;
+  clearTimer?: (timer: unknown) => void;
+};
+/** Main side: mark a terminated heavy worker as still tearing down until its
+ * lifetime lock is free (or a bounded fallback elapses). */
+export function trackHeavyWorkerTeardown(
+  schedule: HeavyWorkerSchedule,
+  name: string,
+  options: TeardownOptions = {},
+) {
+  const locks = "locks" in options ? options.locks : lockManager();
+  const setTimer =
+    options.setTimer ?? ((run: () => void, ms: number) => setTimeout(run, ms));
+  const clearTimer =
+    options.clearTimer ??
+    ((timer: unknown) => clearTimeout(timer as ReturnType<typeof setTimeout>));
+  const release = schedule.begin("teardown");
+  let timer: unknown;
+  const finish = () => {
+    if (timer !== undefined) clearTimer(timer);
+    timer = undefined;
+    release();
+  };
+  if (!locks) {
+    timer = setTimer(finish, options.fallbackMs ?? 9000);
+    return;
+  }
+  timer = setTimer(finish, options.timeoutMs ?? 30000);
+  const released = () => {
+    if (timer !== undefined) clearTimer(timer);
+    const releaseMs = options.releaseMs ?? 6000;
+    timer = releaseMs > 0 ? setTimer(finish, releaseMs) : undefined;
+    if (releaseMs <= 0) finish();
+  };
+  locks.request(name, () => released()).catch(finish);
+}
+/** Wrap a heavy worker so terminate() is followed by teardown tracking. */
+export function trackedHeavyWorker<W extends { terminate(): void }>(
+  schedule: HeavyWorkerSchedule,
+  name: string,
+  worker: W,
+  options?: TeardownOptions,
+): W {
+  let terminated = false;
+  const terminate = worker.terminate.bind(worker);
+  worker.terminate = () => {
+    terminate();
+    if (terminated) return;
+    terminated = true;
+    trackHeavyWorkerTeardown(schedule, name, options);
+  };
+  return worker;
 }

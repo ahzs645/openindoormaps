@@ -4,9 +4,11 @@ import type { RouteCalculation, RouteRequest } from "./route-calculation";
 import { RouteWorkerClient } from "./route-worker-client";
 import { floorDiagnostic } from "./floor-diagnostics";
 import {
+  heavyWorkerName,
   heavyWorkerSchedule,
   routeRequestReady,
   scheduleRouteWarmup,
+  trackedHeavyWorker,
 } from "./heavy-worker-schedule";
 
 export function useProjectRoute(
@@ -17,12 +19,18 @@ export function useProjectRoute(
 ) {
   const [client] = useState(
     () =>
-      new RouteWorkerClient(
-        () =>
+      new RouteWorkerClient(() => {
+        // Named so its teardown can be observed (see heavy-worker-schedule).
+        const name = heavyWorkerName("route");
+        return trackedHeavyWorker(
+          heavyWorkerSchedule,
+          name,
           new Worker(new URL("route-calculation.worker.ts", import.meta.url), {
             type: "module",
+            name,
           }),
-      ),
+        );
+      }),
   );
   const [result, setResult] = useState<{
     data: IndoorDataset;

@@ -10,8 +10,10 @@ import {
 import { floorDiagnostic } from "./floor-diagnostics";
 import {
   floorPreparationReady,
+  heavyWorkerName,
   heavyWorkerSchedule,
   releaseWhenOthersStart,
+  trackedHeavyWorker,
 } from "./heavy-worker-schedule";
 
 export function usePreparedFloor(
@@ -25,13 +27,23 @@ export function usePreparedFloor(
 ) {
   const [client] = useState(
     () =>
-      new FloorWorkerClient(() =>
-        bridgeFloorDisplayWorker(
-          new Worker(new URL("floor-presentation.worker.ts", import.meta.url), {
-            type: "module",
-          }),
-        ),
-      ),
+      new FloorWorkerClient(() => {
+        // Named so its teardown can be observed (see heavy-worker-schedule).
+        const name = heavyWorkerName("floor");
+        return bridgeFloorDisplayWorker(
+          trackedHeavyWorker(
+            heavyWorkerSchedule,
+            name,
+            new Worker(
+              new URL("floor-presentation.worker.ts", import.meta.url),
+              {
+                type: "module",
+                name,
+              },
+            ),
+          ),
+        );
+      }),
   );
   const key = floorClientKey(levels, building, options, transport);
   const [attempt, retry] = useState(0);
@@ -82,15 +94,17 @@ export function usePreparedFloor(
     let request: ReturnType<FloorWorkerClient["request"]> | undefined;
     let release = () => {};
     const fresh = !(client.hasResidentWorker() && sentData.current === data);
+    // Mark floor preparation active first, so background route work yields
+    // (terminates) now; the request itself is posted only once that worker
+    // has actually been torn down and no conflicting dataset clone is busy.
+    release = heavyWorkerSchedule.begin("floor");
+    pending.current = true;
     const send = () => {
-      // Marks floor preparation active first, so a background route warmup
-      // yields (terminates) before this request allocates in the worker.
-      release = heavyWorkerSchedule.begin("floor");
-      pending.current = true;
       floorDiagnostic("floor-main:request", {
         levels: levels.length,
         freshDatasetClone: fresh,
         routeBusy: heavyWorkerSchedule.busy("route"),
+        waitedMs: performance.now() - started,
       });
       request = client.request(data, levels, building, options, transport);
       sentData.current = data;

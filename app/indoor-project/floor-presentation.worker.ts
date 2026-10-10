@@ -1,3 +1,4 @@
+import { holdHeavyWorkerLifetimeLock } from "./heavy-worker-schedule";
 import type { NativeExploreResult } from "./native-explore";
 import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import { deriveNativeExplore } from "./native-explore";
@@ -39,6 +40,9 @@ const scope = globalThis as unknown as {
       | { requestId: number; diagnostic: FloorDiagnosticEntry },
   ) => void;
 };
+// Released only when this worker context is destroyed: lets the UI wait for
+// actual teardown after terminate() before allocating another heavy worker.
+holdHeavyWorkerLifetimeLock();
 let data: IndoorDataset | undefined;
 const memoryCostBytes = createFloorMemoryCostQuery();
 const preparedFloor = createPreparedFloorCache(

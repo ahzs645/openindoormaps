@@ -392,3 +392,100 @@ test("the warmup waits for floor work to stay idle for the gate period", () => {
   assert.equal(runs.length, 1, "starts after an idle gate period");
   warmup.dispose();
 });
+
+test("terminated heavy workers block new heavy allocations until their lifetime lock is free", async () => {
+  const {
+    holdHeavyWorkerLifetimeLock,
+    heavyWorkerName,
+    trackedHeavyWorker,
+    trackHeavyWorkerTeardown,
+  } = await import("../../app/indoor-project/heavy-worker-schedule");
+  // A minimal lock manager: a request waits until the holder releases.
+  const held = new Map<string, () => void>();
+  const waiting = new Map<string, (() => void)[]>();
+  const locks = {
+    request(name: string, callback: () => unknown) {
+      if (!held.has(name)) {
+        let release!: () => void;
+        const done = new Promise<void>((r) => (release = r));
+        held.set(name, release);
+        return Promise.resolve(callback()).then(() => done);
+      }
+      return new Promise((resolve) => {
+        const queue = waiting.get(name) ?? [];
+        queue.push(() => resolve(callback()));
+        waiting.set(name, queue);
+      });
+    },
+  };
+  const destroy = (name: string) => {
+    held.delete(name);
+    for (const run of waiting.get(name) ?? []) run();
+    waiting.delete(name);
+  };
+  const schedule = new HeavyWorkerSchedule();
+  const name = heavyWorkerName("route");
+  assert.match(name, /^oim-heavy-route-/);
+  assert.notEqual(heavyWorkerName("route"), name, "names are unique");
+  assert.equal(holdHeavyWorkerLifetimeLock({ name }, locks), true);
+  assert.equal(holdHeavyWorkerLifetimeLock({ name: "other" }, locks), false);
+  let terminations = 0;
+  const releaseTimers: (() => void)[] = [];
+  const worker = trackedHeavyWorker(
+    schedule,
+    name,
+    { terminate: () => terminations++ },
+    {
+      locks,
+      timeoutMs: 60000,
+      releaseMs: 6000,
+      setTimer: (run, ms) => {
+        if (ms === 6000) releaseTimers.push(run);
+        return 1;
+      },
+      clearTimer: () => {},
+    },
+  );
+  worker.terminate();
+  worker.terminate();
+  assert.equal(terminations, 2, "terminate itself still runs");
+  assert(schedule.busy("teardown"), "teardown pending after terminate()");
+  assert.equal(floorPreparationReady(schedule, false)(), false);
+  assert.equal(routeRequestReady(schedule, true)(), false);
+  let posted = 0;
+  schedule.when(floorPreparationReady(schedule, false), () => posted++);
+  assert.equal(posted, 0, "floor request waits for the old worker to die");
+  destroy(name); // the worker context is destroyed: its lock is released
+  await flush();
+  assert(schedule.busy("teardown"), "heap release grace after the lock");
+  assert.equal(posted, 0);
+  releaseTimers[0]();
+  assert.equal(schedule.busy("teardown"), false);
+  assert.equal(posted, 1);
+  // Without Web Locks a bounded fallback wait is used.
+  const timers: (() => void)[] = [];
+  trackHeavyWorkerTeardown(schedule, "oim-heavy-x", {
+    locks: undefined,
+    setTimer: (run) => timers.push(run),
+    clearTimer: () => {},
+  });
+  assert(schedule.busy("teardown"));
+  timers[0]();
+  assert.equal(schedule.busy("teardown"), false);
+});
+
+test("a warmup does not start while a worker is still being torn down", () => {
+  const schedule = new HeavyWorkerSchedule();
+  const { runs, run } = controllableWarmups();
+  const teardown = schedule.begin("teardown");
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    { onReady: () => {}, onError: assert.fail },
+    noGate,
+  );
+  assert.equal(runs.length, 0);
+  teardown();
+  assert.equal(runs.length, 1);
+  warmup.dispose();
+});
