@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { IndoorDataset } from "./contract";
 import type { RouteCalculation, RouteRequest } from "./route-calculation";
 import { RouteWorkerClient } from "./route-worker-client";
+import { floorDiagnostic } from "./floor-diagnostics";
 import {
   heavyWorkerSchedule,
   routeRequestReady,
@@ -37,6 +38,21 @@ export function useProjectRoute(
     error?: string;
   }>();
   useEffect(() => () => client.dispose(), [client]);
+  // Floor preparation never runs beside background route work: stop any
+  // warmup the worker is still computing (including one orphaned by an
+  // effect cleanup) unless a user route request is active.
+  useEffect(
+    () =>
+      heavyWorkerSchedule.subscribe(() => {
+        if (
+          heavyWorkerSchedule.busy("floor") &&
+          !heavyWorkerSchedule.busy("route") &&
+          client.abandonBackgroundWarmup()
+        )
+          floorDiagnostic("route:warmup-stopped-for-floor");
+      }),
+    [client],
+  );
   useEffect(() => {
     client.resetData(data);
     setResult(undefined);
@@ -51,6 +67,9 @@ export function useProjectRoute(
     const warmup = scheduleRouteWarmup(
       heavyWorkerSchedule,
       () => {
+        floorDiagnostic("route:warmup-start", {
+          freshDatasetClone: !client.hasResidentData(data),
+        });
         preparation = client.request(data, "", "", mode);
         const own = preparation;
         return {
@@ -61,11 +80,13 @@ export function useProjectRoute(
       },
       {
         onReady: () => {
+          floorDiagnostic("route:warmup-ready");
           if (active) setPreparation({ data, mode });
         },
         // The worker was released for floor preparation; routes are cold
         // again until the restarted warmup completes.
         onAbandoned: () => {
+          floorDiagnostic("route:released-for-floor");
           if (active) setPreparation(undefined);
         },
         releaseIdle: () => {
@@ -117,6 +138,7 @@ export function useProjectRoute(
       routeRequestReady(heavyWorkerSchedule, !client.hasResidentData(data)),
       () => {
         release = heavyWorkerSchedule.begin("route");
+        floorDiagnostic("route:request", { destination: !!end });
         request = client.request(data, start, end, mode);
         void request.promise.then(release, release);
         track(request);

@@ -84,6 +84,20 @@ export type WarmupRun = {
   /** Terminate the warmup's worker (only while no user request took it over). */
   abandon: () => void;
 };
+export type WarmupIdleGate = {
+  ms: number;
+  setTimer: (run: () => void, ms: number) => unknown;
+  clearTimer: (timer: unknown) => void;
+};
+/** Floor preparation must stay idle this long before a warmup starts. A
+ * project import mounts the floor shortly after the route hook; starting a
+ * warmup in that gap and terminating it during its dataset clone was
+ * observed to leave the worker running (2.2–2.8 GB) in Chromium 141. */
+export const DEFAULT_WARMUP_IDLE_GATE: WarmupIdleGate = {
+  ms: 5000,
+  setTimer: (run, ms) => setTimeout(run, ms),
+  clearTimer: (timer) => clearTimeout(timer as ReturnType<typeof setTimeout>),
+};
 /** Background route warmup that yields to floor preparation.
  *
  * - Starts only while no floor preparation is active.
@@ -103,7 +117,17 @@ export function scheduleRouteWarmup(
     /** Terminate an idle warm route worker; false when there is none. */
     releaseIdle?: () => boolean;
   },
+  /** Floor preparation must stay idle this long before a warmup starts. A
+   * project import mounts the floor shortly after the route hook; starting a
+   * warmup in that gap and terminating it during its dataset clone was
+   * observed to leave the worker running (2.2–2.8 GB) in Chromium 141. */
+  idleGate: WarmupIdleGate = DEFAULT_WARMUP_IDLE_GATE,
 ) {
+  let settleTimer: unknown;
+  const cancelSettle = () => {
+    if (settleTimer !== undefined) idleGate.clearTimer(settleTimer);
+    settleTimer = undefined;
+  };
   let state: "idle" | "running" | "done" = "idle";
   let failed = false;
   let current: (WarmupRun & { release: () => void; id: number }) | undefined;
@@ -139,7 +163,19 @@ export function scheduleRouteWarmup(
       }
       return;
     }
-    if (schedule.busy("floor")) return;
+    if (schedule.busy("floor")) {
+      cancelSettle();
+      return;
+    }
+    if (idleGate.ms > 0 && settleTimer !== "elapsed") {
+      if (settleTimer === undefined)
+        settleTimer = idleGate.setTimer(() => {
+          settleTimer = "elapsed";
+          tick();
+        }, idleGate.ms);
+      return;
+    }
+    settleTimer = undefined;
     state = "running";
     const id = ++sequence;
     const release = schedule.begin("warmup");
@@ -173,6 +209,7 @@ export function scheduleRouteWarmup(
     state: () => state,
     dispose() {
       disposed = true;
+      if (settleTimer !== "elapsed") cancelSettle();
       unsubscribe();
       settle();
     },

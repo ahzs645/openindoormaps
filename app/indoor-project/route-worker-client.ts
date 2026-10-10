@@ -25,11 +25,23 @@ export class RouteWorkerClient {
   private worker?: RouteWorker;
   private workerData?: IndoorDataset;
   private pending?: Pending;
+  /** Id of a background warmup (no endpoints) the worker is still computing,
+   * even after its caller stopped waiting for it (effect cleanup). */
+  private warmingId?: number;
   private sequence = 0;
   constructor(private readonly factory: () => RouteWorker) {}
   /** Scalar: does a live worker already hold this dataset snapshot? */
   hasResidentData(data: IndoorDataset) {
     return !!this.worker && this.workerData === data;
+  }
+  /** Terminate the worker if its only work is a background warmup (pending
+   * or orphaned by an effect cleanup). A user route request keeps it.
+   * Returns whether a worker was stopped. */
+  abandonBackgroundWarmup() {
+    if (this.warmingId === undefined) return false;
+    if (this.pending && !(this.pending.id === this.warmingId)) return false;
+    this.stop();
+    return true;
   }
   /** Imports/clears may leave no route endpoints. Release the previous cloned
    * graph immediately, rather than retaining it until another route is requested. */
@@ -44,6 +56,7 @@ export class RouteWorkerClient {
   ) {
     const pending = this.pending;
     this.pending = undefined;
+    this.warmingId = undefined;
     this.worker?.terminate();
     this.worker = undefined;
     this.workerData = undefined;
@@ -77,6 +90,8 @@ export class RouteWorkerClient {
         const worker = this.factory();
         this.worker = worker;
         worker.onmessage = ({ data: response }) => {
+          if (this.worker === worker && response.requestId === this.warmingId)
+            this.warmingId = undefined;
           const pending = this.pending;
           if (
             this.worker !== worker ||
@@ -103,6 +118,7 @@ export class RouteWorkerClient {
             this.stop(new Error("Route calculation returned unreadable data."));
         };
       }
+      if (!start && !end) this.warmingId = id;
       this.worker.postMessage({
         requestId: id,
         data: this.workerData === data ? undefined : routeWorkerDataset(data),

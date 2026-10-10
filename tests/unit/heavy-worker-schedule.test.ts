@@ -11,6 +11,7 @@ import { RouteWorkerClient } from "../../app/indoor-project/route-worker-client"
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 
 const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
+const noGate = { ms: 0, setTimer: () => 0, clearTimer: () => {} };
 const abortError = () =>
   new DOMException("Route calculation cancelled.", "AbortError");
 function controllableWarmups() {
@@ -43,10 +44,15 @@ test("warmup waits while a floor is preparing, then starts once", async () => {
   const { runs, run } = controllableWarmups();
   const releaseFloor = schedule.begin("floor");
   let ready = 0;
-  const warmup = scheduleRouteWarmup(schedule, run, {
-    onReady: () => ready++,
-    onError: assert.fail,
-  });
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    {
+      onReady: () => ready++,
+      onError: assert.fail,
+    },
+    noGate,
+  );
   assert.equal(runs.length, 0, "no warmup during floor preparation");
   releaseFloor();
   assert.equal(runs.length, 1);
@@ -69,11 +75,16 @@ test("floor preparation terminates a background-only warmup, which restarts when
   const { runs, run } = controllableWarmups();
   let ready = 0,
     abandoned = 0;
-  const warmup = scheduleRouteWarmup(schedule, run, {
-    onReady: () => ready++,
-    onError: assert.fail,
-    onAbandoned: () => abandoned++,
-  });
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    {
+      onReady: () => ready++,
+      onError: assert.fail,
+      onAbandoned: () => abandoned++,
+    },
+    noGate,
+  );
   assert.equal(runs.length, 1);
   const releaseFloor = schedule.begin("floor");
   assert.equal(runs[0].abandoned, true, "worker terminated before floor work");
@@ -92,10 +103,15 @@ test("floor preparation terminates a background-only warmup, which restarts when
 test("a user route request keeps the warmup's worker; floor work does not terminate it", async () => {
   const schedule = new HeavyWorkerSchedule();
   const { runs, run } = controllableWarmups();
-  const warmup = scheduleRouteWarmup(schedule, run, {
-    onReady: () => {},
-    onError: assert.fail,
-  });
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    {
+      onReady: () => {},
+      onError: assert.fail,
+    },
+    noGate,
+  );
   const releaseRoute = schedule.begin("route");
   const releaseFloor = schedule.begin("floor");
   assert.equal(runs[0].abandoned, false);
@@ -145,10 +161,15 @@ test("disposal releases tokens and ignores late warmup replies; releases are ide
   const schedule = new HeavyWorkerSchedule();
   const { runs, run } = controllableWarmups();
   let ready = 0;
-  const warmup = scheduleRouteWarmup(schedule, run, {
-    onReady: () => ready++,
-    onError: assert.fail,
-  });
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    {
+      onReady: () => ready++,
+      onError: assert.fail,
+    },
+    noGate,
+  );
   assert(schedule.busy("warmup"));
   warmup.dispose();
   assert.equal(schedule.busy("warmup"), false);
@@ -170,10 +191,15 @@ test("a warmup failure is reported once and not retried in a loop", async () => 
   const schedule = new HeavyWorkerSchedule();
   const { runs, run } = controllableWarmups();
   const errors: unknown[] = [];
-  const warmup = scheduleRouteWarmup(schedule, run, {
-    onReady: assert.fail,
-    onError: (e) => errors.push(e),
-  });
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    {
+      onReady: assert.fail,
+      onError: (e) => errors.push(e),
+    },
+    noGate,
+  );
   runs[0].reject(new Error("graph failed"));
   await flush();
   assert.equal(errors.length, 1);
@@ -264,6 +290,7 @@ test("a completed warm route worker is released for floor preparation and re-war
         return had;
       },
     },
+    noGate,
   );
   runs[0].resolve();
   await flush();
@@ -283,5 +310,85 @@ test("a completed warm route worker is released for floor preparation and re-war
   runs[1].resolve();
   await flush();
   assert.equal(ready, 2);
+  warmup.dispose();
+});
+
+test("an orphaned background warmup (effect cleanup) can still be stopped for floor work; a user request cannot", async () => {
+  type Msg = { requestId: number };
+  const workers: {
+    terminated: boolean;
+    messages: Msg[];
+    onmessage: ((e: MessageEvent) => void) | null;
+  }[] = [];
+  const client = new RouteWorkerClient(() => {
+    const w = {
+      onmessage: null as ((e: MessageEvent) => void) | null,
+      onerror: null,
+      onmessageerror: null,
+      terminated: false,
+      messages: [] as Msg[],
+      postMessage(m: Msg) {
+        w.messages.push(m);
+      },
+      terminate() {
+        w.terminated = true;
+      },
+    };
+    workers.push(w);
+    return w as never;
+  });
+  const data = {} as IndoorDataset;
+  const warm = client.request(data, "", "", "public");
+  const superseded = assert.rejects(warm.promise, { name: "AbortError" });
+  warm.cancel(true); // cleanup keeps the graph work running in the worker
+  await superseded;
+  assert.equal(workers[0].terminated, false);
+  assert.equal(client.abandonBackgroundWarmup(), true, "orphan stopped");
+  assert.equal(workers[0].terminated, true);
+  // A user request queued behind a warmup keeps the worker.
+  client.request(data, "", "", "public").promise.catch(() => {});
+  const user = client.request(data, "room-a", "room-b", "public");
+  user.promise.catch(() => {});
+  assert.equal(client.abandonBackgroundWarmup(), false);
+  assert.equal(workers[1].terminated, false);
+  // Once the worker has answered the warmup, there is nothing to abandon.
+  workers[1].onmessage?.({
+    data: { requestId: workers[1].messages[0].requestId, value: {} },
+  } as MessageEvent);
+  user.cancel();
+  assert.equal(client.abandonBackgroundWarmup(), false);
+  client.dispose();
+});
+
+test("the warmup waits for floor work to stay idle for the gate period", () => {
+  const schedule = new HeavyWorkerSchedule();
+  const { runs, run } = controllableWarmups();
+  const timers: { run: () => void; cleared: boolean }[] = [];
+  const gate = {
+    ms: 5000,
+    setTimer: (fn: () => void) => {
+      const t = { run: fn, cleared: false };
+      timers.push(t);
+      return t;
+    },
+    clearTimer: (t: unknown) => {
+      (t as { cleared: boolean }).cleared = true;
+    },
+  };
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    { onReady: () => {}, onError: assert.fail },
+    gate,
+  );
+  assert.equal(runs.length, 0, "not immediately after data arrives");
+  assert.equal(timers.length, 1);
+  // The map mounts and prepares its first floor within the gate period.
+  const floor = schedule.begin("floor");
+  assert.equal(timers[0].cleared, true);
+  floor();
+  assert.equal(timers.length, 2, "gate restarts after the floor is ready");
+  timers[1].run();
+  assert.equal(runs.length, 1, "starts after an idle gate period");
   warmup.dispose();
 });
