@@ -27,6 +27,10 @@ export class RouteWorkerClient {
   private pending?: Pending;
   private sequence = 0;
   constructor(private readonly factory: () => RouteWorker) {}
+  /** Scalar: does a live worker already hold this dataset snapshot? */
+  hasResidentData(data: IndoorDataset) {
+    return !!this.worker && this.workerData === data;
+  }
   /** Imports/clears may leave no route endpoints. Release the previous cloned
    * graph immediately, rather than retaining it until another route is requested. */
   resetData(data: IndoorDataset | undefined) {
