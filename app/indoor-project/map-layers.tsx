@@ -7,6 +7,7 @@ import { nativeStairZoomStyle } from "./native-stair-style";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { isVisitorHallway } from "./place-discovery";
 import { stableWallGeometry } from "./stable-wall-geometry";
+import { singleExtrusionWalls } from "./native-wall-level-owner";
 import { precisionWallLayer } from "./precision-wall-layer";
 import {
   floorDiagnostic,
@@ -235,21 +236,28 @@ function PreparedProjectMapLayers({
       data.windowDisplay?.mode === "native" && !roomThree
         ? prepared.presentation.nativeWindowPlanWalls
         : undefined;
+    const source = review
+      ? (planWalls?.exposed ?? display.exposedWalls)
+      : simplifyGeometry
+        ? (planWalls?.simple ?? simpleWalls)
+        : showStructures
+          ? (planWalls?.exposed ?? display.exposedWalls)
+          : (planWalls?.visitor ?? visitorWalls);
     return timeFloorStage(
       "layers:stable-wall-geometry",
       () =>
         stableWallGeometry(
-          review
-            ? (planWalls?.exposed ?? display.exposedWalls)
-            : simplifyGeometry
-              ? (planWalls?.simple ?? simpleWalls)
-              : showStructures
-                ? (planWalls?.exposed ?? display.exposedWalls)
-                : (planWalls?.visitor ?? visitorWalls),
+          // Native wall paint is one plan section per native level; in a
+          // combined scope the same physical wall would otherwise be lifted
+          // to every level it crosses. Extrusion views only: the 2D map and
+          // the prepared worker result are untouched.
+          roomThree ? singleExtrusionWalls(data, levelIds, source) : source,
         ),
       (walls) => ({ features: walls.features.length }),
     );
   }, [
+    data,
+    levelIds,
     data.windowDisplay?.mode,
     roomThree,
     prepared.presentation.nativeWindowPlanWalls,
