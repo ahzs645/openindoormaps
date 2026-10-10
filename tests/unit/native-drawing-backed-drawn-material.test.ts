@@ -454,3 +454,31 @@ test("an extension must be the wall's own end face swept along its own axis", ()
   });
   assert.throws(() => index(skew.data), /own end face/);
 });
+
+test("two parallel lines with other registered linework between them are not solid drawn material", () => {
+  const lines: Seg[] = [
+    [
+      [0, -0.25],
+      [3, -0.25],
+    ],
+    [
+      [0, 0.25],
+      [3, 0.25],
+    ],
+    [
+      [2.04, -0.2],
+      [2.04, 0.2],
+    ],
+  ];
+  const { data, boundaryReference } = fixture({ wallLines: lines });
+  // the row cites only the outer pair (all three lines are cited entities, the third in no band)
+  assert.ok(index(data).partsAt(0.1).length > 0);
+  assert.throws(
+    () =>
+      verifyDrawingBackedDrawingEvidence(
+        data.nativeProvisionalCornerSeals,
+        boundaryReference,
+      ),
+    /not solid drawn material: registered line wallSegments#2/,
+  );
+});
