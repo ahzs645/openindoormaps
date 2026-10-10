@@ -18,6 +18,11 @@ import {
   shortEngine,
   warnStalePreparedDisplay,
 } from "./prepared-display-status";
+import { geoJsonStatistics } from "./geojson-statistics";
+import {
+  largeIndoorProject,
+  shouldRecreateMapForScope,
+} from "./heavy-worker-schedule";
 import {
   emptyPreparedFloorSources,
   removePreparedCustomLayers,
@@ -31,7 +36,7 @@ import {
   type ExpressionSpecification,
 } from "maplibre-gl";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
-import { useMap } from "~/components/map/map";
+import { useMap, useMapRecreate } from "~/components/map/map";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
 import { hospitalFollowPadding } from "~/utils/hospital-follow-padding";
@@ -76,6 +81,11 @@ const collection = <T extends Geometry>(
   type: "FeatureCollection",
   features,
 });
+/** Stable empty collection for sources hidden in the current mode. */
+const HIDDEN_SOURCE: FeatureCollection = {
+  type: "FeatureCollection",
+  features: [],
+};
 function PreparedProjectMapLayers({
   prepared,
   basemapVisibility,
@@ -250,7 +260,9 @@ function PreparedProjectMapLayers({
     simpleWalls,
     visitorWalls,
   ]);
-  const layers = useMemo(() => {
+  // Whole-floor collections that do not depend on selection, labels or the
+  // route keep their identity, so a click does not re-send them to MapLibre.
+  const staticLayers = useMemo(() => {
     const {
       records,
       areas,
@@ -259,7 +271,6 @@ function PreparedProjectMapLayers({
       doorFootprints,
       doorMarkers,
       lowerRooms,
-      labels,
     } = display;
     const keys = new Set(records.map((r) => r.key));
     const edges = data.edges.filter(
@@ -309,32 +320,6 @@ function PreparedProjectMapLayers({
           },
         })),
     ]);
-    const routeLines = collection(
-      (route?.paths ?? [])
-        .filter((path) => path.levelIds.some((id) => levelIds.includes(id)))
-        .filter(
-          (path) =>
-            !relativeHeights &&
-            (!(roomThree || nativeModel) ||
-              !path.edgeIds.some((id) =>
-                route?.edges.some(
-                  (e) =>
-                    e.id === id &&
-                    data.rampDisplay?.ramps.some(
-                      (r) => r.nativeElementId === e.nativeElementId,
-                    ),
-                ),
-              )),
-        )
-        .map((path, i) => ({
-          type: "Feature",
-          properties: { id: `route:${i}`, centered: path.centered },
-          geometry: {
-            type: "LineString",
-            coordinates: path.pointsFeet.map((p) => geographicPoint(data, p)),
-          },
-        })),
-    );
     return {
       areas: !review && simplifyGeometry ? simpleAreas : areas,
       walls,
@@ -351,17 +336,14 @@ function PreparedProjectMapLayers({
       exposedWalls,
       lines,
       portals,
-      routeLines,
       records,
       doorFootprints:
         !review && simplifyGeometry ? simpleDoors : doorFootprints,
       lowerRooms,
-      labels: review ? labels : visitorLabels,
     };
   }, [
     data,
     levelIds,
-    route,
     display,
     review,
     exposedWalls,
@@ -369,13 +351,47 @@ function PreparedProjectMapLayers({
     simpleRooms,
     simpleAreas,
     simpleDoors,
-    visitorLabels,
     nativeStairKeys,
     prepared.stairSurroundKeys,
-    roomThree,
-    nativeModel,
-    relativeHeights,
   ]);
+  const routeLines = useMemo(
+    () =>
+      collection(
+        (route?.paths ?? [])
+          .filter((path) => path.levelIds.some((id) => levelIds.includes(id)))
+          .filter(
+            (path) =>
+              !relativeHeights &&
+              (!(roomThree || nativeModel) ||
+                !path.edgeIds.some((id) =>
+                  route?.edges.some(
+                    (e) =>
+                      e.id === id &&
+                      data.rampDisplay?.ramps.some(
+                        (r) => r.nativeElementId === e.nativeElementId,
+                      ),
+                  ),
+                )),
+          )
+          .map((path, i) => ({
+            type: "Feature",
+            properties: { id: `route:${i}`, centered: path.centered },
+            geometry: {
+              type: "LineString",
+              coordinates: path.pointsFeet.map((p) => geographicPoint(data, p)),
+            },
+          })),
+      ),
+    [route, levelIds, relativeHeights, roomThree, nativeModel, data],
+  );
+  const layers = useMemo(
+    () => ({
+      ...staticLayers,
+      routeLines,
+      labels: review ? display.labels : visitorLabels,
+    }),
+    [staticLayers, routeLines, review, display.labels, visitorLabels],
+  );
   const stairCutAreas = useMemo(
     () =>
       visitorRoomSurfaces(
@@ -473,9 +489,21 @@ function PreparedProjectMapLayers({
       ];
     // Build aperture data once, rather than repeating both polygon cuts for
     // every source. Unchanged sources need no worker upload on selection changes.
+    // Sources whose every layer is hidden in this mode get an empty
+    // collection (identical pixels); MapLibre's worker otherwise clones and
+    // tiles the whole floor's walls for nothing. Visibility rules mirror the
+    // setLayoutProperty calls below ("project-wall-fill" is review 2D only;
+    // "project-exposed-wall-fill" visitor 2D without native material;
+    // "project-wall-boxes" 3D review/source model).
+    const wallsShown = review && !roomThree;
+    const exposedWallsShown =
+      (!review &&
+        !roomThree &&
+        !(nativeFloorLevels.length && data.nativeMaterialSections)) ||
+      (roomThree && (review || nativeModel));
     const values = [
       stairCutAreas,
-      layers.walls,
+      wallsShown ? layers.walls : HIDDEN_SOURCE,
       layers.lines,
       layers.portals,
       layers.routeLines,
@@ -483,7 +511,7 @@ function PreparedProjectMapLayers({
       layers.lowerRooms,
       layers.labels,
       stairCutRooms,
-      layers.exposedWalls,
+      exposedWallsShown ? layers.exposedWalls : HIDDEN_SOURCE,
       nativeStairs,
       prepared.selectionAreas,
       areaPerimeters,
@@ -496,10 +524,20 @@ function PreparedProjectMapLayers({
         const uploaded = uploadedSources.current.get(id);
         if (uploaded?.source !== source || uploaded.value !== value) {
           uploads++;
+          if (effectStarted)
+            floorDiagnostic("source:upload", {
+              id,
+              ...geoJsonStatistics(mapDrawingFeatures(value)),
+            });
           source.setData(mapDrawingFeatures(value));
         }
       } else {
         uploads++;
+        if (effectStarted)
+          floorDiagnostic("source:upload", {
+            id,
+            ...geoJsonStatistics(mapDrawingFeatures(value)),
+          });
         map.addSource(id, {
           type: "geojson",
           data: mapDrawingFeatures(value),
@@ -1026,17 +1064,35 @@ function PreparedProjectMapLayers({
         ),
         "project-network-line",
       );
-    if (!map.getSource("project-native-windows"))
-      map.addSource("project-native-windows", {
-        type: "geojson",
-        data: mapDrawingFeatures(windows.features),
-        tolerance: 0,
-        maxzoom: 22,
+    {
+      // Re-send the window collection only when it changed (as for the
+      // floor sources above), not on every selection or label change.
+      const windowSource = map.getSource("project-native-windows") as
+        | GeoJSONSource
+        | undefined;
+      const uploaded = uploadedSources.current.get("project-native-windows");
+      if (!windowSource)
+        map.addSource("project-native-windows", {
+          type: "geojson",
+          data: mapDrawingFeatures(windows.features),
+          tolerance: 0,
+          maxzoom: 22,
+        });
+      else if (
+        uploaded?.source !== windowSource ||
+        uploaded.value !== windows.features
+      )
+        windowSource.setData(mapDrawingFeatures(windows.features));
+      if (effectStarted && uploaded?.value !== windows.features)
+        floorDiagnostic("source:upload", {
+          id: "project-native-windows",
+          ...geoJsonStatistics(mapDrawingFeatures(windows.features)),
+        });
+      uploadedSources.current.set("project-native-windows", {
+        source: map.getSource("project-native-windows") as GeoJSONSource,
+        value: windows.features,
       });
-    else
-      (map.getSource("project-native-windows") as GeoJSONSource).setData(
-        mapDrawingFeatures(windows.features),
-      );
+    }
     if (!map.getLayer("project-native-window-plan"))
       map.addLayer(
         {
@@ -1887,6 +1943,34 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
     { nativeDisplay: needsNativeDisplay },
   );
   const displayScope = props.levelIds.join(",");
+  // Large projects: a scope/mode switch recreates the map behind the loading
+  // overlay, so MapLibre's tile workers release the previous floor's GeoJSON
+  // (measured at 2.1–2.9 GB in one worker) before the next floor decodes.
+  // Camera, selection, floor, mode and all React state are kept.
+  const recreateMap = useMapRecreate();
+  const shownScope = useRef<string>();
+  const scopeKey = `${props.building}|${displayScope}|${props.roomThree}`;
+  useEffect(() => {
+    if (value) {
+      shownScope.current = scopeKey;
+      return;
+    }
+    if (
+      shouldRecreateMapForScope(
+        shownScope.current,
+        scopeKey,
+        !value && !error,
+        largeIndoorProject(props.data),
+      ) &&
+      recreateMap?.()
+    ) {
+      shownScope.current = undefined;
+      floorDiagnostic("map:recreated-for-scope", {
+        levels: props.levelIds.length,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, error, scopeKey, recreateMap]);
   useEffect(() => {
     const nativeDisplay = preparedFloorNativeDisplay(value);
     props.onNativeDisplay?.({

@@ -24,6 +24,8 @@ import {
   type ReactNode,
 } from "react";
 import { useTheme } from "~/hooks/use-theme";
+import { mapCameraSnapshot, type MapCameraSnapshot } from "./map-camera";
+export { mapCameraSnapshot, type MapCameraSnapshot } from "./map-camera";
 import { cn } from "~/lib/utils";
 import "~/maplibre.css";
 import { registerBasemapSymbolImages } from "~/utils/basemap-symbol-images";
@@ -39,6 +41,8 @@ type MapContextValue = {
   map: maplibregl.Map | null;
   isLoaded: boolean;
   setContainerElement: (element: HTMLDivElement | null) => void;
+  /** Replace the MapLibre instance, keeping the camera (see useMapRecreate). */
+  recreate: () => boolean;
 };
 
 const MapContext = createContext<MapContextValue | null>(null);
@@ -53,6 +57,14 @@ export function useMap() {
     map: context.map,
     isLoaded: context.isLoaded,
   };
+}
+
+/** Recreate the map instance (camera preserved). Removing the last map
+ * terminates MapLibre's tile-worker pool, releasing every GeoJSON source copy
+ * and tile index it held; children stay mounted and re-add their layers.
+ * Intended only for full-screen loading states, never normal interaction. */
+export function useMapRecreate() {
+  return useContext(MapContext)?.recreate;
 }
 
 function useMapInternal() {
@@ -80,6 +92,8 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
   const currentStyleRef = useRef<MapStyleOption | null>(null);
   const mapOptionsRef = useRef(options);
   const styleTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [generation, setGeneration] = useState(0);
+  const cameraRef = useRef<MapCameraSnapshot | null>(null);
 
   const clearStyleTimeout = useCallback(() => {
     if (!styleTimeoutRef.current) return;
@@ -100,6 +114,7 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
 
     const map = new maplibregl.Map({
       ...mapOptionsRef.current,
+      ...(cameraRef.current ?? {}),
       container: containerElement,
       style: initialStyle,
     });
@@ -133,9 +148,15 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
       setHasLoadedStyle(false);
       setMapInstance(null);
     };
-    // The MapLibre instance should be created once for the mounted container.
+    // The MapLibre instance is created once per container and generation.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerElement]);
+  }, [containerElement, generation]);
+  const recreate = useCallback(() => {
+    if (!mapInstance) return false;
+    cameraRef.current = mapCameraSnapshot(mapInstance);
+    setGeneration((value) => value + 1);
+    return true;
+  }, [mapInstance]);
 
   useEffect(() => {
     if (!mapInstance) return;
@@ -154,8 +175,9 @@ export function MapProvider({ children, options, styles }: MapProviderProps) {
       map: mapInstance,
       isLoaded: Boolean(mapInstance && hasLoaded && hasLoadedStyle),
       setContainerElement,
+      recreate,
     }),
-    [hasLoaded, hasLoadedStyle, mapInstance],
+    [hasLoaded, hasLoadedStyle, mapInstance, recreate],
   );
 
   return (

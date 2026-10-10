@@ -80,6 +80,26 @@ export function automaticRouteWarmup(data: {
   );
 }
 
+/** Same generic scale test as the route warmup: projects whose prepared
+ * floors and map sources are large enough to need memory-saving transitions. */
+export function largeIndoorProject(data: {
+  nodes?: readonly unknown[];
+  edges?: readonly unknown[];
+}) {
+  return !automaticRouteWarmup(data);
+}
+/** Recreate the map (terminating MapLibre's tile workers) only while a new
+ * floor scope is loading behind the full-screen preparation overlay, after a
+ * different scope was shown, for large projects. Never during interaction. */
+export function shouldRecreateMapForScope(
+  shownScope: string | undefined,
+  nextScope: string,
+  loading: boolean,
+  large: boolean,
+) {
+  return loading && large && !!shownScope && shownScope !== nextScope;
+}
+
 /** One schedule per page realm. */
 export const heavyWorkerSchedule = new HeavyWorkerSchedule();
 

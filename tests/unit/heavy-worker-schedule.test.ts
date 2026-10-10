@@ -523,3 +523,51 @@ test("a warmup never starts while a user route request is building the graph", (
   assert.equal(runs.length, 1, "then a (cheap, resident) warmup completes it");
   warmup.dispose();
 });
+
+test("the map is recreated only behind a loading overlay after a different large scope was shown", async () => {
+  const { shouldRecreateMapForScope, largeIndoorProject } = await import(
+    "../../app/indoor-project/heavy-worker-schedule"
+  );
+  const { mapCameraSnapshot } = await import(
+    "../../app/components/map/map-camera"
+  );
+  assert.equal(shouldRecreateMapForScope("a", "b", true, true), true);
+  assert.equal(
+    shouldRecreateMapForScope(undefined, "b", true, true),
+    false,
+    "initial load after import",
+  );
+  assert.equal(
+    shouldRecreateMapForScope("b", "b", true, true),
+    false,
+    "same scope reload",
+  );
+  assert.equal(
+    shouldRecreateMapForScope("a", "b", false, true),
+    false,
+    "never while a floor is shown (normal interaction)",
+  );
+  assert.equal(shouldRecreateMapForScope("a", "b", true, false), false);
+  const items = (n: number) => Array.from({ length: n }, () => ({}));
+  assert.equal(
+    largeIndoorProject({ nodes: items(5341), edges: items(1) }),
+    true,
+  );
+  assert.equal(
+    largeIndoorProject({ nodes: items(10), edges: items(10) }),
+    false,
+  );
+  // The recreated map starts from exactly the old camera.
+  const camera = mapCameraSnapshot({
+    getCenter: () => ({ lng: -122.81, lat: 53.89 }),
+    getZoom: () => 19.25,
+    getBearing: () => 17,
+    getPitch: () => 55,
+  });
+  assert.deepEqual(camera, {
+    center: [-122.81, 53.89],
+    zoom: 19.25,
+    bearing: 17,
+    pitch: 55,
+  });
+});
