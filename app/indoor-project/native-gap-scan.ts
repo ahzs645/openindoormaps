@@ -2,6 +2,7 @@ import pc from "polygon-clipping";
 import type { IndoorDataset } from "./contract";
 import { deriveNativeAreas, pointInNativeArea } from "./native-area-review";
 import { roomLabelPoint } from "./map-edits";
+import { nativePhysicalLevelRecords } from "./native-physical-level-records";
 
 type Point = [number, number];
 type Rings = Point[][];
@@ -86,7 +87,7 @@ export async function scanNativeGaps(data: IndoorDataset, levelId: number, optio
   // Always trace the whole native level with measured doors closed; temporary
   // previews, crops and global gap closure must not contaminate a diagnostic.
   const base = await deriveNativeAreas(data, levelId, { maxGapFeet: 0, mode: "connected" });
-  const records = data.records.filter(r => r.levelId === levelId).map(r => ({ key: r.key, point: roomLabelPoint(data, r.key) }));
+  const records = nativePhysicalLevelRecords(data, levelId).map(r => ({ key: r.key, point: roomLabelPoint(data, r.key) }));
   const walls = data.walls.filter(w => w.levelId === levelId && !w.approximate && !w.reviewPatchId && w.kind === "wall");
   const part = (ringsFeet: Rings): GapScanPart => ({ ringsFeet, areaSquareFeet: area(ringsFeet), roomKeys: records.filter(r => pointInNativeArea(r.point, ringsFeet)).map(r => r.key) });
   const findings: GapScanFinding[] = [];

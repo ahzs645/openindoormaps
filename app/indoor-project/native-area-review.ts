@@ -78,6 +78,11 @@ import { nativeCirculationCells } from "./native-circulation";
 import { nativeExactHallwayDisplayParts } from "./native-hallway-display";
 import { nativeSelectionBoolean } from "./native-selection-boolean";
 import { associateNativeRooms } from "./native-explore-associations";
+import {
+  NATIVE_PHYSICAL_LEVEL_RECORDS_VERSION,
+  nativePhysicalLevelRecords,
+  nativeRecordPhysicalLevelId,
+} from "./native-physical-level-records";
 type Point = [number, number];
 type Rings = Point[][];
 export const nativeAreaKinds = {
@@ -611,8 +616,10 @@ export async function nativeAreaGeometrySha256(
       holes,
       fixtures,
       ...(data.indoorExclusions ? [data.indoorExclusions] : []),
-      data.records
-        .filter((r) => r.levelId === levelId)
+      ...(data.nativePhysicalLevels && data.walkingSupport
+        ? [NATIVE_PHYSICAL_LEVEL_RECORDS_VERSION]
+        : []),
+      nativePhysicalLevelRecords(data, levelId)
         .map((r) => [
           r.key,
           r.ringsFeet,
@@ -985,7 +992,9 @@ export async function deriveNativeAreas(
     : undefined;
   if (options.roomKey) {
     const room = data.records.find(
-      (r) => r.key === options.roomKey && r.levelId === levelId,
+      (r) =>
+        r.key === options.roomKey &&
+        nativeRecordPhysicalLevelId(data, r) === levelId,
     );
     if (!room) throw new Error("Choose a place on this native floor.");
     const prepared =
@@ -1033,7 +1042,9 @@ export async function deriveNativeAreas(
     }
   }
   const geometrySha256 = await nativeAreaGeometrySha256(data, levelId, options);
-  const records = data.records.filter((r) => r.levelId === levelId);
+  // Rooms are labelled on the physical level carrying their native floor;
+  // levelId stays their directory/display identity.
+  const records = nativePhysicalLevelRecords(data, levelId);
   const containedDisplays = remainingExact?.map((part) =>
     createNativeContainedDisplay([part]),
   );

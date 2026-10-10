@@ -1,4 +1,8 @@
 import {
+  nativePhysicalLevelRecords,
+  nativeRecordPhysicalLevelId,
+} from "./native-physical-level-records";
+import {
   nativeRationalOverlay,
   NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
   type NativeRationalParts,
@@ -238,7 +242,10 @@ export async function deriveNativeExplore(
     if (
       building !== "all" &&
       !data.records.some(
-        (r) => r.levelId === levelId && r.building === building,
+        (r) =>
+          (r.levelId === levelId ||
+            nativeRecordPhysicalLevelId(data, r) === levelId) &&
+          r.building === building,
       ) &&
       !lectureOwners.some(
         (o) => o.room.building === building && o.levelIds.includes(levelId),
@@ -317,7 +324,7 @@ export async function deriveNativeExplore(
         ? traced.regions
         : associateNativeRooms(
             traced.regions,
-            data.records.filter((r) => r.levelId === levelId),
+            nativePhysicalLevelRecords(data, levelId),
             data,
           )) {
         const lectureRoomKey = !originalRegion.roomKeys.length
@@ -656,6 +663,7 @@ export function nativeExplorePlaces(
     (r) =>
       keys.has(r.key) &&
       (r.levelId === region.levelId ||
+        nativeRecordPhysicalLevelId(data, r) === region.levelId ||
         (region.lectureRoomKey === r.key &&
           nativeLectureFloorOwner(
             nativeLectureFloorOwners(data),

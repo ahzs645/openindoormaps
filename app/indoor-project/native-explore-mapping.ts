@@ -1,4 +1,9 @@
 import {
+  NATIVE_PHYSICAL_LEVEL_RECORDS_VERSION,
+  nativePhysicalLevelRecords,
+  nativeRecordPhysicalLevelId,
+} from "./native-physical-level-records";
+import {
   Rational,
   nativeRationalOverlay,
   nativeRationalScalarToIEEE,
@@ -139,6 +144,7 @@ export async function nativeExploreDatasetGeometrySha256(
       : []),
     ...(data.nativePhysicalLevels
       ? [
+          ...(data.walkingSupport ? [NATIVE_PHYSICAL_LEVEL_RECORDS_VERSION] : []),
           data.nativePhysicalLevels,
           data.floors.map((floor) => [floor.id, floor.levelIds]),
         ]
@@ -225,7 +231,7 @@ export async function compileNativeExploreMapping(
           ? result.regions
           : associateNativeRooms(
               result.regions,
-              data.records.filter((r) => r.levelId === level.id),
+              nativePhysicalLevelRecords(data, level.id),
               data,
             ),
         warningCount: result.warnings.length,
@@ -323,7 +329,7 @@ export async function publishNativeExploreMapping(
               ...r,
               displayPartsFeet: nativeAreaDisplayParts(r.ringsFeet),
             })),
-            data.records.filter((r) => r.levelId === level.levelId),
+            nativePhysicalLevelRecords(data, level.levelId),
             data,
           );
         }
@@ -563,7 +569,9 @@ async function validatePublishedNativeExploreMappingUncachedInProcess(
         r.roomKeys.some(
           (k) =>
             !data.records.some(
-              (p) => p.key === k && p.levelId === level.levelId,
+              (p) =>
+                p.key === k &&
+                nativeRecordPhysicalLevelId(data, p) === level.levelId,
             ),
         ) ||
         ![r.areaSquareFeet, r.exposedFloorEdgeFeet].every(
