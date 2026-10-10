@@ -11,6 +11,7 @@ const { join, resolve } = path;
 import { readProjectPackage } from "../../../reviter/lib/reviter/project-package.ts";
 import { prepareIndoorDataset } from "../../../reviter/lib/reviter/indoor-pipeline.ts";
 import { createNativeParallelCompiler } from "../../../reviter/scripts/indoor/parallel-native-circulation.ts";
+import { attachNativeCirculationResumable } from "../../../reviter/scripts/indoor/native-landing-approaches.ts";
 import type { ConvertResult } from "../../../reviter/lib/reviter/types.ts";
 import { validatePublishedNativeExploreMapping } from "../../app/indoor-project/native-explore-mapping";
 import { nativeSourceStairPhysicalEvidence } from "../../app/indoor-project/native-source-stair-material";
@@ -24,20 +25,22 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--checkpoint-dir directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--landing-workers N] [--checkpoint-dir directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
   const flag = workerArgs[i]!,
     value = workerArgs[i + 1];
   if (
-    !["--native-workers", "--checkpoint-dir"].includes(flag) ||
+    !["--native-workers", "--landing-workers", "--checkpoint-dir"].includes(
+      flag,
+    ) ||
     workerOptions.has(flag) ||
     !value ||
     value.startsWith("--")
   )
     throw new Error(
-      "Expected unique --native-workers 1|2 and optional --checkpoint-dir directory",
+      "Expected unique --native-workers 1|2, --landing-workers N and optional --checkpoint-dir directory",
     );
   workerOptions.set(flag, value);
 }
@@ -46,8 +49,20 @@ const workerCount = workerOptions.has("--native-workers")
   : undefined;
 if (workerCount !== undefined && workerCount !== 1 && workerCount !== 2)
   throw new Error("--native-workers must be 1 or 2");
-if (workerOptions.has("--checkpoint-dir") && !workerCount)
-  throw new Error("--checkpoint-dir requires --native-workers");
+const landingWorkers = workerOptions.has("--landing-workers")
+  ? Number(workerOptions.get("--landing-workers"))
+  : undefined;
+if (
+  landingWorkers !== undefined &&
+  (!Number.isSafeInteger(landingWorkers) ||
+    landingWorkers < 1 ||
+    landingWorkers > 8)
+)
+  throw new Error("--landing-workers must be an integer 1–8");
+if (workerOptions.has("--checkpoint-dir") && !workerCount && !landingWorkers)
+  throw new Error(
+    "--checkpoint-dir requires --native-workers or --landing-workers",
+  );
 const inputPath = resolve(input),
   cachePath = resolve(nativeCache),
   output = resolve(destination);
@@ -60,6 +75,28 @@ const nativeCirculationCompiler = workerCount
       ),
       onProgress: (message) => console.log(message),
     })
+  : undefined;
+// Without --landing-workers the landing stage runs the unchanged in-process
+// path. With it, pure per-pair results are checkpointed (resumable) and, for
+// N>1, evaluated in worker threads; the ordered replay is identical.
+const nativeLandingApproaches = landingWorkers
+  ? async (
+      model: Parameters<typeof attachNativeCirculationResumable>[0],
+      data: Parameters<typeof attachNativeCirculationResumable>[1],
+      onProgress: (checked: number, total: number, edges: number) => void,
+    ) => {
+      const result = await attachNativeCirculationResumable(model, data, {
+        checkpointDir: resolve(
+          workerOptions.get("--checkpoint-dir") ??
+            join(output, "native-plane-checkpoints"),
+        ),
+        workers: landingWorkers,
+        onProgress,
+        onEvent: (message) => console.log(message),
+      });
+      console.log(JSON.stringify({ landingApproachReceipt: result.receipt }));
+      return { edges: result.edges, diagnostics: result.diagnostics };
+    }
   : undefined;
 const originalBytes = new Uint8Array(await readFile(inputPath));
 const original = await readProjectPackage(originalBytes);
@@ -86,7 +123,11 @@ const dataset = await prepareIndoorDataset(
     if (!message.includes("region") || /region (?:[0-9]*00)\//.test(message))
       console.log(message);
   },
-  { physicalDoorSource: original.indoor, nativeCirculationCompiler },
+  {
+    physicalDoorSource: original.indoor,
+    nativeCirculationCompiler,
+    nativeLandingApproaches,
+  },
 );
 // The compiler hashes hydrated annotations. A portable package binds the exact
 // preserved source entry, whose review companions may use archive wire storage.
@@ -179,7 +220,9 @@ if (
 const masterComparable = structuredClone(master.dataset);
 const compilerComparable = structuredClone(dataset);
 delete masterComparable.nativeExploreMapping;
-delete compilerComparable.nativeExploreMapping;
+// The compiler contract has no mapping field; delete keeps parity explicit.
+delete (compilerComparable as { nativeExploreMapping?: unknown })
+  .nativeExploreMapping;
 assert.equal(
   sha(new TextEncoder().encode(JSON.stringify(masterComparable))),
   sha(new TextEncoder().encode(JSON.stringify(compilerComparable))),
