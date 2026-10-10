@@ -1,9 +1,11 @@
+import * as DMath from "./deterministic-math";
 type XY = [number, number];
 const length = (points: XY[]) =>
   points
     .slice(1)
     .reduce(
-      (sum, p, i) => sum + Math.hypot(p[0] - points[i][0], p[1] - points[i][1]),
+      (sum, p, i) =>
+        sum + DMath.hypot(p[0] - points[i][0], p[1] - points[i][1]),
       0,
     );
 const interpolate = (a: XY, b: XY, t: number): XY => [
@@ -38,7 +40,7 @@ export function centeredJunctions(
       (c[0] - b[0]) / outgoingLength,
       (c[1] - b[1]) / outgoingLength,
     ];
-    const angle = Math.acos(
+    const angle = DMath.acos(
       Math.max(
         -1,
         Math.min(1, incoming[0] * outgoing[0] + incoming[1] * outgoing[1]),
@@ -50,7 +52,7 @@ export function centeredJunctions(
       !directions.some(
         (d) =>
           Math.abs(d[0] * outgoing[0] + d[1] * outgoing[1]) >
-          Math.cos(Math.PI / 180),
+          DMath.cos(Math.PI / 180),
       )
     )
       continue;
@@ -118,7 +120,7 @@ export function centeredJunctions(
           section = crossSection(p, outgoing);
         if (!section || section.width < 3 || section.width > 24) continue;
         error +=
-          Math.hypot(p[0] - section.point[0], p[1] - section.point[1]) /
+          DMath.hypot(p[0] - section.point[0], p[1] - section.point[1]) /
           section.width;
         count++;
       }

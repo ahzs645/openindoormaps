@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   validateNativeSelectionContactRepairs,
   deriveNativeSelectionContactRepairs,
@@ -352,7 +353,7 @@ function manualNativeGap(
           return {
             wall,
             p,
-            distance: Math.hypot(p[0] - point[0], p[1] - point[1]),
+            distance: DMath.hypot(p[0] - point[0], p[1] - point[1]),
           };
         }),
       ),
@@ -366,7 +367,7 @@ function manualNativeGap(
   };
   const a = snap(points[0]),
     b = snap(points[1]);
-  const width = Math.hypot(b.p[0] - a.p[0], b.p[1] - a.p[1]);
+  const width = DMath.hypot(b.p[0] - a.p[0], b.p[1] - a.p[1]);
   if (
     a.wall.nativeElementId === b.wall.nativeElementId ||
     width < 0.02 ||
@@ -379,7 +380,7 @@ function manualNativeGap(
     Math.min(
       ...w.ringsFeet[0].map((p, i) => {
         const q = w.ringsFeet[0][(i + 1) % w.ringsFeet[0].length];
-        return Math.hypot(p[0] - q[0], p[1] - q[1]) || Infinity;
+        return DMath.hypot(p[0] - q[0], p[1] - q[1]) || Infinity;
       }),
     );
   const half = Math.max(
@@ -737,8 +738,8 @@ export async function deriveNativeAreas(
         !doors.some(
           (d) =>
             d.nativeElementId === id &&
-            Number.isFinite(Math.hypot(...d.normalFeet!)) &&
-            Math.hypot(...d.normalFeet!) > 1e-9,
+            Number.isFinite(DMath.hypot(...d.normalFeet!)) &&
+            DMath.hypot(...d.normalFeet!) > 1e-9,
         ),
     )
   )
@@ -1203,8 +1204,8 @@ export async function deriveNativeAreas(
   // the bypass may be a missing partition/join elsewhere in the enclosure.
   const doorChecks: NativeDoorCheck[] = doors.map((door) => {
     if (
-      !Number.isFinite(Math.hypot(...door.normalFeet!)) ||
-      Math.hypot(...door.normalFeet!) < 1e-9
+      !Number.isFinite(DMath.hypot(...door.normalFeet!)) ||
+      DMath.hypot(...door.normalFeet!) < 1e-9
     ) {
       return {
         nativeElementId: door.nativeElementId,
@@ -1214,7 +1215,7 @@ export async function deriveNativeAreas(
       };
     }
     const n = door.normalFeet!,
-      size = Math.hypot(...n),
+      size = DMath.hypot(...n),
       normal: Point = [n[0] / size, n[1] / size],
       tangent: Point = [-normal[1], normal[0]],
       projected = door.footprintFeet!.map((p) => [

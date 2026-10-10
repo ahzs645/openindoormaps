@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { nativeRoomIdentityRings } from "./native-floor-opening-ownership";
 import { validateNativeContainedCellDisplay } from "./native-contained-cell-display";
 import { createNativeExactRoutingAuthority } from "./native-exact-routing-authority";
@@ -872,7 +873,7 @@ export function nativeCirculationWalkBlockers(
         b = edge.pointsFeet[i];
       if (
         data.nativeIndoorEnvelopes &&
-        Math.hypot(...a.map((v, k) => v - b[k]!)) < 1e-8
+        DMath.hypot(...a.map((v, k) => v - b[k]!)) < 1e-8
       ) {
         const cell = edge.nativeCellId && rawCells.get(edge.nativeCellId),
           from = nodes.get(edge.from),
@@ -882,8 +883,8 @@ export function nativeCirculationWalkBlockers(
           !from ||
           !to ||
           from.roomKey !== to.roomKey ||
-          Math.hypot(...from.pointFeet.map((v, k) => v - a[k]!)) > 1e-8 ||
-          Math.hypot(...to.pointFeet.map((v, k) => v - b[k]!)) > 1e-8 ||
+          DMath.hypot(...from.pointFeet.map((v, k) => v - a[k]!)) > 1e-8 ||
+          DMath.hypot(...to.pointFeet.map((v, k) => v - b[k]!)) > 1e-8 ||
           !physicalCellPoint(data, cell, a) ||
           !physicalCellPoint(data, cell, b)
         ) {

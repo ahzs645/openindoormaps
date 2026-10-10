@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import type { IndoorDataset } from "./contract";
 import type { IndoorProject, ProjectRooms } from "./package";
@@ -58,7 +59,7 @@ const point = (p: unknown): p is Point =>
   p.every(
     (n) => typeof n === "number" && Number.isFinite(n) && Math.abs(n) < 1e7,
   );
-const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const distance = (a: Point, b: Point) => DMath.hypot(a[0] - b[0], a[1] - b[1]);
 function closest(p: Point, a: Point, b: Point): Point {
   const dx = b[0] - a[0],
     dy = b[1] - a[1],

@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   nativeSourceStairOwnedTerminal,
   nativeOwnedTerminalPartsForSegment,
@@ -91,7 +92,7 @@ const near = (a: P3, b: P3) => a.every((n, i) => Math.abs(n - b[i]!) < 1e-8);
 const strip = (a: P3, b: P3, width: number): pc.Polygon => {
   const dx = b[0] - a[0],
     dy = b[1] - a[1],
-    d = Math.hypot(dx, dy);
+    d = DMath.hypot(dx, dy);
   if (d < 1e-8) return [];
   const nx = ((-dy / d) * width) / 2,
     ny = ((dx / d) * width) / 2;
@@ -208,7 +209,7 @@ export function validateNativeSourceStairWidth(
         cap.capFeet.some(
           (p) => p.length !== 3 || p.some((n) => !Number.isFinite(n)),
         ) ||
-        Math.hypot(
+        DMath.hypot(
           cap.capFeet[1][0] - cap.capFeet[0][0],
           cap.capFeet[1][1] - cap.capFeet[0][1],
         ) <
@@ -226,7 +227,7 @@ export function validateNativeSourceStairWidth(
       // than borrowing a projected tread to hide an unsupported endpoint.
       const dx = cap.capFeet[1][0] - cap.capFeet[0][0],
         dy = cap.capFeet[1][1] - cap.capFeet[0][1],
-        len = Math.hypot(dx, dy);
+        len = DMath.hypot(dx, dy);
       const a: P3 = [
           cap.pointFeet[0] - (dy / len) * 0.05,
           cap.pointFeet[1] + (dx / len) * 0.05,
@@ -281,7 +282,7 @@ export function validateNativeSourceStairWidth(
       if (
         b[2] < a[2] - 1e-8 ||
         b[2] - a[2] > 1.2 ||
-        Math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-8
+        DMath.hypot(b[0] - a[0], b[1] - a[1]) < 1e-8
       )
         return false;
       const ps = surfaces

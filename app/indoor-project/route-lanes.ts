@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 type XY = [number, number];
 
 /** Search sparse corridor lanes, with direction in the state so short grid
@@ -31,7 +32,7 @@ export function routeLanes(
   );
   const connect = (a: number, b: number, axis: number) => {
     if (!valid(points[a], points[b])) return;
-    const length = Math.hypot(
+    const length = DMath.hypot(
       points[a][0] - points[b][0],
       points[a][1] - points[b][1],
     );

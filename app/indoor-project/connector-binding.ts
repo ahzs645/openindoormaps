@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 type SourceConnectorReview = {
   version: 1;
@@ -65,7 +66,7 @@ export function validateConnectorBinding(
           !Array.isArray(s.pointFeet) ||
           s.pointFeet.length !== 2 ||
           s.pointFeet.some((p) => !Number.isFinite(p)) ||
-          Math.hypot(
+          DMath.hypot(
             node.pointFeet[0] - s.pointFeet[0],
             node.pointFeet[1] - s.pointFeet[1],
           ) > 1.2

@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   nativeRationalOverlay,
   type NativeRationalParts,
@@ -101,7 +102,8 @@ const length = (points: readonly number[][]) =>
   points
     .slice(1)
     .reduce(
-      (sum, p, i) => sum + Math.hypot(p[0] - points[i][0], p[1] - points[i][1]),
+      (sum, p, i) =>
+        sum + DMath.hypot(p[0] - points[i][0], p[1] - points[i][1]),
       0,
     );
 function walkingPathQuality(points: number[][]) {
@@ -110,10 +112,13 @@ function walkingPathQuality(points: number[][]) {
     const a = points[i - 1],
       b = points[i],
       c = points[i + 1];
-    const incoming = Math.atan2(b[1] - a[1], b[0] - a[0]);
-    const outgoing = Math.atan2(c[1] - b[1], c[0] - b[0]);
+    const incoming = DMath.atan2(b[1] - a[1], b[0] - a[0]);
+    const outgoing = DMath.atan2(c[1] - b[1], c[0] - b[0]);
     const delta = Math.abs(
-      Math.atan2(Math.sin(outgoing - incoming), Math.cos(outgoing - incoming)),
+      DMath.atan2(
+        DMath.sin(outgoing - incoming),
+        DMath.cos(outgoing - incoming),
+      ),
     );
     if (delta > (25 * Math.PI) / 180) turns++;
   }
@@ -130,7 +135,7 @@ function splitWalkingGuide(
   for (let i = 1; i < points.length; i++)
     distances.push(
       distances[i - 1] +
-        Math.hypot(
+        DMath.hypot(
           points[i][0] - points[i - 1][0],
           points[i][1] - points[i - 1][1],
         ),
@@ -151,7 +156,7 @@ function splitWalkingGuide(
         Math.min(1, ((anchor[0] - a[0]) * dx + (anchor[1] - a[1]) * dy) / len2),
       );
       const point: XYZ = [a[0] + t * dx, a[1] + t * dy, a[2]];
-      const error = Math.hypot(point[0] - anchor[0], point[1] - anchor[1]);
+      const error = DMath.hypot(point[0] - anchor[0], point[1] - anchor[1]);
       if (!best || error < best.error)
         best = {
           point,
@@ -304,7 +309,7 @@ const interpolate = (a: XY, b: XY, t: number): XY => [
 const validSegment = (a: XY, b: XY, area: WalkableArea) => {
   if (area.exactParts)
     return nativeRationalPathSupported([a, b], area.exactParts);
-  if (Math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-7) return area.contains(a);
+  if (DMath.hypot(b[0] - a[0], b[1] - a[1]) < 1e-7) return area.contains(a);
   const ts = breaks(a, b, area.boundaries, area.boundaryRings);
   return (
     ts.every((t) => area.contains(interpolate(a, b, t))) &&
@@ -349,7 +354,7 @@ function crossingStrip(
     for (const i of indices) {
       const a = out.at(-1)!,
         b = points[i],
-        d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        d = DMath.hypot(b[0] - a[0], b[1] - a[1]);
       if (d < 1e-8) continue;
       if (d >= remaining) {
         out.push([
@@ -377,7 +382,7 @@ function crossingStrip(
   for (let i = 1; i < local.length; i++) {
     const a = local[i - 1],
       b = local[i],
-      d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      d = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     if (d < 1e-8) continue;
     const n: XY = [
       (-(b[1] - a[1]) * width) / (2 * d),
@@ -401,11 +406,11 @@ function axes(walls: Rings[]) {
       for (let i = 0; i < ring.length; i++) {
         const a = ring[i],
           b = ring[(i + 1) % ring.length],
-          weight = Math.hypot(b[0] - a[0], b[1] - a[1]);
+          weight = DMath.hypot(b[0] - a[0], b[1] - a[1]);
         if (weight < 3) continue;
         directions.push({
           angle:
-            ((Math.atan2(b[1] - a[1], b[0] - a[0]) % (Math.PI / 2)) +
+            ((DMath.atan2(b[1] - a[1], b[0] - a[0]) % (Math.PI / 2)) +
               Math.PI / 2) %
             (Math.PI / 2),
           weight,
@@ -415,25 +420,25 @@ function axes(walls: Rings[]) {
     .map((angle) => {
       const nearby = directions.filter(
         (d) =>
-          Math.abs(Math.sin(2 * (d.angle - angle))) < Math.sin(Math.PI / 15),
+          Math.abs(DMath.sin(2 * (d.angle - angle))) < DMath.sin(Math.PI / 15),
       );
       const weight = nearby.reduce((sum, d) => sum + d.weight, 0);
       const x = nearby.reduce(
-        (sum, d) => sum + d.weight * Math.cos(4 * d.angle),
+        (sum, d) => sum + d.weight * DMath.cos(4 * d.angle),
         0,
       );
       const y = nearby.reduce(
-        (sum, d) => sum + d.weight * Math.sin(4 * d.angle),
+        (sum, d) => sum + d.weight * DMath.sin(4 * d.angle),
         0,
       );
-      return { angle: Math.atan2(y, x) / 4, weight };
+      return { angle: DMath.atan2(y, x) / 4, weight };
     })
     .sort((a, b) => b.weight - a.weight);
   const result: number[] = [];
   for (const candidate of candidates)
     if (
       candidate.weight > 0 &&
-      result.every((a) => Math.abs(Math.sin(2 * (a - candidate.angle))) > 0.1)
+      result.every((a) => Math.abs(DMath.sin(2 * (a - candidate.angle))) > 0.1)
     ) {
       result.push(candidate.angle);
       if (result.length === 3) break;
@@ -557,7 +562,7 @@ function doorCoverage(footprint: XY[], edge: IndoorEdge, normal?: XY): Rings {
     axis: XY = [1, 0];
   footprint.forEach((a, i) => {
     const b = footprint[(i + 1) % footprint.length],
-      d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      d = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     if (d > longest) {
       longest = d;
       axis = [(b[0] - a[0]) / d, (b[1] - a[1]) / d];
@@ -986,7 +991,7 @@ function refine(
     // repaired by searching more lanes. Keep their source connection intact.
     if (!free.contains(start) || !free.contains(end))
       return source("unsupported-anchor");
-    const span = Math.hypot(bounds[2] - bounds[0], bounds[3] - bounds[1]) + 1;
+    const span = DMath.hypot(bounds[2] - bounds[0], bounds[3] - bounds[1]) + 1;
     const sourceLength = length(path.pointsFeet);
     const arrival = (id: string) => {
       const node = data.nodes.find((n) => n.id === id);
@@ -1015,7 +1020,7 @@ function refine(
           data.nodes.find((n) => n.id === id)?.kind ?? "",
         ),
       ) &&
-      Math.hypot(end[0] - start[0], end[1] - start[1]) <= 24 &&
+      DMath.hypot(end[0] - start[0], end[1] - start[1]) <= 24 &&
       validSegment(start, end, free)
     )
       candidates.push([start, end]);
@@ -1054,7 +1059,7 @@ function refine(
         : rawAngle;
       const component = (n: number) =>
         preparedCandidate ? Math.round(n * 1e12) / 1e12 : n;
-      const u: XY = [component(Math.cos(angle)), component(Math.sin(angle))],
+      const u: XY = [component(DMath.cos(angle)), component(DMath.sin(angle))],
         v: XY = [-u[1], u[0]];
       const a = centeredPoint(start, u, v, free, span),
         b = centeredPoint(end, u, v, free, span);
@@ -1072,7 +1077,8 @@ function refine(
           ...(arrival(lastId) ? [] : [end]),
         ].filter(
           (p, i, all) =>
-            !i || Math.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
+            !i ||
+            DMath.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
         );
         if (
           !guideOnly &&
@@ -1104,7 +1110,8 @@ function refine(
           ...(arrival(lastId) ? [] : [end]),
         ].filter(
           (p, i, all) =>
-            !i || Math.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
+            !i ||
+            DMath.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
         );
         if (
           points.slice(1).every((p, i) => validSegment(points[i], p, free)) &&
@@ -1151,7 +1158,8 @@ function refine(
         .map<XY>((p) => [p[0], p[1]])
         .filter(
           (p, i, all) =>
-            !i || Math.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
+            !i ||
+            DMath.hypot(p[0] - all[i - 1][0], p[1] - all[i - 1][1]) > 1e-6,
         );
       if (guide.slice(1).every((p, i) => validSegment(guide[i], p, free))) {
         candidates.push(guide);
@@ -1192,7 +1200,7 @@ function refine(
                 [a, elbow, b].filter(
                   (point, i, all) =>
                     !i ||
-                    Math.hypot(
+                    DMath.hypot(
                       point[0] - all[i - 1][0],
                       point[1] - all[i - 1][1],
                     ) > 1e-6,
@@ -1254,7 +1262,7 @@ function refine(
               const parts = [a, elbow, b].filter(
                 (point, i, all) =>
                   !i ||
-                  Math.hypot(
+                  DMath.hypot(
                     point[0] - all[i - 1][0],
                     point[1] - all[i - 1][1],
                   ) > 1e-6,
@@ -1304,8 +1312,8 @@ function refine(
         const a = simplified[i - 1],
           b = simplified[i],
           c = simplified[i + 1];
-        const incoming = Math.hypot(b[0] - a[0], b[1] - a[1]),
-          outgoing = Math.hypot(c[0] - b[0], c[1] - b[1]);
+        const incoming = DMath.hypot(b[0] - a[0], b[1] - a[1]),
+          outgoing = DMath.hypot(c[0] - b[0], c[1] - b[1]);
         // At most one inch: meaningful doorway/stair approaches keep their
         // geometry. A tiny obstacle or floor hole still vetoes the chord.
         if (
@@ -1433,7 +1441,7 @@ function refine(
           v: XY = [b[0] - p[0], b[1] - p[1]];
         return (
           Math.abs(
-            Math.atan2(u[0] * v[1] - u[1] * v[0], u[0] * v[0] + u[1] * v[1]),
+            DMath.atan2(u[0] * v[1] - u[1] * v[0], u[0] * v[0] + u[1] * v[1]),
           ) >
           (25 * Math.PI) / 180
         );
@@ -1567,7 +1575,7 @@ export function centeredRoutePaths(
             })
             .filter(
               (p, j, all) =>
-                !j || Math.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8,
+                !j || DMath.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8,
             );
     const resolved = refine(
       data,
@@ -1769,10 +1777,11 @@ export function centeredRoutePaths(
         const u = [b[0] - a[0], b[1] - a[1]],
           v = [c[0] - b[0], c[1] - b[1]];
         return (
-          Math.hypot(...u) >= 6 &&
-          Math.hypot(...v) >= 6 &&
-          (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(...u) * Math.hypot(...v)) <
-            Math.cos((100 * Math.PI) / 180)
+          DMath.hypot(...u) >= 6 &&
+          DMath.hypot(...v) >= 6 &&
+          (u[0] * v[0] + u[1] * v[1]) /
+            (DMath.hypot(...u) * DMath.hypot(...v)) <
+            DMath.cos((100 * Math.PI) / 180)
         );
       })
     )
@@ -1845,7 +1854,7 @@ export function prepareWalkingGuide(
     ) ||
     [0, path.pointsFeet.length - 1].some(
       (index, j) =>
-        Math.hypot(
+        DMath.hypot(
           ...path.pointsFeet[index].map(
             (v, k) =>
               v - edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],

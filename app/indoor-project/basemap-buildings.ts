@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import polygonClipping from "polygon-clipping";
 import { convertFilter } from "@maplibre/maplibre-gl-style-spec";
 import type { Feature, FeatureCollection, Geometry, Polygon } from "geojson";
@@ -29,7 +30,7 @@ export function validateBasemapExclusionPolygon(points: EditPoint[]) {
   for (let i = 0; i < points.length; i++) {
     const a = points[i],
       b = points[(i + 1) % points.length];
-    if (Math.hypot(a[0] - b[0], a[1] - b[1]) < 0.001)
+    if (DMath.hypot(a[0] - b[0], a[1] - b[1]) < 0.001)
       throw new Error(
         "Polygon corners must be distinct. Undo the last point to adjust it.",
       );

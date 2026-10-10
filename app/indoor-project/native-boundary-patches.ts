@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import {
   validateNativeMaterialSections,
@@ -127,7 +128,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
     ];
     const o = mid(a, b),
       end = mid(c, d);
-    const width = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const width = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     const v: Point = [(b[0] - a[0]) / width, (b[1] - a[1]) / width];
     const u: Point = [-v[1], v[0]];
     if ((end[0] - o[0]) * u[0] + (end[1] - o[1]) * u[1] < 0) {
@@ -165,10 +166,10 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
               (dx * dx + dy * dy || 1),
           ),
         );
-      return Math.hypot(q[0] - x[0] - t * dx, q[1] - x[1] - t * dy);
+      return DMath.hypot(q[0] - x[0] - t * dx, q[1] - x[1] - t * dy);
     };
     const near = (x: Point, y: Point) =>
-      Math.hypot(x[0] - y[0], x[1] - y[1]) <= 1e-6;
+      DMath.hypot(x[0] - y[0], x[1] - y[1]) <= 1e-6;
     const edgeMatch = source.ringsFeet[0].some((q, i) => {
       const next = source.ringsFeet[0][(i + 1) % source.ringsFeet[0].length];
       return (near(a, q) && near(b, next)) || (near(b, q) && near(a, next));
@@ -181,7 +182,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
         width -
           Math.min(
             ...source.ringsFeet[0].map((q, i) =>
-              Math.hypot(
+              DMath.hypot(
                 q[0] - source.ringsFeet[0][(i + 1) % 4][0],
                 q[1] - source.ringsFeet[0][(i + 1) % 4][1],
               ),
@@ -382,8 +383,8 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
             ? pp.map((q) =>
                 rawFar.reduce(
                   (best, p) =>
-                    Math.hypot(p[0] - q[0], p[1] - q[1]) <
-                    Math.hypot(best[0] - q[0], best[1] - q[1])
+                    DMath.hypot(p[0] - q[0], p[1] - q[1]) <
+                    DMath.hypot(best[0] - q[0], best[1] - q[1])
                       ? p
                       : best,
                   rawFar[0] ?? [Infinity, Infinity],
@@ -406,7 +407,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
       if (
         far.some(
           (q, i) =>
-            Math.hypot(q[0] - pp[i][0], q[1] - pp[i][1]) > 0.020001 ||
+            DMath.hypot(q[0] - pp[i][0], q[1] - pp[i][1]) > 0.020001 ||
             q[0] < pp[i][0] - 1e-6 ||
             Math.abs(q[1]) > width / 2 + 1e-6,
         )
@@ -419,7 +420,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
           fy = far[j + 1][1] - far[j][1];
         if (
           Math.abs(ex * fy - ey * fx) >
-          1e-6 * Math.hypot(ex, ey) * Math.hypot(fx, fy)
+          1e-6 * DMath.hypot(ex, ey) * DMath.hypot(fx, fy)
         )
           return false;
       }
@@ -533,7 +534,8 @@ export function validDrawingReconstruction(p: NativeBoundaryPatch): boolean {
     )
   )
     return false;
-  const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const distance = (a: Point, b: Point) =>
+    DMath.hypot(a[0] - b[0], a[1] - b[1]);
   if (q.some((p, i) => distance(p, r[i]) > proof.contactAdaptationFeet + 1e-6))
     return false;
   const lengths = r.map((p, i) => distance(p, r[(i + 1) % 4]));
@@ -651,7 +653,7 @@ export function validAssumedEnclosure(p: NativeBoundaryPatch): boolean {
         return false;
     }
     const lengths = r.map((a, i) =>
-      Math.hypot(a[0] - r[(i + 1) % 4][0], a[1] - r[(i + 1) % 4][1]),
+      DMath.hypot(a[0] - r[(i + 1) % 4][0], a[1] - r[(i + 1) % 4][1]),
     );
     if (
       Math.min(...lengths) < 0.05 ||
@@ -662,7 +664,7 @@ export function validAssumedEnclosure(p: NativeBoundaryPatch): boolean {
     const dx = q[0][0] - r[0][0],
       dy = q[0][1] - r[0][1];
     return (
-      Math.hypot(dx, dy) <= proof.contactAdaptationFeet + 1e-6 &&
+      DMath.hypot(dx, dy) <= proof.contactAdaptationFeet + 1e-6 &&
       q.every(
         (p, i) =>
           Math.abs(p[0] - r[i][0] - dx) < 1e-6 &&
@@ -728,7 +730,7 @@ export function validateNativeBoundaryPatches(
             : 4) ||
         p.ringsFeet[0].some(
           (q, i) =>
-            Math.hypot(
+            DMath.hypot(
               q[0] - p.ringsFeet[0][(i + 1) % p.ringsFeet[0].length][0],
               q[1] - p.ringsFeet[0][(i + 1) % p.ringsFeet[0].length][1],
             ) >
@@ -913,7 +915,7 @@ export function validateCurrentBoundaryContacts(
               const previous = points.get(key) ?? [];
               for (const other of previous)
                 if (
-                  Math.hypot(p[0] - other[0], p[1] - other[1]) >
+                  DMath.hypot(p[0] - other[0], p[1] - other[1]) >
                   4 *
                     Number.EPSILON *
                     Math.max(1, ...p.map(Math.abs), ...other.map(Math.abs))

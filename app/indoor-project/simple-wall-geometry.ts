@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import buffer from "@turf/buffer";
 import polygonClipping from "polygon-clipping";
 import type { FeatureCollection, MultiPolygon } from "geojson";
@@ -267,7 +268,7 @@ export function simpleRoomGeometry(
           for (const mask of nearby) {
             const edges = outer.flatMap((a, i) => {
               const b = outer[(i + 1) % outer.length];
-              return Math.hypot(b[0] - a[0], b[1] - a[1]) >= 4 &&
+              return DMath.hypot(b[0] - a[0], b[1] - a[1]) >= 4 &&
                 overlap(box([a, b]), mask.box, 0.5)
                 ? [{ a, b }]
                 : [];

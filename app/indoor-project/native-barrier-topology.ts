@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 type Point = [number, number];
 export const NATIVE_BARRIER_TOPOLOGY_VERSION = "native-wall-contact-noding-v2";
 type Rings = Point[][];
@@ -109,7 +110,7 @@ export function nativeBarrierTopology(
           const j = pointIds.get(end)!;
           const pair = `${Math.min(i, j)}:${Math.max(i, j)}`;
           if (seen.has(pair)) continue;
-          const distance = Math.hypot(
+          const distance = DMath.hypot(
             vertex.point[0] - end[0],
             vertex.point[1] - end[1],
           );
@@ -129,7 +130,7 @@ export function nativeBarrierTopology(
         !aa.every((i) =>
           bb.every(
             (j) =>
-              Math.hypot(
+              DMath.hypot(
                 vertices[i].point[0] - vertices[j].point[0],
                 vertices[i].point[1] - vertices[j].point[1],
               ) <= numericalJunction,
@@ -177,24 +178,24 @@ export function nativeBarrierTopology(
             );
             const closeEndpoint = [edge.a, edge.b].find(
               (end) =>
-                Math.hypot(point[0] - end[0], point[1] - end[1]) <=
+                DMath.hypot(point[0] - end[0], point[1] - end[1]) <=
                 numericalJunction,
             );
             const anchoredEnd =
               closeEndpoint && (anchors.get(closeEndpoint) ?? closeEndpoint);
             const endpointWithinBound =
               !anchoredEnd ||
-              Math.hypot(
+              DMath.hypot(
                 shared[0] - anchoredEnd[0],
                 shared[1] - anchoredEnd[1],
               ) <= numericalJunction;
             if (
               endpointWithinBound &&
-              Math.hypot(
+              DMath.hypot(
                 point[0] - edge.a[0] - finiteT * dx,
                 point[1] - edge.a[1] - finiteT * dy,
               ) <= numericalJunction &&
-              Math.hypot(
+              DMath.hypot(
                 shared[0] - edge.a[0] - anchoredT * dx,
                 shared[1] - edge.a[1] - anchoredT * dy,
               ) <= numericalJunction
@@ -205,7 +206,7 @@ export function nativeBarrierTopology(
           }
           if (t <= 0 || t >= 1) continue;
           if (
-            Math.hypot(
+            DMath.hypot(
               point[0] - edge.a[0] - t * dx,
               point[1] - edge.a[1] - t * dy,
             ) > contact
@@ -221,7 +222,7 @@ export function nativeBarrierTopology(
               ),
             );
             if (
-              Math.hypot(
+              DMath.hypot(
                 shared[0] - edge.a[0] - sharedT * dx,
                 shared[1] - edge.a[1] - sharedT * dy,
               ) > numericalJunction
@@ -255,7 +256,7 @@ export function nativeBarrierTopology(
       const ex = other.b[0] - other.a[0],
         ey = other.b[1] - other.a[1],
         den = dx * ey - dy * ex;
-      if (Math.abs(den) < 1e-14 * Math.hypot(dx, dy) * Math.hypot(ex, ey))
+      if (Math.abs(den) < 1e-14 * DMath.hypot(dx, dy) * DMath.hypot(ex, ey))
         continue;
       const ax = other.a[0] - edge.a[0],
         ay = other.a[1] - edge.a[1],

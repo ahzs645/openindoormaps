@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { strictNativeDisplay } from "./strict-native-display";
 import type { NativeExploreResult } from "./native-explore";
 import { fillMeasuredDoorwayRecesses } from "./display-doorway-recesses";
@@ -64,7 +65,7 @@ const segmentDistance = (
         (dx * dx + dy * dy || 1),
     ),
   );
-  return Math.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
+  return DMath.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
 };
 
 const touches = (a: Ring, b: Ring) =>
@@ -105,7 +106,7 @@ export function pillarWallContinuation(wall: Rings, pillar: Rings): Rings[] {
   for (let i = 0; i < ring.length; i++) {
     const a = ring[i],
       b = ring[(i + 1) % ring.length];
-    const d = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const d = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     if (d > length) {
       length = d;
       axis = [(b[0] - a[0]) / d, (b[1] - a[1]) / d];
@@ -168,7 +169,7 @@ function boundaryBands(rings: Rings): Rings[] {
   return rings.flatMap((ring) =>
     ring.flatMap((a, i) => {
       const b = ring[(i + 1) % ring.length];
-      const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      const length = DMath.hypot(b[0] - a[0], b[1] - a[1]);
       if (!length) return [];
       const dx = ((b[0] - a[0]) / length) * reach;
       const dy = ((b[1] - a[1]) / length) * reach;

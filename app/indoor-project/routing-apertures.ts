@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 type XY = [number, number];
 export type SourceDoorProof = {
@@ -125,7 +126,7 @@ export function routingDoorApertures(
     if (!proof) continue;
     const a = edge.pointsFeet[0],
       b = edge.pointsFeet.at(-1)!,
-      length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      length = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     if (length < 1e-8) continue;
     doors.push({
       id: edge.id,

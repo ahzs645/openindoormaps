@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { validateNativeSourceStairMaterials } from "./native-source-stair-material";
 import { validateNativePhysicalLevels } from "./native-physical-levels";
 import {
@@ -97,13 +98,14 @@ export function geographicPoint(
   const a = data.alignment,
     x = p[0] - a.originFeet[0],
     y = p[1] - a.originFeet[1],
-    c = Math.cos(a.rotationRadians),
-    s = Math.sin(a.rotationRadians),
+    c = DMath.cos(a.rotationRadians),
+    s = DMath.sin(a.rotationRadians),
     east = (x * c - y * s) * a.horizontalMetresPerFoot,
     north = (x * s + y * c) * a.horizontalMetresPerFoot;
   return [
     a.originGeographic[0] +
-      ((east / (6_378_137 * Math.cos((a.projectionLatitude * Math.PI) / 180))) *
+      ((east /
+        (6_378_137 * DMath.cos((a.projectionLatitude * Math.PI) / 180))) *
         180) /
         Math.PI,
     a.originGeographic[1] + ((north / 6_378_137) * 180) / Math.PI,
@@ -390,7 +392,7 @@ function resolveProjectRoute(
             .reduce(
               (metres, p, i) =>
                 metres +
-                Math.hypot(
+                DMath.hypot(
                   p[0] - path.pointsFeet[i][0],
                   p[1] - path.pointsFeet[i][1],
                 ) *
@@ -587,7 +589,7 @@ function validateIndoorDatasetSnapshot(
         ) ||
         (door.normalFeet !== undefined &&
           (!finitePoint(door.normalFeet, 2) ||
-            Math.abs(Math.hypot(...door.normalFeet) - 1) > 1e-5)) ||
+            Math.abs(DMath.hypot(...door.normalFeet) - 1) > 1e-5)) ||
         (door.footprintFeet !== undefined &&
           (!Array.isArray(door.footprintFeet) ||
             door.footprintFeet.length < 3 ||
@@ -1278,7 +1280,7 @@ function validateIndoorDatasetSnapshot(
           (p) =>
             !finitePoint(p, 3) || Math.abs(p[2] - from.pointFeet[2]) > 0.05,
         ) ||
-        Math.hypot(
+        DMath.hypot(
           span.pointsFeet[1][0] - span.pointsFeet[0][0],
           span.pointsFeet[1][1] - span.pointsFeet[0][1],
         ) < 0.001 ||
@@ -1303,7 +1305,7 @@ function validateIndoorDatasetSnapshot(
             return (
               Math.abs(orientation) > 1e-6 &&
               orientation * winding > 0 &&
-              (side * Math.sign(orientation)) / Math.hypot(dx, dy) >=
+              (side * Math.sign(orientation)) / DMath.hypot(dx, dy) >=
                 span.walkingStripWidthFeet / 2 - 0.001
             );
           }),

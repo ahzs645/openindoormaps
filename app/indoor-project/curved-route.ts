@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 type XY = [number, number];
 type Section = { point: XY; width: number };
 type Segment = { a: XY; b: XY; normal: XY };
@@ -5,7 +6,7 @@ export type CurvedPath = {
   points: XY[];
   ranges: { start: number; end: number }[];
 };
-const distance = (a: XY, b: XY) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const distance = (a: XY, b: XY) => DMath.hypot(a[0] - b[0], a[1] - b[1]);
 const mix = (a: XY, b: XY, t: number): XY => [
   a[0] + (b[0] - a[0]) * t,
   a[1] + (b[1] - a[1]) * t,
@@ -39,7 +40,7 @@ function curvedSegments(rings: XY[][]): Segment[] {
     const turns = ring.map((p, i) => {
       const a = ring[(i + n - 1) % n],
         b = ring[(i + 1) % n];
-      return Math.atan2(
+      return DMath.atan2(
         (p[0] - a[0]) * (b[1] - p[1]) - (p[1] - a[1]) * (b[0] - p[0]),
         (p[0] - a[0]) * (b[0] - p[0]) + (p[1] - a[1]) * (b[1] - p[1]),
       );
@@ -137,13 +138,13 @@ function circularLane(
     const r = distance(p, center);
     if (r < radius - 0.15) return [];
     if (Math.abs(r - radius) < 0.15) return [p];
-    const angle = Math.atan2(p[1] - center[1], p[0] - center[0]),
-      offset = Math.acos(radius / r);
+    const angle = DMath.atan2(p[1] - center[1], p[0] - center[0]),
+      offset = DMath.acos(radius / r);
     return [angle - offset, angle + offset].map(
       (t) =>
         [
-          center[0] + radius * Math.cos(t),
-          center[1] + radius * Math.sin(t),
+          center[0] + radius * DMath.cos(t),
+          center[1] + radius * DMath.sin(t),
         ] as XY,
     );
   };
@@ -152,14 +153,14 @@ function circularLane(
     for (let last = first + 1; last < original.length; last++) {
       for (const a of tangents(original[first]))
         for (const b of tangents(original[last])) {
-          const start = Math.atan2(a[1] - center[1], a[0] - center[0]),
-            end = Math.atan2(b[1] - center[1], b[0] - center[0]);
+          const start = DMath.atan2(a[1] - center[1], a[0] - center[0]),
+            end = DMath.atan2(b[1] - center[1], b[0] - center[0]);
           for (const sign of [-1, 1]) {
             const tangentA: XY = [
-                -Math.sin(start) * sign,
-                Math.cos(start) * sign,
+                -DMath.sin(start) * sign,
+                DMath.cos(start) * sign,
               ],
-              tangentB: XY = [-Math.sin(end) * sign, Math.cos(end) * sign];
+              tangentB: XY = [-DMath.sin(end) * sign, DMath.cos(end) * sign];
             if (
               (a[0] - original[first][0]) * tangentA[0] +
                 (a[1] - original[first][1]) * tangentA[1] <
@@ -185,8 +186,8 @@ function circularLane(
               if (i === count) return b;
               const t = start + (delta * i) / count;
               return [
-                center[0] + radius * Math.cos(t),
-                center[1] + radius * Math.sin(t),
+                center[0] + radius * DMath.cos(t),
+                center[1] + radius * DMath.sin(t),
               ];
             });
             if (arc.some((p) => guideDistance(p, original) > 12)) continue;

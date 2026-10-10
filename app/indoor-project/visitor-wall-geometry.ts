@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { FeatureCollection, MultiPolygon } from "geojson";
 import polygonClipping from "polygon-clipping";
 import type { IndoorDataset, IndoorRecord } from "./contract";
@@ -23,7 +24,7 @@ const distance = (p: number[], a: number[], b: number[]) => {
         ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / (dx * dx + dy * dy || 1),
       ),
     );
-  return Math.hypot(p[0] - a[0] - dx * t, p[1] - a[1] - dy * t);
+  return DMath.hypot(p[0] - a[0] - dx * t, p[1] - a[1] - dy * t);
 };
 /** Visitor presentation only: hide disconnected native wall components that
  * have no mapped walkable floor within three feet. Preserve full native walls
@@ -35,13 +36,13 @@ export function visitorWallGeometry(
 ): FeatureCollection<MultiPolygon> {
   if (data.nativeIndoorEnvelopes) return walls;
   const a = data.alignment,
-    cos = Math.cos(a.rotationRadians),
-    sin = Math.sin(a.rotationRadians);
+    cos = DMath.cos(a.rotationRadians),
+    sin = DMath.sin(a.rotationRadians);
   const fromGeo = ([lon, lat]: number[]): [number, number] => {
     const east =
       ((((lon - a.originGeographic[0]) * Math.PI) / 180) *
         6_378_137 *
-        Math.cos((a.projectionLatitude * Math.PI) / 180)) /
+        DMath.cos((a.projectionLatitude * Math.PI) / 180)) /
       a.horizontalMetresPerFoot;
     const north =
       ((((lat - a.originGeographic[1]) * Math.PI) / 180) * 6_378_137) /

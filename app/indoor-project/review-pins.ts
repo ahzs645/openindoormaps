@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 import type { IndoorProject } from "./package";
 import { wallReviewContext, wallReviewKey } from "./wall-review";
@@ -116,7 +117,7 @@ const distanceToRing = (point: EditPoint, ring: EditPoint[]) =>
             (dx * dx + dy * dy || 1),
         ),
       );
-      return Math.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
+      return DMath.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
     }),
   );
 /** Optional source reference; the dot's original coordinates are never snapped or moved. */

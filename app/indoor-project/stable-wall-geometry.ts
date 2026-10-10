@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { FeatureCollection, MultiPolygon, Position } from "geojson";
 
 export type WallGeometryRepair = {
@@ -35,7 +36,8 @@ export function stableWallGeometry(
         const origin = polygon[0]?.[0];
         if (!origin) return [];
         const sx =
-          ((6_378_137 * Math.PI) / 180) * Math.cos((origin[1] * Math.PI) / 180);
+          ((6_378_137 * Math.PI) / 180) *
+          DMath.cos((origin[1] * Math.PI) / 180);
         const sy = (6_378_137 * Math.PI) / 180;
         const point = (p: Position) => [
           (p[0] - origin[0]) * sx,
@@ -75,7 +77,7 @@ export function stableWallGeometry(
           const points = ring.filter(
             (p, i) =>
               i === 0 ||
-              Math.hypot(
+              DMath.hypot(
                 (p[0] - ring[i - 1][0]) * sx,
                 (p[1] - ring[i - 1][1]) * sy,
               ) > 1e-7,
@@ -84,7 +86,7 @@ export function stableWallGeometry(
             report("duplicate-vertex", ring.length - points.length);
           if (
             points.length > 1 &&
-            Math.hypot(
+            DMath.hypot(
               (points[0][0] - points.at(-1)![0]) * sx,
               (points[0][1] - points.at(-1)![1]) * sy,
             ) <= 1e-7
@@ -103,7 +105,7 @@ export function stableWallGeometry(
               const c = point(points[(i + 1) % points.length]);
               const dx = c[0] - a[0],
                 dy = c[1] - a[1];
-              const length = Math.hypot(dx, dy);
+              const length = DMath.hypot(dx, dy);
               const distance =
                 length < 1e-7
                   ? 0
@@ -133,7 +135,7 @@ export function stableWallGeometry(
             const a = point(points[i]),
               b = point(points[(i + 1) % points.length]);
             area += a[0] * b[1] - b[0] * a[1];
-            perimeter += Math.hypot(b[0] - a[0], b[1] - a[1]);
+            perimeter += DMath.hypot(b[0] - a[0], b[1] - a[1]);
           }
           if (
             !Number.isFinite(area) ||

@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { nativeSelectionBoolean } from "./native-selection-boolean";
 import type { FeatureCollection, MultiPolygon, Polygon, Point } from "geojson";
 import type { IndoorDataset, IndoorRecord } from "./contract";
@@ -105,7 +106,7 @@ export function strictNativeDisplay(
           : p.pointsFeet;
         return chain.slice(1).some((b, i) => {
           const a = chain[i],
-            length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+            length = DMath.hypot(b[0] - a[0], b[1] - a[1]);
           if (!length) return false;
           const x = (-(b[1] - a[1]) / length) * 0.0001,
             y = ((b[0] - a[0]) / length) * 0.0001;

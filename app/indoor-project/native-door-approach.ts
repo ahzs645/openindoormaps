@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   nativeRationalOverlay,
   type NativeRationalParts,
@@ -454,7 +455,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
       if (
         !a ||
         !p ||
-        Math.hypot(...p.map((v, i) => v - a.point[i])) > 1e-6 ||
+        DMath.hypot(...p.map((v, i) => v - a.point[i])) > 1e-6 ||
         approaches.get(other)?.doorId === a.doorId
       )
         return [];

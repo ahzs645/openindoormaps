@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 type Point = [number, number];
 type Rings = Point[][];
@@ -46,7 +47,7 @@ const edges = (rings: Rings): [Point, Point][] =>
   rings.flatMap((r) =>
     r.map((a, i) => [a, r[(i + 1) % r.length]!] as [Point, Point]),
   );
-const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const distance = (a: Point, b: Point) => DMath.hypot(a[0] - b[0], a[1] - b[1]);
 function nearest(p: Point, rings: Rings): Point {
   let best: Point = p;
   let minimum = Infinity;

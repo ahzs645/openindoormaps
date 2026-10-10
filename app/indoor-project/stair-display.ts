@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { FeatureCollection, Polygon } from "geojson";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint } from "./routing";
@@ -111,7 +112,7 @@ export function projectStairDisplay(
           Math.abs(other.elevationFeet - t.elevationFeet) < 1 &&
           t.ringFeet.filter((p) =>
             other.ringFeet.some(
-              (q) => Math.hypot(p[0] - q[0], p[1] - q[1]) < 0.03,
+              (q) => DMath.hypot(p[0] - q[0], p[1] - q[1]) < 0.03,
             ),
           ).length >= 2,
       );
@@ -221,7 +222,7 @@ export function projectStairDisplay(
               [r.a, r.b].every((p) =>
                 polygon[0].some((q) => {
                   const g = geographicPoint(data, q);
-                  return Math.hypot(g[0] - p[0], g[1] - p[1]) < 1e-9;
+                  return DMath.hypot(g[0] - p[0], g[1] - p[1]) < 1e-9;
                 }),
               ),
             ),

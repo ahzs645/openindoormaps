@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import { nativeBarrierTopology } from "./native-barrier-topology";
 import {
@@ -52,7 +53,7 @@ export function nativeBoundaryPatchFloorSupport(
     return { supported: false, originalContactAllowance: false };
   const [a, b] = proof.sourceCapFeet,
     [c, d] = proof.targetContactFeet;
-  const width = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const width = DMath.hypot(b[0] - a[0], b[1] - a[1]);
   const tangent: Point = [(b[0] - a[0]) / width, (b[1] - a[1]) / width];
   const normal: Point = [-tangent[1], tangent[0]];
   if ((c[0] - a[0]) * normal[0] + (c[1] - a[1]) * normal[1] < 0) {

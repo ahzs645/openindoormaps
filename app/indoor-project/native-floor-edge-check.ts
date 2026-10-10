@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 type Point = [number, number];
 type Rings = Point[][];
 /** Length of a region exterior coincident with an outer native slab edge.
@@ -10,7 +11,7 @@ export function exposedNativeFloorEdgeFeet(
   const segments = (ring: Point[]) =>
     ring.flatMap((a, i) => {
       const b = ring[(i + 1) % ring.length];
-      return Math.hypot(b[0] - a[0], b[1] - a[1]) > 1e-7
+      return DMath.hypot(b[0] - a[0], b[1] - a[1]) > 1e-7
         ? [[a, b] as [Point, Point]]
         : [];
     });
@@ -19,7 +20,7 @@ export function exposedNativeFloorEdgeFeet(
   const edges = ground.flatMap((p) => segments(p[0]));
   let total = 0;
   for (const [a, b] of segments(region[0])) {
-    const length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const length = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     const ux = (b[0] - a[0]) / length,
       uy = (b[1] - a[1]) / length;
     const spans: [number, number][] = [];
