@@ -64,6 +64,22 @@ export class HeavyWorkerSchedule {
   }
 }
 
+/** Graph size above which routes are warmed on intent (directions opened, a
+ * start/destination picked or a route requested) instead of automatically at
+ * import. Generic, scalar and cheap: the warm route graph of a large native
+ * dataset was measured at up to 2.8 GB, which alone leaves almost no room in
+ * a tab's shared ~4 GB heap beside the page and the map. */
+export const AUTOMATIC_ROUTE_WARMUP_MAX_GRAPH_ITEMS = 4000;
+export function automaticRouteWarmup(data: {
+  nodes?: readonly unknown[];
+  edges?: readonly unknown[];
+}) {
+  return (
+    (data.nodes?.length ?? 0) + (data.edges?.length ?? 0) <=
+    AUTOMATIC_ROUTE_WARMUP_MAX_GRAPH_ITEMS
+  );
+}
+
 /** One schedule per page realm. */
 export const heavyWorkerSchedule = new HeavyWorkerSchedule();
 
@@ -173,7 +189,13 @@ export function scheduleRouteWarmup(
       }
       return;
     }
-    if (schedule.busy("floor") || schedule.busy("teardown")) {
+    // A user route request already builds the graph in the same worker; a
+    // warmup started meanwhile would only supersede its reply.
+    if (
+      schedule.busy("floor") ||
+      schedule.busy("teardown") ||
+      schedule.busy("route")
+    ) {
       cancelSettle();
       return;
     }

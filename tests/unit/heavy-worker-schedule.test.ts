@@ -489,3 +489,37 @@ test("a warmup does not start while a worker is still being torn down", () => {
   assert.equal(runs.length, 1);
   warmup.dispose();
 });
+
+test("large route graphs warm on intent; small ones still warm automatically", async () => {
+  const { automaticRouteWarmup, AUTOMATIC_ROUTE_WARMUP_MAX_GRAPH_ITEMS } =
+    await import("../../app/indoor-project/heavy-worker-schedule");
+  const items = (n: number) => Array.from({ length: n }, () => ({}));
+  assert.equal(
+    automaticRouteWarmup({ nodes: items(10), edges: items(20) }),
+    true,
+  );
+  assert.equal(
+    automaticRouteWarmup({
+      nodes: items(AUTOMATIC_ROUTE_WARMUP_MAX_GRAPH_ITEMS),
+      edges: items(1),
+    }),
+    false,
+  );
+  assert.equal(automaticRouteWarmup({}), true);
+});
+
+test("a warmup never starts while a user route request is building the graph", () => {
+  const schedule = new HeavyWorkerSchedule();
+  const { runs, run } = controllableWarmups();
+  const route = schedule.begin("route");
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    run,
+    { onReady: () => {}, onError: assert.fail },
+    noGate,
+  );
+  assert.equal(runs.length, 0, "the user request's worker is warming");
+  route();
+  assert.equal(runs.length, 1, "then a (cheap, resident) warmup completes it");
+  warmup.dispose();
+});

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { IndoorDataset } from "./contract";
 import type { RouteCalculation, RouteRequest } from "./route-calculation";
 import { RouteWorkerClient } from "./route-worker-client";
 import { floorDiagnostic } from "./floor-diagnostics";
 import {
+  automaticRouteWarmup,
   heavyWorkerName,
   heavyWorkerSchedule,
   routeRequestReady,
@@ -16,6 +17,9 @@ export function useProjectRoute(
   start: string,
   end: string,
   mode: RouteRequest["mode"],
+  /** The visitor showed routing intent (directions opened, a start or
+   * destination picked). Large datasets warm routes only after this. */
+  intent = false,
 ) {
   const [client] = useState(
     () =>
@@ -61,11 +65,23 @@ export function useProjectRoute(
       }),
     [client],
   );
+  // Latched per dataset: once intent was shown, keep the warm graph.
+  const intentFor = useRef<IndoorDataset | undefined>(undefined);
+  if (intent && data) intentFor.current = data;
+  const warm =
+    !!data && (automaticRouteWarmup(data) || intentFor.current === data);
+  // Whether a route is on screen: a shown route keeps its warm worker.
+  const routeShown = useRef(false);
+  routeShown.current = !!start && !!end;
   useEffect(() => {
     client.resetData(data);
     setResult(undefined);
     setPreparation(undefined);
     if (!data) return;
+    if (!warm) {
+      floorDiagnostic("route:warmup-deferred-until-intent");
+      return;
+    }
     // Prepare the policy graph while the imported map is being explored. It is
     // off-thread, shares the route worker, and never prepares a fictitious path.
     // It yields to floor preparation: both hold a dataset clone and GB-scale
@@ -98,7 +114,7 @@ export function useProjectRoute(
           if (active) setPreparation(undefined);
         },
         releaseIdle: () => {
-          if (!client.hasResidentData(data)) return false;
+          if (routeShown.current || !client.hasResidentData(data)) return false;
           client.dispose();
           return true;
         },
@@ -119,7 +135,7 @@ export function useProjectRoute(
       warmup.dispose();
       preparation?.cancel(true);
     };
-  }, [client, data, mode]);
+  }, [client, data, mode, warm]);
   useEffect(() => {
     if (!data || !start) return;
     let active = true;
@@ -185,6 +201,9 @@ export function useProjectRoute(
     reachable: coverage,
     arrivals: current?.value?.arrivals,
     calculating: !!data && !!start && !!end && !current,
-    preparing: !!data && !prepared && !completedCalculation,
+    // Large datasets warm on intent: no "preparing" state before that.
+    preparing:
+      !!data && (warm || !!start) && !prepared && !completedCalculation,
+    deferred: !!data && !warm,
   };
 }
