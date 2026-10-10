@@ -1,0 +1,313 @@
+{
+  "format": "openindoormaps-04128-post-regeneration-verification",
+  "version": 1,
+  "master": {
+    "path": "/home/user/openindoormaps/work/floor1-followup-20261009/integration-04128/regenerated/UNBC.master.reviter.zip",
+    "sha256": "72af43b48d3ff66f794462160aa64d7b54608b007206513f04c35c02f2d39796",
+    "bytes": 225256190
+  },
+  "compiled": {
+    "path": "/home/user/openindoormaps/work/floor1-followup-20261009/integration-04128/regenerated/compiled-dataset.json",
+    "sha256": "1194eeb64f208d2d95a217bc3d73ae8fc608180760d70b13400552e11a70efde"
+  },
+  "sourceCandidate": {
+    "path": "/home/user/openindoormaps/work/floor1-followup-20261009/integration-04128/staging/UNBC.04-128-reviewed-source.reviter.zip",
+    "sha256": "d94baef6c73787b96e4fd7d55e479ad42f4975243f69a73cb79e7e056a980f4f"
+  },
+  "previousPublished": {
+    "path": "work/floor1-followup-20261009/building09-08/routing/fresh-published-dataset.json",
+    "sha256": "73f7c95e0e066799c15071b890892ed2950768e47e7e6fbcdcb402817bdb3b01"
+  },
+  "descriptors": {
+    "total": 353,
+    "collectionSha256": "7e16efe9b513e8d72919e88017b03b3ca203fcc74aa75ae502120bee80d76a6d",
+    "applied04128": true,
+    "prior352ByteIdentical": true
+  },
+  "originalAssets": [
+    {
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "expected": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "equal": true
+    },
+    {
+      "path": "model/scene.glb",
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "expected": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "equal": true
+    },
+    {
+      "path": "gis/reference-points.json",
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "expected": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "equal": true
+    }
+  ],
+  "companions": 908,
+  "mappingSha256": "e6b649c794950d8cf336fcbffe543473eb8a6c7f6ee5f05578e68809492e2956",
+  "datasetFieldsChangedVsPrevious": [
+    "source",
+    "nativeSelectionContactRepairs",
+    "edges",
+    "walls",
+    "circulationGeometry"
+  ],
+  "sourceFieldsChangedVsPrevious": [
+    "roomsSha256"
+  ],
+  "routingFieldsIdenticalToPrevious": {
+    "nodes": true,
+    "edges": false,
+    "records": true,
+    "doors": true,
+    "connectors": true,
+    "rampDisplay": true,
+    "circulationGeometry": false,
+    "walkingSupport": true,
+    "indoorExclusions": true,
+    "nativeMaterialSections": true
+  },
+  "arrivals": {
+    "before": 1560,
+    "after": 1560
+  },
+  "building4Ramps": {
+    "1586431": {
+      "oldEdges": 9,
+      "newEdges": 9,
+      "identical": true,
+      "enabledNew": 9
+    },
+    "1587605": {
+      "oldEdges": 32,
+      "newEdges": 32,
+      "identical": true,
+      "enabledNew": 32
+    }
+  },
+  "room04128": {
+    "faceCount": 1,
+    "faceId": "native-region:311:45",
+    "exactFaceId": "native-region:311:45",
+    "namedKeys": [
+      "rm-311-1f665af5196b"
+    ],
+    "areaSquareFeet": 173.40350936946277,
+    "expectedAreaSquareFeet": 173.40350936946277,
+    "exactShapeEqualsExpected": true,
+    "exactRationalArea": [
+      "417690851016694493156929774455271352850077700488084245954496940648305534667153514519095321549896671451428272661456899072210562315869277117831708621200384938474892186517234799763883136623544754219568928160165029143",
+      "2408779686959738095106180684372088933740042418637360121698550914938800502131730540320179320234186986395196749552542185061691657795785772025116447780079370908456969187936832676526570687333577704794535747001516032"
+    ],
+    "group04125_07165_ramp": {
+      "sameFace": true,
+      "keys": [
+        "04-125",
+        "07-165"
+      ],
+      "hasRampLanding": true,
+      "areaSquareFeet": 1058.183132788899,
+      "expectedAreaSquareFeet": 1058.183132788899
+    }
+  },
+  "namedSingletons": {
+    "preservedExactShapes": 716,
+    "lost": [
+      {
+        "levelId": 311,
+        "key": "rm-311-16e712c8b3e9",
+        "number": "07-410"
+      },
+      {
+        "levelId": 311,
+        "key": "rm-311-dd343f6f08db",
+        "number": "04-S102"
+      }
+    ],
+    "shapeChanged": [],
+    "gained": [
+      {
+        "levelId": 311,
+        "key": "rm-311-1f665af5196b",
+        "number": "04-128",
+        "face": "native-region:311:45",
+        "exactFaceId": "native-region:311:45"
+      }
+    ],
+    "perLevel": [
+      {
+        "levelId": 2295121,
+        "oldRegions": 26,
+        "newRegions": 26,
+        "oldSingletons": 2,
+        "newSingletons": 2,
+        "preservedExactShapes": 2
+      },
+      {
+        "levelId": 1450417,
+        "oldRegions": 297,
+        "newRegions": 297,
+        "oldSingletons": 37,
+        "newSingletons": 37,
+        "preservedExactShapes": 37
+      },
+      {
+        "levelId": 311,
+        "oldRegions": 950,
+        "newRegions": 950,
+        "oldSingletons": 155,
+        "newSingletons": 154,
+        "preservedExactShapes": 153
+      },
+      {
+        "levelId": 1487816,
+        "oldRegions": 535,
+        "newRegions": 535,
+        "oldSingletons": 80,
+        "newSingletons": 80,
+        "preservedExactShapes": 80
+      },
+      {
+        "levelId": 1425915,
+        "oldRegions": 22,
+        "newRegions": 22,
+        "oldSingletons": 0,
+        "newSingletons": 0,
+        "preservedExactShapes": 0
+      },
+      {
+        "levelId": 694,
+        "oldRegions": 1881,
+        "newRegions": 1881,
+        "oldSingletons": 165,
+        "newSingletons": 165,
+        "preservedExactShapes": 165
+      },
+      {
+        "levelId": 400176,
+        "oldRegions": 829,
+        "newRegions": 829,
+        "oldSingletons": 133,
+        "newSingletons": 133,
+        "preservedExactShapes": 133
+      },
+      {
+        "levelId": 1487353,
+        "oldRegions": 91,
+        "newRegions": 91,
+        "oldSingletons": 8,
+        "newSingletons": 8,
+        "preservedExactShapes": 8
+      },
+      {
+        "levelId": 402367,
+        "oldRegions": 963,
+        "newRegions": 963,
+        "oldSingletons": 138,
+        "newSingletons": 138,
+        "preservedExactShapes": 138
+      }
+    ]
+  },
+  "priorAudit": {
+    "keys": 272,
+    "missing": [
+      "rm-311-16e712c8b3e9",
+      "rm-311-dd343f6f08db"
+    ],
+    "sevenGains": [
+      {
+        "number": "07-409",
+        "key": "rm-311-94714c0f977e",
+        "singleton": true
+      },
+      {
+        "number": "07-218",
+        "key": "rm-311-9b74fb0f9aff",
+        "singleton": true
+      },
+      {
+        "number": "05-113",
+        "key": "rm-311-ac62d1426f13",
+        "singleton": true
+      },
+      {
+        "number": "08-106",
+        "key": "rm-1487816-43cb14307dd8",
+        "singleton": true
+      },
+      {
+        "number": "09-200",
+        "key": "rm-1450417-f670e3d929f3",
+        "singleton": true
+      },
+      {
+        "number": "09-200-1",
+        "key": "rm-1450417-f669f7d929ed",
+        "singleton": true
+      },
+      {
+        "number": "10-1007",
+        "key": "rm-1487816-1942e041e15e",
+        "singleton": true
+      }
+    ]
+  },
+  "intentionalSharedGroups": [
+    {
+      "numbers": [
+        "03-014",
+        "03-013"
+      ],
+      "faces": [
+        "311:native-region:311:228",
+        "311:native-region:311:228"
+      ],
+      "stillShared": true
+    },
+    {
+      "numbers": [
+        "05-157",
+        "05-150",
+        "05-150A"
+      ],
+      "faces": [
+        "311:native-region:311:769",
+        "311:native-region:311:769",
+        "311:native-region:311:769"
+      ],
+      "stillShared": true
+    },
+    {
+      "numbers": [
+        "07-102",
+        "07-102A",
+        "07-102B",
+        "07-103"
+      ],
+      "faces": [
+        "311:native-region:311:590",
+        "311:native-region:311:590",
+        "311:native-region:311:590",
+        "311:native-region:311:590"
+      ],
+      "stillShared": true
+    }
+  ],
+  "failures": [
+    "Lost named singletons: 07-410,04-S102",
+    "Prior audited singleton keys lost"
+  ],
+  "passed": false,
+  "timingsMs": {
+    "readInputs": 5299,
+    "readMaster": 681518,
+    "readCompiled": 684874,
+    "parity": 717836,
+    "routing": 723158,
+    "mapping": 748450,
+    "audits": 748453
+  },
+  "limits": "Selection/mapping/routing-data preservation only. Does not certify raised visitor volumes, browser 3D, or end-to-end routes; ordinary/native-height and runtime route checks remain separate."
+}

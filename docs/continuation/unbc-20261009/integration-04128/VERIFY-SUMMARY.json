@@ -1,0 +1,188 @@
+{
+  "format": "openindoormaps-04128-verify-summary",
+  "version": 1,
+  "shipped": "selection-only",
+  "passed": true,
+  "failures": [],
+  "pinned": {
+    "openindoormaps": "1a1e358dfed2e03910aff5bccc0a5118fecd09ce",
+    "reviter": "5847bd3847032778a9e8ffd9f43d1651b7075aa3"
+  },
+  "master": {
+    "bytes": 225262148,
+    "sha256": "70175e202905c7d6d150ff31de700aec373ed14bd0f7329e18643b1c5dd7f28b"
+  },
+  "viewer": {
+    "bytes": 50761144,
+    "sha256": "209a1efe3bc5241a6c68943d0f3defbbf5003e623ee3770003d79ab787dcd505"
+  },
+  "mappingSha256": "7273c07ef74ad6ac226f8246fc82917d03bd8b82677887a00aee3576ce4a0042",
+  "sourceCandidateSha256": "d94baef6c73787b96e4fd7d55e479ad42f4975243f69a73cb79e7e056a980f4f",
+  "previousPublishedSha256": "73f7c95e0e066799c15071b890892ed2950768e47e7e6fbcdcb402817bdb3b01",
+  "descriptors": {
+    "total": 353,
+    "collectionSha256": "7e16efe9b513e8d72919e88017b03b3ca203fcc74aa75ae502120bee80d76a6d",
+    "applied04128": true,
+    "prior352ByteIdentical": true
+  },
+  "room04128": {
+    "faceCount": 1,
+    "faceId": "native-region:311:45",
+    "exactFaceId": "native-region:311:45",
+    "namedKeys": [
+      "rm-311-1f665af5196b"
+    ],
+    "areaSquareFeet": 173.40350936946277,
+    "expectedAreaSquareFeet": 173.40350936946277,
+    "exactShapeEqualsExpected": true,
+    "group04125_07165_ramp": {
+      "sameFace": true,
+      "keys": [
+        "04-125",
+        "07-165"
+      ],
+      "hasRampLanding": true,
+      "areaSquareFeet": 1058.183132788899,
+      "expectedAreaSquareFeet": 1058.183132788899
+    }
+  },
+  "namedSingletons": {
+    "preservedExactShapes": 718,
+    "lost": [],
+    "shapeChanged": [],
+    "gained": [
+      {
+        "levelId": 311,
+        "key": "rm-311-1f665af5196b",
+        "number": "04-128",
+        "face": "native-region:311:45",
+        "exactFaceId": "native-region:311:45"
+      }
+    ]
+  },
+  "priorAudit": {
+    "keys": 272,
+    "missing": [],
+    "sevenGainsAllSingleton": true
+  },
+  "intentionalSharedGroupsStillShared": true,
+  "datasetFieldsChangedVsPrevious": [
+    "source",
+    "nativeSelectionContactRepairs"
+  ],
+  "routingFieldsIdenticalToPrevious": {
+    "nodes": true,
+    "edges": true,
+    "records": true,
+    "doors": true,
+    "connectors": true,
+    "rampDisplay": true,
+    "circulationGeometry": true,
+    "walkingSupport": true,
+    "indoorExclusions": true,
+    "nativeMaterialSections": true
+  },
+  "arrivals": {
+    "before": 1560,
+    "after": 1560
+  },
+  "building4Ramps": {
+    "1586431": {
+      "oldEdges": 9,
+      "newEdges": 9,
+      "identical": true,
+      "enabledNew": 9
+    },
+    "1587605": {
+      "oldEdges": 32,
+      "newEdges": 32,
+      "identical": true,
+      "enabledNew": 32
+    }
+  },
+  "originalAssets": [
+    {
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "expected": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "equal": true
+    },
+    {
+      "path": "model/scene.glb",
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "expected": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "equal": true
+    },
+    {
+      "path": "gis/reference-points.json",
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "expected": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "equal": true
+    }
+  ],
+  "companions": 908,
+  "rejectedFullRecompile": {
+    "master": {
+      "path": "/home/user/openindoormaps/work/floor1-followup-20261009/integration-04128/regenerated/UNBC.master.reviter.zip",
+      "sha256": "72af43b48d3ff66f794462160aa64d7b54608b007206513f04c35c02f2d39796",
+      "bytes": 225256190
+    },
+    "passed": false,
+    "failures": [
+      "Lost named singletons: 07-410,04-S102",
+      "Prior audited singleton keys lost"
+    ],
+    "seeRecompileDrift": "RECOMPILE-DRIFT.md"
+  },
+  "sourceEntryParity": {
+    "passed": true,
+    "entries": [
+      {
+        "path": "floors/rooms.json",
+        "masterSha256": "2c3fa3c5777231525af6294d18036c716be4fbb5cafab8d86fe6fe554f642244",
+        "identical": true
+      },
+      {
+        "path": "review/companions.bin",
+        "masterSha256": "305b0495ba5c01eca2de6bc35ff794a17d3d97ede489ca2d3ae8b75e1d7580c1",
+        "identical": true
+      },
+      {
+        "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "masterSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "identical": true
+      },
+      {
+        "path": "model/scene.glb",
+        "masterSha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        "identical": true
+      },
+      {
+        "path": "gis/reference-points.json",
+        "masterSha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        "identical": true
+      }
+    ],
+    "report": "source-entry-parity-selection-only.json"
+  },
+  "limits": "Selection/mapping/routing-data preservation only. Does not certify raised visitor volumes, browser 3D, or end-to-end routes; ordinary/native-height and runtime route checks remain separate.",
+  "copiedTo": {
+    "dir": "/home/user/UNBC.final/previews/2026-10-10",
+    "master": "UNBC.04-128-selection-only.master.reviter.zip",
+    "viewer": "UNBC.04-128-selection-only.campus-viewer.zip",
+    "sha256sumsVerified": true,
+    "copiedBy": "coordinator"
+  },
+  "preparedDisplay": {
+    "zip": "display/UNBC.04-128-selection-only.review-ready.reviter.zip",
+    "bytes": 292516758,
+    "sha256": "1086cb6ab6559985194a491a21592e978a0770659df2fc2a28809e2382c792b8",
+    "engineSha256": "c653b913e64b67962aee1728e1f3450c6f72ceb6ea6a514148db5fbded4d8e94",
+    "datasetSha256": "65ab45265c3e990c1adcda782eed35525bd9ffa3e6ec7f6e6c8cc5e7bf38b0b9",
+    "scopes": 12,
+    "unavailableScopes": 0,
+    "sourceEntriesUnchanged": true,
+    "elapsedSeconds": 4283,
+    "browserImportTested": false
+  }
+}
