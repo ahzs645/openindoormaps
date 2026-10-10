@@ -114,6 +114,11 @@ scope.onmessage = async ({ data: request }) => {
       datasetIncluded: !!request.data,
       levels: request.levelIds.length,
       preparedAssetOffered: !!request.preparedDisplay,
+      // Scalar engine comparison only; the loader still verifies everything.
+      engineMatches:
+        request.preparedDisplay?.descriptor.binding.enginePreparationSha256 ===
+        PREPARED_DISPLAY_ENGINE_SHA256,
+      engine: PREPARED_DISPLAY_ENGINE_SHA256.slice(0, 8),
     });
     if (request.data) data = request.data;
     if (!data) throw new Error("The floor worker has no project data.");
