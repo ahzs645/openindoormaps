@@ -51,7 +51,7 @@ import {
 import { selectionDoorIds } from "./selection-door-thresholds";
 import {
   checkReviewedAreaPartition,
-  reviewedAreaPartitionGeometrySha256,
+  reviewedAreaPartitionEvidenceHashes,
   validateReviewedAreaPartitions,
 } from "./reviewed-area-partitions";
 import {
@@ -120,6 +120,9 @@ export type NativeAreaResult = {
   displayResidualTopology?: NativeExactPlanarTopology;
   /** Analytical boundaries used for selection; these certify no physical wall or route. */
   logicalPartitionIds?: string[];
+  /** Applied boundaries left out of this selection because their check failed
+   * (for example stale physical evidence). Never silent: also in warnings. */
+  omittedLogicalPartitions?: { id: string; label: string; errors: string[] }[];
   /** Current full-project audit evidence, computed on the native review worker. */
   reviewEvidenceSha256?: string;
   levelId: number;
@@ -167,7 +170,7 @@ export function validateNativeAreaOptions(
         ))) ||
     (o.passThroughDoorIds !== undefined &&
       (!Array.isArray(o.passThroughDoorIds) ||
-        o.passThroughDoorIds.length > 10000 ||
+        o.passThroughDoorIds.length > 10_000 ||
         new Set(o.passThroughDoorIds).size !== o.passThroughDoorIds.length ||
         o.passThroughDoorIds.some(
           (id) => !Number.isSafeInteger(id) || id <= 0,
@@ -359,7 +362,7 @@ function manualNativeGap(
       ),
     );
     choices.sort((a, b) => a.distance - b.distance);
-    if (!choices.length || choices[0].distance > 0.75)
+    if (choices.length === 0 || choices[0].distance > 0.75)
       throw new Error(
         "Click within 0.75 feet of an exact native wall face. Approximate envelopes cannot anchor a repair.",
       );
@@ -468,7 +471,8 @@ function nativeInputs(data: IndoorDataset, levelId: number) {
   const floors = data.walkingSupport.floors.filter(
     (f) => Math.abs(f.elevationFeet - level.elevationFeet) < 0.15,
   );
-  if (!floors.length) throw new Error("No native slabs support this level.");
+  if (floors.length === 0)
+    throw new Error("No native slabs support this level.");
   const walls = data.walls.filter((w) => w.levelId === levelId);
   // A raised opening in a plan cut is not a passage through material at floor
   // level. Use both independently recovered source sections for selection;
@@ -561,7 +565,8 @@ export async function nativeAreaGeometrySha256(
     options?.passThroughDoorIds === undefined
   ) {
     const reviewed = selectionDoorIds(data, levelId);
-    if (reviewed.length) options = { ...options, passThroughDoorIds: reviewed };
+    if (reviewed.length > 0)
+      options = { ...options, passThroughDoorIds: reviewed };
   }
   const { floors, walls, doors, holes, fixtures } = nativeInputs(data, levelId);
   return hash(
@@ -620,15 +625,14 @@ export async function nativeAreaGeometrySha256(
       ...(data.nativePhysicalLevels && data.walkingSupport
         ? [NATIVE_PHYSICAL_LEVEL_RECORDS_VERSION]
         : []),
-      nativePhysicalLevelRecords(data, levelId)
-        .map((r) => [
-          r.key,
-          r.ringsFeet,
-          roomLabelPoint(data, r.key),
-          ...(r.properties.nativeFloorOpeningOwnership
-            ? [r.properties.nativeFloorOpeningOwnership]
-            : []),
-        ]),
+      nativePhysicalLevelRecords(data, levelId).map((r) => [
+        r.key,
+        r.ringsFeet,
+        roomLabelPoint(data, r.key),
+        ...(r.properties.nativeFloorOpeningOwnership
+          ? [r.properties.nativeFloorOpeningOwnership]
+          : []),
+      ]),
       ...(options &&
       (options.roomKey ||
         options.manualGapPoints ||
@@ -679,7 +683,8 @@ export async function deriveNativeAreas(
   );
   if (options.passThroughDoorIds === undefined) {
     const reviewed = selectionDoorIds(data, levelId);
-    if (reviewed.length) options = { ...options, passThroughDoorIds: reviewed };
+    if (reviewed.length > 0)
+      options = { ...options, passThroughDoorIds: reviewed };
   }
   validateNativeAreaOptions(options);
   if (options.mode === "room" && !options.roomKey)
@@ -713,17 +718,26 @@ export async function deriveNativeAreas(
       ((!options.ignoreAppliedPartitions && p.status === "applied") ||
         options.previewPartitionIds?.includes(p.id)),
   );
-  const partitionGeometryHash = activePartitions.length
-    ? await reviewedAreaPartitionGeometrySha256(data, levelId)
-    : undefined;
+  const partitionDigests =
+    activePartitions.length > 0
+      ? await reviewedAreaPartitionEvidenceHashes(data, activePartitions)
+      : {};
   const checkedPartitionIds: string[] = [];
   const partitionWarnings: string[] = [];
+  const omittedLogicalPartitions: NonNullable<
+    NativeAreaResult["omittedLogicalPartitions"]
+  > = [];
   const partitionMasks = activePartitions.flatMap((p) => {
-    const check = checkReviewedAreaPartition(data, p, partitionGeometryHash!);
+    const check = checkReviewedAreaPartition(data, p, partitionDigests[p.id]!);
     if (!check.valid) {
       const warning = `Area boundary ${p.label || p.id} needs review: ${check.errors.join(" ")}`;
       if (options.previewPartitionIds?.includes(p.id)) throw new Error(warning);
       partitionWarnings.push(warning + " It was omitted from selection.");
+      omittedLogicalPartitions.push({
+        id: p.id,
+        label: p.label,
+        errors: check.errors,
+      });
       return [];
     }
     checkedPartitionIds.push(p.id);
@@ -746,7 +760,7 @@ export async function deriveNativeAreas(
     throw new Error(
       "A pass-through threshold has stale or missing measured door evidence on this floor.",
     );
-  if (!scopedFloors.length)
+  if (scopedFloors.length === 0)
     throw new Error("Choose a native slab supporting this floor.");
   const support = scopedFloors.flatMap((f) => f.partsFeet ?? [f.ringsFeet]);
   // Shared slab edges can have different vertex segmentation. Rounding each
@@ -859,7 +873,7 @@ export async function deriveNativeAreas(
       const apertures = apertureMasks(w);
       // Strict cuts are kept rational by exactWallMasks; this copy is only used
       // for broad-phase/proposal bookkeeping and cannot authorize the subtraction.
-      return !strict && apertures.length
+      return !strict && apertures.length > 0
         ? pc.difference(w.ringsFeet, ...apertures)
         : [w.ringsFeet];
     });
@@ -871,7 +885,7 @@ export async function deriveNativeAreas(
     sourceWalls.flatMap((w) => {
       const apertures = apertureMasks(w);
       return nativeRationalOverlay(
-        apertures.length ? "difference" : "union",
+        apertures.length > 0 ? "difference" : "union",
         w.exactParts ?? [w.ringsFeet],
         ...apertures.map((a) => [a]),
       );
@@ -944,7 +958,7 @@ export async function deriveNativeAreas(
         remaining,
         ...sourceTopology.masks.slice(i, i + 100).map((part) => [part]),
       );
-    if (floorContactPrecise.length) {
+    if (floorContactPrecise.length > 0) {
       const floorContactMasks = wallMasks(floorContactPrecise);
       // Adding real low material must only subtract from the plan selection.
       // Renoding the previous faces together with new vertices can move a shared
@@ -979,14 +993,16 @@ export async function deriveNativeAreas(
       elevation,
     );
     if (remainingExact) {
-      remainingExact = indoor.length
-        ? nativeRationalOverlay("intersection", remainingExact, indoor)
-        : [];
+      remainingExact =
+        indoor.length > 0
+          ? nativeRationalOverlay("intersection", remainingExact, indoor)
+          : [];
       remaining = nativeExactPartsForProposals(remainingExact);
     } else
-      remaining = indoor.length
-        ? nativeSelectionBoolean("intersection", remaining, indoor)
-        : [];
+      remaining =
+        indoor.length > 0
+          ? nativeSelectionBoolean("intersection", remaining, indoor)
+          : [];
   }
   let cropEvidence: string | undefined = options.nativeFloorId
     ? `Exact native slab #${options.nativeFloorId}; verify which part is enclosed before classification.`
@@ -1011,16 +1027,16 @@ export async function deriveNativeAreas(
       const identity = nativeRoomIdentityRings(data, room);
       remaining = pc.intersection(
         remaining,
-        identity !== room.ringsFeet
-          ? identity
-          : (prepared?.interiorRingsFeet ?? room.ringsFeet),
+        identity === room.ringsFeet
+          ? (prepared?.interiorRingsFeet ?? room.ringsFeet)
+          : identity,
       );
       cropEvidence =
-        identity !== room.ringsFeet
-          ? "Original native slab opening identity; this non-traversable void has no supported selectable floor."
-          : prepared
+        identity === room.ringsFeet
+          ? prepared
             ? "Prepared native interior crop; inspect current walls and doors."
-            : "Source-outline crop only; enclosure remains unverified.";
+            : "Source-outline crop only; enclosure remains unverified."
+          : "Original native slab opening identity; this non-traversable void has no supported selectable floor.";
     }
   }
   if (options.cropPolygonFeet) {
@@ -1244,13 +1260,13 @@ export async function deriveNativeAreas(
                 ])
               : pointInNativeArea(p, r.ringsFeet)),
         );
-        return index < 0 ? null : regions[index].id;
+        return index === -1 ? null : regions[index].id;
       }) as [string | null, string | null];
     return {
       nativeElementId: door.nativeElementId,
       pointFeet: door.pointFeet,
       sideRegionIds,
-      status: sideRegionIds.some((id) => id === null)
+      status: sideRegionIds.includes(null)
         ? "unsupported-side"
         : sideRegionIds[0] === sideRegionIds[1]
           ? "same-region"
@@ -1281,7 +1297,7 @@ export async function deriveNativeAreas(
               kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
             },
             containedDisplays!.flatMap((display, i) =>
-              display.exactResidualParts.length
+              display.exactResidualParts.length > 0
                 ? [
                     {
                       id: `native-region:${levelId}:${i}:render-residual`,
@@ -1297,8 +1313,11 @@ export async function deriveNativeAreas(
     doorChecks,
     options,
     gapCandidates,
-    ...(checkedPartitionIds.length
+    ...(checkedPartitionIds.length > 0
       ? { logicalPartitionIds: checkedPartitionIds }
+      : {}),
+    ...(omittedLogicalPartitions.length > 0
+      ? { omittedLogicalPartitions }
       : {}),
     cropEvidence,
     hallwayPartsFeet: strict
@@ -1306,14 +1325,14 @@ export async function deriveNativeAreas(
       : nativeCirculationCells(data)
           .filter((c) => c.levelIds.includes(levelId))
           .flatMap((c) =>
-            (exterior.length
+            (exterior.length > 0
               ? pc.difference(c.ringsFeet, ...exterior.map(topology))
               : [c.ringsFeet]
             ).flatMap(nativeAreaDisplayParts),
           ),
     warnings: [
       ...partitionWarnings,
-      ...(checkedPartitionIds.length
+      ...(checkedPartitionIds.length > 0
         ? [
             `${checkedPartitionIds.length} reviewed area boundaries separate this selection. Dashed lines are analytical boundaries across open entrances or shutters, not source walls. Physical geometry, access, routing and raised room certification are unchanged.`,
           ]
@@ -1363,10 +1382,10 @@ export function validateNativeAreaReviews(
         !d.label.trim() ||
         d.label.length > 200 ||
         typeof d.notes !== "string" ||
-        d.notes.length > 10000 ||
+        d.notes.length > 10_000 ||
         !d.notes.trim() ||
         !Array.isArray(d.regionIds) ||
-        !d.regionIds.length ||
+        d.regionIds.length === 0 ||
         d.regionIds.length > 1000 ||
         d.regionIds.some((id) => typeof id !== "string" || id.length > 200) ||
         !Array.isArray(d.partsFeet) ||
@@ -1374,13 +1393,13 @@ export function validateNativeAreaReviews(
         d.partsFeet.some(
           (r) =>
             !Array.isArray(r) ||
-            !r.length ||
-            r.length > 10000 ||
+            r.length === 0 ||
+            r.length > 10_000 ||
             r.some(
               (h) =>
                 !Array.isArray(h) ||
                 h.length < 3 ||
-                h.length > 60000 ||
+                h.length > 60_000 ||
                 h.some(
                   (p) =>
                     !Array.isArray(p) ||
@@ -1390,11 +1409,11 @@ export function validateNativeAreaReviews(
             ),
         ) ||
         !Array.isArray(d.roomKeys) ||
-        d.roomKeys.length > 10000 ||
+        d.roomKeys.length > 10_000 ||
         d.roomKeys.some((k) => typeof k !== "string" || !k || k.length > 200) ||
         (d.appliedRoomKeys !== undefined &&
           (!Array.isArray(d.appliedRoomKeys) ||
-            !d.appliedRoomKeys.length ||
+            d.appliedRoomKeys.length === 0 ||
             d.appliedRoomKeys.some((k) => !d.roomKeys.includes(k)))) ||
         !Array.isArray(d.nativeFloorIds) ||
         !Array.isArray(d.nativeDoorIds) ||
@@ -1431,7 +1450,7 @@ export async function saveNativeBoundaryPatches(
     )) !== result.geometrySha256
   )
     throw new Error("Native geometry changed. Retrace before saving patches.");
-  if (!ids.length || new Set(ids).size !== ids.length || !notes.trim())
+  if (ids.length === 0 || new Set(ids).size !== ids.length || !notes.trim())
     throw new Error("Check proposed closures and record your evidence first.");
   const selected = ids.map((id) =>
     result.gapCandidates?.find((c) => c.id === id),
@@ -1515,7 +1534,7 @@ export async function saveNativeAreaDecision(
     );
   const regions = ids.map((id) => result.regions.find((r) => r.id === id));
   if (
-    !ids.length ||
+    ids.length === 0 ||
     new Set(ids).size !== ids.length ||
     regions.some((r) => !r)
   )
@@ -1595,7 +1614,8 @@ export async function applyNativeAreaDecision(
       // Exclusion v1 carries IEEE footprints. Never turn a rounded display
       // approximation into a new source/navigation veto.
       if (
-        nativeRationalOverlay("xor", selectedExact, decision.partsFeet).length
+        nativeRationalOverlay("xor", selectedExact, decision.partsFeet).length >
+        0
       )
         throw new Error(
           "This exact native boundary needs an exact footprint correction; the display proposal cannot be applied as an exclusion.",
@@ -1642,7 +1662,7 @@ export async function applyNativeAreaDecision(
     };
   }
   if (
-    !roomKeys.length ||
+    roomKeys.length === 0 ||
     new Set(roomKeys).size !== roomKeys.length ||
     roomKeys.some((k) => !decision.roomKeys.includes(k))
   )
@@ -1720,7 +1740,7 @@ export function removeOutdoorExclusion(
   const areas = next.dataset.indoorExclusions?.areas.filter((a) => a.id !== id);
   if (!areas || areas.length === next.dataset.indoorExclusions!.areas.length)
     throw new Error("Indoor exclusion not found.");
-  if (areas.length) {
+  if (areas.length > 0) {
     next.dataset.indoorExclusions!.areas = areas;
     next.rooms.indoorExclusions = structuredClone(
       next.dataset.indoorExclusions,
