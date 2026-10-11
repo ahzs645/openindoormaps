@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   Rational,
   rational,
@@ -51,7 +52,7 @@ const cross = (a: RP, b: RP) => sub(mul(a[0], b[1]), mul(a[1], b[0]));
 const minus = (a: RP, b: RP): RP => [sub(a[0], b[0]), sub(a[1], b[1])];
 const exact = (p: P2): RP => [rational(p[0]), rational(p[1])];
 const distance = (a: RP, b: RP) =>
-  Math.hypot(toNumber(sub(a[0], b[0])), toNumber(sub(a[1], b[1])));
+  DMath.hypot(toNumber(sub(a[0], b[0])), toNumber(sub(a[1], b[1])));
 
 function segments(floors: readonly NativeSlabJoinFloor[]): Segment[] {
   const out: Segment[] = [];
@@ -183,7 +184,7 @@ export function nativeSlabJoinClosures(
         // other edge's line; the exact construction below decides the rest.
         const dx = s.b[0] - s.a[0],
           dy = s.b[1] - s.a[1],
-          len = Math.hypot(dx, dy);
+          len = DMath.hypot(dx, dy);
         const off = (p: P2) =>
           Math.abs((p[0] - s.a[0]) * dy - (p[1] - s.a[1]) * dx) / len;
         if (Math.min(off(t.a), off(t.b)) > 1e-6) continue;
