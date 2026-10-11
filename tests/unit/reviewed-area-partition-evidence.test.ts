@@ -167,7 +167,7 @@ test("a local wall change stales the partition, and the check names the local wi
     assert.notEqual(digest, local.geometrySha256);
     const check = checkReviewedAreaPartition(changed, local, digest);
     assert.equal(check.valid, false);
-    assert.match(check.errors.join(" "), /within 6 ft of this boundary/);
+    assert.match(check.errors.join(" "), /evidence window/);
   }
 });
 
@@ -316,7 +316,7 @@ test("a stale applied partition is reported, counted and never silently dropped"
   const audit = await auditReviewedAreaPartitions(changed);
   assert.equal(audit.appliedCount, 1);
   assert.equal(audit.appliedOmittedCount, 1);
-  assert.match(audit.entries[0]!.errors.join(" "), /within 6 ft/);
+  assert.match(audit.entries[0]!.errors.join(" "), /evidence window/);
 });
 
 test("migration re-binds where the stored level digest is recovered and the local evidence is unchanged, and refuses otherwise", async () => {
@@ -416,7 +416,7 @@ test("migration re-binds where the stored level digest is recovered and the loca
   assert.deepEqual(refused.differences, [
     { collection: "walls", key: "201", change: "changed" },
   ]);
-  assert.match(refused.reason, /within 6 ft/);
+  assert.match(refused.reason, /evidence window/);
   // Already bound locally: nothing to do.
   assert.equal(
     decideReviewedAreaPartitionRebind(rebound.partition, sources, now).outcome,
