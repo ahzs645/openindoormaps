@@ -7,6 +7,8 @@ import {
 import {
   createNativeProvisionalCornerSealIndex,
   drawingBackedAssumptionFootprint,
+  dwgDerivedOutlinesHash,
+  type DwgDerivedOutlines,
   nativeProvisionalAssumptionCounts,
   nativeProvisionalCornerSealsHash,
   verifyDrawingBackedDrawingEvidence,
@@ -562,5 +564,127 @@ test("a drawing registered to another level is cited only with an explicit cross
   assert.throws(
     () => index(crossLevelFixture(true, 0.2).data),
     /does not line up vertically/,
+  );
+});
+
+/** A raw DWG circle (the column) registered as a derived outline; the wall lines stop at the wall end. */
+function derivedFixture(centre: P2 = [2.5, 0]) {
+  const f = fixture({
+    wallLines: [
+      [
+        [0, -0.25],
+        [2, -0.25],
+      ],
+      [
+        [0, 0.25],
+        [2, 0.25],
+      ],
+    ],
+  });
+  const n = 64,
+    ring: P2[] = Array.from({ length: n }, (_, k) => [
+      centre[0] + 0.5 * Math.cos((2 * Math.PI * k) / n),
+      centre[1] + 0.5 * Math.sin((2 * Math.PI * k) / n),
+    ]);
+  const outlineSegments: Seg[] = ring.map((p, k) => [p, ring[(k + 1) % n]!]);
+  const section = f.boundaryReference.sections[0]!;
+  const derivedSection = {
+    sectionId: section.sectionId,
+    levelId: 1,
+    boundarySectionSha256: nativeDerivedFrameHash([
+      f.boundaryReference.sourceSha256,
+      section,
+    ]),
+    registration: { re: 1, im: 0, t: [0, 0] as P2 },
+    registrationCheck: { matchedSegments: 2, maxEndpointErrorFeet: 0 },
+    outlines: [
+      {
+        handle: "C1",
+        entityType: "CIRCLE",
+        layer: "walls",
+        closure: "circle" as const,
+        ringFeet: ring,
+        firstSegment: 0,
+      },
+    ],
+    outlineSegments,
+  };
+  const body: Omit<DwgDerivedOutlines, "geometrySha256"> = {
+    format: "reviter-dwg-derived-outlines",
+    version: 1,
+    sourceDwgSha256: f.boundaryReference.sourceSha256,
+    derivation: {
+      rawExtract: [{ file: "raw.json", sha256: "7".repeat(64) }],
+      layers: ["walls"],
+      circleSegments: n,
+      arcSegmentsPerQuarterTurn: 16,
+      maxOutlineWidthFeet: 4,
+      registrationToleranceFeet: 1e-6,
+      math: "reviter-deterministic-math",
+    },
+    sections: [derivedSection],
+  };
+  const derived = { ...body, geometrySha256: dwgDerivedOutlinesHash(body) };
+  const seals = f.data.nativeProvisionalCornerSeals!;
+  const dwg = seals.rows[0]!.drawingBacked!.dwg!;
+  const first = dwg.entities.length;
+  dwg.entities.push(
+    ...outlineSegments.map((segmentFeet, index) => ({
+      kind: "derivedOutlineSegments" as const,
+      index,
+      segmentFeet,
+    })),
+  );
+  dwg.drawnMaterial!.closedOutlines = [
+    outlineSegments.map((_, k) => first + k),
+  ];
+  dwg.derivedOutlinesSha256 = nativeDerivedFrameHash([
+    derived.sourceDwgSha256,
+    derivedSection,
+  ]);
+  seals.geometrySha256 = nativeProvisionalCornerSealsHash(seals);
+  return { ...f, derived };
+}
+
+test("a raw DWG circle registered as a derived outline is drawn material, bound to its receipt", () => {
+  const { data, boundaryReference, derived } = derivedFixture();
+  assert.ok(index(data).partsAt(0.1).length > 0);
+  verifyDrawingBackedDrawingEvidence(
+    data.nativeProvisionalCornerSeals,
+    boundaryReference,
+    derived,
+  );
+  sourceDrawingEvidence(
+    data.nativeProvisionalCornerSeals as never,
+    boundaryReference,
+    derived as never,
+  );
+  assert.throws(
+    () =>
+      verifyDrawingBackedDrawingEvidence(
+        data.nativeProvisionalCornerSeals,
+        boundaryReference,
+      ),
+    /derived DWG outlines/,
+  );
+  const tampered = structuredClone(derived);
+  tampered.sections[0]!.outlines[0]!.handle = "C2";
+  assert.throws(
+    () =>
+      verifyDrawingBackedDrawingEvidence(
+        data.nativeProvisionalCornerSeals,
+        boundaryReference,
+        tampered,
+      ),
+    /Invalid derived DWG outline evidence/,
+  );
+});
+
+test("a closed outline that encloses no declared native owner is not drawn material", () => {
+  // a cited circle away from every declared owner (an empty drawn ring) never counts as material
+  const { data } = derivedFixture([5, 5]);
+  assert.throws(
+    () => index(data),
+    /encloses no declared native owner material/,
   );
 });
