@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { createHash } from "node:crypto";
 import { project } from "../fixtures/native-area-project";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import {
@@ -20,6 +21,7 @@ import {
   REVIEWED_PARTITION_EVIDENCE_SNAPSHOT_MAX_BYTES,
   type ReviewedAreaPartition,
 } from "../../app/indoor-project/reviewed-area-partitions";
+import { reviewedAreaPartitionEvidenceSnapshotSha256 } from "../../app/indoor-project/reviewed-area-partition-evidence";
 import { deriveNativeAreas } from "../../app/indoor-project/native-area-review";
 
 type Point = [number, number];
@@ -564,5 +566,252 @@ test("migration re-binds where the stored level digest is recovered and the loca
   assert.equal(
     decideReviewedAreaPartitionRebind(rebound.partition, sources, now).outcome,
     "already-local",
+  );
+});
+
+/** Seal rows that stand on one level-wide slab, as drawing-backed rows do: each
+ * carries the slab's full parts in its floor binding and digests of them. */
+async function slabBoundFixture() {
+  const p = await fixture();
+  const slab = (ring: Point[]): Point[][][] => [[ring]];
+  const fullSlab: Point[] = rect(0, 0, 100, 20);
+  const row = (id: string, body: Point[], slabRing: Point[] = fullSlab) => {
+    const binding = [
+      { nativeElementId: 100, elevationFeet: 0, partsFeet: slab(slabRing) },
+    ];
+    const digest = (v: unknown) =>
+      createHash("sha256").update(JSON.stringify(v)).digest("hex");
+    const r = {
+      id,
+      levelId: 1,
+      elevationFeet: 0,
+      baseElevationFeet: 0,
+      topElevationFeet: 9,
+      state: "applied",
+      partsFeet: [[body]],
+      sourceFloorIds: [100],
+      sourceFloorBindings: binding,
+      sourceFloorPartsSha256: digest(binding),
+      drawingBacked: {
+        version: 1,
+        kind: "exact-contact-closure",
+        nativeOwnerIds: [200, 201],
+        construction: {
+          kind: "bridge",
+          pointAFeet: body[0],
+          pointBFeet: body[2],
+          directionFeet: [1, 0],
+          halfWidthFeet: 0.0001,
+          overlapFeet: 0.0001,
+        },
+      },
+      assumption: { kind: "drawing-backed", evidenceSha256: "2".repeat(64) },
+    };
+    return { ...r, evidenceSha256: digest(r) };
+  };
+  const strict = (
+    rows: ReturnType<typeof row>[],
+    slabRing: Point[] = fullSlab,
+  ) =>
+    ({
+      ...p.dataset,
+      walkingSupport: {
+        ...p.dataset.walkingSupport!,
+        floors: [
+          { nativeElementId: 100, elevationFeet: 0, ringsFeet: [slabRing] },
+        ],
+      },
+      nativeIndoorEnvelopes: {
+        version: 1,
+        sourceModelSha256: p.dataset.source.modelSha256,
+        geometrySha256: "3".repeat(64),
+        levels: [],
+      },
+      nativeProvisionalCornerSeals: {
+        version: 1,
+        sourceModelSha256: p.dataset.source.modelSha256,
+        sourceMaterialGeometrySha256: "c".repeat(64),
+        sourceWallPositionRepairsSha256: "d".repeat(64),
+        geometrySha256: `${rows.length}`.padStart(64, "e"),
+        completeOriginalPhysicalOwnerCensusSha256: "1".repeat(64),
+        foreignBodies: [],
+        rows,
+      },
+    }) as unknown as IndoorDataset;
+  return { fullSlab, row, strict };
+}
+
+test("a row far away on the same slab does not stale the partition; its floor binding is not local evidence", async () => {
+  const { row, strict } = await slabBoundFixture();
+  const base = strict([]);
+  const local = await bindReviewedAreaPartitionEvidence(
+    base,
+    partition("0".repeat(64)),
+  );
+  // 60 ft away; its binding holds the whole slab, which contains the window.
+  const far = strict([row("db:far", rect(80, 10, 0.1, 0.1))]);
+  const evidence = await reviewedAreaPartitionLocalEvidence(far, local);
+  assert.equal(evidence.sha256, local.geometrySha256);
+  assert(
+    !evidence.records.some((r) => r.collection === "provisionalCornerSeals"),
+  );
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(far, [local]))[local.id]!.test,
+    "exact",
+  );
+  // Many far rows anywhere on the level: still exact.
+  const many = strict(
+    Array.from({ length: 20 }, (_, i) =>
+      row(`db:far:${i}`, rect(30 + i * 3, 1 + (i % 15), 0.1, 0.1)),
+    ),
+  );
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(many, [local]))[local.id]!
+      .test,
+    "exact",
+  );
+});
+
+test("a row whose body meets the window stales the partition, and only its window trace is recorded", async () => {
+  const { row, strict } = await slabBoundFixture();
+  const local = await bindReviewedAreaPartitionEvidence(
+    strict([]),
+    partition("0".repeat(64)),
+  );
+  const near = strict([row("db:near", rect(16, 9, 0.1, 2))]);
+  const status = (await reviewedAreaPartitionEvidenceStatuses(near, [local]))[
+    local.id
+  ]!;
+  assert.equal(status.test, "changed");
+  assert.deepEqual(status.differences, [
+    { collection: "provisionalCornerSeals", key: "db:near", change: "added" },
+  ]);
+  const record = (
+    await reviewedAreaPartitionLocalEvidence(near, local)
+  ).records.find((r) => r.collection === "provisionalCornerSeals")!;
+  const value = JSON.parse(record.value);
+  // Body and construction as window traces; the slab only as its window trace
+  // (no edge meets this window, all four corners inside); no full-slab digests.
+  assert.notEqual(value.partsFeet, null);
+  assert.notEqual(value.drawingBacked.construction.pointAFeet, null);
+  assert.deepEqual(value.sourceFloorBindings[0].partsFeet, [[["o", 15, []]]]);
+  assert.equal(value.sourceFloorPartsSha256, undefined);
+  assert.equal(value.evidenceSha256, undefined);
+  assert.equal(value.assumption.evidenceSha256, "2".repeat(64));
+  assert(!record.value.includes("100,0"));
+});
+
+test("a slab edit inside the window stales the partition; a slab edit away from it does not", async () => {
+  const { fullSlab, row, strict } = await slabBoundFixture();
+  const body = rect(16, 9, 0.1, 2);
+  const local = await bindReviewedAreaPartitionEvidence(
+    strict([row("db:near", body)]),
+    partition("0".repeat(64)),
+  );
+  // A notch in the slab edge reaching into the window (x 18..19, up to y 4).
+  const notched: Point[] = [
+    [0, 0],
+    [18, 0],
+    [18, 4],
+    [19, 4],
+    [19, 0],
+    ...fullSlab.slice(1),
+  ];
+  const inside = strict([row("db:near", body, notched)], notched);
+  const changed = (
+    await reviewedAreaPartitionEvidenceStatuses(inside, [local])
+  )[local.id]!;
+  assert.equal(changed.test, "changed");
+  assert.match(JSON.stringify(changed.differences), /provisionalCornerSeals/);
+  assert.match(JSON.stringify(changed.differences), /floors/);
+  // The same row re-generated on a slab moved 60 ft away from the window: its
+  // floor digest and row digest change, the local evidence does not.
+  const moved: Point[] = [
+    [0, 0],
+    [100, -1],
+    [100, 20],
+    [0, 20],
+  ];
+  const away = strict([row("db:near", body, moved)], moved);
+  assert.notEqual(
+    away.nativeProvisionalCornerSeals!.rows[0]!.sourceFloorPartsSha256,
+    strict([row("db:near", body)]).nativeProvisionalCornerSeals!.rows[0]!
+      .sourceFloorPartsSha256,
+  );
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(away, [local]))[local.id]!
+      .test,
+    "exact",
+  );
+});
+
+test("a snapshot bound before the floor-bound row reduction still compares on its local content", async () => {
+  const { row, strict } = await slabBoundFixture();
+  const data = strict([row("db:far", rect(80, 10, 0.1, 0.1))]);
+  const local = await bindReviewedAreaPartitionEvidence(
+    data,
+    partition("0".repeat(64)),
+  );
+  // What the previous reduction stored for the far row: every plan value
+  // traced (only the slab is local) and the full-slab digests.
+  const previous = {
+    ...local.evidenceSnapshot!,
+    records: [
+      ...local.evidenceSnapshot!.records,
+      [
+        "provisionalCornerSeals",
+        "db:far",
+        JSON.stringify({
+          baseElevationFeet: 0,
+          drawingBacked: { construction: { pointAFeet: null } },
+          elevationFeet: 0,
+          evidenceSha256: "9".repeat(64),
+          id: "db:far",
+          partsFeet: null,
+          sourceFloorBindings: [
+            {
+              elevationFeet: 0,
+              nativeElementId: 100,
+              partsFeet: [[["o", 15, []]]],
+            },
+          ],
+          sourceFloorPartsSha256: "8".repeat(64),
+        }),
+      ] as [string, string, string],
+    ].sort(),
+  };
+  const old = {
+    ...local,
+    evidenceSnapshot: previous,
+    geometrySha256: await reviewedAreaPartitionEvidenceSnapshotSha256(previous),
+  };
+  const status = (await reviewedAreaPartitionEvidenceStatuses(data, [old]))[
+    old.id
+  ]!;
+  assert.equal(status.test, "tolerance");
+  assert.equal(status.maxVertexDeltaFeet, 0);
+  // A stored row whose own body was local is still compared: removing it is a change.
+  const bodyLocal = {
+    ...previous,
+    records: previous.records.map((r) =>
+      r[1] === "db:far"
+        ? ([
+            r[0],
+            r[1],
+            r[2].replace('"partsFeet":null', '"partsFeet":[[16,9]]'),
+          ] as [string, string, string])
+        : r,
+    ),
+  };
+  const stale = {
+    ...local,
+    evidenceSnapshot: bodyLocal,
+    geometrySha256:
+      await reviewedAreaPartitionEvidenceSnapshotSha256(bodyLocal),
+  };
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(data, [stale]))[stale.id]!
+      .test,
+    "changed",
   );
 });
