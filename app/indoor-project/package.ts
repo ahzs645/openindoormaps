@@ -88,6 +88,10 @@ import {
 } from "./native-window-display";
 import { validateIndoorExclusions } from "./indoor-exclusions";
 import {
+  validateReviewedPlaceLabels,
+  type ReviewedPlaceLabels,
+} from "./reviewed-place-labels";
+import {
   validateNativeAccessZones,
   type NativeAccessZones,
 } from "./native-access-zones";
@@ -233,6 +237,20 @@ function validateIndoorScopeBinding(
       JSON.stringify(dataset.nativeDisplayScopes)
   )
     throw new Error("Source and prepared native display scopes do not match.");
+  validateReviewedPlaceLabels(
+    dataset.reviewedPlaceLabels,
+    dataset.records,
+    dataset.source.modelSha256,
+  );
+  if (
+    (rooms.format !== "openindoormaps-viewer-metadata" ||
+      rooms.reviewedPlaceLabels !== undefined) &&
+    JSON.stringify(rooms.reviewedPlaceLabels) !==
+      JSON.stringify(dataset.reviewedPlaceLabels)
+  )
+    throw new Error(
+      "Source and prepared place-label reviews do not match. Regenerate the reviewed master.",
+    );
   validateIndoorExclusions(
     rooms.indoorExclusions,
     dataset.source.modelSha256,
@@ -329,6 +347,7 @@ export type ProjectRooms = {
   nativeWallPositionRepairs?: NativeWallPositionRepairs;
   selectionDoorThresholds?: SelectionDoorThresholds;
   reviewedAreaPartitions?: ReviewedAreaPartitions;
+  reviewedPlaceLabels?: ReviewedPlaceLabels;
   indoorExclusions?: IndoorExclusions;
   nativeDisplayScopes?: NativeDisplayScopes;
   nativeProvisionalCornerSeals?: NativeProvisionalCornerSeals;
@@ -1097,6 +1116,8 @@ export async function exportCampusViewer(
   if (options.windows === "simplified") delete visitorDataset.windowDisplay;
   for (const area of visitorDataset.indoorExclusions?.areas ?? [])
     delete area.notes;
+  for (const label of visitorDataset.reviewedPlaceLabels?.labels ?? [])
+    delete label.notes;
   if (visitorDataset.nativeSelectionContactRepairs)
     visitorDataset.nativeSelectionContactRepairs.repairs =
       visitorDataset.nativeSelectionContactRepairs.repairs

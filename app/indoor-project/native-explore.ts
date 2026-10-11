@@ -40,6 +40,10 @@ import {
 } from "./display-passages";
 import { projectPlaceDisplayName } from "./visitor-metadata";
 import { isVisitorHallway } from "./place-discovery";
+import {
+  reviewedPlaceSearchText,
+  reviewedSeparatePlaceKeys,
+} from "./reviewed-place-labels";
 import { pointInNativeArea } from "./native-area-review";
 import {
   nativeIndoorEnvelopeParts,
@@ -84,9 +88,9 @@ export type NativeExploreResult = {
 /** Type colors are independent of old outline paints and selection highlights.
  * Mixed shared areas keep a neutral fill until their boundaries are resolved. */
 export function nativeExploreRegionColor(places: IndoorRecord[]) {
-  if (places.length && places.every(isRestrictedArea))
+  if (places.length > 0 && places.every(isRestrictedArea))
     return RESTRICTED_AREA_COLOR;
-  if (places.length && places.every(isHallway)) return HALLWAY_COLOR;
+  if (places.length > 0 && places.every(isHallway)) return HALLWAY_COLOR;
   const colors = new Set(places.map((r) => roomDisplayColor(r, false)));
   return colors.size === 1 ? [...colors][0] : "#e9edef";
 }
@@ -152,7 +156,7 @@ export function nativeExploreRegionStyle(
   if (places.length < 2 || uniform.size === 1)
     return {
       color: nativeExploreRegionColor(places),
-      circulation: !!places.length && places.every(isOverviewWalkway),
+      circulation: places.length > 0 && places.every(isOverviewWalkway),
     };
   const groups = new Map<string, IndoorRecord[]>();
   for (const room of places.filter((r) => !isRestrictedArea(r) && r.walkable)) {
@@ -185,7 +189,7 @@ export function nativeExploreRegionStyle(
 export function hasNativeExploreGeometry(data: IndoorDataset) {
   return (
     data.walkingSupport?.sourceModelSha256 === data.source.modelSha256 &&
-    !!data.walkingSupport.floors.length
+    data.walkingSupport.floors.length > 0
   );
 }
 /** A fresh import starts the main map; restores may retain a comparison link. */
@@ -238,7 +242,7 @@ export async function deriveNativeExplore(
   const byKey = new Map(data.records.map((r) => [r.key, r]));
   const lectureOwners = nativeLectureFloorOwners(data);
   const slabOwners = nativeSlabFloorOwners(data);
-  for (const levelId of [...new Set(levels)]) {
+  for (const levelId of new Set(levels)) {
     if (
       building !== "all" &&
       !data.records.some(
@@ -327,15 +331,16 @@ export async function deriveNativeExplore(
             nativePhysicalLevelRecords(data, levelId),
             data,
           )) {
-        const lectureRoomKey = !originalRegion.roomKeys.length
-          ? nativeLectureFloorOwner(
-              lectureOwners,
-              levelId,
-              originalRegion.ringsFeet,
-            )
-          : undefined;
+        const lectureRoomKey =
+          originalRegion.roomKeys.length === 0
+            ? nativeLectureFloorOwner(
+                lectureOwners,
+                levelId,
+                originalRegion.ringsFeet,
+              )
+            : undefined;
         const slabRoomKey =
-          !originalRegion.roomKeys.length && !lectureRoomKey
+          originalRegion.roomKeys.length === 0 && !lectureRoomKey
             ? nativeSlabFloorOwner(
                 slabOwners,
                 levelId,
@@ -358,14 +363,14 @@ export async function deriveNativeExplore(
         // evidence. Registered room contours never create a display boundary.
         const needsDisplayScope =
           !!data.nativeIndoorEnvelopes ||
-          !places.length ||
+          places.length === 0 ||
           (places.length > 1 && region.exposedFloorEdgeFeet > 0);
         let visitorPartsFeet = exactIndex
           ? region.displayPartsFeet
-          : !places.length && !data.nativeIndoorEnvelopes
+          : places.length === 0 && !data.nativeIndoorEnvelopes
             ? []
             : needsDisplayScope
-              ? displayCoverage.length
+              ? displayCoverage.length > 0
                 ? polygonClipping.intersection(
                     region.ringsFeet,
                     displayCoverage,
@@ -383,7 +388,7 @@ export async function deriveNativeExplore(
             region.id,
             region.ringsFeet,
           );
-          if (scoped.parts.length)
+          if (scoped.parts.length > 0)
             visitorPartsFeet = polygonClipping.union(
               visitorPartsFeet,
               scoped.parts,
@@ -435,7 +440,7 @@ export async function deriveNativeExplore(
           color: protectedShared ? "#e9edef" : color,
           roomKeys: region.roomKeys,
           circulation: style.circulation && places.every(isOverviewWalkway),
-          restricted: !!places.length && places.every(isRestrictedArea),
+          restricted: places.length > 0 && places.every(isRestrictedArea),
         };
         const feature = (rings: number[][][]) => ({
           type: "Feature" as const,
@@ -561,7 +566,7 @@ export async function deriveNativeExplore(
       );
     }
   }
-  if (!result.levelIds.length)
+  if (result.levelIds.length === 0)
     throw new Error(
       result.warnings.join(" ") ||
         "No native floor geometry on this campus floor.",
@@ -619,7 +624,7 @@ export function filterNativeExplorePlaces(
   const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   return places.filter((r) => {
     const label =
-      `${r.number} ${r.name} ${data ? projectPlaceDisplayName(data, r) : ""} ${r.building} #${r.levelId}`.toLocaleLowerCase();
+      `${r.number} ${r.name} ${data ? projectPlaceDisplayName(data, r) : ""} ${data ? reviewedPlaceSearchText(data, r) : ""} ${r.building} #${r.levelId}`.toLocaleLowerCase();
     return terms.every((term) => label.includes(term));
   });
 }
@@ -648,7 +653,7 @@ export function nativeExplorePickRegions(
       return false;
     const places = nativeExplorePlaces(data, region, building);
     const destinations = places.filter((room) => !isVisitorHallway(room));
-    if (!destinations.length) return false;
+    if (destinations.length === 0) return false;
     return true;
   });
 }
@@ -658,7 +663,8 @@ export function nativeExplorePlaces(
   region: NativeExploreRegion,
   building = "all",
 ) {
-  const keys = new Set(region.roomKeys);
+  // An owner-reviewed alias or retired label is searched through its place, not listed apart.
+  const keys = new Set(reviewedSeparatePlaceKeys(data, region.roomKeys));
   return data.records.filter(
     (r) =>
       keys.has(r.key) &&

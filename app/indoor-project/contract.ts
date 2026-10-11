@@ -182,6 +182,8 @@ export type IndoorDataset = {
   selectionDoorThresholds?: import("./selection-door-thresholds").SelectionDoorThresholds;
   /** Portable logical outlines for authoring selection only; no navigation or physical walls. */
   reviewedAreaPartitions?: import("./reviewed-area-partitions").ReviewedAreaPartitions;
+  /** Owner-reviewed aliases and retired place labels; metadata only. */
+  reviewedPlaceLabels?: import("./reviewed-place-labels").ReviewedPlaceLabels;
   /** Reviewed staff/non-walkable carve-outs of shared native walking faces. */
   nativeAccessZones?: import("./native-access-zones").NativeAccessZones;
   /** Reviewed owner links between existing graph nodes, physically rechecked. */
