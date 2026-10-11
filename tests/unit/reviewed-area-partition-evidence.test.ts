@@ -15,6 +15,9 @@ import {
   saveReviewedAreaPartition,
   applyReviewedAreaPartitionGroup,
   validateReviewedAreaPartitions,
+  reviewedAreaPartitionEvidenceStatuses,
+  reviewedAreaPartitionEvidenceSnapshotBytes,
+  REVIEWED_PARTITION_EVIDENCE_SNAPSHOT_MAX_BYTES,
   type ReviewedAreaPartition,
 } from "../../app/indoor-project/reviewed-area-partitions";
 import { deriveNativeAreas } from "../../app/indoor-project/native-area-review";
@@ -134,41 +137,156 @@ test("a far-away wall drift by one ulp does not stale a locally bound partition 
   assert.match(stale.errors.join(" "), /Physical evidence changed/);
 });
 
-test("a local wall change stales the partition, and the check names the local window", async () => {
+const moveWall = (
+  d: IndoorDataset,
+  id: number,
+  f: (ring: Point[]) => Point[],
+): IndoorDataset => ({
+  ...d,
+  walls: d.walls.map((w) =>
+    w.nativeElementId === id
+      ? { ...w, ringsFeet: [f(w.ringsFeet[0] as Point[])] }
+      : w,
+  ),
+});
+const firstVertexBy = (dy: number) => (r: Point[]) =>
+  r.map(([x, y], i) => (i ? [x, y] : [x, y + dy]) as Point);
+
+test("floating-point noise at the boundary passes the tolerant snapshot test; real local changes do not", async () => {
   const p = await fixture();
   const local = await bindReviewedAreaPartitionEvidence(
     p.dataset,
     partition("0".repeat(64)),
   );
-  const returnMoved = {
-    ...p.dataset,
-    walls: p.dataset.walls.map((w) =>
-      w.nativeElementId === 201
-        ? {
-            ...w,
-            ringsFeet: [
-              w.ringsFeet[0]!.map(
-                ([x, y], i) => (i ? [x, y] : [x, y + 2 ** -48]) as Point,
-              ),
-            ],
-          }
-        : w,
-    ),
-  };
-  const wallAdded = {
-    ...p.dataset,
-    walls: [
-      ...p.dataset.walls,
-      { levelId: 1, nativeElementId: 300, ringsFeet: [rect(19, 9, 0.4, 2)] },
+  assert(local.evidenceSnapshot);
+  assert(
+    reviewedAreaPartitionEvidenceSnapshotBytes(local.evidenceSnapshot) <=
+      REVIEWED_PARTITION_EVIDENCE_SNAPSHOT_MAX_BYTES,
+  );
+  const statusOf = async (d: IndoorDataset) =>
+    (await reviewedAreaPartitionEvidenceStatuses(d, [local]))[local.id]!;
+  // Unchanged: exact fast path.
+  assert.equal((await statusOf(p.dataset)).test, "exact");
+
+  // One ulp at a return the line ends on: the digest differs, the snapshot holds.
+  const ulp = moveWall(p.dataset, 201, firstVertexBy(2 ** -48));
+  assert.notEqual(
+    (await reviewedAreaPartitionLocalEvidence(ulp, local)).sha256,
+    local.geometrySha256,
+  );
+  const tolerant = await statusOf(ulp);
+  assert.equal(tolerant.test, "tolerance");
+  assert(
+    tolerant.maxVertexDeltaFeet! > 0 && tolerant.maxVertexDeltaFeet! < 1e-12,
+  );
+  assert.equal(
+    checkReviewedAreaPartition(ulp, local, tolerant.digest).valid,
+    true,
+  );
+  const selected = await deriveNativeAreas(
+    {
+      ...ulp,
+      reviewedAreaPartitions: {
+        version: 1,
+        sourceModelSha256: ulp.source.modelSha256,
+        partitions: [{ ...local, status: "applied" }],
+      },
+    },
+    1,
+    {},
+  );
+  assert.deepEqual(selected.logicalPartitionEvidenceTests, {
+    [local.id]: "tolerance",
+  });
+
+  const cases: [string, IndoorDataset, RegExp][] = [
+    // 1e-4 ft is a real move.
+    ["moved", moveWall(p.dataset, 201, firstVertexBy(1e-4)), /geometry/],
+    [
+      "added",
+      {
+        ...p.dataset,
+        walls: [
+          ...p.dataset.walls,
+          {
+            levelId: 1,
+            nativeElementId: 300,
+            ringsFeet: [rect(19, 9, 0.4, 2)],
+          },
+        ],
+      },
+      /added/,
     ],
-  };
-  for (const changed of [returnMoved, wallAdded]) {
-    const digest = await reviewedAreaPartitionEvidenceSha256(changed, local);
-    assert.notEqual(digest, local.geometrySha256);
-    const check = checkReviewedAreaPartition(changed, local, digest);
-    assert.equal(check.valid, false);
+    [
+      "removed",
+      {
+        ...p.dataset,
+        walls: p.dataset.walls.filter((w) => w.nativeElementId !== 201),
+      },
+      /removed/,
+    ],
+    // Same outline, one more vertex: a topology change, not noise.
+    [
+      "split edge",
+      moveWall(p.dataset, 201, (r) => [r[0]!, [15, 12], ...r.slice(1)]),
+      /topology/,
+    ],
+  ];
+  for (const [name, changed, why] of cases) {
+    const status = await statusOf(changed);
+    assert.equal(status.test, "changed", name);
+    assert.match(
+      JSON.stringify(status.differences),
+      why,
+      `${name}: ${JSON.stringify(status.differences)}`,
+    );
+    const check = checkReviewedAreaPartition(changed, local, status.digest);
+    assert.equal(check.valid, false, name);
     assert.match(check.errors.join(" "), /evidence window/);
   }
+
+  // A snapshot only speaks for the digest it hashes to.
+  const tampered = {
+    ...local,
+    evidenceSnapshot: {
+      ...local.evidenceSnapshot,
+      header: { ...local.evidenceSnapshot.header, strict: true },
+    },
+  };
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(ulp, [tampered]))[local.id]!
+      .test,
+    "changed",
+  );
+  // No snapshot: exact binding only.
+  const { evidenceSnapshot: _, ...exactOnly } = local;
+  assert.equal(
+    (await reviewedAreaPartitionEvidenceStatuses(ulp, [exactOnly]))[local.id]!
+      .test,
+    "changed",
+  );
+  // Oversized or malformed snapshots are rejected.
+  assert.throws(() =>
+    validateReviewedAreaPartitions({
+      version: 1,
+      sourceModelSha256: p.dataset.source.modelSha256,
+      partitions: [
+        {
+          ...local,
+          evidenceSnapshot: {
+            ...local.evidenceSnapshot,
+            records: [
+              [
+                "walls",
+                "x",
+                "y".repeat(REVIEWED_PARTITION_EVIDENCE_SNAPSHOT_MAX_BYTES),
+              ],
+            ],
+          },
+        },
+      ],
+    }),
+  );
 });
 
 test("the local evidence is canonical: row order, ring start and direction do not matter", async () => {
@@ -346,6 +464,8 @@ test("migration re-binds where the stored level digest is recovered and the loca
     previousRule: "logical-area-partition-physical-v1",
     geometrySha256: level,
     sourceDatasetSha256: "5".repeat(64),
+    evidenceTest: "exact",
+    maxVertexDeltaFeet: 0,
   });
   assert.equal(rebound.partition.status, "applied");
   assert.equal(
@@ -388,6 +508,29 @@ test("migration re-binds where the stored level digest is recovered and the loca
     }),
   );
 
+  assert.equal(rebound.partition.reboundFrom?.evidenceTest, "exact");
+  assert(rebound.partition.evidenceSnapshot);
+  assert.equal(migrated.history?.at(-1)?.after?.evidenceSnapshot, undefined);
+  // Floating-point noise at the boundary since the review: re-bound via tolerance.
+  const noisy = moveWall(current, 201, firstVertexBy(2 ** -48));
+  const viaTolerance = decideReviewedAreaPartitionRebind(
+    legacy,
+    sources,
+    await reviewedAreaPartitionLocalEvidence(noisy, legacy),
+  );
+  assert.equal(viaTolerance.outcome, "rebound");
+  if (viaTolerance.outcome !== "rebound") return;
+  assert.equal(viaTolerance.partition.reboundFrom?.evidenceTest, "tolerance");
+  assert(viaTolerance.partition.reboundFrom!.maxVertexDeltaFeet! > 0);
+  assert.equal(
+    (
+      await reviewedAreaPartitionEvidenceStatuses(noisy, [
+        viaTolerance.partition,
+      ])
+    )[legacy.id]!.test,
+    "exact",
+  );
+
   // No candidate reproduces the stored digest: never re-bound.
   const lost = decideReviewedAreaPartitionRebind(legacy, [sources[0]!], now);
   assert.equal(lost.outcome, "needs-review");
@@ -414,7 +557,7 @@ test("migration re-binds where the stored level digest is recovered and the loca
   if (refused.outcome !== "needs-review") return;
   assert.equal(refused.source?.sha256, "5".repeat(64));
   assert.deepEqual(refused.differences, [
-    { collection: "walls", key: "201", change: "changed" },
+    { collection: "walls", key: "201", change: "changed", detail: "geometry" },
   ]);
   assert.match(refused.reason, /evidence window/);
   // Already bound locally: nothing to do.

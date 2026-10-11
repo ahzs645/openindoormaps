@@ -51,7 +51,7 @@ import {
 import { selectionDoorIds } from "./selection-door-thresholds";
 import {
   checkReviewedAreaPartition,
-  reviewedAreaPartitionEvidenceHashes,
+  reviewedAreaPartitionEvidenceStatuses,
   validateReviewedAreaPartitions,
 } from "./reviewed-area-partitions";
 import {
@@ -123,6 +123,11 @@ export type NativeAreaResult = {
   /** Applied boundaries left out of this selection because their check failed
    * (for example stale physical evidence). Never silent: also in warnings. */
   omittedLogicalPartitions?: { id: string; label: string; errors: string[] }[];
+  /** Which evidence test each applied boundary passed: level-wide, exact local, or tolerant local. */
+  logicalPartitionEvidenceTests?: Record<
+    string,
+    "level" | "exact" | "tolerance"
+  >;
   /** Current full-project audit evidence, computed on the native review worker. */
   reviewEvidenceSha256?: string;
   levelId: number;
@@ -718,17 +723,24 @@ export async function deriveNativeAreas(
       ((!options.ignoreAppliedPartitions && p.status === "applied") ||
         options.previewPartitionIds?.includes(p.id)),
   );
-  const partitionDigests =
+  const partitionEvidence =
     activePartitions.length > 0
-      ? await reviewedAreaPartitionEvidenceHashes(data, activePartitions)
+      ? await reviewedAreaPartitionEvidenceStatuses(data, activePartitions)
       : {};
   const checkedPartitionIds: string[] = [];
+  const logicalPartitionEvidenceTests: NonNullable<
+    NativeAreaResult["logicalPartitionEvidenceTests"]
+  > = {};
   const partitionWarnings: string[] = [];
   const omittedLogicalPartitions: NonNullable<
     NativeAreaResult["omittedLogicalPartitions"]
   > = [];
   const partitionMasks = activePartitions.flatMap((p) => {
-    const check = checkReviewedAreaPartition(data, p, partitionDigests[p.id]!);
+    const check = checkReviewedAreaPartition(
+      data,
+      p,
+      partitionEvidence[p.id]!.digest,
+    );
     if (!check.valid) {
       const warning = `Area boundary ${p.label || p.id} needs review: ${check.errors.join(" ")}`;
       if (options.previewPartitionIds?.includes(p.id)) throw new Error(warning);
@@ -741,6 +753,8 @@ export async function deriveNativeAreas(
       return [];
     }
     checkedPartitionIds.push(p.id);
+    const test = partitionEvidence[p.id]!.test;
+    if (test !== "changed") logicalPartitionEvidenceTests[p.id] = test;
     return check.footprintsFeet.map((ring) => [ring]);
   });
   const scopedFloors = options.nativeFloorId
@@ -1315,6 +1329,9 @@ export async function deriveNativeAreas(
     gapCandidates,
     ...(checkedPartitionIds.length > 0
       ? { logicalPartitionIds: checkedPartitionIds }
+      : {}),
+    ...(checkedPartitionIds.length > 0
+      ? { logicalPartitionEvidenceTests }
       : {}),
     ...(omittedLogicalPartitions.length > 0
       ? { omittedLogicalPartitions }
