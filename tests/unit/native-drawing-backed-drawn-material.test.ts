@@ -482,3 +482,85 @@ test("two parallel lines with other registered linework between them are not sol
     /not solid drawn material: registered line wallSegments#2/,
   );
 });
+
+/** The registered drawing belongs to level 2 (stacked 10 ft above); `shift` moves level 2's native material. */
+function crossLevelFixture(record: boolean, shift = 0) {
+  const f = fixture();
+  const data = f.data as unknown as {
+    nativeMaterialSections: {
+      version: number;
+      sourceModelSha256: string;
+      geometrySha256: string;
+      levels: {
+        levelId: number;
+        elevationFeet: number;
+        cutElevationFeet: number;
+        sections: { partsFeet: P2[][][] }[];
+      }[];
+    };
+    nativeProvisionalCornerSeals: {
+      sourceMaterialGeometrySha256: string;
+      geometrySha256: string;
+      rows: { drawingBacked: { dwg: Record<string, unknown> } }[];
+    };
+  };
+  const m = data.nativeMaterialSections;
+  const upper = structuredClone(m.levels).map((l) => ({
+    ...l,
+    levelId: 2,
+    elevationFeet: 10,
+    cutElevationFeet: l.cutElevationFeet + 10,
+    sections: l.sections.map((s) => ({
+      ...s,
+      partsFeet: s.partsFeet.map((part) =>
+        part.map((ring) => ring.map(([x, y]) => [x + shift, y] as P2)),
+      ),
+    })),
+  }));
+  m.levels.push(...upper);
+  m.geometrySha256 = nativeDerivedFrameHash([
+    m.version,
+    m.sourceModelSha256,
+    m.levels,
+  ]);
+  const seals = data.nativeProvisionalCornerSeals;
+  seals.sourceMaterialGeometrySha256 = m.geometrySha256;
+  const reference = structuredClone(f.boundaryReference);
+  reference.sections[0]!.levelId = 2;
+  const dwg = seals.rows[0]!.drawingBacked.dwg;
+  dwg.registrationSha256 = nativeDerivedFrameHash([
+    reference.sourceSha256,
+    reference.sections[0],
+  ]);
+  if (record)
+    dwg.crossLevel = {
+      decisionId: "test-decisions#stacked",
+      sourceLevelId: 2,
+      alignmentToleranceFeet: 0.05,
+    };
+  seals.geometrySha256 = nativeProvisionalCornerSealsHash(seals as never);
+  return { data: f.data, reference };
+}
+
+test("a drawing registered to another level is cited only with an explicit cross-level decision where the floors stack", () => {
+  const silent = crossLevelFixture(false);
+  index(silent.data);
+  assert.throws(
+    () =>
+      verifyDrawingBackedDrawingEvidence(
+        silent.data.nativeProvisionalCornerSeals,
+        silent.reference,
+      ),
+    /without a cross-level owner decision/,
+  );
+  const stacked = crossLevelFixture(true);
+  assert.ok(index(stacked.data).partsAt(0.1).length > 0);
+  verifyDrawingBackedDrawingEvidence(
+    stacked.data.nativeProvisionalCornerSeals,
+    stacked.reference,
+  );
+  assert.throws(
+    () => index(crossLevelFixture(true, 0.2).data),
+    /does not line up vertically/,
+  );
+});
