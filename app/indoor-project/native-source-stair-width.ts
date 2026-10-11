@@ -38,6 +38,12 @@ export type NativeSourceStairReceipt = {
     ringsFeet: Rings;
     thicknessFeet?: number;
   }[];
+  /** Up-facing native lips of the runs (nosings): plan support only, never a visited step. */
+  supportFaces?: {
+    runElementId: number;
+    elevationFeet: number;
+    ringFeet: P2[];
+  }[];
   terminalCaps: [
     {
       pointFeet: P3;
@@ -84,7 +90,7 @@ const area = (ps: pc.MultiPolygon) =>
   );
 const close = (r: Rings) =>
   r.map((h) =>
-    h.length && h[0]![0] === h.at(-1)![0] && h[0]![1] === h.at(-1)![1]
+    h.length > 0 && h[0]![0] === h.at(-1)![0] && h[0]![1] === h.at(-1)![1]
       ? h
       : [...h, h[0]!],
   );
@@ -145,15 +151,15 @@ export function validateNativeSourceStairWidth(
       r.widthFeet !== 2 ||
       !/^[a-f0-9]{64}$/.test(r.sourceModelSha256) ||
       !Number.isSafeInteger(r.nativeStairId) ||
-      r.nativeRunIds.length < 1 ||
+      r.nativeRunIds.length === 0 ||
       new Set(r.nativeRunIds).size !== r.nativeRunIds.length ||
       r.pointsFeet.length < 4 ||
-      r.pointsFeet.length > 10000 ||
+      r.pointsFeet.length > 10_000 ||
       r.pointsFeet.some(
         (p) => p.length !== 3 || p.some((n) => !Number.isFinite(n)),
       ) ||
       r.treads.length < 2 ||
-      r.treads.length > 10000 ||
+      r.treads.length > 10_000 ||
       r.terminalCaps.length !== 2 ||
       r.levelIds[0] === r.levelIds[1]
     )
@@ -187,6 +193,22 @@ export function validateNativeSourceStairWidth(
               h.length < 3 || h.some((p) => p.some((n) => !Number.isFinite(n))),
           ),
       )
+    )
+      return false;
+    if (
+      r.supportFaces !== undefined &&
+      (!Array.isArray(r.supportFaces) ||
+        r.supportFaces.length > 10_000 ||
+        r.supportFaces.some(
+          (f) =>
+            !ids.has(f.runElementId) ||
+            !Number.isFinite(f.elevationFeet) ||
+            !Array.isArray(f.ringFeet) ||
+            f.ringFeet.length < 3 ||
+            f.ringFeet.some(
+              (p) => p.length !== 2 || p.some((n) => !Number.isFinite(n)),
+            ),
+        ))
     )
       return false;
     const sourceFloors = r.nativeFloorElementIds.map((id) =>
@@ -245,7 +267,7 @@ export function validateNativeSourceStairWidth(
             "difference",
             ownedTerminal.capParts,
             nativeRationalOverlay("union", parts as [number, number][][][]),
-          ).length
+          ).length > 0
         )
           return false;
         continue;
@@ -256,7 +278,7 @@ export function validateNativeSourceStairWidth(
             "difference",
             [strip(a, b, 2)] as [number, number][][][],
             nativeRationalOverlay("union", parts as [number, number][][][]),
-          ).length
+          ).length > 0
         )
           return false;
       } else {
@@ -267,6 +289,10 @@ export function validateNativeSourceStairWidth(
     const surfaces: { z: number; rings: Rings; parts?: Rings[] }[] = [
       ...ts.map((t) => ({ z: t.elevationFeet, rings: [t.ringFeet] })),
       ...r.landings.map((l) => ({ z: l.elevationFeet, rings: l.ringsFeet })),
+      ...(r.supportFaces ?? []).map((f) => ({
+        z: f.elevationFeet,
+        rings: [f.ringFeet],
+      })),
       ...sourceFloors.map((f) => ({
         z: f!.elevationFeet,
         rings: f!.ringsFeet,
@@ -288,7 +314,7 @@ export function validateNativeSourceStairWidth(
       const ps = surfaces
         .filter((s) => s.z >= a[2] - 0.05 && s.z <= b[2] + 0.05)
         .flatMap((s) => (s.parts ?? [s.rings]).map(close));
-      if (!ps.length) return false;
+      if (ps.length === 0) return false;
       if (exactNative) {
         if (
           nativeRationalOverlay(
@@ -306,7 +332,7 @@ export function validateNativeSourceStairWidth(
                 ),
               ].filter((p) => p.length),
             ),
-          ).length
+          ).length > 0
         )
           return false;
       } else {
@@ -333,11 +359,11 @@ export function validateNativeSourceStairWidth(
             : pc.intersection(
                 [
                   [
-                    [p[0] - 0.00001, p[1] - 0.00001],
-                    [p[0] + 0.00001, p[1] - 0.00001],
-                    [p[0] + 0.00001, p[1] + 0.00001],
-                    [p[0] - 0.00001, p[1] + 0.00001],
-                    [p[0] - 0.00001, p[1] - 0.00001],
+                    [p[0] - 0.000_01, p[1] - 0.000_01],
+                    [p[0] + 0.000_01, p[1] - 0.000_01],
+                    [p[0] + 0.000_01, p[1] + 0.000_01],
+                    [p[0] - 0.000_01, p[1] + 0.000_01],
+                    [p[0] - 0.000_01, p[1] - 0.000_01],
                   ],
                 ],
                 close([t.ringFeet]),

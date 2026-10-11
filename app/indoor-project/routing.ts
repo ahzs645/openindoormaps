@@ -10,6 +10,12 @@ import { validateNativeFloorOpeningOwnership } from "./native-floor-opening-owne
 import { validateNativeIndoorEnvelopes } from "./native-indoor-envelopes";
 import { validNativeRampSurfaceBinding } from "./native-ramp-surface";
 import { validateNativeDisplayScopes } from "./native-display-scopes";
+import { validateNativeAccessZones } from "./native-access-zones";
+import { nativeRecordOnPhysicalLevel } from "./native-physical-level-records";
+import {
+  validateReviewedCirculationLinks,
+  validReviewedCirculationLinkEdge,
+} from "./reviewed-circulation-links";
 import { validateNativeWindowDisplay } from "./native-window-display";
 import {
   createIndoorExclusionQuery,
@@ -449,6 +455,14 @@ function validateIndoorDatasetSnapshot(
     (value as IndoorDataset)?.nativeDisplayScopes,
     (value as IndoorDataset)?.source?.modelSha256,
   );
+  validateNativeAccessZones(
+    (value as IndoorDataset)?.nativeAccessZones,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
+  validateReviewedCirculationLinks(
+    (value as IndoorDataset)?.reviewedCirculationLinks,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
   const d = value as IndoorDataset,
     finitePoint = (p: unknown, n: number) =>
       Array.isArray(p) &&
@@ -589,7 +603,10 @@ function validateIndoorDatasetSnapshot(
         !Array.isArray(door.roomKeys) ||
         door.roomKeys.some(
           (k) =>
-            !d.records.some((r) => r.key === k && r.levelId === door.levelId),
+            !d.records.some(
+              (r) =>
+                r.key === k && nativeRecordOnPhysicalLevel(d, r, door.levelId),
+            ),
         ) ||
         (door.normalFeet !== undefined &&
           (!finitePoint(door.normalFeet, 2) ||
@@ -770,6 +787,19 @@ function validateIndoorDatasetSnapshot(
                   r.topElevationFeet <= r.bottomElevationFeet ||
                   typeof r.beginWithRiser !== "boolean" ||
                   typeof r.endWithRiser !== "boolean",
+              ))) ||
+          (f.supportFaces !== undefined &&
+            (!Array.isArray(f.supportFaces) ||
+              f.supportFaces.length > 10_000 ||
+              f.supportFaces.some(
+                (t) =>
+                  !Number.isSafeInteger(t.runElementId) ||
+                  !f.treads.some((x) => x.runElementId === t.runElementId) ||
+                  !Number.isFinite(t.elevationFeet) ||
+                  !Array.isArray(t.ringFeet) ||
+                  t.ringFeet.length < 3 ||
+                  t.ringFeet.length > 1000 ||
+                  t.ringFeet.some((p) => !finitePoint(p, 2)),
               ))) ||
           !Array.isArray(f.treads) ||
           f.treads.length === 0 ||
@@ -1181,12 +1211,27 @@ function validateIndoorDatasetSnapshot(
       typeof e.enabled !== "boolean"
     )
       throw new Error("Invalid indoor graph edge.");
+    if (
+      e.reviewedCirculationLinkId !== undefined &&
+      (typeof e.reviewedCirculationLinkId !== "string" ||
+        e.kind !== "walk" ||
+        e.nativeCellId !== undefined ||
+        !d.reviewedCirculationLinks?.links.some(
+          (l) => l.id === e.reviewedCirculationLinkId,
+        ))
+    )
+      throw new Error("Invalid reviewed circulation link edge.");
     const from = byNode.get(e.from)!,
       to = byNode.get(e.to)!,
+      // A reviewed owner link joins two places on one physical plane whose
+      // metadata surfaces differ; it must replay its own physical proof.
       nativeFloorAlias =
         e.kind === "walk" &&
         (from.surfaceId !== to.surfaceId || from.levelId !== to.levelId) &&
-        nativeCellSharedFloorAlias(d, e);
+        (e.reviewedCirculationLinkId === undefined
+          ? nativeCellSharedFloorAlias(d, e)
+          : Math.abs(from.pointFeet[2] - to.pointFeet[2]) <= 0.05 &&
+            validReviewedCirculationLinkEdge(d, e));
     if (e.sourceDoorProof !== undefined) {
       const p = e.sourceDoorProof;
       const indices = (v: number[], minimum: number) =>

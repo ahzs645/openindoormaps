@@ -24,8 +24,14 @@ import type { IndoorDataset, IndoorRecord } from "./contract";
 import { nativeConnectorAnchors } from "./native-connector-anchors";
 import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import { NATIVE_BARRIER_TOPOLOGY_VERSION } from "./native-barrier-topology";
+import {
+  nativeAccessZonesAt,
+  NATIVE_ACCESS_ZONES_VERSION,
+} from "./native-access-zones";
 import { routingCalculationValue } from "./routing-cache";
 import { createNativeDoorApproachQuery } from "./native-door-approach";
+import { validReviewedCirculationLinkEdge } from "./reviewed-circulation-links";
+import { createNativeRoutingMaterialQuery } from "./native-routing-material";
 export type NativeCirculationCell = NonNullable<
   IndoorDataset["circulationGeometry"]
 >["cells"][number];
@@ -40,6 +46,36 @@ function nativeCellAccessIsSupported(
     () => {
       const face = cell.exactFaceId ? index.parts(cell.exactFaceId) : undefined;
       if (!face) return false;
+      // A reviewed staff access-zone cell is restricted circulation: it must lie
+      // inside its applied zone and carry every zone identity, so the ordinary
+      // access policy keeps public routes out. Any other cell must stay clear
+      // of every applied zone on its plane.
+      const zones = routingCalculationValue(
+        data,
+        `native-access-zones:${cell.elevationFeet}`,
+        () => nativeAccessZonesAt(data, cell.elevationFeet),
+      );
+      if (cell.accessZoneId !== undefined) {
+        const zone = zones.find((z) => z.zone.id === cell.accessZoneId);
+        return (
+          !!zone &&
+          zone.zone.access === "staff" &&
+          JSON.stringify(cell.roomKeys) ===
+            JSON.stringify([...zone.zone.memberRoomKeys].sort()) &&
+          nativeRationalOverlay("difference", face, zone.parts).length === 0
+        );
+      }
+      if (
+        zones.some(
+          (z) =>
+            nativeRationalOverlay(
+              "intersection",
+              face,
+              nativeRationalIntersectionOperand(face, z.parts),
+            ).length > 0,
+        )
+      )
+        return false;
       const points = cell.ringsFeet.flat(),
         loX = Math.min(...points.map((p) => p[0])),
         hiX = Math.max(...points.map((p) => p[0])),
@@ -342,6 +378,16 @@ export function validateNativeCirculationGeometry(data: IndoorDataset): void {
     )
       throw new Error("Invalid native circulation cell or floor ownership.");
     if (
+      cell.accessZoneId !== undefined &&
+      (typeof cell.accessZoneId !== "string" ||
+        !data.nativeAccessZones?.zones.some(
+          (z) =>
+            z.id === cell.accessZoneId &&
+            Math.abs(z.elevationFeet - cell.elevationFeet) < 0.05,
+        ))
+    )
+      throw new Error("Native circulation cell names an unknown access zone.");
+    if (
       cell.connectorAnchors !== undefined &&
       (!Array.isArray(cell.connectorAnchors) ||
         cell.connectorAnchors.length === 0 ||
@@ -370,6 +416,9 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
               NATIVE_EXACT_GEOS_BINDING,
               nativeConnectorAnchors(data),
               ...(data.nativePhysicalLevels ? [data.nativePhysicalLevels] : []),
+              ...(data.nativeAccessZones
+                ? [NATIVE_ACCESS_ZONES_VERSION, data.nativeAccessZones]
+                : []),
             ]
           : []),
         ...(data.nativeMaterialSections
@@ -746,10 +795,33 @@ export function nativeCirculationWalkBlockers(
 ): Set<string> {
   const cells = nativeCirculationCells(data),
     prepared = data.circulationGeometry;
+  // A walk without a native cell is blocked unless it is a current reviewed
+  // owner link that replays physically (reviewed-circulation-links.ts).
   const blocked = new Set<string>(
     data.nativeIndoorEnvelopes
       ? edges
-          .filter((e) => e.kind === "walk" && !e.nativeCellId)
+          .filter(
+            (e) =>
+              e.kind === "walk" &&
+              !e.nativeCellId &&
+              !(
+                e.reviewedCirculationLinkId !== undefined &&
+                routingCalculationValue(
+                  data,
+                  `reviewed-circulation-link:${e.id}`,
+                  () =>
+                    validReviewedCirculationLinkEdge(
+                      data,
+                      e,
+                      routingCalculationValue(
+                        data,
+                        "reviewed-circulation-link-material",
+                        () => createNativeRoutingMaterialQuery(data),
+                      ),
+                    ),
+                )
+              ),
+          )
           .map((e) => e.id)
       : [],
   );
@@ -797,6 +869,7 @@ export function nativeCirculationWalkBlockers(
   for (const edge of edges) {
     if (
       edge.kind !== "walk" ||
+      edge.reviewedCirculationLinkId !== undefined ||
       (edge.nativeCellId && !data.nativeIndoorEnvelopes) ||
       (edge.roomKeys.length === 0 &&
         (!data.nativeIndoorEnvelopes ||

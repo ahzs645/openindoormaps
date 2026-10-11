@@ -87,6 +87,14 @@ import {
   type WindowExportMode,
 } from "./native-window-display";
 import { validateIndoorExclusions } from "./indoor-exclusions";
+import {
+  validateNativeAccessZones,
+  type NativeAccessZones,
+} from "./native-access-zones";
+import {
+  validateReviewedCirculationLinks,
+  type ReviewedCirculationLinks,
+} from "./reviewed-circulation-links";
 import type { IndoorExclusions } from "./contract";
 import { validatePreparedRouting } from "./prepared-routing";
 import { throughNavigationGeometryKey } from "./through-navigation";
@@ -239,6 +247,32 @@ function validateIndoorScopeBinding(
     throw new Error(
       "Source and prepared outdoor exclusions do not match. Regenerate the reviewed master.",
     );
+  // Reviewed access zones and owner links bind routing; a viewer may omit the
+  // authoring copy but never carry a different one.
+  validateNativeAccessZones(
+    rooms.nativeAccessZones,
+    dataset.source.modelSha256,
+  );
+  validateReviewedCirculationLinks(
+    rooms.reviewedCirculationLinks,
+    dataset.source.modelSha256,
+  );
+  for (const [name, source, prepared] of [
+    ["access zones", rooms.nativeAccessZones, dataset.nativeAccessZones],
+    [
+      "circulation links",
+      rooms.reviewedCirculationLinks,
+      dataset.reviewedCirculationLinks,
+    ],
+  ] as const)
+    if (
+      (rooms.format !== "openindoormaps-viewer-metadata" ||
+        source !== undefined) &&
+      JSON.stringify(source) !== JSON.stringify(prepared)
+    )
+      throw new Error(
+        `Source and prepared reviewed ${name} do not match. Regenerate the reviewed master.`,
+      );
 }
 
 type Entry = { path: string; bytes: number; sha256: string };
@@ -298,6 +332,8 @@ export type ProjectRooms = {
   indoorExclusions?: IndoorExclusions;
   nativeDisplayScopes?: NativeDisplayScopes;
   nativeProvisionalCornerSeals?: NativeProvisionalCornerSeals;
+  nativeAccessZones?: NativeAccessZones;
+  reviewedCirculationLinks?: ReviewedCirculationLinks;
   nativeDerivedFrameReturns?: NativeDerivedFrameReturns;
   nativeMaterialSections?: NativeMaterialSections;
   nativeSourceStairMaterials?: NativeSourceStairMaterials;
@@ -610,14 +646,14 @@ function currentPreparedDisplayArchive(
   data: IndoorDataset,
   archive: PreparedDisplayArchive | undefined,
 ) {
-  if (!archive) return undefined;
+  if (!archive) return;
   const fingerprint = preparedDisplayDatasetSha256(data);
   const descriptors = archive.descriptors.filter(
     ({ binding }) =>
       binding.datasetSha256 === fingerprint &&
       binding.enginePreparationSha256 === PREPARED_DISPLAY_ENGINE_SHA256,
   );
-  return descriptors.length ? { ...archive, descriptors } : undefined;
+  return descriptors.length > 0 ? { ...archive, descriptors } : undefined;
 }
 
 /** CLI/package worker finalization: attach only currently prepared display
@@ -985,15 +1021,15 @@ export async function exportCampusViewer(
       .map((a) => ({
         key: a.key,
         stairDisplayOnlyFlightIds: a.stairDisplayOnlyFlightIds,
-        ...(a.nativeFloorOpeningOwnership !== undefined
-          ? {
+        ...(a.nativeFloorOpeningOwnership === undefined
+          ? {}
+          : {
               nativeFloorOpeningOwnership: a.nativeFloorOpeningOwnership,
               walkability: a.walkability,
               access: a.access && {
                 kind: (a.access as { kind: unknown }).kind,
               },
-            }
-          : {}),
+            }),
       })),
     georeference: project.rooms.georeference,
     visitorMetadata: project.dataset.visitor,
@@ -1396,7 +1432,7 @@ function validateSupplementalBoundaryBinding(
   const contacts = (data.nativeSelectionContactRepairs?.repairs ?? []).filter(
     (r) => r.status === "applied",
   );
-  if (contacts.length)
+  if (contacts.length > 0)
     assertNativeSelectionContactRepairsPhysicalGuards(
       data,
       contacts,

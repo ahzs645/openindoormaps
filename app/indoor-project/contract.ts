@@ -64,6 +64,8 @@ export type IndoorEdge = {
   nativeElementId?: number;
   /** Walking branch rebuilt inside this model-bound native circulation cell. */
   nativeCellId?: string;
+  /** Reviewed owner link between two existing nodes (reviewed-circulation-links.ts); rechecked physically. */
+  reviewedCirculationLinkId?: string;
   accessible: "unknown" | "yes" | "no";
   enabled: boolean;
   notes?: string;
@@ -180,6 +182,10 @@ export type IndoorDataset = {
   selectionDoorThresholds?: import("./selection-door-thresholds").SelectionDoorThresholds;
   /** Portable logical outlines for authoring selection only; no navigation or physical walls. */
   reviewedAreaPartitions?: import("./reviewed-area-partitions").ReviewedAreaPartitions;
+  /** Reviewed staff/non-walkable carve-outs of shared native walking faces. */
+  nativeAccessZones?: import("./native-access-zones").NativeAccessZones;
+  /** Reviewed owner links between existing graph nodes, physically rechecked. */
+  reviewedCirculationLinks?: import("./reviewed-circulation-links").ReviewedCirculationLinks;
   indoorExclusions?: IndoorExclusions;
   format: "reviter-indoor";
   version: 1;
@@ -244,6 +250,8 @@ export type IndoorDataset = {
     cells: {
       id: string;
       exactFaceId?: string;
+      /** Restricted circulation carved out by a reviewed access zone (native-access-zones.ts). */
+      accessZoneId?: string;
       containedDisplay?: NativeContainedCellDisplay;
       levelIds: number[];
       elevationFeet: number;
@@ -429,6 +437,12 @@ export type IndoorDataset = {
         runElementId: number;
         elevationFeet: number;
         thicknessFeet?: number;
+        ringFeet: [number, number][];
+      }[];
+      /** Up-facing native lips of the runs beside the treads (nosings): receipt plan support only. */
+      supportFaces?: {
+        runElementId: number;
+        elevationFeet: number;
         ringFeet: [number, number][];
       }[];
       context?: "outdoor" | "tiered-seating";

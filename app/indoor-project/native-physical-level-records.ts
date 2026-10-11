@@ -59,8 +59,7 @@ const ringArea = (ring: Ring) => {
 const area = (parts: Rings[]) =>
   parts.reduce(
     (sum, rings) =>
-      sum +
-      rings.reduce((a, ring, i) => a + (i ? -1 : 1) * ringArea(ring), 0),
+      sum + rings.reduce((a, ring, i) => a + (i ? -1 : 1) * ringArea(ring), 0),
     0,
   );
 const box = (parts: Rings[]) => {
@@ -79,8 +78,9 @@ const supported = (outline: Rings, floors: Floor[]) => {
   const parts = floors
     .flatMap((f) => f.partsFeet ?? [f.ringsFeet])
     .filter((p) => p[0]?.length >= 3 && touches(box([p]), b));
-  if (!parts.length) return 0;
-  const union = parts.length === 1 ? [parts[0]] : pc.union(parts[0], ...parts.slice(1));
+  if (parts.length === 0) return 0;
+  const union =
+    parts.length === 1 ? [parts[0]] : pc.union(parts[0], ...parts.slice(1));
   return area(pc.intersection(outline, union as never) as Rings[]);
 };
 
@@ -108,7 +108,8 @@ export function nativePhysicalLevelAssignment(
       supported(
         outline,
         floors.filter(
-          (f) => Math.abs(f.elevationFeet - own.elevationFeet) < SAME_PLANE_FEET,
+          (f) =>
+            Math.abs(f.elevationFeet - own.elevationFeet) < SAME_PLANE_FEET,
         ),
       ) / total;
     if (ownFraction >= 0.5) return undefined;
@@ -126,7 +127,7 @@ export function nativePhysicalLevelAssignment(
           ids.has(f.nativeElementId) &&
           Math.abs(f.elevationFeet - level.elevationFeet) < SAME_PLANE_FEET,
       );
-      if (!slabs.length) continue;
+      if (slabs.length === 0) continue;
       const fraction = supported(outline, slabs) / total;
       if (fraction < 0.5) continue;
       const b = box([outline]);
@@ -213,5 +214,18 @@ export function nativePhysicalLevelRecords<R extends RecordLike>(
   const moved = nativePhysicalLevelAssignments(data);
   return (data.records as R[]).filter(
     (r) => (moved.get(r.key)?.physicalLevelId ?? r.levelId) === levelId,
+  );
+}
+/** A door on a native level may join a room labelled on that physical level
+ * even when the room's identity level differs (a raised Floor 1.25 office
+ * registered on Floor 1). The record's identity level stays unchanged. */
+export function nativeRecordOnPhysicalLevel(
+  data: NativePhysicalLevelData,
+  record: RecordLike,
+  levelId: number,
+) {
+  return (
+    record.levelId === levelId ||
+    nativeRecordPhysicalLevelId(data, record) === levelId
   );
 }
