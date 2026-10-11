@@ -3,7 +3,10 @@ import {
   validateNativeSelectionContactRepairs,
   deriveNativeSelectionContactRepairs,
 } from "./native-selection-contact-repairs";
-import { assertNativeSelectionContactRepairsPhysicalGuards } from "./native-selection-contact-guards";
+import {
+  assertNativeSelectionContactRepairsPhysicalGuards,
+  type NativeSelectionContactDuplicateClosure,
+} from "./native-selection-contact-guards";
 import {
   nativeRationalOverlay,
   NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
@@ -128,6 +131,10 @@ export type NativeAreaResult = {
     string,
     "level" | "exact" | "tolerance"
   >;
+  /** Joints closed both by an applied contact repair and by an applied
+   * drawing-backed row. Each joint is closed once in effect: the repair's gap
+   * mask is the closure of record, and the row is not read as foreign material. */
+  contactClosureDuplicates?: NativeSelectionContactDuplicateClosure[];
   /** Current full-project audit evidence, computed on the native review worker. */
   reviewEvidenceSha256?: string;
   levelId: number;
@@ -921,16 +928,18 @@ export async function deriveNativeAreas(
   const groundBounds = bounds(ground.flat());
   let remainingExact: NativeRationalParts | undefined;
   let remaining: Rings[];
+  let contactClosureDuplicates: NativeSelectionContactDuplicateClosure[] = [];
   if (strict) {
     const contacts = (data.nativeSelectionContactRepairs?.repairs ?? []).filter(
       (r) => r.status === "applied" && r.levelId === levelId,
     );
     const contactMasks = deriveNativeSelectionContactRepairs(data, contacts);
-    assertNativeSelectionContactRepairsPhysicalGuards(
-      data,
-      contacts,
-      contactMasks,
-    );
+    contactClosureDuplicates =
+      assertNativeSelectionContactRepairsPhysicalGuards(
+        data,
+        contacts,
+        contactMasks,
+      );
     const exactMasks: NativeRationalParts = [
       ...contactMasks.flat(),
       ...exactWallMasks(precise),
@@ -1335,6 +1344,9 @@ export async function deriveNativeAreas(
       : {}),
     ...(omittedLogicalPartitions.length > 0
       ? { omittedLogicalPartitions }
+      : {}),
+    ...(contactClosureDuplicates.length > 0
+      ? { contactClosureDuplicates }
       : {}),
     cropEvidence,
     hallwayPartsFeet: strict
