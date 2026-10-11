@@ -309,7 +309,7 @@ function resolveProjectRoute(
   // Refinement must not replace a safe source walk with an exterior shortcut.
   // A safe saved geometry remains usable when a refined guide is rejected.
   for (let i = 0; i < paths.length; i++) {
-    if (!pathExclusions(paths[i]).length) continue;
+    if (pathExclusions(paths[i]).length === 0) continue;
     const source = centeredRoutePaths(data, edges, nodeIds, false);
     if (source.some((p) => pathExclusions(p).length)) return remember(null);
     paths.splice(0, paths.length, ...source);
@@ -377,7 +377,7 @@ function resolveProjectRoute(
       .map((edge) => edge.id);
     const next = new Set([
       ...excluded,
-      ...(rejected.length ? rejected : candidateIds),
+      ...(rejected.length > 0 ? rejected : candidateIds),
     ]);
     if (next.size > excluded.size) return { retry: next };
     return remember(null);
@@ -495,7 +495,7 @@ function validateIndoorDatasetSnapshot(
     (!d.boundaryPatchState ||
       typeof d.boundaryPatchState.regenerated !== "boolean" ||
       !Array.isArray(d.boundaryPatchState.patchIds) ||
-      !d.boundaryPatchState.patchIds.length ||
+      d.boundaryPatchState.patchIds.length === 0 ||
       d.boundaryPatchState.patchIds.length > 5000 ||
       d.boundaryPatchState.patchIds.some(
         (p) => !id(p) || !d.walls.some((w) => w.reviewPatchId === p),
@@ -580,6 +580,10 @@ function validateIndoorDatasetSnapshot(
         (door.hostWallNativeElementId !== undefined &&
           (!Number.isSafeInteger(door.hostWallNativeElementId) ||
             door.hostWallNativeElementId <= 0)) ||
+        (door.drawingBackedPatchId !== undefined &&
+          (typeof door.drawingBackedPatchId !== "string" ||
+            !door.drawingBackedPatchId ||
+            door.drawingBackedPatchId.length > 200)) ||
         !finitePoint(door.pointFeet, 2) ||
         !["connected", "unmatched", "ambiguous"].includes(door.state) ||
         !Array.isArray(door.roomKeys) ||
