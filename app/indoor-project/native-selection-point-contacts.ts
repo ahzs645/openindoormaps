@@ -9,12 +9,15 @@ import {
 } from "./native-exact-planar-topology";
 
 /** Selection-only rule: native faces whose interiors meet only at isolated
- * exact points are separate selection areas. A shared boundary of positive
- * length keeps them one area. This is decided with exact rational vertex
- * identity and signed areas; no tolerance, snapping, buffering or coordinate
- * change is involved. Positive-width seams are NOT covered (they remain with
- * the reviewed contact families). Physical walls, floor holes, doors, portals,
- * routing and access are never read or changed here. */
+ * exact points, or only along zero-width edges (an exact boundary edge traced
+ * once in each direction, which has no interior on either side), are separate
+ * selection areas. A shared interior of positive width keeps them one area.
+ * This is decided with exact rational vertex identity and signed areas; no
+ * tolerance, snapping, buffering or coordinate change is involved. Seams of
+ * positive exact width, however thin (also below IEEE resolution), are NOT
+ * covered: they remain with the reviewed contact families. Physical walls,
+ * floor holes, doors, portals, routing and access are never read or changed
+ * here. */
 export const NATIVE_SELECTION_POINT_CONTACT_VERSION =
   "native-selection-point-contact-split-v1";
 
@@ -93,7 +96,9 @@ const dotSign = (
  * walk: at a vertex with several outgoing boundary edges, continue with the
  * first outgoing edge clockwise from the reversed incoming edge. This keeps
  * the area on the left of every walk and never crosses an isolated touch
- * point, so lobes meeting only at points become separate closed cycles. */
+ * point, so lobes meeting only at points become separate closed cycles. A
+ * zero-width edge is walked once each way back to back; simpleLoops drops
+ * that zero-area loop, so lobes joined only along such edges separate too. */
 function boundaryCycles(rings: Ring[]): Ring[] {
   const from: NativeRationalPoint[] = [],
     to: NativeRationalPoint[] = [];

@@ -334,3 +334,165 @@ for (const [name, input, body] of [
       }
   });
 }
+
+// Zero-width boundary: an edge traced once in each direction has no interior
+// on either side, so lobes joined only along such edges are separate areas,
+// exactly like lobes meeting at an isolated point.
+const slitLobes = parts([
+  [
+    [0, 0],
+    [1, 0],
+    [1, 0.5],
+    [2, 0.5],
+    [2, 0],
+    [3, 0],
+    [3, 1],
+    [2, 1],
+    [2, 0.5],
+    [1, 0.5],
+    [1, 1],
+    [0, 1],
+    [0, 0],
+  ],
+]);
+// The same slit with an extra collinear vertex on its return side.
+const slitWithVertex = parts([
+  [
+    [0, 0],
+    [1, 0],
+    [1, 0.5],
+    [2, 0.5],
+    [2, 0],
+    [3, 0],
+    [3, 1],
+    [2, 1],
+    [2, 0.5],
+    [1.5, 0.5],
+    [1, 0.5],
+    [1, 1],
+    [0, 1],
+    [0, 0],
+  ],
+]);
+// A wall body (hole) meeting the outline along a whole edge at the bottom and
+// at the top: the floor on either side of it is reached only along edges.
+const holeAlongShell = parts([
+  [
+    [0, 0],
+    [1.5, 0],
+    [2.5, 0],
+    [4, 0],
+    [4, 2],
+    [2.5, 2],
+    [1.5, 2],
+    [0, 2],
+    [0, 0],
+  ],
+  [
+    [1.5, 0],
+    [1.5, 2],
+    [2.5, 2],
+    [2.5, 0],
+    [1.5, 0],
+  ],
+]);
+for (const [name, input, left, right, body] of [
+  ["a zero-width slit", slitLobes, [0.5, 0.5], [2.5, 0.5], [1.5, 0.75]],
+  [
+    "a slit with a collinear vertex",
+    slitWithVertex,
+    [0.5, 0.5],
+    [2.5, 0.5],
+    [1.5, 0.75],
+  ],
+  [
+    "a hole meeting the outline along edges",
+    holeAlongShell,
+    [0.5, 1],
+    [3.5, 1],
+    [2, 1],
+  ],
+] as const) {
+  test(`lobes joined only along ${name} separate exactly`, () => {
+    const r = splitNativeSelectionPointContacts(input);
+    assert.equal(r.splitParts, 1);
+    assert.equal(r.undecidedParts, 0);
+    assert.equal(r.parts.length, 2);
+    assert.ok(sameArea(input, r.parts), "exact area preserved");
+    const a = at(r.parts, left[0], left[1]),
+      b = at(r.parts, right[0], right[1]);
+    assert.ok(a >= 0 && b >= 0 && a !== b, "separate lobes");
+    assert.equal(at(r.parts, body[0], body[1]), -1, "outside stays outside");
+    const before = new Set(
+      input.flat(2).map((p) => `${p[0].n}/${p[0].d},${p[1].n}/${p[1].d}`),
+    );
+    for (const p of r.parts.flat(2))
+      assert.ok(
+        before.has(`${p[0].n}/${p[0].d},${p[1].n}/${p[1].d}`),
+        "no point is moved or added",
+      );
+    assert.doesNotThrow(() => encode(r.parts), "split pieces are encodable");
+  });
+}
+
+test("a dead-end zero-width crack inside one area changes nothing", () => {
+  const crack = parts([
+    [
+      [0, 0],
+      [2, 0],
+      [2, 2],
+      [1, 2],
+      [1, 1],
+      [1, 2],
+      [0, 2],
+      [0, 0],
+    ],
+  ]);
+  const r = splitNativeSelectionPointContacts(crack);
+  assert.equal(r.splitParts, 0);
+  assert.equal(r.parts, crack, "unchanged object");
+});
+
+test("a positive-width channel, however thin, keeps its lobes one area", () => {
+  // Two wall bodies 2^-48 ft apart (below IEEE resolution at these
+  // coordinates' scale in the real data): a channel of positive exact width,
+  // closed only by reviewed contact rows, never by this topology rule.
+  const w = 2 ** -48;
+  const channel = nativeRationalOverlay(
+    "difference",
+    [
+      [
+        [
+          [0, 0],
+          [3, 0],
+          [3, 2],
+          [0, 2],
+        ],
+      ],
+    ],
+    [
+      [
+        [
+          [1, 0],
+          [1.5, 0],
+          [1.5, 1],
+          [1, 1],
+        ],
+      ],
+    ],
+    [
+      [
+        [
+          [1, 1 + w],
+          [1.5, 1 + w],
+          [1.5, 2],
+          [1, 2],
+        ],
+      ],
+    ],
+  );
+  assert.equal(channel.length, 1);
+  const r = splitNativeSelectionPointContacts(channel);
+  assert.equal(r.splitParts, 0);
+  assert.equal(r.parts, channel);
+});
