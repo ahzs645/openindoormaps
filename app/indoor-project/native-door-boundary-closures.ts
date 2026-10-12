@@ -54,6 +54,8 @@ const bounds = (ps: Point[], u: Point) =>
     Math.min(...ps.map((p) => p[0] * u[0] + p[1] * u[1])),
     Math.max(...ps.map((p) => p[0] * u[0] + p[1] * u[1])),
   ] as [number, number];
+/** Parts -> rings -> vertices. */
+const PARTS_VERTEX_DEPTH = 2;
 const same = (a: unknown, b: unknown) =>
   JSON.stringify(a) === JSON.stringify(b);
 const hash = (s: string) => /^[a-f0-9]{64}$/.test(s);
@@ -75,7 +77,7 @@ export function validateNativeDoorBoundaryClosures(
     !hash(v.sourceModelSha256) ||
     (modelSha !== undefined && modelSha !== v.sourceModelSha256) ||
     !Array.isArray(v.doors) ||
-    v.doors.length > 10000
+    v.doors.length > 10_000
   )
     error("source identity or payload");
   const ids = new Set<string>();
@@ -124,7 +126,7 @@ export function validateNativeDoorBoundaryClosures(
       !hash(d.evidenceSha256) ||
       typeof d.notes !== "string" ||
       !d.notes.trim() ||
-      d.notes.length > 10000
+      d.notes.length > 10_000
     )
       error("geometry evidence or duplicate door");
     ids.add(key);
@@ -178,7 +180,7 @@ export function closedBoundaryDoors(
   validateNativeDoorBoundaryClosures(value, data.source.modelSha256);
   const doors = (data.doors ?? []).filter((d) => d.levelId === levelId);
   const reviewed = (value?.doors ?? []).filter((d) => d.levelId === levelId);
-  if (!reviewed.length) return doors;
+  if (reviewed.length === 0) return doors;
   const level = data.nativeLevels.find((l) => l.id === levelId);
   if (
     !level ||
@@ -190,7 +192,7 @@ export function closedBoundaryDoors(
       (f) => Math.abs(f.elevationFeet - level!.elevationFeet) < 0.15,
     )
     .flatMap((f) => f.partsFeet ?? [f.ringsFeet]);
-  if (!floors.length) error("missing native slabs");
+  if (floors.length === 0) error("missing native slabs");
   const ground = pc.union(floors[0]!, ...floors.slice(1));
   const virtual = new Map<number, Point[]>();
   for (const saved of reviewed) {
@@ -298,7 +300,7 @@ export function closedBoundaryDoors(
       jambs.map((j) => {
         const intersection = pc.intersection([end], j.ringsFeet);
         if (area(intersection) <= 1e-8) return 0;
-        const projected = bounds(intersection.flat(2), n);
+        const projected = bounds(intersection.flat(PARTS_VERTEX_DEPTH), n);
         return projected[1] - projected[0];
       }),
     );
@@ -313,13 +315,22 @@ export function closedBoundaryDoors(
       error(
         "both exact threshold ends must meet distinct named original jambs",
       );
-    // A tiny overlap makes the native mask robust; it cannot bury a jamb.
+    // A rectangular end cannot meet an oblique or offset jamb face without
+    // entering it. The extension may enter a named jamb (whose material the
+    // selection subtracts anyway) only within the checked tangent limit, and
+    // no part of it may lie beyond a jamb: what remains outside the jambs
+    // stays one piece with the original doorway.
+    const limit = saved.measuredTangentLimitFeet ?? 0.15;
+    const outside = pc
+      .difference(extension, ...jambs.map((j) => j.ringsFeet))
+      .filter((part) => area([part]) > 1e-9);
     if (
       jambs.some(
         (j) =>
           area(pc.intersection(extension, j.ringsFeet)) >
-          (nb[1] - nb[0]) * 0.002,
-      )
+          (nb[1] - nb[0]) * limit,
+      ) ||
+      pc.union(original, outside).length !== 1
     )
       error("extension penetrates a jamb beyond contact overlap");
     virtual.set(saved.nativeElementId, saved.footprintFeet);
