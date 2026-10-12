@@ -778,3 +778,50 @@ test("a corner join is refused when the face lines only cross instead of meeting
     /do not meet at a drawn corner/,
   );
 });
+
+test("a joint line drawn from one face of the band to the other keeps the band solid; a line short of a face does not", () => {
+  const faces: Seg[] = [
+    [
+      [0, -0.25],
+      [3, -0.25],
+    ],
+    [
+      [0, 0.25],
+      [3, 0.25],
+    ],
+  ];
+  const joint = fixture({
+    wallLines: [
+      ...faces,
+      [
+        [2.04, -0.25],
+        [2.04, 0.25],
+      ],
+    ],
+  });
+  verifyDrawingBackedDrawingEvidence(
+    joint.data.nativeProvisionalCornerSeals,
+    joint.boundaryReference,
+  );
+  sourceDrawingEvidence(
+    joint.data.nativeProvisionalCornerSeals as never,
+    joint.boundaryReference,
+  );
+  const short = fixture({
+    wallLines: [
+      ...faces,
+      [
+        [2.04, -0.25],
+        [2.04, 0.2],
+      ],
+    ],
+  });
+  assert.throws(
+    () =>
+      verifyDrawingBackedDrawingEvidence(
+        short.data.nativeProvisionalCornerSeals,
+        short.boundaryReference,
+      ),
+    /not solid drawn material: registered line wallSegments#2/,
+  );
+});
