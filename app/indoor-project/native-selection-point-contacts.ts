@@ -27,7 +27,7 @@ const samePoint = (a: NativeRationalPoint, b: NativeRationalPoint) =>
   a[1].n === b[1].n &&
   a[1].d === b[1].d;
 const openRing = (r: Ring): Ring =>
-  r.length > 1 && samePoint(r[0], r[r.length - 1]) ? r.slice(0, -1) : r;
+  r.length > 1 && samePoint(r[0], r.at(-1)) ? r.slice(0, -1) : r;
 /** Twice the signed area numerator/denominator (exact). */
 function signedArea2(r: Ring): Rational {
   let n = 0n,
@@ -147,6 +147,31 @@ function boundaryCycles(rings: Ring[]): Ring[] {
   }
   return cycles;
 }
+/** A face walk passes a vertex twice where a hole meets the shell or another
+ * hole at one isolated point. The exact topology encoder admits such a shared
+ * vertex only between separate rings, so emit the walk as its simple loops:
+ * each loop keeps its own orientation (outer or hole) and the exact area and
+ * nesting checks below decide where it belongs. Vertices are never moved. */
+function simpleLoops(cycle: Ring): Ring[] {
+  const loops: Ring[] = [];
+  const stack: NativeRationalPoint[] = [];
+  const at = new Map<string, number>();
+  for (const p of cycle) {
+    const k = key(p);
+    const i = at.get(k);
+    if (i === undefined) {
+      at.set(k, stack.length);
+      stack.push(p);
+      continue;
+    }
+    const loop = stack.splice(i + 1);
+    for (const q of loop) at.delete(key(q));
+    loop.unshift(stack[i]);
+    if (loop.length >= 3) loops.push(loop);
+  }
+  if (stack.length >= 3) loops.push(stack);
+  return loops;
+}
 function interiorWitnessInside(hole: Ring, outer: Ring): 0 | 1 | -1 {
   for (const p of hole) {
     const s = nativeRationalPointInRing(p, outer);
@@ -183,7 +208,7 @@ export function splitNativeSelectionPointContacts(
   const out: NativeRationalParts = [];
   for (const part of parts) {
     const rings = part.map(openRing);
-    const closed = part.map((r) => r.length > 1 && samePoint(r[0], r[r.length - 1]));
+    const closed = part.map((r) => r.length > 1 && samePoint(r[0], r.at(-1)));
     const seen = new Set<string>();
     let repeated = false;
     for (const r of rings) {
@@ -202,7 +227,7 @@ export function splitNativeSelectionPointContacts(
     const outerSign = orientedArea(rings[0]).sign;
     const outers: { ring: Ring; area: number; holes: Ring[] }[] = [];
     const holes: Ring[] = [];
-    for (const c of boundaryCycles(rings)) {
+    for (const c of boundaryCycles(rings).flatMap(simpleLoops)) {
       const { sign: s, magnitude: a } = orientedArea(c);
       if (!s) continue;
       if (s === outerSign) outers.push({ ring: c, area: a, holes: [] });

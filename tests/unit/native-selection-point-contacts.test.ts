@@ -1,11 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  encodeNativeExactTopology,
   nativeRationalArea,
   nativeRationalPoint,
   nativeRationalPointInParts,
 } from "../../app/indoor-project/native-exact-planar-topology";
 import {
+  NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
   nativeRationalOverlay,
   type NativeRationalParts,
 } from "../../app/indoor-project/native-rational-overlay";
@@ -239,3 +241,96 @@ test("the exact overlay engine already separates simple corner touches (no chang
     /point-contact-split-v1$/,
   );
 });
+
+const encode = (p: NativeRationalParts) =>
+  encodeNativeExactTopology(
+    {
+      sourceModelSha256: "0".repeat(64),
+      sourceGeometryKey: "t",
+      kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+    },
+    p.map((part, i) => ({ id: `native-region:1:${i}`, parts: [part] })),
+  );
+const ringKeys = (ring: NativeRationalParts[number][number]) =>
+  ring.slice(0, -1).map((p) => `${p[0].n}/${p[0].d},${p[1].n}/${p[1].d}`);
+// 8 x 4 floor; a diamond wall body touches the outline at (4,0) and (4,4), so
+// the interior is two lobes meeting only at points. The left lobe also holds
+// two column bodies meeting corner to corner at (2,2).
+const holeMeetsHole = parts([
+  [
+    [0, 0],
+    [4, 0],
+    [8, 0],
+    [8, 4],
+    [4, 4],
+    [0, 4],
+    [0, 0],
+  ],
+  [
+    [4, 0],
+    [3, 2],
+    [4, 4],
+    [5, 2],
+    [4, 0],
+  ],
+  [
+    [1, 1],
+    [1, 2],
+    [2, 2],
+    [2, 1],
+    [1, 1],
+  ],
+  [
+    [2, 2],
+    [2, 3],
+    [3, 3],
+    [3, 2],
+    [2, 2],
+  ],
+]);
+// As above, but in the left lobe a wall stub touches the outline at (0,2).
+const holeMeetsShell = parts([
+  [
+    [0, 0],
+    [4, 0],
+    [8, 0],
+    [8, 4],
+    [4, 4],
+    [0, 4],
+    [0, 2],
+    [0, 0],
+  ],
+  [
+    [4, 0],
+    [3, 2],
+    [4, 4],
+    [5, 2],
+    [4, 0],
+  ],
+  [
+    [0, 2],
+    [1, 2.5],
+    [1, 1.5],
+    [0, 2],
+  ],
+]);
+for (const [name, input, body] of [
+  ["hole meets hole", holeMeetsHole, [1.5, 1.5]],
+  ["hole meets shell", holeMeetsShell, [0.6, 2]],
+] as const) {
+  test(`point-contact split of a part with ${name} at one vertex is encodable`, () => {
+    assert.doesNotThrow(() => encode(input), "the input is valid topology");
+    const r = splitNativeSelectionPointContacts(input);
+    assert.equal(r.splitParts, 1);
+    assert.equal(r.parts.length, 2);
+    assert.ok(sameArea(input, r.parts), "exact area preserved");
+    assert.notEqual(at(r.parts, 1, 3.5), at(r.parts, 7, 2), "separate lobes");
+    assert.equal(at(r.parts, body[0], body[1]), -1, "bodies stay excluded");
+    assert.doesNotThrow(() => encode(r.parts), "split pieces are encodable");
+    for (const part of r.parts)
+      for (const ring of part) {
+        const open = ringKeys(ring);
+        assert.equal(new Set(open).size, open.length, "simple rings only");
+      }
+  });
+}
