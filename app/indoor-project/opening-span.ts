@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 type XY = [number, number];
 type XYZ = [number, number, number];
@@ -42,7 +43,7 @@ export function validatedOpeningSpan(
     return;
   const [a, b] = span.pointsFeet;
   if (
-    Math.hypot(b[0] - a[0], b[1] - a[1]) < 1e-6 ||
+    DMath.hypot(b[0] - a[0], b[1] - a[1]) < 1e-6 ||
     Math.abs(a[2] - b[2]) > 0.01
   )
     return;
@@ -83,7 +84,7 @@ export function validatedOpeningSpan(
 
 export function openingSpanFrame(edge: IndoorEdge, span: OpeningSpan) {
   const [a, b] = span.pointsFeet,
-    length = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    length = DMath.hypot(b[0] - a[0], b[1] - a[1]);
   const u: XY = [(b[0] - a[0]) / length, (b[1] - a[1]) / length];
   let n: XY = [-u[1], u[0]];
   const first = edge.pointsFeet[0],

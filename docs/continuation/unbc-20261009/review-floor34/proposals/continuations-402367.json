@@ -1,0 +1,841 @@
+{
+ "status": "proposed",
+ "levelId": 402367,
+ "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+ "productionModuleSha256": {
+  "native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "native-door-boundary-closures.ts": "32829153d79367e04f14ff986df5752b2b88690de9b68f40973555112c3290f9"
+ },
+ "validation": {
+  "stage1File": "evidence/validation-402367.json",
+  "stage1Sha256": "d70229e4c3b1da10ad521fe0190275bd5cb97423ea75bacf5e2e2e0ca23c88e2",
+  "physicalFile": "evidence/validation-physical-402367.json",
+  "physicalSha256": "4ab4d938c12b26d43077902b70a74e8fb4672bce3c2feebe6df12b7f1ac1a037",
+  "finalDeriveFile": "evidence/after-all-derive-402367.json",
+  "finalDeriveSha256": "c7bfb16d03cd4eee8bdb98b68d0fee867f2caafc84b8667751d1dfa59663d848",
+  "lostNamedSingletons": [],
+  "gainedSingletons": 93
+ },
+ "application": "NOT applied. Apply only through the owning pipeline agent: append to source + prepared descriptors, regenerate circulation/mapping/display, re-verify singletons.",
+ "format": "openindoormaps-f34-proposal",
+ "family": "nativeBoundaryPatches (continuationProof)",
+ "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a",
+ "evidenceFile": "evidence/residual-gates-402367.json",
+ "checks": "validNativeContinuation + reviewedBoundaryWalls(current-contact binding) + deriveExactBoundaryPatchGroupPreview (floor/opening/door/column/fixture/contact guards + derive)",
+ "drawingBackedPolicyNote": "Physical supplemental walls; under the 2026-10-09 owner policy these may instead be carried by the generic tagged drawing-backed family.",
+ "collection": {
+  "version": 1,
+  "patches": [
+   {
+    "id": "f34-continuation:402367:1115435-1185924:-107.0747:449.0552",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.19432288951571955,
+    "ringsFeet": [
+     [
+      [
+       -107.07452881127028,
+       449.0552224445908
+      ],
+      [
+       -107.07452881127028,
+       448.6615216571892
+      ],
+      [
+       -107.26925170078601,
+       448.6615216571892
+      ],
+      [
+       -107.26925170078601,
+       449.0552224445908
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1115435,
+      "ringsFeet": [
+       [
+        [
+         -107.07472881127029,
+         448.6615216571892
+        ],
+        [
+         -91.90243934381517,
+         448.66152165718916
+        ],
+        [
+         -91.90243934381517,
+         449.05522244459075
+        ],
+        [
+         -107.07472881127029,
+         449.0552224445908
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 1185924,
+      "ringsFeet": [
+       [
+        [
+         -108.00724067716405,
+         397.66182772034836
+        ],
+        [
+         -108.00724067716395,
+         458.5387847876858
+        ],
+        [
+         -107.269051700786,
+         458.5387847876858
+        ],
+        [
+         -107.2690517007861,
+         397.66182772034836
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1115435,
+     "sourceCapFeet": [
+      [
+       -107.07472881127029,
+       449.0552224445908
+      ],
+      [
+       -107.07472881127029,
+       448.6615216571892
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       -107.26905170078601,
+       449.0552224445908
+      ],
+      [
+       -107.26905170078601,
+       448.6615216571892
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1115435 (full cap 120.0 mm) by 59.230 mm to the first face of native #1185924 in native-region:402367:13; sides [[\"04-417\"],[\"04-418\"]]; registered DWG wall lines at gate: 2. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1504000-2461086:31.7686:501.9390",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 1.3143044619424806,
+    "ringsFeet": [
+     [
+      [
+       31.768829165781334,
+       501.9389695228174
+      ],
+      [
+       31.768829165781334,
+       501.5452687354158
+      ],
+      [
+       30.454124703838854,
+       501.5452687354158
+      ],
+      [
+       30.454124703838854,
+       501.9389695228174
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1504000,
+      "ringsFeet": [
+       [
+        [
+         42.98844543874737,
+         501.9389695228174
+        ],
+        [
+         31.768629165781334,
+         501.9389695228174
+        ],
+        [
+         31.768629165781334,
+         501.5452687354158
+        ],
+        [
+         42.98844543874737,
+         501.5452687354158
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 2461086,
+      "ringsFeet": [
+       [
+        [
+         30.454324703838854,
+         500.95685010024545
+        ],
+        [
+         30.454324703838854,
+         502.557079759038
+        ],
+        [
+         29.79815672483623,
+         502.557079759038
+        ],
+        [
+         29.79815672483623,
+         500.95685010024545
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1504000,
+     "sourceCapFeet": [
+      [
+       31.768629165781334,
+       501.9389695228174
+      ],
+      [
+       31.768629165781334,
+       501.5452687354158
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       30.454324703838854,
+       501.9389695228174
+      ],
+      [
+       30.454324703838854,
+       501.5452687354158
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1504000 (full cap 120.0 mm) by 400.600 mm to the first face of native #2461086 in native-region:402367:313; sides [[\"08-409\"],[\"08-412\"]]; registered DWG wall lines at gate: 5. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1503995-2461044:31.7726:481.5748",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 1.2854330708662494,
+    "ringsFeet": [
+     [
+      [
+       31.772766173655977,
+       481.574796294471
+      ],
+      [
+       31.772766173655977,
+       481.1810955070694
+      ],
+      [
+       30.486933102789727,
+       481.1810955070694
+      ],
+      [
+       30.48693310278973,
+       481.574796294471
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1503995,
+      "ringsFeet": [
+       [
+        [
+         31.772566173655978,
+         481.1810955070694
+        ],
+        [
+         42.96547955948229,
+         481.1810955070694
+        ],
+        [
+         42.96547955948229,
+         481.574796294471
+        ],
+        [
+         31.772566173655978,
+         481.574796294471
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 2461044,
+      "ringsFeet": [
+       [
+        [
+         30.48713310278973,
+         482.230964273474
+        ],
+        [
+         30.487133102789727,
+         480.3736808089062
+        ],
+        [
+         29.830965123787102,
+         480.3736808089062
+        ],
+        [
+         29.830965123787106,
+         482.230964273474
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1503995,
+     "sourceCapFeet": [
+      [
+       31.772566173655978,
+       481.574796294471
+      ],
+      [
+       31.772566173655978,
+       481.1810955070694
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       30.48713310278973,
+       481.574796294471
+      ],
+      [
+       30.487133102789727,
+       481.1810955070694
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1503995 (full cap 120.0 mm) by 391.800 mm to the first face of native #2461044 in native-region:402367:313; sides [[\"08-408\"],[\"08-407\"]]; registered DWG wall lines at gate: 4. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:2282591-2282580:88.8727:863.1827",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 1.003723893497085,
+    "ringsFeet": [
+     [
+      [
+       88.87291938414873,
+       863.1826192034555
+      ],
+      [
+       88.66428794119842,
+       862.8487431321159
+      ],
+      [
+       87.81274728318247,
+       863.3808512149142
+      ],
+      [
+       88.02137691477344,
+       863.7147284181303
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 2282591,
+      "ringsFeet": [
+       [
+        [
+         98.46194487023902,
+         857.1906587265521
+        ],
+        [
+         88.8727497751045,
+         863.1827251882285
+        ],
+        [
+         88.66411833215419,
+         862.8488491168889
+        ],
+        [
+         98.25331342728872,
+         856.8567826552126
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 2282580,
+      "ringsFeet": [
+       [
+        [
+         109.17998602549824,
+         897.5752037485228
+        ],
+        [
+         43.25747675264777,
+         792.0771359181516
+        ],
+        [
+         42.14455274194382,
+         792.7725680234445
+        ],
+        [
+         108.06706201479429,
+         898.2706358538156
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 2282591,
+     "sourceCapFeet": [
+      [
+       88.8727497751045,
+       863.1827251882285
+      ],
+      [
+       88.66411833215419,
+       862.8488491168889
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       88.02154652381768,
+       863.7146224333574
+      ],
+      [
+       87.81291689222671,
+       863.3807452301412
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #2282591 (full cap 120.0 mm) by 305.935 mm to the first face of native #2282580 in native-region:402367:377; sides [[\"10-4038\"],[\"10-4036\"]]; registered DWG wall lines at gate: 5. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1504046-1504079:86.1056:508.8865",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.6742125984259962,
+    "ringsFeet": [
+     [
+      [
+       86.10537142299887,
+       508.8864760844976
+      ],
+      [
+       86.10537142299887,
+       509.2801768718992
+      ],
+      [
+       86.77998402142488,
+       509.2801768718992
+      ],
+      [
+       86.77998402142488,
+       508.8864760844976
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1504046,
+      "ringsFeet": [
+       [
+        [
+         74.0199415017392,
+         508.8864760844976
+        ],
+        [
+         86.10557142299888,
+         508.8864760844976
+        ],
+        [
+         86.10557142299888,
+         509.2801768718992
+        ],
+        [
+         74.0199415017392,
+         509.2801768718992
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 1504079,
+      "ringsFeet": [
+       [
+        [
+         87.76403598992884,
+         525.801830415206
+        ],
+        [
+         87.76403598992879,
+         492.05839209499595
+        ],
+        [
+         86.77978402142485,
+         492.05839209499595
+        ],
+        [
+         86.7797840214249,
+         525.801830415206
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1504046,
+     "sourceCapFeet": [
+      [
+       86.10557142299888,
+       508.8864760844976
+      ],
+      [
+       86.10557142299888,
+       509.2801768718992
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       86.77978402142487,
+       508.8864760844976
+      ],
+      [
+       86.77978402142487,
+       509.2801768718992
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1504046 (full cap 120.0 mm) by 205.500 mm to the first face of native #1504079 in native-region:402367:475; sides [[\"08-403\"],[\"08-404\"]]; registered DWG wall lines at gate: 3. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1124613-516432:246.6803:287.1810",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.2687007873956463,
+    "ringsFeet": [
+     [
+      [
+       246.6801421560178,
+       287.18109990046815
+      ],
+      [
+       246.8887717876055,
+       287.5149771036795
+      ],
+      [
+       247.11698219803066,
+       287.37237541241836
+      ],
+      [
+       246.90835256644277,
+       287.03849820920715
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1124613,
+      "ringsFeet": [
+       [
+        [
+         236.46589519539683,
+         293.56366977898506
+        ],
+        [
+         246.68031176563704,
+         287.1809939166153
+        ],
+        [
+         246.88894139722473,
+         287.51487111982664
+        ],
+        [
+         236.6745248269845,
+         293.8975469821964
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 516432,
+      "ringsFeet": [
+       [
+        [
+         247.27565947803333,
+         287.6266895585639
+        ],
+        [
+         246.75629038825514,
+         286.79552527087526
+        ],
+        [
+         247.5909833962831,
+         286.27395119190555
+        ],
+        [
+         248.1103524860613,
+         287.1051154795942
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1124613,
+     "sourceCapFeet": [
+      [
+       246.68031176563704,
+       287.1809939166153
+      ],
+      [
+       246.88894139722473,
+       287.51487111982664
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       246.90818295682354,
+       287.03860419306
+      ],
+      [
+       247.11681258841142,
+       287.3724813962712
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1124613 (full cap 120.0 mm) by 81.900 mm to the first face of native #516432 in native-region:402367:664; sides [[\"05-476\",\"05-481\"],[\"05-458\"]]; registered DWG wall lines at gate: 0. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1065410-518386:184.0914:187.0178",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.2687007873951984,
+    "ringsFeet": [
+     [
+      [
+       184.09125267971257,
+       187.01793893707574
+      ],
+      [
+       184.29988231130025,
+       187.35181614028704
+      ],
+      [
+       184.52809272172505,
+       187.20921444902612
+      ],
+      [
+       184.31946309013713,
+       186.87533724581496
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1065410,
+      "ringsFeet": [
+       [
+        [
+         168.189685793386,
+         196.95434073166481
+        ],
+        [
+         184.0914222893318,
+         187.0178329532229
+        ],
+        [
+         184.3000519209195,
+         187.3517101564342
+        ],
+        [
+         168.39831542497367,
+         197.28821793487612
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 518386,
+      "ringsFeet": [
+       [
+        [
+         184.72913201371287,
+         187.53132198567116
+        ],
+        [
+         184.12503889996424,
+         186.56457091698343
+        ],
+        [
+         184.9597319079922,
+         186.0429968380137
+        ],
+        [
+         185.5638250217408,
+         187.0097479067014
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1065410,
+     "sourceCapFeet": [
+      [
+       184.0914222893318,
+       187.0178329532229
+      ],
+      [
+       184.3000519209195,
+       187.3517101564342
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       184.3192934805179,
+       186.8754432296678
+      ],
+      [
+       184.5279231121058,
+       187.20932043287897
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1065410 (full cap 120.0 mm) by 81.900 mm to the first face of native #518386 in native-region:402367:705; sides [[\"05-495\"],[\"05-494\"]]; registered DWG wall lines at gate: 1. Proposal only; doors, access, routes unchanged."
+   },
+   {
+    "id": "f34-continuation:402367:1065402-518014:199.9473:212.3925",
+    "levelId": 402367,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "status": "proposed",
+    "widthFeet": 0.268700787395281,
+    "ringsFeet": [
+     [
+      [
+       199.94710468037664,
+       212.39260638113532
+      ],
+      [
+       199.73847504878896,
+       212.05872917792402
+      ],
+      [
+       199.9666854592136,
+       211.91612748666319
+      ],
+      [
+       200.1753150908015,
+       212.25000468987437
+      ]
+     ]
+    ],
+    "wallEvidence": [
+     {
+      "nativeElementId": 1065402,
+      "ringsFeet": [
+       [
+        [
+         199.7386446584082,
+         212.05862319407117
+        ],
+        [
+         189.19035088495673,
+         218.6499286880286
+        ],
+        [
+         189.3989805165444,
+         218.9838058912399
+        ],
+        [
+         199.94727428999587,
+         212.39250039728248
+        ]
+       ]
+      ]
+     },
+     {
+      "nativeElementId": 518014,
+      "ringsFeet": [
+       [
+        [
+         200.37635438278886,
+         212.57211222651867
+        ],
+        [
+         199.85687078142212,
+         211.74076468198092
+        ],
+        [
+         200.69156378945004,
+         211.21919060301119
+        ],
+        [
+         201.21104739081682,
+         212.0505381475489
+        ]
+       ]
+      ]
+     }
+    ],
+    "nativeDoorIds": [],
+    "continuationProof": {
+     "sourceWallId": 1065402,
+     "sourceCapFeet": [
+      [
+       199.94727428999587,
+       212.39250039728248
+      ],
+      [
+       199.7386446584082,
+       212.05862319407117
+      ]
+     ],
+     "targetContactFeet": [
+      [
+       200.17514548118226,
+       212.25011067372722
+      ],
+      [
+       199.96651584959437,
+       211.91623347051603
+      ]
+     ],
+     "evidenceSha256": "56d9a7be1a6999d70896fad279286b0ef366f9952af88eb5f8424378367d157a"
+    },
+    "notes": "F34 proposed original-axis continuation of native wall #1065402 (full cap 120.0 mm) by 81.900 mm to the first face of native #518014 in native-region:402367:705; sides [[\"05-483\"],[\"05-482\"]]; registered DWG wall lines at gate: 1. Proposal only; doors, access, routes unchanged."
+   }
+  ]
+ }
+}

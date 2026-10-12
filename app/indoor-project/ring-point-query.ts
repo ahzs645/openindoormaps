@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 type Point = [number, number];
 const epsilon = 1e-8;
 const bucketSize = 8;
@@ -15,7 +16,7 @@ export function createRingPointQuery(ring: Point[]) {
       b,
       dx,
       dy,
-      length: Math.hypot(dx, dy),
+      length: DMath.hypot(dx, dy),
       minX: Math.min(a[0], b[0]) - epsilon,
       maxX: Math.max(a[0], b[0]) + epsilon,
       minY: Math.min(a[1], b[1]) - epsilon,

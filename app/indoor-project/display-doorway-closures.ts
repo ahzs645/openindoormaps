@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 
 type Point = [number, number];
@@ -10,7 +11,7 @@ export type DisplayDoorwayClosure = {
 };
 export const DISPLAY_DOORWAY_MAX_WIDTH_FEET = 5;
 const precision = 0.02;
-const length = (a: Point, b: Point) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const length = (a: Point, b: Point) => DMath.hypot(b[0] - a[0], b[1] - a[1]);
 const dot = (a: Point, b: Point) => a[0] * b[0] + a[1] * b[1];
 const inside = (p: Point, ring: Point[]) => {
   let yes = false;

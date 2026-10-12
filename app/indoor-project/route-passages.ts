@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import { routingDoorApertures } from "./routing-apertures";
 import {
@@ -91,7 +92,7 @@ export function createDoorPassageQuery(data: IndoorDataset): PassageQuery {
       b = edge.pointsFeet.at(-1)!;
     const dx = b[0] - a[0],
       dy = b[1] - a[1],
-      length = Math.hypot(dx, dy);
+      length = DMath.hypot(dx, dy);
     if (length < 1e-6) continue;
     // Use the native aperture plane, rather than the raster-snapped portal
     // direction. Snap offsets can tilt a pair of anchors beside a side door.
@@ -105,7 +106,7 @@ export function createDoorPassageQuery(data: IndoorDataset): PassageQuery {
       for (let i = 0; i < ring.length; i++) {
         const u = ring[i],
           v = ring[(i + 1) % ring.length],
-          span = Math.hypot(v[0] - u[0], v[1] - u[1]);
+          span = DMath.hypot(v[0] - u[0], v[1] - u[1]);
         if (span < 1e-8) continue;
         const candidate: XY = [-(v[1] - u[1]) / span, (v[0] - u[0]) / span];
         if (

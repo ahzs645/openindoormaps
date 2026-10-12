@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { validateNativeSourceStairMaterials } from "./native-source-stair-material";
 import { validateNativePhysicalLevels } from "./native-physical-levels";
 import {
@@ -9,6 +10,12 @@ import { validateNativeFloorOpeningOwnership } from "./native-floor-opening-owne
 import { validateNativeIndoorEnvelopes } from "./native-indoor-envelopes";
 import { validNativeRampSurfaceBinding } from "./native-ramp-surface";
 import { validateNativeDisplayScopes } from "./native-display-scopes";
+import { validateNativeAccessZones } from "./native-access-zones";
+import { nativeRecordOnPhysicalLevel } from "./native-physical-level-records";
+import {
+  validateReviewedCirculationLinks,
+  validReviewedCirculationLinkEdge,
+} from "./reviewed-circulation-links";
 import { validateNativeWindowDisplay } from "./native-window-display";
 import {
   createIndoorExclusionQuery,
@@ -97,13 +104,14 @@ export function geographicPoint(
   const a = data.alignment,
     x = p[0] - a.originFeet[0],
     y = p[1] - a.originFeet[1],
-    c = Math.cos(a.rotationRadians),
-    s = Math.sin(a.rotationRadians),
+    c = DMath.cos(a.rotationRadians),
+    s = DMath.sin(a.rotationRadians),
     east = (x * c - y * s) * a.horizontalMetresPerFoot,
     north = (x * s + y * c) * a.horizontalMetresPerFoot;
   return [
     a.originGeographic[0] +
-      ((east / (6_378_137 * Math.cos((a.projectionLatitude * Math.PI) / 180))) *
+      ((east /
+        (6_378_137 * DMath.cos((a.projectionLatitude * Math.PI) / 180))) *
         180) /
         Math.PI,
     a.originGeographic[1] + ((north / 6_378_137) * 180) / Math.PI,
@@ -307,7 +315,7 @@ function resolveProjectRoute(
   // Refinement must not replace a safe source walk with an exterior shortcut.
   // A safe saved geometry remains usable when a refined guide is rejected.
   for (let i = 0; i < paths.length; i++) {
-    if (!pathExclusions(paths[i]).length) continue;
+    if (pathExclusions(paths[i]).length === 0) continue;
     const source = centeredRoutePaths(data, edges, nodeIds, false);
     if (source.some((p) => pathExclusions(p).length)) return remember(null);
     paths.splice(0, paths.length, ...source);
@@ -375,7 +383,7 @@ function resolveProjectRoute(
       .map((edge) => edge.id);
     const next = new Set([
       ...excluded,
-      ...(rejected.length ? rejected : candidateIds),
+      ...(rejected.length > 0 ? rejected : candidateIds),
     ]);
     if (next.size > excluded.size) return { retry: next };
     return remember(null);
@@ -390,7 +398,7 @@ function resolveProjectRoute(
             .reduce(
               (metres, p, i) =>
                 metres +
-                Math.hypot(
+                DMath.hypot(
                   p[0] - path.pointsFeet[i][0],
                   p[1] - path.pointsFeet[i][1],
                 ) *
@@ -447,6 +455,14 @@ function validateIndoorDatasetSnapshot(
     (value as IndoorDataset)?.nativeDisplayScopes,
     (value as IndoorDataset)?.source?.modelSha256,
   );
+  validateNativeAccessZones(
+    (value as IndoorDataset)?.nativeAccessZones,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
+  validateReviewedCirculationLinks(
+    (value as IndoorDataset)?.reviewedCirculationLinks,
+    (value as IndoorDataset)?.source?.modelSha256,
+  );
   const d = value as IndoorDataset,
     finitePoint = (p: unknown, n: number) =>
       Array.isArray(p) &&
@@ -493,7 +509,7 @@ function validateIndoorDatasetSnapshot(
     (!d.boundaryPatchState ||
       typeof d.boundaryPatchState.regenerated !== "boolean" ||
       !Array.isArray(d.boundaryPatchState.patchIds) ||
-      !d.boundaryPatchState.patchIds.length ||
+      d.boundaryPatchState.patchIds.length === 0 ||
       d.boundaryPatchState.patchIds.length > 5000 ||
       d.boundaryPatchState.patchIds.some(
         (p) => !id(p) || !d.walls.some((w) => w.reviewPatchId === p),
@@ -578,16 +594,23 @@ function validateIndoorDatasetSnapshot(
         (door.hostWallNativeElementId !== undefined &&
           (!Number.isSafeInteger(door.hostWallNativeElementId) ||
             door.hostWallNativeElementId <= 0)) ||
+        (door.drawingBackedPatchId !== undefined &&
+          (typeof door.drawingBackedPatchId !== "string" ||
+            !door.drawingBackedPatchId ||
+            door.drawingBackedPatchId.length > 200)) ||
         !finitePoint(door.pointFeet, 2) ||
         !["connected", "unmatched", "ambiguous"].includes(door.state) ||
         !Array.isArray(door.roomKeys) ||
         door.roomKeys.some(
           (k) =>
-            !d.records.some((r) => r.key === k && r.levelId === door.levelId),
+            !d.records.some(
+              (r) =>
+                r.key === k && nativeRecordOnPhysicalLevel(d, r, door.levelId),
+            ),
         ) ||
         (door.normalFeet !== undefined &&
           (!finitePoint(door.normalFeet, 2) ||
-            Math.abs(Math.hypot(...door.normalFeet) - 1) > 1e-5)) ||
+            Math.abs(DMath.hypot(...door.normalFeet) - 1) > 1e-5)) ||
         (door.footprintFeet !== undefined &&
           (!Array.isArray(door.footprintFeet) ||
             door.footprintFeet.length < 3 ||
@@ -764,6 +787,19 @@ function validateIndoorDatasetSnapshot(
                   r.topElevationFeet <= r.bottomElevationFeet ||
                   typeof r.beginWithRiser !== "boolean" ||
                   typeof r.endWithRiser !== "boolean",
+              ))) ||
+          (f.supportFaces !== undefined &&
+            (!Array.isArray(f.supportFaces) ||
+              f.supportFaces.length > 10_000 ||
+              f.supportFaces.some(
+                (t) =>
+                  !Number.isSafeInteger(t.runElementId) ||
+                  !f.treads.some((x) => x.runElementId === t.runElementId) ||
+                  !Number.isFinite(t.elevationFeet) ||
+                  !Array.isArray(t.ringFeet) ||
+                  t.ringFeet.length < 3 ||
+                  t.ringFeet.length > 1000 ||
+                  t.ringFeet.some((p) => !finitePoint(p, 2)),
               ))) ||
           !Array.isArray(f.treads) ||
           f.treads.length === 0 ||
@@ -1175,12 +1211,27 @@ function validateIndoorDatasetSnapshot(
       typeof e.enabled !== "boolean"
     )
       throw new Error("Invalid indoor graph edge.");
+    if (
+      e.reviewedCirculationLinkId !== undefined &&
+      (typeof e.reviewedCirculationLinkId !== "string" ||
+        e.kind !== "walk" ||
+        e.nativeCellId !== undefined ||
+        !d.reviewedCirculationLinks?.links.some(
+          (l) => l.id === e.reviewedCirculationLinkId,
+        ))
+    )
+      throw new Error("Invalid reviewed circulation link edge.");
     const from = byNode.get(e.from)!,
       to = byNode.get(e.to)!,
+      // A reviewed owner link joins two places on one physical plane whose
+      // metadata surfaces differ; it must replay its own physical proof.
       nativeFloorAlias =
         e.kind === "walk" &&
         (from.surfaceId !== to.surfaceId || from.levelId !== to.levelId) &&
-        nativeCellSharedFloorAlias(d, e);
+        (e.reviewedCirculationLinkId === undefined
+          ? nativeCellSharedFloorAlias(d, e)
+          : Math.abs(from.pointFeet[2] - to.pointFeet[2]) <= 0.05 &&
+            validReviewedCirculationLinkEdge(d, e));
     if (e.sourceDoorProof !== undefined) {
       const p = e.sourceDoorProof;
       const indices = (v: number[], minimum: number) =>
@@ -1278,7 +1329,7 @@ function validateIndoorDatasetSnapshot(
           (p) =>
             !finitePoint(p, 3) || Math.abs(p[2] - from.pointFeet[2]) > 0.05,
         ) ||
-        Math.hypot(
+        DMath.hypot(
           span.pointsFeet[1][0] - span.pointsFeet[0][0],
           span.pointsFeet[1][1] - span.pointsFeet[0][1],
         ) < 0.001 ||
@@ -1303,7 +1354,7 @@ function validateIndoorDatasetSnapshot(
             return (
               Math.abs(orientation) > 1e-6 &&
               orientation * winding > 0 &&
-              (side * Math.sign(orientation)) / Math.hypot(dx, dy) >=
+              (side * Math.sign(orientation)) / DMath.hypot(dx, dy) >=
                 span.walkingStripWidthFeet / 2 - 0.001
             );
           }),

@@ -1319,7 +1319,14 @@ export default function IndoorProjectPage() {
   const record = data?.records.find((r) => r.key === selected),
     edge = data?.edges.find((e) => e.id === edgeId),
     door = data?.doors?.find((d) => d.id === edgeId);
-  const routeCalculation = useProjectRoute(data, start, end, mode);
+  // Large datasets build the route graph on visitor intent, not at import.
+  const routeCalculation = useProjectRoute(
+    data,
+    start,
+    end,
+    mode,
+    routePickTarget !== null || !!start || !!end,
+  );
   const baseRoute = routeCalculation.route;
   const arrivalResult = useMemo(
     () =>
@@ -3153,6 +3160,7 @@ export default function IndoorProjectPage() {
                     data={data}
                     route={route}
                     calculating={routeCalculation.calculating}
+                    preparingRoutes={routeCalculation.preparing}
                     reachable={routeCalculation.reachable}
                     calculationError={routeCalculation.error}
                     routeDiagnostic={routeCalculation.diagnostic}

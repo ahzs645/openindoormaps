@@ -1,3 +1,4 @@
+import { holdHeavyWorkerLifetimeLock } from "./heavy-worker-schedule";
 import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   createWorkerRouteCalculator,
@@ -8,6 +9,9 @@ const scope = globalThis as unknown as {
   onmessage: (event: MessageEvent<RouteRequest>) => void;
   postMessage: (message: RouteResponse) => void;
 };
+// Released only when this worker context is destroyed: lets the UI wait for
+// actual teardown after terminate() before allocating another heavy worker.
+holdHeavyWorkerLifetimeLock();
 let calculate: ReturnType<typeof createWorkerRouteCalculator> | undefined;
 let pending = Promise.resolve();
 scope.onmessage = ({ data: request }) => {

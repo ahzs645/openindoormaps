@@ -92,6 +92,7 @@ export function ProjectNavigation({
   data,
   route,
   calculating,
+  preparingRoutes = false,
   calculationError,
   routeDiagnostic,
   reachable,
@@ -137,6 +138,8 @@ export function ProjectNavigation({
   managedLocations?: MapLocation[];
   route: ProjectRoute | null;
   calculating: boolean;
+  /** The route graph is still being built (first route on a large map). */
+  preparingRoutes?: boolean;
   calculationError?: string;
   routeDiagnostic?: ProjectRouteDiagnostic;
   reachable?: Set<string>;
@@ -492,7 +495,9 @@ export function ProjectNavigation({
                     role="status"
                     data-testid="project-route-calculating"
                   >
-                    Calculating directions…
+                    {preparingRoutes
+                      ? "Preparing directions…"
+                      : "Calculating directions…"}
                   </p>
                 ) : route ? (
                   <div

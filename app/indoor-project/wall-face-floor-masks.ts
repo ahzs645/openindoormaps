@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import type { FeatureCollection, MultiPolygon } from "geojson";
 import type { IndoorDataset, IndoorRecord } from "./contract";
@@ -20,7 +21,7 @@ type FloorMasks = Map<string, Rings> & {
 };
 type Hit = { ring: Point[]; edge: number; t: number; point: Point };
 const reach = 3; // Association with a nearby source edge, never wall-gap closure.
-const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const distance = (a: Point, b: Point) => DMath.hypot(a[0] - b[0], a[1] - b[1]);
 const nearest = (p: Point, a: Point, b: Point) => {
   const dx = b[0] - a[0],
     dy = b[1] - a[1];

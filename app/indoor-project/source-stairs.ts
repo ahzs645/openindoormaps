@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 import pointInPolygon from "@turf/boolean-point-in-polygon";
 export type SourceStair = NonNullable<
@@ -73,7 +74,7 @@ export function nearbySourceStairs(
                 (dx * dx + dy * dy || 1),
             ),
           );
-        return Math.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
+        return DMath.hypot(point[0] - a[0] - t * dx, point[1] - a[1] - t * dy);
       }),
     );
   };

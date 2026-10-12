@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import {
   nativeRationalOverlay,
   type NativeRationalParts,
@@ -22,6 +23,8 @@ import pc from "polygon-clipping";
 import { indoorExclusionParts } from "./indoor-exclusions";
 import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import type { IndoorDataset, IndoorEdge } from "./contract";
+import { nativeAccessZonesAt } from "./native-access-zones";
+import { nativeRecordOnPhysicalLevel } from "./native-physical-level-records";
 type Point = [number, number];
 type Rings = Point[][];
 type IndexedPart = {
@@ -193,7 +196,10 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
         .map((p) => p.rings);
     let parts: Rings[] = [];
     try {
-      if (floors.length && (!data.nativeIndoorEnvelopes || envelope.length)) {
+      if (
+        floors.length > 0 &&
+        (!data.nativeIndoorEnvelopes || envelope.length > 0)
+      ) {
         parts = pc.intersection(rect, floors);
         if (data.nativeIndoorEnvelopes)
           parts = pc.intersection(parts, envelope);
@@ -234,7 +240,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
         ? (nativeDoorClearOpening(
             data,
             door,
-            edge?.pointsFeet[0]?.[2] ?? NaN,
+            edge?.pointsFeet[0]?.[2] ?? Number.NaN,
           ) ?? door.footprintFeet)
         : door.footprintFeet,
       normal = door.normalFeet;
@@ -258,12 +264,29 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
       pair.some(
         (n) =>
           !n ||
-          n.levelId !== door.levelId ||
+          (n.levelId !== door.levelId &&
+            !(
+              records.has(n.roomKey) &&
+              nativeRecordOnPhysicalLevel(
+                data,
+                records.get(n.roomKey)!,
+                door.levelId,
+              )
+            )) ||
           !door.roomKeys.includes(n.roomKey),
       )
     )
       return result;
     const z = pair[0]!.pointFeet[2];
+    // Staff rooms of an applied reviewed staff access zone keep their own
+    // doorway halves for that zone's restricted circulation branches.
+    const zoneMembers = new Set(
+      routingCalculationValue(data, `native-access-zones:${z}`, () =>
+        nativeAccessZonesAt(data, z),
+      )
+        .filter((zone) => zone.zone.access === "staff")
+        .flatMap((zone) => zone.zone.memberRoomKeys),
+    );
     if (
       Math.abs(pair[1]!.pointFeet[2] - z) > 0.05 ||
       door.roomKeys.some((key) => {
@@ -271,7 +294,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
         return (
           !r ||
           !r.walkable ||
-          r.access === "staff" ||
+          (r.access === "staff" && !zoneMembers.has(key)) ||
           Math.abs(r.elevationFeet - z) > 0.05
         );
       })
@@ -374,14 +397,14 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
             .flatMap(
               (p) => p.exactParts ?? nativeRationalOverlay("union", [p.rings]),
             );
-          if (exactMasks.length)
+          if (exactMasks.length > 0)
             exactParts = nativeRationalOverlay(
               "difference",
               exactParts,
               exactMasks,
             );
           exactParts = freezeNativeRationalParts(exactParts);
-          if (exactParts.length)
+          if (exactParts.length > 0)
             result.set(node!.id, {
               doorId: door.id,
               z,
@@ -401,15 +424,15 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
               .filter((p) => overlaps(box, p.box))
               .map((p) => p.rings);
           if (
-            !floors.length ||
-            (data.nativeIndoorEnvelopes && !envelope.length)
+            floors.length === 0 ||
+            (data.nativeIndoorEnvelopes && envelope.length === 0)
           )
             continue;
           rings = pc.intersection([half], floors);
           if (data.nativeIndoorEnvelopes)
             rings = pc.intersection(rings, envelope);
         } else {
-          if (!support.length) continue;
+          if (support.length === 0) continue;
           rings = pc.intersection([half], support);
         }
         if (near.length > 0) rings = pc.difference(rings, ...near);
@@ -454,7 +477,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
       if (
         !a ||
         !p ||
-        Math.hypot(...p.map((v, i) => v - a.point[i])) > 1e-6 ||
+        DMath.hypot(...p.map((v, i) => v - a.point[i])) > 1e-6 ||
         approaches.get(other)?.doorId === a.doorId
       )
         return [];

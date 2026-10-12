@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 
 type Point = [number, number];
@@ -44,7 +45,7 @@ const nearest = (
       ),
     );
     const q: Point = [a[0] + t * dx, a[1] + t * dy];
-    const d = Math.hypot(q[0] - p[0], q[1] - p[1]);
+    const d = DMath.hypot(q[0] - p[0], q[1] - p[1]);
     if (d <= tolerance && d < distance) {
       best = q;
       distance = d;
@@ -113,7 +114,7 @@ export function wallJunctionPatches(
     if (wall.ringsFeet.length !== 1 || ring.length !== 4) continue;
     const lengths = ring.map((a, i) => {
       const b = ring[(i + 1) % ring.length];
-      return Math.hypot(b[0] - a[0], b[1] - a[1]);
+      return DMath.hypot(b[0] - a[0], b[1] - a[1]);
     });
     const longest = Math.max(...lengths);
     for (const [i, a] of ring.entries()) {
@@ -136,8 +137,8 @@ export function wallJunctionPatches(
         if (!qa) continue;
         const qb = nearest(b, other.edges, tolerance);
         if (!qb) continue;
-        const da = Math.hypot(qa[0] - a[0], qa[1] - a[1]),
-          db = Math.hypot(qb[0] - b[0], qb[1] - b[1]);
+        const da = DMath.hypot(qa[0] - a[0], qa[1] - a[1]),
+          db = DMath.hypot(qb[0] - b[0], qb[1] - b[1]);
         if (da > tolerance || db > tolerance || Math.max(da, db) < 1e-7)
           continue;
         patches.push({

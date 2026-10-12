@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { floorDisplayName } from "./floor-display-name";
 import type { IndoorDataset } from "./contract";
 import type { IndoorProject } from "./package";
@@ -162,7 +163,7 @@ export function validateMapEdits(
         .slice(1)
         .some(
           (p, i) =>
-            Math.hypot(p[0] - points[i][0], p[1] - points[i][1]) < 0.001,
+            DMath.hypot(p[0] - points[i][0], p[1] - points[i][1]) < 0.001,
         )
     )
       throw new Error("Line points must be distinct.");
@@ -293,7 +294,7 @@ function validateArea(points: EditPoint[]) {
   for (let i = 0; i < points.length; i++) {
     const a = points[i],
       b = points[(i + 1) % points.length];
-    if (Math.hypot(a[0] - b[0], a[1] - b[1]) < 0.001)
+    if (DMath.hypot(a[0] - b[0], a[1] - b[1]) < 0.001)
       throw new Error("Highlighted areas need distinct corners.");
     area += a[0] * b[1] - b[0] * a[1];
     for (let j = i + 2; j < points.length; j++) {
@@ -390,10 +391,10 @@ export function shapePoints(tool: string, points: EditPoint[]): EditPoint[] {
     return points;
   const [a, b] = points;
   if (tool === "rectangle") return [a, [b[0], a[1]], b, [a[0], b[1]]];
-  const radius = Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const radius = DMath.hypot(b[0] - a[0], b[1] - a[1]);
   return Array.from({ length: 48 }, (_, i) => [
-    a[0] + radius * Math.cos((i * Math.PI) / 24),
-    a[1] + radius * Math.sin((i * Math.PI) / 24),
+    a[0] + radius * DMath.cos((i * Math.PI) / 24),
+    a[1] + radius * DMath.sin((i * Math.PI) / 24),
   ]);
 }
 
@@ -406,13 +407,13 @@ export function nativeEditPoint(
   const east =
     ((((geographic[0] - a.originGeographic[0]) * Math.PI) / 180) *
       6_378_137 *
-      Math.cos((a.projectionLatitude * Math.PI) / 180)) /
+      DMath.cos((a.projectionLatitude * Math.PI) / 180)) /
     a.horizontalMetresPerFoot;
   const north =
     ((((geographic[1] - a.originGeographic[1]) * Math.PI) / 180) * 6_378_137) /
     a.horizontalMetresPerFoot;
-  const c = Math.cos(a.rotationRadians),
-    s = Math.sin(a.rotationRadians);
+  const c = DMath.cos(a.rotationRadians),
+    s = DMath.sin(a.rotationRadians);
   return [
     a.originFeet[0] + east * c + north * s,
     a.originFeet[1] - east * s + north * c,

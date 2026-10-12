@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import {
   validateNativeMaterialSections,
@@ -7,6 +8,7 @@ import {
   validateReviewedDoorApertures,
   reviewedDoorWallSourceEvidence,
 } from "./reviewed-door-apertures";
+import { activeDoorAperturePatch } from "./reviewed-drawn-doors";
 /** Portable source sidecar. Keep this wire schema and validation in sync with
  * Reviter/lib/reviter/native-boundary-patches.ts. The RVT itself is preserved. */
 type Point = [number, number];
@@ -89,7 +91,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
       p.drawingReconstructionProof ||
       p.assumedEnclosureProof ||
       p.manualPointsFeet ||
-      p.nativeDoorIds.length ||
+      p.nativeDoorIds.length > 0 ||
       !Number.isSafeInteger(proof.sourceWallId) ||
       !/^[a-f0-9]{64}$/.test(proof.evidenceSha256)
     )
@@ -127,7 +129,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
     ];
     const o = mid(a, b),
       end = mid(c, d);
-    const width = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const width = DMath.hypot(b[0] - a[0], b[1] - a[1]);
     const v: Point = [(b[0] - a[0]) / width, (b[1] - a[1]) / width];
     const u: Point = [-v[1], v[0]];
     if ((end[0] - o[0]) * u[0] + (end[1] - o[1]) * u[1] < 0) {
@@ -165,10 +167,10 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
               (dx * dx + dy * dy || 1),
           ),
         );
-      return Math.hypot(q[0] - x[0] - t * dx, q[1] - x[1] - t * dy);
+      return DMath.hypot(q[0] - x[0] - t * dx, q[1] - x[1] - t * dy);
     };
     const near = (x: Point, y: Point) =>
-      Math.hypot(x[0] - y[0], x[1] - y[1]) <= 1e-6;
+      DMath.hypot(x[0] - y[0], x[1] - y[1]) <= 1e-6;
     const edgeMatch = source.ringsFeet[0].some((q, i) => {
       const next = source.ringsFeet[0][(i + 1) % source.ringsFeet[0].length];
       return (near(a, q) && near(b, next)) || (near(b, q) && near(a, next));
@@ -181,7 +183,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
         width -
           Math.min(
             ...source.ringsFeet[0].map((q, i) =>
-              Math.hypot(
+              DMath.hypot(
                 q[0] - source.ringsFeet[0][(i + 1) % 4][0],
                 q[1] - source.ringsFeet[0][(i + 1) % 4][1],
               ),
@@ -226,7 +228,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
             q.some((n) => !Number.isFinite(n) || Math.abs(n) >= 1e7),
         ) ||
         !near(path[0], c) ||
-        !near(path[path.length - 1], d) ||
+        !near(path.at(-1)!, d) ||
         path
           .slice(1, -1)
           .some((point) => !target.ringsFeet[0].some((q) => near(q, point)))
@@ -237,8 +239,8 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
       // terminal vertex is the same source point, not a degenerate inner edge.
       const col =
           rawTarget.length > 3 &&
-          rawTarget[0][0] === rawTarget[rawTarget.length - 1][0] &&
-          rawTarget[0][1] === rawTarget[rawTarget.length - 1][1]
+          rawTarget[0][0] === rawTarget.at(-1)![0] &&
+          rawTarget[0][1] === rawTarget.at(-1)![1]
             ? rawTarget.slice(0, -1)
             : rawTarget,
         cross = (x: Point, y: Point, z: Point) =>
@@ -296,7 +298,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
         declaredMiddle !== undefined &&
         (!Number.isFinite(declaredMiddle) ||
           declaredMiddle <= 0 ||
-          declaredMiddle > 0.00025 ||
+          declaredMiddle > 0.000_25 ||
           Math.abs(declaredMiddle - middlePenetration) > 1e-8 ||
           contactDepths.some((depth) => depth <= 0))
       )
@@ -304,7 +306,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
       const permittedMiddle = declaredMiddle ?? 0;
       if (
         Math.abs(pp[0][1] + width / 2) > 1e-6 ||
-        Math.abs(pp[pp.length - 1][1] - width / 2) > 1e-6 ||
+        Math.abs(pp.at(-1)![1] - width / 2) > 1e-6 ||
         pp.some(
           (q, i) =>
             i > 0 &&
@@ -354,7 +356,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
               q[0] + ((lateral - q[1]) * (next[0] - q[0])) / (next[1] - q[1]),
             );
         }
-        if (!profileHits.length) return false;
+        if (profileHits.length === 0) return false;
         const expected = Math.min(...profileHits);
         const hits: number[] = [];
         for (let j = 0; j < col.length; j++) {
@@ -368,13 +370,13 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
               hits.push(h);
           }
         }
-        if (!hits.length || Math.abs(Math.min(...hits) - expected) > 1e-6)
+        if (hits.length === 0 || Math.abs(Math.min(...hits) - expected) > 1e-6)
           return false;
       }
       const qs = p.ringsFeet[0].map(project);
       if (qs.length !== path.length + 2) return false;
       const lo = Math.min(...qs.map((q) => q[0]));
-      if (lo > 0 || lo < -0.020001) return false;
+      if (lo > 0 || lo < -0.020_001) return false;
       const starts = qs.filter((q) => Math.abs(q[0] - lo) < 1e-6),
         rawFar = qs.filter((q) => Math.abs(q[0] - lo) >= 1e-6),
         far =
@@ -382,8 +384,8 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
             ? pp.map((q) =>
                 rawFar.reduce(
                   (best, p) =>
-                    Math.hypot(p[0] - q[0], p[1] - q[1]) <
-                    Math.hypot(best[0] - q[0], best[1] - q[1])
+                    DMath.hypot(p[0] - q[0], p[1] - q[1]) <
+                    DMath.hypot(best[0] - q[0], best[1] - q[1])
                       ? p
                       : best,
                   rawFar[0] ?? [Infinity, Infinity],
@@ -400,13 +402,13 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
         far.length !== path.length ||
         starts.some((q) => Math.abs(Math.abs(q[1]) - width / 2) > 1e-6) ||
         Math.abs(far[0][1] + width / 2) > 1e-6 ||
-        Math.abs(far[far.length - 1][1] - width / 2) > 1e-6
+        Math.abs(far.at(-1)![1] - width / 2) > 1e-6
       )
         return false;
       if (
         far.some(
           (q, i) =>
-            Math.hypot(q[0] - pp[i][0], q[1] - pp[i][1]) > 0.020001 ||
+            DMath.hypot(q[0] - pp[i][0], q[1] - pp[i][1]) > 0.020_001 ||
             q[0] < pp[i][0] - 1e-6 ||
             Math.abs(q[1]) > width / 2 + 1e-6,
         )
@@ -419,7 +421,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
           fy = far[j + 1][1] - far[j][1];
         if (
           Math.abs(ex * fy - ey * fx) >
-          1e-6 * Math.hypot(ex, ey) * Math.hypot(fx, fy)
+          1e-6 * DMath.hypot(ex, ey) * DMath.hypot(fx, fy)
         )
           return false;
       }
@@ -469,7 +471,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
     const ends = qs.filter((q) => Math.abs(q[0] - lo) >= 1e-6);
     if (
       lo > 0 ||
-      lo < -0.020001 ||
+      lo < -0.020_001 ||
       starts.length !== 2 ||
       ends.length !== 2 ||
       qs.some((q) => Math.abs(Math.abs(q[1]) - width / 2) > 1e-6) ||
@@ -478,7 +480,7 @@ export function validNativeContinuation(p: NativeBoundaryPatch): boolean {
           (x) => Math.abs(q[1] - x[1]) < 1e-6,
         );
         return (
-          !contact || q[0] < contact[0] - 1e-6 || q[0] > contact[0] + 0.020001
+          !contact || q[0] < contact[0] - 1e-6 || q[0] > contact[0] + 0.020_001
         );
       }) ||
       new Set(
@@ -508,7 +510,7 @@ export function validDrawingReconstruction(p: NativeBoundaryPatch): boolean {
     p.continuationProof ||
     p.assumedEnclosureProof ||
     p.manualPointsFeet ||
-    p.nativeDoorIds.length ||
+    p.nativeDoorIds.length > 0 ||
     !/^[a-f0-9]{64}$/.test(proof.sourceDrawingSha256) ||
     !/^[a-f0-9]{64}$/.test(proof.evidenceSha256) ||
     typeof proof.sectionId !== "string" ||
@@ -533,7 +535,8 @@ export function validDrawingReconstruction(p: NativeBoundaryPatch): boolean {
     )
   )
     return false;
-  const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const distance = (a: Point, b: Point) =>
+    DMath.hypot(a[0] - b[0], a[1] - b[1]);
   if (q.some((p, i) => distance(p, r[i]) > proof.contactAdaptationFeet + 1e-6))
     return false;
   const lengths = r.map((p, i) => distance(p, r[(i + 1) % 4]));
@@ -587,7 +590,7 @@ export function validAssumedEnclosure(p: NativeBoundaryPatch): boolean {
       p.continuationProof ||
       p.drawingReconstructionProof ||
       p.manualPointsFeet ||
-      p.nativeDoorIds.length ||
+      p.nativeDoorIds.length > 0 ||
       proof.assumedConstruction !== "solid-enclosed-box" ||
       proof.revisitRequired !== true ||
       !/^[a-f0-9]{64}$/.test(proof.sourceDrawingSha256) ||
@@ -651,7 +654,7 @@ export function validAssumedEnclosure(p: NativeBoundaryPatch): boolean {
         return false;
     }
     const lengths = r.map((a, i) =>
-      Math.hypot(a[0] - r[(i + 1) % 4][0], a[1] - r[(i + 1) % 4][1]),
+      DMath.hypot(a[0] - r[(i + 1) % 4][0], a[1] - r[(i + 1) % 4][1]),
     );
     if (
       Math.min(...lengths) < 0.05 ||
@@ -662,7 +665,7 @@ export function validAssumedEnclosure(p: NativeBoundaryPatch): boolean {
     const dx = q[0][0] - r[0][0],
       dy = q[0][1] - r[0][1];
     return (
-      Math.hypot(dx, dy) <= proof.contactAdaptationFeet + 1e-6 &&
+      DMath.hypot(dx, dy) <= proof.contactAdaptationFeet + 1e-6 &&
       q.every(
         (p, i) =>
           Math.abs(p[0] - r[i][0] - dx) < 1e-6 &&
@@ -684,7 +687,7 @@ export function validateNativeBoundaryPatches(
     r.length === 1 &&
     Array.isArray(r[0]) &&
     r[0].length >= 3 &&
-    r[0].length <= 10000 &&
+    r[0].length <= 10_000 &&
     r[0].every(
       (p) =>
         Array.isArray(p) &&
@@ -728,7 +731,7 @@ export function validateNativeBoundaryPatches(
             : 4) ||
         p.ringsFeet[0].some(
           (q, i) =>
-            Math.hypot(
+            DMath.hypot(
               q[0] - p.ringsFeet[0][(i + 1) % p.ringsFeet[0].length][0],
               q[1] - p.ringsFeet[0][(i + 1) % p.ringsFeet[0].length][1],
             ) >
@@ -756,7 +759,7 @@ export function validateNativeBoundaryPatches(
         p.nativeDoorIds.some((id) => !Number.isSafeInteger(id) || id <= 0) ||
         typeof p.notes !== "string" ||
         !p.notes.trim() ||
-        p.notes.length > 10000 ||
+        p.notes.length > 10_000 ||
         (p.continuationProof !== undefined && !validNativeContinuation(p)) ||
         (p.drawingReconstructionProof !== undefined &&
           !validDrawingReconstruction(p)) ||
@@ -776,11 +779,9 @@ export function sameNativeMaterialEvidence(a: Rings, b: Rings): boolean {
       Math.round(x * 1e10),
       Math.round(y * 1e10),
     ]);
-    if (points.some((p) => p.some((n) => !Number.isSafeInteger(n))))
-      return undefined;
+    if (points.some((p) => p.some((n) => !Number.isSafeInteger(n)))) return;
     const same = (x: number[], y: number[]) => x[0] === y[0] && x[1] === y[1];
-    if (points.length > 1 && same(points[0], points[points.length - 1]))
-      points.pop();
+    if (points.length > 1 && same(points[0], points.at(-1)!)) points.pop();
     points = points.filter((p, i) => !same(p, points[(i + 1) % points.length]));
     let changed = true;
     while (changed && points.length >= 3) {
@@ -803,14 +804,14 @@ export function sameNativeMaterialEvidence(a: Rings, b: Rings): boolean {
         }
       }
     }
-    if (points.length < 3) return undefined;
+    if (points.length < 3) return;
     const candidates = [points, points.slice().reverse()].flatMap((ps) =>
       ps.map((_, i) => JSON.stringify([...ps.slice(i), ...ps.slice(0, i)])),
     );
     return candidates.sort()[0];
   };
   const key = (rings: Rings) => {
-    if (!rings.length) return undefined;
+    if (rings.length === 0) return;
     const outer = ringKey(rings[0]),
       holes = rings.slice(1).map(ringKey);
     return outer && holes.every((h) => h !== undefined)
@@ -840,10 +841,11 @@ export function boundaryPatchMaterialParts(
     patch.wallEvidence[0].nativeElementId;
   const cuts = (doorCuts?.patches ?? []).filter(
     (p) =>
+      activeDoorAperturePatch(p) &&
       p.levelId === patch.levelId &&
       p.wallEvidence.some((w) => w.nativeElementId === owner),
   );
-  return cuts.length
+  return cuts.length > 0
     ? (pc.difference(
         patch.ringsFeet,
         ...cuts.map((p) => [p.apertureFeet]),
@@ -891,7 +893,9 @@ export function validateCurrentBoundaryContacts(
         rings.map((r) => r.map((p) => [p[0] - origin[0], p[1] - origin[1]]));
       try {
         return area(pc.intersection(local(a), local(b)) as Rings[]) > 1e-8;
-      } catch {}
+      } catch {
+        // Retried below on fixed quantization grids.
+      }
       for (const grid of [1e-12, 1e-11, 1e-10]) {
         let valid = true;
         const points = new Map<string, Point[]>();
@@ -913,7 +917,7 @@ export function validateCurrentBoundaryContacts(
               const previous = points.get(key) ?? [];
               for (const other of previous)
                 if (
-                  Math.hypot(p[0] - other[0], p[1] - other[1]) >
+                  DMath.hypot(p[0] - other[0], p[1] - other[1]) >
                   4 *
                     Number.EPSILON *
                     Math.max(1, ...p.map(Math.abs), ...other.map(Math.abs))
@@ -931,7 +935,9 @@ export function validateCurrentBoundaryContacts(
         if (!valid) continue;
         try {
           return area(pc.intersection(aa, bb) as Rings[]) > 1e-8;
-        } catch {}
+        } catch {
+          // Try the next quantization grid.
+        }
       }
       throw originalError;
     }
@@ -958,16 +964,16 @@ export function validateCurrentBoundaryContacts(
           : [],
       ),
     );
-    for (let i = 0; i < local.length; i++) {
+    for (const [i, element] of local.entries()) {
       const reached = new Set([i]),
         pending = [i];
-      while (pending.length)
+      while (pending.length > 0)
         for (const j of neighbours[pending.pop()!])
           if (!reached.has(j)) {
             reached.add(j);
             pending.push(j);
           }
-      for (const support of local[i].wallEvidence) {
+      for (const support of element.wallEvidence) {
         if (
           ![...reached].some((j) =>
             (owners.get(support.nativeElementId) ?? []).some(
@@ -978,7 +984,7 @@ export function validateCurrentBoundaryContacts(
           )
         )
           throw new Error(
-            `Boundary patch ${local[i].id} does not contact actual current native material #${support.nativeElementId}. Review or supersede it before regeneration.`,
+            `Boundary patch ${element.id} does not contact actual current native material #${support.nativeElementId}. Review or supersede it before regeneration.`,
           );
       }
     }

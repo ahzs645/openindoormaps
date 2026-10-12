@@ -1,0 +1,12 @@
+ok 1 - closed room is enclosed at every cut; supplement stays inside native walking support
+ok 2 - a 49 mm joint keeps the face open; only an explicitly reviewed correction closes it and its labels propagate
+ok 3 - a seal applied at only one cut is not enough (facade must close at every cut)
+ok 4 - parapet-only terrace (bounded at the ankle cut only) is not admitted
+ok 5 - door footprints close openings for enclosure only; a doorless opening stays open
+ok 6 - islands inside a cavity stay solid and authored parts are subtracted, not replaced
+ok 7 - approximate curtain-host footprints are excluded by the dataset adapter
+ok 8 - merge keeps authored parts byte-identical, appends evidence and passes checksum verification
+ok 9 - an intermediate-level cut closes another storey's physical door only when its leaf spans the cut
+# tests 9
+# pass 9
+# fail 0

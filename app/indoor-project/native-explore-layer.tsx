@@ -1,3 +1,9 @@
+import { floorDiagnostic, floorDiagnosticsEnabled } from "./floor-diagnostics";
+import { geoJsonStatistics } from "./geojson-statistics";
+import {
+  mapSourceFeatures,
+  NATIVE_EXPLORE_PROPERTIES,
+} from "./map-source-properties";
 import { useNativeExactHits } from "./use-native-exact-hits";
 import { mapDrawingFeatures } from "./map-drawing-features";
 import { projectPlaceDisplayName } from "./visitor-metadata";
@@ -433,17 +439,6 @@ export function NativeExploreLayer({
     // indoor native circulation tint when the prepared layer finishes later.
     if (map.getLayer("project-overview-fill") && map.getLayer(layers[0]))
       map.moveLayer("project-overview-fill", layers[4]);
-    [
-      result?.fills,
-      result?.outlines,
-      result?.partitions,
-      result?.overview,
-      result?.walls,
-    ].forEach((value, i) =>
-      (map.getSource(sources[i]) as GeoJSONSource | undefined)?.setData(
-        mapDrawingFeatures(value ?? empty),
-      ),
-    );
     for (const id of [layers[0], layers[4]])
       if (map.getLayer(id))
         map.setPaintProperty(id, "fill-color", [
@@ -476,6 +471,33 @@ export function NativeExploreLayer({
         ["literal", selectedRegions],
       ]);
   }, [map, isLoaded, result, selectedRegions]);
+  // Whole-floor geometry is uploaded once per result, never per selection:
+  // each setData re-sends and re-indexes the collection in MapLibre's worker.
+  // Selection only changes the paint/filter expressions above.
+  useEffect(() => {
+    if (!map || !isLoaded) return;
+    [
+      result?.fills,
+      result?.outlines,
+      result?.partitions,
+      result?.overview,
+      result?.walls,
+    ].forEach((value, i) => {
+      // Only the properties these layers read (see NATIVE_EXPLORE_PROPERTIES).
+      const drawing = mapSourceFeatures(
+        mapDrawingFeatures(value ?? empty),
+        NATIVE_EXPLORE_PROPERTIES,
+      );
+      if (floorDiagnosticsEnabled())
+        floorDiagnostic("source:upload", {
+          id: sources[i],
+          ...geoJsonStatistics(drawing),
+        });
+      (map.getSource(sources[i]) as GeoJSONSource | undefined)?.setData(
+        drawing,
+      );
+    });
+  }, [map, isLoaded, result]);
   useEffect(() => {
     if (!map || !isLoaded) return;
     (map.getSource(sources[5]) as GeoJSONSource | undefined)?.setData(

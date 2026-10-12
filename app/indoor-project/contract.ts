@@ -64,6 +64,8 @@ export type IndoorEdge = {
   nativeElementId?: number;
   /** Walking branch rebuilt inside this model-bound native circulation cell. */
   nativeCellId?: string;
+  /** Reviewed owner link between two existing nodes (reviewed-circulation-links.ts); rechecked physically. */
+  reviewedCirculationLinkId?: string;
   accessible: "unknown" | "yes" | "no";
   enabled: boolean;
   notes?: string;
@@ -166,6 +168,8 @@ export type IndoorDataset = {
   nativeDerivedFrameReturns?: import("./native-derived-frame-returns").NativeDerivedFrameReturns;
   nativeProvisionalCornerSeals?: import("./native-provisional-corner-seals").NativeProvisionalCornerSeals;
   nativeMaterialSections?: import("./native-material-sections").NativeMaterialSections;
+  /** Derived production-cutter sections of owners the prepared rows omit (compiler-only, re-derived). */
+  nativeMaterialSectionSupplement?: import("./native-material-section-supplement").NativeMaterialSectionSupplement;
   nativeIndoorEnvelopes?: import("./native-indoor-envelopes").NativeIndoorEnvelopes;
   /** Checked presentation coverage only; native selections and routes stay unchanged. */
   nativeDisplayScopes?: import("./native-display-scopes").NativeDisplayScopes;
@@ -178,6 +182,12 @@ export type IndoorDataset = {
   selectionDoorThresholds?: import("./selection-door-thresholds").SelectionDoorThresholds;
   /** Portable logical outlines for authoring selection only; no navigation or physical walls. */
   reviewedAreaPartitions?: import("./reviewed-area-partitions").ReviewedAreaPartitions;
+  /** Owner-reviewed aliases and retired place labels; metadata only. */
+  reviewedPlaceLabels?: import("./reviewed-place-labels").ReviewedPlaceLabels;
+  /** Reviewed staff/non-walkable carve-outs of shared native walking faces. */
+  nativeAccessZones?: import("./native-access-zones").NativeAccessZones;
+  /** Reviewed owner links between existing graph nodes, physically rechecked. */
+  reviewedCirculationLinks?: import("./reviewed-circulation-links").ReviewedCirculationLinks;
   indoorExclusions?: IndoorExclusions;
   format: "reviter-indoor";
   version: 1;
@@ -242,6 +252,8 @@ export type IndoorDataset = {
     cells: {
       id: string;
       exactFaceId?: string;
+      /** Restricted circulation carved out by a reviewed access zone (native-access-zones.ts). */
+      accessZoneId?: string;
       containedDisplay?: NativeContainedCellDisplay;
       levelIds: number[];
       elevationFeet: number;
@@ -327,6 +339,9 @@ export type IndoorDataset = {
     normalFeet?: [number, number];
     roomKeys: string[];
     state: "connected" | "unmatched" | "ambiguous";
+    /** Drawing-backed door (reviewedDoorApertures kind "dwg-drawn-door"): no native door
+     * element exists; nativeElementId is the record's synthetic identity. */
+    drawingBackedPatchId?: string;
   }[];
   /** Prepared visual geometry. It never authorizes a graph edge or replaces source routing polygons. */
   presentation?: {
@@ -424,6 +439,12 @@ export type IndoorDataset = {
         runElementId: number;
         elevationFeet: number;
         thicknessFeet?: number;
+        ringFeet: [number, number][];
+      }[];
+      /** Up-facing native lips of the runs beside the treads (nosings): receipt plan support only. */
+      supportFaces?: {
+        runElementId: number;
+        elevationFeet: number;
         ringFeet: [number, number][];
       }[];
       context?: "outdoor" | "tiered-seating";

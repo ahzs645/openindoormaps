@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { isConnectorLobbyDestination } from "./connector-arrival";
 import type { IndoorDataset } from "./contract";
 import type { ProjectRoute } from "./routing";
@@ -54,7 +55,7 @@ const length = (points: readonly XYZ[], scale: number) =>
     .slice(1)
     .reduce(
       (sum, p, i) =>
-        sum + Math.hypot(p[0] - points[i][0], p[1] - points[i][1]) * scale,
+        sum + DMath.hypot(p[0] - points[i][0], p[1] - points[i][1]) * scale,
       0,
     );
 
@@ -118,7 +119,7 @@ export function resolveRouteArrival(
       inside.pointFeet[0] - outside.pointFeet[0],
       inside.pointFeet[1] - outside.pointFeet[1],
     ];
-    const d = Math.hypot(...delta);
+    const d = DMath.hypot(...delta);
     if (d < 1e-8)
       return unavailable(
         "The destination entrance has no verified approach. Choose Inside room.",
@@ -199,7 +200,7 @@ export function resolveRouteArrival(
         .filter(
           (p, j) =>
             !j ||
-            Math.hypot(
+            DMath.hypot(
               p[0] - points[j - 1][0],
               p[1] - points[j - 1][1],
               p[2] - points[j - 1][2],

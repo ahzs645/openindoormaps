@@ -7,7 +7,27 @@ import { nativeStairZoomStyle } from "./native-stair-style";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { isVisitorHallway } from "./place-discovery";
 import { stableWallGeometry } from "./stable-wall-geometry";
+import { singleExtrusionWalls } from "./native-wall-level-owner";
 import { precisionWallLayer } from "./precision-wall-layer";
+import {
+  floorDiagnostic,
+  floorDiagnosticsEnabled,
+  timeFloorStage,
+} from "./floor-diagnostics";
+import {
+  preparedDisplayStatus,
+  shortEngine,
+  warnStalePreparedDisplay,
+} from "./prepared-display-status";
+import { geoJsonStatistics } from "./geojson-statistics";
+import {
+  largeIndoorProject,
+  shouldRecreateMapForScope,
+} from "./heavy-worker-schedule";
+import {
+  emptyPreparedFloorSources,
+  removePreparedCustomLayers,
+} from "./prepared-layer-lifetime";
 import { useEffect, useMemo, useRef, type MutableRefObject } from "react";
 import {
   LngLatBounds,
@@ -17,7 +37,7 @@ import {
   type ExpressionSpecification,
 } from "maplibre-gl";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
-import { useMap } from "~/components/map/map";
+import { useMap, useMapRecreate } from "~/components/map/map";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
 import { hospitalFollowPadding } from "~/utils/hospital-follow-padding";
@@ -62,6 +82,11 @@ const collection = <T extends Geometry>(
   type: "FeatureCollection",
   features,
 });
+/** Stable empty collection for sources hidden in the current mode. */
+const HIDDEN_SOURCE: FeatureCollection = {
+  type: "FeatureCollection",
+  features: [],
+};
 function PreparedProjectMapLayers({
   prepared,
   basemapVisibility,
@@ -124,6 +149,14 @@ function PreparedProjectMapLayers({
   selectionPadding?: number;
 }) {
   const { map, isLoaded } = useMap();
+  useEffect(() => {
+    floorDiagnostic("layers:prepared-mount", { roomThree });
+    return () => {
+      floorDiagnostic("layers:prepared-unmount", { roomThree });
+    };
+    // Mount/unmount markers for one prepared result only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prepared]);
   const uploadedSources = useRef(
     new Map<string, { source: GeoJSONSource; value: FeatureCollection }>(),
   );
@@ -181,21 +214,71 @@ function PreparedProjectMapLayers({
     () => ({ features: prepared.presentation.nativeWindows }),
     [prepared.presentation.nativeWindows],
   );
-  const layers = useMemo(() => {
+  // Stable per-floor glazing/frame inputs, so their precision meshes are reused
+  // across selection, route and label changes instead of re-triangulated.
+  const windowParts = useMemo(
+    () =>
+      ([true, false] as const).map((glass) => ({
+        glass,
+        walls: {
+          type: "FeatureCollection" as const,
+          features: windows.features.features.filter(
+            (f) => (f.properties?.role === "glazing") === glass,
+          ),
+        },
+      })),
+    [windows],
+  );
+  // Whole-floor wall extrusion input. Kept out of the selection/label-driven
+  // memo below so a click does not rebuild, re-upload or re-triangulate it.
+  const exposedWalls = useMemo(() => {
     const planWalls =
       data.windowDisplay?.mode === "native" && !roomThree
         ? prepared.presentation.nativeWindowPlanWalls
         : undefined;
+    const source = review
+      ? (planWalls?.exposed ?? display.exposedWalls)
+      : simplifyGeometry
+        ? (planWalls?.simple ?? simpleWalls)
+        : showStructures
+          ? (planWalls?.exposed ?? display.exposedWalls)
+          : (planWalls?.visitor ?? visitorWalls);
+    return timeFloorStage(
+      "layers:stable-wall-geometry",
+      () =>
+        stableWallGeometry(
+          // Native wall paint is one plan section per native level; in a
+          // combined scope the same physical wall would otherwise be lifted
+          // to every level it crosses. Extrusion views only: the 2D map and
+          // the prepared worker result are untouched.
+          roomThree ? singleExtrusionWalls(data, levelIds, source) : source,
+        ),
+      (walls) => ({ features: walls.features.length }),
+    );
+  }, [
+    data,
+    levelIds,
+    data.windowDisplay?.mode,
+    roomThree,
+    prepared.presentation.nativeWindowPlanWalls,
+    review,
+    simplifyGeometry,
+    showStructures,
+    display.exposedWalls,
+    simpleWalls,
+    visitorWalls,
+  ]);
+  // Whole-floor collections that do not depend on selection, labels or the
+  // route keep their identity, so a click does not re-send them to MapLibre.
+  const staticLayers = useMemo(() => {
     const {
       records,
       areas,
       walls,
       roomBlocks,
-      exposedWalls,
       doorFootprints,
       doorMarkers,
       lowerRooms,
-      labels,
     } = display;
     const keys = new Set(records.map((r) => r.key));
     const edges = data.edges.filter(
@@ -245,32 +328,6 @@ function PreparedProjectMapLayers({
           },
         })),
     ]);
-    const routeLines = collection(
-      (route?.paths ?? [])
-        .filter((path) => path.levelIds.some((id) => levelIds.includes(id)))
-        .filter(
-          (path) =>
-            !relativeHeights &&
-            (!(roomThree || nativeModel) ||
-              !path.edgeIds.some((id) =>
-                route?.edges.some(
-                  (e) =>
-                    e.id === id &&
-                    data.rampDisplay?.ramps.some(
-                      (r) => r.nativeElementId === e.nativeElementId,
-                    ),
-                ),
-              )),
-        )
-        .map((path, i) => ({
-          type: "Feature",
-          properties: { id: `route:${i}`, centered: path.centered },
-          geometry: {
-            type: "LineString",
-            coordinates: path.pointsFeet.map((p) => geographicPoint(data, p)),
-          },
-        })),
-    );
     return {
       areas: !review && simplifyGeometry ? simpleAreas : areas,
       walls,
@@ -284,45 +341,65 @@ function PreparedProjectMapLayers({
             !prepared.stairSurroundKeys.includes(String(f.properties?.key)),
         ),
       ),
-      exposedWalls: stableWallGeometry(
-        review
-          ? (planWalls?.exposed ?? exposedWalls)
-          : simplifyGeometry
-            ? (planWalls?.simple ?? simpleWalls)
-            : showStructures
-              ? (planWalls?.exposed ?? exposedWalls)
-              : (planWalls?.visitor ?? visitorWalls),
-      ),
+      exposedWalls,
       lines,
       portals,
-      routeLines,
       records,
       doorFootprints:
         !review && simplifyGeometry ? simpleDoors : doorFootprints,
       lowerRooms,
-      labels: review ? labels : visitorLabels,
     };
   }, [
     data,
     levelIds,
-    route,
     display,
     review,
-    showStructures,
-    windows,
-    visitorWalls,
+    exposedWalls,
     simplifyGeometry,
-    simpleWalls,
     simpleRooms,
     simpleAreas,
     simpleDoors,
-    visitorLabels,
     nativeStairKeys,
     prepared.stairSurroundKeys,
-    roomThree,
-    nativeModel,
-    relativeHeights,
   ]);
+  const routeLines = useMemo(
+    () =>
+      collection(
+        (route?.paths ?? [])
+          .filter((path) => path.levelIds.some((id) => levelIds.includes(id)))
+          .filter(
+            (path) =>
+              !relativeHeights &&
+              (!(roomThree || nativeModel) ||
+                !path.edgeIds.some((id) =>
+                  route?.edges.some(
+                    (e) =>
+                      e.id === id &&
+                      data.rampDisplay?.ramps.some(
+                        (r) => r.nativeElementId === e.nativeElementId,
+                      ),
+                  ),
+                )),
+          )
+          .map((path, i) => ({
+            type: "Feature",
+            properties: { id: `route:${i}`, centered: path.centered },
+            geometry: {
+              type: "LineString",
+              coordinates: path.pointsFeet.map((p) => geographicPoint(data, p)),
+            },
+          })),
+      ),
+    [route, levelIds, relativeHeights, roomThree, nativeModel, data],
+  );
+  const layers = useMemo(
+    () => ({
+      ...staticLayers,
+      routeLines,
+      labels: review ? display.labels : visitorLabels,
+    }),
+    [staticLayers, routeLines, review, display.labels, visitorLabels],
+  );
   const stairCutAreas = useMemo(
     () =>
       visitorRoomSurfaces(
@@ -368,6 +445,8 @@ function PreparedProjectMapLayers({
   );
   useEffect(() => {
     if (!map || !isLoaded) return;
+    const effectStarted = floorDiagnosticsEnabled() ? performance.now() : 0;
+    let uploads = 0;
     const overviewSource = map.getSource("project-overview") as
       | GeoJSONSource
       | undefined;
@@ -376,8 +455,10 @@ function PreparedProjectMapLayers({
       if (
         uploaded?.source !== overviewSource ||
         uploaded.value !== overviewGeometry
-      )
+      ) {
+        uploads++;
         overviewSource.setData(mapDrawingFeatures(overviewGeometry));
+      }
     } else
       map.addSource("project-overview", {
         type: "geojson",
@@ -416,9 +497,21 @@ function PreparedProjectMapLayers({
       ];
     // Build aperture data once, rather than repeating both polygon cuts for
     // every source. Unchanged sources need no worker upload on selection changes.
+    // Sources whose every layer is hidden in this mode get an empty
+    // collection (identical pixels); MapLibre's worker otherwise clones and
+    // tiles the whole floor's walls for nothing. Visibility rules mirror the
+    // setLayoutProperty calls below ("project-wall-fill" is review 2D only;
+    // "project-exposed-wall-fill" visitor 2D without native material;
+    // "project-wall-boxes" 3D review/source model).
+    const wallsShown = review && !roomThree;
+    const exposedWallsShown =
+      (!review &&
+        !roomThree &&
+        !(nativeFloorLevels.length && data.nativeMaterialSections)) ||
+      (roomThree && (review || nativeModel));
     const values = [
       stairCutAreas,
-      layers.walls,
+      wallsShown ? layers.walls : HIDDEN_SOURCE,
       layers.lines,
       layers.portals,
       layers.routeLines,
@@ -426,7 +519,7 @@ function PreparedProjectMapLayers({
       layers.lowerRooms,
       layers.labels,
       stairCutRooms,
-      layers.exposedWalls,
+      exposedWallsShown ? layers.exposedWalls : HIDDEN_SOURCE,
       nativeStairs,
       prepared.selectionAreas,
       areaPerimeters,
@@ -437,15 +530,29 @@ function PreparedProjectMapLayers({
       const source = map.getSource(id) as GeoJSONSource | undefined;
       if (source) {
         const uploaded = uploadedSources.current.get(id);
-        if (uploaded?.source !== source || uploaded.value !== value)
+        if (uploaded?.source !== source || uploaded.value !== value) {
+          uploads++;
+          if (effectStarted)
+            floorDiagnostic("source:upload", {
+              id,
+              ...geoJsonStatistics(mapDrawingFeatures(value)),
+            });
           source.setData(mapDrawingFeatures(value));
-      } else
+        }
+      } else {
+        uploads++;
+        if (effectStarted)
+          floorDiagnostic("source:upload", {
+            id,
+            ...geoJsonStatistics(mapDrawingFeatures(value)),
+          });
         map.addSource(id, {
           type: "geojson",
           data: mapDrawingFeatures(value),
           maxzoom: 22,
           tolerance: 0,
         });
+      }
       uploadedSources.current.set(id, {
         source: map.getSource(id) as GeoJSONSource,
         value,
@@ -956,6 +1063,7 @@ function PreparedProjectMapLayers({
       if (map.getLayer(id)) map.removeLayer(id);
     if (map.getLayer("project-precision-walls"))
       map.removeLayer("project-precision-walls");
+    const layersStarted = effectStarted ? performance.now() : 0;
     if (roomThree && !review && !nativeModel)
       map.addLayer(
         precisionWallLayer(
@@ -964,17 +1072,35 @@ function PreparedProjectMapLayers({
         ),
         "project-network-line",
       );
-    if (!map.getSource("project-native-windows"))
-      map.addSource("project-native-windows", {
-        type: "geojson",
-        data: mapDrawingFeatures(windows.features),
-        tolerance: 0,
-        maxzoom: 22,
+    {
+      // Re-send the window collection only when it changed (as for the
+      // floor sources above), not on every selection or label change.
+      const windowSource = map.getSource("project-native-windows") as
+        | GeoJSONSource
+        | undefined;
+      const uploaded = uploadedSources.current.get("project-native-windows");
+      if (!windowSource)
+        map.addSource("project-native-windows", {
+          type: "geojson",
+          data: mapDrawingFeatures(windows.features),
+          tolerance: 0,
+          maxzoom: 22,
+        });
+      else if (
+        uploaded?.source !== windowSource ||
+        uploaded.value !== windows.features
+      )
+        windowSource.setData(mapDrawingFeatures(windows.features));
+      if (effectStarted && uploaded?.value !== windows.features)
+        floorDiagnostic("source:upload", {
+          id: "project-native-windows",
+          ...geoJsonStatistics(mapDrawingFeatures(windows.features)),
+        });
+      uploadedSources.current.set("project-native-windows", {
+        source: map.getSource("project-native-windows") as GeoJSONSource,
+        value: windows.features,
       });
-    else
-      (map.getSource("project-native-windows") as GeoJSONSource).setData(
-        mapDrawingFeatures(windows.features),
-      );
+    }
     if (!map.getLayer("project-native-window-plan"))
       map.addLayer(
         {
@@ -1000,22 +1126,15 @@ function PreparedProjectMapLayers({
         : "none",
     );
     if (roomThree && !nativeModel)
-      for (const glass of [true, false]) {
-        const features = windows.features.features.filter(
-          (f) => (f.properties?.role === "glazing") === glass,
-        );
-        if (features.length)
+      for (const { glass, walls } of windowParts) {
+        if (walls.features.length)
           map.addLayer(
-            precisionWallLayer(
-              { type: "FeatureCollection", features },
-              data.alignment.originGeographic,
-              {
-                id: glass
-                  ? "project-native-window-glass"
-                  : "project-native-window-frames",
-                windowOpacity: glass,
-              },
-            ),
+            precisionWallLayer(walls, data.alignment.originGeographic, {
+              id: glass
+                ? "project-native-window-glass"
+                : "project-native-window-frames",
+              windowOpacity: glass,
+            }),
             "project-network-line",
           );
       }
@@ -1062,6 +1181,11 @@ function PreparedProjectMapLayers({
         ),
         "project-room-fill",
       );
+    if (layersStarted)
+      floorDiagnostic("layers:custom-3d", {
+        roomThree,
+        ms: performance.now() - layersStarted,
+      });
     map.setLayoutProperty(
       "project-relative-floors",
       "visibility",
@@ -1530,26 +1654,23 @@ function PreparedProjectMapLayers({
             duration: 650,
           });
       });
+    if (effectStarted)
+      floorDiagnostic("layers:effect", {
+        roomThree,
+        uploads,
+        ms: performance.now() - effectStarted,
+      });
     return () => {
       map.off("click", pick);
       // The parent map may already be removed during route navigation or Clear
       // map. MapLibre's getLayer throws once its style has been disposed.
-      if (!map.getStyle()) return;
-      if (map.getLayer("project-connector-markers"))
-        map.removeLayer("project-connector-markers");
-      if (map.getLayer("project-roof-labels"))
-        map.removeLayer("project-roof-labels");
-      if (map.getLayer("project-lower-depth"))
-        map.removeLayer("project-lower-depth");
-      if (map.getLayer("project-descending-stairs"))
-        map.removeLayer("project-descending-stairs");
-      if (map.getLayer("project-native-ramps"))
-        map.removeLayer("project-native-ramps");
-      if (map.getLayer("project-precision-walls"))
-        map.removeLayer("project-precision-walls");
+      // Every custom (three.js) layer this effect can add is removed, including
+      // window glass/frames, so a loading or unmounted floor keeps no meshes.
+      removePreparedCustomLayers(map);
     };
   }, [
     windows,
+    windowParts,
     map,
     isLoaded,
     layers,
@@ -1803,43 +1924,61 @@ type ProjectMapLayersProps = Omit<
     retry: () => void;
   }) => void;
 };
-const floorSources = [
-  "project-overview",
-  "project-areas",
-  "project-walls",
-  "project-network",
-  "project-portals",
-  "project-route",
-  "project-doors",
-  "project-lower-rooms",
-  "project-labels",
-  "project-room-blocks",
-  "project-exposed-walls",
-  "project-native-stairs",
-  "project-selection-areas",
-];
 const emptyFloor = collection<Geometry>([]);
 
 export function ProjectMapLayers(props: ProjectMapLayersProps) {
   const { map, isLoaded } = useMap();
   // Basemap visibility belongs to the mounted map, not a transient floor child.
   const basemapVisibility = useRef(new Map<string, string>());
+  const needsNativeDisplay = (props.nativeFloorLevels?.length ?? 0) > 0;
+  const preparationOptions = {
+    relativeHeights: props.relativeHeights,
+    showPillars: props.showPillars,
+    showPassThroughPlaces: props.showPassThroughPlaces,
+    showVestibuleDoors: props.showVestibuleDoors,
+    showStructures: props.showStructures,
+    showDoorwayRecesses: props.showDoorwayRecesses,
+    review: props.review,
+    simplifyGeometry: props.simplifyGeometry,
+  };
   const { value, error, retry } = usePreparedFloor(
     props.data,
     props.levelIds,
     props.building,
-    {
-      relativeHeights: props.relativeHeights,
-      showPillars: props.showPillars,
-      showPassThroughPlaces: props.showPassThroughPlaces,
-      showVestibuleDoors: props.showVestibuleDoors,
-      showStructures: props.showStructures,
-      showDoorwayRecesses: props.showDoorwayRecesses,
-      review: props.review,
-      simplifyGeometry: props.simplifyGeometry,
-    },
+    preparationOptions,
+    // Only the 2D native floor map renders the native area display. Other
+    // views get the same prepared floor without cloning that carrier.
+    { nativeDisplay: needsNativeDisplay },
   );
   const displayScope = props.levelIds.join(",");
+  // Large projects: a scope/mode switch recreates the map behind the loading
+  // overlay, so MapLibre's tile workers release the previous floor's GeoJSON
+  // (measured at 2.1–2.9 GB in one worker) before the next floor decodes.
+  // Camera, selection, floor, mode and all React state are kept.
+  const recreateMap = useMapRecreate();
+  const shownScope = useRef<string>();
+  const scopeKey = `${props.building}|${displayScope}|${props.roomThree}`;
+  useEffect(() => {
+    if (value) {
+      shownScope.current = scopeKey;
+      return;
+    }
+    if (
+      shouldRecreateMapForScope(
+        shownScope.current,
+        scopeKey,
+        !value && !error,
+        largeIndoorProject(props.data),
+      ) &&
+      recreateMap?.()
+    ) {
+      shownScope.current = undefined;
+      floorDiagnostic("map:recreated-for-scope", {
+        levels: props.levelIds.length,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, error, scopeKey, recreateMap]);
   useEffect(() => {
     const nativeDisplay = preparedFloorNativeDisplay(value);
     props.onNativeDisplay?.({
@@ -1850,7 +1989,10 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
       retry,
       error:
         error ??
-        (value && props.data.nativeIndoorEnvelopes && !nativeDisplay
+        (value &&
+        needsNativeDisplay &&
+        props.data.nativeIndoorEnvelopes &&
+        !nativeDisplay
           ? "The prepared floor did not include its native area display. Retry floor preparation."
           : undefined),
     });
@@ -1864,15 +2006,13 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
     value,
     error,
     retry,
+    needsNativeDisplay,
   ]);
   useEffect(() => {
     if (!map || !isLoaded || value) return;
     // The selected level must never display or accept clicks on an old level.
     // The prepared child removes its custom layers and click handler on unmount.
-    for (const id of floorSources) {
-      const source = map.getSource(id) as GeoJSONSource | undefined;
-      source?.setData(emptyFloor);
-    }
+    emptyPreparedFloorSources(map, emptyFloor);
   }, [map, isLoaded, value]);
   if (value)
     return (
@@ -1885,6 +2025,14 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
   const floor = props.data.floors.find((f) =>
     props.levelIds.some((id) => f.levelIds.includes(id)),
   );
+  // Scalar archive lookup only; the worker still verifies everything.
+  const saved = preparedDisplayStatus(
+    props.data,
+    props.levelIds,
+    props.building,
+    preparationOptions,
+  );
+  warnStalePreparedDisplay(saved);
   return (
     <div className="project-floor-preparation" data-testid="floor-preparation">
       {error ? (
@@ -1900,6 +2048,14 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
         >
           <span className="project-floor-spinner" aria-hidden="true" />
           <strong>Preparing {floor?.name ?? "floor"}…</strong>
+          {saved.state === "stale-engine" && (
+            <p data-testid="floor-preparation-live">
+              Saved floor displays in this project were prepared by another app
+              version (display engine {shortEngine(saved.assetEngine)}, this app{" "}
+              {shortEngine(saved.runtimeEngine)}), so this floor is being
+              prepared live. This can take several minutes.
+            </p>
+          )}
         </div>
       )}
     </div>

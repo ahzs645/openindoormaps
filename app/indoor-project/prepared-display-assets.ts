@@ -3,6 +3,7 @@ import { bytesToHex } from "@noble/hashes/utils.js";
 import { gzipSync, Gunzip } from "fflate";
 import type { NativeExploreResult } from "./native-explore";
 import type { prepareFloor } from "./prepared-floor";
+import { floorDiagnostic, timeFloorStage } from "./floor-diagnostics";
 
 export type PreparedDisplayOptions = Readonly<
   Record<string, boolean | string | number | null>
@@ -526,11 +527,23 @@ function decodePool(raw: Pool, limits: PreparedDisplayAssetLimits): unknown {
       ? v.map(restore)
       : Object.fromEntries(Object.entries(v).map(([k, q]) => [k, restore(q)]));
   };
-  const value = restore(raw.value),
-    logical = jsonSummary(value, raw.logicalJsonBytes);
+  const value = timeFloorStage("prepared-asset:restore", () =>
+    restore(raw.value),
+  );
+  const { logicalJsonBytes, logicalJsonSha256 } = raw;
+  // Restoration allocates new containers, so the parsed wire tree, pool and
+  // expansion summaries are no longer reachable from the value. Release this
+  // private decode state before the full logical checksum traversal.
+  completed.clear();
+  summaries.length = 0;
+  raw.pool.length = 0;
+  (raw as { value: Json }).value = null;
+  const logical = timeFloorStage("prepared-asset:logical-checksum", () =>
+    jsonSummary(value, logicalJsonBytes),
+  );
   if (
-    logical.bytes !== raw.logicalJsonBytes ||
-    logical.sha256 !== raw.logicalJsonSha256
+    logical.bytes !== logicalJsonBytes ||
+    logical.sha256 !== logicalJsonSha256
   )
     fail("checksum", "logical checksum mismatch");
   const seen = new WeakSet<object>();
@@ -540,7 +553,7 @@ function decodePool(raw: Pool, limits: PreparedDisplayAssetLimits): unknown {
     for (const q of Object.values(v)) freeze(q);
     Object.freeze(v);
   };
-  freeze(value);
+  timeFloorStage("prepared-asset:freeze", () => freeze(value));
   return value;
 }
 
@@ -594,21 +607,15 @@ export function validatePreparedDisplayAssetDescriptor(
     fail("limit", "aggregate chunk bound mismatch");
 }
 
-/** Lazy worker loader. Expected binding MUST come from the current runtime/dataset,
- * never from the asset's own declaration. Missing/stale asset fallback is caller policy. */
-export async function decodePreparedDisplayAsset(
+/** Inflate, checksum and parse the pooled wire JSON. Kept in its own frame so
+ * the combined bytes and decoded text are unreachable once the pool is parsed,
+ * before the (larger) restored graph is allocated. */
+async function inflatePooledJson(
   descriptor: PreparedDisplayAssetDescriptor,
-  expectedBinding: PreparedDisplayAssetBinding,
   loadChunk: (
     sha256: string,
   ) => Uint8Array | undefined | Promise<Uint8Array | undefined>,
-  limits: PreparedDisplayAssetLimits = PREPARED_DISPLAY_ASSET_LIMITS,
-): Promise<PreparedDisplayPayload> {
-  validatePreparedDisplayAssetDescriptor(descriptor, limits);
-  if (
-    preparedDisplayBindingSha256(expectedBinding) !== descriptor.bindingSha256
-  )
-    fail("binding", "stale dataset/engine/options/scope binding");
+): Promise<Pool> {
   const expandedTotal = descriptor.pooledJsonBytes;
   const combined = new Uint8Array(expandedTotal);
   let offset = 0;
@@ -644,14 +651,39 @@ export async function decodePreparedDisplayAsset(
   }
   if (digest(combined) !== descriptor.pooledJsonSha256)
     fail("checksum", "pooled checksum mismatch");
-  let pool: Pool;
+  floorDiagnostic("prepared-asset:inflated", {
+    pooledJsonBytes: expandedTotal,
+    chunks: descriptor.chunks.length,
+  });
   try {
-    pool = JSON.parse(
-      new TextDecoder("utf-8", { fatal: true }).decode(combined),
-    ) as Pool;
+    return timeFloorStage(
+      "prepared-asset:parse",
+      () =>
+        JSON.parse(
+          new TextDecoder("utf-8", { fatal: true }).decode(combined),
+        ) as Pool,
+    );
   } catch {
     return fail("format", "invalid pool JSON");
   }
+}
+
+/** Lazy worker loader. Expected binding MUST come from the current runtime/dataset,
+ * never from the asset's own declaration. Missing/stale asset fallback is caller policy. */
+export async function decodePreparedDisplayAsset(
+  descriptor: PreparedDisplayAssetDescriptor,
+  expectedBinding: PreparedDisplayAssetBinding,
+  loadChunk: (
+    sha256: string,
+  ) => Uint8Array | undefined | Promise<Uint8Array | undefined>,
+  limits: PreparedDisplayAssetLimits = PREPARED_DISPLAY_ASSET_LIMITS,
+): Promise<PreparedDisplayPayload> {
+  validatePreparedDisplayAssetDescriptor(descriptor, limits);
+  if (
+    preparedDisplayBindingSha256(expectedBinding) !== descriptor.bindingSha256
+  )
+    fail("binding", "stale dataset/engine/options/scope binding");
+  const pool = await inflatePooledJson(descriptor, loadChunk);
   if (
     pool.logicalJsonSha256 !== descriptor.logicalJsonSha256 ||
     pool.logicalJsonBytes !== descriptor.logicalJsonBytes ||

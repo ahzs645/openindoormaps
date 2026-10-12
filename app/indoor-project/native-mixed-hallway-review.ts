@@ -1,6 +1,7 @@
 import type { IndoorDataset, IndoorRecord } from "./contract";
 import type { NativeExploreResult } from "./native-explore";
 import { isOverviewWalkway } from "./display-passages";
+import { reviewedSeparatePlaceKeys } from "./reviewed-place-labels";
 
 export type MixedHallwayIssue = {
   id: string;
@@ -27,12 +28,13 @@ export function nativeMixedHallwayIssues(
   }
   return result.regions.flatMap((region) => {
     if (!visible.has(region.id) || green.has(region.id)) return [];
-    const places = [...new Set(region.roomKeys)]
+    // An owner-reviewed alias or retired label is not a place of its own.
+    const places = reviewedSeparatePlaceKeys(data, region.roomKeys)
       .map((key) => byKey.get(key))
       .filter((room): room is IndoorRecord => !!room);
     const hallways = places.filter(isOverviewWalkway);
     const otherPlaces = places.filter((room) => !isOverviewWalkway(room));
-    return hallways.length && otherPlaces.length
+    return hallways.length > 0 && otherPlaces.length > 0
       ? [
           {
             id: region.id,

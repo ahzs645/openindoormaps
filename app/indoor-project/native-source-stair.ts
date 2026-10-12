@@ -11,7 +11,7 @@ const sameRing = (a: number[][], b: number[][]) => {
     r.length > 1 && samePoint(r[0]!, r.at(-1)!) ? r.slice(0, -1) : r;
   a = open(a);
   b = open(b);
-  if (a.length !== b.length || !a.length) return false;
+  if (a.length !== b.length || a.length === 0) return false;
   return b.some((_, start) =>
     [1, -1].some((direction) =>
       a.every((point, i) =>
@@ -61,7 +61,7 @@ export function validNativeSourceStairBinding(
     );
     const boundRuns = proof.nativeRunIds.filter((id) => authored.has(id));
     if (
-      boundRuns.length &&
+      boundRuns.length > 0 &&
       (flight.authoredTreadRolesSha256 !==
         data.nativeSourceStairMaterials!.authoredTreadRoles!.geometrySha256 ||
         boundRuns.some((id) => {
@@ -90,9 +90,22 @@ export function validNativeSourceStairBinding(
           o.elevationFeet === tread.elevationFeet &&
           sameRing(o.ringFeet, tread.ringFeet),
       );
-      if (index < 0) return false;
+      if (index === -1) return false;
       unmatched.splice(index, 1);
     }
+    // Support lips (nosings) must be the flight's own recorded native faces.
+    if (
+      (proof.supportFaces ?? []).some(
+        (f) =>
+          !flight.supportFaces?.some(
+            (o) =>
+              o.runElementId === f.runElementId &&
+              o.elevationFeet === f.elevationFeet &&
+              sameRing(o.ringFeet, f.ringFeet),
+          ),
+      )
+    )
+      return false;
     if (
       proof.landings.some(
         (l) =>

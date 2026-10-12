@@ -1,0 +1,66 @@
+{
+ "status": "proposed",
+ "levelId": 400176,
+ "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+ "productionModuleSha256": {
+  "native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "native-door-boundary-closures.ts": "32829153d79367e04f14ff986df5752b2b88690de9b68f40973555112c3290f9"
+ },
+ "validation": {
+  "stage1File": "evidence/validation-400176.json",
+  "stage1Sha256": "648cb9479360b9037291284f5ff518cead4201d29d34752f1e4107a5aafca09a",
+  "physicalFile": "evidence/validation-physical-400176.json",
+  "physicalSha256": "8f55a2442cf1dc0f23b03e18b81fd46b2c65b86a769801f8f48d561d48cc9ed7",
+  "finalDeriveFile": "evidence/after-all-derive-400176.json",
+  "finalDeriveSha256": "2e2d8013743bffad9133d3fc8c01a16c1468a0dd440955f4502f33c1381269dc",
+  "lostNamedSingletons": [],
+  "gainedSingletons": 80
+ },
+ "application": "NOT applied. Apply only through the owning pipeline agent: append to source + prepared descriptors, regenerate circulation/mapping/display, re-verify singletons.",
+ "format": "openindoormaps-f34-proposal",
+ "family": "reviewedAreaPartitions (selection only)",
+ "evidenceSha256": "47c23204efefdbbb46dfd9e4141f4845730c2a95432e3da83e1240265189214c",
+ "evidenceFile": "evidence/residual-gates-400176.json",
+ "checks": "snapReviewedAreaPartitionPoints + checkReviewedAreaPartition + deriveNativeAreas(previewPartitionIds)",
+ "geometryBindingNote": "geometrySha256 is bound to the current physical geometry WITHOUT the proposed continuation walls; if continuations are applied first, rebind with reviewedAreaPartitionGeometrySha256.",
+ "collection": {
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "partitions": [
+   {
+    "id": "f34-open-entrance:400176:03-2001",
+    "kind": "open-entrance",
+    "pointsFeet": [
+     [
+      75.0975,
+      -300.9913173898309
+     ],
+     [
+      75.0975,
+      -297.3331833675209
+     ]
+    ],
+    "label": "03-2001 Washroom doorless entrance \u2014 selection only",
+    "notes": "Doorless washroom entrance on the east side of 03-2001 (rm key per records). Native: opening between the top face of wall #1686478 (y=-300.991) and the bottom face of wall #1077330 (y=-297.333), 3.66 ft clear, no measured door. Registered DWG '03 CJMH LVL 2' shows the same opening (wall segments 727/744 end at y=-301.0, segments 830/834 at y=-297.34; no door segment). Logical selection boundary only; the real open passage, access and routes are unchanged (handoff \u00a77: doorless washroom entrances need logical selection boundaries).",
+    "evidence": {
+     "kind": "native-endpoints",
+     "reason": "Exact native faces #1686478 (top) and #1077330 (bottom) bound the doorless entrance; registered DWG 03 CJMH LVL 2 segments 727, 744, 830, 834.",
+     "nativeElementIds": [
+      1686478,
+      1077330
+     ]
+    },
+    "levelId": 400176,
+    "elevationFeet": 24.278215223097114,
+    "geometrySha256": "80b6d8b958de5242ab3fed460d4b108b623bb43fa58c10fb502be37742785575",
+    "closed": false,
+    "status": "proposed",
+    "selection": "closed",
+    "navigation": "unchanged"
+   }
+  ]
+ },
+ "notRecommended": []
+}

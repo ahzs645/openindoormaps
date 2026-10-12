@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { nativeMaterialPlanWalls } from "./native-material-plan";
 import { verifyNativeMaterialSections } from "./native-material-sections";
 import {
@@ -287,7 +288,7 @@ function segmentDistance(q: number[], a: number[], b: number[]) {
       ((q[0] - a[0]) * dx + (q[1] - a[1]) * dy) / (dx * dx + dy * dy || 1),
     ),
   );
-  return Math.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dy);
+  return DMath.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dy);
 }
 
 /** Proximity is only a recommendation lookup, not proof of room ownership. */

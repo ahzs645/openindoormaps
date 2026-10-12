@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { IndoorProject } from "./package";
 import type { NativeAreaOptions, NativeAreaResult } from "./native-area-review";
 import {
+  bindReviewedAreaPartitionEvidence,
   restoreReviewedAreaPartition,
   saveReviewedAreaPartition,
   snapReviewedAreaPartitionPoints,
@@ -64,6 +65,9 @@ export function ReviewedAreaPartitionsPanel({
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [physicalHash, setPhysicalHash] = useState("");
+  const [evidenceDigests, setEvidenceDigests] = useState<
+    Record<string, string>
+  >({});
   const [checkState, setCheckState] = useState<{
     id: string;
     check: ReviewedAreaPartitionCheck;
@@ -100,6 +104,7 @@ export function ReviewedAreaPartitionsPanel({
   useEffect(() => {
     let current = true;
     setPhysicalHash("");
+    setEvidenceDigests({});
     setCheckState(undefined);
     setGroupChecks([]);
     const partition = project.rooms.reviewedAreaPartitions?.partitions.find(
@@ -107,13 +112,14 @@ export function ReviewedAreaPartitionsPanel({
         p.levelId === levelId && options.previewPartitionIds?.includes(p.id),
     );
     const worker = new Worker(
-      new URL("./reviewed-area-partitions.worker.ts", import.meta.url),
+      new URL("reviewed-area-partitions.worker.ts", import.meta.url),
       { type: "module" },
     );
     worker.onmessage = ({
       data,
     }: MessageEvent<{
       physicalHash?: string;
+      evidenceDigests?: Record<string, string>;
       check?: ReviewedAreaPartitionCheck;
       checks?: { id: string; check: ReviewedAreaPartitionCheck }[];
       error?: string;
@@ -121,6 +127,7 @@ export function ReviewedAreaPartitionsPanel({
       if (!current) return;
       if (data.error) setMessage(data.error);
       if (data.physicalHash) setPhysicalHash(data.physicalHash);
+      if (data.evidenceDigests) setEvidenceDigests(data.evidenceDigests);
       if (data.checks) setGroupChecks(data.checks);
       if (partition && data.check)
         setCheckState({ id: partition.id, check: data.check });
@@ -152,7 +159,7 @@ export function ReviewedAreaPartitionsPanel({
     (p) => groupIds.includes(p.id) && p.status === "proposed",
   );
   const groupPreviewed =
-    !!group.length &&
+    group.length > 0 &&
     !options.ignoreAppliedPartitions &&
     group.length === options.previewPartitionIds?.length &&
     group.every((p) => options.previewPartitionIds?.includes(p.id));
@@ -210,27 +217,35 @@ export function ReviewedAreaPartitionsPanel({
     try {
       if (elementIds.trim() && !/^\d+(?:\s*,\s*\d+)*$/.test(elementIds.trim()))
         throw new Error("Enter native wall or column IDs separated by commas.");
-      const partition: Partition = {
-        id: `area-partition-${crypto.randomUUID()}`,
-        levelId,
-        elevationFeet: level.elevationFeet,
-        geometrySha256: physicalHash,
-        kind,
-        pointsFeet: draft.map((p) => [...p] as Point),
-        closed: false,
-        status: "proposed",
-        label: label.trim(),
-        notes: notes.trim(),
-        evidence: {
-          kind: evidenceKind,
-          nativeElementIds: elementIds.trim()
-            ? [...new Set(elementIds.split(",").map((id) => Number(id.trim())))]
-            : [],
-          reason: notes.trim(),
+      // New reviews bind to the evidence near the boundary, not the whole level.
+      const partition: Partition = await bindReviewedAreaPartitionEvidence(
+        project.dataset,
+        {
+          id: `area-partition-${crypto.randomUUID()}`,
+          levelId,
+          elevationFeet: level.elevationFeet,
+          geometrySha256: physicalHash,
+          kind,
+          pointsFeet: draft.map((p) => [...p] as Point),
+          closed: false,
+          status: "proposed",
+          label: label.trim(),
+          notes: notes.trim(),
+          evidence: {
+            kind: evidenceKind,
+            nativeElementIds: elementIds.trim()
+              ? [
+                  ...new Set(
+                    elementIds.split(",").map((id) => Number(id.trim())),
+                  ),
+                ]
+              : [],
+            reason: notes.trim(),
+          },
+          selection: "closed",
+          navigation: "unchanged",
         },
-        selection: "closed",
-        navigation: "unchanged",
-      };
+      );
       const next = await saveReviewedAreaPartition(project, partition);
       onApply(next);
       const ids = [...group.map((p) => p.id), partition.id];
@@ -267,7 +282,7 @@ export function ReviewedAreaPartitionsPanel({
       const appliedPartitions = await new Promise<ReviewedAreaPartitions>(
         (resolve, reject) => {
           const worker = new Worker(
-            new URL("./reviewed-area-partitions.worker.ts", import.meta.url),
+            new URL("reviewed-area-partitions.worker.ts", import.meta.url),
             { type: "module" },
           );
           applyWorkerRef.current = worker;
@@ -476,7 +491,7 @@ export function ReviewedAreaPartitionsPanel({
           aria-label="Area boundary evidence"
           value={notes}
           disabled={disabled}
-          maxLength={10000}
+          maxLength={10_000}
           placeholder="Describe the opening, shutter or divider, its endpoints and what you checked. Record uncertain dimensions as an assumption."
           onChange={(e) => setNotes(e.target.value)}
         />
@@ -503,7 +518,7 @@ export function ReviewedAreaPartitionsPanel({
       </p>
       {message && <p role="status">{message}</p>}
       <h3>Saved area boundaries · {entries.length}</h3>
-      {!!group.length && (
+      {group.length > 0 && (
         <section aria-label="Boundary group">
           <h4>Boundary group · {group.length}</h4>
           <p>
@@ -557,7 +572,7 @@ export function ReviewedAreaPartitionsPanel({
           </button>
         </section>
       )}
-      {!!entries.length && (
+      {entries.length > 0 && (
         <>
           <button
             disabled={disabled}
@@ -597,7 +612,9 @@ export function ReviewedAreaPartitionsPanel({
       )}
       <div className="native-door-check-list">
         {entries.map((p) => {
-          const stale = !!physicalHash && p.geometrySha256 !== physicalHash;
+          const stale =
+            evidenceDigests[p.id] !== undefined &&
+            p.geometrySha256 !== evidenceDigests[p.id];
           const checked =
             !stale && checkState?.id === p.id ? checkState.check : undefined;
           const active = options.previewPartitionIds?.includes(p.id) ?? false;

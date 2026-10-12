@@ -26,6 +26,11 @@ export function registerPreparedDisplayArchive(
   else archives.delete(data);
 }
 
+/** Scalar: has this dataset object a registered display archive? */
+export function hasPreparedDisplayArchive(data: IndoorDataset) {
+  return archives.has(data);
+}
+
 export function preparedDisplayOptions(
   data: IndoorDataset,
   options: FloorPreparationOptions,

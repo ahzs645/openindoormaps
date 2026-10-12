@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import type { IndoorDataset } from "./contract";
 
@@ -100,7 +101,7 @@ export function fillMeasuredDoorwayRecesses(
       !Number.isSafeInteger(d.nativeElementId)
     )
       continue;
-    const nl = Math.hypot(...d.normalFeet);
+    const nl = DMath.hypot(...d.normalFeet);
     if (!Number.isFinite(nl) || nl < 0.9 || nl > 1.1) continue;
     const n: Point = [d.normalFeet[0] / nl, d.normalFeet[1] / nl],
       t: Point = [-n[1], n[0]];

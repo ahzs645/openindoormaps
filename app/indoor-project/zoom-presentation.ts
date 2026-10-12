@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { FeatureCollection, Point, Polygon, MultiPolygon } from "geojson";
 import buffer from "@turf/buffer";
 import polygonClipping, {
@@ -175,8 +176,8 @@ export function buildingOverviewLabels(
         const anchor =
           arrivals.sort(
             (a, b) =>
-              Math.hypot(a[0] - center[0], a[1] - center[1]) -
-              Math.hypot(b[0] - center[0], b[1] - center[1]),
+              DMath.hypot(a[0] - center[0], a[1] - center[1]) -
+              DMath.hypot(b[0] - center[0], b[1] - center[1]),
           )[0] ?? points[0];
         return [
           {

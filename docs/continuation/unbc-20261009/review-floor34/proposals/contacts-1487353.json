@@ -1,0 +1,7246 @@
+{
+ "status": "proposed",
+ "levelId": 1487353,
+ "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+ "productionModuleSha256": {
+  "native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "native-door-boundary-closures.ts": "32829153d79367e04f14ff986df5752b2b88690de9b68f40973555112c3290f9"
+ },
+ "validation": {
+  "stage1File": "evidence/validation-1487353.json",
+  "stage1Sha256": "5f15ecca2ab1729c9522c5e2afb7b11ac8be4803c41f9e88a7b04e774550580c",
+  "physicalFile": "evidence/validation-physical-1487353.json",
+  "physicalSha256": "32d7b292e6f6e1dcb00387fb3846f13902f9e63d6d707a9c4fc7b7253fa8f5e6",
+  "finalDeriveFile": "evidence/after-all-derive-1487353.json",
+  "finalDeriveSha256": "61b891ffef5d2da3184b167d64538659392fbc85a68125fc73b80a7c3825aa9c",
+  "lostNamedSingletons": [],
+  "gainedSingletons": 16
+ },
+ "application": "NOT applied. Apply only through the owning pipeline agent: append to source + prepared descriptors, regenerate circulation/mapping/display, re-verify singletons.",
+ "format": "openindoormaps-f34-proposal",
+ "family": "nativeSelectionContactRepairs",
+ "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+ "evidenceFile": "evidence/pinches-1487353.json",
+ "checks": "validateNativeSelectionContactRepairs + deriveNativeSelectionContactRepairAttempts + createNativeSelectionContactPhysicalGuard + assertNativeSelectionContactRepairsPhysicalGuards (unchanged production) + full deriveNativeAreas",
+ "collection": {
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "repairs": [
+   {
+    "id": "f34-contact:1487353:1793374-1792812:3-1:original-free-cap:44",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1793374,
+     "ringsFeet": [
+      [
+       [
+        -338.33521843461614,
+        -62.65958197478455
+       ],
+       [
+        -337.05970719374204,
+        -63.45660985722413
+       ],
+       [
+        -336.4512041016099,
+        -62.482801347858675
+       ],
+       [
+        -337.726715342484,
+        -61.685773465419096
+       ],
+       [
+        -338.33521843461614,
+        -62.65958197478455
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -337.726715342484,
+       -61.685773465419096
+      ],
+      [
+       -338.33521843461614,
+       -62.65958197478455
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1792812,
+     "ringsFeet": [
+      [
+       [
+        -338.4743339359541,
+        -62.57265296162285
+       ],
+       [
+        -338.3352184346162,
+        -62.65958197478458
+       ],
+       [
+        -338.074431395131,
+        -62.242235470770815
+       ],
+       [
+        -338.2135468964689,
+        -62.15530645760908
+       ],
+       [
+        -338.4743339359541,
+        -62.57265296162285
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -338.3352184346162,
+       -62.65958197478458
+      ],
+      [
+       -338.074431395131,
+       -62.242235470770815
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (repeated-vertex-zero-width, 0 ft) near [-338.33521843461614, -62.65958197478455] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:2365042-2365041:2-0:original-free-cap:256",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 2365042,
+     "ringsFeet": [
+      [
+       [
+        -353.5117978458134,
+        -33.097189147169026
+       ],
+       [
+        -353.4422400951444,
+        -33.140653653749865
+       ],
+       [
+        -351.58195921348465,
+        -30.16358192511753
+       ],
+       [
+        -351.6515169641536,
+        -30.120117418536694
+       ],
+       [
+        -353.5117978458134,
+        -33.097189147169026
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -351.58195921348465,
+       -30.16358192511753
+      ],
+      [
+       -351.6515169641536,
+       -30.120117418536694
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 2365041,
+     "ringsFeet": [
+      [
+       [
+        -351.7224658698359,
+        -30.07578362182426
+       ],
+       [
+        -351.305119365822,
+        -30.33657066130928
+       ],
+       [
+        -351.2181903526604,
+        -30.197455159971323
+       ],
+       [
+        -351.6355368566742,
+        -29.9366681204863
+       ],
+       [
+        -351.7224658698359,
+        -30.07578362182426
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -351.7224658698359,
+       -30.07578362182426
+      ],
+      [
+       -351.305119365822,
+       -30.33657066130928
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 7.56e-15 ft) near [-351.6515169641536, -30.12011741853669] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:2365042-2365051:2-0:original-free-cap:268",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 2365042,
+     "ringsFeet": [
+      [
+       [
+        -353.5117978458134,
+        -33.097189147169026
+       ],
+       [
+        -353.4422400951444,
+        -33.140653653749865
+       ],
+       [
+        -351.58195921348465,
+        -30.16358192511753
+       ],
+       [
+        -351.6515169641536,
+        -30.120117418536694
+       ],
+       [
+        -353.5117978458134,
+        -33.097189147169026
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -351.58195921348465,
+       -30.16358192511753
+      ],
+      [
+       -351.6515169641536,
+       -30.120117418536694
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 2365051,
+     "ringsFeet": [
+      [
+       [
+        -351.7224658698359,
+        -30.07578362182426
+       ],
+       [
+        -351.305119365822,
+        -30.33657066130928
+       ],
+       [
+        -351.2181903526604,
+        -30.197455159971323
+       ],
+       [
+        -351.6355368566742,
+        -29.9366681204863
+       ],
+       [
+        -351.7224658698359,
+        -30.07578362182426
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -351.7224658698359,
+       -30.07578362182426
+      ],
+      [
+       -351.305119365822,
+       -30.33657066130928
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 7.56e-15 ft) near [-351.6515169641536, -30.12011741853669] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779072-1779074:1-3:original-free-cap:420",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779072,
+     "ringsFeet": [
+      [
+       [
+        -347.916240182985,
+        -26.106615177821396
+       ],
+       [
+        -340.7816356219594,
+        -30.564810906002847
+       ],
+       [
+        -340.5730059903714,
+        -30.230933702791745
+       ],
+       [
+        -347.70761055139695,
+        -25.77273797461032
+       ],
+       [
+        -347.916240182985,
+        -26.106615177821396
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -340.7816356219594,
+       -30.564810906002847
+      ],
+      [
+       -340.5730059903714,
+       -30.230933702791745
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779074,
+     "ringsFeet": [
+      [
+       [
+        -341.12960843018755,
+        -31.12168380617718
+       ],
+       [
+        -340.79573122697644,
+        -31.330313437765195
+       ],
+       [
+        -340.0032455595998,
+        -30.062071260493386
+       ],
+       [
+        -340.3371227628109,
+        -29.8534416289054
+       ],
+       [
+        -341.12960843018755,
+        -31.12168380617718
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -340.3371227628109,
+       -29.8534416289054
+      ],
+      [
+       -341.12960843018755,
+       -31.12168380617718
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 4.77e-15 ft) near [-340.7816356219594, -30.564810906002847] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779075-1779074:0-2:finite-cap-overlap:442",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "finite-cap-overlap",
+    "source": {
+     "nativeElementId": 1779075,
+     "ringsFeet": [
+      [
+       [
+        -333.1411930457278,
+        -18.337546834115408
+       ],
+       [
+        -332.8073158425167,
+        -18.54617646570342
+       ],
+       [
+        -332.3085067465379,
+        -17.747915046009545
+       ],
+       [
+        -332.642383949749,
+        -17.53928541442153
+       ],
+       [
+        -333.1411930457278,
+        -18.337546834115408
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -333.1411930457278,
+       -18.337546834115408
+      ],
+      [
+       -332.8073158425167,
+       -18.54617646570342
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779074,
+     "ringsFeet": [
+      [
+       [
+        -338.74632182195234,
+        -27.307627954420738
+       ],
+       [
+        -338.4124446187412,
+        -27.51625758600874
+       ],
+       [
+        -332.80731584251674,
+        -18.546176465703407
+       ],
+       [
+        -333.14119304572785,
+        -18.337546834115393
+       ],
+       [
+        -338.74632182195234,
+        -27.307627954420738
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -332.80731584251674,
+       -18.546176465703407
+      ],
+      [
+       -333.14119304572785,
+       -18.337546834115393
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.81e-14 ft) near [-333.1411930457278, -18.337546834115415] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779074-1779075:2-0:original-free-cap:456",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779074,
+     "ringsFeet": [
+      [
+       [
+        -338.74632182195234,
+        -27.307627954420738
+       ],
+       [
+        -338.4124446187412,
+        -27.51625758600874
+       ],
+       [
+        -332.80731584251674,
+        -18.546176465703407
+       ],
+       [
+        -333.14119304572785,
+        -18.337546834115393
+       ],
+       [
+        -338.74632182195234,
+        -27.307627954420738
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -332.80731584251674,
+       -18.546176465703407
+      ],
+      [
+       -333.14119304572785,
+       -18.337546834115393
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779075,
+     "ringsFeet": [
+      [
+       [
+        -333.1411930457278,
+        -18.337546834115408
+       ],
+       [
+        -332.8073158425167,
+        -18.54617646570342
+       ],
+       [
+        -332.3085067465379,
+        -17.747915046009545
+       ],
+       [
+        -332.642383949749,
+        -17.53928541442153
+       ],
+       [
+        -333.1411930457278,
+        -18.337546834115408
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -333.1411930457278,
+       -18.337546834115408
+      ],
+      [
+       -332.8073158425167,
+       -18.54617646570342
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.81e-14 ft) near [-333.1411930457278, -18.337546834115415] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779078-1778789:2-0:original-free-cap:496",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779078,
+     "ringsFeet": [
+      [
+       [
+        -321.7647328061504,
+        -37.05174334061298
+       ],
+       [
+        -321.4308556029393,
+        -37.260372972201
+       ],
+       [
+        -315.68432357777334,
+        -28.063999350096218
+       ],
+       [
+        -316.01820078098444,
+        -27.855369718508204
+       ],
+       [
+        -321.7647328061504,
+        -37.05174334061298
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -315.68432357777334,
+       -28.063999350096218
+      ],
+      [
+       -316.01820078098444,
+       -27.855369718508204
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778789,
+     "ringsFeet": [
+      [
+       [
+        -340.8993542843712,
+        -12.307899454075969
+       ],
+       [
+        -302.47008818504685,
+        -36.321170055934175
+       ],
+       [
+        -301.748577375805,
+        -35.166511394829115
+       ],
+       [
+        -340.17784347512935,
+        -11.153240792970905
+       ],
+       [
+        -340.8993542843712,
+        -12.307899454075969
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -340.8993542843712,
+       -12.307899454075969
+      ],
+      [
+       -302.47008818504685,
+       -36.321170055934175
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.06e-14 ft) near [-316.01820078098444, -27.8553697185082] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779077-1779076:0-2:original-free-cap:564",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779077,
+     "ringsFeet": [
+      [
+       [
+        -305.07135496804335,
+        -47.48292353149811
+       ],
+       [
+        -304.7374777648322,
+        -47.69155316308611
+       ],
+       [
+        -298.83447351596396,
+        -38.24477163855495
+       ],
+       [
+        -299.16835071917507,
+        -38.03614200696694
+       ],
+       [
+        -305.07135496804335,
+        -47.48292353149811
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -305.07135496804335,
+       -47.48292353149811
+      ],
+      [
+       -304.7374777648322,
+       -47.69155316308611
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779076,
+     "ringsFeet": [
+      [
+       [
+        -306.1285891577928,
+        -47.28653375442303
+       ],
+       [
+        -304.9461073964202,
+        -48.025430366297215
+       ],
+       [
+        -304.7374777648322,
+        -47.69155316308612
+       ],
+       [
+        -305.9199595262048,
+        -46.952656551211945
+       ],
+       [
+        -306.1285891577928,
+        -47.28653375442303
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -304.7374777648322,
+       -47.69155316308612
+      ],
+      [
+       -305.9199595262048,
+       -46.952656551211945
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 6.03e-15 ft) near [-304.7374777648322, -47.69155316308611] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1793319-1792552:1-3:original-free-cap:940",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1793319,
+     "ringsFeet": [
+      [
+       [
+        -346.5223435947476,
+        -57.54369838196357
+       ],
+       [
+        -345.47184365325114,
+        -58.20012359958787
+       ],
+       [
+        -344.86334056111946,
+        -57.22631509022215
+       ],
+       [
+        -345.9138405026159,
+        -56.569889872597855
+       ],
+       [
+        -346.5223435947476,
+        -57.54369838196357
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -345.47184365325114,
+       -58.20012359958787
+      ],
+      [
+       -344.86334056111946,
+       -57.22631509022215
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1792552,
+     "ringsFeet": [
+      [
+       [
+        -345.4718436532513,
+        -58.20012359958785
+       ],
+       [
+        -345.3327281519134,
+        -58.287052612749584
+       ],
+       [
+        -345.0719411124282,
+        -57.86970610873581
+       ],
+       [
+        -345.2110566137661,
+        -57.78277709557408
+       ],
+       [
+        -345.4718436532513,
+        -58.20012359958785
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -345.2110566137661,
+       -57.78277709557408
+      ],
+      [
+       -345.4718436532513,
+       -58.20012359958785
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 6.33e-14 ft) near [-345.2110566137661, -57.78277709557407] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1793536-1792802:3-1:original-free-cap:1516",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1793536,
+     "ringsFeet": [
+      [
+       [
+        -321.8300000486819,
+        -73.33104142903535
+       ],
+       [
+        -308.9633937193623,
+        -81.37098938732497
+       ],
+       [
+        -308.2418829101199,
+        -80.21633072622022
+       ],
+       [
+        -321.1084892394395,
+        -72.1763827679306
+       ],
+       [
+        -321.8300000486819,
+        -73.33104142903535
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -321.1084892394395,
+       -72.1763827679306
+      ],
+      [
+       -321.8300000486819,
+       -73.33104142903535
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1792802,
+     "ringsFeet": [
+      [
+       [
+        -321.80829687567075,
+        -72.98674873839862
+       ],
+       [
+        -321.6691813743328,
+        -73.07367775156035
+       ],
+       [
+        -321.4083943348476,
+        -72.65633124754658
+       ],
+       [
+        -321.54750983618555,
+        -72.56940223438485
+       ],
+       [
+        -321.80829687567075,
+        -72.98674873839862
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -321.6691813743328,
+       -73.07367775156035
+      ],
+      [
+       -321.4083943348476,
+       -72.65633124754658
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.49e-14 ft) near [-321.669181374337, -73.07367775156702] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779079-1779080:2-3:original-free-cap:2116",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779079,
+     "ringsFeet": [
+      [
+       [
+        -314.78793983769793,
+        -63.05360813049164
+       ],
+       [
+        -314.45406263448695,
+        -63.26223776207979
+       ],
+       [
+        -313.80209503577396,
+        -62.21887150204535
+       ],
+       [
+        -314.13597223898495,
+        -62.01024187045721
+       ],
+       [
+        -314.78793983769793,
+        -63.05360813049164
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -313.80209503577396,
+       -62.21887150204535
+      ],
+      [
+       -314.13597223898495,
+       -62.01024187045721
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779080,
+     "ringsFeet": [
+      [
+       [
+        -314.0107246673621,
+        -62.55274870525636
+       ],
+       [
+        -306.0486618536196,
+        -67.5279977355504
+       ],
+       [
+        -305.8400322220316,
+        -67.19412053233928
+       ],
+       [
+        -313.80209503577396,
+        -62.21887150204534
+       ],
+       [
+        -314.0107246673621,
+        -62.55274870525636
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -313.80209503577396,
+       -62.21887150204534
+      ],
+      [
+       -314.0107246673621,
+       -62.55274870525636
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.21e-14 ft) near [-313.80209503577396, -62.218871502045346] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779080-1779323:1-3:original-free-cap:2120",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779080,
+     "ringsFeet": [
+      [
+       [
+        -314.0107246673621,
+        -62.55274870525636
+       ],
+       [
+        -306.0486618536196,
+        -67.5279977355504
+       ],
+       [
+        -305.8400322220316,
+        -67.19412053233928
+       ],
+       [
+        -313.80209503577396,
+        -62.21887150204534
+       ],
+       [
+        -314.0107246673621,
+        -62.55274870525636
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -306.0486618536196,
+       -67.5279977355504
+      ],
+      [
+       -305.8400322220316,
+       -67.19412053233928
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779323,
+     "ringsFeet": [
+      [
+       [
+        -312.36664904175944,
+        -77.63889078676019
+       ],
+       [
+        -311.8380101366754,
+        -77.96922103677477
+       ],
+       [
+        -290.00404990084445,
+        -43.02758056569763
+       ],
+       [
+        -290.5326888059287,
+        -42.697250315683284
+       ],
+       [
+        -312.36664904175944,
+        -77.63889078676019
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -290.5326888059287,
+       -42.697250315683284
+      ],
+      [
+       -312.36664904175944,
+       -77.63889078676019
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.38e-15 ft) near [-305.8400322220316, -67.19412053233928] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1778790-1778789:2-0:original-free-cap:2196",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1778790,
+     "ringsFeet": [
+      [
+       [
+        -343.6699992563553,
+        -16.741858270452006
+       ],
+       [
+        -342.5153405952502,
+        -17.463369079693894
+       ],
+       [
+        -339.7446956232661,
+        -13.029410263317867
+       ],
+       [
+        -340.8993542843712,
+        -12.30789945407597
+       ],
+       [
+        -343.6699992563553,
+        -16.741858270452006
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -339.7446956232661,
+       -13.029410263317867
+      ],
+      [
+       -340.8993542843712,
+       -12.30789945407597
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778789,
+     "ringsFeet": [
+      [
+       [
+        -340.8993542843712,
+        -12.307899454075969
+       ],
+       [
+        -302.47008818504685,
+        -36.321170055934175
+       ],
+       [
+        -301.748577375805,
+        -35.166511394829115
+       ],
+       [
+        -340.17784347512935,
+        -11.153240792970905
+       ],
+       [
+        -340.8993542843712,
+        -12.307899454075969
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -340.8993542843712,
+       -12.307899454075969
+      ],
+      [
+       -302.47008818504685,
+       -36.321170055934175
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.18e-16 ft) near [-339.7446956232661, -13.029410263317867] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779072-1778790:3-1:original-free-cap:2492",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779072,
+     "ringsFeet": [
+      [
+       [
+        -347.916240182985,
+        -26.106615177821396
+       ],
+       [
+        -340.7816356219594,
+        -30.564810906002847
+       ],
+       [
+        -340.5730059903714,
+        -30.230933702791745
+       ],
+       [
+        -347.70761055139695,
+        -25.77273797461032
+       ],
+       [
+        -347.916240182985,
+        -26.106615177821396
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -347.70761055139695,
+       -25.77273797461032
+      ],
+      [
+       -347.916240182985,
+       -26.106615177821396
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778790,
+     "ringsFeet": [
+      [
+       [
+        -349.1578278572518,
+        -25.524219869917548
+       ],
+       [
+        -348.0031691961467,
+        -26.24573067915945
+       ],
+       [
+        -347.2281970438103,
+        -25.005515984731446
+       ],
+       [
+        -348.3828557049154,
+        -24.284005175489554
+       ],
+       [
+        -349.1578278572518,
+        -25.524219869917548
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -348.0031691961467,
+       -26.24573067915945
+      ],
+      [
+       -347.2281970438103,
+       -25.005515984731446
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.15e-14 ft) near [-347.70761055139695, -25.772737974610315] in native-region:1487353:2. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779221-1779220:2-0:original-free-cap:3104",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779221,
+     "ringsFeet": [
+      [
+       [
+        -234.92244061636328,
+        -78.94152910459063
+       ],
+       [
+        -234.43553636168042,
+        -79.2457806506565
+       ],
+       [
+        -234.12872718177528,
+        -78.75478332622794
+       ],
+       [
+        -234.61563143645796,
+        -78.45053178016185
+       ],
+       [
+        -234.92244061636328,
+        -78.94152910459063
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -234.12872718177528,
+       -78.75478332622794
+      ],
+      [
+       -234.61563143645796,
+       -78.45053178016185
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779220,
+     "ringsFeet": [
+      [
+       [
+        -234.61563143645796,
+        -78.45053178016185
+       ],
+       [
+        -233.6821061596937,
+        -79.0338631148457
+       ],
+       [
+        -233.29092560046584,
+        -78.40784335882508
+       ],
+       [
+        -234.22445087723042,
+        -77.82451202414103
+       ],
+       [
+        -234.61563143645796,
+        -78.45053178016185
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -234.61563143645796,
+       -78.45053178016185
+      ],
+      [
+       -233.6821061596937,
+       -79.0338631148457
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (repeated-vertex-zero-width, 0 ft) near [-234.61563143645796, -78.45053178016185] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779738-1779737:3-1:original-free-cap:3972",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779738,
+     "ringsFeet": [
+      [
+       [
+        -284.6289389425293,
+        -47.03799942456252
+       ],
+       [
+        -264.9278993272971,
+        -59.34857528087275
+       ],
+       [
+        -264.7192696957092,
+        -59.01469807766156
+       ],
+       [
+        -284.41448146268135,
+        -46.70776386511664
+       ],
+       [
+        -284.6289389425293,
+        -47.03799942456252
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -284.41448146268135,
+       -46.70776386511664
+      ],
+      [
+       -284.6289389425293,
+       -47.03799942456252
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779737,
+     "ringsFeet": [
+      [
+       [
+        -285.50960680193793,
+        -47.67124347107196
+       ],
+       [
+        -285.1794215389673,
+        -47.88566828800701
+       ],
+       [
+        -284.41448146268135,
+        -46.70776386511665
+       ],
+       [
+        -284.7484095247538,
+        -46.49910245338508
+       ],
+       [
+        -285.50960680193793,
+        -47.67124347107196
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -285.1794215389673,
+       -47.88566828800701
+      ],
+      [
+       -284.41448146268135,
+       -46.70776386511665
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.24e-14 ft) near [-284.6289389425293, -47.03799942456252] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:2391625-2391664:1-3:original-free-cap:4208",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 2391625,
+     "ringsFeet": [
+      [
+       [
+        -266.17017831099037,
+        -68.283373291943
+       ],
+       [
+        -262.48957961645544,
+        -70.58326661283542
+       ],
+       [
+        -262.44611510987465,
+        -70.51370886216641
+       ],
+       [
+        -266.1267138044096,
+        -68.21381554127399
+       ],
+       [
+        -266.17017831099037,
+        -68.283373291943
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -262.48957961645544,
+       -70.58326661283542
+      ],
+      [
+       -262.44611510987465,
+       -70.51370886216641
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 2391664,
+     "ringsFeet": [
+      [
+       [
+        -262.66256835264704,
+        -70.86010646049803
+       ],
+       [
+        -262.52345285130906,
+        -70.94703547365965
+       ],
+       [
+        -262.2626658118242,
+        -70.52968896964566
+       ],
+       [
+        -262.4017813131622,
+        -70.44275995648404
+       ],
+       [
+        -262.66256835264704,
+        -70.86010646049803
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -262.4017813131622,
+       -70.44275995648404
+      ],
+      [
+       -262.66256835264704,
+       -70.86010646049803
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.57e-14 ft) near [-262.44611510987465, -70.51370886216641] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:2391611-2391664:1-3:original-free-cap:4240",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 2391611,
+     "ringsFeet": [
+      [
+       [
+        -266.17017831099037,
+        -68.283373291943
+       ],
+       [
+        -262.48957961645544,
+        -70.58326661283542
+       ],
+       [
+        -262.44611510987465,
+        -70.51370886216641
+       ],
+       [
+        -266.1267138044096,
+        -68.21381554127399
+       ],
+       [
+        -266.17017831099037,
+        -68.283373291943
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -262.48957961645544,
+       -70.58326661283542
+      ],
+      [
+       -262.44611510987465,
+       -70.51370886216641
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 2391664,
+     "ringsFeet": [
+      [
+       [
+        -262.66256835264704,
+        -70.86010646049803
+       ],
+       [
+        -262.52345285130906,
+        -70.94703547365965
+       ],
+       [
+        -262.2626658118242,
+        -70.52968896964566
+       ],
+       [
+        -262.4017813131622,
+        -70.44275995648404
+       ],
+       [
+        -262.66256835264704,
+        -70.86010646049803
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -262.4017813131622,
+       -70.44275995648404
+      ],
+      [
+       -262.66256835264704,
+       -70.86010646049803
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.57e-14 ft) near [-262.44611510987465, -70.51370886216641] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779767-1779801:1-3:original-free-cap:4452",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779767,
+     "ringsFeet": [
+      [
+       [
+        -254.5719202237297,
+        -75.53076930620689
+       ],
+       [
+        -250.82176377937378,
+        -77.87412713315024
+       ],
+       [
+        -250.778299272793,
+        -77.80456938248123
+       ],
+       [
+        -254.52845571714892,
+        -75.4612115555379
+       ],
+       [
+        -254.5719202237297,
+        -75.53076930620689
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -250.82176377937378,
+       -77.87412713315024
+      ],
+      [
+       -250.778299272793,
+       -77.80456938248123
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779801,
+     "ringsFeet": [
+      [
+       [
+        -250.99475251556538,
+        -78.15096698081283
+       ],
+       [
+        -250.8556370142274,
+        -78.23789599397445
+       ],
+       [
+        -250.59484997474254,
+        -77.82054948996046
+       ],
+       [
+        -250.73396547608053,
+        -77.73362047679883
+       ],
+       [
+        -250.99475251556538,
+        -78.15096698081283
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -250.73396547608053,
+       -77.73362047679883
+      ],
+      [
+       -250.99475251556538,
+       -78.15096698081283
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.94e-14 ft) near [-250.78521898998864, -77.81564324484067] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779767-2391625:1-3:original-free-cap:4460",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779767,
+     "ringsFeet": [
+      [
+       [
+        -254.5719202237297,
+        -75.53076930620689
+       ],
+       [
+        -250.82176377937378,
+        -77.87412713315024
+       ],
+       [
+        -250.778299272793,
+        -77.80456938248123
+       ],
+       [
+        -254.52845571714892,
+        -75.4612115555379
+       ],
+       [
+        -254.5719202237297,
+        -75.53076930620689
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -250.82176377937378,
+       -77.87412713315024
+      ],
+      [
+       -250.778299272793,
+       -77.80456938248123
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 2391625,
+     "ringsFeet": [
+      [
+       [
+        -250.99475251556538,
+        -78.15096698081283
+       ],
+       [
+        -250.8556370142274,
+        -78.23789599397445
+       ],
+       [
+        -250.59484997474254,
+        -77.82054948996046
+       ],
+       [
+        -250.73396547608053,
+        -77.73362047679883
+       ],
+       [
+        -250.99475251556538,
+        -78.15096698081283
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -250.73396547608053,
+       -77.73362047679883
+      ],
+      [
+       -250.99475251556538,
+       -78.15096698081283
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.94e-14 ft) near [-250.78521898998864, -77.81564324484067] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779393-1779219:3-1:original-free-cap:4852",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779393,
+     "ringsFeet": [
+      [
+       [
+        -240.40016873970413,
+        -88.70715959564517
+       ],
+       [
+        -233.67115194970063,
+        -92.91191595621018
+       ],
+       [
+        -233.5146797260095,
+        -92.66150805380192
+       ],
+       [
+        -240.2436965160131,
+        -88.45675169323684
+       ],
+       [
+        -240.40016873970413,
+        -88.70715959564517
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -240.2436965160131,
+       -88.45675169323684
+      ],
+      [
+       -240.40016873970413,
+       -88.70715959564517
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779219,
+     "ringsFeet": [
+      [
+       [
+        -247.23378932562795,
+        -98.25021698700607
+       ],
+       [
+        -246.60776956960714,
+        -98.64139754623359
+       ],
+       [
+        -238.08872627976316,
+        -85.00807841511352
+       ],
+       [
+        -238.714746035784,
+        -84.61689785588598
+       ],
+       [
+        -247.23378932562795,
+        -98.25021698700607
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -246.60776956960714,
+       -98.64139754623359
+      ],
+      [
+       -238.08872627976316,
+       -85.00807841511352
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 6.8e-15 ft) near [-240.2436965160131, -88.45675169323684] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779106-1779220:2-0:original-free-cap:4880",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779106,
+     "ringsFeet": [
+      [
+       [
+        -230.79146107200148,
+        -94.7113465286609
+       ],
+       [
+        -230.54105316959323,
+        -94.86781875235205
+       ],
+       [
+        -224.30737363576898,
+        -84.89184615140573
+       ],
+       [
+        -224.55778153817724,
+        -84.73537392771459
+       ],
+       [
+        -230.79146107200148,
+        -94.7113465286609
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -224.30737363576898,
+       -84.89184615140573
+      ],
+      [
+       -224.55778153817724,
+       -84.73537392771459
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779220,
+     "ringsFeet": [
+      [
+       [
+        -228.59381758275805,
+        -82.21337870024956
+       ],
+       [
+        -224.02914263308907,
+        -85.06570417773176
+       ],
+       [
+        -223.63796207386125,
+        -84.43968442171112
+       ],
+       [
+        -228.2026370235302,
+        -81.58735894422894
+       ],
+       [
+        -228.59381758275805,
+        -82.21337870024956
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -228.59381758275805,
+       -82.21337870024956
+      ],
+      [
+       -224.02914263308907,
+       -85.06570417773176
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.34e-15 ft) near [-224.55778153817724, -84.73537392771459] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779106-1779393:0-1:original-free-cap:4920",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779106,
+     "ringsFeet": [
+      [
+       [
+        -230.79146107200148,
+        -94.7113465286609
+       ],
+       [
+        -230.54105316959323,
+        -94.86781875235205
+       ],
+       [
+        -224.30737363576898,
+        -84.89184615140573
+       ],
+       [
+        -224.55778153817724,
+        -84.73537392771459
+       ],
+       [
+        -230.79146107200148,
+        -94.7113465286609
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -230.79146107200148,
+       -94.7113465286609
+      ],
+      [
+       -230.54105316959323,
+       -94.86781875235205
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779393,
+     "ringsFeet": [
+      [
+       [
+        -231.12533827521673,
+        -94.50271689707007
+       ],
+       [
+        -230.79146107200148,
+        -94.71134652866091
+       ],
+       [
+        -230.63498884831048,
+        -94.46093862625257
+       ],
+       [
+        -230.9688660515256,
+        -94.25230899466182
+       ],
+       [
+        -231.12533827521673,
+        -94.50271689707007
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -230.79146107200148,
+       -94.71134652866091
+      ],
+      [
+       -230.63498884831048,
+       -94.46093862625257
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.21e-14 ft) near [-230.79146107200148, -94.71134652866091] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779394-1779393:2-0:original-free-cap:4932",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779394,
+     "ringsFeet": [
+      [
+       [
+        -234.6869701062069,
+        -92.66403187800417
+       ],
+       [
+        -234.43656220379864,
+        -92.82050410169529
+       ],
+       [
+        -234.26270417747514,
+        -92.54227309901945
+       ],
+       [
+        -234.5131120798834,
+        -92.38580087532831
+       ],
+       [
+        -234.6869701062069,
+        -92.66403187800417
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -234.26270417747514,
+       -92.54227309901945
+      ],
+      [
+       -234.5131120798834,
+       -92.38580087532831
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779393,
+     "ringsFeet": [
+      [
+       [
+        -240.40016873970413,
+        -88.70715959564517
+       ],
+       [
+        -233.67115194970063,
+        -92.91191595621018
+       ],
+       [
+        -233.5146797260095,
+        -92.66150805380192
+       ],
+       [
+        -240.2436965160131,
+        -88.45675169323684
+       ],
+       [
+        -240.40016873970413,
+        -88.70715959564517
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -240.40016873970413,
+       -88.70715959564517
+      ],
+      [
+       -233.67115194970063,
+       -92.91191595621018
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.98e-16 ft) near [-234.26270417747514, -92.54227309901945] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1789833-1778792:3-1:original-free-cap:4956",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1789833,
+     "ringsFeet": [
+      [
+       [
+        -246.48073252723415,
+        -99.72277124778775
+       ],
+       [
+        -240.55442350358422,
+        -103.42594012661777
+       ],
+       [
+        -240.20670745093724,
+        -102.8694781212661
+       ],
+       [
+        -246.13301647458718,
+        -99.16630924243607
+       ],
+       [
+        -246.48073252723415,
+        -99.72277124778775
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -246.13301647458718,
+       -99.16630924243607
+      ],
+      [
+       -246.48073252723415,
+       -99.72277124778775
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778792,
+     "ringsFeet": [
+      [
+       [
+        -256.70382584136985,
+        -113.5137895381139
+       ],
+       [
+        -255.54916718026516,
+        -114.23530034735636
+       ],
+       [
+        -246.03044023905477,
+        -99.00215295085484
+       ],
+       [
+        -247.1850989001595,
+        -98.28064214161239
+       ],
+       [
+        -256.70382584136985,
+        -113.5137895381139
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -255.54916718026516,
+       -114.23530034735636
+      ],
+      [
+       -246.03044023905477,
+       -99.00215295085484
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.77e-15 ft) near [-246.13301647458718, -99.16630924243607] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779103-1779102:3-1:original-free-cap:4972",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779103,
+     "ringsFeet": [
+      [
+       [
+        -236.16081289925543,
+        -96.33280649606473
+       ],
+       [
+        -230.59339921194254,
+        -99.81171267867025
+       ],
+       [
+        -230.43692698825154,
+        -99.56130477626192
+       ],
+       [
+        -236.0043406755644,
+        -96.08239859365642
+       ],
+       [
+        -236.16081289925543,
+        -96.33280649606473
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -236.0043406755644,
+       -96.08239859365642
+      ],
+      [
+       -236.16081289925543,
+       -96.33280649606473
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779102,
+     "ringsFeet": [
+      [
+       [
+        -240.82901351504373,
+        -102.41046753934604
+       ],
+       [
+        -240.20299375902292,
+        -102.80164809857357
+       ],
+       [
+        -235.6890011293133,
+        -95.57774982941909
+       ],
+       [
+        -236.31502088533392,
+        -95.18656927019127
+       ],
+       [
+        -240.82901351504373,
+        -102.41046753934604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -240.20299375902292,
+       -102.80164809857357
+      ],
+      [
+       -235.6890011293133,
+       -95.57774982941909
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.45e-14 ft) near [-236.0043406755644, -96.08239859365642] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779105-1779071:1-3:original-free-cap:5016",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779105,
+     "ringsFeet": [
+      [
+       [
+        -223.12950513991143,
+        -104.47180263463537
+       ],
+       [
+        -222.8512741372355,
+        -104.64566066095873
+       ],
+       [
+        -222.6948019135445,
+        -104.3952527585504
+       ],
+       [
+        -222.97303291622043,
+        -104.22139473222704
+       ],
+       [
+        -223.12950513991143,
+        -104.47180263463537
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -222.8512741372355,
+       -104.64566066095873
+      ],
+      [
+       -222.6948019135445,
+       -104.3952527585504
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779071,
+     "ringsFeet": [
+      [
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ],
+       [
+        -226.580660148641,
+        -111.48069485686501
+       ],
+       [
+        -213.99333904280837,
+        -91.33677026309249
+       ],
+       [
+        -214.38286244655455,
+        -91.09336902623963
+       ],
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -214.38286244655455,
+       -91.09336902623963
+      ],
+      [
+       -226.97018355238728,
+       -111.23729362001232
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 7.77e-15 ft) near [-222.6948019135445, -104.3952527585504] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779071-1779220:2-0:original-free-cap:5040",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779071,
+     "ringsFeet": [
+      [
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ],
+       [
+        -226.580660148641,
+        -111.48069485686501
+       ],
+       [
+        -213.99333904280837,
+        -91.33677026309249
+       ],
+       [
+        -214.38286244655455,
+        -91.09336902623963
+       ],
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -213.99333904280837,
+       -91.33677026309249
+      ],
+      [
+       -214.38286244655455,
+       -91.09336902623963
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779220,
+     "ringsFeet": [
+      [
+       [
+        -215.947312622545,
+        -90.11579205867203
+       ],
+       [
+        -213.43687703745258,
+        -91.68448631574203
+       ],
+       [
+        -213.04569647822476,
+        -91.0584665597214
+       ],
+       [
+        -215.55613206331716,
+        -89.4897723026514
+       ],
+       [
+        -215.947312622545,
+        -90.11579205867203
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -215.947312622545,
+       -90.11579205867203
+      ],
+      [
+       -213.43687703745258,
+       -91.68448631574203
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.22e-14 ft) near [-214.38286244655455, -91.09336902623961] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779095-1779071:3-1:original-free-cap:5060",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779095,
+     "ringsFeet": [
+      [
+       [
+        -220.22527999635918,
+        -101.30996055399568
+       ],
+       [
+        -219.66881799100344,
+        -101.6576766066452
+       ],
+       [
+        -219.46018835941527,
+        -101.32379940343418
+       ],
+       [
+        -220.01665036477118,
+        -100.97608335078458
+       ],
+       [
+        -220.22527999635918,
+        -101.30996055399568
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -220.01665036477118,
+       -100.97608335078458
+      ],
+      [
+       -220.22527999635918,
+       -101.30996055399568
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779071,
+     "ringsFeet": [
+      [
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ],
+       [
+        -226.580660148641,
+        -111.48069485686501
+       ],
+       [
+        -213.99333904280837,
+        -91.33677026309249
+       ],
+       [
+        -214.38286244655455,
+        -91.09336902623963
+       ],
+       [
+        -226.97018355238728,
+        -111.23729362001232
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -226.580660148641,
+       -111.48069485686501
+      ],
+      [
+       -213.99333904280837,
+       -91.33677026309249
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.67e-14 ft) near [-220.22527999635918, -101.30996055399568] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779095-1779094:1-3:original-free-cap:5256",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779095,
+     "ringsFeet": [
+      [
+       [
+        -217.12300431651957,
+        -103.24847754750506
+       ],
+       [
+        -206.63650047320547,
+        -109.8011724078847
+       ],
+       [
+        -206.42787084161748,
+        -109.4672952046736
+       ],
+       [
+        -216.91437468493137,
+        -102.91460034429407
+       ],
+       [
+        -217.12300431651957,
+        -103.24847754750506
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -206.63650047320547,
+       -109.8011724078847
+      ],
+      [
+       -206.42787084161748,
+       -109.4672952046736
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779094,
+     "ringsFeet": [
+      [
+       [
+        -212.99188062547952,
+        -119.97190671074156
+       ],
+       [
+        -212.65800342226842,
+        -120.18053634232957
+       ],
+       [
+        -200.07068231644362,
+        -100.03661174856973
+       ],
+       [
+        -200.4045595196546,
+        -99.82798211698154
+       ],
+       [
+        -212.99188062547952,
+        -119.97190671074156
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -200.4045595196546,
+       -99.82798211698154
+      ],
+      [
+       -212.99188062547952,
+       -119.97190671074156
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.52e-14 ft) near [-206.42787084161748, -109.4672952046736] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779107-1779615:2-0:original-free-cap:5396",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779107,
+     "ringsFeet": [
+      [
+       [
+        -192.9048048074836,
+        -118.61600968085997
+       ],
+       [
+        -192.2787850514628,
+        -119.0071902400875
+       ],
+       [
+        -185.75934335749562,
+        -108.57390258717157
+       ],
+       [
+        -186.43709190320178,
+        -108.26550539622292
+       ],
+       [
+        -192.9048048074836,
+        -118.61600968085997
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -185.75934335749562,
+       -108.57390258717157
+      ],
+      [
+       -186.43709190320178,
+       -108.26550539622292
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779615,
+     "ringsFeet": [
+      [
+       [
+        -186.85339617210946,
+        -108.07607368452919
+       ],
+       [
+        -184.75575499880043,
+        -109.0305672788942
+       ],
+       [
+        -184.55193125954918,
+        -108.58263439587085
+       ],
+       [
+        -186.20476297386037,
+        -107.83054328326905
+       ],
+       [
+        -186.6507609854651,
+        -107.7517895985442
+       ],
+       [
+        -186.85339617210946,
+        -108.07607368452919
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -186.85339617210946,
+       -108.07607368452919
+      ],
+      [
+       -184.75575499880043,
+       -109.0305672788942
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.77e-15 ft) near [-185.75934335749562, -108.57390258717157] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779613-1779614:3-2:original-free-cap:5668",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779613,
+     "ringsFeet": [
+      [
+       [
+        -172.1956515953001,
+        -113.35992830299882
+       ],
+       [
+        -170.7770053493788,
+        -113.35992830299882
+       ],
+       [
+        -170.7770053493788,
+        -112.86780231874685
+       ],
+       [
+        -172.11677733533895,
+        -112.86780231874685
+       ],
+       [
+        -172.1956515953001,
+        -113.35992830299882
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -172.11677733533895,
+       -112.86780231874685
+      ],
+      [
+       -172.1956515953001,
+       -113.35992830299882
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779614,
+     "ringsFeet": [
+      [
+       [
+        -172.87540256967938,
+        -113.13629294964124
+       ],
+       [
+        -172.19565159530006,
+        -113.35992830299882
+       ],
+       [
+        -172.11677733533895,
+        -112.86780231874687
+       ],
+       [
+        -172.7216046976897,
+        -112.6688165342496
+       ],
+       [
+        -172.87540256967938,
+        -113.13629294964124
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -172.11677733533895,
+       -112.86780231874687
+      ],
+      [
+       -172.7216046976897,
+       -112.6688165342496
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.35e-14 ft) near [-172.11677733533895, -112.86780231874685] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779612-1779162:0-2:finite-cap-overlap:5766",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "finite-cap-overlap",
+    "source": {
+     "nativeElementId": 1779612,
+     "ringsFeet": [
+      [
+       [
+        -162.28752425849171,
+        -112.05035826481802
+       ],
+       [
+        -162.24035607319652,
+        -112.54021859866015
+       ],
+       [
+        -161.2606354055123,
+        -112.44588222806976
+       ],
+       [
+        -161.30780359080748,
+        -111.95602189422763
+       ],
+       [
+        -162.28752425849171,
+        -112.05035826481802
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -162.28752425849171,
+       -112.05035826481802
+      ],
+      [
+       -162.24035607319652,
+       -112.54021859866015
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779162,
+     "ringsFeet": [
+      [
+       [
+        -162.45081103643912,
+        -112.06608099324974
+       ],
+       [
+        -162.40364285114396,
+        -112.55594132709189
+       ],
+       [
+        -162.24035607319658,
+        -112.54021859866016
+       ],
+       [
+        -162.28752425849174,
+        -112.05035826481803
+       ],
+       [
+        -162.45081103643912,
+        -112.06608099324974
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -162.24035607319658,
+       -112.54021859866016
+      ],
+      [
+       -162.28752425849174,
+       -112.05035826481803
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.79e-14 ft) near [-162.24035607319655, -112.54021859866015] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779173-1779187:1-0:original-free-cap:6136",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779173,
+     "ringsFeet": [
+      [
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ],
+       [
+        -152.55933652027258,
+        -109.29098309818427
+       ],
+       [
+        -152.41789455569102,
+        -109.2078931066264
+       ],
+       [
+        -152.66716453036463,
+        -108.78356721288175
+       ],
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -152.55933652027258,
+       -109.29098309818427
+      ],
+      [
+       -152.41789455569102,
+       -109.2078931066264
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779187,
+     "ringsFeet": [
+      [
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ],
+       [
+        -152.417894555691,
+        -109.2078931066266
+       ],
+       [
+        -152.27645259110943,
+        -109.12480311506876
+       ],
+       [
+        -152.52572256578298,
+        -108.70047722132408
+       ],
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -152.66716453036454,
+       -108.78356721288192
+      ],
+      [
+       -152.417894555691,
+       -109.2078931066266
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-13 ft) near [-152.41789455569105, -109.20789310662651] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779173-1779178:1-0:original-free-cap:6152",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779173,
+     "ringsFeet": [
+      [
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ],
+       [
+        -152.55933652027258,
+        -109.29098309818427
+       ],
+       [
+        -152.41789455569102,
+        -109.2078931066264
+       ],
+       [
+        -152.66716453036463,
+        -108.78356721288175
+       ],
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -152.55933652027258,
+       -109.29098309818427
+      ],
+      [
+       -152.41789455569102,
+       -109.2078931066264
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779178,
+     "ringsFeet": [
+      [
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ],
+       [
+        -152.417894555691,
+        -109.2078931066266
+       ],
+       [
+        -152.27645259110943,
+        -109.12480311506876
+       ],
+       [
+        -152.52572256578298,
+        -108.70047722132408
+       ],
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -152.66716453036454,
+       -108.78356721288192
+      ],
+      [
+       -152.417894555691,
+       -109.2078931066266
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-13 ft) near [-152.41789455569105, -109.20789310662651] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779167-1779187:1-0:original-free-cap:6180",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779167,
+     "ringsFeet": [
+      [
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ],
+       [
+        -152.55933652027258,
+        -109.29098309818427
+       ],
+       [
+        -152.41789455569102,
+        -109.2078931066264
+       ],
+       [
+        -152.66716453036463,
+        -108.78356721288175
+       ],
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -152.55933652027258,
+       -109.29098309818427
+      ],
+      [
+       -152.41789455569102,
+       -109.2078931066264
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779187,
+     "ringsFeet": [
+      [
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ],
+       [
+        -152.417894555691,
+        -109.2078931066266
+       ],
+       [
+        -152.27645259110943,
+        -109.12480311506876
+       ],
+       [
+        -152.52572256578298,
+        -108.70047722132408
+       ],
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -152.66716453036454,
+       -108.78356721288192
+      ],
+      [
+       -152.417894555691,
+       -109.2078931066266
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-13 ft) near [-152.41789455569105, -109.20789310662651] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779167-1779178:1-0:original-free-cap:6196",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779167,
+     "ringsFeet": [
+      [
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ],
+       [
+        -152.55933652027258,
+        -109.29098309818427
+       ],
+       [
+        -152.41789455569102,
+        -109.2078931066264
+       ],
+       [
+        -152.66716453036463,
+        -108.78356721288175
+       ],
+       [
+        -152.80860649494616,
+        -108.86665720443962
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -152.55933652027258,
+       -109.29098309818427
+      ],
+      [
+       -152.41789455569102,
+       -109.2078931066264
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779178,
+     "ringsFeet": [
+      [
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ],
+       [
+        -152.417894555691,
+        -109.2078931066266
+       ],
+       [
+        -152.27645259110943,
+        -109.12480311506876
+       ],
+       [
+        -152.52572256578298,
+        -108.70047722132408
+       ],
+       [
+        -152.66716453036454,
+        -108.78356721288192
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -152.66716453036454,
+       -108.78356721288192
+      ],
+      [
+       -152.417894555691,
+       -109.2078931066266
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-13 ft) near [-152.41789455569105, -109.20789310662651] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1778955-1778954:0-2:original-free-cap:6520",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1778955,
+     "ringsFeet": [
+      [
+       [
+        -75.229096419626,
+        -69.32620959961636
+       ],
+       [
+        -74.44596181981672,
+        -70.16601864018958
+       ],
+       [
+        -55.574958619016826,
+        -52.56852346489168
+       ],
+       [
+        -56.35809321882611,
+        -51.728714424318476
+       ],
+       [
+        -75.229096419626,
+        -69.32620959961636
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -75.229096419626,
+       -69.32620959961636
+      ],
+      [
+       -74.44596181981672,
+       -70.16601864018958
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778954,
+     "ringsFeet": [
+      [
+       [
+        -76.06890546019922,
+        -70.10934419942566
+       ],
+       [
+        -73.67306607602934,
+        -72.67856738925431
+       ],
+       [
+        -72.83325703545614,
+        -71.89543278944501
+       ],
+       [
+        -75.22909641962602,
+        -69.32620959961636
+       ],
+       [
+        -76.06890546019922,
+        -70.10934419942566
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -72.83325703545614,
+       -71.89543278944501
+      ],
+      [
+       -75.22909641962602,
+       -69.32620959961636
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.04e-14 ft) near [-75.229096419626, -69.32620959961636] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1778956-1778957:3-1:original-free-cap:6588",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1778956,
+     "ringsFeet": [
+      [
+       [
+        -64.32490432748476,
+        -44.86907501003149
+       ],
+       [
+        -63.46409782158189,
+        -45.792176972347434
+       ],
+       [
+        -62.62428878100868,
+        -45.00904237253815
+       ],
+       [
+        -63.485095286911566,
+        -44.085940410222186
+       ],
+       [
+        -64.32490432748476,
+        -44.86907501003149
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -63.485095286911566,
+       -44.085940410222186
+      ],
+      [
+       -64.32490432748476,
+       -44.86907501003149
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1778957,
+     "ringsFeet": [
+      [
+       [
+        -65.10803892729405,
+        -44.02926596945827
+       ],
+       [
+        -64.32490432748476,
+        -44.86907501003148
+       ],
+       [
+        -61.88680092540958,
+        -42.59550680603282
+       ],
+       [
+        -62.66993552521886,
+        -41.755697765459615
+       ],
+       [
+        -65.10803892729405,
+        -44.02926596945827
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -64.32490432748476,
+       -44.86907501003148
+      ],
+      [
+       -61.88680092540958,
+       -42.59550680603282
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.2e-15 ft) near [-64.32490432748476, -44.86907501003148] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779379-1779378:0-2:original-free-cap:6796",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779379,
+     "ringsFeet": [
+      [
+       [
+        -116.41150385944357,
+        -61.28638686174357
+       ],
+       [
+        -116.02849062051651,
+        -61.60211861084153
+       ],
+       [
+        -113.03162285958588,
+        -58.807494212614145
+       ],
+       [
+        -113.36725197378986,
+        -58.44757605236849
+       ],
+       [
+        -116.41150385944357,
+        -61.28638686174357
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -116.41150385944357,
+       -61.28638686174357
+      ],
+      [
+       -116.02849062051651,
+       -61.60211861084153
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779378,
+     "ringsFeet": [
+      [
+       [
+        -123.05443571613266,
+        -56.448155461450504
+       ],
+       [
+        -116.39151450037897,
+        -61.94064385544149
+       ],
+       [
+        -116.02849062051652,
+        -61.60211861084153
+       ],
+       [
+        -122.74140509591689,
+        -56.06841895387809
+       ],
+       [
+        -123.05443571613266,
+        -56.448155461450504
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -116.02849062051652,
+       -61.60211861084153
+      ],
+      [
+       -122.74140509591689,
+       -56.06841895387809
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 9.04e-15 ft) near [-116.02849062051652, -61.60211861084153] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779378-1779375:3-1:original-free-cap:6844",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779378,
+     "ringsFeet": [
+      [
+       [
+        -123.05443571613266,
+        -56.448155461450504
+       ],
+       [
+        -116.39151450037897,
+        -61.94064385544149
+       ],
+       [
+        -116.02849062051652,
+        -61.60211861084153
+       ],
+       [
+        -122.74140509591689,
+        -56.06841895387809
+       ],
+       [
+        -123.05443571613266,
+        -56.448155461450504
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -122.74140509591689,
+       -56.06841895387809
+      ],
+      [
+       -123.05443571613266,
+       -56.448155461450504
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779375,
+     "ringsFeet": [
+      [
+       [
+        -163.8495501274346,
+        -104.38921085554902
+       ],
+       [
+        -162.46401587185753,
+        -104.25579908083488
+       ],
+       [
+        -119.86468969794768,
+        -52.578684122979894
+       ],
+       [
+        -120.62416271309253,
+        -51.952622882548354
+       ],
+       [
+        -163.8495501274346,
+        -104.38921085554902
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -162.46401587185753,
+       -104.25579908083488
+      ],
+      [
+       -119.86468969794768,
+       -52.578684122979894
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.99e-17 ft) near [-122.74140509591689, -56.06841895387809] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779992-1779989:0-2:original-free-cap:7432",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779992,
+     "ringsFeet": [
+      [
+       [
+        -132.83020409177604,
+        -80.0056565262361
+       ],
+       [
+        -132.76691467384728,
+        -80.05782829627206
+       ],
+       [
+        -131.1495898027325,
+        -78.09585634048122
+       ],
+       [
+        -131.21287922066122,
+        -78.04368457044527
+       ],
+       [
+        -132.83020409177604,
+        -80.0056565262361
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -132.83020409177604,
+       -80.0056565262361
+      ],
+      [
+       -132.76691467384728,
+       -80.05782829627206
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779989,
+     "ringsFeet": [
+      [
+       [
+        -132.99910283813526,
+        -80.0790201566569
+       ],
+       [
+        -132.61936633056283,
+        -80.39205077687267
+       ],
+       [
+        -132.51502279049092,
+        -80.26547194101519
+       ],
+       [
+        -132.89475929806335,
+        -79.95244132079942
+       ],
+       [
+        -132.99910283813526,
+        -80.0790201566569
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -132.51502279049092,
+       -80.26547194101519
+      ],
+      [
+       -132.89475929806335,
+       -79.95244132079942
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-17 ft) near [-132.76691467384728, -80.05782829627206] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779992-1780006:0-2:original-free-cap:7456",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779992,
+     "ringsFeet": [
+      [
+       [
+        -132.83020409177604,
+        -80.0056565262361
+       ],
+       [
+        -132.76691467384728,
+        -80.05782829627206
+       ],
+       [
+        -131.1495898027325,
+        -78.09585634048122
+       ],
+       [
+        -131.21287922066122,
+        -78.04368457044527
+       ],
+       [
+        -132.83020409177604,
+        -80.0056565262361
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -132.83020409177604,
+       -80.0056565262361
+      ],
+      [
+       -132.76691467384728,
+       -80.05782829627206
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1780006,
+     "ringsFeet": [
+      [
+       [
+        -132.99910283813526,
+        -80.0790201566569
+       ],
+       [
+        -132.61936633056283,
+        -80.39205077687267
+       ],
+       [
+        -132.51502279049092,
+        -80.26547194101519
+       ],
+       [
+        -132.89475929806335,
+        -79.95244132079942
+       ],
+       [
+        -132.99910283813526,
+        -80.0790201566569
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -132.51502279049092,
+       -80.26547194101519
+      ],
+      [
+       -132.89475929806335,
+       -79.95244132079942
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.86e-17 ft) near [-132.76691467384728, -80.05782829627206] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779377-1779375:3-1:original-free-cap:7684",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779377,
+     "ringsFeet": [
+      [
+       [
+        -144.0416977127892,
+        -81.90774011366234
+       ],
+       [
+        -138.24578444501796,
+        -86.68552230933712
+       ],
+       [
+        -137.9327538248022,
+        -86.3057858017647
+       ],
+       [
+        -143.72866709257343,
+        -81.52800360608992
+       ],
+       [
+        -144.0416977127892,
+        -81.90774011366234
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -143.72866709257343,
+       -81.52800360608992
+      ],
+      [
+       -144.0416977127892,
+       -81.90774011366234
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779375,
+     "ringsFeet": [
+      [
+       [
+        -163.8495501274346,
+        -104.38921085554902
+       ],
+       [
+        -162.46401587185753,
+        -104.25579908083488
+       ],
+       [
+        -119.86468969794768,
+        -52.578684122979894
+       ],
+       [
+        -120.62416271309253,
+        -51.952622882548354
+       ],
+       [
+        -163.8495501274346,
+        -104.38921085554902
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -162.46401587185753,
+       -104.25579908083488
+      ],
+      [
+       -119.86468969794768,
+       -52.578684122979894
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 6.32e-15 ft) near [-144.0416977127892, -81.90774011366234] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779374-1779226:1-3:original-free-cap:7756",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779374,
+     "ringsFeet": [
+      [
+       [
+        -220.35456855133322,
+        -62.198973139350784
+       ],
+       [
+        -168.61685807899443,
+        -104.84825040066774
+       ],
+       [
+        -167.2313238234189,
+        -104.71483862595373
+       ],
+       [
+        -219.72850731090168,
+        -61.43950012420595
+       ],
+       [
+        -220.35456855133322,
+        -62.198973139350784
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -168.61685807899443,
+       -104.84825040066774
+      ],
+      [
+       -167.2313238234189,
+       -104.71483862595373
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779226,
+     "ringsFeet": [
+      [
+       [
+        -168.6168580789944,
+        -104.84825040066774
+       ],
+       [
+        -167.5428010407208,
+        -105.73363469776164
+       ],
+       [
+        -163.3494001689524,
+        -105.32985611910968
+       ],
+       [
+        -162.46401587185753,
+        -104.25579908083485
+       ],
+       [
+        -168.6168580789944,
+        -104.84825040066774
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -162.46401587185753,
+       -104.25579908083485
+      ],
+      [
+       -168.6168580789944,
+       -104.84825040066774
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.72e-15 ft) near [-168.6168580789944, -104.84825040066774] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779928-1779927:1-3:original-free-cap:7804",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779928,
+     "ringsFeet": [
+      [
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ],
+       [
+        -196.30540848465213,
+        -91.79564771813203
+       ],
+       [
+        -196.25323671461618,
+        -91.73235830020329
+       ],
+       [
+        -199.34987352817842,
+        -89.1796879011174
+       ],
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -196.30540848465213,
+       -91.79564771813203
+      ],
+      [
+       -196.25323671461618,
+       -91.73235830020329
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779927,
+     "ringsFeet": [
+      [
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ],
+       [
+        -196.23204485423136,
+        -91.96454646449128
+       ],
+       [
+        -195.91901423401558,
+        -91.58480995691885
+       ],
+       [
+        -196.04559306987306,
+        -91.48046641684692
+       ],
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -196.04559306987306,
+       -91.48046641684692
+      ],
+      [
+       -196.35862369008882,
+       -91.86020292441935
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.87e-16 ft) near [-196.30540848465213, -91.79564771813203] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779928-1779960:1-3:original-free-cap:7820",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779928,
+     "ringsFeet": [
+      [
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ],
+       [
+        -196.30540848465213,
+        -91.79564771813203
+       ],
+       [
+        -196.25323671461618,
+        -91.73235830020329
+       ],
+       [
+        -199.34987352817842,
+        -89.1796879011174
+       ],
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -196.30540848465213,
+       -91.79564771813203
+      ],
+      [
+       -196.25323671461618,
+       -91.73235830020329
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779960,
+     "ringsFeet": [
+      [
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ],
+       [
+        -196.23204485423136,
+        -91.96454646449128
+       ],
+       [
+        -195.91901423401558,
+        -91.58480995691885
+       ],
+       [
+        -196.04559306987306,
+        -91.48046641684692
+       ],
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -196.04559306987306,
+       -91.48046641684692
+      ],
+      [
+       -196.35862369008882,
+       -91.86020292441935
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.87e-16 ft) near [-196.30540848465213, -91.79564771813203] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779927-1779960:1-3:original-free-cap:7852",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779927,
+     "ringsFeet": [
+      [
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ],
+       [
+        -196.30540848465213,
+        -91.79564771813203
+       ],
+       [
+        -196.25323671461618,
+        -91.73235830020329
+       ],
+       [
+        -199.34987352817842,
+        -89.1796879011174
+       ],
+       [
+        -199.40204529821438,
+        -89.24297731904613
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -196.30540848465213,
+       -91.79564771813203
+      ],
+      [
+       -196.25323671461618,
+       -91.73235830020329
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779960,
+     "ringsFeet": [
+      [
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ],
+       [
+        -196.23204485423136,
+        -91.96454646449128
+       ],
+       [
+        -195.91901423401558,
+        -91.58480995691885
+       ],
+       [
+        -196.04559306987306,
+        -91.48046641684692
+       ],
+       [
+        -196.35862369008882,
+        -91.86020292441935
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -196.04559306987306,
+       -91.48046641684692
+      ],
+      [
+       -196.35862369008882,
+       -91.86020292441935
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 5.87e-16 ft) near [-196.30540848465213, -91.79564771813203] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1780058-1779927:3-1:original-free-cap:8420",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1780058,
+     "ringsFeet": [
+      [
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ],
+       [
+        -212.67464440037926,
+        -78.30189094474335
+       ],
+       [
+        -212.6224726303433,
+        -78.2386015268146
+       ],
+       [
+        -215.71910944390555,
+        -75.68593112772872
+       ],
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -215.71910944390555,
+       -75.68593112772872
+      ],
+      [
+       -215.7712812139415,
+       -75.74922054565745
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779927,
+     "ringsFeet": [
+      [
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ],
+       [
+        -215.82449641937822,
+        -75.81377575194473
+       ],
+       [
+        -215.51146579916247,
+        -75.4340392443723
+       ],
+       [
+        -215.63804463501992,
+        -75.32969570430038
+       ],
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -215.82449641937822,
+       -75.81377575194473
+      ],
+      [
+       -215.51146579916247,
+       -75.4340392443723
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.78e-14 ft) near [-215.7712812139415, -75.74922054565747] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1780058-1779935:3-1:original-free-cap:8428",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1780058,
+     "ringsFeet": [
+      [
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ],
+       [
+        -212.67464440037926,
+        -78.30189094474335
+       ],
+       [
+        -212.6224726303433,
+        -78.2386015268146
+       ],
+       [
+        -215.71910944390555,
+        -75.68593112772872
+       ],
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -215.71910944390555,
+       -75.68593112772872
+      ],
+      [
+       -215.7712812139415,
+       -75.74922054565745
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779935,
+     "ringsFeet": [
+      [
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ],
+       [
+        -215.82449641937822,
+        -75.81377575194473
+       ],
+       [
+        -215.51146579916247,
+        -75.4340392443723
+       ],
+       [
+        -215.63804463501992,
+        -75.32969570430038
+       ],
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -215.82449641937822,
+       -75.81377575194473
+      ],
+      [
+       -215.51146579916247,
+       -75.4340392443723
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.78e-14 ft) near [-215.7712812139415, -75.74922054565747] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779927-1779935:3-1:original-free-cap:8460",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779927,
+     "ringsFeet": [
+      [
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ],
+       [
+        -212.67464440037926,
+        -78.30189094474335
+       ],
+       [
+        -212.6224726303433,
+        -78.2386015268146
+       ],
+       [
+        -215.71910944390555,
+        -75.68593112772872
+       ],
+       [
+        -215.7712812139415,
+        -75.74922054565745
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -215.71910944390555,
+       -75.68593112772872
+      ],
+      [
+       -215.7712812139415,
+       -75.74922054565745
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779935,
+     "ringsFeet": [
+      [
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ],
+       [
+        -215.82449641937822,
+        -75.81377575194473
+       ],
+       [
+        -215.51146579916247,
+        -75.4340392443723
+       ],
+       [
+        -215.63804463501992,
+        -75.32969570430038
+       ],
+       [
+        -215.9510752552357,
+        -75.70943221187281
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -215.82449641937822,
+       -75.81377575194473
+      ],
+      [
+       -215.51146579916247,
+       -75.4340392443723
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.78e-14 ft) near [-215.7712812139415, -75.74922054565747] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779093-1779092:0-2:original-free-cap:8552",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779093,
+     "ringsFeet": [
+      [
+       [
+        -221.8797368320816,
+        -71.3849231910519
+       ],
+       [
+        -221.4592561286667,
+        -71.64766869568534
+       ],
+       [
+        -216.42858354674556,
+        -65.43530542881211
+       ],
+       [
+        -216.8083345140712,
+        -65.12226288889563
+       ],
+       [
+        -221.8797368320816,
+        -71.3849231910519
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -221.8797368320816,
+       -71.3849231910519
+      ],
+      [
+       -221.4592561286667,
+       -71.64766869568534
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779092,
+     "ringsFeet": [
+      [
+       [
+        -225.60993253147115,
+        -69.6343425542406
+       ],
+       [
+        -221.43646749133234,
+        -72.24221294909077
+       ],
+       [
+        -221.1756804518473,
+        -71.82486644507689
+       ],
+       [
+        -225.34914549198615,
+        -69.21699605022671
+       ],
+       [
+        -225.60993253147115,
+        -69.6343425542406
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -221.1756804518473,
+       -71.82486644507689
+      ],
+      [
+       -225.34914549198615,
+       -69.21699605022671
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 4.69e-15 ft) near [-221.4592561286667, -71.64766869568534] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779214-1779089:1-0:original-free-cap:8632",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779214,
+     "ringsFeet": [
+      [
+       [
+        -250.08575440715438,
+        -60.14486908366489
+       ],
+       [
+        -243.6509368059609,
+        -64.16578938778109
+       ],
+       [
+        -243.32060655594657,
+        -63.63715048269683
+       ],
+       [
+        -249.75542415714003,
+        -59.61623017858064
+       ],
+       [
+        -250.08575440715438,
+        -60.14486908366489
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -243.6509368059609,
+       -64.16578938778109
+      ],
+      [
+       -243.32060655594657,
+       -63.63715048269683
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779089,
+     "ringsFeet": [
+      [
+       [
+        -243.65448375915767,
+        -63.42852085110883
+       ],
+       [
+        -243.32060655594657,
+        -63.63715048269684
+       ],
+       [
+        -237.15915875280197,
+        -53.77677281444938
+       ],
+       [
+        -237.49303595601307,
+        -53.56814318286137
+       ],
+       [
+        -243.65448375915767,
+        -63.42852085110883
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -243.65448375915767,
+       -63.42852085110883
+      ],
+      [
+       -243.32060655594657,
+       -63.63715048269684
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.77e-15 ft) near [-243.32060655594657, -63.63715048269684] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779214-1779212:1-3:original-free-cap:8756",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779214,
+     "ringsFeet": [
+      [
+       [
+        -256.4196831830719,
+        -56.186991114413814
+       ],
+       [
+        -255.5849901750441,
+        -56.70856519338388
+       ],
+       [
+        -255.25465992502978,
+        -56.179926288299626
+       ],
+       [
+        -256.08935293305757,
+        -55.65835220932958
+       ],
+       [
+        -256.4196831830719,
+        -56.186991114413814
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -255.5849901750441,
+       -56.70856519338388
+      ],
+      [
+       -255.25465992502978,
+       -56.179926288299626
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779212,
+     "ringsFeet": [
+      [
+       [
+        -255.59368307636026,
+        -56.722476743517674
+       ],
+       [
+        -255.4545675750223,
+        -56.80940575667935
+       ],
+       [
+        -255.1937805355373,
+        -56.39205925266547
+       ],
+       [
+        -255.33289603687524,
+        -56.3051302395038
+       ],
+       [
+        -255.59368307636026,
+        -56.722476743517674
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -255.33289603687524,
+       -56.3051302395038
+      ],
+      [
+       -255.59368307636026,
+       -56.722476743517674
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.03e-14 ft) near [-255.5849901750441, -56.70856519338388] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779303-1779266:3-1:original-free-cap:8876",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779303,
+     "ringsFeet": [
+      [
+       [
+        -237.15070895609472,
+        -39.49870922477471
+       ],
+       [
+        -236.41418546923774,
+        -39.95894017867345
+       ],
+       [
+        -236.10993392317187,
+        -39.4720359239906
+       ],
+       [
+        -236.84645741002888,
+        -39.011804970091845
+       ],
+       [
+        -237.15070895609472,
+        -39.49870922477471
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -236.84645741002888,
+       -39.011804970091845
+      ],
+      [
+       -237.15070895609472,
+       -39.49870922477471
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ],
+       [
+        -237.10724417936572,
+        -39.429151041778276
+       ],
+       [
+        -236.8464571398807,
+        -39.0118045377644
+       ],
+       [
+        -236.98557264121865,
+        -38.924875524602726
+       ],
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -237.10724417936572,
+       -39.429151041778276
+      ],
+      [
+       -236.8464571398807,
+       -39.0118045377644
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.07e-14 ft) near [-237.10724417936572, -39.429151041778276] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779303-1779277:3-1:original-free-cap:8884",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779303,
+     "ringsFeet": [
+      [
+       [
+        -237.15070895609472,
+        -39.49870922477471
+       ],
+       [
+        -236.41418546923774,
+        -39.95894017867345
+       ],
+       [
+        -236.10993392317187,
+        -39.4720359239906
+       ],
+       [
+        -236.84645741002888,
+        -39.011804970091845
+       ],
+       [
+        -237.15070895609472,
+        -39.49870922477471
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -236.84645741002888,
+       -39.011804970091845
+      ],
+      [
+       -237.15070895609472,
+       -39.49870922477471
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779277,
+     "ringsFeet": [
+      [
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ],
+       [
+        -237.10724417936572,
+        -39.429151041778276
+       ],
+       [
+        -236.8464571398807,
+        -39.0118045377644
+       ],
+       [
+        -236.98557264121865,
+        -38.924875524602726
+       ],
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -237.10724417936572,
+       -39.429151041778276
+      ],
+      [
+       -236.8464571398807,
+       -39.0118045377644
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.07e-14 ft) near [-237.10724417936572, -39.429151041778276] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779266-1779277:1-3:original-free-cap:8916",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -237.073370944512,
+       -39.065382180954074
+      ],
+      [
+       -237.02990643793115,
+       -38.9958244302851
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779277,
+     "ringsFeet": [
+      [
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ],
+       [
+        -237.10724417936572,
+        -39.429151041778276
+       ],
+       [
+        -236.8464571398807,
+        -39.0118045377644
+       ],
+       [
+        -236.98557264121865,
+        -38.924875524602726
+       ],
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -236.98557264121865,
+       -38.924875524602726
+      ],
+      [
+       -237.24635968070368,
+       -39.342222028616604
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.69e-14 ft) near [-237.02990643793115, -38.995824430285104] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779269-1779266:1-3:original-free-cap:8924",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779269,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -237.073370944512,
+       -39.065382180954074
+      ],
+      [
+       -237.02990643793115,
+       -38.9958244302851
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ],
+       [
+        -237.10724417936572,
+        -39.429151041778276
+       ],
+       [
+        -236.8464571398807,
+        -39.0118045377644
+       ],
+       [
+        -236.98557264121865,
+        -38.924875524602726
+       ],
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -236.98557264121865,
+       -38.924875524602726
+      ],
+      [
+       -237.24635968070368,
+       -39.342222028616604
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.69e-14 ft) near [-237.02990643793115, -38.995824430285104] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779269-1779277:1-3:original-free-cap:8948",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779269,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -237.073370944512,
+       -39.065382180954074
+      ],
+      [
+       -237.02990643793115,
+       -38.9958244302851
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779277,
+     "ringsFeet": [
+      [
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ],
+       [
+        -237.10724417936572,
+        -39.429151041778276
+       ],
+       [
+        -236.8464571398807,
+        -39.0118045377644
+       ],
+       [
+        -236.98557264121865,
+        -38.924875524602726
+       ],
+       [
+        -237.24635968070368,
+        -39.342222028616604
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -236.98557264121865,
+       -38.924875524602726
+      ],
+      [
+       -237.24635968070368,
+       -39.342222028616604
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.69e-14 ft) near [-237.02990643793115, -38.995824430285104] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779084-1779083:3-1:original-free-cap:9236",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779084,
+     "ringsFeet": [
+      [
+       [
+        -266.1412031628713,
+        -47.92649823982224
+       ],
+       [
+        -264.6248441982882,
+        -48.87402448328406
+       ],
+       [
+        -264.4162145667002,
+        -48.54014728007296
+       ],
+       [
+        -265.9325735312833,
+        -47.59262103661114
+       ],
+       [
+        -266.1412031628713,
+        -47.92649823982224
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -265.9325735312833,
+       -47.59262103661114
+      ],
+      [
+       -266.1412031628713,
+       -47.92649823982224
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779083,
+     "ringsFeet": [
+      [
+       [
+        -267.1270479647949,
+        -48.761234868268744
+       ],
+       [
+        -266.7931707615838,
+        -48.96986449985677
+       ],
+       [
+        -253.9111871844369,
+        -28.35438137882787
+       ],
+       [
+        -254.245064387648,
+        -28.145751747239856
+       ],
+       [
+        -267.1270479647949,
+        -48.761234868268744
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -266.7931707615838,
+       -48.96986449985677
+      ],
+      [
+       -253.9111871844369,
+       -28.35438137882787
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.11e-14 ft) near [-266.1412031628713, -47.92649823982223] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779200-1779193:0-1:original-free-cap:9600",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779200,
+     "ringsFeet": [
+      [
+       [
+        -278.61454385181247,
+        -42.337446390350465
+       ],
+       [
+        -278.4754283504745,
+        -42.42437540351208
+       ],
+       [
+        -278.21464131098963,
+        -42.00702889949809
+       ],
+       [
+        -278.3537568123276,
+        -41.92009988633647
+       ],
+       [
+        -278.61454385181247,
+        -42.337446390350465
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -278.61454385181247,
+       -42.337446390350465
+      ],
+      [
+       -278.4754283504745,
+       -42.42437540351208
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779193,
+     "ringsFeet": [
+      [
+       [
+        -278.75365935315045,
+        -42.25051737718886
+       ],
+       [
+        -278.61454385181247,
+        -42.33744639035047
+       ],
+       [
+        -278.3537568123276,
+        -41.92009988633648
+       ],
+       [
+        -278.4928723136656,
+        -41.833170873174865
+       ],
+       [
+        -278.75365935315045,
+        -42.25051737718886
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -278.61454385181247,
+       -42.33744639035047
+      ],
+      [
+       -278.3537568123276,
+       -41.92009988633648
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 6.03e-15 ft) near [-278.61454385181247, -42.33744639035047] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779138-1779137:0-2:original-free-cap:9680",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779138,
+     "ringsFeet": [
+      [
+       [
+        -170.60569997993125,
+        -112.93535584706828
+       ],
+       [
+        -170.59783861571535,
+        -113.01699923604197
+       ],
+       [
+        -168.22395719264534,
+        -112.78842045328167
+       ],
+       [
+        -168.2318185568612,
+        -112.70677706430799
+       ],
+       [
+        -170.60569997993125,
+        -112.93535584706828
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -170.60569997993125,
+       -112.93535584706828
+      ],
+      [
+       -170.59783861571535,
+       -113.01699923604197
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779137,
+     "ringsFeet": [
+      [
+       [
+        -170.7770053493788,
+        -112.86780231874685
+       ],
+       [
+        -170.7298371640836,
+        -113.35766265258898
+       ],
+       [
+        -170.5665503861362,
+        -113.34193992415726
+       ],
+       [
+        -170.61371857143143,
+        -112.85207959031511
+       ],
+       [
+        -170.7770053493788,
+        -112.86780231874685
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -170.5665503861362,
+       -113.34193992415726
+      ],
+      [
+       -170.61371857143143,
+       -112.85207959031511
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.57e-15 ft) near [-170.60569997993125, -112.93535584706828] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779138-1779151:0-2:original-free-cap:9704",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779138,
+     "ringsFeet": [
+      [
+       [
+        -170.60569997993125,
+        -112.93535584706828
+       ],
+       [
+        -170.59783861571535,
+        -113.01699923604197
+       ],
+       [
+        -168.22395719264534,
+        -112.78842045328167
+       ],
+       [
+        -168.2318185568612,
+        -112.70677706430799
+       ],
+       [
+        -170.60569997993125,
+        -112.93535584706828
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -170.60569997993125,
+       -112.93535584706828
+      ],
+      [
+       -170.59783861571535,
+       -113.01699923604197
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779151,
+     "ringsFeet": [
+      [
+       [
+        -170.7770053493788,
+        -112.86780231874685
+       ],
+       [
+        -170.7298371640836,
+        -113.35766265258898
+       ],
+       [
+        -170.5665503861362,
+        -113.34193992415726
+       ],
+       [
+        -170.61371857143143,
+        -112.85207959031511
+       ],
+       [
+        -170.7770053493788,
+        -112.86780231874685
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -170.5665503861362,
+       -113.34193992415726
+      ],
+      [
+       -170.61371857143143,
+       -112.85207959031511
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.57e-15 ft) near [-170.60569997993125, -112.93535584706828] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779140-1779154:0-2:original-free-cap:9824",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779140,
+     "ringsFeet": [
+      [
+       [
+        -168.06853177891384,
+        -112.69105433587623
+       ],
+       [
+        -168.06067041469794,
+        -112.77269772484992
+       ],
+       [
+        -165.68678899162794,
+        -112.54411894208963
+       ],
+       [
+        -165.6946503558438,
+        -112.46247555311594
+       ],
+       [
+        -168.06853177891384,
+        -112.69105433587623
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -168.06853177891384,
+       -112.69105433587623
+      ],
+      [
+       -168.06067041469794,
+       -112.77269772484992
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779154,
+     "ringsFeet": [
+      [
+       [
+        -168.2398371483614,
+        -112.62350080755482
+       ],
+       [
+        -168.1926689630662,
+        -113.11336114139695
+       ],
+       [
+        -168.02938218511883,
+        -113.09763841296521
+       ],
+       [
+        -168.07655037041403,
+        -112.60777807912308
+       ],
+       [
+        -168.2398371483614,
+        -112.62350080755482
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -168.02938218511883,
+       -113.09763841296521
+      ],
+      [
+       -168.07655037041403,
+       -112.60777807912308
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 7.51e-15 ft) near [-168.06853177891384, -112.69105433587623] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779267-1779266:1-3:original-free-cap:9936",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779267,
+     "ringsFeet": [
+      [
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ],
+       [
+        -239.64700771926425,
+        -37.45719543746312
+       ],
+       [
+        -239.6035432126834,
+        -37.38763768679414
+       ],
+       [
+        -242.03806448609765,
+        -35.8663799564649
+       ],
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.64700771926425,
+       -37.45719543746312
+      ],
+      [
+       -239.6035432126834,
+       -37.38763768679414
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.5592094159709,
+       -37.31668878111178
+      ],
+      [
+       -239.81999645545594,
+       -37.734035285125664
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.13e-14 ft) near [-239.6035432126834, -37.38763768679415] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779267-1779283:1-3:original-free-cap:9960",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779267,
+     "ringsFeet": [
+      [
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ],
+       [
+        -239.64700771926425,
+        -37.45719543746312
+       ],
+       [
+        -239.6035432126834,
+        -37.38763768679414
+       ],
+       [
+        -242.03806448609765,
+        -35.8663799564649
+       ],
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.64700771926425,
+       -37.45719543746312
+      ],
+      [
+       -239.6035432126834,
+       -37.38763768679414
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779283,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.5592094159709,
+       -37.31668878111178
+      ],
+      [
+       -239.81999645545594,
+       -37.734035285125664
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.13e-14 ft) near [-239.6035432126834, -37.38763768679415] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779266-1779283:1-3:original-free-cap:9992",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ],
+       [
+        -239.64700771926425,
+        -37.45719543746312
+       ],
+       [
+        -239.6035432126834,
+        -37.38763768679414
+       ],
+       [
+        -242.03806448609765,
+        -35.8663799564649
+       ],
+       [
+        -242.0815289926785,
+        -35.935937707133874
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.64700771926425,
+       -37.45719543746312
+      ],
+      [
+       -239.6035432126834,
+       -37.38763768679414
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779283,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.5592094159709,
+       -37.31668878111178
+      ],
+      [
+       -239.81999645545594,
+       -37.734035285125664
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.13e-14 ft) near [-239.6035432126834, -37.38763768679415] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779266-1779283:3-1:original-free-cap:10112",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.4644277113454,
+       -37.47456669995585
+      ],
+      [
+       -239.50789221792624,
+       -37.54412445062483
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779283,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.68088095411795,
+       -37.820964298287336
+      ],
+      [
+       -239.42009391463293,
+       -37.40361779427345
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.75e-15 ft) near [-239.50789221792624, -37.54412445062483] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779269-1779266:3-1:original-free-cap:10132",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779269,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.4644277113454,
+       -37.47456669995585
+      ],
+      [
+       -239.50789221792624,
+       -37.54412445062483
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779266,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.68088095411795,
+       -37.820964298287336
+      ],
+      [
+       -239.42009391463293,
+       -37.40361779427345
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.75e-15 ft) near [-239.50789221792624, -37.54412445062483] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779269-1779283:3-1:original-free-cap:10140",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779269,
+     "ringsFeet": [
+      [
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ],
+       [
+        -237.073370944512,
+        -39.065382180954074
+       ],
+       [
+        -237.02990643793115,
+        -38.9958244302851
+       ],
+       [
+        -239.4644277113454,
+        -37.47456669995585
+       ],
+       [
+        -239.50789221792624,
+        -37.54412445062483
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -239.4644277113454,
+       -37.47456669995585
+      ],
+      [
+       -239.50789221792624,
+       -37.54412445062483
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779283,
+     "ringsFeet": [
+      [
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ],
+       [
+        -239.68088095411795,
+        -37.820964298287336
+       ],
+       [
+        -239.42009391463293,
+        -37.40361779427345
+       ],
+       [
+        -239.5592094159709,
+        -37.31668878111178
+       ],
+       [
+        -239.81999645545594,
+        -37.734035285125664
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -239.68088095411795,
+       -37.820964298287336
+      ],
+      [
+       -239.42009391463293,
+       -37.40361779427345
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.75e-15 ft) near [-239.50789221792624, -37.54412445062483] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779116-1779115:3-1:original-free-cap:10180",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779116,
+     "ringsFeet": [
+      [
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ],
+       [
+        -180.91622294789502,
+        -110.29966078777602
+       ],
+       [
+        -180.8889123763059,
+        -110.2223201342365
+       ],
+       [
+        -184.50594602739477,
+        -108.94507134013637
+       ],
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -184.50594602739477,
+       -108.94507134013637
+      ],
+      [
+       -184.53325659898388,
+       -109.02241199367589
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779115,
+     "ringsFeet": [
+      [
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ],
+       [
+        -184.56111338200478,
+        -109.10129946028619
+       ],
+       [
+        -184.39724995247013,
+        -108.63725553904908
+       ],
+       [
+        -184.55193125954918,
+        -108.58263439587087
+       ],
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -184.56111338200478,
+       -109.10129946028619
+      ],
+      [
+       -184.39724995247013,
+       -108.63725553904908
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 8.25e-15 ft) near [-184.53325659898388, -109.02241199367589] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779116-1779121:3-1:original-free-cap:10188",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779116,
+     "ringsFeet": [
+      [
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ],
+       [
+        -180.91622294789502,
+        -110.29966078777602
+       ],
+       [
+        -180.8889123763059,
+        -110.2223201342365
+       ],
+       [
+        -184.50594602739477,
+        -108.94507134013637
+       ],
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -184.50594602739477,
+       -108.94507134013637
+      ],
+      [
+       -184.53325659898388,
+       -109.02241199367589
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779121,
+     "ringsFeet": [
+      [
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ],
+       [
+        -184.56111338200478,
+        -109.10129946028619
+       ],
+       [
+        -184.39724995247013,
+        -108.63725553904908
+       ],
+       [
+        -184.55193125954918,
+        -108.58263439587087
+       ],
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -184.56111338200478,
+       -109.10129946028619
+      ],
+      [
+       -184.39724995247013,
+       -108.63725553904908
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 8.25e-15 ft) near [-184.53325659898388, -109.02241199367589] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779115-1779121:3-1:original-free-cap:10220",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779115,
+     "ringsFeet": [
+      [
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ],
+       [
+        -180.91622294789502,
+        -110.29966078777602
+       ],
+       [
+        -180.8889123763059,
+        -110.2223201342365
+       ],
+       [
+        -184.50594602739477,
+        -108.94507134013637
+       ],
+       [
+        -184.53325659898388,
+        -109.02241199367589
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -184.50594602739477,
+       -108.94507134013637
+      ],
+      [
+       -184.53325659898388,
+       -109.02241199367589
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779121,
+     "ringsFeet": [
+      [
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ],
+       [
+        -184.56111338200478,
+        -109.10129946028619
+       ],
+       [
+        -184.39724995247013,
+        -108.63725553904908
+       ],
+       [
+        -184.55193125954918,
+        -108.58263439587087
+       ],
+       [
+        -184.7157946890838,
+        -109.04667831710798
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -184.56111338200478,
+       -109.10129946028619
+      ],
+      [
+       -184.39724995247013,
+       -108.63725553904908
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 8.25e-15 ft) near [-184.53325659898388, -109.02241199367589] in native-region:1487353:13. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779087-1779821:1-3:original-free-cap:10504",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779087,
+     "ringsFeet": [
+      [
+       [
+        -234.61334507831728,
+        -55.367573755307994
+       ],
+       [
+        -227.16231882665613,
+        -60.02349170024714
+       ],
+       [
+        -226.9536891950681,
+        -59.68961449703603
+       ],
+       [
+        -234.40471544672926,
+        -55.03369655209689
+       ],
+       [
+        -234.61334507831728,
+        -55.367573755307994
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -227.16231882665613,
+       -60.02349170024714
+      ],
+      [
+       -226.9536891950681,
+       -59.68961449703603
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779821,
+     "ringsFeet": [
+      [
+       [
+        -233.30286587046945,
+        -69.85042116165354
+       ],
+       [
+        -232.77538300949615,
+        -70.18260146897576
+       ],
+       [
+        -222.30198777389143,
+        -53.42166543715888
+       ],
+       [
+        -222.83062667897568,
+        -53.09133518714453
+       ],
+       [
+        -233.30286587046945,
+        -69.85042116165354
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -222.83062667897568,
+       -53.09133518714453
+      ],
+      [
+       -233.30286587046945,
+       -69.85042116165354
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.3e-14 ft) near [-226.9536891950681, -59.68961449703603] in native-region:1487353:38. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779297-1779296:0-2:finite-cap-overlap:10530",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "finite-cap-overlap",
+    "source": {
+     "nativeElementId": 1779297,
+     "ringsFeet": [
+      [
+       [
+        -225.10789570164116,
+        -46.34688197332663
+       ],
+       [
+        -224.6209914469583,
+        -46.65113351939249
+       ],
+       [
+        -224.03073915307888,
+        -45.70653239265246
+       ],
+       [
+        -224.51764340776174,
+        -45.4022808465866
+       ],
+       [
+        -225.10789570164116,
+        -46.34688197332663
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -225.10789570164116,
+       -46.34688197332663
+      ],
+      [
+       -224.6209914469583,
+       -46.65113351939249
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779296,
+     "ringsFeet": [
+      [
+       [
+        -225.41214724770703,
+        -46.83378622800949
+       ],
+       [
+        -224.52737729118243,
+        -47.38665185733236
+       ],
+       [
+        -224.2231257451166,
+        -46.899747602649505
+       ],
+       [
+        -225.10789570164116,
+        -46.34688197332664
+       ],
+       [
+        -225.41214724770703,
+        -46.83378622800949
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -224.2231257451166,
+       -46.899747602649505
+      ],
+      [
+       -225.10789570164116,
+       -46.34688197332664
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 4.73e-15 ft) near [-224.6209914469583, -46.65113351939249] in native-region:1487353:38. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779286-1779285:1-3:original-free-cap:10864",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779286,
+     "ringsFeet": [
+      [
+       [
+        -224.17180398241385,
+        -47.12717596718255
+       ],
+       [
+        -220.66608871671326,
+        -49.31778999324152
+       ],
+       [
+        -220.62262421013241,
+        -49.24823224257253
+       ],
+       [
+        -224.128339475833,
+        -47.057618216513575
+       ],
+       [
+        -224.17180398241385,
+        -47.12717596718255
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -220.66608871671326,
+       -49.31778999324152
+      ],
+      [
+       -220.62262421013241,
+       -49.24823224257253
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779285,
+     "ringsFeet": [
+      [
+       [
+        -220.83907745290495,
+        -49.594629840904055
+       ],
+       [
+        -220.699961951567,
+        -49.68155885406573
+       ],
+       [
+        -220.43917491208197,
+        -49.26421235005185
+       ],
+       [
+        -220.57829041341992,
+        -49.17728333689018
+       ],
+       [
+        -220.83907745290495,
+        -49.594629840904055
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -220.57829041341992,
+       -49.17728333689018
+      ],
+      [
+       -220.83907745290495,
+       -49.594629840904055
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.45e-14 ft) near [-220.62262421013241, -49.24823224257252] in native-region:1487353:38. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779286-1779291:1-3:original-free-cap:10888",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779286,
+     "ringsFeet": [
+      [
+       [
+        -224.17180398241385,
+        -47.12717596718255
+       ],
+       [
+        -220.66608871671326,
+        -49.31778999324152
+       ],
+       [
+        -220.62262421013241,
+        -49.24823224257253
+       ],
+       [
+        -224.128339475833,
+        -47.057618216513575
+       ],
+       [
+        -224.17180398241385,
+        -47.12717596718255
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -220.66608871671326,
+       -49.31778999324152
+      ],
+      [
+       -220.62262421013241,
+       -49.24823224257253
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779291,
+     "ringsFeet": [
+      [
+       [
+        -220.83907745290495,
+        -49.594629840904055
+       ],
+       [
+        -220.699961951567,
+        -49.68155885406573
+       ],
+       [
+        -220.43917491208197,
+        -49.26421235005185
+       ],
+       [
+        -220.57829041341992,
+        -49.17728333689018
+       ],
+       [
+        -220.83907745290495,
+        -49.594629840904055
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -220.57829041341992,
+       -49.17728333689018
+      ],
+      [
+       -220.83907745290495,
+       -49.594629840904055
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 2.45e-14 ft) near [-220.62262421013241, -49.24823224257252] in native-region:1487353:38. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779111-1779114:3-1:original-free-cap:11516",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779111,
+     "ringsFeet": [
+      [
+       [
+        -126.5015909243183,
+        -88.22856024952475
+       ],
+       [
+        -110.57710821906045,
+        -105.30547722598646
+       ],
+       [
+        -110.03723097869177,
+        -104.8020335546807
+       ],
+       [
+        -125.96171368394961,
+        -87.72511657821899
+       ],
+       [
+        -126.5015909243183,
+        -88.22856024952475
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -125.96171368394961,
+       -87.72511657821899
+      ],
+      [
+       -126.5015909243183,
+       -88.22856024952475
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779114,
+     "ringsFeet": [
+      [
+       [
+        -128.92459811693496,
+        -89.4787049515766
+       ],
+       [
+        -128.42115444562924,
+        -90.0185821919453
+       ],
+       [
+        -123.32231384214721,
+        -85.26383640739085
+       ],
+       [
+        -123.82575751345298,
+        -84.72395916702219
+       ],
+       [
+        -128.92459811693496,
+        -89.4787049515766
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -128.42115444562924,
+       -90.0185821919453
+      ],
+      [
+       -123.32231384214721,
+       -85.26383640739085
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 4.7e-15 ft) near [-126.5015909243183, -88.22856024952475] in native-region:1487353:69. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779112-1779114:3-1:original-free-cap:11684",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779112,
+     "ringsFeet": [
+      [
+       [
+        -108.50568291202876,
+        -71.44710453933254
+       ],
+       [
+        -92.58120020677087,
+        -88.52402151579406
+       ],
+       [
+        -92.04132296640219,
+        -88.02057784448832
+       ],
+       [
+        -107.96580567166008,
+        -70.94366086802678
+       ],
+       [
+        -108.50568291202876,
+        -71.44710453933254
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -107.96580567166008,
+       -70.94366086802678
+      ],
+      [
+       -108.50568291202876,
+       -71.44710453933254
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779114,
+     "ringsFeet": [
+      [
+       [
+        -111.16863554480928,
+        -72.92100198418694
+       ],
+       [
+        -110.66519187350353,
+        -73.46087922455563
+       ],
+       [
+        -105.80629671018535,
+        -68.92988618280373
+       ],
+       [
+        -106.30974038149112,
+        -68.39000894243507
+       ],
+       [
+        -111.16863554480928,
+        -72.92100198418694
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -110.66519187350353,
+       -73.46087922455563
+      ],
+      [
+       -105.80629671018535,
+       -68.92988618280373
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 3.45e-15 ft) near [-108.50568291202876, -71.44710453933254] in native-region:1487353:69. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779318-1779317:2-0:original-free-cap:11776",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779318,
+     "ringsFeet": [
+      [
+       [
+        -87.26857839802518,
+        -84.70915069609222
+       ],
+       [
+        -87.21264021232452,
+        -84.76913705613316
+       ],
+       [
+        -78.67058254249419,
+        -76.80353941235852
+       ],
+       [
+        -78.72652072819484,
+        -76.74355305231758
+       ],
+       [
+        -87.26857839802518,
+        -84.70915069609222
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -78.67058254249419,
+       -76.80353941235852
+      ],
+      [
+       -78.72652072819484,
+       -76.74355305231758
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779317,
+     "ringsFeet": [
+      [
+       [
+        -78.94915470728348,
+        -76.50480733935461
+       ],
+       [
+        -78.6135255930795,
+        -76.86472549960027
+       ],
+       [
+        -78.49355287299761,
+        -76.75284912819895
+       ],
+       [
+        -78.8291819872016,
+        -76.39293096795329
+       ],
+       [
+        -78.94915470728348,
+        -76.50480733935461
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -78.94915470728348,
+       -76.50480733935461
+      ],
+      [
+       -78.6135255930795,
+       -76.86472549960027
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.05e-14 ft) near [-78.72652072819484, -76.74355305231758] in native-region:1487353:69. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   },
+   {
+    "id": "f34-contact:1487353:1779318-1779321:2-0:original-free-cap:11792",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceMaterialGeometrySha256": "d5b3fa0df82ee9f78d38633703a3e5815c9e009bc08ea8f33803ca913e4eccfe",
+    "status": "proposed",
+    "contactMode": "original-free-cap",
+    "source": {
+     "nativeElementId": 1779318,
+     "ringsFeet": [
+      [
+       [
+        -87.26857839802518,
+        -84.70915069609222
+       ],
+       [
+        -87.21264021232452,
+        -84.76913705613316
+       ],
+       [
+        -78.67058254249419,
+        -76.80353941235852
+       ],
+       [
+        -78.72652072819484,
+        -76.74355305231758
+       ],
+       [
+        -87.26857839802518,
+        -84.70915069609222
+       ]
+      ]
+     ],
+     "capFeet": [
+      [
+       -78.67058254249419,
+       -76.80353941235852
+      ],
+      [
+       -78.72652072819484,
+       -76.74355305231758
+      ]
+     ]
+    },
+    "target": {
+     "nativeElementId": 1779321,
+     "ringsFeet": [
+      [
+       [
+        -78.94915470728348,
+        -76.50480733935461
+       ],
+       [
+        -78.6135255930795,
+        -76.86472549960027
+       ],
+       [
+        -78.49355287299761,
+        -76.75284912819895
+       ],
+       [
+        -78.8291819872016,
+        -76.39293096795329
+       ],
+       [
+        -78.94915470728348,
+        -76.50480733935461
+       ]
+      ]
+     ],
+     "faceFeet": [
+      [
+       -78.94915470728348,
+       -76.50480733935461
+      ],
+      [
+       -78.6135255930795,
+       -76.86472549960027
+      ]
+     ]
+    },
+    "evidenceSha256": "14c833a657c131b5c887dcc41960fc9280423a28ce54e99c1cc8d6b8165eef34",
+    "notes": "Read-only F34 candidate at exact production-face pinch (positive-gap, 1.05e-14 ft) near [-78.72652072819484, -76.74355305231758] in native-region:1487353:69. Whole original edges only; production derive and physical guards decide. Not applied.",
+    "assumption": {
+     "kind": "provisional-extracted-native-contact",
+     "revisitRequired": true
+    }
+   }
+  ]
+ }
+}

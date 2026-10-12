@@ -1,0 +1,66 @@
+{
+ "status": "proposed",
+ "levelId": 1487353,
+ "datasetSha256": "43ea3aa557d844869cfb70fdf6c72bef175a570158c672fd0083c859dad4e009",
+ "productionModuleSha256": {
+  "native-selection-contact-repairs.ts": "7a8eb4f16207d70a33ecf549308d7f82cb1b787fa042d45a6e0c184752d4fb4d",
+  "native-selection-contact-guards.ts": "ed737132ad40cb5d834f7bfebdc566357a0116b9702984cec457b9ca65dffa4c",
+  "native-area-review.ts": "324414341bf8f6a9c1ffb4b7a50113de7c12ed229a39bb10b869a06ca4b01731",
+  "native-door-boundary-closures.ts": "32829153d79367e04f14ff986df5752b2b88690de9b68f40973555112c3290f9"
+ },
+ "validation": {
+  "stage1File": "evidence/validation-1487353.json",
+  "stage1Sha256": "5f15ecca2ab1729c9522c5e2afb7b11ac8be4803c41f9e88a7b04e774550580c",
+  "physicalFile": "evidence/validation-physical-1487353.json",
+  "physicalSha256": "32d7b292e6f6e1dcb00387fb3846f13902f9e63d6d707a9c4fc7b7253fa8f5e6",
+  "finalDeriveFile": "evidence/after-all-derive-1487353.json",
+  "finalDeriveSha256": "61b891ffef5d2da3184b167d64538659392fbc85a68125fc73b80a7c3825aa9c",
+  "lostNamedSingletons": [],
+  "gainedSingletons": 16
+ },
+ "application": "NOT applied. Apply only through the owning pipeline agent: append to source + prepared descriptors, regenerate circulation/mapping/display, re-verify singletons.",
+ "format": "openindoormaps-f34-proposal",
+ "family": "reviewedAreaPartitions (selection only)",
+ "evidenceSha256": "6e5260c74a88a89ae1e742bbcd0e57dd633822f343b73cea05e8c62ad3c1ae2a",
+ "evidenceFile": "evidence/residual-gates-1487353.json",
+ "checks": "snapReviewedAreaPartitionPoints + checkReviewedAreaPartition + deriveNativeAreas(previewPartitionIds)",
+ "geometryBindingNote": "geometrySha256 is bound to the current physical geometry WITHOUT the proposed continuation walls; if continuations are applied first, rebind with reviewedAreaPartitionGeometrySha256.",
+ "collection": {
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "partitions": [
+   {
+    "id": "f34-logical-gap:1487353:1797518-1779104:-231.9667:-108.1151",
+    "levelId": 1487353,
+    "elevationFeet": 29.855643044619423,
+    "geometrySha256": "b8cf7e8816e157bf8092210f55a04a9aedc2b7f71ca596c1866bef7b8db25a30",
+    "kind": "missing-partition",
+    "pointsFeet": [
+     [
+      -231.9666762786706,
+      -108.11513844832024
+     ],
+     [
+      -231.92321177209462,
+      -108.04558069765893
+     ]
+    ],
+    "closed": false,
+    "status": "proposed",
+    "label": "F34 25.0 mm gap #1797518/#1779104 \u2014 selection only",
+    "notes": "Logical selection-only line across a measured 0.082021 ft gap between exact native faces #1797518 and #1779104 in native-region:1487353:50; sides [[\"06-358\"],[\"06-356\"]]; registered DWG wall lines at gate 0. Not a physical wall; doors, access and routes unchanged.",
+    "evidence": {
+     "kind": "native-endpoints",
+     "nativeElementIds": [
+      1797518,
+      1779104
+     ],
+     "reason": "Exact nearest points between native faces; gap 0.082021 ft."
+    },
+    "selection": "closed",
+    "navigation": "unchanged"
+   }
+  ]
+ },
+ "notRecommended": []
+}

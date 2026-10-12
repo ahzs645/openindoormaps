@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import pc from "polygon-clipping";
 import type { FeatureCollection, MultiPolygon, Polygon } from "geojson";
 import type { IndoorDataset, IndoorRecord } from "./contract";
@@ -16,7 +17,7 @@ export type RoomGeneralization = {
   displayVertices: number;
   partsFeet: Parts;
 };
-const distance = (a: Point, b: Point) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+const distance = (a: Point, b: Point) => DMath.hypot(a[0] - b[0], a[1] - b[1]);
 const open = (r: Point[]) =>
   distance(r[0], r.at(-1)!) < 1e-7 ? r.slice(0, -1) : r;
 const area = (parts: Parts) =>
@@ -121,14 +122,14 @@ function rectangle(room: IndoorRecord, data: IndoorDataset): Parts | undefined {
       a,
       b,
       length: distance(a, b),
-      angle: Math.atan2(b[1] - a[1], b[0] - a[0]),
+      angle: DMath.atan2(b[1] - a[1], b[0] - a[0]),
     };
   });
   const long = edges.filter((e) => e.length >= 3);
   if (long.length === 0) return;
   const reference = [...long].sort((a, b) => b.length - a.length)[0].angle;
   const aligned = long.filter(
-    (e) => Math.abs(Math.sin(2 * (e.angle - reference))) < 0.035,
+    (e) => Math.abs(DMath.sin(2 * (e.angle - reference))) < 0.035,
   );
   if (
     aligned.reduce((s, e) => s + e.length, 0) /
@@ -136,11 +137,11 @@ function rectangle(room: IndoorRecord, data: IndoorDataset): Parts | undefined {
     0.85
   )
     return;
-  const cx = aligned.reduce((s, e) => s + e.length * Math.cos(4 * e.angle), 0);
-  const cy = aligned.reduce((s, e) => s + e.length * Math.sin(4 * e.angle), 0);
-  const angle = Math.atan2(cy, cx) / 4;
-  const c = Math.cos(angle),
-    s = Math.sin(angle),
+  const cx = aligned.reduce((s, e) => s + e.length * DMath.cos(4 * e.angle), 0);
+  const cy = aligned.reduce((s, e) => s + e.length * DMath.sin(4 * e.angle), 0);
+  const angle = DMath.atan2(cy, cx) / 4;
+  const c = DMath.cos(angle),
+    s = DMath.sin(angle),
     origin = ring[0];
   const rotate = (p: Point): Point => [
     (p[0] - origin[0]) * c + (p[1] - origin[1]) * s,

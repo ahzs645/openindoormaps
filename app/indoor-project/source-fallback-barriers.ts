@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import type { RoutePath } from "./centered-route";
 import { routingDoorApertures } from "./routing-apertures";
@@ -42,7 +43,7 @@ function contact(point: Point, ring: readonly Point[]) {
     return (
       t >= 0 &&
       t <= 1 &&
-      Math.hypot(point[0] - a[0] - t * x, point[1] - a[1] - t * y) <= 1e-8
+      DMath.hypot(point[0] - a[0] - t * x, point[1] - a[1] - t * y) <= 1e-8
     );
   });
 }

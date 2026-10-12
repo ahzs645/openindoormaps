@@ -1,5 +1,6 @@
 import {
   nativeRationalOverlay,
+  type NativeRationalOverlayInput,
   type NativeRationalParts,
 } from "./native-rational-overlay";
 import { nativeExactPartsForProposals } from "./native-exact-planar-topology";
@@ -7,6 +8,7 @@ import pc from "polygon-clipping";
 import type { IndoorDataset } from "./contract";
 import { createNativeRoutingMaterialQuery } from "./native-routing-material";
 import { preparedReviewedDoorApertures } from "./reviewed-door-apertures";
+import { nativeSupplementOpeningClosures } from "./native-material-supplement-closures";
 export const NATIVE_FLOOR_CONTACT_SELECTION_VERSION =
   "native-selection-floor-contact-monotone-plan-cuts-v2";
 /** Analytical masks only. Original prepared wall/jamb evidence stays byte-for-byte
@@ -40,9 +42,10 @@ export function nativeMaterialPlanWalls(
           (w) => w.nativeElementId === section.nativeElementId,
         ),
       );
-      const parts = cuts.length
-        ? pc.difference(section.rings, ...cuts.map((p) => [p.apertureFeet]))
-        : [section.rings];
+      const parts =
+        cuts.length > 0
+          ? pc.difference(section.rings, ...cuts.map((p) => [p.apertureFeet]))
+          : [section.rings];
       return parts.map((ringsFeet) => ({
         levelId,
         nativeElementId: section.nativeElementId,
@@ -84,7 +87,7 @@ export function nativeMaterialPlanWalls(
     .flatMap((r, i) =>
       r.partsFeet.map((ringsFeet) => ({
         levelId,
-        nativeElementId: -700000000 - i,
+        nativeElementId: -700_000_000 - i,
         kind: "wall" as const,
         geometrySource: "provisional-native-corner-seal",
         reviewPatchId: r.id,
@@ -112,7 +115,7 @@ export function nativeMaterialPlanWalls(
               ),
             )
           : [];
-        return cuts.length
+        return cuts.length > 0
           ? pc
               .difference(w.ringsFeet, ...cuts.map((p) => [p.apertureFeet]))
               .map((ringsFeet) => ({ ...w, ringsFeet }))
@@ -143,7 +146,7 @@ export function nativeMaterialPlanExactWalls(
     ) ?? [];
   const original = data.walls.filter((w) => w.levelId === levelId);
   const copied: (IndoorDataset["walls"][number] & {
-    parts: [number, number][][][];
+    parts: NativeRationalOverlayInput;
     cutOwnApertures: boolean;
   })[] = [
     ...material.parts.map((section) => ({
@@ -202,7 +205,7 @@ export function nativeMaterialPlanExactWalls(
       .flatMap((r, i) =>
         r.partsFeet.map((ringsFeet) => ({
           levelId,
-          nativeElementId: -700000000 - i,
+          nativeElementId: -700_000_000 - i,
           kind: "wall" as const,
           geometrySource: "provisional-native-corner-seal",
           reviewPatchId: r.id,
@@ -211,6 +214,7 @@ export function nativeMaterialPlanExactWalls(
           cutOwnApertures: false,
         })),
       ),
+    ...nativeSupplementSelectionClosures(data, levelId, material),
   ];
   return copied.flatMap(({ parts, cutOwnApertures, ...wall }) => {
     const cuts = cutOwnApertures
@@ -221,7 +225,7 @@ export function nativeMaterialPlanExactWalls(
         )
       : [];
     const exactParts = nativeRationalOverlay(
-      cuts.length ? "difference" : "union",
+      cuts.length > 0 ? "difference" : "union",
       parts,
       ...cuts.map((p) => [[p.apertureFeet]]),
     );
@@ -231,4 +235,76 @@ export function nativeMaterialPlanExactWalls(
       exactParts: [part],
     }));
   });
+}
+
+/** Census-omission supplement hosts: close hosted window/curtain openings across
+ * the native body and body-face slivers (selection only; routing and physical
+ * material read the unchanged section). Reviewed door apertures of the host are
+ * still cut from these closures like from its section. */
+function nativeSupplementSelectionClosures(
+  data: IndoorDataset,
+  levelId: number,
+  material: ReturnType<ReturnType<typeof createNativeRoutingMaterialQuery>>,
+) {
+  if (material.censusOmissionSupplementIds.size === 0) return [];
+  const repaired = new Set(
+    (data.nativeWallPositionRepairs?.walls ?? []).map((w) => w.nativeElementId),
+  );
+  const members = new Map<number, [number, number][][][]>();
+  for (const part of material.parts)
+    if (
+      !part.positiveSubsetOnly &&
+      material.fenestrationIds.has(part.nativeElementId)
+    )
+      members.set(part.nativeElementId, [
+        ...(members.get(part.nativeElementId) ?? []),
+        part.rings,
+      ]);
+  const doors = (data.doors ?? [])
+    .filter(
+      (d) =>
+        d.levelId === levelId && d.footprintFeet && d.footprintFeet.length >= 3,
+    )
+    .map((d) => ({
+      footprintFeet: d.footprintFeet!,
+      normalFeet: d.normalFeet,
+    }));
+  return [...material.censusOmissionSupplementIds]
+    .sort((a, b) => a - b)
+    .filter((id) => !repaired.has(id))
+    .flatMap((id) => {
+      const body = data.walls
+        .filter(
+          (w) =>
+            w.levelId === levelId &&
+            w.nativeElementId === id &&
+            w.kind !== "column" &&
+            !w.approximate &&
+            !w.reviewPatchId,
+        )
+        .map((w) => w.ringsFeet);
+      const section = material.parts
+        .filter(
+          (p) => p.nativeElementId === id && !p.positiveSubsetOnly && !p.column,
+        )
+        .map((p) => p.rings);
+      if (body.length === 0 || section.length === 0) return [];
+      return nativeSupplementOpeningClosures({
+        body,
+        section,
+        members: [...members.values()],
+        doors,
+      }).map((closure) => ({
+        levelId,
+        nativeElementId: id,
+        kind: "wall" as const,
+        geometrySource:
+          closure.kind === "face"
+            ? "native-supplement-face-closure"
+            : "native-supplement-hosted-opening-closure",
+        ringsFeet: nativeExactPartsForProposals(closure.parts)[0]!,
+        parts: closure.parts as NativeRationalOverlayInput,
+        cutOwnApertures: true,
+      }));
+    });
 }

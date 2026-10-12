@@ -1,0 +1,872 @@
+{
+ "census": "routing-followup/envelope-omission-census.json (97 rows; the routing report quoted 76)",
+ "groups": [
+  {
+   "group": "G1-B10-F0-labs",
+   "class": "b-drawing-backed",
+   "rootCause": "380.27 mm corner gap #2299065/#2298515 and 25.00 mm #2297106/column #2297888 remain after the production junction replay; registered DWG continuous (10 TandL Base and Atrium #2 #840, #737). Non-circulation labs. Pin 99 vestibule (303.65,752.857) stays outside.",
+   "records": [
+    {
+     "key": "rm-2295121-38fed8497695",
+     "record": "10-B512",
+     "level": "Floor 0",
+     "building": "10",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-2295121-3986c8497708",
+     "record": "10-B514",
+     "level": "Floor 0",
+     "building": "10",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    }
+   ]
+  },
+  {
+   "group": "G2-B9-F0.5-lobby",
+   "class": "b-owner-decided+census-omission",
+   "rootCause": "Open >8 ft at +0.1/+4 on the compiled material because finished wall #1521392 is absent from the material census (unapplied supplemental-material proposal in building09-08/envelope-design) and the ramp #1643796 well is uncapped at low cuts; the 16 B9 intervals (63.5 mm, hairline, 11.9 mm, 1.03 ft at +8, 13 micro) were decided by the owner on 2026-10-09 (q1a-d, q2, q3) and are being implemented by the routing agent. Same free-space component as G3.",
+   "records": [
+    {
+     "key": "rm-1450417-dba13529f060",
+     "record": "09-261",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-1450417-dbab6729f069",
+     "record": "09-260",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-dbca0729f083",
+     "record": "09-224",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-1450417-dbcd6929f085",
+     "record": "09-218",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.009
+    },
+    {
+     "key": "rm-1450417-dbd43929f08b",
+     "record": "09-216",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-1450417-dbde6729f094",
+     "record": "09-220",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-dbe24929f098",
+     "record": "09-222",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-ed5dced924b1",
+     "record": "09-284",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-f65fe5d929e4",
+     "record": "09-201",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-f77d65d92ad7",
+     "record": "09-214",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-f780e3d92ada",
+     "record": "09-207",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1450417-feaef9ff66b1",
+     "record": "09-218-1",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "landing:ramp:1643796:lower",
+     "record": "Native ramp lower approach",
+     "level": "Floor 0.5",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.062
+    }
+   ]
+  },
+  {
+   "group": "G3-B7-F1-Agora",
+   "class": "b-dependent-on-G2",
+   "rootCause": "Same free-space component as the B9 Floor 0.5 lobby (via ramp corridor): at Floor 1 +0.1 it exits through B9 openings over Floor 0.5 (2.39 m #1522216/#1646241 at (147.00,449.47); 2.43 m #1741269/#773885; 0.92 m #1522231/#1522014 (272.02,533.98); 0.92 m #1521997/#1522003 (248.49,531.90); 340 mm curtain-panel slots on the B9 north facade y 549-556 where #1521392 is missing). Those B9 openings have DWG continuity only on the Floor 0.5 registered plan: re-evaluate after G2 patches; no separate question.",
+   "records": [
+    {
+     "key": "reviewed-native:pin-9",
+     "record": "Reviewed Agora circulation",
+     "level": "Floor 1",
+     "building": "07",
+     "circulation": true,
+     "envelopeFraction": 0.028
+    },
+    {
+     "key": "landing:ramp:1643796:upper",
+     "record": "Native ramp upper landing",
+     "level": "Floor 1",
+     "building": "07",
+     "circulation": true,
+     "envelopeFraction": 0.044
+    }
+   ]
+  },
+  {
+   "group": "G4-F1-03-029-07-502",
+   "class": "b-drawing-backed (exterior bay)",
+   "rootCause": "10.17 ft opening to exterior at the corridor east end x 93.73-94.88, y -186.21..-176.04 between walls #292674 and #2486677 (no floor at any level beyond). Registered DWG 03 CJMH LVL 0: outer-face line #1 (139.78 ft) continuous across; inner face capped at #45 (y -186.15) and #58/#60 (y -176.73) i.e. a single-line closure (glazing/storefront-type) across a 9.42 ft bay. Candidate: assumed wall/glazing along DWG line #1 between the caps. Enumeration past this opening not done.",
+   "records": [
+    {
+     "key": "rm-311-4f50db792ebc",
+     "record": "07-502",
+     "level": "Floor 1",
+     "building": "07",
+     "circulation": true,
+     "envelopeFraction": 0.008
+    },
+    {
+     "key": "rm-311-a08d9ff5e6f7",
+     "record": "03-029",
+     "level": "Floor 1",
+     "building": "03",
+     "circulation": true,
+     "envelopeFraction": 0.003
+    }
+   ]
+  },
+  {
+   "group": "G5-F1-05-170B",
+   "class": "b-partly-drawing-backed",
+   "rootCause": "95.00 mm CW panel #330125 / wall #2435127 (274.865,172.898) DWG 05 Libr LVL 1 #1827 continuous; 95.00 mm CW panel #330126 / wall #330633 (274.824,173.761) no continuous DWG line; plus an unmeasured 0.04 ft mouth near (223.94,157.64). Not routing-critical (staff/office).",
+   "records": [
+    {
+     "key": "rm-311-ce87a93ffdf0",
+     "record": "05-170B",
+     "level": "Floor 1",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.005
+    }
+   ]
+  },
+  {
+   "group": "G6-B8-F1.25",
+   "class": "b-drawing-backed",
+   "rootCause": "Bounded at +0.1 and +4 after 9 joints: 90.00 mm #998123/#1515144|#1515148 (98.47,468.83); 32.70 mm #1514498/#1515137 (103.44,470.58, over stair hall); 15.00 mm #1514569/column #2446268 (88.76,716.45); 15.00 mm column #2446734/#1514654 (96.30,736.77); 5.00 mm #1514503/#1514504 (117.23,495.50); 5.00 mm #2003788/#1514505 (116.93,507.95); 3.00 mm #1514974/#1514982 (85.72,678.03); exact-contact micro at (110.19,697.39). All with continuous registered DWG lines (08 Tea Lab LVL 1).",
+   "records": [
+    {
+     "key": "rm-1487816-1a0ccf3066a5",
+     "record": "08-102",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-1487816-3e4571f4120f",
+     "record": "08-105",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.005
+    },
+    {
+     "key": "rm-1487816-46309af41655",
+     "record": "08-161",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.011
+    },
+    {
+     "key": "rm-1487816-781c56fde119",
+     "record": "08-156",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1487816-800e4ffde566",
+     "record": "08-155",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-1487816-959fe1d830e0",
+     "record": "08-159",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1487816-ee59edf50681",
+     "record": "08-141",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1487816-ef4e5df50750",
+     "record": "08-143",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-1487816-ef5bf5f5075c",
+     "record": "08-140",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-1487816-ef5f79f5075f",
+     "record": "08-145",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-1487816-f75f11f50bb7",
+     "record": "08-146",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-1487816-f76297f50bba",
+     "record": "08-149",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    }
+   ]
+  },
+  {
+   "group": "G6b-B8-F1.25-08-126",
+   "class": "b-drawing-backed",
+   "rootCause": "50.00 mm #1514705/#1514703 (43.36,641.83), DWG 08 Tea Lab LVL 1 #4167.",
+   "records": [
+    {
+     "key": "rm-1487816-46419af41664",
+     "record": "08-126",
+     "level": "Floor 1.25",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.006
+    }
+   ]
+  },
+  {
+   "group": "G7-B10-F1.25-atrium",
+   "class": "b-drawing-backed",
+   "rootCause": "Bounded at both cuts after 3 curtain-corner joints: 49.46 mm panel #1500926 / mullion #1501562 (204.595,835.255) DWG #1112; 24.50 mm mullion #1501556 / panel #1500948 (183.752,841.315) DWG #137/#146 (0.1 mm above the 24.4 mm production junction tolerance); 19.19 mm panel #1500768 / panel #1500748 (182.784,750.762) at +4 only (at +0.1 the existing frame return + junction rule close it) DWG #386. Section \"10 TandL Base and Atrium #1\".",
+   "records": [
+    {
+     "key": "rm-1487816-38e6d6497680",
+     "record": "10-1312",
+     "level": "Floor 1.25",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-1487816-5550ce486504",
+     "record": "10-1300",
+     "level": "Floor 1.25",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.007
+    },
+    {
+     "key": "rm-1487816-555ae048650d",
+     "record": "10-1302",
+     "level": "Floor 1.25",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-1487816-55654e486516",
+     "record": "10-1304",
+     "level": "Floor 1.25",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-1487816-556850486518",
+     "record": "10-1306",
+     "level": "Floor 1.25",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.002
+    }
+   ]
+  },
+  {
+   "group": "G8-B10-upper-atrium",
+   "class": "b-drawing-backed column slots + open questions",
+   "rootCause": "Floors 2-4 at both cuts: five ~400 mm slots between curtain panels exactly at facade column positions (east x=303.626, y=771.65/811.02/830.71/850.39; SW (122.82,759.79)); the registered DWG draws a closed pier outline in each slot (e.g. 10 TandL 2500E segs 114-119/125/126 at x 303.56-304.35, y 771.80-773.08) -> assumed column section candidates. Atrium perimeter: 397.5 mm column #1501289 / panel #1499195 (F2), #1497109 (F3), #1495994 (F4) at (201.86,834.47) and 395.0 mm column #1501271 / mullion #1496792|#1495677 at (203.08,760.69): over the atrium void; DWG only on Floor 4 (10 TandL Atrium LVL 4 #857/#48). Enumeration incomplete: further 1.295-ft-class openings remain after these. 10-S401: exact-contact micro only (recovered). 10-3011: 3.46 ft class opening not localised.",
+   "records": [
+    {
+     "key": "walkway:10:694:1498827:1",
+     "record": "Atrium crosswalk",
+     "level": "Floor 2",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.006
+    },
+    {
+     "key": "walkway:10:694:1498827:11",
+     "record": "Atrium crosswalk",
+     "level": "Floor 2",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.004
+    },
+    {
+     "key": "rm-400176-fcc92010fae8",
+     "record": "10-3011",
+     "level": "Floor 3",
+     "building": "10",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "walkway:10:400176:2183541:1",
+     "record": "Atrium crosswalk",
+     "level": "Floor 3",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.006
+    },
+    {
+     "key": "walkway:10:400176:2183541:7",
+     "record": "Atrium crosswalk",
+     "level": "Floor 3",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.009
+    },
+    {
+     "key": "rm-402367-07d989afc4d0",
+     "record": "10-S401",
+     "level": "Floor 4",
+     "building": "10",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-402367-21d39ed0cbd2",
+     "record": "10-4306",
+     "level": "Floor 4",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-402367-2c07d5d0d20a",
+     "record": "10-4300",
+     "level": "Floor 4",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-402367-2c0e15d0d20f",
+     "record": "10-4302",
+     "level": "Floor 4",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-402367-2c1207d0d213",
+     "record": "10-4304",
+     "level": "Floor 4",
+     "building": "10",
+     "circulation": true,
+     "envelopeFraction": 0.005
+    }
+   ]
+  },
+  {
+   "group": "G9-F2-corridor-network",
+   "class": "b-mixed (owner-decided B9 facades + drawing-backed joints + unresolved)",
+   "rootCause": "Floor 2 corridors are one campus-scale free-space component (doorless inter-building links): one open interval anywhere excludes all of them. B9 part: south-facade openings 1.172 m #1522480|#1522481/#1522482 at (316.9-325.6,482.6) and 3.83 ft (owner q3: assumed walls #1521701/#1521704/#1522479 + columns #1521703/#1521705-#1521707). B8 part: +4 bounded after 12.76 mm curtain #2021372 / column #2446856 (88.76,736.17) + 2 micro; +0.1 open >8 ft through the 08-S201 stair hall south side (not localised). B6 part: >=12 sub-20 mm curtain/column joints on the B6 facade (-192..-136, -130..-114) plus unmeasured 27 mm-class mouths. B4: 0.61 ft-class mouth not localised; 04-242A alone recovers. 05-231: 40.00 mm #510741/#510999 (201.52,369.44) DWG 05 Libr LVL 2 #346 + micro. 04-259 Rotunda is 71% on floor.",
+   "records": [
+    {
+     "key": "rm-694-01803a06bb62",
+     "record": "08-264",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.013
+    },
+    {
+     "key": "rm-694-01a5ba06bb82",
+     "record": "08-265",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-07cd805d7743",
+     "record": "04-242A",
+     "level": "Floor 2",
+     "building": "04",
+     "circulation": false,
+     "envelopeFraction": 0.013
+    },
+    {
+     "key": "rm-694-07de695d7751",
+     "record": "04-259",
+     "level": "Floor 2",
+     "building": "04",
+     "circulation": false,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-694-0b30ff58296a",
+     "record": "06-244",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.006
+    },
+    {
+     "key": "rm-694-0e0ad8ab64e9",
+     "record": "06-203",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.009
+    },
+    {
+     "key": "rm-694-0e0ebcab64ec",
+     "record": "06-210",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-240576583727",
+     "record": "06-215",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.005
+    },
+    {
+     "key": "rm-694-2408fa58372a",
+     "record": "06-214",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-694-24136e583733",
+     "record": "06-248",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": false,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-694-2419fa583738",
+     "record": "06-240",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-241d6e58373b",
+     "record": "06-246",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": false,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-694-2420f658373e",
+     "record": "06-252",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": false,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-694-242af6583747",
+     "record": "06-250",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": false,
+     "envelopeFraction": 0.003
+    },
+    {
+     "key": "rm-694-2b939bf6dc44",
+     "record": "04-236",
+     "level": "Floor 2",
+     "building": "04",
+     "circulation": true,
+     "envelopeFraction": 0.006
+    },
+    {
+     "key": "rm-694-2b971ef6dc47",
+     "record": "04-204",
+     "level": "Floor 2",
+     "building": "04",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-694-3399eaf6e0a1",
+     "record": "04-237",
+     "level": "Floor 2",
+     "building": "04",
+     "circulation": true,
+     "envelopeFraction": 0.013
+    },
+    {
+     "key": "rm-694-3f02e106de79",
+     "record": "08-215",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-43988ffdc334",
+     "record": "08-267",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-439b95fdc336",
+     "record": "08-205",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-43c823fdc35c",
+     "record": "08-202",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-43cb29fdc35f",
+     "record": "08-S201",
+     "level": "Floor 2",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-607258e63bb3",
+     "record": "06-S206",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-7cbcba717e0d",
+     "record": "09-330",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-7cc6aa717e16",
+     "record": "09-333",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-85fee3718377",
+     "record": "09-334",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-86026771837a",
+     "record": "09-332",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-ae50759d8fa1",
+     "record": "05-231",
+     "level": "Floor 2",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-b17d7fe3d57c",
+     "record": "06-S204",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-b17d80e3d57c",
+     "record": "06-S205",
+     "level": "Floor 2",
+     "building": "06",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3da0c414247",
+     "record": "09-350",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3e08c41424d",
+     "record": "09-338",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3e41e414250",
+     "record": "09-336",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3e79d414253",
+     "record": "09-354",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3ee8d414259",
+     "record": "09-340",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3fc1d414264",
+     "record": "09-358",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e3ff8d414267",
+     "record": "09-351",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-694-e4248d414287",
+     "record": "09-315",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-e4280d41428a",
+     "record": "09-314",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.001
+    },
+    {
+     "key": "rm-694-eb40c641461d",
+     "record": "09-310",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-eb4ab6414626",
+     "record": "09-390",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": false,
+     "envelopeFraction": 0.002
+    },
+    {
+     "key": "rm-694-f43edf414b4d",
+     "record": "09-316",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-694-f45a6f414b65",
+     "record": "09-317",
+     "level": "Floor 2",
+     "building": "09",
+     "circulation": true,
+     "envelopeFraction": 0.006
+    }
+   ]
+  },
+  {
+   "group": "G10-F2-05-235-terrace",
+   "class": "c-outdoor",
+   "rootCause": "Terrace outside the B5 curtain facade (patio doors #1895901/#1895483); enclosed only by a low parapet at +0.1, nothing at +4. Keep out.",
+   "records": [
+    {
+     "key": "rm-694-06d9c5812b9c",
+     "record": "05-235",
+     "level": "Floor 2",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    }
+   ]
+  },
+  {
+   "group": "G11-F3-05-348-terrace",
+   "class": "c-outdoor",
+   "rootCause": "Terrace outside the B5 curtain facade; parapet only at +0.1. Keep out.",
+   "records": [
+    {
+     "key": "rm-400176-1000eb8130ee",
+     "record": "05-348",
+     "level": "Floor 3",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    }
+   ]
+  },
+  {
+   "group": "G12-F3-F4-small",
+   "class": "b-drawing-backed",
+   "rootCause": "05-326: 40.00 mm #513066/#513067 (201.52,369.44) DWG 05 Libr LVL 3 #620 + exact-contact micro #2329582/#2329581 (200.48,369.26); 08-333: 5.00 mm #1505177/#1505178 (116.93,507.95) DWG 08 Tea Lab LVL 3 #873; 04-S402: 5.53 mm #440407 / panel #501932 (-74.73,172.55) DWG 04 Res Lab LVL 4S #3457; 05-454: 40.00 mm #515682/#515683 (201.52,369.44) DWG 05 Libr LVL 4 #2986. The 40 mm B5 joint repeats on Floors 2-4 at the same plan point.",
+   "records": [
+    {
+     "key": "rm-400176-4c44011c214e",
+     "record": "05-326",
+     "level": "Floor 3",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-400176-d3af62fd4436",
+     "record": "08-333",
+     "level": "Floor 3",
+     "building": "08",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-402367-136b08ba658e",
+     "record": "04-S402",
+     "level": "Floor 4",
+     "building": "04",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    },
+    {
+     "key": "rm-402367-e117195e059a",
+     "record": "05-454",
+     "level": "Floor 4",
+     "building": "05",
+     "circulation": false,
+     "envelopeFraction": 0.0
+    }
+   ]
+  }
+ ]
+}

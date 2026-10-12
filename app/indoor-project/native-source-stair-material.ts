@@ -1,3 +1,4 @@
+import * as DMath from "./deterministic-math";
 import { nativeRationalOverlay } from "./native-rational-overlay.ts";
 import {
   nativeAuthoredStairTreads,
@@ -293,7 +294,7 @@ export function validNativeSourceStairMaterial(
         b = points[i + 1]!,
         dx = b[0] - a[0],
         dy = b[1] - a[1],
-        length = Math.hypot(dx, dy);
+        length = DMath.hypot(dx, dy);
       if (
         band.segmentIndex !== i ||
         band.minimumElevationFeet !== Math.min(a[2], b[2]) ||
