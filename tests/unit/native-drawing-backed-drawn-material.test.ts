@@ -45,6 +45,7 @@ function fixture(
     doorSegments?: Seg[];
     pairs?: [number, number][];
     outlines?: number[][];
+    corners?: [number, number][];
     floor?: P2[][][];
     doors?: { footprint: P2[]; enabled: boolean }[];
     owners?: number[];
@@ -161,6 +162,7 @@ function fixture(
       drawnMaterial: {
         faceLinePairs: options.pairs ?? [[0, 1]],
         closedOutlines: options.outlines ?? [],
+        ...(options.corners ? { cornerJoins: options.corners } : {}),
       },
     },
     acknowledgedUnverifiedBodyIds: [] as number[],
@@ -686,5 +688,93 @@ test("a closed outline that encloses no declared native owner is not drawn mater
   assert.throws(
     () => index(data),
     /encloses no declared native owner material/,
+  );
+});
+
+/** An L corner: wall #1 (x 0..2) stops at the inner face of a wall the model leaves out; the
+ * drawing draws both walls, its outer lines meeting at (2.5, 0.25) and its inner lines at (2, -0.25). */
+const cornerLines = (innerVerticalTop = -0.25): Seg[] => [
+  [
+    [0, 0.25],
+    [2.5, 0.25],
+  ],
+  [
+    [0, -0.25],
+    [2, -0.25],
+  ],
+  [
+    [2.5, 0.25],
+    [2.5, -3],
+  ],
+  [
+    [2, innerVerticalTop],
+    [2, -3],
+  ],
+];
+const cornerExtension: NativeDrawingBackedConstruction = {
+  kind: "wall-end-extension",
+  wallNativeElementId: 1,
+  endFaceFeet: [
+    [2, -0.25],
+    [2, 0.25],
+  ],
+  axisFeet: [1, 0],
+  lengthFeet: 0.5,
+  backOverlapFeet: 0.01,
+};
+
+test("a cited corner join draws the block where two drawn wall bands meet, identically in source and runtime", () => {
+  const options = {
+    withColumn: false,
+    owners: [1],
+    wallLines: cornerLines(),
+    pairs: [
+      [0, 1],
+      [2, 3],
+    ] as [number, number][],
+    construction: cornerExtension,
+  };
+  // without the join, the corner block is outside both bands' common spans
+  assert.throws(
+    () => index(fixture(options).data),
+    /outside drawn DWG material/,
+  );
+  const { data, boundaryReference } = fixture({
+    ...options,
+    corners: [[0, 1]],
+  });
+  const runtime = index(data);
+  assert.ok(runtime.partsAt(0.1).length > 0);
+  assert.deepEqual(
+    JSON.stringify(runtime.partsAt(0.1)),
+    JSON.stringify(sourceIndex(data as never).partsAt(0.1)),
+  );
+  verifyDrawingBackedDrawingEvidence(
+    data.nativeProvisionalCornerSeals,
+    boundaryReference,
+  );
+  sourceDrawingEvidence(
+    data.nativeProvisionalCornerSeals as never,
+    boundaryReference,
+  );
+});
+
+test("a corner join is refused when the face lines only cross instead of meeting at shared corners", () => {
+  const { data } = fixture({
+    withColumn: false,
+    owners: [1],
+    // the inner vertical line runs on through the corner (a crossing wall, not a drawn corner)
+    wallLines: cornerLines(1),
+    pairs: [
+      [0, 1],
+      [2, 3],
+    ],
+    corners: [[0, 1]],
+    construction: cornerExtension,
+  });
+  assert.throws(() => index(data), /do not meet at a drawn corner/);
+  assert.throws(
+    () => sourceIndex(data as never),
+    /do not meet at a drawn corner/,
   );
 });
