@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   compileNativeExploreMapping,
   validatePublishedNativeExploreMappingInProcess,
@@ -32,3 +33,4 @@ worker.onmessage = ({ data }) => {
       }),
     );
 };
+worker.onmessage = afterNativeExactGeosOverlay(worker.onmessage);

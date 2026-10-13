@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import type { IndoorProject } from "./package";
 import { deriveNativeAreas } from "./native-area-review";
 import {
@@ -29,3 +30,4 @@ scope.onmessage = async ({ data: { project, plan } }) => {
     });
   }
 };
+scope.onmessage = afterNativeExactGeosOverlay(scope.onmessage);

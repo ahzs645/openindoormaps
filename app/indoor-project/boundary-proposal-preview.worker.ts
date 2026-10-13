@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   affectedComparisonRegions,
   type PinComparisonResult,
@@ -101,3 +102,4 @@ scope.onmessage = async ({ data: request }) => {
     });
   }
 };
+scope.onmessage = afterNativeExactGeosOverlay(scope.onmessage);

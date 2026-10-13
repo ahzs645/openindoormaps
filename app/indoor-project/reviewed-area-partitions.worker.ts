@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import type { IndoorDataset } from "./contract";
 import type { IndoorProject } from "./package";
 import {
@@ -98,3 +99,4 @@ worker.onmessage = ({ data: request }) => {
     }),
   );
 };
+worker.onmessage = afterNativeExactGeosOverlay(worker.onmessage);

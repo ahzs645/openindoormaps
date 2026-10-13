@@ -66,7 +66,7 @@ export function setNativeExactGeosOverlayInputRecorder(
 export function initializeNativeExactGeosOverlay(): Promise<void> {
   return (preparation ??= (async () => {
     const url = new URL(
-      "./vendor/native-exact-geos/native-exact-geos.wasm",
+      "vendor/native-exact-geos/native-exact-geos.wasm",
       import.meta.url,
     );
     const node = !!(
@@ -104,9 +104,32 @@ export function initializeNativeExactGeosOverlay(): Promise<void> {
   })());
 }
 export const nativeExactGeosOverlayInitialized = () => !!ready;
+/** Runs a worker's message handler once this context's checked engine is
+ * ready (started by the first message; messages keep their order). Native
+ * areas verify drawing-backed rows with exact overlays, so any worker that
+ * can derive them needs the engine. A failed load still surfaces through the
+ * handler's own error path as "not initialized"; a synchronous throw is
+ * rethrown outside the promise so the worker's error event still fires. */
+export function afterNativeExactGeosOverlay<E>(
+  handle: (event: E) => unknown,
+): (event: E) => void {
+  let engine: Promise<void> | undefined;
+  return (event) => {
+    engine ??= initializeNativeExactGeosOverlay().catch(() => {});
+    void engine.then(() => {
+      try {
+        handle(event);
+      } catch (error) {
+        setTimeout(() => {
+          throw error;
+        });
+      }
+    });
+  };
+}
 const closed = (rings: Rings): Rings =>
   rings.map((r) =>
-    r.length && (r[0][0] !== r.at(-1)![0] || r[0][1] !== r.at(-1)![1])
+    r.length > 0 && (r[0][0] !== r.at(-1)![0] || r[0][1] !== r.at(-1)![1])
       ? [...r, r[0]]
       : r,
   );
@@ -270,7 +293,7 @@ export function nativeExactGeosOverlay(
     }
   };
   const union = (parts: Rings[]): Geometry =>
-    !parts.length
+    parts.length === 0
       ? multi([])
       : parts.length === 1
         ? polygon(parts[0])
@@ -289,7 +312,7 @@ export function nativeExactGeosOverlay(
           ? operands.flat().slice().reverse()
           : operands.flat()) {
           const parts = polygons(output);
-          if (!parts.length) break;
+          if (parts.length === 0) break;
           output = call("difference", multi(parts), polygon(mask));
         }
         if (subject.length === 1) {
@@ -299,16 +322,18 @@ export function nativeExactGeosOverlay(
           // overlap with an original hole rather than grant walking support.
           for (const hole of subject[0].slice(1)) {
             const parts = polygons(output);
-            if (!parts.length) break;
+            if (parts.length === 0) break;
             output = call("difference", multi(parts), polygon([hole]));
           }
           for (const hole of subject[0].slice(1))
-            if (polygons(call("intersection", output, polygon([hole]))).length)
+            if (
+              polygons(call("intersection", output, polygon([hole]))).length > 0
+            )
               throw new Error(
                 "Sequential native overlay did not preserve an original floor hole.",
               );
         }
-      } else if (operands.flat().length)
+      } else if (operands.flat().length > 0)
         output = call("difference", output, union(operands.flat()));
     } else
       for (const group of operands)

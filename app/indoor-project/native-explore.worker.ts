@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   deriveNativeExplore,
   nativeExploreWallFeatures,
@@ -67,3 +68,4 @@ worker.onmessage = ({ data }) => {
     }),
   );
 };
+worker.onmessage = afterNativeExactGeosOverlay(worker.onmessage);

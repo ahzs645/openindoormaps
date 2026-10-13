@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   deriveNativeAreas,
   type NativeAreaOptions,
@@ -35,3 +36,4 @@ worker.onmessage = ({ data }) => {
       }),
     );
 };
+worker.onmessage = afterNativeExactGeosOverlay(worker.onmessage);

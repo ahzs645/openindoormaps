@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import { deriveNativeExplore } from "./native-explore";
 import {
   auditVolumeScope,
@@ -64,3 +65,4 @@ scope.onmessage = async ({ data }) => {
     });
   }
 };
+scope.onmessage = afterNativeExactGeosOverlay(scope.onmessage);

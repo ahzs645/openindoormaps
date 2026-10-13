@@ -1,3 +1,4 @@
+import { afterNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   acceptedPinPatches,
   type PinPatchDecisions,
@@ -35,3 +36,4 @@ scope.onmessage = ({ data: r }) => {
       }),
   );
 };
+scope.onmessage = afterNativeExactGeosOverlay(scope.onmessage);
