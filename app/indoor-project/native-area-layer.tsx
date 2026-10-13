@@ -16,6 +16,7 @@ import {
 } from "./native-area-review";
 import type { IndoorDataset } from "./contract";
 import type { FeatureCollection, Polygon } from "geojson";
+import { mapReady } from "~/components/map/map-ready";
 export function NativeAreaLayer({
   data,
   result,
@@ -94,7 +95,7 @@ export function NativeAreaLayer({
     [data, result, selected, decisions],
   );
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map.addSource("native-area-regions", {
       type: "geojson",
       data: features,
@@ -214,7 +215,7 @@ export function NativeAreaLayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     (
       map.getSource("native-area-partitions") as GeoJSONSource | undefined
     )?.setData({
@@ -243,7 +244,7 @@ export function NativeAreaLayer({
     });
   }, [map, isLoaded, data, result]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const points = draft.map((p) => geographicPoint(data, p));
     (map.getSource("native-area-draft") as GeoJSONSource | undefined)?.setData({
       type: "FeatureCollection",
@@ -295,7 +296,7 @@ export function NativeAreaLayer({
       });
   }, [map, isLoaded, features]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     (
       map.getSource("native-existing-hallways") as GeoJSONSource | undefined
     )?.setData({
@@ -315,7 +316,7 @@ export function NativeAreaLayer({
     });
   }, [map, isLoaded, data, result, showHallways]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     let raising = false;
     const raise = () => {
       if (raising) return;
@@ -352,7 +353,7 @@ export function NativeAreaLayer({
     };
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded || !result || !selected.length) return;
+    if (!mapReady(map, isLoaded) || !result || selected.length === 0) return;
     const bounds = new LngLatBounds();
     for (const region of result.regions.filter((r) => selected.includes(r.id)))
       for (const p of region.ringsFeet[0])
@@ -366,7 +367,7 @@ export function NativeAreaLayer({
       });
   }, [map, isLoaded, result, selected, data]);
   useEffect(() => {
-    if (!map || !isLoaded || (!result && !drawing)) return;
+    if (!mapReady(map, isLoaded) || (!result && !drawing)) return;
     const pick = (e: MapMouseEvent) => {
       if (!interactive) return;
       if ((e.originalEvent.target as HTMLElement)?.closest("button,a,input"))
@@ -375,7 +376,7 @@ export function NativeAreaLayer({
         map.getLayer("project-review-pin-dot") &&
         map.queryRenderedFeatures(e.point, {
           layers: ["project-review-pin-dot"],
-        }).length
+        }).length > 0
       )
         return;
       const point = nativeEditPoint(data, [e.lngLat.lng, e.lngLat.lat]);

@@ -12,6 +12,7 @@ import { nativeEditPoint, type EditPoint } from "./map-edits";
 import { projectRoofLabel } from "./roof-label-layer";
 import { floorHeightDatum, surfaceElevationFeet } from "./relative-heights";
 import type { ReviewPin } from "./review-pins";
+import { mapReady } from "~/components/map/map-ready";
 export function ReviewPinLayer({
   data,
   pins,
@@ -53,7 +54,7 @@ export function ReviewPinLayer({
     [data, pins, levelIds],
   );
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map.addSource("project-review-pins", { type: "geojson", data: features });
     map.addLayer({
       id: "project-review-pin-dot",
@@ -93,7 +94,8 @@ export function ReviewPinLayer({
     };
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded || !map.getSource("project-review-pins")) return;
+    if (!mapReady(map, isLoaded) || !map.getSource("project-review-pins"))
+      return;
     (map.getSource("project-review-pins") as GeoJSONSource).setData(features);
     for (const id of ["project-review-pin-dot", "project-review-pin-label"])
       map.setLayoutProperty(

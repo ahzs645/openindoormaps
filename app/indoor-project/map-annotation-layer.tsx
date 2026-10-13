@@ -13,6 +13,7 @@ import {
 
 import { editorSymbolSvg } from "./editor-symbols";
 import { labelOpacityAtZoom } from "./zoom-presentation";
+import { mapReady } from "~/components/map/map-ready";
 export type AnnotationTool =
   | "select"
   | "label"
@@ -49,7 +50,7 @@ export function MapAnnotationLayer({
 }) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map
       .getContainer()
       .classList.toggle(

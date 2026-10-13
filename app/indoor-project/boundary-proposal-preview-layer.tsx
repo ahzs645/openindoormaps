@@ -11,6 +11,7 @@ import type {
   ProposalDisplayPreviewPlan,
 } from "./enclosure-proposals";
 import { geographicPoint } from "./routing";
+import { mapReady } from "~/components/map/map-ready";
 
 /** Temporary boundary comparison. Never supplies visitor blocks or route data. */
 export function BoundaryProposalPreviewLayer({
@@ -109,7 +110,7 @@ export function BoundaryProposalPreviewLayer({
     [data, plan, result, displayPlan, comparison, after],
   );
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map.addSource("boundary-proposal-preview", {
       type: "geojson",
       data: features,
@@ -176,7 +177,7 @@ export function BoundaryProposalPreviewLayer({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     (
       map.getSource("boundary-proposal-preview") as GeoJSONSource | undefined
     )?.setData(features);
@@ -187,12 +188,15 @@ export function BoundaryProposalPreviewLayer({
       );
   }, [map, isLoaded, features, comparison]);
   useEffect(() => {
-    if (!map || !isLoaded || displayPlan?.kind !== "native-enclosure-walkway")
+    if (
+      !mapReady(map, isLoaded) ||
+      displayPlan?.kind !== "native-enclosure-walkway"
+    )
       return;
     const points = displayPlan.partsFeet
       .flatMap((r) => r[0])
       .map((p) => geographicPoint(data, p));
-    if (!points.length) return;
+    if (points.length === 0) return;
     map.fitBounds(
       [
         [
@@ -208,11 +212,11 @@ export function BoundaryProposalPreviewLayer({
     );
   }, [map, isLoaded, displayPlan]);
   useEffect(() => {
-    if (!map || !isLoaded || !comparison?.current) return;
+    if (!mapReady(map, isLoaded) || !comparison?.current) return;
     const points = comparison.current.ringsFeet[0].map((p) =>
       geographicPoint(data, p),
     );
-    if (!points.length) return;
+    if (points.length === 0) return;
     map.fitBounds(
       [
         [

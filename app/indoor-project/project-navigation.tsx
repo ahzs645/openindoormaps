@@ -55,6 +55,7 @@ import type {
   BasemapAreaShape,
 } from "./basemap-buildings";
 import type { LabelSettings } from "./label-settings";
+import { mapReady } from "~/components/map/map-ready";
 
 const categories = [
   {
@@ -296,7 +297,7 @@ export function ProjectNavigation({
     return () => clearTimeout(timer);
   }, [playing, following, activeStep, steps.length]);
   useEffect(() => {
-    if (!following || !map || !isLoaded || !steps[activeStep]) return;
+    if (!following || !mapReady(map, isLoaded) || !steps[activeStep]) return;
     const step = steps[activeStep];
     onFloor(step.levelId);
     const bounds = new LngLatBounds();

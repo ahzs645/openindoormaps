@@ -20,6 +20,7 @@ import {
 import { findPoiById, poiFromFeature } from "~/utils/poi";
 import { MapGeoJSONFeature, MapMouseEvent } from "maplibre-gl";
 import type { LocationConfig } from "~/types/location";
+import { mapReady } from "~/components/map/map-ready";
 
 type UIMode = "discovery" | "detail" | "navigation";
 
@@ -128,7 +129,7 @@ export default function DiscoveryPanel({
 
   // Apply ?poi= / ?from=&to= / ?floor= once the map and route graph are ready.
   useEffect(() => {
-    if (deepLinkApplied || !map || !isLoaded || !routesReady) return;
+    if (deepLinkApplied || !mapReady(map, isLoaded) || !routesReady) return;
     setDeepLinkApplied(true);
 
     const link = readDeepLink(routeSearch());
@@ -213,7 +214,7 @@ export default function DiscoveryPanel({
   }, [indoorDirections, indoorGeocoder, location.totemPoiName]);
 
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const currentWindow = globalThis.window;
     if (currentWindow.parent === currentWindow) return;
 

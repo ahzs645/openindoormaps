@@ -6,6 +6,7 @@ import type {
   Map as MapLibreMap,
 } from "maplibre-gl";
 import { useMap } from "~/components/map/map";
+import { mapReady } from "./map-ready";
 
 export const POIS_SOURCE_ID = "pois";
 const POIS_LAYER_IDS = ["point", "point-label"];
@@ -176,7 +177,7 @@ export function PoisLayer({
   }, [filteredData, isLoaded, map]);
 
   useEffect(() => {
-    if (!map || !isLoaded || !hospitalStyle) return;
+    if (!mapReady(map, isLoaded) || !hospitalStyle) return;
     let cancelled = false;
     const logos = new Map<string, string>();
     for (const feature of filteredData.features) {

@@ -45,6 +45,7 @@ import {
   nativeMixedHallwayIssues,
   nativeMixedHallwayFeatures,
 } from "./native-mixed-hallway-review";
+import { mapReady } from "~/components/map/map-ready";
 
 // Retain one immutable dataset's complete results within both count/byte
 // budgets; pending walls and cancelled workers never populate this cache.
@@ -194,14 +195,17 @@ export function NativeExploreLayer({
             ? { ...floorResult, walls: response.walls }
             : floorResult);
         const update = { ...response, result: floorResult };
-        if (update.result && update.complete !== false && !update.error) {
-          if (nativeExploreCacheData === data)
-            nativeExploreCache.set(
-              scope,
-              update.result,
-              response.memoryCostBytes,
-            );
-        }
+        if (
+          update.result &&
+          update.complete !== false &&
+          !update.error &&
+          nativeExploreCacheData === data
+        )
+          nativeExploreCache.set(
+            scope,
+            update.result,
+            response.memoryCostBytes,
+          );
         setState({ data, scope, ...update });
       },
     );
@@ -221,7 +225,7 @@ export function NativeExploreLayer({
   );
   useEffect(() => setPicked([]), [selected]);
   useEffect(() => {
-    if (!map || !isLoaded || !result || !onFitReady) return;
+    if (!mapReady(map, isLoaded) || !result || !onFitReady) return;
     onFitReady((includeSelection = true) => {
       const chosen =
         includeSelection && selected
@@ -229,7 +233,7 @@ export function NativeExploreLayer({
           : [];
       const bounds = new LngLatBounds();
       const identity =
-        includeSelection && selected && !chosen.length
+        includeSelection && selected && chosen.length === 0
           ? nativeExploreIdentityLocation(data, selected, levelIds, building)
           : undefined;
       if (identity) {
@@ -238,13 +242,15 @@ export function NativeExploreLayer({
         for (const point of identity)
           bounds.extend(geographicPoint(data, point));
       } else {
-        for (const feature of chosen.length ? chosen : result.outlines.features)
+        for (const feature of chosen.length > 0
+          ? chosen
+          : result.outlines.features)
           for (const point of feature.geometry.coordinates[0])
             bounds.extend(point as [number, number]);
       }
       if (!bounds.isEmpty())
         fitProjectPlaceBounds(map, bounds, {
-          maxZoom: chosen.length || identity ? 21 : 20,
+          maxZoom: chosen.length > 0 || identity ? 21 : 20,
           pitch: 0,
           duration: 650,
         });
@@ -277,7 +283,7 @@ export function NativeExploreLayer({
     setPlaceLimit(20);
   }, [picked]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     for (const id of sources)
       map.addSource(id, {
         type: "geojson",
@@ -434,7 +440,7 @@ export function NativeExploreLayer({
     };
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     // The grey overview is backing for wall-width seams, not a cover over the
     // indoor native circulation tint when the prepared layer finishes later.
     if (map.getLayer("project-overview-fill") && map.getLayer(layers[0]))
@@ -475,7 +481,7 @@ export function NativeExploreLayer({
   // each setData re-sends and re-indexes the collection in MapLibre's worker.
   // Selection only changes the paint/filter expressions above.
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     [
       result?.fills,
       result?.outlines,
@@ -499,7 +505,7 @@ export function NativeExploreLayer({
     });
   }, [map, isLoaded, result]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     (map.getSource(sources[5]) as GeoJSONSource | undefined)?.setData(
       nativeMixedHallwayFeatures(result, mixedHallwayIds),
     );
@@ -522,7 +528,7 @@ export function NativeExploreLayer({
       });
   };
   useEffect(() => {
-    if (!map || !isLoaded || !result) return;
+    if (!mapReady(map, isLoaded) || !result) return;
     let active = true,
       clickSequence = 0;
     const click = async (event: MapMouseEvent) => {
@@ -531,7 +537,7 @@ export function NativeExploreLayer({
       const hitLayers = map
         .queryRenderedFeatures(event.point)
         .filter((f) => nativeExploreControlHit(f.layer.id));
-      if (hitLayers.length) return;
+      if (hitLayers.length > 0) return;
       const point = nativeEditPoint(data, [event.lngLat.lng, event.lngLat.lat]);
       const exactIds = exactHits.enabled
         ? new Set(await exactHits.hit(point))
@@ -549,7 +555,7 @@ export function NativeExploreLayer({
       );
       // Native levels can overlap in a campus view. Always offer named places,
       // rather than selecting a large merged component as a new destination.
-      if (!hits.length) {
+      if (hits.length === 0) {
         setPicked([]);
         return;
       }
@@ -575,7 +581,7 @@ export function NativeExploreLayer({
       className="project-native-explore-status"
       aria-label="Native floor map"
     >
-      {result && !!mixedHallwayIssues.length && (
+      {result && mixedHallwayIssues.length > 0 && (
         <div className="project-mixed-hallway-review">
           <button
             className="project-mixed-hallway-toggle"
@@ -644,9 +650,9 @@ export function NativeExploreLayer({
             ? result
               ? "Native wall detail unavailable"
               : "Native floor map unavailable"
-            : !result
-              ? "Loading native floor map…"
-              : `Native floor map · ${result.regions.length} areas${result.warningCount ? ` · ${result.warningCount} warnings` : ""}`}
+            : result
+              ? `Native floor map · ${result.regions.length} areas${result.warningCount ? ` · ${result.warningCount} warnings` : ""}`
+              : "Loading native floor map…"}
         </summary>
         {!current && (
           <p role="status">
@@ -759,7 +765,7 @@ export function NativeExploreLayer({
                     </button>
                   ))}
                 </div>
-                {!!places.length && !matchingPlaces.length && (
+                {places.length > 0 && matchingPlaces.length === 0 && (
                   <p>No matching named places.</p>
                 )}
                 {matchingPlaces.length > placeLimit && (
@@ -768,7 +774,9 @@ export function NativeExploreLayer({
                     {matchingPlaces.length}
                   </button>
                 )}
-                {!places.length && <p>No named destination in this area.</p>}
+                {places.length === 0 && (
+                  <p>No named destination in this area.</p>
+                )}
                 <button onClick={() => setPicked([])}>
                   Close native area places
                 </button>
@@ -779,7 +787,7 @@ export function NativeExploreLayer({
                 Areas without a verified native trace stay hidden in this view.
               </p>
             )}
-            {!!result.warnings.length && (
+            {result.warnings.length > 0 && (
               <details>
                 <summary>
                   Native evidence warnings · {result.warningCount}

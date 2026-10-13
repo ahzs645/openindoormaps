@@ -5,6 +5,7 @@ import type { IndoorDataset } from "./contract";
 import type { PinComparisonMode, PinComparisonResult } from "./pin-comparison";
 import { coloredComparisonRegions } from "./patch-comparison-colors";
 import { geographicPoint } from "./routing";
+import { mapReady } from "~/components/map/map-ready";
 export function PinComparisonLayer({
   data,
   result,
@@ -18,7 +19,7 @@ export function PinComparisonLayer({
 }) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map.addSource("pin-comparison", {
       type: "geojson",
       maxzoom: 23,
@@ -79,7 +80,7 @@ export function PinComparisonLayer({
     };
   }, [map, isLoaded]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const polygon = (
       rings: [number, number][][],
       kind: string,
@@ -102,8 +103,8 @@ export function PinComparisonLayer({
       )) {
         features.push(
           ...region.displayPartsFeet.map((r) => polygon(r, "selection", color)),
+          polygon(region.ringsFeet, "outline", color),
         );
-        features.push(polygon(region.ringsFeet, "outline", color));
       }
     }
     if (showCurrent && result.current && mode !== "current-selection")
@@ -118,13 +119,13 @@ export function PinComparisonLayer({
     });
   }, [map, isLoaded, data, result, mode, showCurrent]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const points = (
       result.currentRegions ?? (result.current ? [result.current] : [])
     )
       .flatMap((r) => r.ringsFeet[0])
       .map((p) => geographicPoint(data, p));
-    if (!points.length) return;
+    if (points.length === 0) return;
     map.fitBounds(
       [
         [

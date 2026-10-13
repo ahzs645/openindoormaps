@@ -8,6 +8,7 @@ import { useMap } from "~/components/map/map";
 import type { IndoorDataset } from "./contract";
 import { relativeHeightGeometry } from "./relative-heights";
 import { wallReviewFeatures } from "./wall-review";
+import { mapReady } from "~/components/map/map-ready";
 
 export type WallCapture = () => Promise<{ png: Uint8Array; camera: unknown }>;
 export function WallReviewLayer({
@@ -41,7 +42,7 @@ export function WallReviewLayer({
       : walls;
   }, [data, levelIds, building, relativeHeights]);
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     map.addSource("project-review-walls", {
       type: "geojson",
       data: features,
@@ -118,7 +119,8 @@ export function WallReviewLayer({
     };
   }, [map, isLoaded, onCaptureReady]);
   useEffect(() => {
-    if (!map || !isLoaded || !map.getSource("project-review-walls")) return;
+    if (!mapReady(map, isLoaded) || !map.getSource("project-review-walls"))
+      return;
     (map.getSource("project-review-walls") as GeoJSONSource).setData(features);
     map.setPaintProperty(
       "project-review-wall-boxes",

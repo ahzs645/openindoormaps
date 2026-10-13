@@ -7,6 +7,7 @@ import type { IndoorDataset } from "./contract";
 import { nativeCirculationSurfaces } from "./native-circulation";
 import { sourceModelSection } from "./model-section";
 import type { NativeBoundaryPatches } from "./native-boundary-patches";
+import { mapReady } from "~/components/map/map-ready";
 
 /** Exact native origin, units and registration. Never normalize or re-centre the GLB. */
 export function ProjectModelLayer({
@@ -33,7 +34,7 @@ export function ProjectModelLayer({
 }) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     let disposed = false,
       renderer: THREE.WebGLRenderer | undefined,
       model: THREE.Group | undefined;

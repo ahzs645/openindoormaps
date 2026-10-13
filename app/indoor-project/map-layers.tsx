@@ -75,6 +75,7 @@ import {
   WALL_DETAIL_START,
   WALL_DETAIL_END,
 } from "./zoom-presentation";
+import { mapReady } from "~/components/map/map-ready";
 
 const collection = <T extends Geometry>(
   features: Feature<T>[],
@@ -444,7 +445,7 @@ function PreparedProjectMapLayers({
     [data, stairCutRooms],
   );
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const effectStarted = floorDiagnosticsEnabled() ? performance.now() : 0;
     let uploads = 0;
     const overviewSource = map.getSource("project-overview") as
@@ -507,7 +508,7 @@ function PreparedProjectMapLayers({
     const exposedWallsShown =
       (!review &&
         !roomThree &&
-        !(nativeFloorLevels.length && data.nativeMaterialSections)) ||
+        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)) ||
       (roomThree && (review || nativeModel));
     const values = [
       stairCutAreas,
@@ -1121,13 +1122,13 @@ function PreparedProjectMapLayers({
       "visibility",
       !roomThree &&
         !nativeModel &&
-        !(nativeFloorLevels.length && data.nativeMaterialSections)
+        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)
         ? "visible"
         : "none",
     );
     if (roomThree && !nativeModel)
       for (const { glass, walls } of windowParts) {
-        if (walls.features.length)
+        if (walls.features.length > 0)
           map.addLayer(
             precisionWallLayer(walls, data.alignment.originGeographic, {
               id: glass
@@ -1370,7 +1371,7 @@ function PreparedProjectMapLayers({
       "visibility",
       !review &&
         !roomThree &&
-        !(nativeFloorLevels.length && data.nativeMaterialSections)
+        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)
         ? "visible"
         : "none",
     );
@@ -1496,7 +1497,7 @@ function PreparedProjectMapLayers({
       map.setPaintProperty(
         id,
         property,
-        nativeFloorLevels.length && id.startsWith("project-native-stair-")
+        nativeFloorLevels.length > 0 && id.startsWith("project-native-stair-")
           ? nativeStairZoomStyle(
               nativeFloorLevels,
               // These are measured native treads/landings, not stair room
@@ -1522,7 +1523,7 @@ function PreparedProjectMapLayers({
     map.setPaintProperty(
       "project-native-stair-outline",
       "line-color",
-      nativeFloorLevels.length
+      nativeFloorLevels.length > 0
         ? [
             "case",
             ["in", ["get", "levelId"], ["literal", nativeFloorLevels]],
@@ -1531,7 +1532,7 @@ function PreparedProjectMapLayers({
           ]
         : "#adbcca",
     );
-    if (nativeFloorLevels.length)
+    if (nativeFloorLevels.length > 0)
       map.setLayerZoomRange("project-native-stair-fill", 0, 24);
     for (const id of ["project-area-outline", "project-block-outline"]) {
       map.setPaintProperty(id, "line-color", [
@@ -1609,7 +1610,7 @@ function PreparedProjectMapLayers({
     map.on("click", pick);
     // The native layer registers its fit only after the current scoped trace
     // is ready. Do not center a search on prepared/hidden source footprints.
-    if (!nativeFloorLevels.length)
+    if (nativeFloorLevels.length === 0)
       onFitReady((includeSelection = true) => {
         const bounds = new LngLatBounds();
         const chosen = includeSelection
@@ -1705,7 +1706,7 @@ function PreparedProjectMapLayers({
     labelSettings,
   ]);
   useEffect(() => {
-    if (!map || !isLoaded || !map.getLayer("project-room-fill")) return;
+    if (!mapReady(map, isLoaded) || !map.getLayer("project-room-fill")) return;
     const nativeKeys = data.records
       .filter((r) => nativeFloorLevels.includes(r.levelId))
       .map((r) => r.key);
@@ -1721,7 +1722,7 @@ function PreparedProjectMapLayers({
     const nativeOpacity = (
       opacity: number,
     ): number | ExpressionSpecification =>
-      nativeFloorLevels.length
+      nativeFloorLevels.length > 0
         ? [
             "case",
             [
@@ -1758,7 +1759,7 @@ function PreparedProjectMapLayers({
           id,
           property,
           property === "fill-extrusion-opacity" &&
-            nativeFloorLevels.length &&
+            nativeFloorLevels.length > 0 &&
             [
               "project-relative-floors",
               "project-flat-selection-surface",
@@ -1777,7 +1778,7 @@ function PreparedProjectMapLayers({
                   ? nativeOpacity(full * geometryOpacity)
                   : full * geometryOpacity;
                 return id === "project-native-stair-fill" &&
-                  nativeFloorLevels.length
+                  nativeFloorLevels.length > 0
                   ? nativeStairZoomStyle(
                       nativeFloorLevels,
                       full * geometryOpacity,
@@ -1830,7 +1831,7 @@ function PreparedProjectMapLayers({
     map.setPaintProperty(
       "project-overview-fill",
       "fill-opacity",
-      nativeFloorLevels.length &&
+      nativeFloorLevels.length > 0 &&
         levelIds.every((id) => nativeFloorLevels.includes(id))
         ? 0
         : [
@@ -2009,7 +2010,7 @@ export function ProjectMapLayers(props: ProjectMapLayersProps) {
     needsNativeDisplay,
   ]);
   useEffect(() => {
-    if (!map || !isLoaded || value) return;
+    if (!mapReady(map, isLoaded) || value) return;
     // The selected level must never display or accept clicks on an old level.
     // The prepared child removes its custom layers and click handler on unmount.
     emptyPreparedFloorSources(map, emptyFloor);

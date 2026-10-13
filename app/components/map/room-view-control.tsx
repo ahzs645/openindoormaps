@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useMap } from "./map";
+import { mapReady } from "./map-ready";
 
 export type RoomView = "2d" | "3d";
 
@@ -14,7 +15,7 @@ export function RoomViewControl({
 }) {
   const { map, isLoaded } = useMap();
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     // Flat rooms stay flat even when rotating or using a touch gesture.
     map.setLight({ color: "#ffffff", intensity: 0.2 });
     map.setMaxPitch(view === "2d" ? 0 : 60);

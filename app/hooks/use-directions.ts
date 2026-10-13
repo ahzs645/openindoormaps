@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMap } from "~/components/map/map";
 import IndoorDirections from "~/indoor-directions/directions/main";
+import { mapReady } from "~/components/map/map-ready";
 
 function useDirections(hospitalStyle = false) {
   const { isLoaded, map } = useMap();
@@ -8,7 +9,7 @@ function useDirections(hospitalStyle = false) {
     useState<IndoorDirections | null>(null);
 
   useEffect(() => {
-    if (!map || !isLoaded) {
+    if (!mapReady(map, isLoaded)) {
       setIndoorDirections(null);
       return;
     }

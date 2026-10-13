@@ -18,6 +18,7 @@ import {
 } from "./basemap-buildings";
 import { nativeEditPoint, shapePoints, type EditPoint } from "./map-edits";
 import { geographicPoint } from "./routing";
+import { mapReady } from "~/components/map/map-ready";
 
 export function BasemapBuildingLayer({
   data,
@@ -32,7 +33,7 @@ export function BasemapBuildingLayer({
     [data, settings],
   );
   useEffect(() => {
-    if (!map || !isLoaded) return;
+    if (!mapReady(map, isLoaded)) return;
     const layers = map.getStyle().layers.filter(isBasemapBuildingLayer);
     const sources = new Set(
       layers.map((layer) => ("source" in layer ? layer.source : "")),
@@ -112,7 +113,7 @@ export function BasemapAreaDrawing({
   const [error, setError] = useState("");
   const controls = useRef<{ finish: () => void; undo: () => void }>();
   useEffect(() => {
-    if (!map || !isLoaded || !active) return;
+    if (!mapReady(map, isLoaded) || !active) return;
     let points: EditPoint[] = [];
     setCorners(0);
     setError("");
