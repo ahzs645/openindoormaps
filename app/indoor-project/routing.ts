@@ -814,7 +814,8 @@ function validateIndoorDatasetSnapshot(
                   t.thicknessFeet > 10)) ||
               !Array.isArray(t.ringFeet) ||
               t.ringFeet.length < 3 ||
-              t.ringFeet.length > 100 ||
+              // Curved and merged authored treads (tiered seating) carry more vertices.
+              t.ringFeet.length > 1000 ||
               t.ringFeet.some((p) => !finitePoint(p, 2)),
           )
         )
@@ -880,7 +881,7 @@ function validateIndoorDatasetSnapshot(
               t.thicknessFeet > 10)) ||
           !Array.isArray(t.ringFeet) ||
           t.ringFeet.length < 3 ||
-          t.ringFeet.length > 100 ||
+          t.ringFeet.length > 1000 ||
           t.ringFeet.some((p) => !finitePoint(p, 2))
         )
           throw new Error("Invalid native stair tread.");
