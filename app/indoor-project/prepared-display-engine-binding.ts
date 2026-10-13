@@ -1,4 +1,4 @@
 // Generated from the complete local preparation module graph and dependency lock.
 // Refresh through Vite or scripts/indoor/prepared-display-engine-binding.ts.
 export const PREPARED_DISPLAY_ENGINE_SHA256 =
-  "81ad0b0daf61b75e7f54e529f837263dda94123a45ff883a7f1dd4bd85873eae";
+  "679803b225f46e3efb612be9ecf439858178e9c9c58e5d7b0713a71dc61bfca3";
