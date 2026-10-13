@@ -1,3 +1,4 @@
+import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import {
   readIndoorProject,
   exportIndoorProject,
@@ -15,6 +16,9 @@ worker.onmessage = async ({
   data: request,
 }: MessageEvent<ProjectPackageRequest>) => {
   try {
+    // Reading and exporting verify drawing-backed seal rows, whose drawn
+    // material check runs on the checked exact overlay engine.
+    await initializeNativeExactGeosOverlay();
     // The transferred ZIP is owned by this job only. Detach it from the
     // retained message object so it can be collected once it is inflated.
     const archive = request.kind === "import" ? request.bytes : undefined;
