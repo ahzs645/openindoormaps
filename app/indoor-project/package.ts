@@ -396,7 +396,9 @@ const MB = 1024 * 1024,
   MAX = 900 * MB,
   limits: Record<string, number> = {
     "manifest.json": 65_536,
-    "floors/rooms.json": 64 * MB,
+    // Reviewed drawing-backed rows, the registered DWG reference and derived outlines
+    // travel with the source annotations; the rooms entry may reach 128 MiB.
+    "floors/rooms.json": 128 * MB,
     "gis/reference-points.json": MB,
     // Exact native floor faces and their source-bound routing proofs can exceed
     // 128 MiB. Keep a bounded entry allowance within the 900 MiB archive cap.

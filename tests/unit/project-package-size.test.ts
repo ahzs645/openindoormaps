@@ -8,7 +8,7 @@ function declaredSize(name: string, bytes: number): Uint8Array {
   const zip = zipSync({ [name]: strToU8("{}") }, { level: 0 });
   const view = new DataView(zip.buffer, zip.byteOffset, zip.byteLength);
   for (let i = 0; i + 46 <= zip.length; i++)
-    if (view.getUint32(i, true) === 0x02014b50) {
+    if (view.getUint32(i, true) === 0x02_01_4b_50) {
       view.setUint32(i + 24, bytes, true);
       return zip;
     }
@@ -32,7 +32,7 @@ test("native dataset and other entry caps still reject oversized ZIP declaration
     /oversized ZIP entry/,
   );
   await assert.rejects(
-    readIndoorProject(declaredSize("floors/rooms.json", 64 * 1024 * 1024 + 1)),
+    readIndoorProject(declaredSize("floors/rooms.json", 128 * 1024 * 1024 + 1)),
     /oversized ZIP entry/,
   );
   await assert.rejects(

@@ -19,9 +19,9 @@ const MAX_HEADER = 1024 * 1024;
 const MAX_CONTAINER = MAX_TOTAL + MAX_HEADER;
 export const REVIEW_BUNDLE_ARCHIVE_PATH = "review/companions.bin";
 export const REVIEW_BUNDLE_ARCHIVE_LIMIT = MAX_CONTAINER;
-const JSON_LIMIT = 64 * 1024 * 1024;
+const JSON_LIMIT = 128 * 1024 * 1024;
 const encoder = new TextEncoder();
-const decoder = new TextDecoder("utf-8", { fatal: true });
+const decoder = new TextDecoder("utf8", { fatal: true });
 const fail = () => {
   throw new Error("Invalid packed review companion container.");
 };
@@ -36,13 +36,13 @@ const hash = async (bytes: Uint8Array) =>
 const base64 = (bytes: Uint8Array) => {
   let s = "";
   for (let i = 0; i < bytes.length; i += 8192)
-    s += String.fromCharCode(...bytes.subarray(i, i + 8192));
+    s += String.fromCodePoint(...bytes.subarray(i, i + 8192));
   return btoa(s);
 };
 const unbase64 = (value: string) => {
   if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value)) return fail();
   try {
-    return Uint8Array.from(atob(value), (c) => c.charCodeAt(0));
+    return Uint8Array.from(atob(value), (c) => c.codePointAt(0) ?? 0);
   } catch {
     return fail();
   }
@@ -97,12 +97,12 @@ export async function packReviewBundle(
       sha256: file.sha256,
       mode,
       storedBytes: part.length,
-      ...(canonical !== file.compressedBase64
-        ? {
+      ...(canonical === file.compressedBase64
+        ? {}
+        : {
             base64Ending: file.compressedBase64.slice(-4),
             base64Length: file.compressedBase64.length,
-          }
-        : {}),
+          }),
     });
     parts.push(part);
   }
