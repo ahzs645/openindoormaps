@@ -3268,3 +3268,84 @@ test("visitor exports retain exact authored physical tread evidence and omit cac
     );
   }
 });
+
+test("viewer exports carry authored envelopes while the dataset keeps compiler supplements", async () => {
+  const p = await readIndoorProject(await archive());
+  const { nativeIndoorEnvelopeHash, nativeIndoorEnvelopeAuthored } =
+    await import("../../app/indoor-project/native-indoor-envelopes");
+  const rect = (
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
+  ): [number, number][] => [
+    [x0, y0],
+    [x1, y0],
+    [x1, y1],
+    [x0, y1],
+  ];
+  const level = {
+    levelId: p.dataset.nativeLevels[0]!.id,
+    elevationFeet: p.dataset.nativeLevels[0]!.elevationFeet,
+    partsFeet: [[rect(30, 0, 40, 10)]],
+    sourceElementIds: [77],
+    cutElevationsFeet: [p.dataset.nativeLevels[0]!.elevationFeet + 4],
+    evidenceSha256: "b".repeat(64),
+  };
+  const base = {
+    version: 1 as const,
+    sourceModelSha256: p.dataset.source.modelSha256,
+    levels: [level],
+  };
+  const authored = {
+    ...base,
+    geometrySha256: await nativeIndoorEnvelopeHash(base),
+  };
+  // Shape written by reviter mergeNativeIndoorEnvelopeSupplements.
+  const levels = [
+    {
+      ...level,
+      partsFeet: [...level.partsFeet, [rect(0, 0, 10, 10)]],
+      supplements: [
+        {
+          version: 1,
+          method: "bounded-faces-intersection-over-cuts-v1",
+          levelId: level.levelId,
+          elevationFeet: level.elevationFeet,
+          cutElevationsFeet: level.cutElevationsFeet,
+          areaSqFt: 100,
+          sourceElementIds: [1],
+          correctionIds: ["db:7:x"],
+          assumptionIds: ["db:7:x"],
+          evidenceSha256: "c".repeat(64),
+          partStartIndex: 1,
+          partCount: 1,
+        },
+      ],
+    },
+  ];
+  const prepared = {
+    ...authored,
+    levels,
+    geometrySha256: await nativeIndoorEnvelopeHash({
+      ...base,
+      levels,
+    } as never),
+    authoredGeometrySha256: authored.geometrySha256,
+  } as unknown as typeof p.dataset.nativeIndoorEnvelopes;
+  assert.equal(
+    JSON.stringify(nativeIndoorEnvelopeAuthored(prepared)),
+    JSON.stringify(authored),
+  );
+  p.rooms.nativeIndoorEnvelopes = authored;
+  p.dataset.nativeIndoorEnvelopes = prepared;
+  const viewer = await readIndoorProject(await exportCampusViewer(p));
+  assert.equal(
+    JSON.stringify(viewer.rooms.nativeIndoorEnvelopes),
+    JSON.stringify(authored),
+  );
+  assert.equal(
+    JSON.stringify(viewer.dataset.nativeIndoorEnvelopes),
+    JSON.stringify(prepared),
+  );
+});

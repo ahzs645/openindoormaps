@@ -1058,7 +1058,10 @@ export async function exportCampusViewer(
     nativeProvisionalCornerSeals: project.dataset.nativeProvisionalCornerSeals,
     nativeDerivedFrameReturns: project.dataset.nativeDerivedFrameReturns,
     nativeMaterialSections: project.dataset.nativeMaterialSections,
-    nativeIndoorEnvelopes: project.dataset.nativeIndoorEnvelopes,
+    // Source rooms carry the authored envelopes; compiler supplements stay in the dataset.
+    nativeIndoorEnvelopes: nativeIndoorEnvelopeAuthored(
+      project.dataset.nativeIndoorEnvelopes,
+    ),
     nativeSourceStairMaterials: nativeSourceStairPhysicalEvidence(
       project.dataset.nativeSourceStairMaterials,
     ),
