@@ -400,9 +400,10 @@ const MB = 1024 * 1024,
     // travel with the source annotations; the rooms entry may reach 128 MiB.
     "floors/rooms.json": 128 * MB,
     "gis/reference-points.json": MB,
-    // Exact native floor faces and their source-bound routing proofs can exceed
-    // 128 MiB. Keep a bounded entry allowance within the 900 MiB archive cap.
-    "viewer/indoor.json": 192 * MB,
+    // Exact native floor faces, their source-bound routing proofs and the
+    // published exact floor mapping of a routing-on campus can exceed 192 MiB.
+    // Keep a bounded entry allowance within the 900 MiB archive cap.
+    "viewer/indoor.json": 320 * MB,
     "viewer/metadata.json": 16 * MB,
     "model/scene.glb": 256 * MB,
     // Literal avoids the existing package/review-bundle initialization cycle.

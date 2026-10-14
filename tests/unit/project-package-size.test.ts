@@ -20,14 +20,14 @@ test("native dataset entry permits the new bounded range before manifest validat
     /Missing Reviter manifest/,
   );
   await assert.rejects(
-    readIndoorProject(declaredSize("viewer/indoor.json", 192 * 1024 * 1024)),
+    readIndoorProject(declaredSize("viewer/indoor.json", 320 * 1024 * 1024)),
     /Missing Reviter manifest/,
   );
 });
 test("native dataset and other entry caps still reject oversized ZIP declarations", async () => {
   await assert.rejects(
     readIndoorProject(
-      declaredSize("viewer/indoor.json", 192 * 1024 * 1024 + 1),
+      declaredSize("viewer/indoor.json", 320 * 1024 * 1024 + 1),
     ),
     /oversized ZIP entry/,
   );
