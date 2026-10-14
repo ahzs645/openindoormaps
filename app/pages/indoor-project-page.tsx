@@ -26,6 +26,10 @@ import { NativeGapScanLayer } from "../indoor-project/native-gap-scan-layer";
 import type { GapScanPreview } from "../indoor-project/native-gap-scan";
 import type { WindowExportMode } from "../indoor-project/native-window-display";
 import { projectBoundaryEvidence } from "../indoor-project/boundary-evidence";
+import {
+  initializeNativeExactGeosOverlay,
+  nativeExactGeosOverlayInitialized,
+} from "../indoor-project/native-exact-geos-overlay";
 import { EnclosureReviewPanel } from "../indoor-project/enclosure-review-panel";
 import { BoundaryProposalPreviewLayer } from "../indoor-project/boundary-proposal-preview-layer";
 import {
@@ -359,8 +363,8 @@ export default function IndoorProjectPage() {
         Math.floor((performance.now() - importStartedAt) / 1000),
       );
     update();
-    const timer = window.setInterval(update, 1000);
-    return () => window.clearInterval(timer);
+    const timer = globalThis.setInterval(update, 1000);
+    return () => globalThis.clearInterval(timer);
   }, [importStartedAt]);
   const [packageInfo, setPackageInfo] = useState<{
     fileName: string;
@@ -531,6 +535,15 @@ export default function IndoorProjectPage() {
   const accept = useCallback(
     (p: IndoorProject, fileName?: string, restored = false) => {
       latestProject.current = p;
+      // Rendering a native project runs exact checks on this thread (e.g. the
+      // boundary evidence of routing-on circulation cells); both load paths
+      // start this context's checked overlay engine before accepting.
+      if (!nativeExactGeosOverlayInitialized()) {
+        setMessage(
+          "The checked native overlay engine is not ready. Reload the page and import the ZIP again.",
+        );
+        return;
+      }
       setImportNotice(false);
       setPackageInfo({
         fileName: fileName ?? p.manifest.model.fileName,
@@ -621,6 +634,7 @@ export default function IndoorProjectPage() {
             },
             controller.signal,
           );
+          await initializeNativeExactGeosOverlay();
           if (current()) {
             accept(p, snapshot.fileName, true);
             setImportProgress(null);
@@ -657,6 +671,7 @@ export default function IndoorProjectPage() {
         : `Validating ${file.name} and loading floor maps…`,
     );
     try {
+      await initializeNativeExactGeosOverlay();
       const folder = folderFiles
         ? await readProjectFolder(folderFiles, controller.signal)
         : undefined;
@@ -929,7 +944,7 @@ export default function IndoorProjectPage() {
     project?.rooms.mapEdits?.floorNames,
   ]);
   const displayData = useMemo(() => {
-    if (!project) return undefined;
+    if (!project) return;
     const data = editorVisitorDataset(project);
     const previewMode = roomReview && roomWindowPreview ? "native" : windowMode;
     const display =
@@ -1024,7 +1039,7 @@ export default function IndoorProjectPage() {
           const found = response.result.regions.filter(
             (r) => key && r.roomKeys.includes(key),
           );
-          if (found.length) {
+          if (found.length > 0) {
             fitted.current = true;
             setNativeAreaSelection(found.map((r) => r.id));
           }
@@ -1844,7 +1859,7 @@ export default function IndoorProjectPage() {
             onChange={async (event) => {
               const element = event.currentTarget;
               const files = Array.from(element.files ?? []);
-              if (files.length) await load(files[0], files);
+              if (files.length > 0) await load(files[0], files);
               element.value = "";
               setFolderChoosing(false);
             }}
