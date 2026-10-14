@@ -1,5 +1,5 @@
 import { readFile, writeFile } from "node:fs/promises";
-import { resolve } from "node:path";
+import path from "node:path";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
@@ -7,6 +7,7 @@ import {
   readIndoorProject,
   attachPreparedDisplayArchiveToPackage,
 } from "../../app/indoor-project/package";
+import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { editorVisitorDataset } from "../../app/indoor-project/map-edits";
 import { preparedDisplayDatasetSha256 } from "../../app/indoor-project/prepared-display-assets";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
@@ -65,18 +66,21 @@ export async function preparePackageDisplayAssets(
 }
 if (
   process.argv[1] &&
-  import.meta.url === pathToFileURL(resolve(process.argv[1])).href
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
 ) {
   const [input, output, ...flags] = process.argv.slice(2);
   if (
     !input ||
     !output ||
-    resolve(input) === resolve(output) ||
+    path.resolve(input) === path.resolve(output) ||
     flags.some((flag) => flag !== "--native-levels")
   )
     throw new Error(
       "Usage: node --expose-gc --import tsx scripts/indoor/prepare-display-assets.ts input.zip candidate.zip [--native-levels] (distinct, new paths)",
     );
+  // CLI runs have no package worker; start the checked exact overlay engine
+  // that native material and selection checks require.
+  await initializeNativeExactGeosOverlay();
   const result = await preparePackageDisplayAssets(
     new Uint8Array(await readFile(input)),
     flags.includes("--native-levels"),

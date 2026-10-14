@@ -3,6 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { performance } from "node:perf_hooks";
 import { createHash } from "node:crypto";
 import { readIndoorProject } from "../../app/indoor-project/package";
+import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { findProjectRoute } from "../../app/indoor-project/routing";
 import {
   projectRoutingGraph,
@@ -37,6 +38,8 @@ const pick = <T>(items: T[]) => items[Math.floor(random() * items.length)];
 const loadStart = performance.now();
 const inputBytes = new Uint8Array(await readFile(input));
 const inputSha256 = createHash("sha256").update(inputBytes).digest("hex");
+// CLI runs have no route worker; start the checked exact overlay engine first.
+await initializeNativeExactGeosOverlay();
 const { dataset: data } = await readIndoorProject(inputBytes);
 const loadMs = performance.now() - loadStart;
 const snapshot = JSON.stringify(data);
