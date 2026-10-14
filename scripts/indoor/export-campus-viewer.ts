@@ -1,5 +1,6 @@
 import { validatePublishedNativeExploreMapping } from "../../app/indoor-project/native-explore-mapping";
 import { floorDisplayName } from "../../app/indoor-project/floor-display-name";
+import { nativeSourceStairPhysicalEvidence } from "../../app/indoor-project/native-source-stair-material";
 import { readFile, writeFile, mkdir, rename } from "node:fs/promises";
 import path from "node:path";
 const { resolve, dirname } = path;
@@ -12,8 +13,8 @@ import {
 const args = process.argv.slice(2),
   [input, output] = args;
 const choice = args.indexOf("--windows"),
-  windows = choice < 0 ? undefined : args[choice + 1];
-if (choice >= 0 && !["native", "simplified"].includes(windows ?? ""))
+  windows = choice === -1 ? undefined : args[choice + 1];
+if (choice !== -1 && !["native", "simplified"].includes(windows ?? ""))
   throw new Error("--windows must be native or simplified");
 if (!input || !output || resolve(input) === resolve(output))
   throw new Error(
@@ -41,13 +42,36 @@ const normalize = (d: typeof project.dataset) => {
       project.rooms.mapEdits?.floorNames?.[f.id] ?? floorDisplayName(f.name),
   }));
   for (const area of c.indoorExclusions?.areas ?? []) delete area.notes;
+  // The visitor projection of exportCampusViewer: physical stair evidence only,
+  // no cached tread history, applied contact repairs and no authoring notes.
+  c.nativeSourceStairMaterials = nativeSourceStairPhysicalEvidence(
+    c.nativeSourceStairMaterials,
+  );
+  for (const flight of c.stairDisplay?.sourceFlights ?? [])
+    delete flight.historicalPreparedTreads;
+  for (const flight of c.stairDisplay?.flights ?? [])
+    delete flight.historicalPreparedTreads;
+  for (const label of c.reviewedPlaceLabels?.labels ?? []) delete label.notes;
+  if (c.nativeSelectionContactRepairs)
+    c.nativeSelectionContactRepairs.repairs =
+      c.nativeSelectionContactRepairs.repairs
+        .filter((r) => r.status === "applied")
+        .map((r) => ({ ...r, notes: "" }));
   return c;
 };
-if (
-  JSON.stringify(normalize(restored.dataset)) !==
-  JSON.stringify(normalize(project.dataset))
-)
-  throw new Error("Viewer round-trip changed geometry or navigation.");
+const before = normalize(project.dataset),
+  after = normalize(restored.dataset);
+const changed = [...new Set([...Object.keys(before), ...Object.keys(after)])]
+  .filter(
+    (key) =>
+      JSON.stringify(before[key as keyof typeof before]) !==
+      JSON.stringify(after[key as keyof typeof after]),
+  )
+  .sort();
+if (changed.length > 0)
+  throw new Error(
+    `Viewer round-trip changed geometry or navigation: ${changed.join(", ")}.`,
+  );
 await mkdir(dirname(resolve(output)), { recursive: true });
 const temporary = resolve(output) + `.${process.pid}.tmp`;
 await writeFile(temporary, bytes);
