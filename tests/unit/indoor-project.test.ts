@@ -566,17 +566,17 @@ test("viewer exports pack large exact native materials within the existing metad
         sections: [
           {
             nativeElementId: 7,
-            categoryId: -2000011,
+            categoryId: -2_000_011,
             kind: "wall" as const,
             baseElevationFeet: level.elevationFeet,
             topElevationFeet: level.elevationFeet + 9,
             partsFeet: [
               [
                 [
-                  [0.123456789012345, 0],
+                  [0.123_456_789_012_345, 0],
                   [2, 0],
                   [2, 1],
-                  [0.123456789012345, 1],
+                  [0.123_456_789_012_345, 1],
                 ],
               ],
             ] as [number, number][][][],
@@ -584,14 +584,14 @@ test("viewer exports pack large exact native materials within the existing metad
         ],
       },
     ],
-    sourceEvidence: "original source provenance\n".repeat(700000),
+    sourceEvidence: "original source provenance\n".repeat(1_300_000),
   };
   descriptor.geometrySha256 = await nativeMaterialSectionsHash(descriptor);
   master.rooms.nativeMaterialSections = descriptor;
   master.dataset.nativeMaterialSections = descriptor;
   const exported = await exportCampusViewer(master);
   const files = unzipSync(exported);
-  assert(files["viewer/metadata.json"].length < 16 * 1024 * 1024);
+  assert(files["viewer/metadata.json"].length < 32 * 1024 * 1024);
   const wire = JSON.parse(strFromU8(files["viewer/metadata.json"]));
   assert.equal(wire.format, "openindoormaps-viewer-metadata-wire");
   const viewer = await readIndoorProject(exported);
@@ -3083,7 +3083,7 @@ test("strict visitor physical bindings preserve native cells and routes while st
       sourceElementIds: [10, 11],
       sections: [original, support].map((r, i) => ({
         nativeElementId: 10 + i,
-        categoryId: -2000011,
+        categoryId: -2_000_011,
         kind: "wall" as const,
         baseElevationFeet: 0,
         topElevationFeet: 8,
@@ -3204,7 +3204,7 @@ test("visitor exports retain exact authored physical tread evidence and omit cac
         authoredTreadRolesSha256: roles.geometrySha256,
         treads,
         historicalPreparedTreads: [
-          { ...structuredClone(treads[0]), elevationFeet: 1.000001 },
+          { ...structuredClone(treads[0]), elevationFeet: 1.000_001 },
         ],
       },
     ],

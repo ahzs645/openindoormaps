@@ -10,18 +10,18 @@ test("multiple individually small physical bindings fit the viewer limit without
     format: "openindoormaps-viewer-metadata",
     version: 1,
     nativeMaterialSections: {
-      coordinate: 0.123456789012345,
-      physical: "m".repeat(9 * 1024 * 1024),
+      coordinate: 0.123_456_789_012_345,
+      physical: "m".repeat(17 * 1024 * 1024),
     },
     nativeProvisionalCornerSeals: {
       sourceVerified: false,
       revisitRequired: true,
-      physical: "c".repeat(9 * 1024 * 1024),
+      physical: "c".repeat(17 * 1024 * 1024),
     },
   };
   const before = JSON.stringify(metadata),
     wire = await packViewerMetadata(metadata);
-  assert(Buffer.byteLength(JSON.stringify(wire)) < 16 * 1024 * 1024);
+  assert(Buffer.byteLength(JSON.stringify(wire)) < 32 * 1024 * 1024);
   assert.equal(JSON.stringify(await hydrateViewerMetadata(wire)), before);
   assert.equal(JSON.stringify(metadata), before);
   const packed = wire as {
@@ -30,7 +30,7 @@ test("multiple individually small physical bindings fit the viewer limit without
     [key: string]: unknown;
   };
   await assert.rejects(
-    hydrateViewerMetadata({ ...packed, bytes: 64 * 1024 * 1024 + 1 }),
+    hydrateViewerMetadata({ ...packed, bytes: 128 * 1024 * 1024 + 1 }),
     /packed viewer/,
   );
   await assert.rejects(

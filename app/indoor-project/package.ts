@@ -404,7 +404,7 @@ const MB = 1024 * 1024,
     // published exact floor mapping of a routing-on campus can exceed 192 MiB.
     // Keep a bounded entry allowance within the 900 MiB archive cap.
     "viewer/indoor.json": 320 * MB,
-    "viewer/metadata.json": 16 * MB,
+    "viewer/metadata.json": 32 * MB,
     "model/scene.glb": 256 * MB,
     // Literal avoids the existing package/review-bundle initialization cycle.
     "review/companions.bin": MAX_REVIEW_CONTAINER_BYTES,

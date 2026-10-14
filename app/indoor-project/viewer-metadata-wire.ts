@@ -2,10 +2,12 @@ import { deflateSync } from "fflate";
 import { boundedInflate } from "./review-bundle-inflate";
 
 const FORMAT = "openindoormaps-viewer-metadata-wire";
-const ENTRY_LIMIT = 16 * 1024 * 1024;
-const EXPANDED_LIMIT = 64 * 1024 * 1024;
+// A complete native campus (seal rows, material sections, envelopes) packs to
+// about 18 MiB from 72 MiB of JSON; keep bounded headroom above that.
+const ENTRY_LIMIT = 32 * 1024 * 1024;
+const EXPANDED_LIMIT = 128 * 1024 * 1024;
 const encoder = new TextEncoder();
-const decoder = new TextDecoder("utf-8", { fatal: true });
+const decoder = new TextDecoder("utf8", { fatal: true });
 const fail = () => {
   throw new Error("Invalid packed viewer metadata.");
 };
@@ -20,7 +22,7 @@ const hash = async (bytes: Uint8Array) =>
 const base64 = (bytes: Uint8Array) => {
   let text = "";
   for (let i = 0; i < bytes.length; i += 8192)
-    text += String.fromCharCode(...bytes.subarray(i, i + 8192));
+    text += String.fromCodePoint(...bytes.subarray(i, i + 8192));
   return btoa(text);
 };
 
@@ -81,8 +83,9 @@ export async function hydrateViewerMetadata<T extends object>(
     fail();
   let compressed: Uint8Array;
   try {
-    compressed = Uint8Array.from(atob(wire.compressedBase64), (c) =>
-      c.charCodeAt(0),
+    compressed = Uint8Array.from(
+      atob(wire.compressedBase64),
+      (c) => c.codePointAt(0) ?? 0,
     );
   } catch {
     return fail();
