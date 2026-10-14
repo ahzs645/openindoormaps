@@ -9,7 +9,9 @@ export function projectBoundaryEvidence(
   rooms: ProjectRooms,
 ): Map<string, string> {
   const nativeKeys = new Set(
-    nativeCirculationCells(data).flatMap((cell) => cell.roomKeys),
+    nativeCirculationCells(data, { connectorAnchors: false }).flatMap(
+      (cell) => cell.roomKeys,
+    ),
   );
   const annotations = new Map(
     rooms.annotations.map((area) => [area.key, area]),

@@ -28,7 +28,10 @@ import {
   nativeAccessZonesAt,
   NATIVE_ACCESS_ZONES_VERSION,
 } from "./native-access-zones";
-import { routingCalculationValue } from "./routing-cache";
+import {
+  routingCalculationValue,
+  withRoutingCalculation,
+} from "./routing-cache";
 import { createNativeDoorApproachQuery } from "./native-door-approach";
 import { validReviewedCirculationLinkEdge } from "./reviewed-circulation-links";
 import { createNativeRoutingMaterialQuery } from "./native-routing-material";
@@ -486,6 +489,10 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
 }
 export function nativeCirculationCells(
   data: IndoorDataset,
+  // Connector anchors bind lift/stair attachment, not a cell's floor face.
+  // Descriptive callers (boundary evidence) may skip their proof, which builds
+  // the exact routing material authority on the calling thread.
+  { connectorAnchors = true }: { connectorAnchors?: boolean } = {},
 ): NativeCirculationCell[] {
   const prepared = data.circulationGeometry;
   if (
@@ -496,19 +503,25 @@ export function nativeCirculationCells(
     (data.nativeIndoorEnvelopes && !prepared.exactTopology)
   )
     return [];
-  const index = data.nativeIndoorEnvelopes
-    ? nativeCirculationExactIndex(data)
-    : undefined;
-  return prepared.cells.filter(
-    (cell) =>
-      (!data.nativeIndoorEnvelopes ||
-        !!(
-          cell.exactFaceId &&
-          index?.parts(cell.exactFaceId) &&
-          nativeCellAccessIsSupported(data, cell, index)
-        )) &&
-      (!cell.connectorAnchors || validConnectorCellAnchors(data, cell)),
-  );
+  // One synchronous pass over a snapshot: share its exact bindings (access
+  // zones, routing material) across cells instead of rebuilding them per cell.
+  return withRoutingCalculation(data, () => {
+    const index = data.nativeIndoorEnvelopes
+      ? nativeCirculationExactIndex(data)
+      : undefined;
+    return prepared.cells.filter(
+      (cell) =>
+        (!data.nativeIndoorEnvelopes ||
+          !!(
+            cell.exactFaceId &&
+            index?.parts(cell.exactFaceId) &&
+            nativeCellAccessIsSupported(data, cell, index)
+          )) &&
+        (!connectorAnchors ||
+          !cell.connectorAnchors ||
+          validConnectorCellAnchors(data, cell)),
+    );
+  });
 }
 
 function physicalCellPoint(
