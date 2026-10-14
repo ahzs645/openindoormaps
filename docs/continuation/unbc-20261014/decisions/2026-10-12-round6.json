@@ -1,0 +1,56 @@
+{
+ "source": "chat (Mac session, 2026-10-12), four questions with close-ups candidate-floors-3/regress/images/{09-390-wide,08-264-wide,08-206}.png",
+ "standingPolicy": "The registered DWG is the authority where the Revit model is incomplete; every correction is a reversible, tagged drawing-backed assumption patch.",
+ "decisions": {
+  "q6.1": {
+   "label": "09-390-kitchenette-open-end",
+   "question": "09-390 Kitchenette: the strip opens straight onto the 09-314 Concrete Catwalk at its south end, with no door in the DWG or the model. How should selection treat it?",
+   "decision": "Merge with catwalk: accept 09-390 sharing the catwalk area as expected (open plan); no boundary.",
+   "levelId": 694,
+   "rooms": [
+    "09-390",
+    "09-314"
+   ],
+   "effect": "triage: expected merge (owner)"
+  },
+  "q6.2": {
+   "label": "09-310-janitor-open-entrance",
+   "question": "09-310 Janitor: a 3.59 ft opening onto the 09-390 strip, with no door in the DWG or the model. How should selection treat it?",
+   "decision": "Separate area: a selection-only open-entrance line across the 3.59 ft opening (as Q3.7 for 08-165/08-167). Walking is unchanged.",
+   "levelId": 694,
+   "rooms": [
+    "09-310",
+    "09-390"
+   ],
+   "openingFeet": 3.59,
+   "effect": "reviewed area partition (selection closed, navigation unchanged), endpoints on the two native wall faces of the opening"
+  },
+  "q6.3": {
+   "label": "08-264-08-265-help-desk-casework",
+   "question": "08-264 Signout Equip Storage and 08-265 Help Desk are casework outlines in the open lobby; the DWG draws counters, not walls. How should selection treat them?",
+   "decision": "Expected merge: they are open plan and share the lobby area.",
+   "levelId": 694,
+   "rooms": [
+    "08-264",
+    "08-265"
+   ],
+   "effect": "triage: expected merge (owner)"
+  },
+  "q6.4": {
+   "label": "08-206-glazed-partition-foot",
+   "question": "08-206 Office: there's a 0.17 ft gap between the bottom frame of the glazed partition and the wall below. The DWG draws a small box there, but it doesn't span the full width. Close it?",
+   "decision": "Close as wall: treat the drawn box plus the wall return as solid; a drawing-backed row closes the gap under this decision. 08-206 separates from the 08-210 corridor.",
+   "levelId": 694,
+   "rooms": [
+    "08-206",
+    "08-210"
+   ],
+   "pointFeet": [
+    48.183,
+    471.245
+   ],
+   "gapFeet": 0.17,
+   "effect": "drawing-backed row (owner-authorized) at the gap"
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "source": "Round 8 decisions page https://claude.ai/artifact/JaVBRH9bqTpf6SdggD4eHf (db collection answers, read 2026-10-13; all seven answered)",
+ "standingPolicy": "The registered DWG is the authority where the Revit model is incomplete; every correction is a reversible, tagged drawing-backed assumption patch.",
+ "rawAnswers": {
+  "q8.1": {
+   "choice": "open",
+   "choiceLabel": "Keep it one open food hall",
+   "note": "",
+   "updatedAt": "2026-10-13T06:08:44.585Z"
+  },
+  "q8.2": {
+   "choice": "events",
+   "choiceLabel": "Separate the events hall from the corridor and lounges",
+   "note": "",
+   "updatedAt": "2026-10-13T06:09:24.840Z"
+  },
+  "q8.3": {
+   "choice": "open",
+   "choiceLabel": "Keep it one open library work area",
+   "note": "",
+   "updatedAt": "2026-10-13T06:09:56.291Z"
+  },
+  "q8.4": {
+   "choice": "open",
+   "choiceLabel": "Keep the kitchenette open to the circulation",
+   "note": "",
+   "updatedAt": "2026-10-13T06:11:21.765Z"
+  },
+  "q8.5": {
+   "choice": "room",
+   "choiceLabel": "The pocket is part of 08-219",
+   "note": "",
+   "updatedAt": "2026-10-13T06:12:57.456Z"
+  },
+  "q8.6": {
+   "choice": "room",
+   "choiceLabel": "The wedge is part of the washroom",
+   "note": "",
+   "updatedAt": "2026-10-13T06:13:22.547Z"
+  },
+  "q8.7": {
+   "choice": "room",
+   "choiceLabel": "It's the theatre's back aisle",
+   "note": "",
+   "updatedAt": "2026-10-13T06:14:12.849Z"
+  }
+ },
+ "decisions": {
+  "q8.1": {
+   "label": "07-301 / 07-312 food hall",
+   "decision": "Keep 07-301 Lower Dining Hall, 07-312 Food Pick Up, corridor 07-300 and the 07-S205 landing as one open area (no drawn wall). Audit: expected.",
+   "status": "decided"
+  },
+  "q8.2": {
+   "label": "06-250 / 06-252 events hall",
+   "decision": "Separate the events hall (06-250 + 06-252 together) from corridor 06-244 and lounges 06-246/06-248 with selection-only lines where they meet; 06-250 and 06-252 stay one area. Walking unchanged.",
+   "status": "decided"
+  },
+  "q8.3": {
+   "label": "05-476 / 05-481 library work area",
+   "decision": "Keep 05-476, 05-481, the 05-492 waiting area and corridor 05-486 as one open library work area. Audit: expected.",
+   "status": "decided"
+  },
+  "q8.4": {
+   "label": "05-170E kitchenette",
+   "decision": "Keep 05-170E Kitchen open to circulation 05-168B (5.7 ft doorless opening). Audit: expected.",
+   "status": "decided"
+  },
+  "q8.5": {
+   "label": "08-219 west pocket",
+   "decision": "The walled west pocket belongs to 08-219; the Revit room outline (9.7 sq ft) is wrong. Audit: expected (record outline wrong in Revit).",
+   "status": "decided"
+  },
+  "q8.6": {
+   "label": "06-235 east wedge",
+   "decision": "The 42 sq ft east wedge belongs to 06-235 Washroom. Audit: expected.",
+   "status": "decided"
+  },
+  "q8.7": {
+   "label": "06-213 back aisle",
+   "decision": "The ring behind the top seating row is the 06-213 Lecture Theatre's back aisle. Audit: expected.",
+   "status": "decided"
+  }
+ }
+}

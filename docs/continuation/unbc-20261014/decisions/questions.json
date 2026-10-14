@@ -1,0 +1,570 @@
+{
+ "generatedAt": "2026-10-09",
+ "coordinateUnits": "Revit model feet (x east-ish, y north-ish; true north is 16.2° clockwise from +y per dataset alignment rotationRadians 0.28325)",
+ "colourKey": {
+  "nativeWallCut": "dark grey/black",
+  "curtainGlazingFrame": "blue",
+  "registeredDwgLines": "thin magenta dashed (highlighted lines thicker)",
+  "provisionalSeals": "purple",
+  "doors": "orange",
+  "gapInQuestion": "red",
+  "indoorEnvelope": "pale green",
+  "routingCell256": "pale orange",
+  "reconstructedDisplayOnlyWalls": "grey hatched outline"
+ },
+ "images": [
+  {
+   "file": "q1-overview.png",
+   "question_id": "A1-provisional-seals (overview)",
+   "title": "Building 9, Floor 0.5 — where the 16 openings at 4 ft height are (lift lobby enclosure test)",
+   "explanation": "Plan of Building 9 Floor 0.5 cut at 4 ft, with the lift pins 115/116 (red stars) and the enclosure probe. Each numbered red circle is one of the 16 places where the lobby enclosure test leaks; each was confirmed necessary by removing only that diagnostic closure and retesting. Only #1 (63.5 mm, q1a) and #2 (11.9 mm, q1c) are openings you could see at drawing scale. #7 is the place reported as the '50 mm gap' (q1b); the evidence shows the 50 mm is filled by a mullion and the real leak there is a 1.6 µm hairline. The other 13 are hairline joints or point contacts (q2). The dashed circle marks the separate 1.03 ft opening that exists only at the +8 ft cut (q1d). A table under the map lists the coordinates, width and owners of all 16. White (non-green) floor such as 09-218 Student Commons is outside the current indoor envelope, which is the separate root cause in the routing report.",
+   "measured": {
+    "cutElevationFeetModel": 0.71916,
+    "levelId": 1450417,
+    "offsetFeet": 4,
+    "necessaryIntervals": 16,
+    "enclosedAreaSqFtWithAllDiagnosticClosures": 9844.06,
+    "liftPins": {
+     "115": [
+      251.705,
+      497.623
+     ],
+     "116": [
+      250.976,
+      486.299
+     ]
+    },
+    "probe": [
+     251.7,
+     502
+    ]
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q1a-b9-gap-63mm.png",
+   "question_id": "A1-provisional-seals: 63.5 mm",
+   "title": "Building 9, Floor 0.5 — 63.5 mm gap between a wall and a glass wall next to door #1948341",
+   "explanation": "Room-scale view plus two zooms of the corner where the diagonal 100 mm wall #1521222 meets curtain-wall mullion #1948433 (host curtain wall #1948340, not an authoritative native owner) beside unmatched door #1948341. In the native model at 4 ft above Floor 0.5 the wall face and the mullion corner do not touch: the nearest points are 63.5 mm apart and the closing-disk test agrees (width class 0.207–0.211 ft). The registered DWG plan is continuous here: it draws a frame/mullion profile in this joint (parallel lines #1250/#1251, 0.368 ft long and 0.187 ft apart, plus many small profile lines), so on paper the corner is closed. The gap repeats at +8 ft (mullion #1948434). A provisional seal here would be an assumption; the native model itself leaves the gap.",
+   "measured": {
+    "widthMm": 63.4976,
+    "widthFeet": 0.208325,
+    "pointA_wall_1521222": [
+     174.579033,
+     443.610985
+    ],
+    "pointB_mullion_1948433": [
+     174.726342,
+     443.758294
+    ],
+    "closingDiskWidthClassFeet": [
+     0.207,
+     0.2109
+    ],
+    "alsoAtPlus8ftWithMullion": 1948434,
+    "dwgSection": "09 Med LVL 2",
+    "dwgLines": [
+     1250,
+     1251
+    ]
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q1b-b9-gap-50mm.png",
+   "question_id": "A1-provisional-seals: 50 mm",
+   "title": "Building 9, Floor 0.5 — the '50 mm gap' by glass panel #1522657 is a mullion; the real leak is a hairline",
+   "explanation": "IMPORTANT CORRECTION to the report. At (286.52, 553.94) the evidence file's 'measured owner gap' of 50.0 mm is the distance from wall #1521392 to glass panel #1522657 measured straight across curtain mullion #1522662 (a 50 x 150 mm mullion), i.e. it is the mullion's width, and that space is filled by the mullion. The opening the enclosure test actually needs closed there is a hairline between the side of mullion #1522662 and the end face of wall #1521392: 5.3e-06 ft (0.0016 mm) at the mullion's corner, tapering to 2.7e-07 ft at its other corner. The closing-disk width class at this mouth is 0–0.0039 ft, which matches a hairline, not 50 mm. So this location belongs with the micro-gaps (q2), not with the real 63.5 mm / 11.9 mm gaps. The registered DWG facade line #421 (90 ft) is continuous here.",
+   "measured": {
+    "reportedWidthMm": 50.0031,
+    "reportedPair": [
+     "wall #1521392",
+     "glass panel #1522657"
+    ],
+    "reportedSegmentEqualsMullionWidth": true,
+    "actualOpening": {
+     "between": [
+      "mullion #1522662",
+      "wall #1521392"
+     ],
+     "widthFeetAtMouthCorner": 5.281e-06,
+     "widthMmAtMouthCorner": 0.00161,
+     "widthFeetAtFarCorner": 2.668e-07,
+     "mouthFeet": [
+      286.5193,
+      553.9374
+     ],
+     "mullionCorner": [
+      286.51966,
+      553.93337
+     ]
+    },
+    "closingDiskWidthClassFeet": [
+     0.0,
+     0.0039
+    ],
+    "dwgLine": 421
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q1c-b9-gap-12mm.png",
+   "question_id": "A1-provisional-seals: 11.9 mm",
+   "title": "Building 9, Floor 0.5 — 11.9 mm slot between wall #1521468 and glass-wall mullion #1521453",
+   "explanation": "At the glass wall at y ≈ 461 (west part of the 09-201 corridor area), 90 mm wall #1521468 and curtain mullion #1521453 run side by side without touching, leaving a straight slot 11.9 mm wide and 0.49 ft long (y 461.06–461.56). The enclosure test leaks through it (closing-disk class 0.035–0.039 ft). Note the evidence file's automatic 'nearest owner pair' for this interval says 0 mm between #1521468 and #1521469 (those two walls touch elsewhere); the 11.9 mm was measured here directly between #1521468 and #1521453 and matches the report. The registered DWG wall line #3870 (16.4 ft) runs straight across the slot, so the paper plan shows the joint closed.",
+   "measured": {
+    "widthMm": 11.9016,
+    "widthFeet": 0.039047,
+    "wallFaceX": 130.39455,
+    "mullionFaceX": 130.4336,
+    "slotY": [
+     461.0638,
+     461.5559
+    ],
+    "closingDiskWidthClassFeet": [
+     0.0352,
+     0.0391
+    ],
+    "mouthFeet": [
+     130.4141,
+     461.0502
+    ],
+    "dwgLine": 3870,
+    "alsoAtPlus8ft": true
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q1d-b9-gap-1ft-column.png",
+   "question_id": "A1-provisional-seals: 1.03 ft at +8 ft",
+   "title": "Building 9, Floor 0.5 — 1.03 ft opening at 8 ft height where column #1521242 has no cut",
+   "explanation": "At 8 ft above Floor 0.5 (and at +10 ft) the unchanged production cutter returns no closed cut for 400 mm column #1521242, although its source bounds run from -3.28 to 11.15 ft; at +0.1, +1 and +4 ft it is cut normally (dotted outline = its +4 ft cut). The existing user seal 1976247–1521242 (purple, 0.063 x 0.0035 ft) bridges the end of wall #1976247 to the column's corner, so at +8 ft it ends in empty space. The result is an opening between the seal's end and door #1975053 of about 1.03 ft (closing-disk class 1.031–1.039 ft; corner-to-corner 1.036 ft = 316 mm). Two smaller necessary intervals at +8 ft sit right next to it (0.12 ft at door #1975053 / wall #1521243 and 0.027 ft at wall #1976247 / the seal). The registered DWG draws the column outline (#439/#440/#441) and the facade line #2615 across this opening.",
+   "measured": {
+    "cut": "f05-z8",
+    "cutElevationFeetModel": 4.71916,
+    "closingDiskWidthClassFeet": [
+     1.0312,
+     1.0391
+    ],
+    "cornerToCornerFeet": 1.03598,
+    "sealEastEnd": [
+     258.52588,
+     459.20817
+    ],
+    "door1975053Corner": [
+     259.56123,
+     459.17186
+    ],
+    "mouthFeet": [
+     259.0436,
+     459.6835
+    ],
+    "column1521242": {
+     "sourceZFeet": [
+      -3.2808,
+      11.1549
+     ],
+     "cutAtOffsetsFeet": [
+      0.1,
+      1,
+      4
+     ],
+     "noCutAtOffsetsFeet": [
+      8,
+      10
+     ]
+    },
+    "neighbourIntervalsAtPlus8ft": [
+     {
+      "at": [
+       259.4971,
+       459.2284
+      ],
+      "widthClassFeet": [
+       0.1211,
+       0.125
+      ]
+     },
+     {
+      "at": [
+       258.4765,
+       459.5111
+      ],
+      "widthClassFeet": [
+       0.0234,
+       0.0273
+      ]
+     }
+    ],
+    "dwgLines": [
+     439,
+     440,
+     441,
+     2615
+    ]
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q2-b9-micro-gaps.png",
+   "question_id": "A2-micro-gap-contact-rule",
+   "title": "Building 9, Floor 0.5 — 13 micro-gaps (≤ 4.3 µm) that are invisible at normal drawing scale",
+   "explanation": "Map of the 13 micro-gap intervals at the +4 ft cut (same numbering as q1-overview), with zoom panels A, C, D, E at about 0.7 m across — a normal close-up drawing scale — at a north-facade glass joint (#11) and at the jambs of doors #1521412 (#15), #1964672 (#4) and #1951047 (#16). At that scale every joint looks closed. The test still finds a passage at each, because the native bodies either touch only at a single point (width 0) or are separated by a hairline. Panel B magnifies joint #11 about 100,000 times to show the largest of the 13: 4.3 µm (1.4e-05 ft) between glass panel #1522624 and mullion #1522632. All 13 have closing-disk width class 0–0.0039 ft, and a registered DWG line lies within 0.11 ft of each. A generic exact-contact rule (treat sub-micrometre joints between curtain members, and between door frames and mullions, as closed) would close all of them; #7 from q1b is the same kind of hairline (1.6 µm).",
+   "measured": {
+    "count": 13,
+    "maxWidthFeet": 1.3968e-05,
+    "maxWidthMicrometres": 4.26,
+    "closingDiskWidthClassFeet": [
+     0.0,
+     0.0039
+    ],
+    "items": [
+     {
+      "n": 3,
+      "at": [
+       174.99,
+       443.727
+      ],
+      "owners": "mullion #1948433 / door #1948341 (jamb)",
+      "widthFeet": 8.77e-07
+     },
+     {
+      "n": 4,
+      "at": [
+       316.563,
+       488.312
+      ],
+      "owners": "mullions #1522178/#1522185 at door #1964672 (jamb)",
+      "widthFeet": 0.0
+     },
+     {
+      "n": 5,
+      "at": [
+       315.716,
+       508.944
+      ],
+      "owners": "mullion #1522513 / wall #1521342",
+      "widthFeet": 0.0
+     },
+     {
+      "n": 6,
+      "at": [
+       293.648,
+       554.89
+      ],
+      "owners": "mullion #1522673 / glass #1522668",
+      "widthFeet": 2.01e-06
+     },
+     {
+      "n": 8,
+      "at": [
+       286.327,
+       554.248
+      ],
+      "owners": "mullion #1522662 / wall #1521392",
+      "widthFeet": 2.67e-07
+     },
+     {
+      "n": 9,
+      "at": [
+       282.732,
+       553.933
+      ],
+      "owners": "mullion #1522651 / glass #1522646",
+      "widthFeet": 2.42e-07
+     },
+     {
+      "n": 10,
+      "at": [
+       270.182,
+       552.833
+      ],
+      "owners": "glass #1522624 / mullion #1522629",
+      "widthFeet": 2.42e-07
+     },
+     {
+      "n": 11,
+      "at": [
+       268.025,
+       552.644
+      ],
+      "owners": "glass #1522624 / mullion #1522632",
+      "widthFeet": 1.4e-05
+     },
+     {
+      "n": 12,
+      "at": [
+       246.776,
+       550.455
+      ],
+      "owners": "wall #1521392 / wall #1521999",
+      "widthFeet": 1.23e-05
+     },
+     {
+      "n": 13,
+      "at": [
+       239.39,
+       549.808
+      ],
+      "owners": "wall #1521392 / mullion #1522574 (no pair measured; point contact)",
+      "widthFeet": null
+     },
+     {
+      "n": 14,
+      "at": [
+       234.486,
+       525.844
+      ],
+      "owners": "walls #1522006 / #1521996 beside door #1522094",
+      "widthFeet": 4.02e-07
+     },
+     {
+      "n": 15,
+      "at": [
+       151.884,
+       461.21
+      ],
+      "owners": "door #1521412 leaf box / mullion #1521420 (jamb)",
+      "widthFeet": 1.64e-06
+     },
+     {
+      "n": 16,
+      "at": [
+       99.372,
+       450.312
+      ],
+      "owners": "mullion #1951059 / glass #1951042 at door #1951047 (jamb)",
+      "widthFeet": 0.0
+     }
+    ]
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q3-b9-f2-south-facade.png",
+   "question_id": "A3-reconstructed-walls",
+   "title": "Building 9, Floor 2 — south facade (y ≈ 459): 8 openings of 0.9–2.6 ft where the model has no solid wall",
+   "explanation": "On Floor 2 (level 694, cut at +4 ft) the south facade is modelled as walls #1521701 (x 184–248) and #1521704 (x 260–352). Both have reconstructed display geometry only (hatched); the native model has no body for them, so the enclosure cut holds only curtain mullions and glass (blue) and some interior walls. The test finds 8 necessary openings 0.92–2.63 ft wide on this facade (red bars, measured as straight-through gaps; they match the closing-disk width classes), plus 21 smaller necessary intervals. Four of the 8 sit exactly at native 400 mm columns #1521703/#1521705/#1521706/#1521707, whose source bounds span Floor 2 but which get no cut at any Floor 2 offset — the same symptom as q1d. The registered DWG facade line #710 is continuous for 95 ft (x 215.6–310.5, y ≈ 459.15). Correction to the report: the 3.8 ft opening is not on the south facade; it is on the north facade at (222.3, 550.4) beside reconstructed wall #1522479 (panel D).",
+   "measured": {
+    "levelId": 694,
+    "cutElevationFeetModel": 18.4357,
+    "openingsSouth": [
+     {
+      "xFeet": [
+       225.44,
+       226.555
+      ],
+      "widthFeet": 1.115,
+      "widthClassFeet": [
+       1.1094,
+       1.1172
+      ],
+      "column": null
+     },
+     {
+      "xFeet": [
+       236.07,
+       237.385
+      ],
+      "widthFeet": 1.315,
+      "widthClassFeet": [
+       1.3047,
+       1.3125
+      ],
+      "column": null
+     },
+     {
+      "xFeet": [
+       246.895,
+       248.425
+      ],
+      "widthFeet": 1.53,
+      "widthClassFeet": [
+       1.5234,
+       1.5312
+      ],
+      "column": null
+     },
+     {
+      "xFeet": [
+       258.47,
+       259.84
+      ],
+      "widthFeet": 1.37,
+      "widthClassFeet": [
+       1.3672,
+       1.375
+      ],
+      "column": 1521703
+     },
+     {
+      "xFeet": [
+       267.715,
+       269.535
+      ],
+      "widthFeet": 1.82,
+      "widthClassFeet": [
+       1.8203,
+       1.8281
+      ],
+      "column": 1521705
+     },
+     {
+      "xFeet": [
+       288.89,
+       290.535
+      ],
+      "widthFeet": 1.645,
+      "widthClassFeet": [
+       1.6328,
+       1.6406
+      ],
+      "column": 1521706
+     },
+     {
+      "xFeet": [
+       300.045,
+       300.97
+      ],
+      "widthFeet": 0.925,
+      "widthClassFeet": [
+       0.9219,
+       0.9258
+      ],
+      "column": null
+     },
+     {
+      "xFeet": [
+       331.7,
+       334.325
+      ],
+      "widthFeet": 2.625,
+      "widthClassFeet": [
+       2.6094,
+       2.625
+      ],
+      "column": 1521707
+     }
+    ],
+    "smallerNecessaryIntervalsOnSouthFacade": 21,
+    "northFacadeOpening": {
+     "mouthFeet": [
+      222.2674,
+      550.4232
+     ],
+     "widthClassFeet": [
+      3.8281,
+      3.8438
+     ],
+     "measuredStraightThroughFeet": 3.835,
+     "besideWall": 1522479
+    },
+    "reconstructedWalls": {
+     "1521701": {
+      "thicknessFeet": 0.82,
+      "x": [
+       184.18,
+       248.42
+      ]
+     },
+     "1521704": {
+      "thicknessFeet": 0.656,
+      "x": [
+       259.81,
+       352.06
+      ]
+     },
+     "1522479": {
+      "thicknessFeet": 0.82
+     }
+    },
+    "dwg": {
+     "section": "09 Med LVL 3",
+     "line": 710,
+     "lengthFeet": 94.95
+    },
+    "method": "straight-through openings = x ranges where a vertical segment y 458.0–459.9 touches no barrier (cuts + door footprints/boxes + applied seals + frame returns), 0.005 ft sampling"
+   },
+   "sources": "Sources (read-only): RUN/routing-followup/b9/b9-lobby-enclosure-verdict.json, interval-evidence-*.json, b9-production-cuts-5-heights.json; RUN/building09-08/envelope-design/b9-complete-owner-extract.json; RUN/shared-extracts/compiled-2fad94-routing-core.json; RUN/shared-extracts/dwg/registered-sections-level-*.json"
+  },
+  {
+   "file": "q4-b78-door-1630256.png",
+   "question_id": "C-a-associate-door-1630256",
+   "title": "Building 7/8, Floor 1.25 — unmatched door #1630256 between the ramp landing and stair 08-S101",
+   "explanation": "The top of ramp #1622190 (node at 55.5, 466.5) and the 08-S101 stair hall are separated by a glazed diagonal wall (host #1629345). Door #1630256 (footprint 6.76 ft long, point 61.92, 464.61, normal pointing toward the stair hall) sits in that wall but is 'unmatched': its only owner is 08-S101, so no route is built through it. Routing cell 256 (orange) contains the ramp landing, the stair hall and office 08-106 together; inside it the landing reaches the stair hall only through a hairline of 2.3e-06 ft (0.0007 mm) at (71.46, 459.02) between a glazing hole and the wall — not walkable. Associating #1630256 as a two-owner door (landing ↔ 08-S101) would give the landing a real door to the stair hall and stair node. The registered DWG has frame profiles at both ends of the door span and no wall line across it (consistent with a doorway); there are no DWG door symbols in this DWG section near it. Separately, 08-102 Corridor has no routing cell, so door #2018182 (stair hall ↔ 08-102) is not attached either.",
+   "measured": {
+    "levelId": 1487816,
+    "door": {
+     "id": "door:1487816:1630256",
+     "state": "unmatched",
+     "roomKeys": [
+      "rm-1487816-1a09473066a2 (08-S101)"
+     ],
+     "host": 1629345,
+     "pointFeet": [
+      61.924,
+      464.612
+     ],
+     "normalFeet": [
+      0.5,
+      0.866
+     ],
+     "footprintLengthFeet": 6.7585
+    },
+    "landingToStairHairline": {
+     "atFeet": [
+      71.4619,
+      459.0195
+     ],
+     "widthFeet": 2.292e-06,
+     "widthMm": 0.0007
+    },
+    "cell": "native-cell:3.280840:256",
+    "cellOwners": [
+     "landing:ramp:1622190:upper",
+     "08-S101",
+     "08-106"
+    ],
+    "rampUpperNode": [
+     55.5,
+     466.5
+    ],
+    "stairNode": [
+     75.79,
+     474.69
+    ]
+   },
+   "sources": "Sources (read-only): RUN/shared-extracts/compiled-2fad94-routing-core.json (cells, doors, nodes, records, envelopes); RUN/shared-extracts/native-level-1487816/plan-exact-walls-numeric.json; compiled-2fad94-material-sections.json (category ids); RUN/shared-extracts/dwg/registered-sections-level-1487816.json"
+  },
+  {
+   "file": "q5-b78-08-106-corner.png",
+   "question_id": "C-b-is-08-106-corner-seam-real",
+   "title": "Building 7/8, Floor 1.25 — the 08-106 corner seam is a zero-width joint between two walls",
+   "explanation": "Routing cell 256 joins office 08-106 to the stair hall through the joint between 08-106's east wall #2017986 and the diagonal wall #2017949 at the office's south-east corner. In the native plan cut the two walls share that edge exactly: it runs 1.97 ft (exactly 0.60 m) from (60.223, 471.295) to (61.207, 472.999), and the walls are 6e-15 ft apart (floating-point noise). The measured width of the seam is therefore 0 — there is no physical opening. The cell outline (orange line) runs into the joint and back out on the stair-hall side, which a pinch-aware test would not treat as a passage; eroding the cell by just 1e-9 ft already separates 08-106 from the stair hall. The registered DWG draws this corner closed (inner-face lines #1157/#1158 meet at 60.17, 471.21). So the seam looks like a cell-construction artefact rather than a real opening.",
+   "measured": {
+    "seamFrom": [
+     60.2227,
+     471.29454
+    ],
+    "seamTo": [
+     61.20695,
+     472.99931
+    ],
+    "seamLengthFeet": 1.9685,
+    "seamWidthFeet": 0.0,
+    "maxEdgeSeparationFeet": 6.3e-15,
+    "erosionThatSeparates08106Feet": 1e-09,
+    "walls": [
+     2017986,
+     2017949
+    ],
+    "dwgLines": [
+     1157,
+     1158
+    ],
+    "dwgSection": "08 Tea Lab LVL 1"
+   },
+   "sources": "Sources (read-only): RUN/shared-extracts/compiled-2fad94-routing-core.json (cells, doors, nodes, records, envelopes); RUN/shared-extracts/native-level-1487816/plan-exact-walls-numeric.json; compiled-2fad94-material-sections.json (category ids); RUN/shared-extracts/dwg/registered-sections-level-1487816.json"
+  }
+ ]
+}

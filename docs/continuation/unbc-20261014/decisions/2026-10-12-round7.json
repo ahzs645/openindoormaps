@@ -1,0 +1,107 @@
+{
+ "source": "Round 7 decisions page https://claude.ai/artifact/AytjEyLhJD5MYnb9qVJ4Dd (db collection answers, read 2026-10-12 22:35 UTC); re-read 2026-10-12 22:58 UTC (all eight answered)",
+ "standingPolicy": "The registered DWG is the authority where the Revit model is incomplete; every correction is a reversible, tagged drawing-backed assumption patch.",
+ "rawAnswers": {
+  "q7.3": {
+   "choice": "column",
+   "choiceLabel": "Approve \"a column can be a door jamb\"",
+   "note": "",
+   "updatedAt": "2026-10-12T22:25:35.102Z"
+  },
+  "q7.4": {
+   "choice": "rule",
+   "choiceLabel": "Approve the door-to-jamb closure rule",
+   "note": "I mean I want to actually close all those gaps like we are doing since when we made the revit we made a lot of mistakes since it was our first time?",
+   "updatedAt": "2026-10-12T22:56:09.630Z"
+  },
+  "q7.5": {
+   "choice": "line",
+   "choiceLabel": "Add a selection-only line",
+   "note": "",
+   "updatedAt": "2026-10-12T22:26:47.662Z"
+  },
+  "q7.6": {
+   "choice": "confirm",
+   "choiceLabel": "Confirm: no link on those floors",
+   "note": "no real direct link for now. but they can go through the lower floor and other connections to go up stairs right?",
+   "updatedAt": "2026-10-12T22:27:48.543Z"
+  },
+  "q7.7": {
+   "choice": null,
+   "note": "hmm I think we need to extend btoh walls to meet like in the dwg reference?",
+   "updatedAt": "2026-10-12T22:56:48.016Z"
+  },
+  "q7.8": {
+   "choice": "leaksfirst",
+   "choiceLabel": "Finish leaks, then routing",
+   "note": "",
+   "updatedAt": "2026-10-12T22:32:19.519Z"
+  },
+  "q7.1": {
+   "choice": "sep",
+   "choiceLabel": "Separate them with DWG-only walls",
+   "note": "",
+   "updatedAt": "2026-10-12T22:55:22.315Z"
+  },
+  "q7.2": {
+   "choice": "solid",
+   "choiceLabel": "Treat joint lines as solid",
+   "note": "bring over hte missing wall lines from the dwg?",
+   "updatedAt": "2026-10-12T22:55:49.931Z"
+  }
+ },
+ "decisions": {
+  "q7.3": {
+   "label": "05-180 column jamb",
+   "decision": "Approve the generic rule that a native column can serve as a door jamb for selection closure (both repos), plus the drawing-backed piece for the 0.43 ft gap at 05-180 (completes round2#f1-4).",
+   "status": "decided"
+  },
+  "q7.4": {
+   "label": "door-to-jamb cracks",
+   "decision": "Approve the generic door-to-jamb selection closure for gaps up to about 0.15 ft against a wall jamb (owner: close all these gaps; the Revit model has first-model mistakes). Rooms 05-327, 03-1042A, 04-207B, 10-2092, 10-2094, 10-3530. Routing and door state unchanged.",
+   "status": "decided"
+  },
+  "q7.5": {
+   "label": "07-316 Dish Washing",
+   "decision": "Selection-only line across the 9.4 ft opening (as Q6.2); walking unchanged. Consistent with round2#f1-3 note that dish washing has a door.",
+   "status": "decided"
+  },
+  "q7.6": {
+   "label": "disconnected building pairs",
+   "decision": "Confirmed: 04-08 Floor 4, 05-09 Floor 2, 08-09 Floor 2, 08-10 Floors 3 and 4 have no same-floor link. Each pair connects on another floor (04-08 Floor 2; 05-09, 08-09 Floor 1 via connectors; 08-10 Floors 1.25 and 2).",
+   "status": "decided"
+  },
+  "q7.7": {
+   "label": "08-127/08-128 corner seal",
+   "decision": "Close the 08-127/08-128 corner to the registered DWG: a drawing-backed corner piece extends wall #1515115 east and wall #1515116 north to the drawn corner (DWG 08 Tea Lab LVL 1 wallSegments 4101/4102 and 4105/4106, corner near (84.22, 611.33)); the refused proposal line review-f1:1487816:08-127-08-128-corner-seal is withdrawn as superseded.",
+   "status": "decided (owner note)",
+   "implementation": {
+    "row": "db:1487816:r7-q7.7:wall-end-1515115@83.8664,611.1790",
+    "construction": "wall-end-extension of #1515115 east 0.3379 ft to the drawn corner",
+    "evidence": "08 Tea Lab LVL 1 face-line bands with corner joins (drawnMaterial.cornerJoins)",
+    "code": {
+     "openindoormaps": "d8313266 on claude/unbc-candidate4-rules",
+     "reviter": "e8776b8 on claude/unbc-candidate4-rules"
+    },
+    "validation": "alone PASS (candidate-floors-3/regress/work/gen-q77-results.json); combined with all 2,981 candidate-3 rows ok (regress/work/combined-q77)",
+    "effect": "removes a 0.0985 sq ft notch from the 08-127 Lab face; 08-127 and 08-128 already separate",
+    "status": "built, goes into candidate 4"
+   }
+  },
+  "q7.8": {
+   "label": "order",
+   "decision": "Finish the remaining leak classes, then routing.",
+   "status": "decided"
+  },
+  "q7.1": {
+   "label": "06-232/06-235 under the seating",
+   "decision": "Separate 06-232 Janitor and 06-235 Washroom from 06-212 Storage with DWG-only wall rows along the registered drawn walls (as Q3.10).",
+   "status": "decided"
+  },
+  "q7.2": {
+   "label": "08-219..08-222 joint line",
+   "decision": "Treat a joint/cross line inside an otherwise continuous registered wall band as solid: drawing-backed rows bring the drawn wall across the 3.3 ft gaps at 08-219..08-222 (owner note: bring over the missing wall lines from the DWG). General rule for the same pattern.",
+   "status": "decided"
+  }
+ }
+}

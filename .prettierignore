@@ -12,3 +12,7 @@ app/data/bc-hospital/*.geojson
 
 # Audited third-party geometry kernels: preserve shipped source/hash parity.
 app/indoor-project/vendor/
+
+# Handoff copies: decision files are sha-pinned and tools are verbatim run scripts.
+docs/continuation/*/decisions/
+docs/continuation/*/tools/

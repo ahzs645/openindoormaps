@@ -1,0 +1,160 @@
+{
+ "source": "Round 10 decisions page https://claude.ai/artifact/UqZdGSZ5UmUwYRC41HNuUz (version 3, revised pictures; db collection answers read 2026-10-13 ~17:05 UTC; 19 of 19 answered (Q10.9 read ~17:06 UTC); q10.4 and q10.5 were answered on version 1)",
+ "standingPolicy": "The registered DWG is the authority where the Revit model is incomplete; every correction is a reversible, tagged drawing-backed assumption patch.",
+ "rawAnswers": {
+  "q10.1": {
+   "choice": "close"
+  },
+  "q10.2": {
+   "choice": "open"
+  },
+  "q10.3": {
+   "choice": "open"
+  },
+  "q10.4": {
+   "choice": "close"
+  },
+  "q10.5": {
+   "choice": "open"
+  },
+  "q10.6": {
+   "choice": "open"
+  },
+  "q10.7": {
+   "choice": "open"
+  },
+  "q10.8": {
+   "choice": "ok"
+  },
+  "q10.10": {
+   "choice": "dwg"
+  },
+  "q10.11": {
+   "choice": "open"
+  },
+  "q10.12": {
+   "choice": "open"
+  },
+  "q10.13": {
+   "choice": "glass"
+  },
+  "q10.14": {
+   "choice": "door"
+  },
+  "q10.15": {
+   "choice": "open"
+  },
+  "q10.16": {
+   "choice": "open"
+  },
+  "q10.17": {
+   "choice": "open"
+  },
+  "q10.18": {
+   "choice": "open"
+  },
+  "q10.19": {
+   "choice": "rule"
+  },
+  "q10.9": {
+   "choice": "open"
+  }
+ },
+ "decisions": {
+  "q10.1": {
+   "label": "04-131 / 07-400 Utilidor tunnels",
+   "decision": "Close the tunnel openings to corridor 04-133, stair 07-S106 and the south unnamed area with selection-only lines; walking unchanged.",
+   "status": "decided"
+  },
+  "q10.2": {
+   "label": "08-145 / 08-146 / 08-149 open suite",
+   "decision": "Leave open: the suite and corridor 08-102 stay one selectable area; room names stay labels.",
+   "status": "decided"
+  },
+  "q10.3": {
+   "label": "06-280 Dry Goods / 06-260 Pub Entrance",
+   "decision": "Leave open (no selection line at the DWG-drawn door gap).",
+   "status": "decided"
+  },
+  "q10.4": {
+   "label": "06-204 / 06-205 Revit door #1327911",
+   "decision": "Close: the Revit door closes for selection under 2026-10-12-round7#q7.4 (answered on the first version of the page).",
+   "status": "decided"
+  },
+  "q10.5": {
+   "label": "03-1058 / 03-1059 offices (closet 03-1056A)",
+   "decision": "Leave open: the two offices stay one area. Answered on the first version of the page, before the closet was split out; the closet's DWG-drawn west wall is applied under the standing policy, not under this answer.",
+   "status": "decided"
+  },
+  "q10.6": {
+   "label": "03-1081 / 03-1085 open suite",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.7": {
+   "label": "03-1005..03-1031 offices along 03-1020 / 03-1010A",
+   "decision": "Leave open (no selection lines at the plan boundaries; Revit doors still close under q7.4).",
+   "status": "decided"
+  },
+  "q10.8": {
+   "label": "08-263 Comm north wall",
+   "decision": "OK: apply the DWG-drawn wall under the standing policy.",
+   "status": "decided"
+  },
+  "q10.9": {
+   "label": "09-330 / 09-332 / 09-333 lab suite",
+   "decision": "Leave open: one open lab; room names stay labels.",
+   "status": "decided"
+  },
+  "q10.10": {
+   "label": "03-2059 / 03-2060 offices, 03-2095 Lounge, 03-2007A Copy",
+   "decision": "Offices: use the DWG-drawn thin wall by the shafts; Lounge: leave open; Copy closes under q7.4.",
+   "status": "decided"
+  },
+  "q10.11": {
+   "label": "08-337 / 08-338 / 08-342 open space and 08-340",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.12": {
+   "label": "06-370 / 06-372 / 06-376 reception and work area",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.13": {
+   "label": "06-346 / 06-340 / 06-342 glass walls; 06-302 Elect",
+   "decision": "Glass (curtain wall) along the corridor counts as a wall for selection: selection-only lines along the glass line; 06-302 Elect stays a label in the lobby.",
+   "status": "decided"
+  },
+  "q10.14": {
+   "label": "10-4086 Elevator Control / 10-4306 Alcove",
+   "decision": "Close Elevator Control along the DWG door line (selection-only); leave the alcove open.",
+   "status": "decided"
+  },
+  "q10.15": {
+   "label": "08-436 / 08-437 open space and 08-440",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.16": {
+   "label": "10-4548 Coffee / 10-4504 Common Area",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.17": {
+   "label": "10-B516 Storage / 10-S002 Stair",
+   "decision": "Leave open.",
+   "status": "decided"
+  },
+  "q10.18": {
+   "label": "07-313 / 07-314 / 07-507 kitchen",
+   "decision": "Leave open (including the freezer).",
+   "status": "decided"
+  },
+  "q10.19": {
+   "label": "Hairline cracks between two native walls",
+   "decision": "General rule: close wall-to-wall cracks up to 0.15 ft that are not at doors with owner-authorized seals, each checked by the production validator; walking unchanged.",
+   "status": "decided"
+  }
+ }
+}

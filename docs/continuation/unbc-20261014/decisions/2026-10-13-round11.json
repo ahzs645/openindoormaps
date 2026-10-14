@@ -1,0 +1,59 @@
+{
+ "source": "Round 11 decisions page https://claude.ai/artifact/WfebKnF97D5QKM1bPLjSwz (db collection answers read 2026-10-13 ~20:00 UTC; 6 of 6, q11.4 by note)",
+ "standingPolicy": "The registered DWG is the authority where the Revit model is incomplete; every correction is a reversible, tagged drawing-backed assumption patch.",
+ "rawAnswers": {
+  "q11.1": {
+   "choice": "trim"
+  },
+  "q11.2": {
+   "choice": "close",
+   "note": "its actually a garage door for distribution"
+  },
+  "q11.3": {
+   "choice": "close"
+  },
+  "q11.4": {
+   "choice": null,
+   "note": "hmm we are missing the elevator, shaft there is it not? and the missing side wall"
+  },
+  "q11.5": {
+   "choice": "keep",
+   "note": "its stalls? and. a disalbed stall"
+  },
+  "q11.6": {
+   "choice": "leave"
+  }
+ },
+ "decisions": {
+  "q11.1": {
+   "label": "Room areas outside the glass (06-390, 06-397, 06-314, 06-313, 06-346, 06-344, 08-102)",
+   "decision": "Trim each selectable area at the glass line; the slab strip outside the glass is not part of the room. Selection only; walking unchanged.",
+   "status": "decided"
+  },
+  "q11.2": {
+   "label": "Corridors 03-029 / 07-502 east end",
+   "decision": "Close along the registered DWG line across the 10 ft east end (owner note: it is actually a garage door for distribution) so both corridors become selectable. Walking unchanged; the garage door is not a pedestrian entrance.",
+   "status": "decided"
+  },
+  "q11.3": {
+   "label": "Atrium rooms 10-3011 / 10-S401",
+   "decision": "Use the registered DWG piers in the atrium curtain-wall slots as drawing-backed column pieces so the rooms enter the walking envelope.",
+   "status": "decided"
+  },
+  "q11.4": {
+   "label": "05-225 Corridor side pocket by the library lift",
+   "decision": "Owner note (no option chosen): 'we are missing the elevator, shaft there is it not? and the missing side wall'. Applied as: the pocket north of the library lift shaft carries a registered DWG X, so it is off-limits under 2026-10-09-round2#f34-10, and its open west side is closed along the DWG-drawn wall under the standing policy. The lift shaft itself (connector unbc-library-lift) is unchanged.",
+   "status": "decided-by-note"
+  },
+  "q11.5": {
+   "label": "10-2094 Washroom",
+   "decision": "Keep as one washroom (owner note: the extra part is stalls, including an accessible stall).",
+   "status": "decided"
+  },
+  "q11.6": {
+   "label": "09-205 Control & Equip",
+   "decision": "Leave as is: the space west of the wall stub stays part of 09-205.",
+   "status": "decided"
+  }
+ }
+}
