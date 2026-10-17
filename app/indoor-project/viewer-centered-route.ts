@@ -18,9 +18,11 @@ import { indoorExclusionParts } from "./indoor-exclusions";
 import {
   preparedWalkingGuides,
   preparedSharedCorridorGuideIds,
+  preparedSharedCorridorJoins,
 } from "./prepared-routing";
 import {
   straightenSharedGuideProposal,
+  simplifyCheckedSharedGuide,
   MAX_SHARED_CORRIDOR_APPROACH_FEET,
 } from "./shared-corridor-guides";
 import { centeredJunctions } from "./centered-junction";
@@ -671,6 +673,7 @@ function refine(
   preparedGuide?: XYZ[],
   fixedAnchors = false,
   preferSharedGuide = false,
+  preservedSharedPoints: XYZ[] = [],
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -1090,26 +1093,75 @@ function refine(
     )
       candidates.push([start, end]);
 
+    // Small vestibules need a straight through-path, not a detour along
+    // several short medial branches via an arbitrary arrival anchor. This
+    // only changes a continuous walking run: fixed door/vertical paths stay
+    // separate. The complete two-foot strip and original crossing policy
+    // must support the chord; a corner, hole or foreign obstacle vetoes it.
+    const endpointOwners = new Set(
+      data.nodes
+        .filter((n) => n.id === firstId || n.id === lastId)
+        .map((n) => n.roomKey),
+    );
+    const compactRecords = records.filter((r) => endpointOwners.has(r.key));
+    const compactBounds = box(compactRecords.flatMap((r) => r.ringsFeet));
     if (
       preparedGuide &&
-      length(preparedGuide) <=
+      preferSharedGuide &&
+      compactRecords.length > 0 &&
+      compactRecords.every((r) => r.circulation && !r.stair) &&
+      DMath.hypot(
+        compactBounds[2] - compactBounds[0],
+        compactBounds[3] - compactBounds[1],
+      ) <= 24 &&
+      exactParts &&
+      validSegment(start, end, free) &&
+      createTwoFootCorridorSupport(
+        exactParts,
+        path.pointsFeet[0][2],
+      )([start, end]) &&
+      policyAllowed([start, end])
+    )
+      return {
+        ...path,
+        centered: true,
+        nativeFloorSupported: !!supportedFloors,
+        nativeCirculationUsed: nativeSurfaces.cells.length > 0,
+        preparedGuideUsed: true,
+        sharedCorridorGuideUsed: true,
+        shape: "centered",
+        sourceReason: undefined,
+        pointsFeet: [path.pointsFeet[0], path.pointsFeet.at(-1)!].map(
+          (p): XYZ => [...p],
+        ),
+      };
+
+    const guideCandidates = preparedGuide
+      ? preferSharedGuide
+        ? [
+            straightenSharedGuideProposal(preparedGuide, false, (p) =>
+              preservedSharedPoints.some((q) => p.every((v, k) => v === q[k])),
+            ),
+            preparedGuide,
+            straightenSharedGuideProposal(preparedGuide, true, (p) =>
+              preservedSharedPoints.some((q) => p.every((v, k) => v === q[k])),
+            ),
+          ]
+        : [preparedGuide]
+      : [];
+    for (const guide of guideCandidates) {
+      if (
+        length(guide) >
         sourceLength * 1.15 +
           0.6 +
-          (preferSharedGuide ? 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET : 0) &&
-      preparedGuide
-        .slice(1)
-        .every((p, i) =>
-          validSegment(
-            [preparedGuide[i][0], preparedGuide[i][1]],
-            [p[0], p[1]],
-            free,
-          ),
-        )
-    ) {
-      const shared = preparedGuide.map<XY>((p) => [p[0], p[1]]);
-      // A shared lane is a deliberate route style. Preserve its center instead
-      // of immediately replacing it with a shorter wall-side chord. All current
-      // physical support and source crossing policy have already been checked.
+          (preferSharedGuide ? 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET : 0)
+      )
+        continue;
+      const shared = guide.map<XY>((p) => [p[0], p[1]]);
+      if (!shared.slice(1).every((p, i) => validSegment(shared[i], p, free)))
+        continue;
+      // Cleanup is a proposal: if it cuts a blocked corner, retain the checked
+      // original shared guide instead of discarding the whole shared lane.
       if (
         preferSharedGuide &&
         exactParts &&
@@ -1118,7 +1170,24 @@ function refine(
           path.pointsFeet[0][2],
         )(shared) &&
         policyAllowed(shared)
-      )
+      ) {
+        const supported = createTwoFootCorridorSupport(
+          exactParts,
+          path.pointsFeet[0][2],
+        );
+        const cleaned = simplifyCheckedSharedGuide(
+          guide,
+          (a, b) =>
+            validSegment([a[0], a[1]], [b[0], b[1]], free) &&
+            supported([
+              [a[0], a[1]],
+              [b[0], b[1]],
+            ]),
+          (points) => policyAllowed(points.map<XY>((p) => [p[0], p[1]])),
+          32,
+          (p) =>
+            preservedSharedPoints.some((q) => p.every((v, k) => v === q[k])),
+        );
         return {
           ...path,
           centered: true,
@@ -1129,8 +1198,9 @@ function refine(
           openingSpanSupported: openingSpans.length > 0 ? true : undefined,
           shape: "centered",
           sourceReason: undefined,
-          pointsFeet: preparedGuide.map((p): XYZ => [...p]),
+          pointsFeet: cleaned.map((p): XYZ => [...p]),
         };
+      }
       if (!preferSharedGuide) {
         candidates.push(shared);
         preparedCandidate = true;
@@ -1557,6 +1627,20 @@ export function centeredRoutePaths(
   const edgeOrientations = new Map(
     edges.map((edge, i) => [edge, nodeIds[i] === edge.from]),
   );
+  const sharedJoins =
+    enabled && useSharedGuides
+      ? preparedSharedCorridorJoins(data)
+      : new Map<string, [XYZ, XYZ]>();
+  // Outer hallway stops are metadata anchors, not redundant routing hooks.
+  // Keep their exact vertices until centerHallwayRouteEndpoints trims the
+  // separately preserved door approaches after refinement.
+  const preservedSharedPoints = [edges[0], edges.at(-1)].flatMap((edge, i) => {
+    if (!edge) return [];
+    const pair = sharedJoins.get(edge.id);
+    return pair
+      ? [pair[(i === 0) === !!edgeOrientations.get(edge) ? 0 : 1]]
+      : [];
+  });
   const paths: RoutePath[] = [],
     groups: { edges: IndoorEdge[]; first: string; last: string }[] = [];
   const flatKind = (edge: IndoorEdge) =>
@@ -1606,7 +1690,7 @@ export function centeredRoutePaths(
     const preferSharedGuide =
       useSharedGuides &&
       walkingEdges.some((edge) => sharedGuideIds.has(edge.id));
-    let preparedGuide =
+    const preparedGuide =
       prepared.size === 0
         ? undefined
         : walkingEdges
@@ -1628,8 +1712,6 @@ export function centeredRoutePaths(
                   ? p.some((v, k) => v !== all[j - 1][k])
                   : DMath.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8),
             );
-    if (preferSharedGuide && preparedGuide)
-      preparedGuide = straightenSharedGuideProposal(preparedGuide);
     return {
       preparedGuide: usedPreparedGuide ? preparedGuide : undefined,
       preferSharedGuide,
@@ -1668,9 +1750,11 @@ export function centeredRoutePaths(
       preparedGuide,
       false,
       preferSharedGuide,
+      preservedSharedPoints,
     );
     if (
       (resolved.centered &&
+        !preferSharedGuide &&
         !group.edges.some(
           (e) => e.kind === "opening" && !nativeCellConnection(data, e),
         )) ||
@@ -1719,6 +1803,7 @@ export function centeredRoutePaths(
           preparedGuide,
           false,
           preferSharedGuide,
+          preservedSharedPoints,
         ),
       );
       run = [];
@@ -1751,7 +1836,7 @@ export function centeredRoutePaths(
       runLast = to;
     }
     flush();
-    if (resolved.centered) {
+    if (resolved.centered && !preferSharedGuide) {
       const quality = (paths: RoutePath[]) => {
         const points = paths.flatMap((p, i) =>
           i ? p.pointsFeet.slice(1) : p.pointsFeet,

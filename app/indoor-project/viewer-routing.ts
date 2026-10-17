@@ -269,9 +269,11 @@ function resolveProjectRoute(
   let reached: string | undefined;
   // Try circulation-only transit first. Retain the physically/policy-checked
   // ordinary-room fallback when the map has no hallway-only connection.
-  for (const allowOrdinaryTransit of options.preferHallways === false
-    ? [true]
-    : [false, true]) {
+  for (const allowOrdinaryTransit of options.allowOtherRoomTransit === false
+    ? [false]
+    : options.preferHallways === false
+      ? [true]
+      : [false, true]) {
     distances.clear();
     previous.clear();
     heap.length = 0;

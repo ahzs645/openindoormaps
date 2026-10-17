@@ -24,6 +24,8 @@ import { findProjectRoute } from "../../app/indoor-project/viewer-routing";
 import {
   corridorGuideLength,
   removeSharedGuideRetraces,
+  straightenSharedGuideProposal,
+  simplifyCheckedSharedGuide,
 } from "../../app/indoor-project/shared-corridor-guides";
 import { createWorkerRouteCalculator } from "../../app/indoor-project/route-calculation";
 import { projectRoutingOptionsKey } from "../../app/indoor-project/routing-options";
@@ -33,8 +35,9 @@ import {
 } from "../../app/indoor-project/shared-corridor-preferences";
 import { centerHallwayRouteEndpoints } from "../../app/indoor-project/hallway-center-endpoints";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
+import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
 
-async function fixture() {
+async function fixture(compact = false, hole = false) {
   await initializeNativeExactGeosOverlay();
   const d = JSON.parse(
     readFileSync(
@@ -45,24 +48,35 @@ async function fixture() {
   d.source.modelSha256 = "a".repeat(64);
   const ring: [number, number][] = [
     [0, 0],
-    [40, 0],
-    [40, 10],
+    [compact ? 12 : 40, 0],
+    [compact ? 12 : 40, 10],
     [0, 10],
   ];
   const original = d.records[0],
     node = d.nodes[0],
     edge = d.edges[0];
   const points: [number, number, number][] = [
-    [4, 1, 0],
-    [20, 1, 0],
-    [36, 9, 0],
+    [compact ? 2 : 4, compact ? 5 : 1, 0],
+    [compact ? 6 : 20, 1, 0],
+    [compact ? 10 : 36, compact ? 5 : 9, 0],
   ];
+  const rings = hole
+    ? [
+        ring,
+        [
+          [5, 3],
+          [5, 7],
+          [7, 7],
+          [7, 3],
+        ] as [number, number][],
+      ]
+    : [ring];
   d.records = ["A", "B", "C"].map((key) => ({
     ...original,
     key,
     number: key,
     name: key,
-    ringsFeet: [ring],
+    ringsFeet: rings,
     arrivalNodeId: key,
     properties: {},
     levelId: 1,
@@ -100,7 +114,7 @@ async function fixture() {
       to: "C",
       kind: "walk",
       roomKeys: ["A", "B", "C"],
-      pointsFeet: [points[1], [36, 1, 0], points[2]],
+      pointsFeet: [points[1], [points[2][0], 1, 0], points[2]],
       lengthMetres: 24 * 0.3048,
       nativeCellId: "hall",
       enabled: true,
@@ -113,7 +127,7 @@ async function fixture() {
   d.walkingSupport = {
     version: 1,
     sourceModelSha256: d.source.modelSha256,
-    floors: [{ nativeElementId: 1, elevationFeet: 0, ringsFeet: [ring] }],
+    floors: [{ nativeElementId: 1, elevationFeet: 0, ringsFeet: rings }],
   };
   d.nativeIndoorEnvelopes = {
     version: 1,
@@ -123,7 +137,7 @@ async function fixture() {
       {
         levelId: 1,
         elevationFeet: 0,
-        partsFeet: [[ring]],
+        partsFeet: [rings],
         sourceElementIds: [1],
         cutElevationsFeet: [0.1],
         evidenceSha256: "b".repeat(64),
@@ -145,7 +159,7 @@ async function fixture() {
         elevationFeet: 0,
         roomKeys: ["A", "B", "C"],
         nativeFloorIds: [1],
-        ringsFeet: [ring],
+        ringsFeet: rings,
         sourceCoverage: 1,
       },
     ],
@@ -161,7 +175,7 @@ async function fixture() {
       sourceGeometryKey: d.circulationGeometry.sourceGeometryKey,
       kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
     },
-    [{ id: "hall-face", parts: nativeRationalOverlay("union", [[ring]]) }],
+    [{ id: "hall-face", parts: nativeRationalOverlay("union", [rings]) }],
   );
   return d;
 }
@@ -442,4 +456,156 @@ test("the corridor setting defaults on and persists independently for each model
       Object.defineProperty(globalThis, "localStorage", descriptor);
     else Reflect.deleteProperty(globalThis, "localStorage");
   }
+});
+
+test("compact vestibule routes straighten through intermediate arrival anchors, while holes veto the chord", async () => {
+  for (const hole of [false, true]) {
+    const data = await fixture(true, hole);
+    const before = JSON.stringify(data);
+    const prepared = await prepareRouting(data, { method: "shared-corridor" });
+    for (const [from, to] of [
+      ["A", "C"],
+      ["C", "A"],
+    ]) {
+      const route = findProjectRoute(prepared.dataset, from, to, "public")!;
+      assert.ok(route);
+      const points = route.paths.flatMap((p, i) =>
+        i ? p.pointsFeet.slice(1) : p.pointsFeet,
+      );
+      if (hole) {
+        assert.ok(
+          points.length > 2,
+          "the real floor hole cannot be averaged away",
+        );
+        assert.ok(route.distanceMetres > 8 * 0.3048);
+      } else {
+        assert.equal(points.length, 2);
+        assert.ok(points.every((p) => p[1] === 5));
+      }
+    }
+    assert.equal(JSON.stringify(data), before);
+  }
+});
+
+test("path view uses bound shared guides on the selected floor, drops repeated segments and cannot include held stairs", async () => {
+  const prepared = await prepareRouting(await fixture(), {
+    method: "shared-corridor",
+  });
+  const data = prepared.dataset;
+  const paths = hallwayPathView(data, [1], "all");
+  assert.ok(paths.features.length > 0);
+  assert.equal(
+    new Set(paths.features.map((f) => JSON.stringify(f.geometry.coordinates)))
+      .size,
+    paths.features.length,
+  );
+  assert.equal(hallwayPathView(data, [999], "all").features.length, 0);
+  assert.equal(hallwayPathView(data, [1], "absent").features.length, 0);
+  data.edges[0].enabled = false;
+  assert.equal(
+    hallwayPathView(data, [1], "all").features.length,
+    0,
+    "an edited source invalidates the saved guide binding",
+  );
+});
+
+test("short reverse hooks are proposed for cleanup; long U-shaped halls and vertical endpoints are retained", () => {
+  const hook: [number, number, number][] = [
+    [0, 5, 0],
+    [10, 5, 0],
+    [11, 5.3, 0],
+    [10.3, 5, 0],
+    [20, 5, 0],
+  ];
+  const before = JSON.stringify(hook);
+  assert.deepEqual(straightenSharedGuideProposal(hook), [
+    [0, 5, 0],
+    [20, 5, 0],
+  ]);
+  assert.equal(JSON.stringify(hook), before);
+  const bend: [number, number, number][] = [
+    [0, 0, 0],
+    [20, 0, 0],
+    [21, 10, 0],
+    [0, 10, 0],
+  ];
+  assert.deepEqual(straightenSharedGuideProposal(bend), bend);
+  const vertical: [number, number, number][] = [
+    [0, 0, 0],
+    [1, 0, 1],
+    [0, 0, 2],
+  ];
+  assert.deepEqual(straightenSharedGuideProposal(vertical), vertical);
+});
+
+test("one blocked hook retains its bend without vetoing another checked cleanup, in either direction", () => {
+  const original: [number, number, number][] = [
+    [0, 0, 0],
+    [5, 0, 0],
+    [4.5, 0.2, 0],
+    [10, 0, 0],
+    [11, 0.2, 0],
+    [10.5, 0, 0],
+    [20, 0, 0],
+  ];
+  for (const points of [original, original.toReversed()]) {
+    const snapshot = JSON.stringify(points);
+    const cleaned = simplifyCheckedSharedGuide(
+      points,
+      (a, b) => Math.min(a[0], b[0]) >= 8,
+      (trial) => trial[0].every((v, k) => v === points[0][k]),
+    );
+    assert.ok(
+      cleaned.some((p) => p[0] === 5),
+      "a blocked corner remains",
+    );
+    assert.ok(
+      !cleaned.some((p) => p[0] === 11),
+      "another independent hook is removed",
+    );
+    assert.equal(JSON.stringify(points), snapshot);
+    assert.deepEqual(
+      cleaned,
+      points === original
+        ? simplifyCheckedSharedGuide(
+            original.toReversed(),
+            (a, b) => Math.min(a[0], b[0]) >= 8,
+            () => true,
+          ).toReversed()
+        : simplifyCheckedSharedGuide(
+            original,
+            (a, b) => Math.min(a[0], b[0]) >= 8,
+            () => true,
+          ).toReversed(),
+    );
+  }
+});
+
+test("cleanup retains the exact hallway stop anchors even when their outer approaches reverse", () => {
+  const points: [number, number, number][] = [
+    [0, 0, 0],
+    [1, 1, 0],
+    [5, 1, 0],
+    [5.2, 1.2, 0],
+    [5.1, 1, 0],
+    [10, 1, 0],
+    [9.5, 0, 0],
+    [9, 0, 0],
+  ];
+  const joins = [points[1], points[5]];
+  const preserve = (p: [number, number, number]) =>
+    joins.some((q) => p.every((v, k) => v === q[k]));
+  const numeric = straightenSharedGuideProposal(points, false, preserve);
+  const result = simplifyCheckedSharedGuide(
+    numeric,
+    () => true,
+    () => true,
+    32,
+    preserve,
+  );
+  for (const join of joins)
+    assert.ok(
+      result.some((p) => p.every((v, k) => v === join[k])),
+      "the later hallway stop can still trim its original door approach",
+    );
 });

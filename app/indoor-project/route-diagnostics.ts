@@ -7,6 +7,8 @@ import type { RouteBlocker } from "./route-policy";
 
 export type ProjectRouteDiagnostic = {
   kind: "connected" | "missing-entrance" | "source-gap" | "blocked";
+  /** A request restriction, distinct from the physical source witness. */
+  constraint?: "hallways" | "stair-exclusions";
   message: string;
   blockers: RouteBlocker[];
   /** A diagnostic witness, never a route offered to the visitor. */
@@ -90,7 +92,7 @@ export function createProjectRouteDiagnostics(
     for (const room of [start, end]) {
       const node = data.nodes.find((n) => n.id === room.arrivalNodeId);
       const excluded = node ? outside([node.pointFeet]) : [];
-      if (excluded.length) {
+      if (excluded.length > 0) {
         const offLimits = excluded.some((id) =>
           data.indoorExclusions?.areas.some(
             (area) => area.id === id && area.reason === "off-limits",

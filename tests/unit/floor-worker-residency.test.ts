@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
+import type { PreparedDisplayAssetRequest } from "../../app/indoor-project/prepared-display-registry";
 import {
   bridgeFloorDisplayWorker,
   preparedFloorNativeDisplay,
@@ -70,6 +71,129 @@ function setup(maximumBytes = 1000) {
   );
   return { client, workers };
 }
+
+test("directions releases the source clone but revisiting completed floors uses the bounded cache", async () => {
+  const { client, workers } = setup(250);
+  for (const level of [3, 4]) {
+    const job = client.request(project, [level], "all", options);
+    workers[0].reply(floor(String(level)), 100);
+    await job.promise;
+  }
+  assert.equal(client.releaseIdleWorker(), true);
+  assert.equal(workers[0].terminated, true);
+  assert.equal(client.hasResidentWorker(), false);
+  for (const level of [3, 4, 3]) {
+    const hit = client.peek(project, floorWorkerKey([level], "all", options));
+    assert.ok(hit);
+    const job = client.request(project, [level], "all", options);
+    assert.equal(await job.promise, hit);
+  }
+  assert.equal(workers.length, 1, "cached floor switches create no worker");
+  // The budget is unchanged: a third floor evicts the least-recently used.
+  const fifth = client.request(project, [5], "all", options);
+  workers[1].reply(floor("five"), 100);
+  await fifth.promise;
+  assert.equal(client.cacheStatistics().entries, 2);
+  assert.equal(
+    client.peek(project, floorWorkerKey([4], "all", options)),
+    undefined,
+  );
+  // A pending calculation cannot be released behind its caller's back.
+  const sixth = client.request(project, [6], "all", options);
+  assert.equal(client.releaseIdleWorker(), false);
+  workers[1].reply(floor("six"), 100);
+  await sixth.promise;
+  // An edit/import must invalidate every old floor, even after release.
+  client.releaseIdleWorker();
+  const edited = {} as IndoorDataset;
+  const changed = client.request(edited, [3], "all", options);
+  assert.equal(
+    client.peek(project, floorWorkerKey([3], "all", options)),
+    undefined,
+  );
+  assert.equal(workers[2].messages[0].data, edited);
+  workers[2].reply(floor("edited"), 100);
+  await changed.promise;
+  client.dispose();
+});
+
+test("oversized completed floors survive worker release in a bounded compressed cache, with full scope invalidation", async () => {
+  const workers: ControlledWorker[] = [];
+  const client = new FloorWorkerClient(
+    () => {
+      const worker = new ControlledWorker();
+      workers.push(worker);
+      return bridgeFloorDisplayWorker(worker);
+    },
+    12,
+    100,
+    250,
+  );
+  const packed = {} as PreparedDisplayAssetRequest;
+  for (const id of [3, 4]) {
+    const task = client.request(project, [id], "all", options);
+    workers.at(-1)!.reply(floor(String(id)), 500, {
+      residentDisplay: packed,
+      residentDisplayMemoryCostBytes: 100,
+    });
+    await task.promise;
+  }
+  assert.equal(client.cacheStatistics().entries, 0);
+  assert.equal(client.packedCacheStatistics().entries, 2);
+  client.releaseIdleWorker();
+  const revisit = client.request(project, [3], "all", options);
+  assert.equal(workers[1].messages[0].residentDisplay, packed);
+  assert.equal(workers[1].messages[0].data, project);
+  workers[1].reply(floor("restored"), 500);
+  await revisit.promise;
+  const otherView = client.request(project, [3], "all", options, {
+    nativeDisplay: false,
+  });
+  assert.equal(workers[1].messages.at(-1)!.residentDisplay, undefined);
+  workers[1].reply(floor("other view"), 500, {
+    residentDisplay: packed,
+    residentDisplayMemoryCostBytes: 200,
+  });
+  await otherView.promise;
+  assert.equal(
+    client.packedCacheStatistics().entries,
+    1,
+    "byte limit evicts older packed floors",
+  );
+  const edited = {} as IndoorDataset;
+  const changed = client.request(edited, [3], "all", options);
+  assert.equal(workers[1].messages.at(-1)!.residentDisplay, undefined);
+  assert.equal(client.packedCacheStatistics().entries, 0);
+  workers[1].reply(floor("changed"));
+  await changed.promise;
+  client.dispose();
+});
+
+test("a failed packed restore drops only that entry so retry can prepare normally", async () => {
+  const { client, workers } = setup(100);
+  const initial = client.request(project, [4], "all", options);
+  workers[0].reply(floor("large"), 500, {
+    residentDisplay: {} as PreparedDisplayAssetRequest,
+    residentDisplayMemoryCostBytes: 100,
+  });
+  await initial.promise;
+  client.releaseIdleWorker();
+  const restore = client.request(project, [4], "all", options);
+  assert.ok(workers[1].messages[0].residentDisplay);
+  workers[1].onmessage?.({
+    data: {
+      requestId: workers[1].messages[0].requestId,
+      error: "corrupt cache",
+    },
+  } as MessageEvent<FloorPreparationResponse>);
+  await assert.rejects(restore.promise, /corrupt cache/);
+  assert.equal(client.packedCacheStatistics().entries, 0);
+  const retry = client.request(project, [4], "all", options);
+  assert.equal(workers[2].messages[0].residentDisplay, undefined);
+  workers[2].reply(floor("recomputed"), 500);
+  await retry.promise;
+  client.dispose();
+});
 
 test("an oversized 2D result does not evict the resident dataset: the 3D scope reuses the same worker without re-cloning", async () => {
   const { client, workers } = setup(1000);

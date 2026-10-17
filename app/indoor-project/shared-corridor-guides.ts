@@ -26,24 +26,72 @@ export function removeSharedGuideRetraces(points: SharedGuidePoint[]) {
  * redundant intermediate vertices (including an unused overshoot) before the
  * caller's continuous physical/policy checks. This numeric proposal alone has
  * no authority to erase a real bend, doorway or obstacle. */
-export function straightenSharedGuideProposal(points: SharedGuidePoint[]) {
+export function straightenSharedGuideProposal(
+  points: SharedGuidePoint[],
+  shortHooks = true,
+  preservePoint: (point: SharedGuidePoint) => boolean = () => false,
+) {
   const result: SharedGuidePoint[] = [];
   for (const point of removeSharedGuideRetraces(points)) {
     while (result.length >= 2) {
       const a = result.at(-2)!,
         b = result.at(-1)!;
+      if (preservePoint(b)) break;
       if (a[2] !== b[2] || b[2] !== point[2]) break;
       const ux = b[0] - a[0],
         uy = b[1] - a[1];
       const vx = point[0] - b[0],
         vy = point[1] - b[1];
       const scale = DMath.hypot(ux, uy) * DMath.hypot(vx, vy);
-      if (Math.abs(ux * vy - uy * vx) > 1e-12 * scale) break;
+      const collinear = Math.abs(ux * vy - uy * vx) <= 1e-12 * scale;
+      // Remove only short reversing hooks. Long bends and ordinary junctions
+      // retain their shared lane. The caller rechecks the entire candidate and
+      // falls back to the original if any real obstruction needs this hook.
+      const shortReverse =
+        shortHooks &&
+        ux * vx + uy * vy < 0 &&
+        Math.min(DMath.hypot(ux, uy), DMath.hypot(vx, vy)) <= 3;
+      if (!collinear && !shortReverse) break;
       result.pop();
     }
     result.push([...point]);
   }
   return removeSharedGuideRetraces(result);
+}
+
+/** Simplify an already checked shared guide one local hook at a time. A real
+ * obstruction can retain its own bend without retaining every other hook.
+ * Chords need current continuous clearance and the complete trial path must
+ * preserve crossing policy. Canonical orientation makes opposite journeys
+ * choose the same geometry. No original point or graph identity is mutated. */
+export function simplifyCheckedSharedGuide(
+  points: SharedGuidePoint[],
+  supportsChord: (a: SharedGuidePoint, b: SharedGuidePoint) => boolean,
+  policyAllows: (points: SharedGuidePoint[]) => boolean,
+  maximumChecks = 32,
+  preservePoint: (point: SharedGuidePoint) => boolean = () => false,
+) {
+  const reverse =
+    points.length > 1 &&
+    JSON.stringify(points[0]) > JSON.stringify(points.at(-1));
+  let result = (reverse ? points.toReversed() : points).map(
+    (p): SharedGuidePoint => [...p],
+  );
+  let checks = 0;
+  for (let i = 1; i < result.length - 1 && checks < maximumChecks; i++) {
+    const a = result[i - 1],
+      b = result[i],
+      c = result[i + 1];
+    if (preservePoint(b)) continue;
+    if (straightenSharedGuideProposal([a, b, c]).length !== 2) continue;
+    checks++;
+    if (!supportsChord(a, c)) continue;
+    const trial = [...result.slice(0, i), ...result.slice(i + 1)];
+    if (!policyAllows(reverse ? trial.toReversed() : trial)) continue;
+    result = trial;
+    i = Math.max(0, i - 2);
+  }
+  return reverse ? result.toReversed() : result;
 }
 export const corridorGuideLength = (points: readonly (readonly number[])[]) =>
   points

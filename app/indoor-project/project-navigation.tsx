@@ -61,6 +61,7 @@ import type {
 } from "./basemap-buildings";
 import type { LabelSettings } from "./label-settings";
 import { mapReady } from "~/components/map/map-ready";
+import { largeIndoorProject } from "./heavy-worker-schedule";
 
 const categories = [
   {
@@ -128,6 +129,8 @@ export function ProjectNavigation({
   onDoorwayRecesses,
   showDoorLocations,
   onDoorLocations,
+  showPathGuides,
+  onPathGuides,
   showVestibuleDoors,
   onVestibuleDoors,
   showStructures,
@@ -177,6 +180,8 @@ export function ProjectNavigation({
   onDoorwayRecesses: (show: boolean) => void;
   showDoorLocations: boolean;
   onDoorLocations: (show: boolean) => void;
+  showPathGuides: boolean;
+  onPathGuides: (show: boolean) => void;
   showVestibuleDoors: boolean;
   onVestibuleDoors: (show: boolean) => void;
   showStructures: boolean;
@@ -377,6 +382,15 @@ export function ProjectNavigation({
       });
     }
   };
+  // Choosing a To floor and immediately returning to From for preview used
+  // to cancel/restart expensive native preparation twice. Endpoint selection
+  // only highlights the place on large native maps; preview/floor controls
+  // still explicitly select the floor that the visitor wants to see.
+  const chooseEndpoint = (r: IndoorRecord) => {
+    if (data.nativeIndoorEnvelopes && largeIndoorProject(data))
+      onPick("area", r.key);
+    else choose(r);
+  };
   const close = () => {
     setFollowing(false);
     setPlaying(false);
@@ -450,7 +464,7 @@ export function ProjectNavigation({
                   onStart(key);
                   const room = destinations.find((r) => r.key === key);
                   if (room) {
-                    choose(room);
+                    chooseEndpoint(room);
                     onPickTarget(end ? null : "end");
                   }
                 }}
@@ -475,7 +489,7 @@ export function ProjectNavigation({
                   onEnd(key);
                   const room = destinations.find((r) => r.key === key);
                   if (room) {
-                    choose(room);
+                    chooseEndpoint(room);
                     onPickTarget(start ? null : "start");
                   }
                 }}
@@ -700,6 +714,20 @@ export function ProjectNavigation({
                     />
                     Show door locations
                   </label>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={showPathGuides}
+                      onChange={(e) => onPathGuides(e.target.checked)}
+                    />
+                    Show hallway paths
+                  </label>
+                  {showPathGuides && (
+                    <p>
+                      Prepared hallway guides on this floor. Directions also
+                      check access and step-free availability.
+                    </p>
+                  )}
                   <label>
                     <input
                       type="checkbox"

@@ -607,7 +607,11 @@ export function PreparedProjectMapLayers({
     const values = [
       stairCutAreas,
       wallsShown ? layers.walls : HIDDEN_SOURCE,
-      layers.lines,
+      review
+        ? layers.lines
+        : network
+          ? (prepared.hallwayPaths ?? HIDDEN_SOURCE)
+          : HIDDEN_SOURCE,
       layers.portals,
       layers.routeLines,
       layers.doorFootprints,
@@ -792,8 +796,8 @@ export function PreparedProjectMapLayers({
         source: sources[2],
         paint: {
           "line-color": "#338d83",
-          "line-opacity": 0.4,
-          "line-width": 1,
+          "line-opacity": 0.8,
+          "line-width": 2,
         },
       });
       map.addLayer({
@@ -1710,6 +1714,10 @@ export function PreparedProjectMapLayers({
         : ["!=", ["get", "openDrop"], true],
     ]);
     map.setLayoutProperty(ids[3], "visibility", network ? "visible" : "none");
+    if (network) {
+      map.moveLayer(ids[3]);
+      map.moveLayer(ids[4]);
+    }
     // Selection paint belongs to the same synchronization pass as base paint.
     // An unrelated UI render can refresh layers without changing the selection.
     const selectedStairKeys = visitorContext
@@ -1936,68 +1944,9 @@ export function PreparedProjectMapLayers({
             duration: 650,
           });
       });
-    if (effectStarted)
-      floorDiagnostic("layers:effect", {
-        roomThree,
-        uploads,
-        ms: performance.now() - effectStarted,
-      });
-    const restoreOverview = keepOverview
-      ? lockBuildingOverviewLayers(map)
-      : undefined;
-    return () => {
-      restoreOverview?.();
-      map.off("click", pick);
-      // The parent map may already be removed during route navigation or Clear
-      // map. MapLibre's getLayer throws once its style has been disposed.
-      // Every custom (three.js) layer this effect can add is removed, including
-      // window glass/frames, so a loading or unmounted floor keeps no meshes.
-      removePreparedCustomLayers(map);
-    };
-  }, [
-    windows,
-    windowParts,
-    map,
-    isLoaded,
-    layers,
-    stairCutAreas,
-    stairCutRooms,
-    display,
-    connectorMarkers,
-    areaPerimeters,
-    roomPerimeters,
-    overviewBacking,
-    overviewFloor,
-    overviewDrawing,
-    geometryOpacity,
-    keepOverview,
-    nativeStairs,
-    nativeStairKeys,
-    overviewGeometry,
-    data,
-    levelIds,
-    building,
-    circulationOnly,
-    network,
-    simplifyGeometry,
-    roomThree,
-    preciseSurfaces,
-    nativeModel,
-    relativeHeights,
-    route,
-    review,
-    showPassThroughPlaces,
-    showDoorLocations,
-    onPick,
-    pickEnabled,
-    nativeFloorLevels,
-    onFitReady,
-    selectionPadding,
-    selected,
-    labelSettings,
-  ]);
-  useEffect(() => {
-    if (!mapReady(map, isLoaded) || !map.getLayer("project-room-fill")) return;
+    // Apply native masking after every base-layer synchronization. A later
+    // independent effect missed route/network/selection-only updates, exposing
+    // triangulated fallback fills as white stripes over the native floor.
     const nativeKeys = data.records
       .filter((r) => nativeFloorLevels.includes(r.levelId))
       .map((r) => r.key);
@@ -2192,19 +2141,68 @@ export function PreparedProjectMapLayers({
           : "none",
       );
     }
+    if (effectStarted)
+      floorDiagnostic("layers:effect", {
+        roomThree,
+        uploads,
+        ms: performance.now() - effectStarted,
+      });
+    const restoreOverview = keepOverview
+      ? lockBuildingOverviewLayers(map)
+      : undefined;
+    return () => {
+      restoreOverview?.();
+      map.off("click", pick);
+      // The parent map may already be removed during route navigation or Clear
+      // map. MapLibre's getLayer throws once its style has been disposed.
+      // Every custom (three.js) layer this effect can add is removed, including
+      // window glass/frames, so a loading or unmounted floor keeps no meshes.
+      removePreparedCustomLayers(map);
+    };
   }, [
+    windows,
+    windowParts,
     map,
     isLoaded,
-    geometryOpacity,
-    nativeFloorLevels,
-    data,
-    labelsVisible,
-    basemapVisible,
-    keepOverview,
     layers,
-    review,
+    stairCutAreas,
+    stairCutRooms,
+    display,
+    connectorMarkers,
+    areaPerimeters,
+    roomPerimeters,
+    overviewBacking,
+    overviewFloor,
+    prepared.hallwayPaths,
+    overviewDrawing,
+    geometryOpacity,
+    keepOverview,
+    nativeStairs,
+    nativeStairKeys,
+    overviewGeometry,
+    data,
+    levelIds,
+    building,
+    circulationOnly,
+    network,
+    simplifyGeometry,
     roomThree,
     preciseSurfaces,
+    nativeModel,
+    relativeHeights,
+    route,
+    review,
+    showPassThroughPlaces,
+    showDoorLocations,
+    onPick,
+    pickEnabled,
+    nativeFloorLevels,
+    onFitReady,
+    selectionPadding,
+    selected,
+    labelSettings,
+    labelsVisible,
+    basemapVisible,
     hasNativeMaterial,
     hasNativeEnvelopes,
   ]);

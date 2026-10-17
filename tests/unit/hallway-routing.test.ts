@@ -253,6 +253,42 @@ test("multiple entrances are chosen by the hallway route rather than the saved i
   assert.equal(outside.departure!.entranceEdgeId, "start-door");
   assert.equal(outside.nodeIds[0], "start-door-out");
 });
+
+test("strict hallway transit preserves inside and doorway endpoint choices without preparing unrelated coverage", () => {
+  const calculate = createWorkerRouteCalculator(fixture());
+  const inside = calculate("start", "room", "public", {
+    endpointMode: "inside",
+    allowOtherRoomTransit: false,
+  });
+  assert.ok(inside.route);
+  assert.ok(inside.arrivals?.doorway?.route);
+  assert.equal(inside.arrivals?.hallway, undefined);
+  assert.equal(inside.reachable, undefined);
+  const hallway = calculate("start", "room", "public", {
+    endpointMode: "hallway",
+    allowOtherRoomTransit: false,
+  });
+  assert.ok(hallway.arrivals?.hallway?.route);
+  assert.equal(hallway.arrivals?.doorway, undefined);
+});
+
+test("missing entrances stop the normal calculator before preparing physical geometry or coverage", () => {
+  const data = fixture();
+  data.records.find((r) => r.key === "start")!.arrivalNodeId = undefined;
+  Object.defineProperty(data, "walls", {
+    get() {
+      throw new Error("Geometry must not be prepared for a missing entrance");
+    },
+  });
+  const calculate = createWorkerRouteCalculator(data);
+  for (const endpointMode of ["inside", "hallway"] as const) {
+    const result = calculate("start", "room", "public", { endpointMode });
+    assert.equal(result.route, null);
+    assert.equal(result.diagnostic?.kind, "missing-entrance");
+    assert.equal(result.reachable, undefined);
+    assert.equal(result.arrivals, undefined);
+  }
+});
 test("selected-mode response caches stay separate from legacy requests for all endpoint choices", () => {
   for (const selectedFirst of [true, false]) {
     const run = createWorkerRouteCalculator(fixture());
@@ -308,6 +344,46 @@ test("a long hallway wins over a shorter ordinary-room shortcut, with a checked 
     true,
   );
   walk.enabled = false;
+  const strictWithExcludedStairs = createWorkerRouteCalculator(data)(
+    "start",
+    "room",
+    "public",
+    {
+      endpointMode: "hallway",
+      allowOtherRoomTransit: false,
+      excludedNativeStairIds: [1_842_431, 1_460_777],
+    },
+  );
+  assert.equal(strictWithExcludedStairs.route, null);
+  assert.equal(strictWithExcludedStairs.diagnostic?.constraint, "hallways");
+  assert.match(
+    strictWithExcludedStairs.arrivals!.hallway!.message!,
+    /No hallway-only route/,
+  );
+  for (const [from, to] of [
+    ["start", "room"],
+    ["room", "start"],
+  ]) {
+    assert.equal(
+      findProjectRoute(data, from, to, "public", {
+        allowOtherRoomTransit: false,
+      }),
+      null,
+      "a missing hallway cannot silently fall back through an office",
+    );
+    assert.equal(
+      findProjectRoute(data, from, to, "public", {
+        allowOtherRoomTransit: false,
+        preferHallways: false,
+      }),
+      null,
+      "strict transit takes precedence over the preference",
+    );
+  }
+  assert.notEqual(
+    projectRoutingOptionsKey({ allowOtherRoomTransit: false }),
+    projectRoutingOptionsKey({ allowOtherRoomTransit: true }),
+  );
   assert.equal(
     findProjectRoute(data, "start", "room")!.edges.some(
       (e) => e.id === "office-shortcut",

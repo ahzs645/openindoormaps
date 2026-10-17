@@ -38,12 +38,14 @@ export function useProjectRoute(
       preferHallways,
       excludedNativeStairIds,
       useSharedCorridorGuides,
+      allowOtherRoomTransit,
     ] = JSON.parse(optionsKey);
     return {
       endpointMode,
       preferHallways,
       excludedNativeStairIds,
       useSharedCorridorGuides,
+      allowOtherRoomTransit,
     };
   }, [optionsKey]);
   const samePlace = sameRoutePlace(start, end);

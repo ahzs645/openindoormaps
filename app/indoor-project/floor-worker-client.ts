@@ -1,6 +1,8 @@
 import type { IndoorDataset } from "./contract";
 import { preparedDisplayAssetRequest } from "./prepared-display-registry";
 import { floorNativeFaceIdentity } from "./floor-cache-identity";
+import type { PreparedDisplayAssetRequest } from "./prepared-display-registry";
+import { RESIDENT_FLOOR_CACHE_BYTES } from "./resident-floor-cache-budget";
 import {
   COMPLETE_FLOOR_CACHE_BYTES,
   FloorMemoryCache,
@@ -35,6 +37,8 @@ export const floorWorkerKey = (
 
 /** Transport-only request fields; they never change what the worker prepares. */
 export type FloorWorkerRequest = FloorPreparationRequest & {
+  /** Private compressed copy of this client's previously completed floor. */
+  residentDisplay?: PreparedDisplayAssetRequest;
   /** The UI does not consume the native area display for this view (3D,
    * review or a non-native floor map). The worker still derives and checks it
    * for preparation, but omits it from the reply instead of cloning it. */
@@ -89,15 +93,18 @@ export class FloorWorkerClient {
   private sequence = 0;
   private cacheData?: IndoorDataset;
   private cache: FloorMemoryCache<string, PreparedFloor>;
+  private packed: FloorMemoryCache<string, PreparedDisplayAssetRequest>;
   private releaseTimer?: ReturnType<typeof setTimeout>;
   private readonly factory: () => FloorWorker;
   constructor(
     factory: () => FloorWorker,
     capacity = 12,
     maximumBytes = COMPLETE_FLOOR_CACHE_BYTES,
+    packedMaximumBytes = RESIDENT_FLOOR_CACHE_BYTES,
   ) {
     this.factory = factory;
     this.cache = new FloorMemoryCache(capacity, maximumBytes);
+    this.packed = new FloorMemoryCache(capacity, packedMaximumBytes);
   }
 
   peek(data: IndoorDataset, key: string) {
@@ -105,6 +112,9 @@ export class FloorWorkerClient {
   }
   cacheStatistics() {
     return this.cache.statistics();
+  }
+  packedCacheStatistics() {
+    return this.packed.statistics();
   }
   /** Scalar state for tests/diagnostics: is a source dataset resident? */
   hasResidentWorker() {
@@ -157,6 +167,7 @@ export class FloorWorkerClient {
     if (this.pending) this.stop();
     if (this.cacheData !== data) {
       this.cache.clear();
+      this.packed.clear();
       this.cacheData = data;
     }
     const cached = this.peek(data, key);
@@ -176,9 +187,16 @@ export class FloorWorkerClient {
           )
             return;
           if ("error" in response) {
+            this.packed.delete(pending.key);
             this.stop(new Error(response.error));
             return;
           }
+          if (response.residentDisplay)
+            this.packed.set(
+              pending.key,
+              response.residentDisplay,
+              response.residentDisplayMemoryCostBytes,
+            );
           // Missing/oversized costs still display successfully, but never
           // trigger a synchronous UI traversal or an unbounded retention.
           // An oversized result is simply not retained here; the worker and
@@ -198,16 +216,20 @@ export class FloorWorkerClient {
         };
         worker.onerror = (event) => {
           event.preventDefault();
-          if (this.worker === worker)
+          if (this.worker === worker) {
+            if (this.pending) this.packed.delete(this.pending.key);
             this.stop(
               new Error(event.message || "The floor worker could not start."),
             );
+          }
         };
         worker.onmessageerror = () => {
-          if (this.worker === worker)
+          if (this.worker === worker) {
+            if (this.pending) this.packed.delete(this.pending.key);
             this.stop(
               new Error("The floor worker returned unreadable geometry."),
             );
+          }
         };
       }
       const message: FloorWorkerRequest = {
@@ -222,6 +244,7 @@ export class FloorWorkerClient {
           building,
           options,
         ),
+        residentDisplay: this.packed.get(key),
       };
       if (transport.nativeDisplay === false) message.omitNativeDisplay = true;
       this.worker.postMessage(message);
@@ -251,6 +274,14 @@ export class FloorWorkerClient {
       this.dispose();
     }, 0);
   }
+  /** Release the large source clone for another worker without discarding
+   * completed floors. The existing byte/count budget still bounds retained
+   * results, and request() invalidates them on any dataset replacement. */
+  releaseIdleWorker() {
+    if (this.pending) return false;
+    this.stop();
+    return true;
+  }
   /** Explicit release (retry, tests): terminate now and drop every result. */
   dispose() {
     if (this.releaseTimer) {
@@ -259,6 +290,7 @@ export class FloorWorkerClient {
     }
     this.stop();
     this.cache.clear();
+    this.packed.clear();
     this.cacheData = undefined;
   }
 }

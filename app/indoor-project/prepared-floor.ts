@@ -1,4 +1,5 @@
 import { generalizedRoomGeometry } from "./generalized-room-geometry";
+import { hallwayPathView } from "./hallway-path-view";
 import { nativeFloorGround } from "./native-floor-ground";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { relativeHeightGeometry } from "./relative-heights";
@@ -198,6 +199,7 @@ export function prepareFloor(
   );
   return {
     presentation: withRaisedLabels,
+    hallwayPaths: hallwayPathView(data, levelIds, building),
     assumedRoomBlocks,
     nativeStairKeys,
     stairSurroundKeys,
@@ -231,5 +233,11 @@ export type FloorPreparationRequest = {
   preparedDisplay?: PreparedDisplayAssetRequest;
 };
 export type FloorPreparationResponse =
-  | { requestId: number; value: PreparedFloor; memoryCostBytes?: number }
+  | {
+      requestId: number;
+      value: PreparedFloor;
+      memoryCostBytes?: number;
+      residentDisplay?: PreparedDisplayAssetRequest;
+      residentDisplayMemoryCostBytes?: number;
+    }
   | { requestId: number; error: string };

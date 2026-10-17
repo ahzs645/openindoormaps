@@ -301,6 +301,7 @@ export default function IndoorProjectPage() {
   const [basemapAreaShape, setBasemapAreaShape] =
     useState<BasemapAreaShape>("rectangle");
   const [arrivalMode, setArrivalMode] = useState(loadArrivalMode);
+  const [allowOtherRoomTransit, setAllowOtherRoomTransit] = useState(false);
   useEffect(() => saveArrivalMode(arrivalMode), [arrivalMode]);
   const [keepBuildingOverview, setKeepBuildingOverview] =
     useState(loadBuildingOverview);
@@ -1473,10 +1474,16 @@ export default function IndoorProjectPage() {
     () => ({
       excludedNativeStairIds: stairExclusions.ids,
       useSharedCorridorGuides: sharedCorridors.enabled,
+      allowOtherRoomTransit,
       endpointMode:
         arrivalMode === "hallway" ? ("hallway" as const) : ("inside" as const),
     }),
-    [stairExclusions.ids, arrivalMode, sharedCorridors.enabled],
+    [
+      stairExclusions.ids,
+      arrivalMode,
+      sharedCorridors.enabled,
+      allowOtherRoomTransit,
+    ],
   );
   const routeCalculation = useProjectRoute(
     data,
@@ -3373,6 +3380,28 @@ export default function IndoorProjectPage() {
                     arrivalReasons={arrivalReasons}
                     routeSettings={
                       <>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={network}
+                            onChange={(e) => setNetwork(e.target.checked)}
+                          />
+                          Show hallway paths
+                        </label>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={allowOtherRoomTransit}
+                            onChange={(e) =>
+                              setAllowOtherRoomTransit(e.target.checked)
+                            }
+                          />
+                          Allow paths through other rooms
+                        </label>
+                        <p>
+                          Off keeps transit in hallways and reviewed connecting
+                          areas. Some destinations may have no hallway route.
+                        </p>
                         <SharedCorridorSetting
                           {...sharedCorridors}
                           available={
@@ -3417,6 +3446,8 @@ export default function IndoorProjectPage() {
                     onDoorwayRecesses={setShowDoorwayRecesses}
                     showDoorLocations={showDoorLocations}
                     onDoorLocations={setShowDoorLocations}
+                    showPathGuides={network}
+                    onPathGuides={setNetwork}
                   />
                 )}
                 <ProjectRouteFocus data={data} route={route} />

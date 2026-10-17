@@ -35,6 +35,8 @@ export function visitorRouteFailureMessage(
     return "An entrance is unavailable for one of these places.";
   if (mode === "accessible")
     return "No confirmed step-free route is available between these places.";
+  if (diagnostic?.constraint === "hallways")
+    return "No hallway-only route is available. You can allow paths through other rooms in Directions.";
   if (
     diagnostic?.blockers.some((b) =>
       ["staff", "non-walkable", "off-limits"].includes(b.kind),
