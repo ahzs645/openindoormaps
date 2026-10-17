@@ -205,7 +205,7 @@ function resolveProjectRoute(
       options.endpointMode === "hallway"
         ? hallwayRouteEndpoints(data, graph, end, false)
         : [{ nodeId: end.arrivalNodeId }];
-  if (!starts.length || !ends.length) return remember(null);
+  if (starts.length === 0 || ends.length === 0) return remember(null);
   const goals = new Set(ends.map((e) => e.nodeId)),
     roots = new Set(starts.map((e) => e.nodeId)),
     excludedStairs = new Set(options.excludedNativeStairIds ?? []);
@@ -317,7 +317,13 @@ function resolveProjectRoute(
   });
   const reviewedEdges = [...dependencies.values()],
     used = [...new Set(reviewedEdges.flatMap((e) => e.roomKeys))];
-  const paths = centerPaths(data, edges, nodeIds, mode === "public");
+  const paths = centerPaths(
+    data,
+    edges,
+    nodeIds,
+    mode === "public",
+    options.useSharedCorridorGuides !== false,
+  );
   const outside = createIndoorExclusionQuery(data);
   const pathExclusions = (path: RoutePath) => {
     const edge =

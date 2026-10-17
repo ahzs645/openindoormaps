@@ -1,6 +1,11 @@
 import type { IndoorDataset } from "./contract";
 import { prepareWalkingGuide } from "./centered-route";
 import { withRoutingCalculation } from "./routing-cache";
+import { routeWorkerDataset } from "./route-worker-dataset";
+import {
+  prepareSharedCorridorRouting,
+  type CorridorCellCompilation,
+} from "./prepare-corridor-routing";
 import {
   preparedRoutingKey,
   ROUTING_GUIDE_VERSION,
@@ -13,9 +18,32 @@ export async function prepareRouting(
   data: IndoorDataset,
   options: {
     edgeIds?: Set<string>;
+    method?: "per-edge" | "shared-corridor";
+    cellIds?: ReadonlySet<string>;
+    cellCompleted?: (
+      cell: CorridorCellCompilation,
+      guides: PreparedRouting["guides"],
+    ) => void;
     progress?: (completed: number, total: number, compiled: number) => void;
   } = {},
 ) {
+  if (options.method === "shared-corridor") {
+    // A separate immutable physical snapshot permits resident caches across
+    // yielded cells without reusing authority after an authoring edit.
+    const snapshot = structuredClone(routeWorkerDataset(data));
+    const { prepared, report } = await prepareSharedCorridorRouting(
+      snapshot,
+      options,
+    );
+    if (
+      withRoutingCalculation(data, () => preparedRoutingKey(data)) !==
+      prepared.sourceGeometryKey
+    )
+      throw new Error(
+        "Source geometry or policy changed during corridor preparation",
+      );
+    return { dataset: withPreparedRouting(data, prepared), report };
+  }
   const edges = data.edges.filter(
     (e) =>
       e.kind === "walk" &&

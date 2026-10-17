@@ -75,6 +75,8 @@ import {
   saveArrivalMode,
 } from "~/indoor-project/viewer-endpoint-preferences";
 import { ProjectRouteArrivalMenu } from "~/indoor-project/route-arrival-menu";
+import { useSharedCorridorGuides } from "~/indoor-project/use-shared-corridor-guides";
+import { SharedCorridorSetting } from "~/indoor-project/shared-corridor-setting";
 import {
   StairExclusionSettings,
   useStairExclusions,
@@ -651,7 +653,7 @@ export default function IndoorProjectPage() {
       setImportNotice(true);
       setMessage("Downloading the complete campus map…");
       void (async () => {
-        const snapshot = await restoreProjectSnapshot().catch(() => undefined);
+        const snapshot = await restoreProjectSnapshot().catch(() => {});
         const hosted = await fetchHostedProject(
           new URL(hostedUrl, location.href).href,
           {
@@ -1466,13 +1468,15 @@ export default function IndoorProjectPage() {
   );
   // Large datasets build the route graph on visitor intent, not at import.
   const stairExclusions = useStairExclusions(data, hostedStairPreferences);
+  const sharedCorridors = useSharedCorridorGuides(data);
   const routingOptions = useMemo(
     () => ({
       excludedNativeStairIds: stairExclusions.ids,
+      useSharedCorridorGuides: sharedCorridors.enabled,
       endpointMode:
         arrivalMode === "hallway" ? ("hallway" as const) : ("inside" as const),
     }),
-    [stairExclusions.ids, arrivalMode],
+    [stairExclusions.ids, arrivalMode, sharedCorridors.enabled],
   );
   const routeCalculation = useProjectRoute(
     data,
@@ -2746,6 +2750,10 @@ export default function IndoorProjectPage() {
                   onChange={setArrivalMode}
                   reasons={arrivalReasons}
                 />
+                <SharedCorridorSetting
+                  {...sharedCorridors}
+                  available={sharedCorridors.available && mode === "public"}
+                />
                 {routeCalculation.preparing && (
                   <p role="status" data-testid="project-route-preparing">
                     Preparing indoor routes…
@@ -3364,11 +3372,19 @@ export default function IndoorProjectPage() {
                     arrivalMessage={arrivalResult.message}
                     arrivalReasons={arrivalReasons}
                     routeSettings={
-                      <StairExclusionSettings
-                        data={data}
-                        ids={stairExclusions.ids}
-                        onChange={stairExclusions.onChange}
-                      />
+                      <>
+                        <SharedCorridorSetting
+                          {...sharedCorridors}
+                          available={
+                            sharedCorridors.available && mode === "public"
+                          }
+                        />
+                        <StairExclusionSettings
+                          data={data}
+                          ids={stairExclusions.ids}
+                          onChange={stairExclusions.onChange}
+                        />
+                      </>
                     }
                     selected={selected}
                     onStart={setStart}

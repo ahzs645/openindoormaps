@@ -211,6 +211,30 @@ test("changing source door order changes the shared-node winner, disabled doors 
   }
 });
 
+test("a scoped approach query grants only the requested original endpoint half", async () => {
+  for (const strict of [false, true]) {
+    const data = await sharedPortalFixture(strict);
+    const a = data.nodes.find((n) => n.id === "first-other")!;
+    const b = data.nodes.find((n) => n.id === "last-other")!;
+    const walk = {
+      ...data.edges.find((e) => e.kind === "walk")!,
+      id: "two-original-door-ends",
+      from: a.id,
+      to: b.id,
+      pointsFeet: [a.pointFeet, b.pointFeet],
+    };
+    const query = createNativeDoorApproachQuery(data);
+    const first = query(walk, new Set([a.id]));
+    const last = query(walk, new Set([b.id]));
+    assert.ok(first.length > 0 && last.length > 0);
+    assert.deepEqual(query(walk), [...first, ...last]);
+    assert.deepEqual(query(reverse(walk), new Set([a.id])), first);
+    assert.deepEqual(query(walk, new Set(["not-an-endpoint"])), []);
+    const sameDoor = data.edges.find((e) => e.id === "same-door-walk")!;
+    assert.deepEqual(query(sameDoor, new Set([sameDoor.from])), []);
+  }
+});
+
 test("strict threshold support keeps nearby holes while distant floor and envelope holes leave exact halves unchanged", async () => {
   const data = await sharedPortalFixture(true),
     walk = data.edges.find((e) => e.id === "shared-walk")!,

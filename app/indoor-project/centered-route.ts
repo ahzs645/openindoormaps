@@ -1,3 +1,4 @@
+import { createTwoFootCorridorSupport } from "./corridor-guide-support";
 import * as DMath from "./deterministic-math";
 import { nativeRationalOverlay } from "./native-rational-overlay";
 import {
@@ -14,7 +15,14 @@ import {
   createNativeRoutingMaterialQuery,
 } from "./native-routing-material";
 import { indoorExclusionParts } from "./indoor-exclusions";
-import { preparedWalkingGuides } from "./prepared-routing";
+import {
+  preparedWalkingGuides,
+  preparedSharedCorridorGuideIds,
+} from "./prepared-routing";
+import {
+  removeSharedGuideRetraces,
+  MAX_SHARED_CORRIDOR_APPROACH_FEET,
+} from "./shared-corridor-guides";
 import { centeredJunctions } from "./centered-junction";
 import { nativeJointBarriers } from "./native-joint-barriers";
 import { createRingPointQuery } from "./ring-point-query";
@@ -62,6 +70,8 @@ export type RoutePath = {
   nativeCirculationUsed?: boolean;
   /** A model/policy-bound prepared guide passed continuous runtime checks. */
   preparedGuideUsed?: boolean;
+  /** A shared lane also passed the current exact planar two-foot check. */
+  sharedCorridorGuideUsed?: boolean;
   /** Only the finite opening crossing and its local full-width approach. */
   openingSpanSupported?: boolean;
   shape?: "centered" | "orthogonal" | "curved";
@@ -660,6 +670,7 @@ function refine(
   junctionOnly = false,
   preparedGuide?: XYZ[],
   fixedAnchors = false,
+  preferSharedGuide = false,
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -1013,6 +1024,50 @@ function refine(
         )
       );
     };
+    const originalPassages = passageQuery(levelId, path.pointsFeet),
+      permitted = new Set([
+        ...edges.filter((e) => e.kind === "door").map((e) => e.id),
+        ...originalPassages.map((p) => p.edge.id),
+      ]);
+    const mandatoryDoors = edges
+      .filter((edge) => edge.kind === "door")
+      .map((edge) => edge.id);
+    const policyAllowed = (points: XY[]) => {
+      const crossings = passageQuery(
+        levelId,
+        points.map((p): XYZ => [p[0], p[1], path.pointsFeet[0][2]]),
+      );
+      // A shortcut may not leave through a different, unprepared open front
+      // and retain the selected doorway only as a fictitious graph dependency.
+      // Preserve every saved native threshold, including its travel direction.
+      return (
+        mandatoryDoors.every((id) => crossings.some((p) => p.edge.id === id)) &&
+        originalPassages.every((saved) =>
+          crossings.some(
+            (p) => p.edge.id === saved.edge.id && p.forward === saved.forward,
+          ),
+        ) &&
+        crossings.every(
+          ({ edge, forward }) =>
+            permitted.has(edge.id) &&
+            edge.enabled &&
+            (edge.direction !== "from-to" || forward) &&
+            (edge.direction !== "to-from" || !forward),
+        ) &&
+        openingSpans.every(({ edge, span }) => {
+          const index = edges.indexOf(edge);
+          let node = firstId;
+          for (let i = 0; i < index; i++)
+            node = edges[i].from === node ? edges[i].to : edges[i].from;
+          const forward = edge.from === node;
+          return openingSpanCrossings(edge, span!, points).some(
+            (c) =>
+              c.forward === forward &&
+              openingBodySupported(edge, span!, points, c),
+          );
+        })
+      );
+    };
     const candidates: XY[][] = [];
     let sourceGuide = false;
     let preparedCandidate = false;
@@ -1037,7 +1092,10 @@ function refine(
 
     if (
       preparedGuide &&
-      length(preparedGuide) <= sourceLength * 1.15 + 0.6 &&
+      length(preparedGuide) <=
+        sourceLength * 1.15 +
+          0.6 +
+          (preferSharedGuide ? 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET : 0) &&
       preparedGuide
         .slice(1)
         .every((p, i) =>
@@ -1048,8 +1106,35 @@ function refine(
           ),
         )
     ) {
-      candidates.push(preparedGuide.map((p) => [p[0], p[1]]));
-      preparedCandidate = true;
+      const shared = preparedGuide.map<XY>((p) => [p[0], p[1]]);
+      // A shared lane is a deliberate route style. Preserve its center instead
+      // of immediately replacing it with a shorter wall-side chord. All current
+      // physical support and source crossing policy have already been checked.
+      if (
+        preferSharedGuide &&
+        exactParts &&
+        createTwoFootCorridorSupport(
+          exactParts,
+          path.pointsFeet[0][2],
+        )(shared) &&
+        policyAllowed(shared)
+      )
+        return {
+          ...path,
+          centered: true,
+          nativeFloorSupported: !!supportedFloors,
+          nativeCirculationUsed: nativeSurfaces.cells.length > 0,
+          preparedGuideUsed: true,
+          sharedCorridorGuideUsed: true,
+          openingSpanSupported: openingSpans.length > 0 ? true : undefined,
+          shape: "centered",
+          sourceReason: undefined,
+          pointsFeet: preparedGuide.map((p): XYZ => [...p]),
+        };
+      if (!preferSharedGuide) {
+        candidates.push(shared);
+        preparedCandidate = true;
+      }
     }
     if (guideOnly) {
       const guide = path.pointsFeet.map<XY>((p) => [p[0], p[1]]);
@@ -1336,14 +1421,6 @@ function refine(
       }
       if (simplified.length < original.length) candidates.push(simplified);
     }
-    const originalPassages = passageQuery(levelId, path.pointsFeet),
-      permitted = new Set([
-        ...edges.filter((e) => e.kind === "door").map((e) => e.id),
-        ...originalPassages.map((p) => p.edge.id),
-      ]);
-    const mandatoryDoors = edges
-      .filter((edge) => edge.kind === "door")
-      .map((edge) => edge.id);
     for (const { edge, span } of openingSpans) {
       const extra = candidates.flatMap((points) =>
         openingSpanCandidates(edge, span!, points),
@@ -1355,42 +1432,6 @@ function refine(
         )
           candidates.push(points);
     }
-    const policyAllowed = (points: XY[]) => {
-      const crossings = passageQuery(
-        levelId,
-        points.map((p): XYZ => [p[0], p[1], path.pointsFeet[0][2]]),
-      );
-      // A shortcut may not leave through a different, unprepared open front
-      // and retain the selected doorway only as a fictitious graph dependency.
-      // Preserve every saved native threshold, including its travel direction.
-      return (
-        mandatoryDoors.every((id) => crossings.some((p) => p.edge.id === id)) &&
-        originalPassages.every((saved) =>
-          crossings.some(
-            (p) => p.edge.id === saved.edge.id && p.forward === saved.forward,
-          ),
-        ) &&
-        crossings.every(
-          ({ edge, forward }) =>
-            permitted.has(edge.id) &&
-            edge.enabled &&
-            (edge.direction !== "from-to" || forward) &&
-            (edge.direction !== "to-from" || !forward),
-        ) &&
-        openingSpans.every(({ edge, span }) => {
-          const index = edges.indexOf(edge);
-          let node = firstId;
-          for (let i = 0; i < index; i++)
-            node = edges[i].from === node ? edges[i].to : edges[i].from;
-          const forward = edge.from === node;
-          return openingSpanCrossings(edge, span!, points).some(
-            (c) =>
-              c.forward === forward &&
-              openingBodySupported(edge, span!, points, c),
-          );
-        })
-      );
-    };
     const policyCandidates = candidates.filter(policyAllowed);
     if (candidates.length > 0 && policyCandidates.length === 0) {
       if (preparedGuide)
@@ -1499,6 +1540,7 @@ export function centeredRoutePaths(
   edges: IndoorEdge[],
   nodeIds: string[],
   enabled = true,
+  useSharedGuides = true,
 ): RoutePath[] {
   // Reviews can edit an existing ring array in place. Bounds are reusable
   // inside one synchronous resolution, never across changed geometry.
@@ -1506,8 +1548,12 @@ export function centeredRoutePaths(
   ringQueries = new WeakMap();
   const passageQuery = createDoorPassageQuery(data);
   const prepared = enabled
-    ? preparedWalkingGuides(data)
+    ? new Map(preparedWalkingGuides(data))
     : new Map<string, XYZ[]>();
+  const sharedGuideIds = enabled
+    ? preparedSharedCorridorGuideIds(data)
+    : new Set<string>();
+  if (!useSharedGuides) for (const id of sharedGuideIds) prepared.delete(id);
   const edgeOrientations = new Map(
     edges.map((edge, i) => [edge, nodeIds[i] === edge.from]),
   );
@@ -1569,7 +1615,10 @@ export function centeredRoutePaths(
       ];
     const group = groups[i];
     let usedPreparedGuide = false;
-    const preparedGuide =
+    const preferSharedGuide =
+      useSharedGuides &&
+      group.edges.some((edge) => sharedGuideIds.has(edge.id));
+    let preparedGuide =
       prepared.size === 0
         ? undefined
         : group.edges
@@ -1585,8 +1634,14 @@ export function centeredRoutePaths(
             })
             .filter(
               (p, j, all) =>
-                !j || DMath.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8,
+                !j ||
+                j === all.length - 1 ||
+                (preferSharedGuide
+                  ? p.some((v, k) => v !== all[j - 1][k])
+                  : DMath.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8),
             );
+    if (preferSharedGuide && preparedGuide)
+      preparedGuide = removeSharedGuideRetraces(preparedGuide);
     const resolved = refine(
       data,
       path,
@@ -1602,6 +1657,8 @@ export function centeredRoutePaths(
       false,
       false,
       usedPreparedGuide ? preparedGuide : undefined,
+      false,
+      preferSharedGuide,
     );
     if (
       (resolved.centered &&
