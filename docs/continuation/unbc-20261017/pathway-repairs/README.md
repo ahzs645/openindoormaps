@@ -3,7 +3,9 @@
 This continuation repairs the viewer and checks affected original route chains.
 The original map geometry, source nodes/edges, room classifications, access,
 held stairs and accessible flags are unchanged. The viewer and existing shared-guide candidate are now live as private Site
-version 11; the source geometry was not regenerated.
+version 12; the source geometry was not regenerated. The latest
+[passage-door correction](PASSAGE-DOOR-FOLLOWUP.md) removes dotted internal
+threshold branches while retaining room entrances.
 
 Current work is on draft [OpenIndoorMaps PR #3](https://github.com/ahzs645/openindoormaps/pull/3),
 branch `codex/unbc-corridor-analysis-20261017`. The related Reviter ownership
@@ -233,12 +235,17 @@ building is inaccessible.
 
 ## Published viewer and download
 
+Current publication is **version 12**, with the
+[passage-door correction](PASSAGE-DOOR-FOLLOWUP.md). The version-11 receipt and
+browser evidence below are retained as historical checks; `publication.json`
+records the latest deployment.
+
 [Open the viewer with hallway guides enabled](https://openindoormaps-unbc-map.ahzs6455.chatgpt.site/openindoormaps/#/projects/indoor?package=%2Fdata%2Funbc-full%2Fproject.json&manifest=%2Fdata%2Funbc%2Fmanifest.json&preview=%2Fbinary%2F&view=2d&paths=1).
 The checkbox in Map preferences or Directions removes/adds `paths=1` in the
 shareable URL without a reload. Teal is the saved hallway trunk; dotted amber
 is a saved door approach. Bright blue still denotes calculated directions.
 
-Site version **11** deployed successfully at **2026-10-17 19:17:50 UTC**,
+The initial dotted-approach Site version **11** deployed successfully at **2026-10-17 19:17:50 UTC**,
 from Site source `73155c6d65af034c0061699a60f4f92d013a9868`, containing
 viewer source `612e37c`. Existing owner-private access is preserved. The
 publication checker checks 26 ordinary page/asset/package-part URLs against
