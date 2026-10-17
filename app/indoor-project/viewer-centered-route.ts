@@ -1114,27 +1114,46 @@ function refine(
         compactBounds[2] - compactBounds[0],
         compactBounds[3] - compactBounds[1],
       ) <= 24 &&
-      exactParts &&
-      validSegment(start, end, free) &&
-      createTwoFootCorridorSupport(
-        exactParts,
-        path.pointsFeet[0][2],
-      )([start, end]) &&
-      policyAllowed([start, end])
-    )
-      return {
-        ...path,
-        centered: true,
-        nativeFloorSupported: !!supportedFloors,
-        nativeCirculationUsed: nativeSurfaces.cells.length > 0,
-        preparedGuideUsed: true,
-        sharedCorridorGuideUsed: true,
-        shape: "centered",
-        sourceReason: undefined,
-        pointsFeet: [path.pointsFeet[0], path.pointsFeet.at(-1)!].map(
-          (p): XYZ => [...p],
-        ),
-      };
+      exactParts
+    ) {
+      // At an outer endpoint, keep the original door-to-center approach.
+      // After endpoint trimming the visible run starts at that center stop;
+      // an internal vestibule still has just its two fixed thresholds.
+      const seen = new Set<string>();
+      const compactPoints = [
+        path.pointsFeet[0],
+        ...preparedGuide.filter((p) => {
+          if (
+            !preservedSharedPoints.some((q) => p.every((v, k) => v === q[k])) ||
+            p.every((v, k) => v === path.pointsFeet[0][k]) ||
+            p.every((v, k) => v === path.pointsFeet.at(-1)![k])
+          )
+            return false;
+          const key = JSON.stringify(p);
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        }),
+        path.pointsFeet.at(-1)!,
+      ];
+      const line = compactPoints.map<XY>((p) => [p[0], p[1]]);
+      if (
+        line.slice(1).every((p, i) => validSegment(line[i], p, free)) &&
+        createTwoFootCorridorSupport(exactParts, path.pointsFeet[0][2])(line) &&
+        policyAllowed(line)
+      )
+        return {
+          ...path,
+          centered: true,
+          nativeFloorSupported: !!supportedFloors,
+          nativeCirculationUsed: nativeSurfaces.cells.length > 0,
+          preparedGuideUsed: true,
+          sharedCorridorGuideUsed: true,
+          shape: "centered",
+          sourceReason: undefined,
+          pointsFeet: compactPoints.map((p): XYZ => [...p]),
+        };
+    }
 
     const guideCandidates = preparedGuide
       ? preferSharedGuide
@@ -1611,6 +1630,7 @@ export function centeredRoutePaths(
   nodeIds: string[],
   enabled = true,
   useSharedGuides = true,
+  preserveHallwayStops = false,
 ): RoutePath[] {
   // Reviews can edit an existing ring array in place. Bounds are reusable
   // inside one synchronous resolution, never across changed geometry.
@@ -1635,7 +1655,7 @@ export function centeredRoutePaths(
   // Keep their exact vertices until centerHallwayRouteEndpoints trims the
   // separately preserved door approaches after refinement.
   const preservedSharedPoints = [edges[0], edges.at(-1)].flatMap((edge, i) => {
-    if (!edge) return [];
+    if (!edge || !preserveHallwayStops) return [];
     const pair = sharedJoins.get(edge.id);
     return pair
       ? [pair[(i === 0) === !!edgeOrientations.get(edge) ? 0 : 1]]

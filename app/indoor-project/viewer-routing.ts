@@ -344,13 +344,16 @@ function resolveProjectRoute(
   });
   const reviewedEdges = [...dependencies.values()],
     used = [...new Set(reviewedEdges.flatMap((e) => e.roomKeys))];
-  const paths = centerPaths(
+  const pathArguments = [
     data,
     edges,
     nodeIds,
     mode === "public",
     options.useSharedCorridorGuides !== false,
-  );
+  ] as const;
+  const paths = originalCentering
+    ? originalCenteredRoutePaths(...pathArguments)
+    : centeredRoutePaths(...pathArguments, options.endpointMode === "hallway");
   const outside = createIndoorExclusionQuery(data);
   const pathExclusions = (path: RoutePath) => {
     const edge =

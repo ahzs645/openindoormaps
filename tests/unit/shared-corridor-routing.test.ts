@@ -36,6 +36,7 @@ import {
 import { centerHallwayRouteEndpoints } from "../../app/indoor-project/hallway-center-endpoints";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
+import { centeredRoutePaths } from "../../app/indoor-project/viewer-centered-route";
 
 async function fixture(compact = false, hole = false) {
   await initializeNativeExactGeosOverlay();
@@ -608,4 +609,66 @@ test("cleanup retains the exact hallway stop anchors even when their outer appro
       result.some((p) => p.every((v, k) => v === join[k])),
       "the later hallway stop can still trim its original door approach",
     );
+});
+
+test("compact vestibule shortcuts preserve both outer hallway-center stops before trimming door approaches", async () => {
+  const source = await fixture(true);
+  source.nodes[0].pointFeet[1] = 1;
+  source.nodes[2].pointFeet[1] = 9;
+  const data = (await prepareRouting(source, { method: "shared-corridor" }))
+    .dataset;
+  for (const [from, to] of [
+    ["A", "C"],
+    ["C", "A"],
+  ]) {
+    const original = findProjectRoute(data, from, to, "public", {
+      endpointMode: "inside",
+    })!;
+    original.paths = centeredRoutePaths(
+      data,
+      original.edges,
+      original.nodeIds,
+      true,
+      true,
+      true,
+    );
+    original.distanceMetres = original.paths.reduce(
+      (n, p) =>
+        n +
+        corridorGuideLength(p.pointsFeet) *
+          data.alignment.horizontalMetresPerFoot,
+      0,
+    );
+    const start = original.paths[0].pointsFeet[0];
+    const end = original.paths.at(-1)!.pointsFeet.at(-1)!;
+    original.departure = {
+      mode: "hallway",
+      pointFeet: start,
+      levelId: 1,
+      building: "test",
+      entranceEdgeId: "start",
+    };
+    original.arrival = {
+      mode: "hallway",
+      pointFeet: end,
+      levelId: 1,
+      building: "test",
+      entranceEdgeId: "end",
+    };
+    const route = centerHallwayRouteEndpoints(data, original);
+    assert.ok(
+      route.departure?.hallwayCenter,
+      "departure keeps its middle-of-hallway stop",
+    );
+    assert.ok(
+      route.arrival?.hallwayCenter,
+      "arrival keeps its middle-of-hallway stop",
+    );
+    assert.equal(route.paths.length, 1);
+    assert.equal(route.paths[0].pointsFeet.length, 2);
+    assert.notDeepEqual(route.departure.pointFeet, start);
+    assert.notDeepEqual(route.arrival.pointFeet, end);
+    assert.deepEqual(route.departure.hallwayCenter.doorPointFeet, start);
+    assert.deepEqual(route.arrival.hallwayCenter.doorPointFeet, end);
+  }
 });

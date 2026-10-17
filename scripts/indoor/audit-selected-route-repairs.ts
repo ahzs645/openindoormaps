@@ -12,6 +12,7 @@ import { createWorkerRouteCalculator } from "../../app/indoor-project/route-calc
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
+import { localRoutingImplementation } from "./lib/local-routing-implementation";
 const [source, casesFile, out] = process.argv.slice(2);
 if (!source || !casesFile || !out)
   throw new Error(
@@ -19,6 +20,7 @@ if (!source || !casesFile || !out)
   );
 const sha = (v: string | Uint8Array) =>
   createHash("sha256").update(v).digest("hex");
+const implementation = localRoutingImplementation();
 const raw = await readFile(source),
   data = JSON.parse(raw.toString()) as IndoorDataset;
 const before = sha(JSON.stringify(data));
@@ -100,6 +102,11 @@ for (const item of cases) {
 }
 assert.equal(sha(JSON.stringify(data)), before);
 assert.equal(
+  localRoutingImplementation().sha256,
+  implementation.sha256,
+  "Routing implementation changed during the audit",
+);
+assert.equal(
   data.edges.filter((e) => e.kind === "stairs" && e.enabled).length,
   0,
 );
@@ -115,6 +122,7 @@ await writeFile(
       sourceUnchanged: true,
       inputJsonSha256: sha(raw),
       engineSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+      implementation,
       results,
     },
     null,

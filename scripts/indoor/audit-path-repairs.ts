@@ -16,6 +16,7 @@ import { centerHallwayRouteEndpoints } from "../../app/indoor-project/hallway-ce
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import type { PreparedRouting } from "../../app/indoor-project/prepared-routing";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
+import { localRoutingImplementation } from "./lib/local-routing-implementation";
 const [input, examplesFile, output, prefix] = process.argv.slice(2);
 if (!input || !examplesFile || !output)
   throw new Error(
@@ -23,6 +24,7 @@ if (!input || !examplesFile || !output)
   );
 const sha = (v: string | Uint8Array) =>
   createHash("sha256").update(v).digest("hex");
+const implementation = localRoutingImplementation();
 const raw = await readFile(input),
   data = JSON.parse(raw.toString()) as IndoorDataset;
 const before = sha(JSON.stringify(data));
@@ -60,7 +62,15 @@ const replay = (
   if (prefix && !prefix.split("|").some((p) => id.startsWith(p))) return;
   const at = performance.now();
   const paths = run(() =>
-    centeredRoutePaths(data, original, nodeIds, true, true),
+    centeredRoutePaths(
+      data,
+      original,
+      nodeIds,
+      true,
+      true,
+      priorRoute?.departure?.mode === "hallway" ||
+        priorRoute?.arrival?.mode === "hallway",
+    ),
   );
   assert.deepEqual(paths[0].pointsFeet[0], nodes.get(nodeIds[0])!.pointFeet);
   assert.deepEqual(
@@ -198,6 +208,11 @@ for (const [id, item] of Object.entries(prior).filter(
   replay(id, source, item.route.nodeIds, item.route.paths, item.route);
 }
 assert.equal(sha(JSON.stringify(data)), before);
+assert.equal(
+  localRoutingImplementation().sha256,
+  implementation.sha256,
+  "Routing implementation changed during the replay",
+);
 await writeFile(
   output,
   JSON.stringify({
@@ -209,6 +224,7 @@ await writeFile(
     policyGraphRebuilt: false,
     sourceModelSha256: data.source.modelSha256,
     engineSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+    implementation,
     results,
   }),
 );
