@@ -1,5 +1,7 @@
 # UNBC: start here for the next AI
 
+> **October 17 regeneration update:** [Fresh original-source materials and all four later review inputs are checked and backed up](../unbc-20261017/regeneration-recovery/README.md). Nine new production floor checkpoints are being regenerated in an isolated guarded build; use the linked private Drive progress index for the current count. No historical digest has been rebound, no original-arrival guard waived, and no newer master accepted or published.
+
 Latest recovery: [the source recovery review](../unbc-20261017/source-recovery/README.md)
 restores the exact original RVT, accepted historical authoring master, canonical
 rooms/GIS and all 890 companions. All 28 held stair sources were freshly reread.

@@ -1,0 +1,83 @@
+{
+  "format": "unbc-regeneration-stages-v1",
+  "updatedAt": "2026-10-17T23:44:09.392076+00:00",
+  "folderId": "13ZLJpZEs-70wVXQiCUzhYera0aVqVpVL",
+  "baseRecoveryArchiveSha256": "7dd8789dea31098c89b3c455fd524ed79add148976fcc95143f53e0bd60448c7",
+  "sourceBaseline": {
+    "openindoormaps": "fc10d7d",
+    "reviter": "b0085be9c475fdb322859a181a0999911ab19793"
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "name": "UNBC.stage-01-materials.tar.zst",
+      "bytes": 1867386,
+      "sha256": "06ed47f5aba9798b54e174c28e1b167f0cf73f484e076a93da5bc5a7bb6e8a40",
+      "driveId": "13RZAohwFFrSludaJtXnQec5qqff9Sahu",
+      "url": "https://drive.google.com/file/d/13RZAohwFFrSludaJtXnQec5qqff9Sahu/view",
+      "remoteWholeFileReadbackPassed": true
+    },
+    {
+      "stage": 2,
+      "name": "UNBC.stage-02-boundary-reviews.tar.zst",
+      "bytes": 171683,
+      "sha256": "cec2bd1652c556e13928c659a94961b670ce99c9f8bf8e392c9fb70e14a7a57a",
+      "driveId": "1P5X_XrPJQGX-TZ312njgYQ-xWlE0NDNU",
+      "url": "https://drive.google.com/file/d/1P5X_XrPJQGX-TZ312njgYQ-xWlE0NDNU/view",
+      "remoteWholeFileReadbackPassed": true
+    },
+    {
+      "stage": 3,
+      "name": "UNBC.stage-03-stepped-source-review.tar.zst",
+      "bytes": 14723,
+      "sha256": "f9303465562d93b6bb8dc55f5beca56c6eb87a3a2a155d657abcb33a9b365967",
+      "driveId": "1UrPt07VgGzO6yPt3oPwVi72WuvAsi0sK",
+      "url": "https://drive.google.com/file/d/1UrPt07VgGzO6yPt3oPwVi72WuvAsi0sK/view",
+      "remoteWholeFileReadbackPassed": true
+    },
+    {
+      "stage": "4",
+      "name": "UNBC.stage-04-prelanding-context.tar.zst",
+      "bytes": 15659969,
+      "sha256": "25f4d90fad3ea1a685df25ce84cffd43ff0afa4df7739254b0fba1782e3f05f8",
+      "driveId": "17S1bqDJTB32Vp8Py9LBit77zYJUrCQuQ",
+      "url": "https://drive.google.com/file/d/17S1bqDJTB32Vp8Py9LBit77zYJUrCQuQ/view",
+      "remoteWholeFileReadbackPassed": true
+    },
+    {
+      "stage": "5a",
+      "name": "UNBC.stage-05a-door-and-source-state.tar.zst",
+      "bytes": 6464720,
+      "sha256": "9cf1c19c54733049a6e29d049177082b095803e836357c57921b5f25a7db3375",
+      "driveId": "1g3PztQBZj8IkdoU7Jia5CwHC0zca7kuC",
+      "url": "https://drive.google.com/file/d/1g3PztQBZj8IkdoU7Jia5CwHC0zca7kuC/view",
+      "remoteWholeFileReadbackPassed": true,
+      "supersededArchiveSha256": "b249570e36be9137874a0ff5aac686bb0e26c7fa07ec00cdedf2514a4c40d91d",
+      "revision": 2
+    },
+    {
+      "stage": "5b",
+      "name": "UNBC.stage-05b-door-source-state.tar.zst",
+      "bytes": 29095709,
+      "sha256": "579480a18f50760f1fc84298a8c0cd9c6a7b5194a1561d91d74eb4427491c355",
+      "driveId": "1y-6QSJMAyntIAyuWQDZfC_2BprbTiROE",
+      "url": "https://drive.google.com/file/d/1y-6QSJMAyntIAyuWQDZfC_2BprbTiROE/view",
+      "remoteWholeFileReadbackPassed": true
+    }
+  ],
+  "pending": [
+    "nine new correctly bound physical-floor checkpoints",
+    "full guarded candidate validation and preservation checks"
+  ],
+  "historicalCheckpointDigestsRelabelled": false,
+  "newAcceptedMasterProduced": false,
+  "liveSiteChanged": false,
+  "allFourReviewInputsReissuedAndChecked": true,
+  "guardedRebuild": {
+    "status": "running",
+    "start": "guarded-rebuild-01-start.json",
+    "sourceFreeze": "SOURCE-FREEZE.json",
+    "historicalCheckpointDigestsRelabelled": false,
+    "originalArrivalPreservationGuardActive": true
+  }
+}

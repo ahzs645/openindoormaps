@@ -1,0 +1,66 @@
+{
+  "format": "unbc-guarded-rebuild-start-v1",
+  "createdAt": "2026-10-17T23:17:25.092740+00:00",
+  "pid": 34397,
+  "supervisorPid": 34389,
+  "args": [
+    "node",
+    "--max-old-space-size=6144",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/regenerate-from-native-cache.ts",
+    "/workspace/scratch/unbc-recovery-20261017/UNBC.reconstructed-working-input.reviter.zip",
+    "/workspace/scratch/unbc-regeneration-20261017/materials/reissued/UNBC.regenerated-materials.native-cache.json",
+    "/workspace/scratch/unbc-regeneration-20261017/regenerated-01",
+    "--native-workers",
+    "1",
+    "--native-worker-heap-mib",
+    "4096",
+    "--landing-workers",
+    "2",
+    "--landing-worker-heap-mib",
+    "3072",
+    "--checkpoint-dir",
+    "/workspace/scratch/unbc-regeneration-20261017/production-checkpoints",
+    "--drawing-reference-review",
+    "/workspace/scratch/unbc-regeneration-20261017/reviews/reviewed-drawing-references.json",
+    "--refresh-drawing-floor-bindings",
+    "checked",
+    "--boundary-contact-review",
+    "/workspace/scratch/unbc-regeneration-20261017/reviews/checked-boundary-review-bundle.json",
+    "--door-boundary-closure-review",
+    "/workspace/scratch/unbc-regeneration-20261017/reviews/checked-door-boundary-review.json",
+    "--source-flat-landing-review",
+    "checked",
+    "--source-stepped-stair-review",
+    "/workspace/scratch/unbc-regeneration-20261017/reviews/checked-stepped-stair-review.json",
+    "--validated-import-checkpoint-dir",
+    "/workspace/scratch/unbc-regeneration-20261017/private-import-checkpoints",
+    "--prepared-diagnostic-dir",
+    "/workspace/scratch/unbc-regeneration-20261017/prepared-diagnostic-01"
+  ],
+  "cwd": "/workspace/scratch/unbc-regeneration-20261017/frozen/workspace/openindoormaps",
+  "sourceFreezeSha256": "ebfb9eb7bb8022034b95f7494c337b7f258a1142e8cbed3b439d577df328b3d4",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.original.rvt",
+      "bytes": 70336512,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+    },
+    {
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.reconstructed-working-input.reviter.zip",
+      "bytes": 274706116,
+      "sha256": "d5a829e8100c81dd6587549bafd9ac1460fd68a56e69284cc5b806d449a49811"
+    },
+    {
+      "path": "/workspace/scratch/unbc-regeneration-20261017/materials/reissued/UNBC.regenerated-materials.native-cache.json",
+      "bytes": 420947461,
+      "sha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb"
+    }
+  ],
+  "log": "/workspace/scratch/unbc-regeneration-20261017/guarded-rebuild-01.log",
+  "physicalGuardsWaived": false,
+  "historicalCheckpointRelabelling": false,
+  "publicationRequestedByThisJob": false
+}

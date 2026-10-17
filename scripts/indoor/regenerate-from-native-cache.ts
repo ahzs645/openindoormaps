@@ -25,6 +25,7 @@ import type { IndoorDataset } from "../../app/indoor-project/contract";
 import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { serialize } from "node:v8";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 const { join, resolve } = path;
@@ -47,7 +48,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--validated-import-checkpoint-dir private-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -67,6 +68,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--door-boundary-closure-review",
       "--source-flat-landing-review",
       "--source-stepped-stair-review",
+      "--prepared-diagnostic-dir",
     ].includes(flag) ||
     workerOptions.has(flag) ||
     !value ||
@@ -93,17 +95,23 @@ if (
 )
   throw new Error("--landing-workers must be an integer 1–8");
 const workerHeap = (flag: string, workers: number | undefined) => {
-  if (!workerOptions.has(flag)) return undefined;
-  if (!workers) throw new Error(`${flag} requires its corresponding worker option`);
+  if (!workerOptions.has(flag)) return;
+  if (!workers)
+    throw new Error(`${flag} requires its corresponding worker option`);
   const heapMiB = Number(workerOptions.get(flag));
   if (!Number.isSafeInteger(heapMiB) || heapMiB < 256 || heapMiB > 8192)
     throw new Error(`${flag} must be an integer 256–8192`);
   return heapMiB;
 };
 const nativeWorkerHeapMiB = workerHeap("--native-worker-heap-mib", workerCount);
-const landingWorkerHeapMiB = workerHeap("--landing-worker-heap-mib", landingWorkers);
+const landingWorkerHeapMiB = workerHeap(
+  "--landing-worker-heap-mib",
+  landingWorkers,
+);
 if (landingWorkerHeapMiB !== undefined && landingWorkers === 1)
-  throw new Error("--landing-worker-heap-mib requires at least two landing workers; one uses the parent isolate");
+  throw new Error(
+    "--landing-worker-heap-mib requires at least two landing workers; one uses the parent isolate",
+  );
 if (workerOptions.has("--checkpoint-dir") && !workerCount && !landingWorkers)
   throw new Error(
     "--checkpoint-dir requires --native-workers or --landing-workers",
@@ -111,11 +119,24 @@ if (workerOptions.has("--checkpoint-dir") && !workerCount && !landingWorkers)
 const inputPath = resolve(input),
   cachePath = resolve(nativeCache),
   output = resolve(destination);
+const preparedDiagnosticDirectory = workerOptions.get(
+  "--prepared-diagnostic-dir",
+);
+// Diagnostic output is isolated and must be new. Refuse accidental replacement
+// before any expensive import or compilation work begins.
+if (preparedDiagnosticDirectory)
+  await mkdir(resolve(preparedDiagnosticDirectory), { recursive: false });
+async function fileDigest(file: string) {
+  const digest = createHash("sha256");
+  for await (const chunk of createReadStream(file)) digest.update(chunk);
+  return digest.digest("hex");
+}
+const inputArchiveSha256 = await fileDigest(inputPath);
 const refreshDrawingFloors = workerOptions.get(
   "--refresh-drawing-floor-bindings",
 );
 if (refreshDrawingFloors !== undefined && refreshDrawingFloors !== "checked")
-  throw Error(
+  throw new Error(
     "--refresh-drawing-floor-bindings requires the explicit value checked",
   );
 const sourceFlatLandingReview = workerOptions.get(
@@ -125,7 +146,7 @@ if (
   sourceFlatLandingReview !== undefined &&
   sourceFlatLandingReview !== "checked"
 )
-  throw Error(
+  throw new Error(
     "--source-flat-landing-review requires the explicit value checked",
   );
 let sourceFlatLandingDriver:
@@ -349,12 +370,14 @@ if (boundaryReceiptBytes) {
     }),
   );
 }
-const doorBoundaryReviewPath = workerOptions.get("--door-boundary-closure-review");
+const doorBoundaryReviewPath = workerOptions.get(
+  "--door-boundary-closure-review",
+);
 const doorBoundaryReviewBytes = doorBoundaryReviewPath
   ? await readFile(resolve(doorBoundaryReviewPath))
   : undefined;
 const doorBoundaryReviewAlgorithmPath = fileURLToPath(
-  new URL("./source-door-boundary-closure-review.ts", import.meta.url),
+  new URL("source-door-boundary-closure-review.ts", import.meta.url),
 );
 const doorBoundaryReviewAlgorithmSha256 = doorBoundaryReviewBytes
   ? createHash("sha256")
@@ -374,19 +397,33 @@ const doorBoundaryReplay = doorBoundaryReviewBytes
     )
   : undefined;
 const rooms = doorBoundaryReplay?.rooms ?? boundaryReviewedRooms;
-const doorBoundaryReceiptPath = join(output, "source-door-boundary-closure-replay.json");
-const doorBoundaryPortableReviewPath = join(output, "source-door-boundary-closure-review.json");
+const doorBoundaryReceiptPath = join(
+  output,
+  "source-door-boundary-closure-replay.json",
+);
+const doorBoundaryPortableReviewPath = join(
+  output,
+  "source-door-boundary-closure-review.json",
+);
 const doorBoundaryReceiptBytes = doorBoundaryReplay
   ? JSON.stringify(doorBoundaryReplay.receipt, null, 2) + "\n"
   : undefined;
 if (doorBoundaryReceiptBytes) {
   await mkdir(output, { recursive: true });
-  await writeFile(doorBoundaryReceiptPath, doorBoundaryReceiptBytes, { flag: "wx" });
-  await writeFile(doorBoundaryPortableReviewPath, doorBoundaryReviewBytes!, { flag: "wx" });
-  console.log(JSON.stringify({
-    stage: "source-door-boundary-closures-rechecked",
-    receiptSha256: createHash("sha256").update(doorBoundaryReceiptBytes).digest("hex"),
-  }));
+  await writeFile(doorBoundaryReceiptPath, doorBoundaryReceiptBytes, {
+    flag: "wx",
+  });
+  await writeFile(doorBoundaryPortableReviewPath, doorBoundaryReviewBytes!, {
+    flag: "wx",
+  });
+  console.log(
+    JSON.stringify({
+      stage: "source-door-boundary-closures-rechecked",
+      receiptSha256: createHash("sha256")
+        .update(doorBoundaryReceiptBytes)
+        .digest("hex"),
+    }),
+  );
 }
 const sourceRooms = JSON.stringify(rooms);
 if (sourceFlatLandingReview) {
@@ -470,6 +507,59 @@ let dataset = await prepareIndoorDataset(
     nativeLandingApproaches,
   },
 );
+if (preparedDiagnosticDirectory) {
+  assert.equal(
+    await fileDigest(inputPath),
+    inputArchiveSha256,
+    "Original archive changed during preparation",
+  );
+  assert.equal(
+    await fileDigest(cachePath),
+    nativeCacheSha256,
+    "Native cache changed during preparation",
+  );
+  const bytes = serialize(dataset),
+    sha256 = createHash("sha256").update(bytes).digest("hex");
+  const directory = resolve(preparedDiagnosticDirectory);
+  await writeFile(
+    join(directory, "prepared-before-stair-finalization.bin"),
+    bytes,
+    { flag: "wx" },
+  );
+  await writeFile(
+    join(directory, "prepared-before-stair-finalization.json"),
+    JSON.stringify(
+      {
+        format: "unbc-prepared-mathematical-diagnostic-v1",
+        createdAt: new Date().toISOString(),
+        bytes: bytes.length,
+        sha256,
+        node: process.version,
+        inputArchiveSha256,
+        nativeCacheSha256,
+        sourceModelSha256,
+        sourceRoomsSha256: dataset.source.roomsSha256,
+        phase:
+          "native-planes-and-landings-computed-before-stair-finalization-and-preservation-gates",
+        validatedImportAuthorityRestored: false,
+        physicalOrRoutingApprovalGranted: false,
+        acceptedMasterProduced: false,
+      },
+      null,
+      2,
+    ) + "\n",
+    { flag: "wx" },
+  );
+  console.log(
+    JSON.stringify({
+      stage: "prepared-mathematical-diagnostic-saved",
+      directory,
+      bytes: bytes.length,
+      sha256,
+      validationAuthorityRestored: false,
+    }),
+  );
+}
 const sourceSteppedApplications = [];
 for (const proof of sourceSteppedProofs?.proofs ?? []) {
   const result = await finalizeSourceSteppedStairV2Dataset(dataset, proof, {
@@ -563,7 +653,7 @@ if (sourceFlatLandingEvidence) {
 // The compiler hashes hydrated annotations. A portable package binds the exact
 // preserved source entry, whose review companions may use archive wire storage.
 dataset.source.roomsSha256 =
-    sourceReview || drawingFloorReplay || boundaryReplay || doorBoundaryReplay
+  sourceReview || drawingFloorReplay || boundaryReplay || doorBoundaryReplay
     ? createHash("sha256")
         .update((await serializeRoomsForArchive(rooms)).rooms)
         .digest("hex")
@@ -604,9 +694,10 @@ const incidentIds = new Set(nonRestrictedLosses.map((r) => r.arrivalNodeId));
 const originalIncidentEdges = before.dataset.edges.filter(
   (e) => e.enabled && (incidentIds.has(e.from) || incidentIds.has(e.to)),
 );
-const originalPhysicalBlockers = nonRestrictedLosses.length
-  ? nativeCirculationWalkBlockers(before.dataset, originalIncidentEdges)
-  : new Set<string>();
+const originalPhysicalBlockers =
+  nonRestrictedLosses.length > 0
+    ? nativeCirculationWalkBlockers(before.dataset, originalIncidentEdges)
+    : new Set<string>();
 const unsupportedPriorArrivals = nonRestrictedLosses
   .map((r) =>
     originalBlockedArrivalEvidence(
@@ -661,7 +752,10 @@ const assets = Object.keys(before.files).filter(
     !path.startsWith("viewer/") &&
     path !== "manifest.json" &&
     !(
-      (sourceReview || drawingFloorReplay || boundaryReplay || doorBoundaryReplay) &&
+      (sourceReview ||
+        drawingFloorReplay ||
+        boundaryReplay ||
+        doorBoundaryReplay) &&
       path === "floors/rooms.json"
     ),
 );
@@ -861,7 +955,7 @@ const summary = {
     ? {
         sourceSteppedStairV2Review: {
           path: resolve(sourceSteppedReviewPath!),
-        portableReviewPath: sourceSteppedReviewArtifactPath,
+          portableReviewPath: sourceSteppedReviewArtifactPath,
           reviewSha256: sha(sourceSteppedReviewBytes!),
           receiptPath: sourceSteppedReceiptPath,
           receiptSha256: createHash("sha256")

@@ -1,5 +1,7 @@
 # UNBC source recovery and complete held-stair review · October 17
 
+> **Regeneration update:** [Fresh materials and all four later source reviews are now checked and backed up](../regeneration-recovery/README.md). The [incremental Drive folder](https://drive.google.com/drive/folders/13ZLJpZEs-70wVXQiCUzhYera0aVqVpVL) contains full-download-verified compact stages and live progress. Nine new correctly bound physical-floor checkpoints are being regenerated once with preservation guards intact. Historical missing artifact hashes remain unrecovered; do not relabel these new inputs or call them an accepted master. The older inventory below describes exact historical recovery.
+
 The original RVT and accepted authoring master have now been recovered from Drive
 and verified by their recorded SHA-256 hashes. The previous statement that they
 were missing described the former workspace state. They are available locally
