@@ -164,6 +164,10 @@ export async function auditSharedCorridorNavigation(
   const calculate = createWorkerRouteCalculator(data);
   const results: unknown[] = [],
     failures: { id: string; message: string }[] = [];
+  const floorResults = new Map<
+    string,
+    { available: boolean; sharedPaths: number }
+  >();
   const allStarted = performance.now();
   for (const item of cases) {
     console.log(`Navigation start ${item.id}`);
@@ -233,6 +237,7 @@ export async function auditSharedCorridorNavigation(
         diagnostic: shared.diagnostic,
       };
       results.push(result);
+      if (item.floorId) floorResults.set(item.floorId, result);
       console.log(
         JSON.stringify({
           case: item.id,
@@ -257,6 +262,15 @@ export async function auditSharedCorridorNavigation(
       ),
     );
     await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  }
+  for (const floor of floorCoverage) {
+    const result = floorResults.get(floor.floorId);
+    if (!result?.available || result.sharedPaths === 0)
+      failures.push({
+        id: `floor-coverage:${floor.floorId}`,
+        message:
+          floor.reason ?? "No actual route using shared guides on this floor",
+      });
   }
   assert.equal(
     sha([data.nodes, data.edges, data.records]),
