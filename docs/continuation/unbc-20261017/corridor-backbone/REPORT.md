@@ -1,5 +1,9 @@
 # Package audit and shared corridor paths — October 17
 
+Follow-up: [ALL-FLOORS.md](ALL-FLOORS.md) records the implemented compiler,
+all five floors, the derived package and acceptance checks. The prototype
+results below describe the earlier investigation.
+
 The published visitor ZIP was freshly recovered through the existing private
 Site and verified against every part and the complete publication descriptor.
 It is still the October 15 geometry export. No Site, source geometry, routing
