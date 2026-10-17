@@ -483,7 +483,14 @@ export function nativeCirculationCells(
   // Connector anchors bind lift/stair attachment, not a cell's floor face.
   // Descriptive callers (boundary evidence) may skip their proof, which builds
   // the exact routing material authority on the calling thread.
-  { connectorAnchors = true }: { connectorAnchors?: boolean } = {},
+  {
+    connectorAnchors = true,
+    cellIds,
+  }: {
+    connectorAnchors?: boolean;
+    /** Scope enumeration only; complete physical/access dependencies remain. */
+    cellIds?: ReadonlySet<string>;
+  } = {},
 ): NativeCirculationCell[] {
   const prepared = data.circulationGeometry;
   if (
@@ -500,18 +507,20 @@ export function nativeCirculationCells(
     const index = data.nativeIndoorEnvelopes
       ? nativeCirculationExactIndex(data)
       : undefined;
-    return prepared.cells.filter(
-      (cell) =>
-        (!data.nativeIndoorEnvelopes ||
-          !!(
-            cell.exactFaceId &&
-            index?.parts(cell.exactFaceId) &&
-            nativeCellAccessIsSupported(data, cell, index)
-          )) &&
-        (!connectorAnchors ||
-          !cell.connectorAnchors ||
-          validConnectorCellAnchors(data, cell)),
-    );
+    return prepared.cells
+      .filter((cell) => !cellIds || cellIds.has(cell.id))
+      .filter(
+        (cell) =>
+          (!data.nativeIndoorEnvelopes ||
+            !!(
+              cell.exactFaceId &&
+              index?.parts(cell.exactFaceId) &&
+              nativeCellAccessIsSupported(data, cell, index)
+            )) &&
+          (!connectorAnchors ||
+            !cell.connectorAnchors ||
+            validConnectorCellAnchors(data, cell)),
+      );
   });
 }
 
@@ -699,7 +708,21 @@ export function nativeCirculationSurfaces(
       .filter((r) => data.nativeIndoorEnvelopes || r.circulation)
       .map((r) => r.key),
   );
-  const cells = nativeCirculationCells(data).filter(
+  const candidateIds = new Set(
+    (data.circulationGeometry?.cells ?? [])
+      .filter(
+        (c) =>
+          c.roomKeys.some((k) => keys.has(k)) &&
+          records.some(
+            (r) =>
+              c.roomKeys.includes(r.key) &&
+              Math.abs(c.elevationFeet - r.elevationFeet) < 0.05 &&
+              c.levelIds.includes(r.levelId),
+          ),
+      )
+      .map((c) => c.id),
+  );
+  const cells = nativeCirculationCells(data, { cellIds: candidateIds }).filter(
     (c) =>
       c.roomKeys.some((k) => keys.has(k)) &&
       records.some(

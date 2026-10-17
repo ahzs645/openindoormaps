@@ -16,3 +16,12 @@ For indoor room boundaries, missing/low room blocks, doors, circulation, stair/r
 No special requirements here apply to unrelated venue demos or ordinary non-indoor changes.
 
 For the current UNBC continuation, start with [the October 16 handoff](docs/continuation/unbc-20261016/HANDOFF.md). It distinguishes the live publication, failed source rebuild, next targeted repairs and portable data. Older handoffs are historical.
+
+The [October 17 pathway repairs](docs/continuation/unbc-20261017/pathway-repairs/README.md) add current viewer checks and data availability: the previously created large handoff archive and failed-run checkpoints are absent from this filesystem. Do not assume old scratch paths still exist or treat the visitor ZIP as authoring evidence.
+
+Every UNBC site publication must pair its exact visitor and both committed source
+trees using `scripts/indoor/package-development-snapshot.py`, verify a fresh
+restore and the final paired archive, and retain the missing-native-input list.
+See [portable development procedure](docs/continuation/unbc-20261017/pathway-repairs/PORTABLE-DEVELOPMENT.md).
+The development snapshot supports application edits; it is not a complete native
+backup until actual authoring inputs have been recovered and included.

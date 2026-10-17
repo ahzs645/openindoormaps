@@ -1,4 +1,8 @@
 import { holdHeavyWorkerLifetimeLock } from "./heavy-worker-schedule";
+import {
+  packResidentFloor,
+  restoreResidentFloor,
+} from "./resident-floor-cache";
 import { prepareOverviewGround } from "./overview-ground";
 import { prepareOverviewFloor } from "./overview-floor";
 import type { NativeExploreResult } from "./native-explore";
@@ -115,6 +119,34 @@ function reply(
   if (nativeFaces) message.nativeFaces = nativeFaces;
   message.overviewGround = overviewGround;
   message.overviewFloor = overviewFloor;
+  if (
+    faces &&
+    memoryCost > COMPLETE_FLOOR_CACHE_BYTES &&
+    !request.residentDisplay
+  ) {
+    try {
+      const packed = timeFloorStage(
+        "floor-worker:pack-resident",
+        () =>
+          packResidentFloor(
+            dataset,
+            request.levelIds,
+            request.building,
+            request.options,
+            value,
+            faces,
+          ),
+        (result) => ({ requestId, bytes: result?.memoryCostBytes }),
+      );
+      if (packed) {
+        message.residentDisplay = packed.asset;
+        message.residentDisplayMemoryCostBytes = packed.memoryCostBytes;
+      }
+    } catch {
+      // Packing is optional. A cache limit/failure must not hide a ready floor.
+      floorDiagnostic("floor-worker:pack-resident-skipped", { requestId });
+    }
+  }
   timeFloorStage(
     "floor-worker:postMessage",
     () => scope.postMessage(message),
@@ -132,6 +164,7 @@ scope.onmessage = async ({ data: request }) => {
       datasetIncluded: !!request.data,
       levels: request.levelIds.length,
       preparedAssetOffered: !!request.preparedDisplay,
+      residentDisplayOffered: !!request.residentDisplay,
       // Scalar engine comparison only; the loader still verifies everything.
       engineMatches:
         request.preparedDisplay?.descriptor.binding.enginePreparationSha256 ===
@@ -141,6 +174,22 @@ scope.onmessage = async ({ data: request }) => {
     if (request.data) data = request.data;
     if (!data) throw new Error("The floor worker has no project data.");
     const dataset = data;
+    if (request.residentDisplay) {
+      const saved = await timeFloorStageAsync(
+        "floor-worker:restore-resident",
+        () =>
+          restoreResidentFloor(
+            dataset,
+            request.levelIds,
+            request.building,
+            request.options,
+            request.residentDisplay!,
+          ),
+        () => ({ requestId }),
+      );
+      reply(request, dataset, saved.preparedFloor, saved.nativeFaces);
+      return;
+    }
     const saved = await timeFloorStageAsync(
       "floor-worker:prepared-asset",
       () =>

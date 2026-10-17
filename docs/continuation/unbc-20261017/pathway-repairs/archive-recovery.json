@@ -1,0 +1,33 @@
+{
+  "status": "absent-from-current-filesystem",
+  "originalCreationConfirmedInChat": true,
+  "previousArchive": {
+    "path": "/workspace/scratch/unbc-main-sync-20261016/transfer/UNBC-data-handoff-20261017.tar.gz",
+    "bytes": 1271906669,
+    "sha256": "24119b663b78afc8250ceeefd13f5a0854a3c94a29f0d566d97961bd5f375253",
+    "priorReadbackPayloads": 2771,
+    "priorDeduplicatedHardLinks": 647
+  },
+  "previousLosslessAlternative": "/workspace/scratch/unbc-archive-optimization-20261017/UNBC-data-handoff.lossless-zstd9-long29.tar.zst",
+  "searches": [
+    "Current /workspace including hidden task files, shared and library-files",
+    "/mnt, /tmp and /home/agent excluding dependency/cache trees",
+    "Current chat artifacts: PRs only",
+    "Accessible Drive UNBC folder and handoff-name searches",
+    "Prior chat creation commands and final archive links"
+  ],
+  "notFound": [
+    "Original archive",
+    "Zstandard alternative",
+    "Newer enriched cache",
+    "Failed-run input",
+    "Nine physical checkpoint pairs"
+  ],
+  "available": [
+    "Git source and committed reviews/handoffs",
+    "Current candidate visitor ZIP",
+    "Published visitor ZIP",
+    "October 14 historical master in Drive"
+  ],
+  "important": "Visitor data and the historical master cannot replace the newer exact failed-run authoring input. No checksum, filename or prior review receipt recreates missing bytes. No rebuilt source package is claimed."
+}

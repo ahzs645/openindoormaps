@@ -3,13 +3,19 @@ import { bytesToHex } from "@noble/hashes/utils.js";
 import type { IndoorDataset } from "./contract";
 import { routingCalculationValue, routingSnapshot } from "./routing-cache";
 import { routeWorkerDataset } from "./route-worker-dataset";
-export const ROUTING_GUIDE_VERSION = "native-walking-guides-1";
+export const ROUTING_GUIDE_VERSION = "native-walking-guides-3";
 export type PreparedRouting = {
   version: 1;
   resolverVersion: string;
   sourceModelSha256: string;
   sourceGeometryKey: string;
-  guides: { edgeId: string; pointsFeet: [number, number, number][] }[];
+  guides: {
+    edgeId: string;
+    pointsFeet: [number, number, number][];
+    kind?: "shared-corridor";
+    /** Full guides keep their source endpoints; these mark the shared trunk. */
+    hallwayJoins?: [number, number];
+  }[];
 };
 type PreparedDataset = IndoorDataset & { preparedRouting?: PreparedRouting };
 const bindings = new WeakMap<
@@ -86,9 +92,23 @@ export function validatePreparedRouting(data: IndoorDataset): void {
         typeof g.edgeId !== "string" ||
         g.edgeId.length > 4096 ||
         ids.has(g.edgeId) ||
+        (g.kind !== undefined && g.kind !== "shared-corridor") ||
         !Array.isArray(g.pointsFeet) ||
         g.pointsFeet.length < 2 ||
         g.pointsFeet.length > 10_000 ||
+        (g.hallwayJoins !== undefined &&
+          (g.kind !== "shared-corridor" ||
+            !Array.isArray(g.hallwayJoins) ||
+            g.hallwayJoins.length !== 2 ||
+            g.hallwayJoins[0] > 2 ||
+            g.pointsFeet.length - 1 - g.hallwayJoins[1] > 2 ||
+            g.hallwayJoins.some(
+              (index) =>
+                !Number.isInteger(index) ||
+                index < 0 ||
+                index >= g.pointsFeet.length,
+            ) ||
+            g.hallwayJoins[0] > g.hallwayJoins[1])) ||
         g.pointsFeet.some(
           (p) =>
             !Array.isArray(p) ||
@@ -123,15 +143,19 @@ export function preparedWalkingGuides(data: IndoorDataset) {
             edge?.kind === "walk" &&
             g.pointsFeet.length >= 2 &&
             [0, g.pointsFeet.length - 1].every((index, j) =>
-              g.pointsFeet[index].every(
-                (v, k) =>
-                  Math.abs(
-                    v - edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
-                  ) <= 1e-7,
+              g.pointsFeet[index].every((v, k) =>
+                g.kind === "shared-corridor"
+                  ? v === edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k]
+                  : Math.abs(
+                      v -
+                        edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
+                    ) <= 1e-7,
               ),
             ) &&
-            g.pointsFeet.every(
-              (p) => Math.abs(p[2] - edge.pointsFeet[0][2]) < 0.01,
+            g.pointsFeet.every((p) =>
+              g.kind === "shared-corridor"
+                ? p[2] === edge.pointsFeet[0][2]
+                : Math.abs(p[2] - edge.pointsFeet[0][2]) < 0.01,
             )
           );
         })
@@ -144,4 +168,36 @@ export function withPreparedRouting(
   preparedRouting: PreparedRouting,
 ): IndoorDataset {
   return { ...data, preparedRouting } as PreparedDataset;
+}
+
+/** A style preference is usable only through the same complete geometry/policy
+ * binding and original endpoint checks as its actual prepared guide. */
+export function preparedSharedCorridorGuideIds(data: IndoorDataset) {
+  const usable = preparedWalkingGuides(data);
+  return new Set(
+    ((data as PreparedDataset).preparedRouting?.guides ?? [])
+      .filter((g) => g.kind === "shared-corridor" && usable.has(g.edgeId))
+      .map((g) => g.edgeId),
+  );
+}
+
+/** Endpoint proposals are usable only with their full, currently bound guide.
+ * Runtime must additionally find the join in the checked resolved path. */
+export function preparedSharedCorridorJoins(data: IndoorDataset) {
+  const usable = preparedWalkingGuides(data);
+  return new Map(
+    ((data as PreparedDataset).preparedRouting?.guides ?? []).flatMap((g) =>
+      g.kind === "shared-corridor" && g.hallwayJoins && usable.has(g.edgeId)
+        ? [
+            [
+              g.edgeId,
+              g.hallwayJoins.map((i) => g.pointsFeet[i]) as [
+                [number, number, number],
+                [number, number, number],
+              ],
+            ] as const,
+          ]
+        : [],
+    ),
+  );
 }

@@ -25,6 +25,7 @@ export const PREPARED_FLOOR_SOURCE_IDS = [
   "project-areas",
   "project-walls",
   "project-network",
+  "project-network-connections",
   "project-portals",
   "project-route",
   "project-doors",

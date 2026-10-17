@@ -1,0 +1,95 @@
+{
+  "status": "passed",
+  "errors": [],
+  "browserBuildCommit": "eb870bd9100bc779d3da885fa833995b4e43ecd5",
+  "scope": "Actual production viewer, desktop/mobile lift journey, path tint preservation, compressed Floor 4 revisit",
+  "totalBrowserTestMinutes": 24.1,
+  "stages": {
+    "floor-worker:native-faces": [
+      {
+        "requestId": 2,
+        "regions": 1143,
+        "ms": 226427.69999999553
+      },
+      {
+        "requestId": 3,
+        "regions": 1216,
+        "ms": 216315.6000000015
+      }
+    ],
+    "floor-worker:prepare-floor": [
+      {
+        "requestId": 2,
+        "ms": 17677.30000000447
+      },
+      {
+        "requestId": 3,
+        "ms": 52923.40000000596
+      }
+    ],
+    "floor-worker:pack-resident": [
+      {
+        "requestId": 2,
+        "bytes": 4908995,
+        "ms": 29490.5
+      },
+      {
+        "requestId": 3,
+        "bytes": 6262707,
+        "ms": 58093.89999999851
+      }
+    ],
+    "floor-worker:restore-resident": [
+      {
+        "requestId": 4,
+        "ms": 33863
+      }
+    ],
+    "floor-worker:overview-ground": [
+      {
+        "ms": 4102.5
+      },
+      {
+        "ms": 8339.89999999851
+      },
+      {
+        "ms": 8706.10000000149
+      }
+    ],
+    "floor-worker:overview-floor": [
+      {
+        "ms": 6280.60000000149
+      },
+      {
+        "ms": 14057.29999999702
+      },
+      {
+        "ms": 12554.70000000298
+      }
+    ],
+    "floor-main:receive": [
+      {
+        "requestId": 2,
+        "deserializeMs": 0,
+        "sincePostMs": 290887.3999999985,
+        "error": false
+      },
+      {
+        "requestId": 3,
+        "deserializeMs": 0,
+        "sincePostMs": 357610.5,
+        "error": false
+      },
+      {
+        "requestId": 4,
+        "deserializeMs": 0,
+        "sincePostMs": 58450.5,
+        "error": false
+      }
+    ]
+  },
+  "nativePreparations": 2,
+  "compressedRestores": 1,
+  "routeDistanceMetres": 118.18245960993349,
+  "strictHallwayRefusedBeforeOptIn": true
+}

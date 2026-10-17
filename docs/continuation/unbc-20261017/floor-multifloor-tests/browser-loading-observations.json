@@ -1,0 +1,23 @@
+{
+  "scope": "Approximate observations from the normal multifloor-only browser retry, not stage-profile timings or a production benchmark.",
+  "events": [
+    {
+      "elapsedMinutes": 12.6,
+      "observation": "Floor 3 native preparation completed; directions still preparing."
+    },
+    {
+      "elapsedMinutes": 15.8,
+      "observation": "119.7 m / one-floor-change route shown; actual worker reply received."
+    },
+    {
+      "elapsedMinutes": 20.5,
+      "observation": "Preview starting floor 4 ready and screenshot captured."
+    },
+    {
+      "elapsedMinutes": 21.2,
+      "observation": "Selecting the elevator instruction switched to Floor 3 and started native Floor 3 preparation again; same calculated route retained."
+    }
+  ],
+  "rootCauseProfiled": false,
+  "nextCheck": "Capture floor cache keys, memory costs/evictions, worker release and prepared-asset rejection stages for Floor 3/4; keep byte limits and input/engine checks."
+}

@@ -1,9 +1,47 @@
 # UNBC: start here for the next AI
 
+October 17 update: [the pathway repair continuation](../unbc-20261017/pathway-repairs/README.md)
+records current private Site version **11**, its 45.52 MB shared-guide visitor
+package, straight-vestibule replay, hallway inspection flag/dotted door branches,
+bounded floor reuse and source archive availability. The continuation is on
+`codex/unbc-corridor-analysis-20261017` / PR #3, not merged main. Existing
+geometry, graph/access and the 28 held stairs are unchanged. The October 16
+publication and transfer descriptions below are historical; the previously
+created large authoring archive is absent from this filesystem.
+
 This is the consolidated continuation for the October 14–16 work in
 OpenIndoorMaps and its sibling Reviter. Read both repositories' `AGENTS.md`,
 this file, [the compiler handoff](https://github.com/ahzs645/reviter/blob/main/docs/UNBC-HANDOFF-2026-10-16.md),
 and [the local repair loop](../../indoor-local-iteration.md).
+
+October 17 addenda: [package audit](../unbc-20261017/corridor-backbone/REPORT.md)
+checks the published visitor ZIP and further evidence pooling.
+[Shared hallway centerlines on all floors](../unbc-20261017/corridor-backbone/ALL-FLOORS.md)
+records the optional compiler, 2,617 guides, a 45.51 MB derived visitor candidate
+and actual navigation comparisons. The live map, source graph and route
+approvals are unchanged. The failed rebuild and held-stair status below remain
+authoritative.
+
+Latest derived route-style follow-up:
+[averaged straight hallways and centerline endpoints](../unbc-20261017/corridor-backbone/straight-hallways/README.md).
+Its 45.52 MB visitor candidate uses resolver version 3, passes 51 normal route
+comparisons and the desktop/mobile viewer check, and preserves original source
+geometry/graph/door connections. It also includes an agent's two-venue Mappedin
+review. Use the updated app in draft PR #3 with that candidate; the live Site
+and the native rebuild/held-stair status are unchanged.
+
+Latest broader routing acceptance:
+[complete Floor 4 and multifloor tests](../unbc-20261017/floor-multifloor-tests/README.md).
+All 345 Floor 4 destinations are covered as origins/destinations; each profile
+has 118,680 ordered connectivity pairs. The 1,538 actual requests produce 508
+available and 1,030 unavailable outcomes after six focused numeric-assertion
+replays. Floor 4 still has 75 unqualified hallway endpoints plus two isolated
+places. Held stairs remain excluded, and long Building 10 zigzags / Library
+other-room fallback and cold preparation remain open. This tests the same
+version 3 candidate; source geometry and the live publication are unchanged.
+The targeted desktop/mobile multifloor controls passed, but the desktop lift
+step screenshot has a blank floor canvas; following-step/mobile geometry
+returns. Treat that as a visual blocker and investigate render readiness.
 
 ## Current state
 

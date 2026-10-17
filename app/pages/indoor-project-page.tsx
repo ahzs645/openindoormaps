@@ -75,6 +75,8 @@ import {
   saveArrivalMode,
 } from "~/indoor-project/viewer-endpoint-preferences";
 import { ProjectRouteArrivalMenu } from "~/indoor-project/route-arrival-menu";
+import { useSharedCorridorGuides } from "~/indoor-project/use-shared-corridor-guides";
+import { SharedCorridorSetting } from "~/indoor-project/shared-corridor-setting";
 import {
   StairExclusionSettings,
   useStairExclusions,
@@ -170,6 +172,8 @@ import {
   BasemapAreaDrawing,
 } from "~/indoor-project/basemap-building-layer";
 import { routeSearch } from "~/utils/deep-link";
+import { hallwayPathUrl } from "../indoor-project/hallway-path-url";
+import { HallwayPathLegend } from "../indoor-project/hallway-path-legend";
 import "./indoor-project.css";
 
 const noPins: ReviewPin[] = [];
@@ -299,6 +303,7 @@ export default function IndoorProjectPage() {
   const [basemapAreaShape, setBasemapAreaShape] =
     useState<BasemapAreaShape>("rectangle");
   const [arrivalMode, setArrivalMode] = useState(loadArrivalMode);
+  const [allowOtherRoomTransit, setAllowOtherRoomTransit] = useState(false);
   useEffect(() => saveArrivalMode(arrivalMode), [arrivalMode]);
   const [keepBuildingOverview, setKeepBuildingOverview] =
     useState(loadBuildingOverview);
@@ -330,7 +335,10 @@ export default function IndoorProjectPage() {
     ),
     [mode, setMode] = useState<"public" | "accessible">("public"),
     [circulation, setCirculation] = useState(false),
-    [network, setNetwork] = useState(false),
+    [network, setNetwork] = useState(() => hostedParams.get("paths") === "1"),
+    [heldPaths, setHeldPaths] = useState(
+      () => hostedParams.get("heldPaths") === "1",
+    ),
     [showPillars, setShowPillars] = useState(false),
     [showPassThroughPlaces, setShowPassThroughPlaces] = useState(false),
     [showVestibuleDoors, setShowVestibuleDoors] = useState(false),
@@ -355,6 +363,35 @@ export default function IndoorProjectPage() {
     [throughNavigation, setThroughNavigation] = useState(false),
     [enabled, setEnabled] = useState(true),
     [accessible, setAccessible] = useState<"yes" | "no" | "unknown">("unknown");
+  const changePathGuides = useCallback((visible: boolean) => {
+    setNetwork(visible);
+    globalThis.history.replaceState(
+      globalThis.history.state,
+      "",
+      hallwayPathUrl(visible, globalThis.location.href),
+    );
+  }, []);
+  const changeHeldPaths = useCallback((visible: boolean) => {
+    setHeldPaths(visible);
+    globalThis.history.replaceState(
+      globalThis.history.state,
+      "",
+      hallwayPathUrl(visible, globalThis.location.href, "heldPaths"),
+    );
+  }, []);
+  useEffect(() => {
+    const sync = () => {
+      const query = new URLSearchParams(routeSearch());
+      setNetwork(query.get("paths") === "1");
+      setHeldPaths(query.get("heldPaths") === "1");
+    };
+    globalThis.addEventListener("popstate", sync);
+    globalThis.addEventListener("hashchange", sync);
+    return () => {
+      globalThis.removeEventListener("popstate", sync);
+      globalThis.removeEventListener("hashchange", sync);
+    };
+  }, []);
   const [preparedNativeDisplay, setPreparedNativeDisplay] = useState<{
     data: IndoorProject["dataset"];
     levelIds: number[];
@@ -651,7 +688,7 @@ export default function IndoorProjectPage() {
       setImportNotice(true);
       setMessage("Downloading the complete campus map…");
       void (async () => {
-        const snapshot = await restoreProjectSnapshot().catch(() => undefined);
+        const snapshot = await restoreProjectSnapshot().catch(() => {});
         const hosted = await fetchHostedProject(
           new URL(hostedUrl, location.href).href,
           {
@@ -1466,13 +1503,21 @@ export default function IndoorProjectPage() {
   );
   // Large datasets build the route graph on visitor intent, not at import.
   const stairExclusions = useStairExclusions(data, hostedStairPreferences);
+  const sharedCorridors = useSharedCorridorGuides(data);
   const routingOptions = useMemo(
     () => ({
       excludedNativeStairIds: stairExclusions.ids,
+      useSharedCorridorGuides: sharedCorridors.enabled,
+      allowOtherRoomTransit,
       endpointMode:
         arrivalMode === "hallway" ? ("hallway" as const) : ("inside" as const),
     }),
-    [stairExclusions.ids, arrivalMode],
+    [
+      stairExclusions.ids,
+      arrivalMode,
+      sharedCorridors.enabled,
+      allowOtherRoomTransit,
+    ],
   );
   const routeCalculation = useProjectRoute(
     data,
@@ -1771,7 +1816,7 @@ export default function IndoorProjectPage() {
               target="_blank"
               rel="noopener"
             >
-              Download latest map ZIP
+              Map and development downloads
             </Link>
           )}
           {visitorManifestUrl && (
@@ -2615,7 +2660,7 @@ export default function IndoorProjectPage() {
                     <input
                       type="checkbox"
                       checked={network}
-                      onChange={(e) => setNetwork(e.target.checked)}
+                      onChange={(e) => changePathGuides(e.target.checked)}
                     />
                     Show routing network
                   </label>
@@ -2745,6 +2790,10 @@ export default function IndoorProjectPage() {
                   mode={arrivalMode}
                   onChange={setArrivalMode}
                   reasons={arrivalReasons}
+                />
+                <SharedCorridorSetting
+                  {...sharedCorridors}
+                  available={sharedCorridors.available && mode === "public"}
                 />
                 {routeCalculation.preparing && (
                   <p role="status" data-testid="project-route-preparing">
@@ -3128,6 +3177,7 @@ export default function IndoorProjectPage() {
                   building={building}
                   circulationOnly={circulation}
                   network={network}
+                  heldPaths={heldPaths}
                   roomThree={view === "3d" || view === "relative"}
                   overviewLocked={keepBuildingOverview && !review}
                   nativeModel={view === "native"}
@@ -3364,11 +3414,54 @@ export default function IndoorProjectPage() {
                     arrivalMessage={arrivalResult.message}
                     arrivalReasons={arrivalReasons}
                     routeSettings={
-                      <StairExclusionSettings
-                        data={data}
-                        ids={stairExclusions.ids}
-                        onChange={stairExclusions.onChange}
-                      />
+                      <>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={network}
+                            onChange={(e) => changePathGuides(e.target.checked)}
+                          />
+                          Show hallway paths
+                        </label>
+                        {network && <HallwayPathLegend />}
+                        {network && (
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={heldPaths}
+                              onChange={(e) =>
+                                changeHeldPaths(e.target.checked)
+                              }
+                            />
+                            Show held stair links · inspection only
+                          </label>
+                        )}
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={allowOtherRoomTransit}
+                            onChange={(e) =>
+                              setAllowOtherRoomTransit(e.target.checked)
+                            }
+                          />
+                          Allow paths through other rooms
+                        </label>
+                        <p>
+                          Off keeps transit in hallways and reviewed connecting
+                          areas. Some destinations may have no hallway route.
+                        </p>
+                        <SharedCorridorSetting
+                          {...sharedCorridors}
+                          available={
+                            sharedCorridors.available && mode === "public"
+                          }
+                        />
+                        <StairExclusionSettings
+                          data={data}
+                          ids={stairExclusions.ids}
+                          onChange={stairExclusions.onChange}
+                        />
+                      </>
                     }
                     selected={selected}
                     onStart={setStart}
@@ -3401,6 +3494,10 @@ export default function IndoorProjectPage() {
                     onDoorwayRecesses={setShowDoorwayRecesses}
                     showDoorLocations={showDoorLocations}
                     onDoorLocations={setShowDoorLocations}
+                    showPathGuides={network}
+                    onPathGuides={changePathGuides}
+                    showHeldPaths={heldPaths}
+                    onHeldPaths={changeHeldPaths}
                   />
                 )}
                 <ProjectRouteFocus data={data} route={route} />

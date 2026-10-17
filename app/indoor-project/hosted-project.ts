@@ -12,6 +12,7 @@ type HostedProjectManifest = {
   sha256: string;
   parts: { path: string; bytes: number; sha256: string }[];
   viewerPreferences?: HostedStairPreferences;
+  developmentSnapshot?: string;
 };
 const MAX_PACKAGE = 900 * 1024 * 1024;
 const MAX_PART = 24 * 1024 * 1024;
@@ -71,7 +72,7 @@ export async function fetchHostedProject(
     throw new Error("Unsupported hosted map URL.");
   const raw = await boundedResponse(
     await fetcher(url.href, { signal: options.signal, cache: "no-cache" }),
-    65536,
+    65_536,
   );
   const manifest = JSON.parse(
     new TextDecoder().decode(raw),
@@ -87,7 +88,7 @@ export async function fetchHostedProject(
     manifest.bytes > MAX_PACKAGE ||
     !isHash(manifest.sha256) ||
     !Array.isArray(manifest.parts) ||
-    !manifest.parts.length ||
+    manifest.parts.length === 0 ||
     manifest.parts.length > 64
   )
     throw new Error("Invalid hosted map manifest.");
@@ -152,4 +153,42 @@ export async function fetchHostedProject(
     cached: false,
     viewerPreferences,
   };
+}
+
+/** Discover a paired source download without fetching or decoding the map. */
+export async function hostedDevelopmentOffer(
+  manifestUrl: string,
+  signal: AbortSignal,
+  fetcher: typeof fetch = fetch,
+) {
+  const url = new URL(manifestUrl);
+  if (!/^https?:$/.test(url.protocol) || url.username || url.password)
+    throw new Error("Unsupported hosted map URL.");
+  const raw = await boundedResponse(
+    await fetcher(url.href, { signal, cache: "no-cache" }),
+    65_536,
+  );
+  const manifest = JSON.parse(
+    new TextDecoder().decode(raw),
+  ) as HostedProjectManifest;
+  if (
+    manifest.format !== "openindoormaps-hosted-project-v1" ||
+    manifest.version !== 1 ||
+    !isHash(manifest.sha256)
+  )
+    throw new Error("Invalid hosted map manifest.");
+  if (manifest.developmentSnapshot === undefined) return;
+  if (typeof manifest.developmentSnapshot !== "string")
+    throw new Error("Invalid development download link.");
+  const snapshot = new URL(manifest.developmentSnapshot, url);
+  if (
+    snapshot.origin !== url.origin ||
+    snapshot.username ||
+    snapshot.password ||
+    snapshot.hash ||
+    snapshot.search ||
+    !snapshot.pathname.endsWith(".json")
+  )
+    throw new Error("Development download must use the map's own origin.");
+  return { url: snapshot.href, viewerSha256: manifest.sha256 };
 }

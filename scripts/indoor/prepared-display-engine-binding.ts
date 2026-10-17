@@ -16,7 +16,10 @@ const generated = "app/indoor-project/prepared-display-engine-binding.ts";
 
 /** Build-time only. Runtime readers compare a literal; they never fetch source
  * modules or walk geometry on the UI thread to decide whether a cache is fresh. */
-export function preparedDisplayEngineBinding(projectRoot: string) {
+export function preparedDisplayEngineBinding(
+  projectRoot: string,
+  entryPoints = roots,
+) {
   const visited = new Set<string>();
   const dependencies = new Map<string, string>();
   const resolveImport = (parent: string, specifier: string) => {
@@ -94,7 +97,7 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
     };
     scan(source);
   };
-  for (const path of roots) visit(nodePath.resolve(projectRoot, path));
+  for (const path of entryPoints) visit(nodePath.resolve(projectRoot, path));
   const lock = nodePath.resolve(projectRoot, "package-lock.json");
   dependencies.set("package-lock.json", hash(readFileSync(lock)));
   const modules = [...dependencies].sort(([a], [b]) => a.localeCompare(b));

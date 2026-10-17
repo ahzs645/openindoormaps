@@ -1,0 +1,38 @@
+✔ shared preparation preserves the graph; actual routes use a common centre in both directions (124.725506ms)
+✔ tampered wall-side guides cannot claim shared two-foot clearance; physical edits invalidate bindings (65.91398ms)
+✔ hallway-center endpoints remove both door hooks but preserve the original graph, approaches and instructions (34.132107ms)
+✔ source directions and exact terminal positions remain authoritative (26.144345ms)
+✔ scoped enumeration uses the same physical/policy binding and retains restrictions (1.798707ms)
+✔ exact retraces remove unused spurs while preserving fixed outer endpoints and non-retraced bends (0.224835ms)
+✔ switching shared guides off and back on reuses a calculator without poisoning its guide cache (25.726386ms)
+✔ the corridor setting defaults on and persists independently for each model (0.435435ms)
+✔ compact vestibule routes straighten through intermediate arrival anchors, while holes veto the chord (122.323836ms)
+✔ path view uses bound shared guides on the selected floor, drops repeated segments and cannot include held stairs (19.179227ms)
+✔ short reverse hooks are proposed for cleanup; long U-shaped halls and vertical endpoints are retained (0.260812ms)
+✔ one blocked hook retains its bend without vetoing another checked cleanup, in either direction (0.359565ms)
+✔ cleanup retains the exact hallway stop anchors even when their outer approaches reverse (0.163835ms)
+✖ compact vestibule shortcuts preserve both outer hallway-center stops before trimming door approaches (30.874417ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 13
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1110.176099
+
+✖ failing tests:
+
+test at tests/unit/shared-corridor-routing.test.ts:1:15199
+✖ compact vestibule shortcuts preserve both outer hallway-center stops before trimming door approaches (30.874417ms)
+  AssertionError [ERR_ASSERTION]: departure keeps its middle-of-hallway stop
+      at TestContext.<anonymous> (/workspace/openindoormaps/tests/unit/shared-corridor-routing.test.ts:643:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

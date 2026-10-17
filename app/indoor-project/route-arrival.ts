@@ -13,6 +13,8 @@ export type ProjectRouteArrival = {
   levelId: number;
   building: string;
   entranceEdgeId: string;
+  /** Selected hallway-center stop plus the separately retained door approach. */
+  hallwayCenter?: { doorPointFeet: XYZ; approachPointsFeet: XYZ[] };
 };
 export const arrivalChoices = [
   {
