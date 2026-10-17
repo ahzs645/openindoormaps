@@ -39,9 +39,23 @@ export function hallwayPathView(
         // These are room-entry branches. A door/opening joining two passage
         // areas (including a vestibule without the circulation flag) is an
         // internal threshold, not a destination-door spur. Keep its original
-        // graph and physical crossing; only omit its optional display branch.
+        // graph and physical crossing; display its branch as solid passage.
         return !owners.every((r) => r && isDisplayPassage(r));
       })
+      .flatMap((e) => [e.from, e.to]),
+  );
+  const passageNodes = new Set(
+    data.edges
+      .filter(
+        (e) =>
+          e.enabled &&
+          ["door", "opening"].includes(e.kind) &&
+          [e.from, e.to].every((id) => {
+            const node = nodes.get(id),
+              owner = node && rooms.get(node.roomKey);
+            return owner && isDisplayPassage(owner);
+          }),
+      )
       .flatMap((e) => [e.from, e.to]),
   );
   const segments = new Map<string, number>();
@@ -71,7 +85,13 @@ export function hallwayPathView(
     const points = guide.pointsFeet;
     const [start, end] = guide.hallwayJoins ?? [0, points.length - 1];
     for (let i = 1; i < points.length; i++) {
-      const role = i <= start || i > end ? "approach" : "hallway";
+      const endpoint = i <= start ? edge.from : edge.to;
+      const role =
+        i <= start || i > end
+          ? passageNodes.has(endpoint)
+            ? "passage"
+            : "approach"
+          : "hallway";
       // Only show saved branches to real door/opening endpoints. An arrival,
       // lift or held staircase is not a new doorway connection.
       if (

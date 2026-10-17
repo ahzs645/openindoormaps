@@ -126,6 +126,7 @@ export function PreparedProjectMapLayers({
   building,
   circulationOnly,
   network,
+  heldPaths = false,
   roomThree: requestedRoomThree,
   overviewLocked = false,
   nativeModel = false,
@@ -160,6 +161,7 @@ export function PreparedProjectMapLayers({
   building: string;
   circulationOnly: boolean;
   network: boolean;
+  heldPaths?: boolean;
   roomThree: boolean;
   overviewLocked?: boolean;
   nativeModel?: boolean;
@@ -580,6 +582,7 @@ export function PreparedProjectMapLayers({
         "project-block-perimeters",
         "project-overview-ground",
         "project-overview-floor",
+        "project-network-connections",
       ],
       ids = [
         "project-room-fill",
@@ -625,6 +628,9 @@ export function PreparedProjectMapLayers({
       roomPerimeters,
       overviewBacking,
       overviewFloor,
+      network && !review
+        ? (prepared.pathConnections ?? HIDDEN_SOURCE)
+        : HIDDEN_SOURCE,
     ];
     for (const [i, id] of sources.entries()) {
       const value = values[i];
@@ -1738,8 +1744,88 @@ export function PreparedProjectMapLayers({
     if (network) {
       map.moveLayer(ids[3]);
       map.moveLayer("project-network-approach-line");
+      for (const role of ["passage", "transition", "held"]) {
+        const color =
+          role === "passage"
+            ? "#338d83"
+            : role === "held"
+              ? "#8b6d48"
+              : "#7054a1";
+        const line = `project-network-${role}-connection`;
+        if (!map.getLayer(line))
+          map.addLayer({
+            id: line,
+            type: "line",
+            source: "project-network-connections",
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "LineString"],
+            ],
+            paint: {
+              "line-color": color,
+              "line-width": role === "passage" ? 2 : 3,
+              ...(role === "held" ? { "line-dasharray": [2, 2] } : {}),
+            },
+          });
+        const point = `project-network-${role}-stop`;
+        if (!map.getLayer(point))
+          map.addLayer({
+            id: point,
+            type: "circle",
+            source: "project-network-connections",
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "Point"],
+            ],
+            paint: {
+              "circle-color": color,
+              "circle-radius": 5,
+              "circle-stroke-color": "#fff",
+              "circle-stroke-width": 1.5,
+            },
+          });
+        const label = `project-network-${role}-label`;
+        if (!map.getLayer(label))
+          map.addLayer({
+            id: label,
+            type: "symbol",
+            source: "project-network-connections",
+            minzoom: 18,
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "Point"],
+            ],
+            layout: {
+              "text-field": ["get", "label"],
+              "text-font": ["Noto Sans Regular"],
+              "text-size": 11,
+              "text-offset": [0, 1.4],
+            },
+            paint: {
+              "text-color": color,
+              "text-halo-color": "#fff",
+              "text-halo-width": 1.2,
+            },
+          });
+        for (const id of [line, point, label]) {
+          map.setLayoutProperty(
+            id,
+            "visibility",
+            !review && (role !== "held" || heldPaths) ? "visible" : "none",
+          );
+          map.moveLayer(id);
+        }
+      }
       map.moveLayer(ids[4]);
-    }
+    } else
+      for (const role of ["passage", "transition", "held"])
+        for (const suffix of ["connection", "stop", "label"]) {
+          const id = `project-network-${role}-${suffix}`;
+          if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        }
     // Selection paint belongs to the same synchronization pass as base paint.
     // An unrelated UI render can refresh layers without changing the selection.
     const selectedStairKeys = visitorContext
@@ -2196,6 +2282,7 @@ export function PreparedProjectMapLayers({
     overviewBacking,
     overviewFloor,
     prepared.hallwayPaths,
+    prepared.pathConnections,
     overviewDrawing,
     geometryOpacity,
     keepOverview,
@@ -2207,6 +2294,7 @@ export function PreparedProjectMapLayers({
     building,
     circulationOnly,
     network,
+    heldPaths,
     simplifyGeometry,
     roomThree,
     preciseSurfaces,

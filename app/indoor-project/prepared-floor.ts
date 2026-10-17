@@ -1,5 +1,6 @@
 import { generalizedRoomGeometry } from "./generalized-room-geometry";
 import { hallwayPathView } from "./hallway-path-view";
+import { pathConnections } from "./path-connections";
 import { nativeFloorGround } from "./native-floor-ground";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { relativeHeightGeometry } from "./relative-heights";
@@ -200,6 +201,7 @@ export function prepareFloor(
   return {
     presentation: withRaisedLabels,
     hallwayPaths: hallwayPathView(data, levelIds, building),
+    pathConnections: pathConnections(data, levelIds, building),
     assumedRoomBlocks,
     nativeStairKeys,
     stairSurroundKeys,

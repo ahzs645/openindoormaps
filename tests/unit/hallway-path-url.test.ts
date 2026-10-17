@@ -18,3 +18,13 @@ test("hallway inspection flag preserves package and floor queries in both route 
     "https://example.test/#/projects/indoor",
   );
 });
+
+test("held inspection flag remains independent of the hallway flag", () => {
+  const base =
+    "https://example.test/#/projects/indoor?package=%2Fproject.json&paths=1";
+  const held = hallwayPathUrl(true, base, "heldPaths");
+  const q = new URLSearchParams(routeSearch(held));
+  assert.equal(q.get("paths"), "1");
+  assert.equal(q.get("heldPaths"), "1");
+  assert.equal(hallwayPathUrl(false, held, "heldPaths"), base);
+});

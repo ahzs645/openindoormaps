@@ -336,6 +336,9 @@ export default function IndoorProjectPage() {
     [mode, setMode] = useState<"public" | "accessible">("public"),
     [circulation, setCirculation] = useState(false),
     [network, setNetwork] = useState(() => hostedParams.get("paths") === "1"),
+    [heldPaths, setHeldPaths] = useState(
+      () => hostedParams.get("heldPaths") === "1",
+    ),
     [showPillars, setShowPillars] = useState(false),
     [showPassThroughPlaces, setShowPassThroughPlaces] = useState(false),
     [showVestibuleDoors, setShowVestibuleDoors] = useState(false),
@@ -368,9 +371,20 @@ export default function IndoorProjectPage() {
       hallwayPathUrl(visible, globalThis.location.href),
     );
   }, []);
+  const changeHeldPaths = useCallback((visible: boolean) => {
+    setHeldPaths(visible);
+    globalThis.history.replaceState(
+      globalThis.history.state,
+      "",
+      hallwayPathUrl(visible, globalThis.location.href, "heldPaths"),
+    );
+  }, []);
   useEffect(() => {
-    const sync = () =>
-      setNetwork(new URLSearchParams(routeSearch()).get("paths") === "1");
+    const sync = () => {
+      const query = new URLSearchParams(routeSearch());
+      setNetwork(query.get("paths") === "1");
+      setHeldPaths(query.get("heldPaths") === "1");
+    };
     globalThis.addEventListener("popstate", sync);
     globalThis.addEventListener("hashchange", sync);
     return () => {
@@ -1802,7 +1816,7 @@ export default function IndoorProjectPage() {
               target="_blank"
               rel="noopener"
             >
-              Download latest map ZIP
+              Map and development downloads
             </Link>
           )}
           {visitorManifestUrl && (
@@ -3163,6 +3177,7 @@ export default function IndoorProjectPage() {
                   building={building}
                   circulationOnly={circulation}
                   network={network}
+                  heldPaths={heldPaths}
                   roomThree={view === "3d" || view === "relative"}
                   overviewLocked={keepBuildingOverview && !review}
                   nativeModel={view === "native"}
@@ -3409,6 +3424,18 @@ export default function IndoorProjectPage() {
                           Show hallway paths
                         </label>
                         {network && <HallwayPathLegend />}
+                        {network && (
+                          <label>
+                            <input
+                              type="checkbox"
+                              checked={heldPaths}
+                              onChange={(e) =>
+                                changeHeldPaths(e.target.checked)
+                              }
+                            />
+                            Show held stair links · inspection only
+                          </label>
+                        )}
                         <label>
                           <input
                             type="checkbox"
@@ -3469,6 +3496,8 @@ export default function IndoorProjectPage() {
                     onDoorLocations={setShowDoorLocations}
                     showPathGuides={network}
                     onPathGuides={changePathGuides}
+                    showHeldPaths={heldPaths}
+                    onHeldPaths={changeHeldPaths}
                   />
                 )}
                 <ProjectRouteFocus data={data} route={route} />

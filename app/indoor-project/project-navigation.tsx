@@ -132,6 +132,8 @@ export function ProjectNavigation({
   onDoorLocations,
   showPathGuides,
   onPathGuides,
+  showHeldPaths = false,
+  onHeldPaths,
   showVestibuleDoors,
   onVestibuleDoors,
   showStructures,
@@ -183,6 +185,8 @@ export function ProjectNavigation({
   onDoorLocations: (show: boolean) => void;
   showPathGuides: boolean;
   onPathGuides: (show: boolean) => void;
+  showHeldPaths?: boolean;
+  onHeldPaths?: (show: boolean) => void;
   showVestibuleDoors: boolean;
   onVestibuleDoors: (show: boolean) => void;
   showStructures: boolean;
@@ -724,6 +728,16 @@ export function ProjectNavigation({
                     Show hallway paths
                   </label>
                   {showPathGuides && <HallwayPathLegend />}
+                  {showPathGuides && onHeldPaths && (
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={showHeldPaths}
+                        onChange={(e) => onHeldPaths(e.target.checked)}
+                      />
+                      Show held stair links · inspection only
+                    </label>
+                  )}
                   <label>
                     <input
                       type="checkbox"

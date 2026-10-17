@@ -9,9 +9,13 @@ export function HallwayPathLegend() {
         <i className="project-path-approach" />
         Room door approach
       </span>
+      <span>
+        <i className="project-path-transition" />
+        Lift, ramp or stair connection
+      </span>
       <p>
-        Internal passage doors are omitted. Directions also check access and
-        step-free availability.
+        Passage connections are solid. Directions check access and clearance.
+        Held stair links remain unavailable for directions.
       </p>
     </div>
   );

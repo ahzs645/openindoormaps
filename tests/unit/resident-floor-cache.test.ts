@@ -53,6 +53,16 @@ const payload = {
     stairCutAreas: fc(),
     stairCutRooms: fc(),
     hallwayPaths: fc(),
+    pathConnections: {
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          properties: { role: "held", enabled: false },
+          geometry: { type: "Point", coordinates: [0, 0] },
+        },
+      ],
+    },
     geometry,
   },
 } as unknown as PreparedDisplayPayload;

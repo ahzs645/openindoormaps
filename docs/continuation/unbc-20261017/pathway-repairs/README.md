@@ -1,5 +1,10 @@
 # UNBC pathway and loading repairs · October 17
 
+The next paired publication adds [portable source downloads and connection
+inspection](PORTABLE-DEVELOPMENT.md), with exact missing-native-input disclosure.
+That report contains the all-floor source-topology audit and release procedure.
+The version-12 receipt below remains the last previously published baseline.
+
 This continuation repairs the viewer and checks affected original route chains.
 The original map geometry, source nodes/edges, room classifications, access,
 held stairs and accessible flags are unchanged. The viewer and existing shared-guide candidate are now live as private Site
