@@ -1,0 +1,1119 @@
+{
+  "status": "passed",
+  "errors": [],
+  "scope": "multifloor-only",
+  "multifloorCase": {
+    "start": "rm-402367-f1426b5e0e6f",
+    "end": "rm-400176-4b8c011c20b2",
+    "from": "05-411",
+    "to": "05-341"
+  },
+  "replies": [
+    {
+      "worker": 6,
+      "start": "rm-402367-f1426b5e0e6f",
+      "end": "rm-400176-4b8c011c20b2",
+      "mode": "public",
+      "route": {
+        "departure": {
+          "mode": "hallway",
+          "pointFeet": [
+            101.20649055996962, 224.62866177218183, 34.120734908136484
+          ],
+          "levelId": 402367,
+          "building": "05",
+          "entranceEdgeId": "door:402367:1119439",
+          "hallwayCenter": {
+            "doorPointFeet": [
+              98.9502207936406, 226.04031613211043, 34.120734908136484
+            ],
+            "approachPointsFeet": [
+              [98.9502207936406, 226.04031613211043, 34.120734908136484],
+              [101.20649055996962, 224.62866177218183, 34.120734908136484]
+            ]
+          }
+        },
+        "arrival": {
+          "mode": "hallway",
+          "pointFeet": [
+            193.53034543514005, 173.79024893345158, 24.278215223097114
+          ],
+          "levelId": 400176,
+          "building": "05",
+          "entranceEdgeId": "door:400176:1923860"
+        },
+        "edges": [
+          {
+            "id": "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119439:0",
+            "to": "arrival:rm-402367-e870225e0964",
+            "kind": "walk",
+            "roomKeys": ["rm-402367-e870225e0964"],
+            "pointsFeet": [
+              [98.9502207936406, 226.04031613211043, 34.120734908136484],
+              [98.85567425997041, 225.8104265814558, 34.120734908136484],
+              [99.36450317501888, 225.49247511470244, 34.120734908136484],
+              [106.99533837709942, 237.70436907586543, 34.120734908136484],
+              [107.36674284247056, 237.77635790249747, 34.120734908136484]
+            ],
+            "lengthMetres": 4.763075863990169,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "arrival:rm-402367-e870225e0964",
+            "to": "door:402367:1119546:0",
+            "kind": "walk",
+            "roomKeys": ["rm-402367-e870225e0964"],
+            "pointsFeet": [
+              [107.36674284247056, 237.77635790249747, 34.120734908136484],
+              [106.99533837709942, 237.70436907586543, 34.120734908136484],
+              [112.40051331190642, 246.3544606316892, 34.120734908136484],
+              [111.89168439685795, 246.67241209844255, 34.120734908136484],
+              [111.95010521575222, 246.95927894128766, 34.120734908136484]
+            ],
+            "lengthMetres": 3.4963827571791217,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119546:0",
+            "to": "door:402367:1119678:0",
+            "kind": "walk",
+            "roomKeys": ["rm-402367-e870225e0964"],
+            "pointsFeet": [
+              [111.95010521575222, 246.95927894128766, 34.120734908136484],
+              [111.89168439685795, 246.67241209844255, 34.120734908136484],
+              [112.40051331190642, 246.3544606316892, 34.120734908136484],
+              [120.66725144749367, 259.5840124229491, 34.120734908136484],
+              [120.28618110907362, 259.4872412137718, 34.120734908136484]
+            ],
+            "lengthMetres": 5.146828675762449,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119728:0",
+            "to": "door:402367:1119678:0",
+            "kind": "walk",
+            "roomKeys": ["rm-402367-e870225e0964"],
+            "pointsFeet": [
+              [122.44246977580232, 259.6616521817103, 34.120734908136484],
+              [122.32081221109729, 259.9657673195393, 34.120734908136484],
+              [121.68490927759058, 258.9481094894424, 34.120734908136484],
+              [120.66725144749367, 259.5840124229491, 34.120734908136484],
+              [120.28618110907362, 259.4872412137718, 34.120734908136484]
+            ],
+            "lengthMetres": 0.951193019091885,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1119728",
+            "from": "door:402367:1119728:0",
+            "to": "door:402367:1119728:1",
+            "kind": "door",
+            "lengthMetres": 0.494958037630721,
+            "pointsFeet": [
+              [122.44246977580232, 259.6616521817103, 34.120734908136484],
+              [122.82868435204132, 261.23893411830767, 34.120734908136484]
+            ],
+            "roomKeys": ["rm-402367-e870225e0964", "rm-402367-e87a525e096d"],
+            "evidence": "native-door",
+            "nativeElementId": 1119728,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|door:402367:1119728:1",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "door:402367:1119728:1",
+            "to": "arrival:rm-402367-e87a525e096d",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [122.82868435204132, 261.23893411830767, 34.120734908136484],
+              [123.03914036276396, 261.4494624398211, 34.120734908136484],
+              [126.8554772561535, 267.55483488678567, 34.120734908136484],
+              [136.5223169638474, 261.51230147225226, 34.120734908136484],
+              [136.19020042496572, 261.42647440104554, 34.120734908136484]
+            ],
+            "lengthMetres": 5.8645678325342265,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|arrival:rm-402367-f2b16b5e0fa6",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "arrival:rm-402367-f2b16b5e0fa6",
+            "to": "arrival:rm-402367-e87a525e096d",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [138.04724976652165, 276.06020596372844, 34.120734908136484],
+              [137.9223431920107, 276.20379311062766, 34.120734908136484],
+              [143.51893460172818, 272.70548429168724, 34.120734908136484],
+              [136.5223169638474, 261.51230147225226, 34.120734908136484],
+              [136.19020042496572, 261.42647440104554, 34.120734908136484]
+            ],
+            "lengthMetres": 6.197602008982677,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-f2b16b5e0fa6|door:402367:1122152:1",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "door:402367:1122152:1",
+            "to": "arrival:rm-402367-f2b16b5e0fa6",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [135.39318798962998, 286.92938327379034, 34.120734908136484],
+              [135.44255467563772, 286.95231156267795, 34.120734908136484],
+              [131.30818970779907, 280.33815807846634, 34.120734908136484],
+              [137.9223431920107, 276.20379311062766, 34.120734908136484],
+              [138.04724976652165, 276.06020596372844, 34.120734908136484]
+            ],
+            "lengthMetres": 4.829477996217299,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1122152",
+            "from": "door:402367:1122152:0",
+            "to": "door:402367:1122152:1",
+            "kind": "door",
+            "lengthMetres": 0.3545934170111256,
+            "pointsFeet": [
+              [135.8691332072104, 287.99093519398554, 34.120734908136484],
+              [135.39318798962998, 286.92938327379034, 34.120734908136484]
+            ],
+            "roomKeys": ["rm-402367-f2a73b5e0f9e", "rm-402367-f2b16b5e0fa6"],
+            "evidence": "native-door",
+            "nativeElementId": 1122152,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1122152:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "door:402367:1122152:0",
+            "to": "arrival:rm-402367-f2a73b5e0f9e",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [135.8691332072104, 287.99093519398554, 34.120734908136484],
+              [135.83248204149734, 287.90568416854217, 34.120734908136484],
+              [151.09306481877036, 312.33015168163234, 34.120734908136484],
+              [157.19918169704292, 308.5150059873141, 34.120734908136484],
+              [157.3947451600318, 308.41249252965997, 34.120734908136484]
+            ],
+            "lengthMetres": 11.068384966733774,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1927060:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-f2a73b5e0f9e",
+            "to": "door:402367:1927060:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [157.3947451600318, 308.41249252965997, 34.120734908136484],
+              [157.19918169704292, 308.5150059873141, 34.120734908136484],
+              [150.0753786723916, 312.96600929735206, 34.120734908136484],
+              [161.8387445632062, 331.7932030053591, 34.120734908136484],
+              [161.85189277002542, 331.80108231019415, 34.120734908136484]
+            ],
+            "lengthMetres": 9.398852917661943,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1927060:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-e82f165e092c",
+            "to": "door:402367:1927060:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [170.60357933378418, 342.5764688641824, 34.120734908136484],
+              [170.67763636355104, 342.54280726513525, 34.120734908136484],
+              [163.36527378277435, 330.8394165817795, 34.120734908136484],
+              [161.8387445632062, 331.7932030053591, 34.120734908136484],
+              [161.85189277002542, 331.80108231019415, 34.120734908136484]
+            ],
+            "lengthMetres": 4.7843470494927685,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1926926:1",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-e82f165e092c",
+            "to": "door:402367:1926926:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [170.60357933378418, 342.5764688641824, 34.120734908136484],
+              [170.67763636355104, 342.54280726513525, 34.120734908136484],
+              [175.25722402225546, 339.6814479943966, 34.120734908136484],
+              [184.7950882580511, 354.94674019007795, 34.120734908136484],
+              [185.81277440442986, 354.31088257435823, 34.120734908136484],
+              [185.92470855883005, 354.116537492607, 34.120734908136484]
+            ],
+            "lengthMetres": 7.59123397697563,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1926926",
+            "from": "door:402367:1926926:0",
+            "to": "door:402367:1926926:1",
+            "kind": "door",
+            "lengthMetres": 0.18288000000000687,
+            "pointsFeet": [
+              [186.44914609237338, 353.8250494595576, 34.120734908136484],
+              [185.92470855883005, 354.116537492607, 34.120734908136484]
+            ],
+            "roomKeys": ["rm-402367-e120c95e05a2", "rm-402367-e82f165e092c"],
+            "evidence": "native-door",
+            "nativeElementId": 1926926,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:connector:unbc-library-lift:3|door:402367:1926926:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "door:402367:1926926:0",
+            "to": "connector:unbc-library-lift:3",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [186.44914609237338, 353.8250494595576, 34.120734908136484],
+              [186.3216174776192, 353.9929537664984, 34.120734908136484],
+              [193.44542050227054, 349.54195045646037, 34.120734908136484],
+              [193.12749169441068, 349.03310738327104, 34.120734908136484],
+              [193, 349, 34.120734908136484]
+            ],
+            "lengthMetres": 2.8476137440630924,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "connector:unbc-library-lift:2:3",
+            "from": "connector:unbc-library-lift:2",
+            "to": "connector:unbc-library-lift:3",
+            "kind": "elevator",
+            "connectorId": "unbc-library-lift",
+            "direction": "both",
+            "lengthMetres": 3.0000000000000004,
+            "pointsFeet": [
+              [193, 349, 24.278215223097114],
+              [193, 349, 34.120734908136484]
+            ],
+            "roomKeys": ["rm-400176-4c46e91c2150", "rm-402367-e120c95e05a2"],
+            "evidence": "User identifies elevator at Review pin 14. Five native shaft wall elements 1891690/1891602/1891507/1891768/1891807 surround the pin from 0 to 43.307ft. West lobby opening supports native floors 311,694,400176,402367 on slabs 447970/503705/511340/515291. Roof excluded: walls stop below roof slab 530368.",
+            "nativeElementId": 1891690,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:connector:unbc-library-lift:2|door:400176:1919713:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "connector:unbc-library-lift:2",
+            "to": "door:400176:1919713:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [193, 349, 24.278215223097114],
+              [192.7221205396072, 348.90467006399194, 24.278215223097114],
+              [190.49683107769832, 345.3426359806742, 24.278215223097114],
+              [188.46138303008817, 346.6142299589078, 24.278215223097114],
+              [188.4523914071348, 346.65104374502664, 24.278215223097114]
+            ],
+            "lengthMetres": 2.112773849820643,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1919713:1|door:400176:1919749:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1919749:1",
+            "to": "door:400176:1919713:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [187.94425541021837, 343.46015079655, 24.278215223097114],
+              [187.88961458110123, 343.4341229102783, 24.278215223097114],
+              [189.47910705389324, 345.97843296979096, 24.278215223097114],
+              [188.46138303008817, 346.6142299589078, 24.278215223097114],
+              [188.4523914071348, 346.65104374502664, 24.278215223097114]
+            ],
+            "lengthMetres": 1.3101581949360233,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:400176:1919749",
+            "from": "door:400176:1919749:0",
+            "to": "door:400176:1919749:1",
+            "kind": "door",
+            "lengthMetres": 0.5486399999999761,
+            "pointsFeet": [
+              [187.02124169833542, 341.9148205122173, 24.278215223097114],
+              [187.94425541021837, 343.46015079655, 24.278215223097114]
+            ],
+            "roomKeys": ["rm-400176-4c3d391c2149", "rm-400176-4c46e91c2150"],
+            "evidence": "native-door",
+            "nativeElementId": 1919749,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1915300:0|door:400176:1919749:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1915300:0",
+            "to": "door:400176:1919749:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [178.3994729562331, 330.99030204421564, 24.278215223097114],
+              [178.60652969877756, 330.83950758992916, 24.278215223097114],
+              [179.62425372258264, 330.2037106008123, 24.278215223097114],
+              [186.93591909742602, 341.90753687457067, 24.278215223097114],
+              [187.02124169833542, 341.9148205122173, 24.278215223097114]
+            ],
+            "lengthMetres": 4.676174625704612,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|door:400176:1915300:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c3d391c2149",
+            "to": "door:400176:1915300:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [199.9797508652207, 317.0077982808182, 24.278215223097114],
+              [199.6608357041258, 316.97890880657354, 24.278215223097114],
+              [178.2886312042192, 330.33064557802663, 24.278215223097114],
+              [178.60652969877756, 330.83950758992916, 24.278215223097114],
+              [178.3994729562331, 330.99030204421564, 24.278215223097114]
+            ],
+            "lengthMetres": 8.039517067993694,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "to": "arrival:rm-400176-4c3d391c2149",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [213.07946278391557, 305.70998814324497, 24.278215223097114],
+              [213.14624007106573, 305.7244044167696, 24.278215223097114],
+              [214.41783404929936, 307.7598524643797, 24.278215223097114],
+              [199.6608357041258, 316.97890880657354, 24.278215223097114],
+              [199.9797508652207, 317.0077982808182, 24.278215223097114]
+            ],
+            "lengthMetres": 6.153465983106378,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "kind": "opening",
+            "lengthMetres": 0.3048000000000148,
+            "pointsFeet": [
+              [213.07946278391557, 305.70998814324497, 24.278215223097114],
+              [213.78656956510207, 305.0028813620583, 24.278215223097114]
+            ],
+            "roomKeys": ["rm-400176-4c3d391c2149", "rm-400176-4c40191c214b"],
+            "evidence": "recovered registered source open front; widthFeet=2; boundaryGapFeet=0; registrationErrorFeet=5.240704272917406e-13; continuously native-floor-covered squareFeet=1.999999999996362; native/repaired-wall, column, source-wall, other-room and hole vetoes passed; access/accessibility unverified",
+            "accessible": "unknown",
+            "enabled": true,
+            "openingSpan": {
+              "version": 1,
+              "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+              "levelId": 400176,
+              "pointsFeet": [
+                [212.72590939332218, 304.6493279714652, 24.278215223097114],
+                [215.5543365180687, 307.477755096211, 24.278215223097114]
+              ],
+              "nativeFloorElementIds": [511340],
+              "walkingStripWidthFeet": 2,
+              "apertureFeet": [
+                [215.5543365180689, 308.8919686585841],
+                [216.96855008044184, 307.4777550962108],
+                [212.725909393322, 303.23511440909203],
+                [211.31169583094908, 304.64932797146537]
+              ]
+            }
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c40191c214b",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [185.81032014954758, 257.5317506631976, 24.278215223097114],
+              [185.93502661930242, 257.6375053435025, 24.278215223097114],
+              [215.18168811867588, 304.45281043853595, 24.278215223097114],
+              [214.1639640948708, 305.08860742765273, 24.278215223097114],
+              [213.78656956510207, 305.0028813620583, 24.278215223097114]
+            ],
+            "lengthMetres": 17.35851826275108,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c40191c214b",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [185.81032014954758, 257.5317506631976, 24.278215223097114],
+              [185.93502661930242, 257.6375053435025, 24.278215223097114],
+              [205.27178307159883, 245.557362550283, 24.278215223097114],
+              [190.64845232191206, 222.14971000276626, 24.278215223097114],
+              [190.39551617450886, 221.99951727692348, 24.278215223097114]
+            ],
+            "lengthMetres": 15.50142033819643,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+            "kind": "opening",
+            "lengthMetres": 0.3048,
+            "pointsFeet": [
+              [190.39551617450886, 221.99951727692348, 24.278215223097114],
+              [191.39551617450886, 221.99951727692348, 24.278215223097114]
+            ],
+            "roomKeys": ["rm-400176-4c40191c214b", "rm-400176-4c51191c2159"],
+            "evidence": "recovered registered source open front; widthFeet=2; boundaryGapFeet=0; registrationErrorFeet=5.240704272917406e-13; continuously native-floor-covered squareFeet=1.999999999992724; native/repaired-wall, column, source-wall, other-room and hole vetoes passed; access/accessibility unverified",
+            "accessible": "unknown",
+            "enabled": true,
+            "openingSpan": {
+              "version": 1,
+              "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+              "levelId": 400176,
+              "pointsFeet": [
+                [190.89551617450886, 218.99951727692348, 24.278215223097114],
+                [190.89551617450886, 224.99951727692348, 24.278215223097114]
+              ],
+              "nativeFloorElementIds": [511340],
+              "walkingStripWidthFeet": 2,
+              "apertureFeet": [
+                [189.89551617450886, 225.99951727692348],
+                [191.89551617450886, 225.99951727692348],
+                [191.89551617450886, 217.99951727692348],
+                [189.89551617450886, 217.99951727692348]
+              ]
+            }
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [191.39551617450886, 221.99951727692348, 24.278215223097114],
+              [191.1573143338146, 221.83181150820786, 24.278215223097114],
+              [207.4408987146958, 211.65905968233884, 24.278215223097114],
+              [204.26191376911174, 206.57043956331344, 24.278215223097114],
+              [203.99551617450885, 206.61893475265163, 24.278215223097114]
+            ],
+            "lengthMetres": 7.852285712671449,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1923860:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1923860:1",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [193.53034543514005, 173.79024893345158, 24.278215223097114],
+              [203.99551617450885, 206.61893475265163, 24.278215223097114]
+            ],
+            "lengthMetres": 10.502305900099161,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          }
+        ],
+        "nodeIds": [
+          "door:402367:1119439:0",
+          "arrival:rm-402367-e870225e0964",
+          "door:402367:1119546:0",
+          "door:402367:1119678:0",
+          "door:402367:1119728:0",
+          "door:402367:1119728:1",
+          "arrival:rm-402367-e87a525e096d",
+          "arrival:rm-402367-f2b16b5e0fa6",
+          "door:402367:1122152:1",
+          "door:402367:1122152:0",
+          "arrival:rm-402367-f2a73b5e0f9e",
+          "door:402367:1927060:0",
+          "arrival:rm-402367-e82f165e092c",
+          "door:402367:1926926:1",
+          "door:402367:1926926:0",
+          "connector:unbc-library-lift:3",
+          "connector:unbc-library-lift:2",
+          "door:400176:1919713:1",
+          "door:400176:1919749:1",
+          "door:400176:1919749:0",
+          "door:400176:1915300:0",
+          "arrival:rm-400176-4c3d391c2149",
+          "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+          "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+          "arrival:rm-400176-4c40191c214b",
+          "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+          "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+          "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+          "door:400176:1923860:1"
+        ],
+        "paths": [
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+              "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+              "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+              "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+            ],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [101.20649055996962, 224.62866177218183, 34.120734908136484],
+              [122.933116049176, 259.35467516977366, 34.120734908136484],
+              [122.32355241929152, 259.1759993609417, 34.120734908136484],
+              [122.44246977580232, 259.6616521817103, 34.120734908136484]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": ["door:402367:1119728"],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [122.44246977580232, 259.6616521817103, 34.120734908136484],
+              [122.82868435204132, 261.23893411830767, 34.120734908136484]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|door:402367:1119728:1",
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|arrival:rm-402367-f2b16b5e0fa6",
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-f2b16b5e0fa6|door:402367:1122152:1"
+            ],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [122.82868435204132, 261.23893411830767, 34.120734908136484],
+              [136.3316928302025, 282.83525466818736, 34.120734908136484],
+              [135.39318798962998, 286.92938327379034, 34.120734908136484]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": ["door:402367:1122152"],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [135.39318798962998, 286.92938327379034, 34.120734908136484],
+              [135.8691332072104, 287.99093519398554, 34.120734908136484]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1122152:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1927060:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1927060:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1926926:1"
+            ],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [135.8691332072104, 287.99093519398554, 34.120734908136484],
+              [141.987232667591, 284.1683127094367, 34.120734908136484],
+              [185.75681441472017, 354.221438685282, 34.120734908136484],
+              [185.92470855883005, 354.116537492607, 34.120734908136484]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": ["door:402367:1926926"],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [185.92470855883005, 354.116537492607, 34.120734908136484],
+              [186.44914609237338, 353.8250494595576, 34.120734908136484]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1215:walk:connector:unbc-library-lift:3|door:402367:1926926:0"
+            ],
+            "levelIds": [402367],
+            "pointsFeet": [
+              [186.44914609237338, 353.8250494595576, 34.120734908136484],
+              [188.19727120418443, 352.85342268272626, 34.120734908136484],
+              [186.15090544478238, 353.3458674552993, 34.120734908136484],
+              [189.45222782988856, 351.28297227607675, 34.120734908136484],
+              [191.5068226206669, 351.73650489904, 34.120734908136484],
+              [192.12196147945903, 349.98632346936864, 34.120734908136484],
+              [193.1966849473138, 349.3147617125293, 34.120734908136484],
+              [193, 349, 34.120734908136484]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": ["connector:unbc-library-lift:2:3"],
+            "levelIds": [402367, 400176],
+            "pointsFeet": [
+              [193, 349, 34.120734908136484],
+              [193, 349, 24.278215223097114]
+            ],
+            "centered": false,
+            "sourceReason": "vertical-transition"
+          },
+          {
+            "edgeIds": [
+              "native-cell:24.278215:938:walk:connector:unbc-library-lift:2|door:400176:1919713:1",
+              "native-cell:24.278215:938:walk:door:400176:1919713:1|door:400176:1919749:1"
+            ],
+            "levelIds": [400176],
+            "pointsFeet": [
+              [193, 349, 24.278215223097114],
+              [193.01413663141315, 348.9819558794206, 24.278215223097114],
+              [192.90006675523918, 348.89258805527436, 24.278215223097114],
+              [190.16102129848676, 344.63718119860755, 24.278215223097114],
+              [188.757492563741, 344.2659247925683, 24.278215223097114],
+              [188.08997070160035, 344.1805363082794, 24.278215223097114],
+              [187.67389632877027, 343.9516802804269, 24.278215223097114],
+              [187.94425541021837, 343.46015079655, 24.278215223097114]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": ["door:400176:1919749"],
+            "levelIds": [400176],
+            "pointsFeet": [
+              [187.94425541021837, 343.46015079655, 24.278215223097114],
+              [187.02124169833542, 341.9148205122173, 24.278215223097114]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:24.278215:938:walk:door:400176:1915300:0|door:400176:1919749:0",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|door:400176:1915300:0",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+              "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+              "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10",
+              "native-cell:24.278215:938:walk:opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+              "native-cell:24.278215:938:walk:door:400176:1923860:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1"
+            ],
+            "levelIds": [400176],
+            "pointsFeet": [
+              [187.02124169833542, 341.9148205122173, 24.278215223097114],
+              [191.58921069276457, 322.04285404748936, 24.278215223097114],
+              [214.41783404929936, 307.7598524643797, 24.278215223097114],
+              [231.326874220304, 234.2007106140894, 24.278215223097114],
+              [193.53034543514005, 173.79024893345158, 24.278215223097114]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "orthogonal"
+          }
+        ],
+        "sourceDistanceMetres": 145.63685219860636,
+        "distanceMetres": 119.74189800702509,
+        "preferenceCost": 526.4516078463545,
+        "unknownAccessAreas": [
+          "rm-402367-e870225e0964",
+          "rm-402367-e87a525e096d",
+          "rm-402367-e840165e093b",
+          "rm-402367-e85b465e0952",
+          "rm-402367-e85f225e0955",
+          "rm-402367-f2b16b5e0fa6",
+          "rm-402367-f2a73b5e0f9e",
+          "rm-402367-5e5131c03aa8",
+          "rm-402367-5e540fc03aaa",
+          "rm-402367-5e5e41c03ab3",
+          "rm-402367-5e622fc03ab7",
+          "rm-402367-5e6511c03ab9",
+          "rm-402367-67f90ac04068",
+          "rm-402367-67fc78c0406b",
+          "rm-402367-680a08c04076",
+          "rm-402367-680d6ac04079",
+          "rm-402367-e10ced5e0591",
+          "rm-402367-e10fcd5e0593",
+          "rm-402367-e11ded5e05a0",
+          "rm-402367-e120c95e05a2",
+          "rm-402367-e82f165e092c",
+          "rm-402367-f2ae0f5e0fa4",
+          "rm-400176-4c46e91c2150",
+          "rm-400176-4671ea1dd0fd",
+          "rm-400176-4b8fe81c20b5",
+          "rm-400176-4ba0e61c20c4",
+          "rm-400176-4ba3c41c20c6",
+          "rm-400176-4c2f211c213c",
+          "rm-400176-4c3d391c2149",
+          "rm-400176-4c40191c214b",
+          "rm-400176-4c51191c2159",
+          "rm-400176-4c55011c215d",
+          "rm-400176-ae535b9d8fa3",
+          "rm-400176-b9e01d7b63c6",
+          "rm-400176-b9e71c7b63cd",
+          "rm-400176-b9ea8e7b63d0",
+          "rm-400176-b9f49c7b63d8",
+          "rm-400176-e290e4852927",
+          "rm-400176-f91a4f2d9cb3"
+        ],
+        "unknownAccessibilityEdges": 28,
+        "doorEdgeIds": [
+          "door:402367:1119728",
+          "door:402367:1122152",
+          "door:402367:1926926",
+          "door:400176:1919749"
+        ]
+      }
+    }
+  ]
+}

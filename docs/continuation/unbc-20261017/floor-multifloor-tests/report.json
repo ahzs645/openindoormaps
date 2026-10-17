@@ -1,0 +1,155 @@
+{
+  "archiveSha256": "09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+  "indoorSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "engineSha256": "aaa335577ffdeb27b45b1b405d94c49a673dc7a36cbd46f3bbc463e202265bda",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "priorCompleteImport": {
+    "receipt": "/workspace/openindoormaps/docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/browser-proof.json",
+    "appCommit": "ad367a5",
+    "exactInputAndRuntimeVerified": true
+  },
+  "fullSourceContextRetained": true,
+  "policyGraphsComputedFresh": true,
+  "sourceDatasetUnchanged": true,
+  "floor": {
+    "id": "storey:402367",
+    "name": "Floor 4",
+    "levelIds": [402367],
+    "elevationFeet": 34.120734908136484
+  },
+  "inventory": {
+    "places": 345,
+    "missingArrivals": [
+      {
+        "key": "rm-402367-049426889a71",
+        "number": "04-413",
+        "name": "Microscopy Lab"
+      },
+      {
+        "key": "rm-402367-1363bcba6587",
+        "number": "04-420",
+        "name": "Janitor"
+      },
+      {
+        "key": "rm-402367-1f1e120e87d5",
+        "number": "08-S401",
+        "name": "Stair"
+      },
+      {
+        "key": "rm-402367-546352c9f38d",
+        "number": "05-S401",
+        "name": "Stair"
+      },
+      {
+        "key": "rm-402367-546664c9f38f",
+        "number": "05-S403",
+        "name": "Stair"
+      },
+      {
+        "key": "rm-402367-72195d0d03a1",
+        "number": "08-422",
+        "name": "Spill Kit"
+      },
+      {
+        "key": "rm-402367-8e75a3917524",
+        "number": "04-409",
+        "name": "Genetics Equipment Room"
+      },
+      {
+        "key": "rm-402367-9777dc917a58",
+        "number": "04-422",
+        "name": "Grad Office"
+      },
+      {
+        "key": "rm-402367-a6e033f4311e",
+        "number": "03-R001",
+        "name": "Penthouse"
+      },
+      {
+        "key": "rm-402367-e786f567cdd2",
+        "number": "03-S304",
+        "name": "Stair"
+      }
+    ]
+  },
+  "graphCoverage": [
+    {
+      "mode": "public",
+      "orderedPairs": 118680,
+      "withinFloorReachable": 16118,
+      "fullCampusReachable": 61954,
+      "hallwayOnlyWithinFloorReachable": 82,
+      "unreachableWithinFloor": 102562,
+      "rowBytes": 44,
+      "matrix": {
+        "file": "floor-public.bits.gz",
+        "bytes": 1269,
+        "sha256": "825e9d2a44aa0c4213ab79a280b81c73bfe44f68dc8fdad41d0c0eb57f9a5172"
+      }
+    },
+    {
+      "mode": "accessible",
+      "orderedPairs": 118680,
+      "withinFloorReachable": 0,
+      "fullCampusReachable": 0,
+      "hallwayOnlyWithinFloorReachable": 0,
+      "unreachableWithinFloor": 118680,
+      "rowBytes": 44,
+      "matrix": {
+        "file": "floor-accessible.bits.gz",
+        "bytes": 49,
+        "sha256": "47fbba01378e8ad3c5a03cc00b097b09a30d6fa3c90f853474f152f62382a168"
+      }
+    }
+  ],
+  "heldStairs": 28,
+  "status": "complete-with-targeted-test-harness-replay",
+  "actualCalculations": {
+    "cases": 1538,
+    "available": 508,
+    "unavailable": 1030,
+    "errors": 0
+  },
+  "public": {
+    "cases": 698,
+    "available": 504,
+    "unavailable": 194,
+    "errors": 0
+  },
+  "stepFree": {
+    "cases": 840,
+    "available": 4,
+    "unavailable": 836,
+    "errors": 0
+  },
+  "invariantFailures": [],
+  "caseSelection": {
+    "kind": "complete-plan-with-six-selected-assertion-replays",
+    "fullPlanCases": 1538
+  },
+  "reconciliation": {
+    "kind": "display-endpoint-Float64-tolerance-only",
+    "replayedCaseIds": [
+      "case-201",
+      "case-202",
+      "case-355",
+      "case-356",
+      "case-37",
+      "case-38"
+    ],
+    "displayEndpointToleranceFeet": 1e-8,
+    "sourceAndVerticalCoordinatesStillExact": true,
+    "productionChanges": false,
+    "initialBatchSeconds": 994.7474235369999,
+    "selectedReplaySeconds": 362.39169908199995,
+    "rawInitialOutcome": "invariant-failures",
+    "replayOutcome": "complete"
+  },
+  "results": {
+    "file": "actual-results.jsonl.gz",
+    "bytes": 325811,
+    "sha256": "da0a86a64f342eaff5399eb66fcbd6034d6d3c2ac0a11326da408d42cfe04a1b",
+    "encoding": "gzip/utf8/JSON-lines",
+    "cases": 1538
+  }
+}

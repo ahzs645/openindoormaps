@@ -1,0 +1,212 @@
+{
+  "status": "calculator-complete-and-browser-functional-pass-with-visual-blocker",
+  "testedRuntimeCommit": "ad367a5",
+  "checkedRepositoryCommit": "9586963",
+  "productionRuntimeUnchanged": true,
+  "archiveSha256": "09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+  "engineSha256": "aaa335577ffdeb27b45b1b405d94c49a673dc7a36cbd46f3bbc463e202265bda",
+  "calculatorCases": 1538,
+  "calculatorInvariantFailures": [],
+  "all345FloorPlacesCoveredAsOriginAndDestinationBothProfiles": true,
+  "browserRuns": {
+    "initial": {
+      "outcome": "worker-lifetime-assertion-failure-after-both-routes-calculated",
+      "testMinutes": 21.9,
+      "completedSameFloorChecks": true,
+      "details": "first-run-outcome.json"
+    },
+    "targetedRetry": {
+      "outcome": "functional-pass",
+      "scope": "multifloor-only",
+      "testMinutes": 23.2,
+      "runnerMinutes": 23.4,
+      "pageErrors": [],
+      "sourceEdgeSequenceEqualsCalculator": true,
+      "distanceParityWithinMetres": 1e-6,
+      "actualRouteMetres": 119.74189800702509,
+      "checkedFloorLevels": [400176, 402367],
+      "screenshotsReviewed": true
+    }
+  },
+  "visualReview": {
+    "outcome": "issue-found",
+    "desktopLiftStep": "Blank floor canvas with POI pins after native preparation indicator cleared. The following desktop walking step and mobile lift step show the correct floor geometry. Duration/cause not established; investigate render/source readiness.",
+    "evidence": "desktop-lift-transition.png",
+    "otherKnownIssues": [
+      "Building 10 zigzags",
+      "Two upper-floor turn-around instructions",
+      "Library other-room fallback",
+      "Repeated native Floor 3 preparation"
+    ]
+  },
+  "mobileScope": "390x844 Chromium viewport, not a physical phone",
+  "publicationChanged": false,
+  "sourceGeometryAndAccessChanged": false,
+  "checks": [
+    "TypeScript noEmit passed",
+    "Touched QA file ESLint passed",
+    "Prettier QA checks passed",
+    "Original source/vertical edge coordinates checked exactly",
+    "Displayed endpoint differences bounded by 1e-8 feet",
+    "Floor bitset hashes and per-pair counts verified",
+    "Saved all-place outcomes and selected replay reconciled without production changes",
+    "Browser real worker source-edge IDs and distance compared with final calculator case"
+  ],
+  "files": [
+    {
+      "file": "README.md",
+      "bytes": 17903,
+      "sha256": "5bc85c622b8323f1315910a906897402a9a1164ae951f3cd60b1d03c95e27e81"
+    },
+    {
+      "file": "actual-results.jsonl.gz",
+      "bytes": 325811,
+      "sha256": "da0a86a64f342eaff5399eb66fcbd6034d6d3c2ac0a11326da408d42cfe04a1b"
+    },
+    {
+      "file": "browser-loading-observations.json",
+      "bytes": 955,
+      "sha256": "831cf50c46f104daab7513ac50b3143cdc8884641e551130d7b3439554b6f6d7"
+    },
+    {
+      "file": "browser-proof.json",
+      "bytes": 55516,
+      "sha256": "475c3fa184d420d2ee8b09c6d5140e916b2fa888f5ca2bb80d87108d0395194a"
+    },
+    {
+      "file": "cases.json.gz",
+      "bytes": 16600,
+      "sha256": "1a39a6e960e265ff5c2c9f002a248e6ad87b6d6dc127fed578f72cbe8ed51a37"
+    },
+    {
+      "file": "components.json",
+      "bytes": 19077,
+      "sha256": "27ce5ab2f583be6d08cdc105e9a81dc4b0cc1023eff49649cb11cc7e8851cab1"
+    },
+    {
+      "file": "coverage-geometry-proof.json.gz",
+      "bytes": 52580,
+      "sha256": "c6c83ff14f3de8bb693fd4019b807828815ced177afa4b3df29735e3eac7ccc3"
+    },
+    {
+      "file": "coverage-summary.json",
+      "bytes": 55182,
+      "sha256": "0ec398530ca979b05b7e7c07dc5c14d8012fc07395fcfe43ce9a4a930cc57095"
+    },
+    {
+      "file": "desktop-full-floor-route.png",
+      "bytes": 263981,
+      "sha256": "b16cb53258347bc1c7cf6cebfedf55bbb5ce06e060e8e9e568152546484fc03c"
+    },
+    {
+      "file": "desktop-lift-transition.png",
+      "bytes": 79311,
+      "sha256": "6b7e91d88449d27efb6400d8e7166f319f66a24c21b2bfbe79398fb12812312c"
+    },
+    {
+      "file": "desktop-multifloor-lower.png",
+      "bytes": 193202,
+      "sha256": "906c1401099442b97cd58b83920ee2401ac435bec41ef5c2e09a9d20cb246c56"
+    },
+    {
+      "file": "desktop-multifloor-result.png",
+      "bytes": 214203,
+      "sha256": "a090c3b1eae87567ce362faa981bcf937ea9b0250a0821b08acfde36da29f9ee"
+    },
+    {
+      "file": "desktop-multifloor-upper.png",
+      "bytes": 203810,
+      "sha256": "8b3f2d3ef5b7eaec12446f381d3029253e765ae82bc95db5f9945c0cc52afe2a"
+    },
+    {
+      "file": "examples.json.gz",
+      "bytes": 50047,
+      "sha256": "beb956347683448068bee0760754ef1fadc4bc99060e8c6114df65c662a1af2c"
+    },
+    {
+      "file": "first-browser-error-context.md.gz",
+      "bytes": 3840,
+      "sha256": "c4034e1d3d91107848477b3d775a0085ff2b57601a727893014cee1066ab1f68"
+    },
+    {
+      "file": "first-run-outcome.json",
+      "bytes": 4990,
+      "sha256": "3d4fbdf55e99293e82469b350e8bb920c98b301350e68e90120476687bb07647"
+    },
+    {
+      "file": "floor-4-coverage.png",
+      "bytes": 326464,
+      "sha256": "236631e94469d459f750334655ba897d187b87d181415bfd24e987229e368b6f"
+    },
+    {
+      "file": "floor-accessible.bits.gz",
+      "bytes": 49,
+      "sha256": "47fbba01378e8ad3c5a03cc00b097b09a30d6fa3c90f853474f152f62382a168"
+    },
+    {
+      "file": "floor-matrix.json",
+      "bytes": 344919,
+      "sha256": "21134d9e23993b8ae65a25fcb3067a6466beaf2e7f055fdbc22425d24f9fe3c3"
+    },
+    {
+      "file": "floor-public.bits.gz",
+      "bytes": 1269,
+      "sha256": "825e9d2a44aa0c4213ab79a280b81c73bfe44f68dc8fdad41d0c0eb57f9a5172"
+    },
+    {
+      "file": "floor-repair-queue.json",
+      "bytes": 17905,
+      "sha256": "b3da410ec43981649e33f07b7ef58327fea5270771607c4f3da2d4d3df262a2b"
+    },
+    {
+      "file": "initial-batch-outcome.json",
+      "bytes": 7545,
+      "sha256": "a70d72257d5fccee607df482d90241b8ad91483f104a64cfeb655ff838b29e0a"
+    },
+    {
+      "file": "mobile-full-floor-route.png",
+      "bytes": 83618,
+      "sha256": "41896cdc37889d7e904dea4c5553a4a2695200c4bbc5532dc22bdb5ba79192c5"
+    },
+    {
+      "file": "mobile-lift-transition.png",
+      "bytes": 57149,
+      "sha256": "57123013ba377d53bb1bc350491dc1372c5685da8fff2e749d3fd9b55b86d56e"
+    },
+    {
+      "file": "mobile-multifloor-lower.png",
+      "bytes": 55224,
+      "sha256": "151a585d1fcbf0866c02153d8307b4a5f1da326c64a36df48324b040348132f9"
+    },
+    {
+      "file": "numeric-replay-ids.json",
+      "bytes": 71,
+      "sha256": "90e40258acfadb7a6f7baffceafc4e8aa9208d751504202c7870cfa224b267ce"
+    },
+    {
+      "file": "numeric-replay-report.json.gz",
+      "bytes": 2156,
+      "sha256": "f7037e697667caf7960efa376c5c87c10438ff7ea51444aabfe126315fc3e527"
+    },
+    {
+      "file": "physical-matrix-mismatches.json",
+      "bytes": 134,
+      "sha256": "28d1bd190d3cbe684323afc53110ae3f252e149cef913558fa39bfe51508359c"
+    },
+    {
+      "file": "report.json",
+      "bytes": 4182,
+      "sha256": "4d0af7e1b17f50e5697a5c97932729e49662999204777424c27a932cfb713b1b"
+    },
+    {
+      "file": "route-quality-observations.json",
+      "bytes": 8984,
+      "sha256": "11c4b41b3df700d2e2d6f15c059438c96147bb5e9f45e70edeafc91c67ce0328"
+    },
+    {
+      "file": "timings.json",
+      "bytes": 699,
+      "sha256": "12c7df3df2baaa2678415e03e2b095a0a64c2f3eb1456fc466f415583f2944a3"
+    }
+  ]
+}

@@ -197,6 +197,16 @@ stairs, certify headroom or improve first-load preparation. The October 16
 source rebuild hold remains authoritative. The live Site publication remains
 unchanged.
 
+## Broader floor and multifloor follow-up
+
+The [complete Floor 4 acceptance](../../floor-multifloor-tests/README.md)
+enumerates 118,680 directed pairs per profile and 1,538 actual requests on this
+same candidate. It covers every Floor 4 place in both directions, section
+backbones and vertical connections. It reports 77 Floor 4 endpoint/isolation
+blockers, unchanged held stairs, residual Building 10 zigzags and the Library
+fallback through other rooms. The 51 comparisons above remain the earlier
+focused result; they are not the limit of the subsequent coverage.
+
 ## Next work
 
 1. Fit straight runs between real junctions in the larger branched components.

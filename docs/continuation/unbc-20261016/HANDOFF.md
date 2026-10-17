@@ -21,6 +21,19 @@ geometry/graph/door connections. It also includes an agent's two-venue Mappedin
 review. Use the updated app in draft PR #3 with that candidate; the live Site
 and the native rebuild/held-stair status are unchanged.
 
+Latest broader routing acceptance:
+[complete Floor 4 and multifloor tests](../unbc-20261017/floor-multifloor-tests/README.md).
+All 345 Floor 4 destinations are covered as origins/destinations; each profile
+has 118,680 ordered connectivity pairs. The 1,538 actual requests produce 508
+available and 1,030 unavailable outcomes after six focused numeric-assertion
+replays. Floor 4 still has 75 unqualified hallway endpoints plus two isolated
+places. Held stairs remain excluded, and long Building 10 zigzags / Library
+other-room fallback and cold preparation remain open. This tests the same
+version 3 candidate; source geometry and the live publication are unchanged.
+The targeted desktop/mobile multifloor controls passed, but the desktop lift
+step screenshot has a blank floor canvas; following-step/mobile geometry
+returns. Treat that as a visual blocker and investigate render readiness.
+
 ## Current state
 
 **The live viewer works; the new source rebuild failed. These are different

@@ -1,0 +1,312 @@
+{
+  "scope": "Route-quality observations, separate from physical/policy acceptance; not automatic geometry corrections.",
+  "examples": [
+    {
+      "example": "libraryLift:311",
+      "from": {
+        "number": "05-143",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 311
+      },
+      "to": {
+        "number": "05-242",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 694
+      },
+      "distanceMetres": 9.454609296479976,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-05-library-east-lift:0:1",
+          "kind": "elevator",
+          "fromLevel": 311,
+          "toLevel": 694
+        }
+      ],
+      "turnAroundInstructions": [],
+      "unknownAccessAreaCount": 93
+    },
+    {
+      "example": "libraryLift:694",
+      "from": {
+        "number": "05-242",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 694
+      },
+      "to": {
+        "number": "05-143",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 311
+      },
+      "distanceMetres": 9.454609296479976,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-05-library-east-lift:0:1",
+          "kind": "elevator",
+          "fromLevel": 311,
+          "toLevel": 694
+        }
+      ],
+      "turnAroundInstructions": [],
+      "unknownAccessAreaCount": 93
+    },
+    {
+      "example": "fourToOne:402367",
+      "from": {
+        "number": "05-411",
+        "name": "Office",
+        "building": "05",
+        "levelId": 402367
+      },
+      "to": {
+        "number": "05-143",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 311
+      },
+      "distanceMetres": 132.10091304104384,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-library-lift:1:3",
+          "kind": "elevator",
+          "fromLevel": 694,
+          "toLevel": 402367
+        },
+        {
+          "id": "connector:unbc-05-library-east-lift:0:1",
+          "kind": "elevator",
+          "fromLevel": 311,
+          "toLevel": 694
+        }
+      ],
+      "turnAroundInstructions": [
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 0.6415380899703732,
+          "turnDirection": "right",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [188.19727120418443, 352.85342268272626, 34.120734908136484],
+            [186.15090544478238, 353.3458674552993, 34.120734908136484]
+          ],
+          "position": [-122.81325685452659, 53.89324030301308]
+        },
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 1.1865400883989654,
+          "turnDirection": "left",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [186.15090544478238, 353.3458674552993, 34.120734908136484],
+            [189.45222782988856, 351.28297227607675, 34.120734908136484]
+          ],
+          "position": [-122.81326662361015, 53.89324003169369]
+        }
+      ],
+      "unknownAccessAreaCount": 115
+    },
+    {
+      "example": "fourToOne:311",
+      "from": {
+        "number": "05-143",
+        "name": "Lobby",
+        "building": "05",
+        "levelId": 311
+      },
+      "to": {
+        "number": "05-411",
+        "name": "Office",
+        "building": "05",
+        "levelId": 402367
+      },
+      "distanceMetres": 133.41338567333537,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-05-library-east-lift:0:1",
+          "kind": "elevator",
+          "fromLevel": 311,
+          "toLevel": 694
+        },
+        {
+          "id": "connector:unbc-library-lift:1:3",
+          "kind": "elevator",
+          "fromLevel": 694,
+          "toLevel": 402367
+        }
+      ],
+      "turnAroundInstructions": [
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 0.6415380899703732,
+          "turnDirection": "right",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [186.15090544478238, 353.3458674552993, 34.120734908136484],
+            [188.19727120418443, 352.85342268272626, 34.120734908136484]
+          ],
+          "position": [-122.81326662361015, 53.89324003169369]
+        },
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 2.1259034877628267,
+          "turnDirection": "left",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [188.19727120418443, 352.85342268272626, 34.120734908136484],
+            [186.44914609237338, 353.8250494595576, 34.120734908136484],
+            [185.92470855883005, 354.116537492607, 34.120734908136484],
+            [182.21460464153012, 356.4346310028751, 34.120734908136484]
+          ],
+          "position": [-122.81325685452659, 53.89324030301308]
+        }
+      ],
+      "unknownAccessAreaCount": 115
+    },
+    {
+      "example": "fourToThree:402367",
+      "from": {
+        "number": "05-411",
+        "name": "Office",
+        "building": "05",
+        "levelId": 402367
+      },
+      "to": {
+        "number": "05-341",
+        "name": "Seminar",
+        "building": "05",
+        "levelId": 400176
+      },
+      "distanceMetres": 119.74189800702509,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-library-lift:2:3",
+          "kind": "elevator",
+          "fromLevel": 400176,
+          "toLevel": 402367
+        }
+      ],
+      "turnAroundInstructions": [
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 0.6415380899703732,
+          "turnDirection": "right",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [188.19727120418443, 352.85342268272626, 34.120734908136484],
+            [186.15090544478238, 353.3458674552993, 34.120734908136484]
+          ],
+          "position": [-122.81325685452659, 53.89324030301308]
+        },
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 1.1865400883989654,
+          "turnDirection": "left",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [186.15090544478238, 353.3458674552993, 34.120734908136484],
+            [189.45222782988856, 351.28297227607675, 34.120734908136484]
+          ],
+          "position": [-122.81326662361015, 53.89324003169369]
+        }
+      ],
+      "unknownAccessAreaCount": 39
+    },
+    {
+      "example": "fourToThree:400176",
+      "from": {
+        "number": "05-341",
+        "name": "Seminar",
+        "building": "05",
+        "levelId": 400176
+      },
+      "to": {
+        "number": "05-411",
+        "name": "Office",
+        "building": "05",
+        "levelId": 402367
+      },
+      "distanceMetres": 121.05437063931663,
+      "floorTransitions": [
+        {
+          "id": "connector:unbc-library-lift:2:3",
+          "kind": "elevator",
+          "fromLevel": 400176,
+          "toLevel": 402367
+        }
+      ],
+      "turnAroundInstructions": [
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 0.6415380899703732,
+          "turnDirection": "right",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [186.15090544478238, 353.3458674552993, 34.120734908136484],
+            [188.19727120418443, 352.85342268272626, 34.120734908136484]
+          ],
+          "position": [-122.81326662361015, 53.89324003169369]
+        },
+        {
+          "type": "turn",
+          "message": "Turn around",
+          "distanceMeters": 2.1259034877628267,
+          "turnDirection": "left",
+          "turnKind": "around",
+          "levelId": 402367,
+          "building": "05",
+          "pointsFeet": [
+            [188.19727120418443, 352.85342268272626, 34.120734908136484],
+            [186.44914609237338, 353.8250494595576, 34.120734908136484],
+            [185.92470855883005, 354.116537492607, 34.120734908136484],
+            [182.21460464153012, 356.4346310028751, 34.120734908136484]
+          ],
+          "position": [-122.81325685452659, 53.89324030301308]
+        }
+      ],
+      "unknownAccessAreaCount": 39
+    },
+    {
+      "example": "fullFloor",
+      "from": {
+        "number": "10-4552",
+        "name": "Club Room (JDC West)",
+        "building": "10",
+        "levelId": 402367
+      },
+      "to": {
+        "number": "10-4560",
+        "name": "Classroom",
+        "building": "10",
+        "levelId": 402367
+      },
+      "distanceMetres": 52.909886766289475,
+      "floorTransitions": [],
+      "turnAroundInstructions": [],
+      "unknownAccessAreaCount": 9
+    }
+  ]
+}
