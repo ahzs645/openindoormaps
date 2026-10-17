@@ -6,6 +6,26 @@ were missing described the former workspace state. They are available locally
 again; the live version-13 116.53 MB development snapshot predates this recovery
 and still omits these native authoring files.
 
+## Downloadable recovery bundle
+
+The [owner-private Drive backup](https://drive.google.com/drive/folders/1FO-aO6JTBXKR0-Wkyfdrw3GLPvZ9pZ1g)
+now contains the **466,093,911-byte** available-source recovery archive in five
+parts below the connector upload limit, plus DOWNLOAD.json, JOIN.py and
+DOWNLOAD-README.md. All five remote names/sizes and the instructions were
+verified after upload. The local joined archive and full restore passed all
+**3,789 tracked source files** and five included data files. Its SHA is
+`7dd8789dea31098c89b3c455fd524ed79add148976fcc95143f53e0bd60448c7`.
+
+The bundle includes both source trees, historical master with embedded model,
+rooms/GIS/890 companions, current visitor, IFC/SVF and the fresh base cache.
+Duplicate standalone model/room/evidence copies and reconstructed working ZIPs
+are omitted. It is a new available-inputs backup, not a lossless replacement for
+the missing 1.27 GB archive. The historical failed state remains incomplete.
+Source snapshots are OpenIndoorMaps `a327c7fd3236ab719fb5f63b735aa3785798ac03`
+and Reviter `be558311b6d9f2df3850130a4ad4f8e943ade4ed`; these documentation-only
+backup receipts follow those snapshot commits. The live Site/app download is
+unchanged. Read DOWNLOAD-README in Drive to join/extract and run restore.py.
+
 ## What is recovered
 
 | Input | Bytes | Verification |
@@ -66,6 +86,14 @@ profile recalculation. The ramp audit uses saved triangles and support; it is
 not a fresh original-RVT ramp reconstruction or a complete navigation test.
 One ramp retains unknown accessibility. Seven user-excluded source stair IDs
 have no corresponding saved stair edge; exclusion preferences were not changed.
+
+The fresh converter also inventories **82 source stair assemblies**: 28 have
+held links, one has an enabled local-step edge and 53 have no saved stair/step
+edge. The 53 include all seven preference exclusions. This is a membership
+census, not 82 complete physical route reviews or a recommendation to connect
+all assemblies. See [all-source-stair-assemblies.json](all-source-stair-assemblies.json).
+Its additional census receipt follows the source snapshot in the bundle; the
+included base cache contains the original full assembly inventory.
 
 No source point, owner, hole, obstacle, access rule or graph edge was changed.
 **All 28 full stair links remain disabled.** A complete source record does not
