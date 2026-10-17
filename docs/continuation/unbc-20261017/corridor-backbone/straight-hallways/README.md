@@ -142,6 +142,31 @@ own older engine binding.
 The first graph request took several minutes. This feature improves displayed
 path geometry and endpoint behavior; it does not solve cold graph preparation.
 
+## Actual viewer acceptance
+
+The current production Pages build passed the desktop/mobile browser test on
+this complete candidate. One cold import was reused for both viewports and
+the preference changes. The real worker returned a single two-vertex shared
+route with center-stop metadata at both ends; switching off used existing
+refinement in the same worker, and switching back restored the client cache.
+No page errors were recorded. The mobile setting stays within the viewport.
+
+The functional test took 12.6 minutes. This is not a loading-speed target or a
+claim that cold preparation is optimized. Source validation, native floor
+preparation and the first graph query remain expensive. No source/worker
+responses or preparation authority were substituted to obtain these images.
+
+[Browser proof and checksums](browser-proof.json),
+[actual worker replies](browser-routes.json),
+[desktop setting](desktop-setting.png), [mobile directions](mobile-route.png)
+and [mobile setting](mobile-setting.png).
+
+![Actual desktop directions, with both centerline ends visible](desktop-route.png)
+
+The desktop directions image shows the full straight route. The mobile image
+focuses the current instruction, so the whole route is not inside that frame.
+Both show the actual viewer, unlike the analytical comparison above.
+
 ## Mappedin comparison requested by the user
 
 An independent agent reviewed two actual public demo routes in an isolated
@@ -171,3 +196,18 @@ rebuild the original native source, resolve missing entrances, clear held
 stairs, certify headroom or improve first-load preparation. The October 16
 source rebuild hold remains authoritative. The live Site publication remains
 unchanged.
+
+## Next work
+
+1. Fit straight runs between real junctions in the larger branched components.
+   Keep the junction, doorway and obstacle checks; do not average an entire
+   T/L/curved hallway into a diagonal. Start with one affected cell and its
+   dependent routes, then batch a stable final all-floor run.
+2. Optimize cold source/floor/graph preparation separately, with caches bound
+   to their real dependencies and implementation. Do not relabel old prepared
+   assets under the new engine.
+3. If publishing this candidate, deploy the current app and its version 3
+   package together and generate fresh verified publication caches. Verify
+   ordinary anonymous URLs and actual directions; a cache-busting URL is not
+   publication proof. The draft PR is #3; this work has not changed the live Site
+   or promoted the failed source rebuild.

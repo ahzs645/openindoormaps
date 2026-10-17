@@ -13,6 +13,14 @@ and actual navigation comparisons. The live map, source graph and route
 approvals are unchanged. The failed rebuild and held-stair status below remain
 authoritative.
 
+Latest derived route-style follow-up:
+[averaged straight hallways and centerline endpoints](../unbc-20261017/corridor-backbone/straight-hallways/README.md).
+Its 45.52 MB visitor candidate uses resolver version 3, passes 51 normal route
+comparisons and the desktop/mobile viewer check, and preserves original source
+geometry/graph/door connections. It also includes an agent's two-venue Mappedin
+review. Use the updated app in draft PR #3 with that candidate; the live Site
+and the native rebuild/held-stair status are unchanged.
+
 ## Current state
 
 **The live viewer works; the new source rebuild failed. These are different
