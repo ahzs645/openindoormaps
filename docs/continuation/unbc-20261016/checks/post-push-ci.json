@@ -1,0 +1,35 @@
+{
+  "reviter": {
+    "run": "https://github.com/ahzs645/reviter/actions/runs/38993348033/attempts/2",
+    "typecheck": "passed with current sibling main",
+    "unitTests": {
+      "total": 2210,
+      "passed": 2186,
+      "failed": 2,
+      "skipped": 22
+    },
+    "failedFamilies": [
+      "tests/deterministic-math.test.ts",
+      "tests/native-local-transition-qualification.test.ts"
+    ],
+    "autodeskPipelineStep": "not run because unit tests failed",
+    "pagesLint": {
+      "run": "https://github.com/ahzs645/reviter/actions/runs/38993348013",
+      "errors": 140,
+      "warnings": 82,
+      "previousMainAlsoFailedLint": true
+    }
+  },
+  "openindoormaps": {
+    "initialRun": "https://github.com/ahzs645/openindoormaps/actions/runs/38993359531",
+    "typecheck": "passed",
+    "failure": "stale authored-tread tampering fixture expected later semantic error but new metadata reference binding refused first",
+    "finalAffectedFamily": {
+      "total": 67,
+      "passed": 67,
+      "failed": 0
+    },
+    "finalScopedTypecheckExit": 0,
+    "productionCodeChangedByFixtureRepair": false
+  }
+}

@@ -46,6 +46,10 @@ Reviter `25bd696f2a5d8085be26fa5bc84aa978a13edb40`. These recover the failed
 run's source version. Main also incorporates the separately tested/published
 viewer changes, without copying its older physical compiler over newer source.
 Final source-validation details are in [CHECKS.md](CHECKS.md).
+Remote full Reviter CI still has two failing test families (deterministic Math
+and run-owned stair material), plus Pages lint debt. The next AI must retain
+those failures and repair them with targeted checks; the source baseline is
+not advertised as fully green.
 
 Completed features and investigations:
 

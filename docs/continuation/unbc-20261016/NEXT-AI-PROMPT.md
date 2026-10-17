@@ -21,6 +21,10 @@ code 1**, not success. It refused losing previously admitted arrivals
 in the handoff. Nine physical checkpoint pairs exist; there is no accepted new
 master or visitor candidate. All 28 held stair links remain disabled.
 
+Read the post-push CI section in `CHECKS.md` as well: Reviter has two failing
+full-suite families (deterministic Math and run-owned stair material), plus
+Pages lint debt. Do not suppress those guards or assume all CI passed.
+
 First diagnose those two arrival losses using retained full affected source/cell
 and physical plane context, preserving original owners, foreign obstacles,
 apertures, support and access. Fix and test the demonstrated predicate and

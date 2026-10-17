@@ -1,0 +1,132 @@
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3294861Z ok 137 - deterministic outputs are pinned: same bits on every platform
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3295279Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3295653Z   duration_ms: 20.616952
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3295962Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3296242Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3296782Z # Subtest: curved-wall tessellation keeps its vertex count and stays within 1e-12 ft of platform trig
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3297553Z ok 138 - curved-wall tessellation keeps its vertex count and stays within 1e-12 ft of platform trig
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3298055Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3298337Z   duration_ms: 209.476864
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3298788Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3299069Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3299532Z # Subtest: compiler geometry modules use no implementation-approximated Math
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3300190Z not ok 139 - compiler geometry modules use no implementation-approximated Math
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3300646Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3300923Z   duration_ms: 52.303827
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3301230Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3301755Z   location: '/home/runner/work/reviter/reviter/reviter/tests/deterministic-math.test.ts:174:1'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3302327Z   failureType: 'testCodeFailure'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3302723Z   error: |-
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3303055Z     Expected values to be strictly deep-equal:
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3303425Z     + actual - expected
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3303721Z     
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3304040Z     + [
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3304610Z     +   'lib/reviter/native-arrival-owner.ts:29: const a = path[i]!, dx = b[0] - a[0], dy = b[1] - a[1], length = Math.hypot(dx, dy);',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3305440Z     +   'lib/reviter/native-arrival-owner.ts:48: const length = Math.hypot(...normal);',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3306185Z     +   'lib/reviter/native-terminal-refinement.ts:65: const span = Math.hypot(box[2]! - box[0]!, box[3]! - box[1]!);',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3306955Z     +   'lib/reviter/native-terminal-refinement.ts:66: if ((span / cell + 4) ** 2 > 1_000_000) continue;',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3307644Z     +   'lib/reviter/revit-2027-garc.ts:116: Math.hypot(...xDirection) <= Number.EPSILON ||',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3308289Z     +   'lib/reviter/revit-2027-garc.ts:117: Math.hypot(...yDirection) <= Number.EPSILON',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3308959Z     +   'lib/reviter/revit-2027-gcondition-dir.ts:58: Math.hypot(...direction) <= Number.EPSILON',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3309646Z     +   'lib/reviter/revit-2027-gellipse.ts:92: Math.hypot(...xDirection) <= Number.EPSILON ||',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3310304Z     +   'lib/reviter/revit-2027-gellipse.ts:93: Math.hypot(...yDirection) <= Number.EPSILON',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3310963Z     +   'lib/reviter/revit-2027-gline.ts:81: if (Math.hypot(...direction) <= Number.EPSILON) {',
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3311807Z     +   'lib/reviter/revit-2027-owner-mesh-trim.ts:54: return Math.hypot(left[0] - right[0], left[1] - right[1]);'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3312338Z     + ]
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3312607Z     - []
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3312871Z     
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3313150Z   code: 'ERR_ASSERTION'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3313461Z   name: 'AssertionError'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3313765Z   expected:
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3314043Z   actual:
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3314604Z     0: 'lib/reviter/native-arrival-owner.ts:29: const a = path[i]!, dx = b[0] - a[0], dy = b[1] - a[1], length = Math.hypot(dx, dy);'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3315419Z     1: 'lib/reviter/native-arrival-owner.ts:48: const length = Math.hypot(...normal);'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3316160Z     2: 'lib/reviter/native-terminal-refinement.ts:65: const span = Math.hypot(box[2]! - box[0]!, box[3]! - box[1]!);'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3316949Z     3: 'lib/reviter/native-terminal-refinement.ts:66: if ((span / cell + 4) ** 2 > 1_000_000) continue;'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3317650Z     4: 'lib/reviter/revit-2027-garc.ts:116: Math.hypot(...xDirection) <= Number.EPSILON ||'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3318372Z     5: 'lib/reviter/revit-2027-garc.ts:117: Math.hypot(...yDirection) <= Number.EPSILON'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3319049Z     6: 'lib/reviter/revit-2027-gcondition-dir.ts:58: Math.hypot(...direction) <= Number.EPSILON'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3319753Z     7: 'lib/reviter/revit-2027-gellipse.ts:92: Math.hypot(...xDirection) <= Number.EPSILON ||'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3320437Z     8: 'lib/reviter/revit-2027-gellipse.ts:93: Math.hypot(...yDirection) <= Number.EPSILON'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3321122Z     9: 'lib/reviter/revit-2027-gline.ts:81: if (Math.hypot(...direction) <= Number.EPSILON) {'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3321866Z     10: 'lib/reviter/revit-2027-owner-mesh-trim.ts:54: return Math.hypot(left[0] - right[0], left[1] - right[1]);'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3322442Z   operator: 'deepStrictEqual'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3322901Z   stack: |-
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3323502Z     TestContext.<anonymous> (file:///home/runner/work/reviter/reviter/reviter/tests/deterministic-math.test.ts:191:10)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3324180Z     Test.runInAsyncScope (node:async_hooks:214:14)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3324629Z     Test.run (node:internal/test_runner/test:1047:25)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3325139Z     Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3326111Z     Test.postRun (node:internal/test_runner/test:1173:19)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3326446Z     Test.run (node:internal/test_runner/test:1101:12)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3326832Z     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3327152Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3327574Z # Subtest: adjacent atrium labels become one outline, retaining source IDs and excluding private rooms
+typecheck + unit tests	Unit tests	2026-10-17T02:05:19.3328210Z ok 140 - adjacent atrium labels become one outline, retaining source IDs and excluding private rooms
+
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4989619Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4989790Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4990192Z # Subtest: a reviewed local-steps recipe qualifies as a not-step-free native stair connector
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4990786Z ok 834 - a reviewed local-steps recipe qualifies as a not-step-free native stair connector
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4991303Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4991474Z   duration_ms: 563.663634
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4991668Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4991838Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4992673Z # Subtest: the run's own Treads/Risers finish is walking body, not foreign material
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4993227Z not ok 835 - the run's own Treads/Risers finish is walking body, not foreign material
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4993576Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4993746Z   duration_ms: 18.457759
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4993949Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4994434Z   location: '/home/runner/work/reviter/reviter/reviter/tests/native-local-transition-qualification.test.ts:103:1'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4994935Z   failureType: 'testCodeFailure'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4995169Z   error: |-
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4996448Z     [{"transition":{"id":"steps-a","kind":"local-steps","evidence":"user-reported","nativeStairId":10,"floorElementIds":[100,101],"endpoints":[{"building":"B","levelId":1,"point":[0,1.5],"roomKey":"low"},{"building":"B","levelId":2,"point":[3,1.5],"roomKey":"high"}]},"reason":"foreign material crosses the 2 ft walking path: elements 12"}]
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4997529Z     
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4997699Z     0 !== 1
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4997861Z     
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4998033Z   code: 'ERR_ASSERTION'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4998250Z   name: 'AssertionError'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4998459Z   expected: 1
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4998636Z   actual: 0
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4998820Z   operator: 'strictEqual'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4999026Z   stack: |-
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.4999601Z     TestContext.<anonymous> (file:///home/runner/work/reviter/reviter/reviter/tests/native-local-transition-qualification.test.ts:106:10)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5000235Z     async Test.run (node:internal/test_runner/test:1054:7)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5000659Z     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5001005Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5001489Z # Subtest: a riser line without its native lip, foreign material in the path or a wrong recipe slab is refused
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5002221Z ok 836 - a riser line without its native lip, foreign material in the path or a wrong recipe slab is refused
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5002643Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5002824Z   duration_ms: 93.671285
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5003208Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5003380Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5003957Z # Subtest: both actual original identity instances retain the whole source envelope including all twelve unresolved null-loop faces
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5004805Z ok 837 - both actual original identity instances retain the whole source envelope including all twelve unresolved null-loop faces
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5005272Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5005857Z   duration_ms: 28.617312
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5008507Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5008637Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5008993Z # Subtest: nonidentity instances, noncomplete frames, changed source boxes, wrong targets and unsupported leaf bodies refuse evidence
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5009532Z ok 838 - nonidentity instances, noncomplete frames, changed source boxes, wrong targets and unsupported leaf bodies refuse evidence
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5009827Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5009948Z   duration_ms: 28.005669
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5010077Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5010190Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:05:43.5010509Z # Subtest: detailed coverage preserves physical template material through the whole carrier box; the legacy API stays strict
+
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2552290Z # Subtest: terminate stops the worker and forgets what it was serving
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2552578Z ok 2206 - terminate stops the worker and forgets what it was serving
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2552770Z   ---
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2552881Z   duration_ms: 0.164894
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553006Z   type: 'test'
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553118Z   ...
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553224Z 1..2206
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553332Z # tests 2210
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553445Z # suites 3
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553562Z # pass 2186
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553673Z # fail 2
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553782Z # cancelled 0
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2553905Z # skipped 22
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2554021Z # todo 0
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2554143Z # duration_ms 72330.994754
+typecheck + unit tests	Unit tests	2026-10-17T02:06:26.2683759Z ##[error]Process completed with exit code 1.
+

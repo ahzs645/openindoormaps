@@ -1,0 +1,155 @@
+build	Check routing and worker lifecycle	﻿2026-10-17T02:03:54.5794368Z ##[group]Run node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts
+build	Check routing and worker lifecycle	2026-10-17T02:03:54.5797512Z [36;1mnode --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts[0m
+build	Check routing and worker lifecycle	2026-10-17T02:03:54.5837205Z shell: /usr/bin/bash -e {0}
+build	Check routing and worker lifecycle	2026-10-17T02:03:54.5837496Z ##[endgroup]
+build	Check routing and worker lifecycle	2026-10-17T02:03:54.8255903Z ✔ Pages venue links preserve hash routes and unrelated query parameters (2.290122ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:54.8278550Z ✔ Browser routes keep their existing query and anchor behavior (0.568209ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6669811Z ✔ rotated long wall faces remove shallow notches without changing room or graph data (10.085653ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6689306Z ✔ a corridor or other room inside a recess vetoes the rectangle (5.519711ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6691093Z ✔ native circulation boundaries protect gaps omitted by coarse source corridor outlines (1.475489ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6712328Z ✔ native floor openings are not filled even when the room source missed them (2.925003ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6758466Z ✔ real room holes remain exact and large L shapes do not become boxes (6.03613ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6779170Z ✔ a room-to-room portal and its landing keep measured positions (3.125047ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6780874Z ✔ shared boundaries cannot shift and result is independent of record order (11.343059ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6804556Z ✔ unresolved boundaries and circulation are retained; stale display outlines are ignored (1.700705ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6818840Z ✔ actual PT MPL becomes four corners with its two existing door connections and neighbours intact (186.376387ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6820320Z ✔ removing a bay cannot erase a shared neighbour boundary (1.810271ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6821499Z ✔ filling a recess cannot create a new neighbour contact across a gap (0.956511ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6822795Z ✔ doorway threshold patches retain their own geometry when they share a room key (3.053827ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:56.6824226Z ✔ connected native door markers retain their footprint and rise only as a thin roof marker (3.722605ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.0601361Z ✔ native stair selection keeps actual tread shapes outside the source outline without extending routes (12.228079ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3064631Z ✔ basemap exclusion areas survive master and viewer exports without changing source geometry or routing (71.632279ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3093981Z ✔ automatic campus exclusions cover all source floors and respect the geographic alignment (0.820469ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3148670Z ✔ floor presentation reuses revisited floors and invalidates edits and display options (163.811494ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3150181Z ✔ floor presentation limits retained floors and refreshes recently used entries (21.020145ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3269263Z ✔ a reviewed internal door remains closed for implicit walking crossings after ZIP export and re-import (20.597518ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:57.3426530Z ✔ campus viewer keeps exact geometry and routes without model bytes or authoring room copies (14.564795ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:59.9725673Z ✔ viewer exports pack large exact native materials within the existing metadata limit (2630.311663ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:59.9879287Z ✔ viewer export preserves combined campus floor selections without joining routing levels (15.847396ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:59.9982071Z ✔ viewer export preserves disabled connections and rejects altered payloads and bundled models (7.294803ms)
+build	Check routing and worker lifecycle	2026-10-17T02:03:59.9984149Z ✔ explicit node identity keeps identical XY on another floor disconnected (3.047115ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0063426Z ✔ visitor metadata survives export without changing room geometry, source names, graph or access (5.300788ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0064763Z ✔ visitor metadata rejects unknown identities and malformed palette fields (0.507338ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0065952Z ✔ public routes block staff and voids while permitting physically linked ordinary rooms (0.708392ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0067784Z ✔ step-free routes require confirmation on every edge and never infer elevators (0.469298ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0069522Z ✔ malformed nodes, graph references and nonfinite registration are rejected (0.601581ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0116016Z ✔ project round-trip preserves original model, GIS and unknown source fields while applying restrictions (5.332072ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0155655Z ✔ connection reviews survive export; stairs cannot be declared step-free (4.056967ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0528881Z ✔ tampered entries, traversal paths and stale prepared graphs fail before import (5.527167ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0530831Z ✔ source feet registration uses longitude latitude order and retains vertical datum (0.474759ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0545772Z ✔ route failure distinguishes source gaps from access and step-free restrictions (2.532252ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0546980Z ✔ room labels never fabricate a route blocker when physical links are permitted (0.477791ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0547918Z ✔ route diagnostics explain rejected native circulation evidence (0.699528ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0548678Z ✔ route diagnostics identify metadata blockers individually and keep their native evidence (0.82309ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0549478Z ✔ reverse-only failures report saved travel direction rather than a fabricated source gap (0.384042ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0550372Z ✔ diagnostics prefer an unblocked detour and do not blame unrelated reviewed doors (0.455348ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0551343Z ✔ room preferences do not become accessibility blockers or alter data (0.463852ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0552374Z ✔ native apertures cut only their own floor and preserve holes, source and routes (10.269131ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0553473Z ✔ unmatched and position-only doors stay review markers without invented routes or holes (0.530712ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.0554674Z ✔ solid room blocks include adjoining walls but leave corridors, apertures and floor holes open (13.12273ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2075823Z ✔ native entrance geometry survives review export and re-import (7.296037ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2077290Z ✔ native walls define a room enclosure using its source identity, including a door threshold (12.385ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2085168Z ✔ tiny rotated native wall junction gaps resolve inset rooms without swallowing a hall or door (17.325681ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2089058Z ✔ lower rooms appear only inside upper polygon openings with no new connectivity (2.550722ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2091699Z ✔ pillars hide without changing routing and overlapping wall faces merge before door cuts (3.65866ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2093145Z ✔ hiding a wall pillar continues the wall at its own thickness and retains the doorway (1.946829ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2094433Z ✔ every destination coverage agrees with corridor-preferred routing (2.342489ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2095535Z ✔ all-room coverage matches an independent pair-by-pair flood across mixed graphs (103.322345ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2097262Z ✔ room-to-room navigation preserves consecutive flights and arrival floor in both directions (1.643717ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2099278Z ✔ prepared presentation rejects stale source geometry, wrong floors and malformed parts (1.634894ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2107308Z ✔ supported junction preparation version 2 accepts its measured cap tolerance and rejects unbounded expansion (0.341376ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2323355Z ✔ prepared wall blocks survive metadata review and preserve graph and source footprints (12.796241ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2340058Z ✔ three consecutive stair milestones remain clickable and aligned with progress on mobile and desktop (1.013834ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2341731Z ✔ explicit served-floor elevators retain vertical paths and matching instruction type (1.517714ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2345183Z ✔ vertical movement within a combined campus floor retains the native transition (0.499007ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2349853Z ✔ source connector binding rejects guessed links and stale individual accessibility reviews (0.978303ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2351460Z ✔ one-way escalators prohibit reversed public routes and every step-free route (1.073929ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2353040Z ✔ vertical connector metadata cannot authorize missing floors, stale bytes or mismatched edges (1.038605ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2354672Z ✔ local steps show once on a combined campus floor with direction and keep separate native endpoints (1.595326ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2356056Z ✔ ramps retain their route geometry and need independent step-free verification (1.190807ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2358063Z ✔ source stair markers include unresolved stairs and use the actual served floor endpoint (1.395424ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2410566Z ✔ elevator reviews survive ZIP export without authorizing invented graph connections (9.793133ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2562261Z ✔ native connector reviews require current owned floor faces rather than old label outlines (12.433949ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2563776Z ✔ visitor presentation hides isolated unmapped wall components while preserving actual room walls and holes (2.2103ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2622312Z ✔ map annotations retain floor/model identity and original geometry through ZIP export (5.724294ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2655118Z ✔ map annotation validation rejects invalid geometry, duplicate IDs and foreign model/floor data (3.441034ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2659703Z ✔ map placement inverts rotated GIS alignment and moves all area corners equally (0.470488ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2751437Z ✔ managed locations, linked labels, floor names and objects survive ZIP round trip without changing routing (5.845507ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2752689Z ✔ reviewed native shafts can span building labels while retaining source identity (1.180766ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2753616Z ✔ shared-room native stair display requires review and never adds a stair route (1.503001ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2754476Z ✔ rounding does not split a direct lift ride into intermediate floor stops (0.764783ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2863187Z ✔ confirmed passage preference survives both exports without changing display or bypassing door rules (10.16754ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2864490Z ✔ corridor preference chooses a reasonable detour and permits an ordinary-room fallback (0.626726ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.2987988Z ✔ routing preparation preserves every source asset in master and viewer packages (12.012131ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.3980538Z ✔ strict visitor physical bindings preserve native cells and routes while stripping private notes (94.911133ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4248606Z ✖ visitor exports retain exact authored physical tread evidence and omit cached authoring history (28.550745ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4301354Z ✔ viewer exports carry authored envelopes while the dataset keeps compiler supplements (8.407953ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4569046Z ✔ both railing pins find actual nearby native stairs and preserve their different routing states (9.45296ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4570471Z ✔ source connectors have one selectable identity in flat, raised and relative views (5.175124ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4571773Z ✔ stale inventories, other levels, distant pins and disabled routes never confer a connection (2.23907ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4572992Z ✔ prepared walking guides retain graph anchors and work in both directions (64.628049ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4573976Z ✔ prepared geometry is invalidated by in-place floor, wall and door reviews (54.182987ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4574935Z ✔ malformed and unsafe prepared guides cannot bypass native clearance (17.806406ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4576550Z ✔ coincident landing anchors keep their graph link without a one-point compiled guide (7.047077ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4577865Z ✔ edge index matches exact containment at concave boundaries and bucket seams (205.0704ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4578880Z ✔ rebuilding a ring query observes in-place source edits (0.351638ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4579928Z ✔ arrival choices share a verified route but stop inside, on the threshold or on its hallway side (19.771102ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4581174Z ✔ arrival choices retain reverse-door orientation and never fabricate missing hallway/door geometry (4.742549ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4582234Z ✔ endpoint choices do not bypass closed doors, staff restrictions or step-free reviews (1.480486ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4583420Z ✔ changing staircase exclusions reroutes without recloning a resident map and cannot reuse a different preference result (3.156944ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4584729Z ✔ selected endpoint responses never mask a legacy all-choices response in the client cache (0.527751ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4586062Z ✔ review releases a completed user graph before warmup ever ran, retaining its returned route (1.144982ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4587813Z ✔ review release protects an active user request and catches an already active review (0.498575ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4589124Z ✔ changing endpoints cancels CPU work and cannot accept obsolete routes (0.901535ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4590316Z ✔ completed requests reuse a verified dataset, but imported or edited snapshots replace it (0.390316ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4591396Z ✔ worker failures are visible and the next request starts with a fresh dataset (0.397562ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4592380Z ✔ import or clear releases a completed dataset even before new route endpoints are chosen (0.268114ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4593399Z ✔ snapshot reset cancels pending work and rejects stale replies (0.334831ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4594458Z ✔ a real destination reuses an in-flight same-snapshot warmup and ignores its stale reply (0.437128ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4595605Z ✔ choosing a destination retains in-flight departure coverage but rejects its stale result (0.374791ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4598177Z ✔ effect cleanup retains same-snapshot coverage preparation and rejects its stale reply before the next destination (0.467907ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4599613Z ✔ isolates real shells and retains door gaps, holes and source identity without mutation (8.462497ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4600712Z ✔ removes long numerical slivers but retains measured millimetre-wide components (0.354064ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4601762Z ✔ normalizes opposite shell/hole winding and duplicate closing vertices (1.525621ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4602708Z ✔ removes a numerical backtracking spur attached to a real wall (0.414536ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4603854Z ✔ native stair surrounds retain both flat landings while preserving the exact void and wall material (13.110038ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4605323Z ✔ raw stair outlines and registered drawing contours yield to neutral native floor rather than a fake enclosure (0.528578ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4606681Z ✔ wrong-height floor material and an absent native enclosure cannot paint a landing (0.296606ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4608083Z ✔ separate native slab components and their holes remain separate (2.271327ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4609311Z ✔ legacy and stale packages retain their existing treatment; explicit open drops remain untouched (0.361756ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4610625Z ✔ a native circulation cell owned by a stair retains the entire shared hallway (0.272283ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4612176Z ✔ audit identifies debris on any native level and retains the measured wall without source mutation (3.067335ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4613313Z ✔ a large invalid bow-tie is a topology finding, not an automatically certified repair (0.723424ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4614229Z ✔ invalid coordinates and a detached hole carry their exact source reference (3.180344ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4615231Z ✔ reports a shared wall/room side but excludes surfaces on a different height (1.808369ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4616561Z ✔ a real doorway gap and a valid wall hole are not reported as malformed geometry (0.944107ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4617440Z ℹ tests 121
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4617794Z ℹ suites 0
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4618140Z ℹ pass 120
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4618414Z ℹ fail 1
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4618683Z ℹ cancelled 0
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4619052Z ℹ skipped 0
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4619453Z ℹ todo 0
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4619843Z ℹ duration_ms 5836.416305
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4620094Z 
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4620305Z ✖ failing tests:
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4620489Z 
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4620839Z test at tests/unit/indoor-project.test.ts:1:74311
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4621961Z ✖ visitor exports retain exact authored physical tread evidence and omit cached authoring history (28.550745ms)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4623214Z   AssertionError [ERR_ASSERTION]: The input did not match the regular expression /stair|material|match|source/i. Input:
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4623961Z   
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4624333Z   'Error: Invalid packed viewer metadata.'
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4624771Z   
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4625746Z       at async TestContext.<anonymous> (/home/runner/work/openindoormaps/openindoormaps/openindoormaps/tests/unit/indoor-project.test.ts:3265:5)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4627181Z       at async Test.run (node:internal/test_runner/test:1409:7)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4628007Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4628664Z     generatedMessage: true,
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4629086Z     code: 'ERR_ASSERTION',
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4629578Z     actual: Error: Invalid packed viewer metadata.
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4630576Z         at fail (/home/runner/work/openindoormaps/openindoormaps/openindoormaps/app/indoor-project/viewer-metadata-wire.ts:33:9)
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4632057Z         at hydrateReferences (/home/runner/work/openindoormaps/openindoormaps/openindoormaps/app/indoor-project/viewer-metadata-wire.ts:193:14),
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4632948Z     expected: /stair|material|match|source/i,
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4633407Z     operator: 'rejects',
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4633758Z     diff: 'simple'
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4634058Z   }
+build	Check routing and worker lifecycle	2026-10-17T02:04:00.4672811Z ##[error]Process completed with exit code 1.

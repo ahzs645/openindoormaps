@@ -1,0 +1,381 @@
+build	Lint	﻿2026-10-17T02:03:29.8075376Z ##[group]Run npm run lint
+build	Lint	2026-10-17T02:03:29.8075694Z [36;1mnpm run lint[0m
+build	Lint	2026-10-17T02:03:29.8143315Z shell: /usr/bin/bash -e {0}
+build	Lint	2026-10-17T02:03:29.8143614Z ##[endgroup]
+build	Lint	2026-10-17T02:03:29.9213755Z 
+build	Lint	2026-10-17T02:03:29.9214678Z > reviter@0.1.0 lint
+build	Lint	2026-10-17T02:03:29.9216229Z > eslint . --ignore-pattern dist --ignore-pattern dist-pages --ignore-pattern .next --ignore-pattern .vinext --ignore-pattern .output --ignore-pattern lib/rvt-wasm
+build	Lint	2026-10-17T02:03:29.9217061Z 
+build	Lint	2026-10-17T02:04:19.3015507Z 
+build	Lint	2026-10-17T02:04:19.3016446Z /home/runner/work/reviter/reviter/reviter/app/studio/DwgBuildingModel.tsx
+build	Lint	2026-10-17T02:04:19.3018451Z   19:110  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+build	Lint	2026-10-17T02:04:19.3019213Z 
+build	Lint	2026-10-17T02:04:19.3021166Z Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+build	Lint	2026-10-17T02:04:19.3023362Z * Update external systems with the latest state from React.
+build	Lint	2026-10-17T02:04:19.3025158Z * Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+build	Lint	2026-10-17T02:04:19.3026104Z 
+build	Lint	2026-10-17T02:04:19.3027121Z Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+build	Lint	2026-10-17T02:04:19.3027839Z 
+build	Lint	2026-10-17T02:04:19.3028191Z /home/runner/work/reviter/reviter/reviter/app/studio/DwgBuildingModel.tsx:19:110
+build	Lint	2026-10-17T02:04:19.3028649Z   17 |  useEffect(()=>{
+build	Lint	2026-10-17T02:04:19.3029009Z   18 |   const element=host.current;if(!element||!building)return;
+build	Lint	2026-10-17T02:04:19.3030072Z > 19 |   let renderer:THREE.WebGLRenderer;try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});}catch{setDetail('WebGL is unavailable. Floor plans remain available.');return;}
+build	Lint	2026-10-17T02:04:19.3031146Z      |                                                                                                              ^^^^^^^^^ Avoid calling setState() directly within an effect
+build	Lint	2026-10-17T02:04:19.3032432Z   20 |   renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));element.appendChild(renderer.domElement);
+build	Lint	2026-10-17T02:04:19.3033197Z   21 |   renderer.domElement.setAttribute('aria-label','3D schematic of Building '+code);
+build	Lint	2026-10-17T02:04:19.3034296Z   22 |   const scene=new THREE.Scene();scene.background=new THREE.Color('#eef3f6');  react-hooks/set-state-in-effect
+build	Lint	2026-10-17T02:04:19.3034976Z 
+build	Lint	2026-10-17T02:04:19.3035478Z /home/runner/work/reviter/reviter/reviter/app/studio/DwgFloorReview.tsx
+build	Lint	2026-10-17T02:04:19.3036781Z   44:37  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+build	Lint	2026-10-17T02:04:19.3037473Z 
+build	Lint	2026-10-17T02:04:19.3039260Z Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+build	Lint	2026-10-17T02:04:19.3041191Z * Update external systems with the latest state from React.
+build	Lint	2026-10-17T02:04:19.3042689Z * Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+build	Lint	2026-10-17T02:04:19.3043509Z 
+build	Lint	2026-10-17T02:04:19.3045005Z Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+build	Lint	2026-10-17T02:04:19.3045849Z 
+build	Lint	2026-10-17T02:04:19.3046270Z /home/runner/work/reviter/reviter/reviter/app/studio/DwgFloorReview.tsx:44:37
+build	Lint	2026-10-17T02:04:19.3047327Z   42 |   }catch(error){if(token!==sequence.current)return;setBusy(false);setStatus(error instanceof Error?error.message:'Unable to read CAD ZIP.');}
+build	Lint	2026-10-17T02:04:19.3047979Z   43 |  },[]);
+build	Lint	2026-10-17T02:04:19.3048421Z > 44 |  useEffect(()=>{if(initialFile)void open(initialFile);},[initialFile,open]);
+build	Lint	2026-10-17T02:04:19.3049299Z      |                                     ^^^^ Avoid calling setState() directly within an effect
+build	Lint	2026-10-17T02:04:19.3051020Z   45 |  return <section className="cad-review-workspace" role="dialog" aria-modal="true" aria-label="DWG floor review" onDragOver={event=>event.preventDefault()} onDrop={event=>{event.preventDefault();event.stopPropagation();const files=Array.from(event.dataTransfer.files);if(files.length===1)void open(files[0]!);else setStatus('Open one CAD analysis ZIP at a time.');}}>
+build	Lint	2026-10-17T02:04:19.3057246Z   46 |   <header><strong>Reviter · DWG floor review</strong><button type="button" className="rv-button" autoFocus disabled={busy} onClick={()=>picker.current?.click()}>Open CAD analysis ZIP</button>{buildings.length>0&&<><button type="button" className="rv-button" aria-pressed={mode==='plans'} onClick={()=>setMode('plans')}>Floor plans</button><button type="button" className="rv-button" aria-pressed={mode==='3d'} onClick={()=>{setSceneCode((frame.current?.contentDocument?.getElementById('building') as HTMLSelectElement|null)?.value);setMode('3d');}}>3D building</button></>}{audit!==null&&<button type="button" className="rv-button" onClick={()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(audit,null,2)],{type:'application/json'}));const a=window.document.createElement('a');a.href=url;a.download='dwg-coverage-audit.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}}>Download coverage audit</button>}<button type="button" className="rv-button" onClick={onClose}>Return to model</button></header>
+build	Lint	2026-10-17T02:04:19.3061568Z   47 |   <input ref={picker} type="file" accept=".zip" hidden onChange={event=>{const f=event.target.files?.[0];if(f)void open(f);event.target.value='';}}/>  react-hooks/set-state-in-effect
+build	Lint	2026-10-17T02:04:19.3062220Z 
+build	Lint	2026-10-17T02:04:19.3062579Z /home/runner/work/reviter/reviter/reviter/lib/reviter/convert-synthesised-records.ts
+build	Lint	2026-10-17T02:04:19.3086372Z ##[warning]  147:10  warning  'boundsOfCornerPoints' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3092405Z 
+build	Lint	2026-10-17T02:04:19.3092819Z /home/runner/work/reviter/reviter/reviter/lib/reviter/indoor-pipeline.ts
+build	Lint	2026-10-17T02:04:19.3094617Z ##[warning]    44:38   warning  'generatedLandingDoorLinkKey' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3096274Z ##[warning]  1129:156  warning  'notes' is defined but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3097712Z ##[warning]  1455:156  warning  'notes' is defined but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3098608Z 
+build	Lint	2026-10-17T02:04:19.3098908Z /home/runner/work/reviter/reviter/reviter/lib/reviter/indoor-ramps.ts
+build	Lint	2026-10-17T02:04:19.3100109Z ##[warning]  5:42  warning  'IndoorRecord' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3101450Z 
+build	Lint	2026-10-17T02:04:19.3102012Z /home/runner/work/reviter/reviter/reviter/lib/reviter/indoor-reviewed-flat-landing.ts
+build	Lint	2026-10-17T02:04:19.3103381Z ##[warning]  77:10  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3104870Z 
+build	Lint	2026-10-17T02:04:19.3105453Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-arrival-owner.ts
+build	Lint	2026-10-17T02:04:19.3106999Z ##[warning]  74:13  warning  '_arrivalId' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3109337Z ##[warning]  74:33  warning  '_cellId' is defined but never used     @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3110777Z 
+build	Lint	2026-10-17T02:04:19.3111448Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-authored-stair-treads.ts
+build	Lint	2026-10-17T02:04:19.3113071Z ##[warning]  47:27  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3114715Z 
+build	Lint	2026-10-17T02:04:19.3115404Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-circulation-clearance.ts
+build	Lint	2026-10-17T02:04:19.3117330Z   7:1  warning  Unused eslint-disable directive (no problems were reported from '@typescript-eslint/triple-slash-reference')
+build	Lint	2026-10-17T02:04:19.3118413Z 
+build	Lint	2026-10-17T02:04:19.3119081Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-circulation-geometry.ts
+build	Lint	2026-10-17T02:04:19.3120878Z ##[warning]  8:3  warning  'nativePlanarPathSupported' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3122460Z 
+build	Lint	2026-10-17T02:04:19.3123116Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-circulation-links.ts
+build	Lint	2026-10-17T02:04:19.3125118Z ##[warning]    4:10  warning  'nativeRationalArea' is defined but never used          @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3127832Z ##[warning]    4:29  warning  'nativeRationalMeasuredArea' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3130615Z ##[warning]    9:10  warning  'nativeExactGeosOverlay' is defined but never used      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3133271Z ##[warning]   22:3   warning  'nativeFloorDifference' is defined but never used       @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3136305Z ##[warning]   23:3   warning  'nativeFloorUnion' is defined but never used            @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3138927Z ##[warning]   24:3   warning  'nativeFloorIntersection' is defined but never used     @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3141633Z ##[warning]  378:9   warning  'envelopeParts' is assigned a value but never used      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3143242Z 
+build	Lint	2026-10-17T02:04:19.3144138Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-derived-frame-returns.ts
+build	Lint	2026-10-17T02:04:19.3145673Z ##[warning]  453:17  warning  '_cut' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3147096Z 
+build	Lint	2026-10-17T02:04:19.3147738Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-door-exact-overlay.ts
+build	Lint	2026-10-17T02:04:19.3151023Z ##[error]  1:1  error  Do not use a triple slash reference for ./native-room-presentation-jsts.d.ts, use `import` style instead  @typescript-eslint/triple-slash-reference
+build	Lint	2026-10-17T02:04:19.3153247Z 
+build	Lint	2026-10-17T02:04:19.3154177Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-exact-planar-topology.ts
+build	Lint	2026-10-17T02:04:19.3155726Z ##[warning]  41:36  warning  '_' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3157211Z 
+build	Lint	2026-10-17T02:04:19.3157915Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-provisional-corner-seals.ts
+build	Lint	2026-10-17T02:04:19.3159468Z ##[warning]  1569:17  warning  '_cut' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3160867Z 
+build	Lint	2026-10-17T02:04:19.3161541Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-selection-exact-overlay.ts
+build	Lint	2026-10-17T02:04:19.3164220Z ##[error]  1:1  error  Do not use a triple slash reference for ./native-room-presentation-jsts.d.ts, use `import` style instead  @typescript-eslint/triple-slash-reference
+build	Lint	2026-10-17T02:04:19.3166247Z 
+build	Lint	2026-10-17T02:04:19.3166912Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-mullion-symbol.ts
+build	Lint	2026-10-17T02:04:19.3168423Z ##[error]  202:13  error  'key' is never reassigned. Use 'const' instead  prefer-const
+build	Lint	2026-10-17T02:04:19.3169752Z 
+build	Lint	2026-10-17T02:04:19.3170508Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-placed-planar-obstacles.ts
+build	Lint	2026-10-17T02:04:19.3172147Z ##[warning]  49:7  warning  'zero' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3173607Z 
+build	Lint	2026-10-17T02:04:19.3174536Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-stair-body.ts
+build	Lint	2026-10-17T02:04:19.3176070Z ##[warning]  27:27  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3177525Z 
+build	Lint	2026-10-17T02:04:19.3178179Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-stair-material.ts
+build	Lint	2026-10-17T02:04:19.3179919Z ##[warning]  195:27  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3181352Z 
+build	Lint	2026-10-17T02:04:19.3182092Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-stair-owned-terminal.ts
+build	Lint	2026-10-17T02:04:19.3183724Z ##[warning]  15:303   warning  'eq' is assigned a value but never used   @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3186391Z ##[error]  16:20    error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3188779Z ##[error]  16:224   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3191200Z ##[error]  16:232   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3193658Z ##[error]  16:263   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3196385Z ##[error]  16:495   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3198837Z ##[error]  16:614   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3201229Z ##[error]  16:930   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3203996Z ##[error]  16:936   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3206514Z ##[error]  16:1029  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3208955Z ##[error]  16:1035  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3211401Z ##[error]  17:23    error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3214120Z ##[error]  17:47    error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3215722Z 
+build	Lint	2026-10-17T02:04:19.3216474Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-source-stair-riser-continuity.ts
+build	Lint	2026-10-17T02:04:19.3218023Z ##[warning]  27:32  warning  '_' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3219648Z 
+build	Lint	2026-10-17T02:04:19.3220388Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-stair-owned-display-inventory.ts
+build	Lint	2026-10-17T02:04:19.3221995Z ##[warning]  40:27  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3223506Z 
+build	Lint	2026-10-17T02:04:19.3224398Z /home/runner/work/reviter/reviter/reviter/lib/reviter/native-wall-position-repairs.ts
+build	Lint	2026-10-17T02:04:19.3225905Z ##[warning]  317:40  warning  '_' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3227387Z 
+build	Lint	2026-10-17T02:04:19.3227949Z /home/runner/work/reviter/reviter/reviter/lib/reviter/review-bundle-wire.ts
+build	Lint	2026-10-17T02:04:19.3229408Z ##[warning]  328:29  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3230933Z 
+build	Lint	2026-10-17T02:04:19.3231552Z /home/runner/work/reviter/reviter/reviter/lib/reviter/reviewed-area-partitions.ts
+build	Lint	2026-10-17T02:04:19.3233059Z ##[warning]  576:24  warning  '_' is assigned a value but never used   @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3235290Z ##[warning]  576:45  warning  '__' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3236691Z ##[warning]  931:29  warning  '_' is assigned a value but never used   @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3237543Z 
+build	Lint	2026-10-17T02:04:19.3237894Z /home/runner/work/reviter/reviter/reviter/lib/reviter/reviewed-door-apertures.ts
+build	Lint	2026-10-17T02:04:19.3238711Z ##[error]  76:6    error    'result' is never reassigned. Use 'const' instead  prefer-const
+build	Lint	2026-10-17T02:04:19.3240079Z ##[warning]  98:112  warning  'notes' is defined but never used                  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3241161Z 
+build	Lint	2026-10-17T02:04:19.3241523Z /home/runner/work/reviter/reviter/reviter/lib/reviter/reviewed-drawing-references.ts
+build	Lint	2026-10-17T02:04:19.3242469Z ##[warning]  24:27  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3243345Z 
+build	Lint	2026-10-17T02:04:19.3243656Z /home/runner/work/reviter/reviter/reviter/lib/reviter/room-directory.ts
+build	Lint	2026-10-17T02:04:19.3245074Z ##[warning]  5:43  warning  'verifyNativeDerivedFrameReturns' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3246098Z 
+build	Lint	2026-10-17T02:04:19.3246548Z /home/runner/work/reviter/reviter/reviter/lib/reviter/vendor/native-exact-geos/native-exact-geos.mjs
+build	Lint	2026-10-17T02:04:19.3247822Z ##[warning]  1:1256   warning  'quit_' is assigned a value but never used                          @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3249443Z ##[warning]  1:1976   warning  'EmscriptenSjLj' is defined but never used                          @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3251095Z ##[warning]  1:2105   warning  'runtimeInitialized' is assigned a value but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3252682Z ##[warning]  1:4955   warning  'ExitStatus' is defined but never used                              @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3254499Z ##[warning]  1:5083   warning  'HEAP16' is assigned a value but never used                         @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3256146Z ##[warning]  1:5105   warning  'HEAP64' is assigned a value but never used                         @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3257739Z ##[warning]  1:5126   warning  'HEAPF32' is assigned a value but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3259308Z ##[warning]  1:5138   warning  'HEAPF64' is assigned a value but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3260862Z ##[warning]  1:5150   warning  'HEAPU16' is assigned a value but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3262424Z ##[warning]  1:5174   warning  'HEAPU64' is assigned a value but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3264424Z ##[warning]  1:11186  warning  'e' is defined but never used                                       @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3266071Z ##[warning]  1:13388  warning  'noExitRuntime' is assigned a value but never used                  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3267645Z ##[warning]  1:13445  warning  'out' is assigned a value but never used                            @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3269217Z ##[warning]  1:13533  warning  'programArgs' is assigned a value but never used                    @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3270809Z ##[warning]  1:13894  warning  '_native_snap_records' is assigned a value but never used           @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3272384Z ##[warning]  1:13915  warning  '_malloc' is assigned a value but never used                        @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3274206Z ##[warning]  1:13923  warning  '_native_bounded_snap_union' is assigned a value but never used     @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3275912Z ##[warning]  1:13950  warning  '_native_bounded_snap_overlay' is assigned a value but never used   @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3277534Z ##[warning]  1:13979  warning  '_native_bounded_snap_sequence' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3279126Z ##[warning]  1:14009  warning  '_native_last_error' is assigned a value but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3280701Z ##[warning]  1:14028  warning  '_native_overlay' is assigned a value but never used                @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3282450Z ##[warning]  1:14044  warning  '_native_union' is assigned a value but never used                  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3284383Z ##[warning]  1:14058  warning  '_native_difference_sequence' is assigned a value but never used    @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3286091Z ##[warning]  1:14086  warning  '_free' is assigned a value but never used                          @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3287957Z ##[warning]  1:14298  warning  'memory' is assigned a value but never used                         @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3289584Z ##[warning]  1:14305  warning  '__indirect_function_table' is assigned a value but never used      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3290532Z 
+build	Lint	2026-10-17T02:04:19.3290965Z /home/runner/work/reviter/reviter/reviter/lib/reviter/vendor/native-rational-polygon-clipping.mjs
+build	Lint	2026-10-17T02:04:19.3291947Z ##[warning]    3:71  warning  'ge' is defined but never used                      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3293394Z ##[warning]   48:7   warning  'EPSILON_SQ' is assigned a value but never used     @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3295164Z ##[warning]  123:7   warning  'sineOfAngle' is assigned a value but never used    @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3296631Z ##[warning]  135:7   warning  'cosineOfAngle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3298467Z ##[error]  659:13  error    Unexpected aliasing of 'this' to local variable     @typescript-eslint/no-this-alias
+build	Lint	2026-10-17T02:04:19.3300115Z ##[warning]  950:16  warning  'ex' is defined but never used                      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3301005Z 
+build	Lint	2026-10-17T02:04:19.3301307Z /home/runner/work/reviter/reviter/reviter/scripts/analyze-dwg-floors.ts
+build	Lint	2026-10-17T02:04:19.3302269Z ##[warning]  12:7  warning  'json' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3303159Z 
+build	Lint	2026-10-17T02:04:19.3303522Z /home/runner/work/reviter/reviter/reviter/scripts/indoor/bounded-checkpoint-worker.ts
+build	Lint	2026-10-17T02:04:19.3305471Z ##[error]  8:2  error  Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+build	Lint	2026-10-17T02:04:19.3306611Z 
+build	Lint	2026-10-17T02:04:19.3306986Z /home/runner/work/reviter/reviter/reviter/scripts/indoor/bounded-worker-checkpoints.ts
+build	Lint	2026-10-17T02:04:19.3307838Z ##[error]  155:5  error  'work' is never reassigned. Use 'const' instead  prefer-const
+build	Lint	2026-10-17T02:04:19.3308659Z 
+build	Lint	2026-10-17T02:04:19.3308983Z /home/runner/work/reviter/reviter/reviter/scripts/probe-monolithic-names.ts
+build	Lint	2026-10-17T02:04:19.3309862Z ##[warning]  60:18  warning  'needle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3310768Z 
+build	Lint	2026-10-17T02:04:19.3311073Z /home/runner/work/reviter/reviter/reviter/scripts/probe-riser-offsets.ts
+build	Lint	2026-10-17T02:04:19.3311972Z ##[warning]  27:7  warning  'FEET_PER_METRE' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3312880Z 
+build	Lint	2026-10-17T02:04:19.3313190Z /home/runner/work/reviter/reviter/reviter/scripts/probe-top-rail-owners.ts
+build	Lint	2026-10-17T02:04:19.3314345Z ##[warning]  56:7  warning  'owningRailing' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3315312Z 
+build	Lint	2026-10-17T02:04:19.3315674Z /home/runner/work/reviter/reviter/reviter/tests/bounded-worker-checkpoints.test.ts
+build	Lint	2026-10-17T02:04:19.3317150Z ##[error]  11:1171  error  Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+build	Lint	2026-10-17T02:04:19.3318268Z 
+build	Lint	2026-10-17T02:04:19.3318600Z /home/runner/work/reviter/reviter/reviter/tests/fixtures/drawing-backed-seal.ts
+build	Lint	2026-10-17T02:04:19.3319695Z ##[warning]  30:7  warning  'noBoundaryReference' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3320830Z 
+build	Lint	2026-10-17T02:04:19.3321231Z /home/runner/work/reviter/reviter/reviter/tests/fixtures/native-parallel-physical-source.ts
+build	Lint	2026-10-17T02:04:19.3322184Z ##[error]  11:22  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3323062Z 
+build	Lint	2026-10-17T02:04:19.3323435Z /home/runner/work/reviter/reviter/reviter/tests/native-column-cap-supersession.test.ts
+build	Lint	2026-10-17T02:04:19.3324688Z ##[error]  121:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3326123Z ##[error]  122:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3327497Z ##[error]  123:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3328872Z ##[error]  124:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3330248Z ##[error]  125:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3331595Z ##[error]  126:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3332964Z ##[error]  132:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3334612Z ##[error]  140:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3336030Z ##[error]  155:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3337481Z ##[error]  156:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3338839Z ##[error]  157:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3340187Z ##[error]  158:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3341598Z ##[error]  214:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3343018Z ##[error]  215:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3344885Z ##[error]  216:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3346258Z ##[error]  217:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3347619Z ##[error]  218:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3348968Z ##[error]  219:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3350310Z ##[error]  225:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3351659Z ##[error]  226:9  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3352515Z 
+build	Lint	2026-10-17T02:04:19.3352857Z /home/runner/work/reviter/reviter/reviter/tests/native-curtain-openings.test.ts
+build	Lint	2026-10-17T02:04:19.3354031Z ##[warning]  4:347  warning  'BoundaryReference' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3355601Z ##[warning]  4:431  warning  'DirectoryDoor' is defined but never used      @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3356503Z 
+build	Lint	2026-10-17T02:04:19.3356844Z /home/runner/work/reviter/reviter/reviter/tests/native-curtain-sections.test.ts
+build	Lint	2026-10-17T02:04:19.3357717Z ##[error]  38:108  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3359114Z ##[error]  40:93   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3360500Z ##[error]  42:100  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3361530Z 
+build	Lint	2026-10-17T02:04:19.3361898Z /home/runner/work/reviter/reviter/reviter/tests/native-door-boundary-closures.test.ts
+build	Lint	2026-10-17T02:04:19.3362814Z ##[error]  18:308  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3365143Z ##[warning]  24:152  warning  'v' is defined but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3367025Z ##[error]  24:283  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3368789Z ##[error]  24:419  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3369898Z 
+build	Lint	2026-10-17T02:04:19.3370258Z /home/runner/work/reviter/reviter/reviter/tests/native-floor-edge-rules.test.ts
+build	Lint	2026-10-17T02:04:19.3371321Z ##[warning]  151:98  warning  '_' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3372487Z 
+build	Lint	2026-10-17T02:04:19.3395824Z /home/runner/work/reviter/reviter/reviter/tests/native-local-face-join.test.ts
+build	Lint	2026-10-17T02:04:19.3397803Z ##[warning]  46:5  warning  Expected an assignment or function call and instead saw an expression  @typescript-eslint/no-unused-expressions
+build	Lint	2026-10-17T02:04:19.3399557Z 
+build	Lint	2026-10-17T02:04:19.3400279Z /home/runner/work/reviter/reviter/reviter/tests/native-material-section-supplement.test.ts
+build	Lint	2026-10-17T02:04:19.3402028Z ##[error]  50:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3405009Z ##[error]  57:32  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3406975Z ##[error]  62:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3407899Z 
+build	Lint	2026-10-17T02:04:19.3408278Z /home/runner/work/reviter/reviter/reviter/tests/native-overlay-browser-build.test.mjs
+build	Lint	2026-10-17T02:04:19.3409675Z ##[error]  32:3  error  Do not assign to the variable `module`. See: https://nextjs.org/docs/messages/no-assign-module-variable  @next/next/no-assign-module-variable
+build	Lint	2026-10-17T02:04:19.3410819Z 
+build	Lint	2026-10-17T02:04:19.3411227Z /home/runner/work/reviter/reviter/reviter/tests/native-parallel-circulation-source.test.ts
+build	Lint	2026-10-17T02:04:19.3412384Z ##[error]  23:15   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3414086Z ##[error]  27:288  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3415053Z 
+build	Lint	2026-10-17T02:04:19.3415443Z /home/runner/work/reviter/reviter/reviter/tests/native-selection-contact-repairs.test.ts
+build	Lint	2026-10-17T02:04:19.3416402Z ##[error]  32:72   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3417810Z ##[error]  49:110  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3419217Z ##[error]  50:171  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3420094Z 
+build	Lint	2026-10-17T02:04:19.3420453Z /home/runner/work/reviter/reviter/reviter/tests/native-source-stair-path.test.ts
+build	Lint	2026-10-17T02:04:19.3421326Z ##[warning]  33:6    warning  'f' is defined but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3422731Z ##[error]  34:66   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3424363Z ##[error]  35:66   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3425822Z ##[error]  35:114  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3427208Z ##[error]  63:31   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3428577Z ##[error]  82:45   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3429458Z 
+build	Lint	2026-10-17T02:04:19.3429805Z /home/runner/work/reviter/reviter/reviter/tests/native-source-stair-width.test.ts
+build	Lint	2026-10-17T02:04:19.3430858Z ##[error]  15:41  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3431751Z 
+build	Lint	2026-10-17T02:04:19.3432138Z /home/runner/work/reviter/reviter/reviter/tests/native-stepped-stair-v2-browser.test.ts
+build	Lint	2026-10-17T02:04:19.3433251Z ##[error]  711:7   error    Definition for rule 'unicorn/prefer-structured-clone' was not found  unicorn/prefer-structured-clone
+build	Lint	2026-10-17T02:04:19.3435236Z ##[warning]  755:26  warning  '_' is assigned a value but never used                               @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3436189Z 
+build	Lint	2026-10-17T02:04:19.3436586Z /home/runner/work/reviter/reviter/reviter/tests/prepared-display-cache-container.test.ts
+build	Lint	2026-10-17T02:04:19.3437574Z ##[error]  10:115  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3439052Z ##[error]  11:61   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3440488Z ##[error]  11:71   error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3441958Z ##[error]  13:134  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3443406Z ##[warning]  18:93   warning  'manifest' is assigned a value but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3445230Z ##[error]  19:225  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3446672Z ##[error]  19:285  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3448089Z ##[error]  19:337  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3449497Z ##[error]  19:387  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3450911Z ##[error]  19:418  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3452311Z ##[error]  19:450  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3454236Z ##[error]  19:496  error    Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3455165Z 
+build	Lint	2026-10-17T02:04:19.3455464Z /home/runner/work/reviter/reviter/reviter/tests/rectify-plan.test.ts
+build	Lint	2026-10-17T02:04:19.3456323Z ##[warning]  5:54  warning  'wingWeight' is defined but never used  @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3457203Z 
+build	Lint	2026-10-17T02:04:19.3457566Z /home/runner/work/reviter/reviter/reviter/tests/review-bundle-wire-package.test.ts
+build	Lint	2026-10-17T02:04:19.3458450Z ##[error]  59:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3459320Z 
+build	Lint	2026-10-17T02:04:19.3459666Z /home/runner/work/reviter/reviter/reviter/tests/reviewed-door-apertures.test.ts
+build	Lint	2026-10-17T02:04:19.3460522Z ##[error]   3:228  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3461888Z ##[error]   5:142  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3463241Z ##[error]   5:217  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3464903Z ##[error]   5:272  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3466299Z ##[error]   5:319  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3467655Z ##[error]   5:370  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3469005Z ##[error]   5:438  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3470555Z ##[error]   8:145  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3471909Z ##[error]   8:191  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3473263Z ##[error]   8:245  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3475000Z ##[error]   8:295  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3476409Z ##[error]   8:352  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3477771Z ##[error]   8:404  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3479139Z ##[error]   8:536  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3480477Z ##[error]   8:668  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3481837Z ##[error]  21:23   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3483196Z ##[error]  21:73   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3484894Z ##[error]  21:126  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3486279Z ##[error]  21:201  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3487640Z ##[error]  21:258  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3489002Z ##[error]  21:306  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3490346Z ##[error]  21:357  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3491687Z ##[error]  21:408  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3493116Z ##[error]  21:475  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3495137Z ##[error]  21:548  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3496530Z ##[error]  21:613  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3497890Z ##[error]  21:670  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3499253Z ##[error]  21:760  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3500108Z 
+build	Lint	2026-10-17T02:04:19.3500443Z /home/runner/work/reviter/reviter/reviter/tests/reviewed-drawn-doors.test.ts
+build	Lint	2026-10-17T02:04:19.3501307Z ##[error]  157:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3502679Z ##[error]  158:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3504489Z ##[error]  159:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3505953Z ##[error]  160:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3507334Z ##[error]  161:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3508700Z ##[error]  162:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3510047Z ##[error]  163:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3511399Z ##[error]  163:77  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3512748Z ##[error]  164:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3514594Z ##[error]  165:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3516018Z ##[error]  166:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3517397Z ##[error]  167:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3518758Z ##[error]  177:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3520170Z ##[warning]  177:14  warning  'm' is defined but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3521596Z ##[error]  177:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3522964Z ##[error]  178:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3524633Z ##[error]  178:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3526102Z ##[error]  179:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3527492Z ##[error]  179:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3528843Z ##[error]  180:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3530195Z ##[warning]  180:14  warning  'm' is defined but never used             @typescript-eslint/no-unused-vars
+build	Lint	2026-10-17T02:04:19.3531545Z ##[error]  180:17  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3532901Z ##[error]  215:29  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3534619Z ##[error]  215:58  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3536077Z ##[error]  219:70  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3537489Z ##[error]  220:66  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3539118Z ##[error]  222:54  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3540484Z ##[error]  225:89  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3541953Z ##[error]  228:51  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3543344Z ##[error]  318:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3545207Z ##[error]  318:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3546606Z ##[error]  319:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3547983Z ##[error]  319:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3549348Z ##[error]  320:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3550711Z ##[error]  320:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3552069Z ##[error]  321:9   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3553435Z ##[error]  321:35  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+build	Lint	2026-10-17T02:04:19.3554508Z 
+build	Lint	2026-10-17T02:04:19.3554921Z ✖ 222 problems (140 errors, 82 warnings)
+build	Lint	2026-10-17T02:04:19.3555395Z   2 errors and 1 warning potentially fixable with the `--fix` option.
+build	Lint	2026-10-17T02:04:19.3555673Z 
+build	Lint	2026-10-17T02:04:19.6413171Z ##[error]Process completed with exit code 1.

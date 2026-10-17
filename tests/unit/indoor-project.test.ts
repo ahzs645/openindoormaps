@@ -3162,6 +3162,9 @@ test("strict visitor physical bindings preserve native cells and routes while st
 });
 
 test("visitor exports retain exact authored physical tread evidence and omit cached authoring history", async () => {
+  const { hydrateViewerMetadata, packViewerMetadata } = await import(
+    "../../app/indoor-project/viewer-metadata-wire"
+  );
   const { nativeAuthoredStairRoleFixture } = await import(
     "../fixtures/native-authored-stair-role"
   );
@@ -3246,21 +3249,44 @@ test("visitor exports retain exact authored physical tread evidence and omit cac
     nativeCirculationGeometryKey(routeWorkerDataset(viewer.dataset)),
     key,
   );
-  for (const mutate of [
-    (d: IndoorDataset) => {
-      d.nativeSourceStairMaterials!.authoredTreadRoles!.runs[0].faces[0].originalTrianglesFeet[0][0][0] += 0.01;
+  for (const { mutate, firstRefusal } of [
+    {
+      mutate: (d: IndoorDataset) => {
+        d.nativeSourceStairMaterials!.authoredTreadRoles!.runs[0].faces[0].originalTrianglesFeet[0][0][0] += 0.01;
+      },
+      firstRefusal: /Invalid original authored stair role binding/,
     },
-    (d: IndoorDataset) => {
-      delete d.nativeSourceStairMaterials;
+    {
+      mutate: (d: IndoorDataset) => {
+        delete d.nativeSourceStairMaterials;
+      },
+      firstRefusal: /Invalid packed viewer metadata/,
     },
   ]) {
     const raw = unzipSync(bytes),
       manifest = JSON.parse(strFromU8(raw["manifest.json"])),
       d = JSON.parse(strFromU8(raw["viewer/indoor.json"]));
+    const metadata = await hydrateViewerMetadata(
+      JSON.parse(strFromU8(raw["viewer/metadata.json"])),
+      d,
+    );
     mutate(d);
     raw["viewer/indoor.json"] = strToU8(JSON.stringify(d));
     manifest.indoor.bytes = raw["viewer/indoor.json"].length;
     manifest.indoor.sha256 = await hash(raw["viewer/indoor.json"]);
+    raw["manifest.json"] = strToU8(JSON.stringify(manifest));
+    await assert.rejects(
+      () => readIndoorProject(zipSync(raw)),
+      firstRefusal,
+      "reject at the earliest applicable source or wire binding guard",
+    );
+    // Repack the original logical metadata against the modified dataset so
+    // the independent source/material guard is exercised past wire checks.
+    raw["viewer/metadata.json"] = strToU8(
+      JSON.stringify(await packViewerMetadata(metadata, d)),
+    );
+    manifest.floors.bytes = raw["viewer/metadata.json"].length;
+    manifest.floors.sha256 = await hash(raw["viewer/metadata.json"]);
     raw["manifest.json"] = strToU8(JSON.stringify(manifest));
     await assert.rejects(
       () => readIndoorProject(zipSync(raw)),

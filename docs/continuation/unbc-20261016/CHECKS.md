@@ -110,3 +110,41 @@ Final source/staged whitespace checks pass with raw evidence logs excluded.
 Those logs retain their original diagnostic whitespace and bytes. Strong
 private-key, GitHub-token and AWS access-key pattern scans found no matches
 in the newly added/modified handoff and integration paths.
+
+## Post-push GitHub checks: unresolved compiler debt
+
+GitHub exposed additional coverage beyond the selected changed-file tests.
+This is **not an all-green CI baseline**:
+
+- Reviter [CI attempt 2](https://github.com/ahzs645/reviter/actions/runs/38993348033/attempts/2)
+  passed TypeScript with the current sibling main. Its full suite had **2,210
+  tests: 2,186 passes, two failures and 22 skips**. The failures are the compiler
+  deterministic-Math audit (11 source matches across seven files) and
+  `native-local-transition-qualification.test.ts`'s run-owned Treads/Risers
+  material case (element 12 is currently refused as foreign). Investigate these
+  against actual source ownership; do not weaken the audit or material veto to
+  pass a test. Autodesk's later separate step was skipped.
+- Reviter [Pages](https://github.com/ahzs645/reviter/actions/runs/38993348013)
+  stops at **140 lint errors and 82 warnings**. Previous main also failed lint;
+  current findings span unchanged and preserved changed files. The exact log
+  and changed-path inventory are retained. No lint rules were suppressed.
+- The first Reviter CI attempt checked out the *old* sibling OpenIndoorMaps
+  commit between the two main pushes, causing a parity-signature type error.
+  The second attempt above corrects that checkout and is the relevant result.
+- OpenIndoorMaps' first remote routing check exposed an additional stale
+  `indoor-project.test.ts` tampering fixture: metadata references now reject a
+  removed native stair field before the older semantic guard. The fixture now
+  checks that early rejection explicitly, then repacks the original logical
+  metadata to exercise the independent source/material refusal. Both refusal
+  guards remain intact. Its entire 67-test family passes, and a fresh scoped
+  project TypeScript check passes. This is separate from the earlier 628-test
+  selection. No production source or preparation binding changed in this fix.
+
+See [post-push-ci.json](checks/post-push-ci.json),
+[compiler failure excerpts](checks/reviter-ci-failure-excerpts.log),
+[lint inventory](checks/reviter-lint-inventory.json) and
+[final package-family replay](checks/metadata-fixture-family-final.log).
+The final source/push receipt outside Git records the definitive heads and any
+later remote checks. These compiler CI blockers belong in the next targeted
+repair queue alongside the map rebuild's two arrival losses. Code preservation
+and transfer verification do not certify a new publishable campus map.
