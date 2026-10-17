@@ -1,5 +1,6 @@
 import type { FeatureCollection, LineString } from "geojson";
 import type { IndoorDataset } from "./contract";
+import { isDisplayPassage } from "./display-passages";
 import { geographicPoint } from "./routing";
 import {
   preparedWalkingGuides,
@@ -28,7 +29,19 @@ export function hallwayPathView(
   const rooms = new Map(data.records.map((r) => [r.key, r]));
   const doorNodes = new Set(
     data.edges
-      .filter((e) => e.enabled && (e.kind === "door" || e.kind === "opening"))
+      .filter((e) => {
+        if (!e.enabled || (e.kind !== "door" && e.kind !== "opening"))
+          return false;
+        const owners = [e.from, e.to].map((id) => {
+          const node = nodes.get(id);
+          return node && rooms.get(node.roomKey);
+        });
+        // These are room-entry branches. A door/opening joining two passage
+        // areas (including a vestibule without the circulation flag) is an
+        // internal threshold, not a destination-door spur. Keep its original
+        // graph and physical crossing; only omit its optional display branch.
+        return !owners.every((r) => r && isDisplayPassage(r));
+      })
       .flatMap((e) => [e.from, e.to]),
   );
   const segments = new Map<string, number>();

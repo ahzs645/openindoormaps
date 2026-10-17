@@ -7,10 +7,10 @@ export function HallwayPathLegend() {
       </span>
       <span>
         <i className="project-path-approach" />
-        Door approach
+        Room door approach
       </span>
       <p>
-        Prepared guides on this floor. Directions also check access and
+        Internal passage doors are omitted. Directions also check access and
         step-free availability.
       </p>
     </div>

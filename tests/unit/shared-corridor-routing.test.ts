@@ -38,7 +38,11 @@ import { projectNavigationSteps } from "../../app/indoor-project/navigation-step
 import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
 import { centeredRoutePaths } from "../../app/indoor-project/viewer-centered-route";
 
-async function fixture(compact = false, hole = false, doorway = false) {
+async function fixture(
+  compact = false,
+  hole = false,
+  doorway: boolean | "hallway" | "vestibule" | "rotunda" = false,
+) {
   await initializeNativeExactGeosOverlay();
   const d = JSON.parse(
     readFileSync(
@@ -137,8 +141,8 @@ async function fixture(compact = false, hole = false, doorway = false) {
       ...d.records[0],
       key: "room",
       number: "Room",
-      name: "Room outside the hall",
-      circulation: false,
+      name: typeof doorway === "string" ? doorway : "Room outside the hall",
+      circulation: doorway === "hallway",
       arrivalNodeId: undefined,
       ringsFeet: [
         [
@@ -571,6 +575,33 @@ test("path inspection distinguishes saved door approaches from hallway trunks wi
     paths.features.length,
   );
   assert.equal(JSON.stringify(data), before);
+});
+
+test("internal hallway, vestibule and rotunda doors have no dotted room-entry branches", async () => {
+  for (const type of ["hallway", "vestibule", "rotunda"] as const) {
+    const { dataset: data } = await prepareRouting(
+      await fixture(false, false, type),
+      {
+        method: "shared-corridor",
+      },
+    );
+    const before = JSON.stringify(data);
+    const paths = hallwayPathView(data, [1], "all");
+    assert.ok(
+      paths.features.some((f) => f.properties?.role === "hallway"),
+      type,
+    );
+    assert.equal(
+      paths.features.filter((f) => f.properties?.role === "approach").length,
+      0,
+      type,
+    );
+    assert.equal(
+      JSON.stringify(data),
+      before,
+      "display filtering preserves original doors, graph and geometry",
+    );
+  }
 });
 
 test("short reverse hooks are proposed for cleanup; long U-shaped halls and vertical endpoints are retained", () => {
