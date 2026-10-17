@@ -1,0 +1,67 @@
+{
+  "status": "reference-inventory-only",
+  "networks": {
+    "bc-hospital": {
+      "bytes": 6996420,
+      "sha256": "58191d99087dc676b16c39ed1dca40e897d3c61e59959ff7ebc8a756bf624ba1",
+      "features": 19301,
+      "kinds": {
+        "destination": 12489,
+        "corridor": 4968,
+        "stairs": 464,
+        "elevator": 774,
+        "door": 96,
+        "outdoor": 508,
+        "ramp": 2
+      },
+      "lineFeatures": 6812,
+      "lineCoordinateUses": 13624,
+      "uniqueLinesWithIdenticalProperties": 6812,
+      "inferredCorridorLines": 0
+    },
+    "harrods": {
+      "bytes": 25915826,
+      "sha256": "c018072c5308a0c8fa868c2340ba4c7369fc41281fd78b3486d4ce0eb0de12ea",
+      "features": 82672,
+      "kinds": {
+        "corridor": 81772,
+        "destination": 692,
+        "elevator": 96,
+        "escalator": 69,
+        "stairs": 38,
+        "outdoor": 5
+      },
+      "lineFeatures": 81980,
+      "lineCoordinateUses": 163960,
+      "uniqueLinesWithIdenticalProperties": 81662,
+      "inferredCorridorLines": 81772
+    }
+  },
+  "recordedRoutes": [
+    {
+      "harEntryIndex": 156,
+      "distanceMetres": 137.20736976023016,
+      "nodeFeatures": 103,
+      "directionFeatures": 8
+    },
+    {
+      "harEntryIndex": 208,
+      "distanceMetres": 116.20938376073249,
+      "nodeFeatures": 64,
+      "directionFeatures": 5
+    }
+  ],
+  "omittedRouteResponses": [
+    {
+      "harEntryIndex": 157,
+      "status": 204,
+      "reason": "no-recorded-response-body"
+    },
+    {
+      "harEntryIndex": 209,
+      "status": 204,
+      "reason": "no-recorded-response-body"
+    }
+  ],
+  "harSha256": "943e5a1542cc7af1e1c55177cfeb5232ecc9c0cdb657268b7f84c3b236fd69f8"
+}

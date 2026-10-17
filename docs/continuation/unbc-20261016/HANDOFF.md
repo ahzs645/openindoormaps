@@ -5,6 +5,12 @@ OpenIndoorMaps and its sibling Reviter. Read both repositories' `AGENTS.md`,
 this file, [the compiler handoff](https://github.com/ahzs645/reviter/blob/main/docs/UNBC-HANDOFF-2026-10-16.md),
 and [the local repair loop](../../indoor-local-iteration.md).
 
+October 17 addendum: [package audit and corridor-backbone experiment](../unbc-20261017/corridor-backbone/REPORT.md)
+freshly checks the published visitor ZIP, measures further evidence pooling and
+prototypes one shared centerline in corridor 05-415. It changes no live map,
+source graph or route approval. The failed rebuild and held-stair status below
+remain authoritative.
+
 ## Current state
 
 **The live viewer works; the new source rebuild failed. These are different
