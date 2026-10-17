@@ -71,7 +71,9 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
   });
   await expect(setting).toBeChecked();
   await expect(page.getByTestId("project-route-result")).toBeVisible({
-    timeout: 480_000,
+    // The first request can queue behind a cold floor preparation as well as
+    // the cold graph. This is a functional check, not a loading-time target.
+    timeout: 900_000,
   });
   const replies = () =>
     page.evaluate(
@@ -86,11 +88,10 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
           }
         ).corridorRouteReplies,
     );
-  expect(
-    (await replies())
-      .at(-1)!
-      .route.paths.some((p) => p.sharedCorridorGuideUsed),
-  ).toBe(true);
+  const initialShared = (await replies()).at(-1)!;
+  expect(initialShared.route.paths.some((p) => p.sharedCorridorGuideUsed)).toBe(
+    true,
+  );
   await setting.uncheck();
   await expect
     .poll(
@@ -103,18 +104,14 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
       .at(-1)!
       .route.paths.every((p) => !p.sharedCorridorGuideUsed),
   ).toBe(true);
+  expect((await replies()).at(-1)!.worker).toBe(initialShared.worker);
   await setting.check();
-  await expect
-    .poll(
-      async () => (await replies()).at(-1)?.options.useSharedCorridorGuides,
-      { timeout: 120_000 },
-    )
-    .toBe(true);
-  expect(
-    (await replies())
-      .at(-1)!
-      .route.paths.some((p) => p.sharedCorridorGuideUsed),
-  ).toBe(true);
+  // Returning to a completed preference restores the client cache and sends no
+  // new worker message. Assert the actual UI result instead of waiting for one.
+  await expect(page.getByTestId("project-route-result")).toContainText(
+    `${initialShared.route.distanceMetres.toFixed(1)} m`,
+  );
+  await expect(setting).toBeChecked();
   await page.screenshot({ path: path.join(output!, "desktop-setting.png") });
   await page
     .getByRole("button", { name: "Preview directions", exact: true })
@@ -141,6 +138,10 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
   expect(errors).toEqual([]);
   await writeFile(
     path.join(output!, "browser-routes.json"),
-    JSON.stringify({ errors, replies: await replies() }, null, 2),
+    JSON.stringify(
+      { errors, cachedSharedRouteRestored: true, replies: await replies() },
+      null,
+      2,
+    ),
   );
 });
