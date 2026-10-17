@@ -38,7 +38,7 @@ import { projectNavigationSteps } from "../../app/indoor-project/navigation-step
 import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
 import { centeredRoutePaths } from "../../app/indoor-project/viewer-centered-route";
 
-async function fixture(compact = false, hole = false) {
+async function fixture(compact = false, hole = false, doorway = false) {
   await initializeNativeExactGeosOverlay();
   const d = JSON.parse(
     readFileSync(
@@ -130,6 +130,43 @@ async function fixture(compact = false, hole = false) {
     sourceModelSha256: d.source.modelSha256,
     floors: [{ nativeElementId: 1, elevationFeet: 0, ringsFeet: rings }],
   };
+  if (doorway) {
+    const hallNode = d.nodes[0];
+    hallNode.kind = "portal";
+    d.records.push({
+      ...d.records[0],
+      key: "room",
+      number: "Room",
+      name: "Room outside the hall",
+      circulation: false,
+      arrivalNodeId: undefined,
+      ringsFeet: [
+        [
+          [0, -10],
+          [10, -10],
+          [10, 0],
+          [0, 0],
+        ],
+      ],
+    });
+    d.nodes.push({
+      ...hallNode,
+      id: "room-door",
+      roomKey: "room",
+      pointFeet: [4, -1, 0],
+    });
+    d.edges.push({
+      ...d.edges[0],
+      id: "door",
+      kind: "door",
+      from: hallNode.id,
+      to: "room-door",
+      roomKeys: ["A", "room"],
+      nativeCellId: undefined,
+      pointsFeet: [hallNode.pointFeet, [4, -1, 0]],
+      lengthMetres: 2 * 0.3048,
+    });
+  }
   d.nativeIndoorEnvelopes = {
     version: 1,
     sourceModelSha256: d.source.modelSha256,
@@ -508,6 +545,32 @@ test("path view uses bound shared guides on the selected floor, drops repeated s
     0,
     "an edited source invalidates the saved guide binding",
   );
+});
+
+test("path inspection distinguishes saved door approaches from hallway trunks without adding arrival spurs", async () => {
+  const { dataset: data } = await prepareRouting(
+    await fixture(false, false, true),
+    {
+      method: "shared-corridor",
+    },
+  );
+  const before = JSON.stringify(data);
+  const paths = hallwayPathView(data, [1], "all");
+  const approaches = paths.features.filter(
+    (f) => f.properties?.role === "approach",
+  );
+  assert.ok(approaches.length > 0);
+  assert.ok(paths.features.some((f) => f.properties?.role === "hallway"));
+  assert.ok(approaches.every((f) => f.properties?.edgeId === "AB"));
+  assert.equal(
+    new Set(
+      paths.features.map((f) =>
+        JSON.stringify([...f.geometry.coordinates].sort()),
+      ),
+    ).size,
+    paths.features.length,
+  );
+  assert.equal(JSON.stringify(data), before);
 });
 
 test("short reverse hooks are proposed for cleanup; long U-shaped halls and vertical endpoints are retained", () => {

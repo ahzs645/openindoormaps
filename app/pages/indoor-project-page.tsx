@@ -172,6 +172,8 @@ import {
   BasemapAreaDrawing,
 } from "~/indoor-project/basemap-building-layer";
 import { routeSearch } from "~/utils/deep-link";
+import { hallwayPathUrl } from "../indoor-project/hallway-path-url";
+import { HallwayPathLegend } from "../indoor-project/hallway-path-legend";
 import "./indoor-project.css";
 
 const noPins: ReviewPin[] = [];
@@ -333,7 +335,7 @@ export default function IndoorProjectPage() {
     ),
     [mode, setMode] = useState<"public" | "accessible">("public"),
     [circulation, setCirculation] = useState(false),
-    [network, setNetwork] = useState(false),
+    [network, setNetwork] = useState(() => hostedParams.get("paths") === "1"),
     [showPillars, setShowPillars] = useState(false),
     [showPassThroughPlaces, setShowPassThroughPlaces] = useState(false),
     [showVestibuleDoors, setShowVestibuleDoors] = useState(false),
@@ -358,6 +360,24 @@ export default function IndoorProjectPage() {
     [throughNavigation, setThroughNavigation] = useState(false),
     [enabled, setEnabled] = useState(true),
     [accessible, setAccessible] = useState<"yes" | "no" | "unknown">("unknown");
+  const changePathGuides = useCallback((visible: boolean) => {
+    setNetwork(visible);
+    globalThis.history.replaceState(
+      globalThis.history.state,
+      "",
+      hallwayPathUrl(visible, globalThis.location.href),
+    );
+  }, []);
+  useEffect(() => {
+    const sync = () =>
+      setNetwork(new URLSearchParams(routeSearch()).get("paths") === "1");
+    globalThis.addEventListener("popstate", sync);
+    globalThis.addEventListener("hashchange", sync);
+    return () => {
+      globalThis.removeEventListener("popstate", sync);
+      globalThis.removeEventListener("hashchange", sync);
+    };
+  }, []);
   const [preparedNativeDisplay, setPreparedNativeDisplay] = useState<{
     data: IndoorProject["dataset"];
     levelIds: number[];
@@ -2626,7 +2646,7 @@ export default function IndoorProjectPage() {
                     <input
                       type="checkbox"
                       checked={network}
-                      onChange={(e) => setNetwork(e.target.checked)}
+                      onChange={(e) => changePathGuides(e.target.checked)}
                     />
                     Show routing network
                   </label>
@@ -3384,10 +3404,11 @@ export default function IndoorProjectPage() {
                           <input
                             type="checkbox"
                             checked={network}
-                            onChange={(e) => setNetwork(e.target.checked)}
+                            onChange={(e) => changePathGuides(e.target.checked)}
                           />
                           Show hallway paths
                         </label>
+                        {network && <HallwayPathLegend />}
                         <label>
                           <input
                             type="checkbox"
@@ -3447,7 +3468,7 @@ export default function IndoorProjectPage() {
                     showDoorLocations={showDoorLocations}
                     onDoorLocations={setShowDoorLocations}
                     showPathGuides={network}
-                    onPathGuides={setNetwork}
+                    onPathGuides={changePathGuides}
                   />
                 )}
                 <ProjectRouteFocus data={data} route={route} />

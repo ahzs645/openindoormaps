@@ -2326,3 +2326,21 @@
   margin: 7px 0;
   overflow-wrap: anywhere;
 }
+
+.project-path-legend {
+  font-size: 0.8rem;
+}
+.project-path-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0;
+}
+.project-path-legend i {
+  display: inline-block;
+  width: 2rem;
+  border-top: 2px solid #338d83;
+}
+.project-path-legend .project-path-approach {
+  border-top: 2px dotted #b86b16;
+}

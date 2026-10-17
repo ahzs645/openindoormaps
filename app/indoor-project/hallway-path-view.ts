@@ -26,7 +26,12 @@ export function hallwayPathView(
   const edges = new Map(data.edges.map((e) => [e.id, e]));
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const rooms = new Map(data.records.map((r) => [r.key, r]));
-  const segments = new Set<string>();
+  const doorNodes = new Set(
+    data.edges
+      .filter((e) => e.enabled && (e.kind === "door" || e.kind === "opening"))
+      .flatMap((e) => [e.from, e.to]),
+  );
+  const segments = new Map<string, number>();
   for (const guide of guides) {
     const edge = edges.get(guide.edgeId);
     if (
@@ -50,10 +55,17 @@ export function hallwayPathView(
       )
     )
       continue;
-    const points = guide.hallwayJoins
-      ? guide.pointsFeet.slice(guide.hallwayJoins[0], guide.hallwayJoins[1] + 1)
-      : guide.pointsFeet;
+    const points = guide.pointsFeet;
+    const [start, end] = guide.hallwayJoins ?? [0, points.length - 1];
     for (let i = 1; i < points.length; i++) {
+      const role = i <= start || i > end ? "approach" : "hallway";
+      // Only show saved branches to real door/opening endpoints. An arrival,
+      // lift or held staircase is not a new doorway connection.
+      if (
+        role === "approach" &&
+        !doorNodes.has(i <= start ? edge.from : edge.to)
+      )
+        continue;
       const a = points[i - 1],
         b = points[i];
       if (a.every((v, k) => v === b[k])) continue;
@@ -61,16 +73,25 @@ export function hallwayPathView(
         edge.nativeCellId,
         [JSON.stringify(a), JSON.stringify(b)].sort(),
       ]);
-      if (segments.has(key)) continue;
-      segments.add(key);
-      result.features.push({
+      const previous = segments.get(key);
+      if (
+        previous !== undefined &&
+        (result.features[previous].properties?.role === "hallway" ||
+          role === "approach")
+      )
+        continue;
+      const feature: FeatureCollection<LineString>["features"][number] = {
         type: "Feature",
-        properties: { edgeId: edge.id, nativeCellId: edge.nativeCellId },
+        properties: { edgeId: edge.id, nativeCellId: edge.nativeCellId, role },
         geometry: {
           type: "LineString",
           coordinates: [geographicPoint(data, a), geographicPoint(data, b)],
         },
-      });
+      };
+      if (previous === undefined) {
+        segments.set(key, result.features.length);
+        result.features.push(feature);
+      } else result.features[previous] = feature;
     }
   }
   return result;

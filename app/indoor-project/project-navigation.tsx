@@ -62,6 +62,7 @@ import type {
 import type { LabelSettings } from "./label-settings";
 import { mapReady } from "~/components/map/map-ready";
 import { largeIndoorProject } from "./heavy-worker-schedule";
+import { HallwayPathLegend } from "./hallway-path-legend";
 
 const categories = [
   {
@@ -722,12 +723,7 @@ export function ProjectNavigation({
                     />
                     Show hallway paths
                   </label>
-                  {showPathGuides && (
-                    <p>
-                      Prepared hallway guides on this floor. Directions also
-                      check access and step-free availability.
-                    </p>
-                  )}
+                  {showPathGuides && <HallwayPathLegend />}
                   <label>
                     <input
                       type="checkbox"

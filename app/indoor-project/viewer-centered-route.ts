@@ -25,6 +25,10 @@ import {
   simplifyCheckedSharedGuide,
   MAX_SHARED_CORRIDOR_APPROACH_FEET,
 } from "./shared-corridor-guides";
+import {
+  compactSharedGuideProposal,
+  type SharedGuideStops,
+} from "./compact-shared-guide";
 import { centeredJunctions } from "./centered-junction";
 import { nativeJointBarriers } from "./native-joint-barriers";
 import { createRingPointQuery } from "./ring-point-query";
@@ -673,8 +677,11 @@ function refine(
   preparedGuide?: XYZ[],
   fixedAnchors = false,
   preferSharedGuide = false,
-  preservedSharedPoints: XYZ[] = [],
+  sharedStops: SharedGuideStops = {},
 ): RoutePath {
+  const preservedSharedPoints = [sharedStops.start, sharedStops.end].filter(
+    (p): p is XYZ => !!p,
+  );
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
   const source = (reason: RoutePath["sourceReason"]): RoutePath => ({
@@ -1119,23 +1126,10 @@ function refine(
       // At an outer endpoint, keep the original door-to-center approach.
       // After endpoint trimming the visible run starts at that center stop;
       // an internal vestibule still has just its two fixed thresholds.
-      const seen = new Set<string>();
-      const compactPoints = [
-        path.pointsFeet[0],
-        ...preparedGuide.filter((p) => {
-          if (
-            !preservedSharedPoints.some((q) => p.every((v, k) => v === q[k])) ||
-            p.every((v, k) => v === path.pointsFeet[0][k]) ||
-            p.every((v, k) => v === path.pointsFeet.at(-1)![k])
-          )
-            return false;
-          const key = JSON.stringify(p);
-          if (seen.has(key)) return false;
-          seen.add(key);
-          return true;
-        }),
-        path.pointsFeet.at(-1)!,
-      ];
+      const compactPoints = compactSharedGuideProposal(
+        preparedGuide,
+        sharedStops,
+      );
       const line = compactPoints.map<XY>((p) => [p[0], p[1]]);
       if (
         line.slice(1).every((p, i) => validSegment(line[i], p, free)) &&
@@ -1654,13 +1648,14 @@ export function centeredRoutePaths(
   // Outer hallway stops are metadata anchors, not redundant routing hooks.
   // Keep their exact vertices until centerHallwayRouteEndpoints trims the
   // separately preserved door approaches after refinement.
-  const preservedSharedPoints = [edges[0], edges.at(-1)].flatMap((edge, i) => {
-    if (!edge || !preserveHallwayStops) return [];
+  const sharedStops: SharedGuideStops = {};
+  for (const [i, edge] of [edges[0], edges.at(-1)].entries()) {
+    if (!edge || !preserveHallwayStops) continue;
     const pair = sharedJoins.get(edge.id);
-    return pair
-      ? [pair[(i === 0) === !!edgeOrientations.get(edge) ? 0 : 1]]
-      : [];
-  });
+    if (pair)
+      sharedStops[i === 0 ? "start" : "end"] =
+        pair[(i === 0) === !!edgeOrientations.get(edge) ? 0 : 1];
+  }
   const paths: RoutePath[] = [],
     groups: { edges: IndoorEdge[]; first: string; last: string }[] = [];
   const flatKind = (edge: IndoorEdge) =>
@@ -1770,7 +1765,7 @@ export function centeredRoutePaths(
       preparedGuide,
       false,
       preferSharedGuide,
-      preservedSharedPoints,
+      sharedStops,
     );
     if (
       (resolved.centered &&
@@ -1823,7 +1818,7 @@ export function centeredRoutePaths(
           preparedGuide,
           false,
           preferSharedGuide,
-          preservedSharedPoints,
+          sharedStops,
         ),
       );
       run = [];

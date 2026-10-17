@@ -1713,9 +1713,31 @@ export function PreparedProjectMapLayers({
           ]
         : ["!=", ["get", "openDrop"], true],
     ]);
+    if (!map.getLayer("project-network-approach-line"))
+      map.addLayer({
+        id: "project-network-approach-line",
+        type: "line",
+        source: "project-network",
+        filter: ["==", ["get", "role"], "approach"],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": "#b86b16",
+          "line-opacity": 0.9,
+          "line-width": 2,
+          "line-dasharray": [0.5, 2],
+        },
+      });
+    // Unclassified source-network lines remain available in review mode.
+    map.setFilter(ids[3], ["!=", ["get", "role"], "approach"]);
     map.setLayoutProperty(ids[3], "visibility", network ? "visible" : "none");
+    map.setLayoutProperty(
+      "project-network-approach-line",
+      "visibility",
+      network && !review ? "visible" : "none",
+    );
     if (network) {
       map.moveLayer(ids[3]);
+      map.moveLayer("project-network-approach-line");
       map.moveLayer(ids[4]);
     }
     // Selection paint belongs to the same synchronization pass as base paint.
