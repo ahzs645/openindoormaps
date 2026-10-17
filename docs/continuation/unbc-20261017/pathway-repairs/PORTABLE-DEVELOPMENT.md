@@ -12,8 +12,8 @@ README, release/checksum manifest and Python restore script. Git history,
 reinstallable node_modules, scratch caches and credentials are excluded. Source
 trees use XZ compression and content-addressed 20 MiB transport parts; the outer
 ZIP stores already-compressed inputs. The map remains stored only once on the
-site. Initial measurements put the combined download near 117 MB; the deployed
-manifest is authoritative for exact bytes. Personal browser preferences are not
+site. The verified combined download is 116,526,015 bytes (116.53 MB). The deployed
+manifest is authoritative for source/input bytes; outer ZIP timestamps may vary. Personal browser preferences are not
 part of the published map.
 
 **This is not the missing complete native-authoring backup.** The latest
@@ -119,3 +119,9 @@ regressions. A Python fixture additionally exercises real paired Git archives,
 fresh restore, overwrite refusal and dirty-source/map-drift publication guards.
 Typecheck and production build are required again after substantive edits; do not
 repeat complete native imports merely for these display/transport changes.
+
+Published as private Site version 13 from Site source `991048d32c3b9d61c4b8868456afee1d9602cad1`.
+The 37 authenticated normal-URL checks passed, including same-origin canonical
+redirects. See publication-v13.json and publication-v13-checks.json. The source
+snapshot contains the exact published runtime commits; these documentation-only
+publication receipts were recorded afterward. Browser rendering remains unchecked.

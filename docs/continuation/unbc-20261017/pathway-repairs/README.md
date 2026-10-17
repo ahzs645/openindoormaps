@@ -1,9 +1,17 @@
 # UNBC pathway and loading repairs · October 17
 
-The next paired publication adds [portable source downloads and connection
-inspection](PORTABLE-DEVELOPMENT.md), with exact missing-native-input disclosure.
-That report contains the all-floor source-topology audit and release procedure.
-The version-12 receipt below remains the last previously published baseline.
+Private Site **version 13 is live**, with [portable source downloads and connection
+inspection](PORTABLE-DEVELOPMENT.md). The development ZIP is 116,526,015 bytes
+(116.53 MB); fresh restore matched all 3,774 tracked source files and the visitor.
+All 37 normal production URLs matched their expected hashes with authorized
+owner access, including canonical same-origin redirects; no cache-busting URL
+was used. This is HTTP asset verification, not new desktop/mobile browser proof.
+See [deployment receipt](publication-v13.json) and [content checks](publication-v13-checks.json).
+The source snapshot binds OpenIndoorMaps `55659c46de2e` and Reviter `1d9b2be`;
+documentation-only receipts follow those published runtime commits. Next
+publication must pair the then-current committed source again. Native rebuild
+inputs remain missing and all 28 full stairs remain disabled. The version-12
+section below is historical.
 
 This continuation repairs the viewer and checks affected original route chains.
 The original map geometry, source nodes/edges, room classifications, access,
