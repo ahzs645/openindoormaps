@@ -3,6 +3,11 @@ import { MAX_REVIEW_CONTAINER_BYTES } from "./review-bundle-limits";
 const fail = () => {
   throw new Error("Invalid packed review companion container.");
 };
+const MIN_INPUT_CHUNK = 1024;
+const MAX_INPUT_CHUNK = 64 * 1024;
+// A length/distance pair emits at most 258 bytes and consumes at least two
+// Huffman bits: at most 1032 decoded bytes per compressed byte (RFC 1951).
+const MAX_DEFLATE_EXPANSION = 1032;
 /** Streaming output count guards prevent an expansion beyond the declared bound. */
 export function boundedInflate(bytes: Uint8Array, expected: number) {
   if (
@@ -20,12 +25,25 @@ export function boundedInflate(bytes: Uint8Array, expected: number) {
     count += chunk.length;
     finished = final;
   });
-  // A DEFLATE block can expand far beyond its input. Feed bounded chunks so the
-  // output callback can reject an overrun before the next block is expanded.
+  // Tiny pushes repeatedly copy fflate's pending input and allocate its working
+  // buffer. Use larger pushes only while the declared remaining output can
+  // accommodate their maximum expansion. Near the limit, retain the original
+  // small-chunk bound. Pending stored-block input is bounded by a
+  // DEFLATE stored block; it cannot accumulate the complete compressed input.
   try {
-    if (!bytes.length) stream.push(bytes, true);
-    for (let i = 0; i < bytes.length; i += 1024)
-      stream.push(bytes.subarray(i, i + 1024), i + 1024 >= bytes.length);
+    if (bytes.length === 0) stream.push(bytes, true);
+    for (let offset = 0; offset < bytes.length; ) {
+      const size = Math.max(
+        MIN_INPUT_CHUNK,
+        Math.min(
+          MAX_INPUT_CHUNK,
+          Math.floor((expected - count) / MAX_DEFLATE_EXPANSION),
+        ),
+      );
+      const end = Math.min(bytes.length, offset + size);
+      stream.push(bytes.subarray(offset, end), end === bytes.length);
+      offset = end;
+    }
   } catch {
     return fail();
   }

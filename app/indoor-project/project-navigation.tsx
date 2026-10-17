@@ -1,4 +1,8 @@
 import type { ProjectRouteDiagnostic } from "./route-diagnostics";
+import {
+  sameRoutePlace,
+  visitorRouteFailureMessage,
+} from "./visitor-route-state";
 import { useEffect, useMemo, useState } from "react";
 import { LngLatBounds } from "maplibre-gl";
 import {
@@ -113,7 +117,6 @@ export function ProjectNavigation({
   onPick,
   onLocate,
   onFloor,
-  onReview,
   roomThree,
   managedLocations,
   showPassThroughPlaces,
@@ -129,6 +132,8 @@ export function ProjectNavigation({
   onStructures,
   simplifyGeometry,
   onSimplifyGeometry,
+  keepBuildingOverview,
+  onKeepBuildingOverview,
   labelSettings,
   onLabelSettings,
   basemapBuildings,
@@ -161,7 +166,6 @@ export function ProjectNavigation({
   /** Native mode waits for its current scoped faces and selected card layout. */
   onLocate?: (key: string) => void;
   onFloor: (levelId: number) => void;
-  onReview: () => void;
   roomThree: boolean;
   showPassThroughPlaces: boolean;
   onPassThroughPlaces: (show: boolean) => void;
@@ -176,6 +180,8 @@ export function ProjectNavigation({
   onStructures: (show: boolean) => void;
   simplifyGeometry: boolean;
   onSimplifyGeometry: (simple: boolean) => void;
+  keepBuildingOverview: boolean;
+  onKeepBuildingOverview: (enabled: boolean) => void;
   labelSettings: LabelSettings;
   onLabelSettings: (settings: LabelSettings) => void;
   basemapBuildings: BasemapBuildingSettings;
@@ -490,7 +496,16 @@ export function ProjectNavigation({
               />
               {start &&
                 end &&
-                (calculating ? (
+                (sameRoutePlace(start, end) ? (
+                  <p
+                    className="project-nav-result"
+                    role="status"
+                    data-testid="project-route-same-place"
+                  >
+                    Departure and destination are the same place. Choose another
+                    destination.
+                  </p>
+                ) : calculating ? (
                   <p
                     className="project-nav-result"
                     role="status"
@@ -566,27 +581,10 @@ export function ProjectNavigation({
                     className="project-warning"
                   >
                     <p>
-                      {calculationError ?? arrivalMessage ?? failure?.message}
+                      {calculationError ??
+                        arrivalMessage ??
+                        visitorRouteFailureMessage(failure, mode)}
                     </p>
-                    {!calculationError && !arrivalMessage && (
-                      <button
-                        onClick={() => {
-                          const target =
-                            data.records.find(
-                              (r) => r.key === failure?.reviewRoomKey,
-                            ) ?? departure;
-                          if (target) {
-                            if (failure?.reviewEdgeId)
-                              onPick("edge", failure.reviewEdgeId);
-                            else onPick("area", target.key);
-                            onFloor(target.levelId);
-                          }
-                          onReview();
-                        }}
-                      >
-                        Review connection
-                      </button>
-                    )}
                   </div>
                 ))}
             </>
@@ -620,6 +618,21 @@ export function ProjectNavigation({
                       onDrawBasemapArea(shape);
                     }}
                   />
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={!keepBuildingOverview}
+                      onChange={(e) =>
+                        onKeepBuildingOverview(!e.target.checked)
+                      }
+                    />
+                    Reveal rooms as you zoom
+                  </label>
+                  <p>
+                    Zoom in to reveal rooms, walls and windows. Turn off to keep
+                    buildings grey and hallways mint at every zoom. Saved on
+                    this device.
+                  </p>
                   <LabelSettingsPanel
                     settings={labelSettings}
                     onChange={onLabelSettings}

@@ -46,6 +46,8 @@ import {
   nativeMixedHallwayFeatures,
 } from "./native-mixed-hallway-review";
 import { mapReady } from "~/components/map/map-ready";
+import { precisionWallLayer } from "./precision-wall-layer";
+import type { FeatureCollection, MultiPolygon } from "geojson";
 
 // Retain one immutable dataset's complete results within both count/byte
 // budgets; pending walls and cancelled workers never populate this cache.
@@ -71,20 +73,25 @@ const layers = [
   "native-explore-material-fill",
   "native-explore-mixed-hallway-fill",
   "native-explore-mixed-hallway-line",
+  "native-explore-overview-mesh",
 ];
 export function NativeExploreLayer({
   data,
   levelIds,
   building,
   selected,
+  overviewLocked = false,
   onPick,
   onFitReady,
   fitRequest = 0,
   usePreparedDisplay = false,
+  visitorOnly = false,
   preparedDisplay,
   preparedDisplayError,
   onRetryPreparedDisplay,
 }: {
+  /** Progressive visitor reuses exact paint and picking without authoring diagnostics. */
+  visitorOnly?: boolean;
   onRetryPreparedDisplay?: () => void;
   usePreparedDisplay?: boolean;
   preparedDisplay?: NativeExploreResult;
@@ -93,6 +100,7 @@ export function NativeExploreLayer({
   levelIds: number[];
   building: string;
   selected: string;
+  overviewLocked?: boolean;
   onPick: (key: string) => void;
   onFitReady?: (fit: (includeSelection?: boolean) => void) => void;
   /** Explicit search requests also locate a repeated selection after panning. */
@@ -116,6 +124,19 @@ export function NativeExploreLayer({
   const current =
     state?.data === data && state.scope === scope ? state : undefined;
   const result = current?.result;
+  const overviewDrawing = useMemo<FeatureCollection<MultiPolygon>>(
+    () => ({
+      type: "FeatureCollection",
+      features: (result?.overview.features ?? []).map((feature) => ({
+        ...feature,
+        geometry: {
+          type: "MultiPolygon",
+          coordinates: [feature.geometry.coordinates],
+        },
+      })),
+    }),
+    [result?.overview],
+  );
   const mixedHallwayIssues = useMemo(
     () => (result ? nativeMixedHallwayIssues(data, result) : []),
     [data, result],
@@ -322,7 +343,9 @@ export function NativeExploreLayer({
             OVERVIEW_SOLID_COLOR,
           ],
           "fill-opacity": 1,
-          "fill-antialias": false,
+          // Matching-tint antialiasing also covers the raster seams between
+          // contained overview pieces. It does not change their native rings.
+          "fill-antialias": true,
         },
       },
       before,
@@ -440,43 +463,106 @@ export function NativeExploreLayer({
     };
   }, [map, isLoaded]);
   useEffect(() => {
+    if (!mapReady(map, isLoaded) || overviewDrawing.features.length === 0)
+      return;
+    // Reuse the contained overview pieces in local coordinates. Vector-tile
+    // rounding otherwise exposes the grey underlay along fine interior joins.
+    const id = "native-explore-overview-mesh";
+    map.addLayer(
+      precisionWallLayer(overviewDrawing, data.alignment.originGeographic, {
+        id,
+        overview: true,
+        overviewTint: true,
+        overviewLocked,
+      }),
+      layers[0],
+    );
+    return () => {
+      if (map.getStyle() && map.getLayer(id)) map.removeLayer(id);
+    };
+  }, [
+    map,
+    isLoaded,
+    overviewDrawing,
+    data.alignment.originGeographic,
+    overviewLocked,
+  ]);
+  useEffect(() => {
     if (!mapReady(map, isLoaded)) return;
     // The grey overview is backing for wall-width seams, not a cover over the
     // indoor native circulation tint when the prepared layer finishes later.
     if (map.getLayer("project-overview-fill") && map.getLayer(layers[0]))
       map.moveLayer("project-overview-fill", layers[4]);
+    if (map.getLayer("project-overview-floor-fill") && map.getLayer(layers[4]))
+      map.moveLayer("project-overview-floor-fill", layers[4]);
+    if (map.getLayer("project-overview-ground-fill") && map.getLayer(layers[4]))
+      map.moveLayer("project-overview-ground-fill", layers[4]);
     for (const id of [layers[0], layers[4]])
-      if (map.getLayer(id))
-        map.setPaintProperty(id, "fill-color", [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          ROOM_DETAIL_START,
-          [
-            "case",
-            ["==", ["get", "circulation"], true],
-            HALLWAY_COLOR,
-            OVERVIEW_SOLID_COLOR,
-          ],
-          ROOM_DETAIL_END,
-          [
-            "case",
-            ["==", ["get", "restricted"], true],
-            ["get", "color"],
-            ["==", ["get", "circulation"], true],
-            ["get", "color"],
-            ["in", ["get", "nativeRegionId"], ["literal", selectedRegions]],
-            "#ffe09d",
-            ["get", "color"],
-          ],
-        ]);
+      if (map.getLayer(id)) {
+        const color = overviewLocked
+          ? [
+              "case",
+              ["==", ["get", "circulation"], true],
+              HALLWAY_COLOR,
+              OVERVIEW_SOLID_COLOR,
+            ]
+          : [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              ROOM_DETAIL_START,
+              [
+                "case",
+                ["==", ["get", "circulation"], true],
+                HALLWAY_COLOR,
+                OVERVIEW_SOLID_COLOR,
+              ],
+              ROOM_DETAIL_END,
+              [
+                "case",
+                ["==", ["get", "restricted"], true],
+                ["get", "color"],
+                ["==", ["get", "circulation"], true],
+                ["get", "color"],
+                ["in", ["get", "nativeRegionId"], ["literal", selectedRegions]],
+                "#ffe09d",
+                ["get", "color"],
+              ],
+            ];
+        map.setPaintProperty(id, "fill-color", color);
+        if (id === layers[4])
+          map.setPaintProperty(id, "fill-outline-color", color);
+      }
+    // The same-colour detail triangles would repaint the antialiased face edge
+    // with their hard raster boundary. The overview source owns the locked
+    // overview at every zoom; keep triangle detail for the ordinary view.
+    if (map.getLayer(layers[0]))
+      map.setLayoutProperty(
+        layers[0],
+        "visibility",
+        overviewLocked ? "none" : "visible",
+      );
     if (map.getLayer(layers[2]))
       map.setFilter(layers[2], [
         "in",
         ["get", "nativeRegionId"],
         ["literal", selectedRegions],
       ]);
-  }, [map, isLoaded, result, selectedRegions]);
+    for (const id of [
+      layers[1],
+      layers[2],
+      layers[3],
+      layers[5],
+      layers[6],
+      layers[7],
+    ])
+      if (map.getLayer(id))
+        map.setLayoutProperty(
+          id,
+          "visibility",
+          overviewLocked ? "none" : "visible",
+        );
+  }, [map, isLoaded, result, selectedRegions, overviewLocked]);
   // Whole-floor geometry is uploaded once per result, never per selection:
   // each setData re-sends and re-indexes the collection in MapLibre's worker.
   // Selection only changes the paint/filter expressions above.
@@ -528,7 +614,7 @@ export function NativeExploreLayer({
       });
   };
   useEffect(() => {
-    if (!mapReady(map, isLoaded) || !result) return;
+    if (!mapReady(map, isLoaded) || !result || overviewLocked) return;
     let active = true,
       clickSequence = 0;
     const click = async (event: MapMouseEvent) => {
@@ -575,7 +661,40 @@ export function NativeExploreLayer({
       active = false;
       map.off("click", click);
     };
-  }, [map, isLoaded, result, data, building, selected, onPick, exactHits]);
+  }, [
+    map,
+    isLoaded,
+    result,
+    data,
+    building,
+    selected,
+    onPick,
+    exactHits,
+    overviewLocked,
+  ]);
+  if (visitorOnly)
+    return picked.length > 0 && places.length > 1 ? (
+      <aside
+        className="project-native-explore-status"
+        aria-label="Choose a place"
+      >
+        <strong>Choose a place</strong>
+        <div className="project-native-explore-places">
+          {places.map((room) => (
+            <button
+              key={room.key}
+              onClick={() => {
+                onPick(room.key);
+                setPicked([]);
+              }}
+            >
+              {room.number} · {projectPlaceDisplayName(data, room)}
+            </button>
+          ))}
+        </div>
+        <button onClick={() => setPicked([])}>Close places</button>
+      </aside>
+    ) : null;
   return (
     <aside
       className="project-native-explore-status"

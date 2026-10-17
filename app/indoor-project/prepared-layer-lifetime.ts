@@ -2,12 +2,16 @@
  * custom layer runs its onRemove, which releases GPU buffers, materials and
  * renderer state; leaving one behind keeps a whole-floor mesh alive. */
 export const PREPARED_CUSTOM_LAYER_IDS = [
+  "project-overview-tint-mesh",
+  "project-overview-ground-mesh",
   "project-connector-markers",
   "project-roof-labels",
   "project-lower-depth",
   "project-descending-stairs",
   "project-native-ramps",
   "project-precision-walls",
+  "project-precision-floors",
+  "project-precision-room-roofs",
   "project-native-window-glass",
   "project-native-window-frames",
 ] as const;
@@ -16,6 +20,8 @@ export const PREPARED_CUSTOM_LAYER_IDS = [
  * scope's drawings are neither shown, clickable nor retained by MapLibre. */
 export const PREPARED_FLOOR_SOURCE_IDS = [
   "project-overview",
+  "project-overview-ground",
+  "project-overview-floor",
   "project-areas",
   "project-walls",
   "project-network",

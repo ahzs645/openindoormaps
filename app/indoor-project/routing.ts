@@ -1,5 +1,7 @@
+import { validateReviewedDrawingReferences } from "./reviewed-drawing-references";
 import * as DMath from "./deterministic-math";
 import { validateNativeSourceStairMaterials } from "./native-source-stair-material";
+import {validateNativeSteppedStairV2Proofs} from "./native-stepped-stair-v2";
 import { validateNativePhysicalLevels } from "./native-physical-levels";
 import {
   validNativeSourceStairBinding,
@@ -572,6 +574,10 @@ function validateIndoorDatasetSnapshot(
   validateNativeFloorOpeningOwnership(d);
   validateNativeCirculationGeometry(d);
   validateNativePhysicalLevels(d);
+  validateReviewedDrawingReferences(
+    d.reviewedDrawingReferences,
+    d.source.modelSha256,
+  );
   validateNativeSourceStairMaterials(
     d.nativeSourceStairMaterials,
     d.source.modelSha256,
@@ -1487,4 +1493,5 @@ function validateIndoorDatasetSnapshot(
       )
     )
       throw new Error("Invalid architectural wall.");
+  validateNativeSteppedStairV2Proofs(d);
 }

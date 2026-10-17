@@ -4,7 +4,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { nativeCirculationGeometryKey } from "../../app/indoor-project/native-circulation";
-import { encodeNativeExactTopology } from "../../app/indoor-project/native-exact-planar-topology";
+import {
+  encodeNativeExactTopology,
+  createNativeRationalPathUnionQuery,
+  freezeNativeRationalParts,
+  nativeRationalPathSupported,
+} from "../../app/indoor-project/native-exact-planar-topology";
 import {
   nativeRationalOverlay,
   NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
@@ -38,6 +43,60 @@ const rect = (
   [x + w, y + h],
   [x, y + h],
 ];
+
+test("centering canonical-face checks retain global holes, degenerate anchors and tangent semantics", () => {
+  const face = freezeNativeRationalParts(
+      nativeRationalOverlay("union", [
+        [rect(-200, -200, 400, 400), rect(-100, 0, 200, 8)],
+        ...Array.from({ length: 35 }, (_, i) => [rect(400 + i * 3, 400, 1, 1)]),
+      ]),
+    ),
+    query = createNativeRationalPathUnionQuery(),
+    before = face.flat(2).map((p) => p.map((q) => `${q.n}/${q.d}`));
+  assert(face.flat(2).length > 128);
+  const paths = [
+    [],
+    [[0, -1]],
+    [[0, 0]],
+    [
+      [-200, 10],
+      [-200, 10],
+    ],
+    [
+      [0, -1],
+      [0, 0],
+    ],
+    [
+      [-5, 0],
+      [5, 0],
+    ],
+    [
+      [-50, -1],
+      [50, -1],
+    ],
+    [
+      [0, -1],
+      [0, 9],
+    ],
+    [
+      [-101, 1],
+      [-99, -1],
+    ],
+  ];
+  for (const points of paths) {
+    // A mutable outer clone disables the reference's optional tile accelerator
+    // without changing any original canonical ring or rational coordinate.
+    const expected = nativeRationalPathSupported(points, [...face]);
+    assert.equal(query(points, face, []), expected);
+    assert.equal(query([...points].reverse(), face, []), expected);
+  }
+  assert.equal(query([[0, 0]], face, []), false);
+  assert.equal(query([[-200, 10]], face, []), true);
+  assert.deepEqual(
+    face.flat(2).map((p) => p.map((q) => `${q.n}/${q.d}`)),
+    before,
+  );
+});
 
 function spanFixture(): IndoorDataset {
   const d = fixture(0);
@@ -658,6 +717,175 @@ test("same XY on another native floor remains disconnected, and stair geometry r
   assert.deepEqual(r.paths.at(-1)!.pointsFeet, stairs.pointsFeet);
   assert.deepEqual(r.paths.at(-1)!.levelIds, [1, 2]);
   assert.equal(r.paths.at(-1)!.centered, false);
+});
+
+test("centering corridors on both sides of a lift preserves exact lobby anchors and native floor changes in either direction", () => {
+  const d = fixture(0);
+  d.source.modelSha256 = "a".repeat(64);
+  const upper = (id: string) => `upper:${id}`;
+  const rise = 24.278_215_223_097_114;
+  const original = {
+    records: [...d.records],
+    nodes: [...d.nodes],
+    edges: [...d.edges],
+    walls: [...d.walls],
+    doors: [...d.doors!],
+  };
+  d.records.push(
+    ...original.records.map((room) => ({
+      ...room,
+      key: upper(room.key),
+      number: upper(room.number),
+      surfaceId: upper(room.surfaceId),
+      arrivalNodeId: upper(room.arrivalNodeId!),
+      levelId: 2,
+      elevationFeet: rise,
+    })),
+  );
+  d.nodes.push(
+    ...original.nodes.map((node) => ({
+      ...node,
+      id: upper(node.id),
+      roomKey: upper(node.roomKey),
+      surfaceId: upper(node.surfaceId),
+      levelId: 2,
+      pointFeet: [node.pointFeet[0], node.pointFeet[1], rise] as [
+        number,
+        number,
+        number,
+      ],
+    })),
+  );
+  for (const node of d.nodes.filter((node) =>
+    ["b", upper("b")].includes(node.id),
+  ))
+    node.kind = "connector";
+  d.edges.push(
+    ...original.edges.map((edge) => ({
+      ...edge,
+      id: upper(edge.id),
+      from: upper(edge.from),
+      to: upper(edge.to),
+      roomKeys: edge.roomKeys.map(upper),
+      pointsFeet: edge.pointsFeet.map(
+        ([x, y]) => [x, y, rise] as [number, number, number],
+      ),
+    })),
+  );
+  d.walls.push(...original.walls.map((wall) => ({ ...wall, levelId: 2 })));
+  d.doors!.push(
+    ...original.doors.map((door) => ({
+      ...door,
+      id: upper(door.id),
+      levelId: 2,
+      roomKeys: door.roomKeys.map(upper),
+    })),
+  );
+  d.nativeLevels.push({
+    id: 2,
+    name: "Upper native level",
+    elevationFeet: rise,
+  });
+  // A campus alias groups the levels without making their physical transition flat.
+  d.floors = [
+    { id: "campus", name: "Campus floor", levelIds: [1, 2], elevationFeet: 0 },
+  ];
+  d.connectors = [
+    {
+      id: "reviewed-lift",
+      kind: "elevator",
+      direction: "both",
+      nativeElementId: 900,
+      sourceModelSha256: d.source.modelSha256,
+      evidence: "Reviewed native lobby identities",
+      accessible: "yes",
+      entrances: [
+        { nodeId: "b", roomKey: "b", levelId: 1 },
+        { nodeId: upper("b"), roomKey: upper("b"), levelId: 2 },
+      ],
+    },
+  ];
+  const lift: IndoorEdge = {
+    id: "reviewed-lift-edge",
+    from: "b",
+    to: upper("b"),
+    kind: "elevator",
+    connectorId: "reviewed-lift",
+    nativeElementId: 900,
+    roomKeys: ["b", upper("b")],
+    pointsFeet: [
+      [1, 25, 0],
+      [1, 25, rise],
+    ],
+    lengthMetres: rise * 0.3048,
+    evidence: d.connectors[0].evidence,
+    enabled: true,
+    accessible: "yes",
+    direction: "both",
+  };
+  d.edges.push(lift);
+  const before = JSON.stringify({
+    edges: d.edges,
+    nodes: d.nodes,
+    doors: d.doors,
+    connectors: d.connectors,
+  });
+  for (const reverse of [false, true]) {
+    const from = reverse ? upper("a") : "a",
+      to = reverse ? "a" : upper("a");
+    const route = findProjectRoute(d, from, to)!;
+    assert.ok(route);
+    const transitionIndex = route.paths.findIndex((path) =>
+      path.edgeIds.includes(lift.id),
+    );
+    const transition = route.paths[transitionIndex];
+    const points = reverse ? lift.pointsFeet.toReversed() : lift.pointsFeet;
+    assert.equal(transition.sourceReason, "vertical-transition");
+    assert.equal(transition.centered, false);
+    assert.deepEqual(transition.pointsFeet, points);
+    assert.deepEqual(transition.levelIds, reverse ? [2, 1] : [1, 2]);
+    assert.deepEqual(
+      route.paths[transitionIndex - 1].pointsFeet.at(-1),
+      points[0],
+    );
+    assert.deepEqual(route.paths[transitionIndex + 1].pointsFeet[0], points[1]);
+    for (const level of [1, 2]) {
+      const corridors = route.paths.filter(
+        (path) => path.levelIds.length === 1 && path.levelIds[0] === level,
+      );
+      assert(
+        corridors.some((path) => path.centered),
+        "both lobbies retain validated corridor refinement",
+      );
+      assert(
+        corridors.every((path) =>
+          path.pointsFeet.every(
+            (point) => point[2] === (level === 1 ? 0 : rise),
+          ),
+        ),
+      );
+    }
+    const confirmed = findProjectRoute(d, from, to, "accessible")!;
+    assert.ok(confirmed);
+    assert(
+      confirmed.paths.every((path) => !path.centered),
+      "step-free approvals retain their saved geometry",
+    );
+    assert.deepEqual(
+      confirmed.paths.find((path) => path.edgeIds.includes(lift.id))!
+        .pointsFeet,
+      points,
+    );
+  }
+  assert.equal(
+    JSON.stringify({
+      edges: d.edges,
+      nodes: d.nodes,
+      doors: d.doors,
+      connectors: d.connectors,
+    }),
+    before,
+  );
 });
 
 test("rotated serpentine corridors resolve five real corners rather than a grid zigzag", () => {
@@ -2170,7 +2398,7 @@ test("strict centering uses original ankle sections rather than a raised histori
   );
   material.levels[0].sections.push({
     nativeElementId: 778,
-    categoryId: -2000011,
+    categoryId: -2_000_011,
     kind: "wall",
     baseElevationFeet: 0,
     topElevationFeet: 8,

@@ -3,6 +3,8 @@ import test from "node:test";
 import {
   floorPreparationReady,
   HeavyWorkerSchedule,
+  releaseWhenOthersStart,
+  reviewRequestReady,
   routeRequestReady,
   scheduleRouteWarmup,
   type WarmupRun,
@@ -14,6 +16,116 @@ const flush = () => new Promise((resolve) => setTimeout(resolve, 0));
 const noGate = { ms: 0, setTimer: () => 0, clearTimer: () => {} };
 const abortError = () =>
   new DOMException("Route calculation cancelled.", "AbortError");
+const failOnError = (error: unknown): never => assert.fail(String(error));
+
+test("optional review waits for active work, reserves an exclusive slot and can be cancelled while queued", () => {
+  const schedule = new HeavyWorkerSchedule();
+  const ready = reviewRequestReady(schedule);
+  for (const kind of ["floor", "route", "teardown", "review"] as const) {
+    const finish = schedule.begin(kind);
+    assert.equal(ready(), false, `review waits for ${kind}`);
+    finish();
+    assert.equal(ready(), true);
+  }
+  const floor = schedule.begin("floor");
+  let runs = 0;
+  const cancelled = schedule.when(ready, () => runs++);
+  cancelled();
+  floor();
+  assert.equal(runs, 0, "closing the inspector drops its queued audit");
+  const review = schedule.begin("review");
+  for (const freshClone of [true, false]) {
+    assert.equal(floorPreparationReady(schedule, freshClone)(), false);
+    assert.equal(routeRequestReady(schedule, freshClone)(), false);
+  }
+  const queued = schedule.when(routeRequestReady(schedule, true), () => runs++);
+  assert.equal(runs, 0);
+  review();
+  assert.equal(runs, 1, "work resumes as soon as review releases its slot");
+  queued();
+});
+
+test("review stops a background warmup and waits for actual teardown before allocating", async () => {
+  const schedule = new HeavyWorkerSchedule();
+  const { runs, run } = controllableWarmups();
+  let finishTeardown = () => {};
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    () => {
+      const started = run();
+      return {
+        promise: started.promise,
+        abandon() {
+          finishTeardown = schedule.begin("teardown");
+          started.abandon();
+        },
+      };
+    },
+    { onReady() {}, onError: failOnError },
+    noGate,
+  );
+  assert.equal(runs.length, 1);
+  assert.equal(reviewRequestReady(schedule)(), true);
+  const review = schedule.begin("review");
+  assert.equal(runs[0].abandoned, true);
+  assert.equal(schedule.busy("warmup"), false);
+  let allocated = 0;
+  const waiting = schedule.when(
+    () => !schedule.busy("teardown"),
+    () => allocated++,
+  );
+  assert.equal(allocated, 0);
+  finishTeardown();
+  assert.equal(allocated, 1);
+  await flush();
+  assert.equal(runs.length, 1, "review prevents another warmup");
+  review();
+  assert.equal(runs.length, 2, "warmup resumes after review finishes");
+  warmup.dispose();
+  waiting();
+});
+
+test("review releases completed idle route and floor workers", async () => {
+  const schedule = new HeavyWorkerSchedule();
+  const { runs, run } = controllableWarmups();
+  let routeResident = false;
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    () => {
+      routeResident = true;
+      return run();
+    },
+    {
+      onReady() {},
+      onError: failOnError,
+      releaseIdle() {
+        const had = routeResident;
+        routeResident = false;
+        return had;
+      },
+    },
+    noGate,
+  );
+  runs[0].resolve();
+  await flush();
+  assert.equal(routeResident, true);
+  let floorResident = true;
+  const stop = releaseWhenOthersStart(
+    schedule,
+    ["route", "warmup", "review"],
+    () => floorResident,
+    () => {
+      floorResident = false;
+    },
+  );
+  const review = schedule.begin("review");
+  assert.equal(routeResident, false);
+  assert.equal(floorResident, false);
+  assert.equal(runs.length, 1);
+  stop();
+  review();
+  warmup.dispose();
+});
 function controllableWarmups() {
   const runs: {
     resolve: () => void;
@@ -49,7 +161,7 @@ test("warmup waits while a floor is preparing, then starts once", async () => {
     run,
     {
       onReady: () => ready++,
-      onError: assert.fail,
+      onError: failOnError,
     },
     noGate,
   );
@@ -80,7 +192,7 @@ test("floor preparation terminates a background-only warmup, which restarts when
     run,
     {
       onReady: () => ready++,
-      onError: assert.fail,
+      onError: failOnError,
       onAbandoned: () => abandoned++,
     },
     noGate,
@@ -108,7 +220,7 @@ test("a user route request keeps the warmup's worker; floor work does not termin
     run,
     {
       onReady: () => {},
-      onError: assert.fail,
+      onError: failOnError,
     },
     noGate,
   );
@@ -166,7 +278,7 @@ test("disposal releases tokens and ignores late warmup replies; releases are ide
     run,
     {
       onReady: () => ready++,
-      onError: assert.fail,
+      onError: failOnError,
     },
     noGate,
   );
@@ -282,7 +394,7 @@ test("a completed warm route worker is released for floor preparation and re-war
     },
     {
       onReady: () => ready++,
-      onError: assert.fail,
+      onError: failOnError,
       onAbandoned: () => abandoned++,
       releaseIdle: () => {
         const had = resident;
@@ -378,7 +490,7 @@ test("the warmup waits for floor work to stay idle for the gate period", () => {
   const warmup = scheduleRouteWarmup(
     schedule,
     run,
-    { onReady: () => {}, onError: assert.fail },
+    { onReady: () => {}, onError: failOnError },
     gate,
   );
   assert.equal(runs.length, 0, "not immediately after data arrives");
@@ -437,7 +549,7 @@ test("terminated heavy workers block new heavy allocations until their lifetime 
     { terminate: () => terminations++ },
     {
       locks,
-      timeoutMs: 60000,
+      timeoutMs: 60_000,
       releaseMs: 6000,
       setTimer: (run, ms) => {
         if (ms === 6000) releaseTimers.push(run);
@@ -481,7 +593,7 @@ test("a warmup does not start while a worker is still being torn down", () => {
   const warmup = scheduleRouteWarmup(
     schedule,
     run,
-    { onReady: () => {}, onError: assert.fail },
+    { onReady: () => {}, onError: failOnError },
     noGate,
   );
   assert.equal(runs.length, 0);
@@ -515,7 +627,7 @@ test("a warmup never starts while a user route request is building the graph", (
   const warmup = scheduleRouteWarmup(
     schedule,
     run,
-    { onReady: () => {}, onError: assert.fail },
+    { onReady: () => {}, onError: failOnError },
     noGate,
   );
   assert.equal(runs.length, 0, "the user request's worker is warming");

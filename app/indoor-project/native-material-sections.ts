@@ -68,7 +68,7 @@ export function validateNativeMaterialSections(
     !digest(value.geometrySha256) ||
     (model && model !== value.sourceModelSha256) ||
     !Array.isArray(value.levels) ||
-    !value.levels.length ||
+    value.levels.length === 0 ||
     value.levels.length > 1000
   )
     throw new Error("Invalid original native material source binding.");
@@ -85,19 +85,23 @@ export function validateNativeMaterialSections(
       seen.has(id) ||
       !digest(row.evidenceSha256) ||
       !Array.isArray(row.sourceElementIds) ||
-      !row.sourceElementIds.length ||
-      row.sourceElementIds.length > 100000 ||
+      row.sourceElementIds.length === 0 ||
+      row.sourceElementIds.length > 100_000 ||
       row.sourceElementIds.some((n) => !Number.isSafeInteger(n) || n <= 0) ||
       new Set(row.sourceElementIds).size !== row.sourceElementIds.length ||
       !Array.isArray(row.sections) ||
-      row.sections.length > 100000
+      row.sections.length > 100_000
     )
       throw new Error("Invalid original native material cut evidence.");
     seen.add(id);
+    // A row's independently checked owner census is shared by every original
+    // member/host/finite-band check below. Build membership once; repeated
+    // linear scans of a large same-row census add no validation evidence.
+    const owners = new Set(row.sourceElementIds);
     if (row.originalPositiveMaterialBands !== undefined) {
       if (
         !Array.isArray(row.originalPositiveMaterialBands) ||
-        row.originalPositiveMaterialBands.length > 10000
+        row.originalPositiveMaterialBands.length > 10_000
       )
         throw new Error("Invalid additive native material bands.");
       const bands = new Set<string>();
@@ -113,7 +117,7 @@ export function validateNativeMaterialSections(
       const profiles = row.originalDoorClearOpeningProfiles;
       if (
         !Array.isArray(profiles) ||
-        profiles.length > 100000 ||
+        profiles.length > 100_000 ||
         new Set(profiles.map((p) => p.nativeDoorElementId)).size !==
           profiles.length
       )
@@ -137,7 +141,7 @@ export function validateNativeMaterialSections(
     if (row.originalNativeMemberSections !== undefined) {
       if (
         !Array.isArray(row.originalNativeMemberSections) ||
-        row.originalNativeMemberSections.length > 100000 ||
+        row.originalNativeMemberSections.length > 100_000 ||
         new Set(row.originalNativeMemberSections.map((p) => p.nativeElementId))
           .size !== row.originalNativeMemberSections.length
       )
@@ -146,7 +150,7 @@ export function validateNativeMaterialSections(
         );
       for (const p of row.originalNativeMemberSections) {
         validateNativeOriginalMemberSection(p);
-        if (!row.sourceElementIds.includes(p.nativeElementId))
+        if (!owners.has(p.nativeElementId))
           throw new Error(
             "Original member is absent from the source owner census.",
           );
@@ -155,7 +159,7 @@ export function validateNativeMaterialSections(
     if (row.originalNativeHostRelations !== undefined) {
       if (
         !Array.isArray(row.originalNativeHostRelations) ||
-        row.originalNativeHostRelations.length > 100000 ||
+        row.originalNativeHostRelations.length > 100_000 ||
         new Set(
           row.originalNativeHostRelations.map((r) => r.hostNativeElementId),
         ).size !== row.originalNativeHostRelations.length
@@ -164,7 +168,7 @@ export function validateNativeMaterialSections(
       for (const r of row.originalNativeHostRelations) {
         const ids = (v: number[]) =>
           Array.isArray(v) &&
-          v.length < 100000 &&
+          v.length < 100_000 &&
           v.every(
             (n) =>
               Number.isSafeInteger(n) && n > 0 && n !== r.hostNativeElementId,
@@ -176,9 +180,7 @@ export function validateNativeMaterialSections(
           !ids(r.memberNativeElementIds) ||
           !ids(r.physicalDoorNativeElementIds) ||
           r.memberNativeElementIds.some(
-            (n) =>
-              !row.sourceElementIds.includes(n) ||
-              r.physicalDoorNativeElementIds.includes(n),
+            (n) => !owners.has(n) || r.physicalDoorNativeElementIds.includes(n),
           ) ||
           !digest(r.evidenceSha256)
         )
@@ -190,22 +192,22 @@ export function validateNativeMaterialSections(
     if (row.originalFiniteMaterialSections !== undefined) {
       if (
         !Array.isArray(row.originalFiniteMaterialSections) ||
-        row.originalFiniteMaterialSections.length > 100000
+        row.originalFiniteMaterialSections.length > 100_000
       )
         throw new Error("Invalid original finite-band material census.");
       for (const q of row.originalFiniteMaterialSections) {
         if (
-          !row.sourceElementIds.includes(q.nativeElementId) ||
+          !owners.has(q.nativeElementId) ||
           !Number.isFinite(q.baseElevationFeet) ||
           !Number.isFinite(q.topElevationFeet) ||
           q.topElevationFeet <= q.baseElevationFeet ||
           !digest(q.evidenceSha256) ||
           !Array.isArray(q.partsFeet) ||
-          !q.partsFeet.length ||
+          q.partsFeet.length === 0 ||
           q.partsFeet.some(
             (p) =>
               !Array.isArray(p) ||
-              !p.length ||
+              p.length === 0 ||
               p.some(
                 (r) =>
                   !Array.isArray(r) ||
@@ -224,8 +226,7 @@ export function validateNativeMaterialSections(
           );
       }
     }
-    const owners = new Set(row.sourceElementIds),
-      parts = new Set<number>();
+    const parts = new Set<number>();
     for (const section of row.sections) {
       if (
         !section ||
@@ -238,17 +239,17 @@ export function validateNativeMaterialSections(
         section.baseElevationFeet > row.cutElevationFeet + 1e-7 ||
         section.topElevationFeet < row.cutElevationFeet - 1e-7 ||
         !Array.isArray(section.partsFeet) ||
-        !section.partsFeet.length ||
-        section.partsFeet.length > 10000 ||
+        section.partsFeet.length === 0 ||
+        section.partsFeet.length > 10_000 ||
         section.partsFeet.some(
           (part) =>
             !Array.isArray(part) ||
-            !part.length ||
+            part.length === 0 ||
             part.some(
               (ring) =>
                 !Array.isArray(ring) ||
                 ring.length < 3 ||
-                ring.length > 100000 ||
+                ring.length > 100_000 ||
                 ring.some(
                   (point) =>
                     !Array.isArray(point) ||
@@ -269,7 +270,7 @@ export function validateNativeMaterialSections(
       ) {
         const ids = (v: unknown): v is number[] =>
           Array.isArray(v) &&
-          v.length <= 10000 &&
+          v.length <= 10_000 &&
           v.every(
             (n) =>
               Number.isSafeInteger(n) && n > 0 && n !== section.nativeElementId,
@@ -279,7 +280,7 @@ export function validateNativeMaterialSections(
           section.kind !== "wall" ||
           section.sourceNativeHostRelationsVerified !== true ||
           !ids(assembly) ||
-          !assembly.length ||
+          assembly.length === 0 ||
           !ids(section.originalPhysicalDoorChildIds) ||
           assembly.some((n) => !owners.has(n)) ||
           section.originalPhysicalDoorChildIds.some((n) => assembly.includes(n))

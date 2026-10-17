@@ -1,0 +1,7 @@
+The regeneration CLI optionally accepts `--validated-import-checkpoint-dir PRIVATE_DIRECTORY` to reuse completed local source-import work during compiler retries. It retains the default full-reader path when omitted.
+
+Both original readers must finish before a checkpoint is written. Its binding covers the archive bytes, the resolved readers and validators, the local checkpoint implementation, the actual TypeScript loader and esbuild code, dependency locks, both checked GEOS WASMs, Node executable/shared libraries, version and process flags. The archive and algorithm files are checked again before commit and reuse. Changing any bound file produces a different checkpoint key; a damaged receipt or payload refuses reuse. Files are immutable and stored with owner-only permissions.
+
+The V8 payload contains only the imported manifests, hydrated room metadata, datasets and byte buffers. Original `File` objects and module-local validation caches/authority are deliberately absent. Both GEOS contexts are initialized normally. Compiler preparation, original arrival/access guards, source-asset comparisons, portable master/viewer parity, fresh output validation and independent navigation QA still run. These checkpoints are private build artifacts; they cannot be loaded by the viewer, used as published routing evidence or grant approval to arbitrary JSON.
+
+The unit test verifies lossless byte/value round trips and rejection of source, receipt and payload changes. End-to-end reuse is established only by an actual completed import and subsequent compiler retry.

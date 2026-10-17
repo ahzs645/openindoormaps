@@ -5,13 +5,13 @@ import { Accessibility, Check, ChevronDown, Footprints } from "lucide-react";
 const profiles = [
   {
     value: "public" as const,
-    name: "Public review",
-    description: "Includes areas awaiting access review",
+    name: "Walking",
+    description: "Walking routes; stairs may be included",
     Icon: Footprints,
   },
   {
     value: "accessible" as const,
-    name: "Confirmed step-free route",
+    name: "Step-free",
     description: "Uses confirmed connections without stairs",
     Icon: Accessibility,
   },

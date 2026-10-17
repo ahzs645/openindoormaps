@@ -114,12 +114,24 @@ export function routingSnapshot(data: IndoorDataset): string {
           ? ["native-derived-frame-returns-v1", data.nativeDerivedFrameReturns]
           : []),
         ...(data.nativeMaterialSectionSupplement
-          ? ["native-material-section-supplement-v1", data.nativeMaterialSectionSupplement.geometrySha256]
+          ? [
+              "native-material-section-supplement-v1",
+              data.nativeMaterialSectionSupplement.geometrySha256,
+            ]
           : []),
         ...(data.nativeProvisionalCornerSeals
           ? [
               "native-provisional-corner-seals-v1",
               data.nativeProvisionalCornerSeals,
+            ]
+          : []),
+        ...(data.reviewedDrawingReferences
+          ? ["reviewed-drawing-references-v1", data.reviewedDrawingReferences]
+          : []),
+        ...(data.nativeSteppedStairV2SourceIndices
+          ? [
+              "native-stepped-stair-v2-source-indices",
+              data.nativeSteppedStairV2SourceIndices,
             ]
           : []),
         data.connectors,
@@ -129,7 +141,7 @@ export function routingSnapshot(data: IndoorDataset): string {
           : []),
         ...(data.nativePhysicalLevels ||
         data.nativeIndoorEnvelopes ||
-        data.edges.some((e) => e.nativeSourceStair)
+        data.edges.some((e) => e.nativeSourceStair || e.nativeSteppedStairV2)
           ? [
               data.stairDisplay?.sourceModelSha256,
               data.stairDisplay?.sourceFlights,

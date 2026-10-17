@@ -1,0 +1,229 @@
+{
+  "format": "unbc-verified-drawing-floor-source-review",
+  "version": 1,
+  "status": "COMPLETE_ORIGINAL_PREDICATES_AND_OLD_NEW_CONSTRUCTOR_PARITY_PASSED",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "inputBindings": {
+    "originalMaster": {
+      "path": "/workspace/scratch/unbc-review-20261014/UNBC.master.reviter.zip",
+      "bytes": 289031229,
+      "sha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520"
+    },
+    "workingSource": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/UNBC.source-rebuild-without-derived-mapping.reviter.zip",
+      "bytes": 273551343,
+      "sha256": "4fb92eb91885cd3eba23d83a0330e6ef0292ad95de785a3abe788608eb58372f"
+    },
+    "sourceRemovalReceipt": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/source-rebuild-input-receipt.json",
+      "bytes": 24986,
+      "sha256": "35528f38775e78badfd7058b662255fc4cb56bc0f460827d0cbc86b53f523287"
+    },
+    "freshNativeCache": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/direction-source-enrichment/UNBC.direction-selection.with-source-envelopes.native-cache.json",
+      "bytes": 407909023,
+      "sha256": "5bf0e31bf51bcf72fc05ccd7ba3c344027f39098c6c422a8d89ee7f7243d5339"
+    },
+    "originalArchiveRooms": {
+      "path": "/workspace/scratch/unbc-stair-review-20261015/canonical-rooms.json",
+      "bytes": 82049198,
+      "sha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+    },
+    "reviewedDrawingReferences": {
+      "path": "/workspace/scratch/unbc-stair-completion-20261015/reviewed-drawing-application-20261015/reviewed-drawing-references.json",
+      "bytes": 8808,
+      "sha256": "9d3348c0130b016732b1a4ffdc27e1c40773b39d2c7597f9bddcc1c9848185a3"
+    }
+  },
+  "algorithm": {
+    "sourceCacheSha256": "5bf0e31bf51bcf72fc05ccd7ba3c344027f39098c6c422a8d89ee7f7243d5339",
+    "originalArchiveRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+    "algorithmFiles": [
+      {
+        "path": "/workspace/openindoormaps/scripts/indoor/rebind-drawing-floor-source-review.ts",
+        "sha256": "3b143a9f87ad949eecf4dfa8b8b6ed2c2dcee7aea92b3d6bd36ad88f89ce3bed"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-provisional-corner-seals.ts",
+        "sha256": "d23bb59f5cb1bc8657077f11e5f9ec7bf6ae188d2cc4fd053a7b2eec349de385"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/static-bounds-index.ts",
+        "sha256": "3e85799dbdd970598191197d4964791a37b9e81e748c2b9b3389b11f2a5182b8"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-derived-frame-returns.ts",
+        "sha256": "dbf44b382296624a04495f17c6d3d6cbcba12344f84277771d508fc5246116df"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-material-wire.ts",
+        "sha256": "9ceaab4fecbc3114f9b8c12a91b41ccfdf5070c3167c98644386390a563fa36a"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/strict-native-floor-polygons.ts",
+        "sha256": "8c0265a84a45518e9f8574d1b5badd03e8fa076a33880fc86d239c14edbd7dfb"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/routing-floor-support.ts",
+        "sha256": "8c3a6e00fb92d8089ccb77f0fa92a3e7f9339e3cddd1b51cf0f63ebb65ec777d"
+      }
+    ],
+    "materialScope": "Verified hydrated original source material/census/doors with actual current strict native floors; fresh regenerated material/routing QA remains mandatory."
+  },
+  "helperTest": {
+    "path": "/workspace/openindoormaps/tests/unit/drawing-floor-source-review.test.ts",
+    "bytes": 7986,
+    "sha256": "84a0608f884280a7280ded4c7ee1632b4366c5d2bf13929a0c363c048fa6313a"
+  },
+  "verifiedReceipts": {
+    "drawing-floor-rebind-complete-replay.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/drawing-floor-rebind-complete-replay.json",
+      "bytes": 1884844,
+      "sha256": "37b8136805e269735d819c931db0d495fe2db2902d76e43720ecd07c17adf9de"
+    },
+    "explicit-floor-profile-drift.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/explicit-floor-profile-drift.json",
+      "bytes": 73098,
+      "sha256": "e8568cb1591cceb22a8994b9ddc69076ac7c93096ba43c05f923c7ae7a447400"
+    },
+    "constructor-static-index-full-parity-canonical.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/constructor-static-index-full-parity-canonical.json",
+      "bytes": 1872,
+      "sha256": "8cd679914c8d9f3ba16b60366c7573ccaf6dff3b75dc449346b312d5aea8de37"
+    },
+    "constructor-static-index-full-parity-refreshed.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/constructor-static-index-full-parity-refreshed.json",
+      "bytes": 1891,
+      "sha256": "5db6e3eacbd950a6bd2fae016a6a9a7a11e63dc05f177af0a4b704d2c135803c"
+    },
+    "drawing-floor-source-review-tests.log": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/drawing-floor-source-review-tests.log",
+      "bytes": 1023,
+      "sha256": "f2d50689b50752981d70ffac8cc807f502b6cbe24b50ef68bbd195500d7e7c45"
+    },
+    "drawing-floor-source-review-typecheck.log": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/drawing-floor-source-review-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "sourceMetadataDelta": {
+    "drawingRows": 100,
+    "onlyRowFields": [
+      "sourceFloorBindings",
+      "sourceFloorPartsSha256"
+    ],
+    "dependentFields": [
+      "nativeProvisionalCornerSeals.geometrySha256",
+      "nativeIndoorEnvelopes.levels[bound].provisionalCornerGeometrySha256",
+      "nativeIndoorEnvelopes.geometrySha256"
+    ],
+    "changedDescriptorBefore": "38f10d39105465431549ea8b8b044abd1948d01ba6fe4cd78a42d12efe8528be",
+    "changedDescriptorAfter": "2d913e3be158ab0b6c8c7da287e3d8a961fa2f07982a4c23cd995517642bab2f",
+    "changedEnvelopeBefore": "bef540a3ad3287eaca7eee1fde24aec6a30e4fc4484858f18f50157776dc8008",
+    "changedEnvelopeAfter": "fd19773e7ef6181842a9acfad1790b34576bfee740221605c113897e39ca3c55",
+    "hydratedSourceBeforeSha256": "2e949584cc9b996c97655a12ec1beee56b13442bfefe3b34152929be60ebe965",
+    "hydratedSourceAfterSha256": "166d747385c102e85e7ee71980770955d7b32a6d1c793f865499b30d38ee64d2",
+    "dependentEnvelopeLevels": [
+      {
+        "levelId": 2295121,
+        "elevationFeet": -7.217847769028872
+      },
+      {
+        "levelId": 1450417,
+        "elevationFeet": -3.2808398950131235
+      },
+      {
+        "levelId": 311,
+        "elevationFeet": 0
+      },
+      {
+        "levelId": 1487816,
+        "elevationFeet": 3.2808398950131235
+      },
+      {
+        "levelId": 1425915,
+        "elevationFeet": 9.84251968503937
+      }
+    ]
+  },
+  "checks": {
+    "allOriginalAssumptions": 3200,
+    "allOriginalDrawingRows": 3191,
+    "allOriginalWalkingFloorIDs": [
+      400238,
+      400479,
+      402395,
+      405772,
+      423406,
+      427511,
+      437656,
+      444577,
+      447970,
+      490040,
+      501699,
+      503705,
+      511340,
+      515291,
+      1279070,
+      1327372,
+      1426532,
+      1454817,
+      1468016,
+      1473216,
+      1474096,
+      1495537,
+      1495596,
+      1496653,
+      1496668,
+      1498750,
+      1498765,
+      1498827,
+      1500982,
+      1501009,
+      1501037,
+      1503517,
+      1505065,
+      1513098,
+      1514723,
+      1521516,
+      1521608,
+      1521899,
+      1582103,
+      1593239,
+      1726620,
+      1759381,
+      1773943,
+      1779842,
+      1840413,
+      1950094,
+      1980767,
+      2071957,
+      2081596,
+      2183541,
+      2183935,
+      2295333,
+      2484309
+    ],
+    "changedWalkingProfiles": [
+      501699,
+      1327372,
+      1582103,
+      1759381
+    ],
+    "originalPhysicalDoorsRetained": 1899,
+    "originalPhysicalEdgesRetained": 7063,
+    "fullOriginalDrawingRowsActuallyReplayed": 3191,
+    "memoHits": 0,
+    "patchBodiesUnchanged": true,
+    "historyAndDecisionsUnchanged": true,
+    "sourceInputMutated": false,
+    "sourceCoordinatesSnapped": false,
+    "globalProfileGeometryEquivalenceClaimed": false,
+    "guardWaivers": false,
+    "targetedTestsPassed": 8,
+    "strictTypescriptPassed": true
+  },
+  "scope": "Original unchanged source material, complete foreign-body census, physical doors/edges and drawing evidence with ALL current strict native walking-floor profiles. Freshly regenerated complete material/route QA remains mandatory.",
+  "remainingGate": "A newly regenerated package must still pass independent complete fresh-source/material/arrival/physical/navigation QA and source-asset/output parity. This source-review receipt alone grants no visitor route, floor geometry equivalence, stair or accessibility admission."
+}

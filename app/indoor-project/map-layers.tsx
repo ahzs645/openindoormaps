@@ -1,4 +1,9 @@
-import { preparedFloorNativeDisplay } from "./floor-display-worker-bridge";
+import { lockBuildingOverviewLayers } from "./building-overview";
+import {
+  preparedFloorNativeDisplay,
+  preparedFloorOverviewGround,
+  preparedFloorOverviewFloor,
+} from "./floor-display-worker-bridge";
 import type { NativeExploreResult } from "./native-explore";
 import { nativeExploreLabels } from "./native-explore-labels";
 import { nativeSurfacePerimeters } from "./native-surface-perimeters";
@@ -9,6 +14,7 @@ import { isVisitorHallway } from "./place-discovery";
 import { stableWallGeometry } from "./stable-wall-geometry";
 import { singleExtrusionWalls } from "./native-wall-level-owner";
 import { precisionWallLayer } from "./precision-wall-layer";
+import { precisionSurfaceLayer } from "./precision-surface-layer";
 import {
   floorDiagnostic,
   floorDiagnosticsEnabled,
@@ -36,7 +42,13 @@ import {
   type PaddingOptions,
   type ExpressionSpecification,
 } from "maplibre-gl";
-import type { Feature, FeatureCollection, Geometry } from "geojson";
+import type {
+  Feature,
+  FeatureCollection,
+  Geometry,
+  MultiPolygon,
+  Point,
+} from "geojson";
 import { useMap, useMapRecreate } from "~/components/map/map";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint, type ProjectRoute } from "./routing";
@@ -88,15 +100,34 @@ const HIDDEN_SOURCE: FeatureCollection = {
   type: "FeatureCollection",
   features: [],
 };
-function PreparedProjectMapLayers({
+const EMPTY_OVERVIEW: FeatureCollection<MultiPolygon> = {
+  type: "FeatureCollection",
+  features: [],
+};
+export type PreparedVisitorRenderContext = {
+  nativeIndoorEnvelopes: boolean;
+  nativeMaterialSections: boolean;
+  windowMode: string | null;
+  connectorMarkers: FeatureCollection<Point>;
+  relativeConnectorMarkers: FeatureCollection<Point>;
+  visitorLabels: FeatureCollection<Point>;
+  extrusionWalls: FeatureCollection<MultiPolygon>;
+  floorDatumFeet: number;
+  portals: FeatureCollection<Point>;
+  stairSelectionKeys: Record<string, string[]>;
+};
+
+export function PreparedProjectMapLayers({
   prepared,
+  visitorContext,
   basemapVisibility,
   data,
   levelIds,
   building,
   circulationOnly,
   network,
-  roomThree,
+  roomThree: requestedRoomThree,
+  overviewLocked = false,
   nativeModel = false,
   relativeHeights = false,
   showPassThroughPlaces,
@@ -118,6 +149,7 @@ function PreparedProjectMapLayers({
   basemapVisible = true,
 }: {
   prepared: PreparedFloor;
+  visitorContext?: PreparedVisitorRenderContext;
   basemapVisibility: MutableRefObject<Map<string, string>>;
   data: IndoorDataset;
   geometryOpacity?: number;
@@ -129,6 +161,7 @@ function PreparedProjectMapLayers({
   circulationOnly: boolean;
   network: boolean;
   roomThree: boolean;
+  overviewLocked?: boolean;
   nativeModel?: boolean;
   relativeHeights?: boolean;
   showPillars: boolean;
@@ -150,6 +183,15 @@ function PreparedProjectMapLayers({
   selectionPadding?: number;
 }) {
   const { map, isLoaded } = useMap();
+  const hasNativeMaterial =
+    visitorContext?.nativeMaterialSections ?? !!data.nativeMaterialSections;
+  const hasNativeEnvelopes =
+    visitorContext?.nativeIndoorEnvelopes ?? !!data.nativeIndoorEnvelopes;
+  const windowMode = visitorContext?.windowMode ?? data.windowDisplay?.mode;
+  const keepOverview = overviewLocked && !review && !nativeModel;
+  const roomThree = requestedRoomThree && !keepOverview;
+  const preciseSurfaces =
+    roomThree && !review && !nativeModel && nativeFloorLevels.length === 0;
   useEffect(() => {
     floorDiagnostic("layers:prepared-mount", { roomThree });
     return () => {
@@ -171,25 +213,60 @@ function PreparedProjectMapLayers({
     overviewGeometry,
     overviewLabels,
   } = prepared.presentation;
+  const overviewDrawing = useMemo<FeatureCollection<MultiPolygon>>(
+    () => ({
+      type: "FeatureCollection",
+      features: overviewGeometry.features.map((feature) => ({
+        ...feature,
+        geometry:
+          feature.geometry.type === "MultiPolygon"
+            ? feature.geometry
+            : {
+                type: "MultiPolygon",
+                coordinates: [feature.geometry.coordinates],
+              },
+      })),
+    }),
+    [overviewGeometry],
+  );
   const visitorLabels = useMemo(
     () => ({
       ...display.labels,
       features: [
         ...overviewLabels.features.map((f) => ({
           ...f,
-          properties: { ...f.properties, maxZoom: labelSettings.roomZoom - 1 },
+          properties: {
+            ...f.properties,
+            maxZoom: keepOverview ? 24 : labelSettings.roomZoom - 1,
+          },
         })),
-        ...visitorRoomLabels(
-          nativeExploreLabels(data, display.labels, nativeFloorLevels),
-          display.records,
-          selected,
-          labelSettings,
-        ).features,
+        ...(keepOverview
+          ? []
+          : visitorRoomLabels(
+              visitorContext?.visitorLabels ??
+                nativeExploreLabels(data, display.labels, nativeFloorLevels),
+              display.records,
+              selected,
+              labelSettings,
+            ).features),
       ],
     }),
-    [display, overviewLabels, selected, labelSettings, data, nativeFloorLevels],
+    [
+      display,
+      overviewLabels,
+      selected,
+      labelSettings,
+      data,
+      nativeFloorLevels,
+      keepOverview,
+      visitorContext,
+    ],
   );
   const connectorMarkers = useMemo(() => {
+    if (visitorContext)
+      return relativeHeights || nativeModel
+        ? visitorContext.relativeConnectorMarkers
+        : visitorContext.connectorMarkers;
     const markers = projectConnectorMarkers(
       data,
       levelIds,
@@ -209,6 +286,7 @@ function PreparedProjectMapLayers({
     nativeModel,
     relativeHeights,
     review,
+    visitorContext,
   ]);
   const { nativeStairKeys, physicalGround, nativeStairs } = prepared;
   const windows = useMemo(
@@ -233,8 +311,17 @@ function PreparedProjectMapLayers({
   // Whole-floor wall extrusion input. Kept out of the selection/label-driven
   // memo below so a click does not rebuild, re-upload or re-triangulate it.
   const exposedWalls = useMemo(() => {
+    if (
+      roomThree &&
+      visitorContext &&
+      !review &&
+      !nativeModel &&
+      !simplifyGeometry &&
+      !showStructures
+    )
+      return visitorContext.extrusionWalls;
     const planWalls =
-      data.windowDisplay?.mode === "native" && !roomThree
+      windowMode === "native" && !roomThree
         ? prepared.presentation.nativeWindowPlanWalls
         : undefined;
     const source = review
@@ -259,7 +346,8 @@ function PreparedProjectMapLayers({
   }, [
     data,
     levelIds,
-    data.windowDisplay?.mode,
+    windowMode,
+    visitorContext,
     roomThree,
     prepared.presentation.nativeWindowPlanWalls,
     review,
@@ -344,7 +432,7 @@ function PreparedProjectMapLayers({
       ),
       exposedWalls,
       lines,
-      portals,
+      portals: visitorContext?.portals ?? portals,
       records,
       doorFootprints:
         !review && simplifyGeometry ? simpleDoors : doorFootprints,
@@ -362,6 +450,7 @@ function PreparedProjectMapLayers({
     simpleDoors,
     nativeStairKeys,
     prepared.stairSurroundKeys,
+    visitorContext,
   ]);
   const routeLines = useMemo(
     () =>
@@ -444,6 +533,9 @@ function PreparedProjectMapLayers({
     () => nativeSurfacePerimeters(data, stairCutRooms),
     [data, stairCutRooms],
   );
+  const overviewBacking =
+    preparedFloorOverviewGround(prepared) ?? EMPTY_OVERVIEW;
+  const overviewFloor = preparedFloorOverviewFloor(prepared) ?? EMPTY_OVERVIEW;
   useEffect(() => {
     if (!mapReady(map, isLoaded)) return;
     const effectStarted = floorDiagnosticsEnabled() ? performance.now() : 0;
@@ -486,6 +578,8 @@ function PreparedProjectMapLayers({
         "project-selection-areas",
         "project-area-perimeters",
         "project-block-perimeters",
+        "project-overview-ground",
+        "project-overview-floor",
       ],
       ids = [
         "project-room-fill",
@@ -508,7 +602,7 @@ function PreparedProjectMapLayers({
     const exposedWallsShown =
       (!review &&
         !roomThree &&
-        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)) ||
+        !(nativeFloorLevels.length > 0 && hasNativeMaterial)) ||
       (roomThree && (review || nativeModel));
     const values = [
       stairCutAreas,
@@ -525,6 +619,8 @@ function PreparedProjectMapLayers({
       prepared.selectionAreas,
       areaPerimeters,
       roomPerimeters,
+      overviewBacking,
+      overviewFloor,
     ];
     for (const [i, id] of sources.entries()) {
       const value = values[i];
@@ -921,10 +1017,77 @@ function PreparedProjectMapLayers({
           id: "project-overview-fill",
           type: "fill",
           source: "project-overview",
+          maxzoom: ROOM_DETAIL_END,
+          paint: {
+            "fill-color": [
+              "case",
+              ["==", ["get", "circulation"], true],
+              HALLWAY_COLOR,
+              OVERVIEW_SOLID_COLOR,
+            ],
+            // Use matching-tint antialiasing along the overview silhouette and
+            // shared raster seams without modifying its contained polygons.
+            "fill-antialias": true,
+            "fill-outline-color": [
+              "case",
+              ["==", ["get", "circulation"], true],
+              HALLWAY_COLOR,
+              OVERVIEW_SOLID_COLOR,
+            ],
+            "fill-opacity": [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              ROOM_DETAIL_START,
+              1,
+              ROOM_DETAIL_END,
+              0,
+            ],
+          },
+        },
+        "project-room-fill",
+      );
+    map.setLayoutProperty(
+      "project-overview-fill",
+      "visibility",
+      review ? "none" : "visible",
+    );
+    // Checked physical slab paint supplies the small floor strips omitted by
+    // area-selection door closures. It stays below the native area tint and
+    // preserves the prepared stair/atrium holes; it is never a navigation mask.
+    if (!map.getLayer("project-overview-floor-fill"))
+      map.addLayer(
+        {
+          id: "project-overview-floor-fill",
+          type: "fill",
+          source: "project-overview-floor",
+          paint: {
+            "fill-color": OVERVIEW_SOLID_COLOR,
+            "fill-outline-color": OVERVIEW_SOLID_COLOR,
+            "fill-antialias": true,
+            "fill-opacity": 1,
+          },
+        },
+        "project-overview-fill",
+      );
+    map.setLayoutProperty(
+      "project-overview-floor-fill",
+      "visibility",
+      review || nativeModel || roomThree ? "none" : "visible",
+    );
+    if (!map.getLayer("project-overview-ground-fill"))
+      map.addLayer(
+        {
+          id: "project-overview-ground-fill",
+          type: "fill",
+          source: "project-overview-ground",
           maxzoom: WALL_DETAIL_END,
           paint: {
-            "fill-color": ["get", "color"],
-            "fill-antialias": false,
+            "fill-color": OVERVIEW_SOLID_COLOR,
+            // A matching pixel edge hides tile seams between contained pieces
+            // without changing the native rings or their actual openings.
+            "fill-antialias": true,
+            "fill-outline-color": OVERVIEW_SOLID_COLOR,
             "fill-opacity": [
               "interpolate",
               ["linear"],
@@ -936,12 +1099,39 @@ function PreparedProjectMapLayers({
             ],
           },
         },
-        "project-room-fill",
+        map.getLayer("native-explore-overview-floor")
+          ? "native-explore-overview-floor"
+          : "project-overview-fill",
       );
     map.setLayoutProperty(
-      "project-overview-fill",
+      "project-overview-ground-fill",
       "visibility",
-      review ? "none" : "visible",
+      review || nativeModel ? "none" : "visible",
+    );
+    map.setLayerZoomRange(
+      "project-overview-fill",
+      0,
+      keepOverview ? 24 : ROOM_DETAIL_END,
+    );
+    map.setLayerZoomRange(
+      "project-overview-ground-fill",
+      0,
+      keepOverview ? 24 : WALL_DETAIL_END,
+    );
+    map.setPaintProperty(
+      "project-overview-ground-fill",
+      "fill-opacity",
+      keepOverview
+        ? 1
+        : [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            WALL_DETAIL_START,
+            1,
+            WALL_DETAIL_END,
+            0,
+          ],
     );
     for (const id of [
       "project-room-fill",
@@ -1033,17 +1223,20 @@ function PreparedProjectMapLayers({
         map.setPaintProperty(
           id,
           property,
-          review
-            ? full
-            : [
-                "interpolate",
-                ["linear"],
-                ["zoom"],
-                ROOM_DETAIL_START,
-                0,
-                ROOM_DETAIL_END,
-                full,
-              ],
+          ["project-relative-floors", "project-room-boxes"].includes(id) &&
+            preciseSurfaces
+            ? 0
+            : review
+              ? full
+              : [
+                  "interpolate",
+                  ["linear"],
+                  ["zoom"],
+                  ROOM_DETAIL_START,
+                  0,
+                  ROOM_DETAIL_END,
+                  full,
+                ],
         );
     }
     map.setLayoutProperty(
@@ -1064,6 +1257,68 @@ function PreparedProjectMapLayers({
       if (map.getLayer(id)) map.removeLayer(id);
     if (map.getLayer("project-precision-walls"))
       map.removeLayer("project-precision-walls");
+    if (map.getLayer("project-overview-ground-mesh"))
+      map.removeLayer("project-overview-ground-mesh");
+    if (map.getLayer("project-overview-tint-mesh"))
+      map.removeLayer("project-overview-tint-mesh");
+    for (const id of [
+      "project-precision-floors",
+      "project-precision-room-roofs",
+    ])
+      if (map.getLayer(id)) map.removeLayer(id);
+    if (
+      !review &&
+      !nativeModel &&
+      nativeFloorLevels.length === 0 &&
+      overviewDrawing.features.length > 0
+    )
+      map.addLayer(
+        precisionWallLayer(overviewDrawing, data.alignment.originGeographic, {
+          id: "project-overview-tint-mesh",
+          overview: true,
+          overviewTint: true,
+          overviewLocked: keepOverview,
+          opacity: geometryOpacity,
+        }),
+        "project-room-fill",
+      );
+    if (!review && !nativeModel && overviewBacking.features.length > 0)
+      map.addLayer(
+        precisionWallLayer(overviewBacking, data.alignment.originGeographic, {
+          id: "project-overview-ground-mesh",
+          overview: true,
+          overviewLocked: keepOverview,
+        }),
+        "project-overview-ground-fill",
+      );
+    if (preciseSurfaces) {
+      // Keep the vector floor layer for its existing hit geometry, with its
+      // paint disabled below. Local caps retain the original floor elevations
+      // without extruding each contained drawing cell into an internal wall.
+      map.addLayer(
+        precisionSurfaceLayer(stairCutAreas, data.alignment.originGeographic, {
+          kind: "floor",
+          relativeHeights,
+          circulationOnly,
+          selected,
+          opacity: geometryOpacity,
+        }),
+        "project-room-boxes",
+      );
+      // Retain the vector room volumes for picking. Local caps and sides draw
+      // the original room rings at the same animated source heights.
+      map.addLayer(
+        precisionSurfaceLayer(stairCutRooms, data.alignment.originGeographic, {
+          kind: "room",
+          perimeters: roomPerimeters,
+          relativeHeights,
+          circulationOnly,
+          selected,
+          opacity: geometryOpacity,
+        }),
+        "project-network-line",
+      );
+    }
     const layersStarted = effectStarted ? performance.now() : 0;
     if (roomThree && !review && !nativeModel)
       map.addLayer(
@@ -1117,12 +1372,27 @@ function PreparedProjectMapLayers({
         "project-network-line",
       );
     map.setLayerZoomRange("project-native-window-plan", WALL_DETAIL_START, 24);
+    map.setPaintProperty(
+      "project-native-window-plan",
+      "fill-opacity",
+      review
+        ? ["get", "opacity"]
+        : [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            WALL_DETAIL_START,
+            0,
+            WALL_DETAIL_END,
+            ["get", "opacity"],
+          ],
+    );
     map.setLayoutProperty(
       "project-native-window-plan",
       "visibility",
       !roomThree &&
         !nativeModel &&
-        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)
+        !(nativeFloorLevels.length > 0 && hasNativeMaterial)
         ? "visible"
         : "none",
     );
@@ -1139,7 +1409,10 @@ function PreparedProjectMapLayers({
             "project-network-line",
           );
       }
-    if (data.rampDisplay?.ramps.length || (relativeHeights && route))
+    if (
+      !keepOverview &&
+      (data.rampDisplay?.ramps.length || (relativeHeights && route))
+    )
       map.addLayer(
         nativeRampLayer(
           data,
@@ -1150,6 +1423,13 @@ function PreparedProjectMapLayers({
           route,
           nativeModel,
           relativeHeights,
+          visitorContext
+            ? {
+                physicalHeights:
+                  visitorContext.nativeIndoorEnvelopes || relativeHeights,
+                datumFeet: visitorContext.floorDatumFeet,
+              }
+            : undefined,
         ),
         "project-network-line",
       );
@@ -1371,7 +1651,7 @@ function PreparedProjectMapLayers({
       "visibility",
       !review &&
         !roomThree &&
-        !(nativeFloorLevels.length > 0 && data.nativeMaterialSections)
+        !(nativeFloorLevels.length > 0 && hasNativeMaterial)
         ? "visible"
         : "none",
     );
@@ -1432,8 +1712,9 @@ function PreparedProjectMapLayers({
     map.setLayoutProperty(ids[3], "visibility", network ? "visible" : "none");
     // Selection paint belongs to the same synchronization pass as base paint.
     // An unrelated UI render can refresh layers without changing the selection.
-    const selectedStairKeys =
-      data.stairDisplay?.sourceModelSha256 === data.source.modelSha256
+    const selectedStairKeys = visitorContext
+      ? (visitorContext.stairSelectionKeys[selected] ?? [])
+      : data.stairDisplay?.sourceModelSha256 === data.source.modelSha256
         ? data.stairDisplay.flights
             .filter(
               (f) =>
@@ -1622,7 +1903,7 @@ function PreparedProjectMapLayers({
                 (building === "all" || r.building === building),
             ))
           : undefined;
-        if (data.nativeIndoorEnvelopes) {
+        if (hasNativeEnvelopes) {
           const physical = prepared.selectionAreas.features.filter(
             (f) =>
               !chosen ||
@@ -1661,7 +1942,11 @@ function PreparedProjectMapLayers({
         uploads,
         ms: performance.now() - effectStarted,
       });
+    const restoreOverview = keepOverview
+      ? lockBuildingOverviewLayers(map)
+      : undefined;
     return () => {
+      restoreOverview?.();
       map.off("click", pick);
       // The parent map may already be removed during route navigation or Clear
       // map. MapLibre's getLayer throws once its style has been disposed.
@@ -1681,6 +1966,11 @@ function PreparedProjectMapLayers({
     connectorMarkers,
     areaPerimeters,
     roomPerimeters,
+    overviewBacking,
+    overviewFloor,
+    overviewDrawing,
+    geometryOpacity,
+    keepOverview,
     nativeStairs,
     nativeStairKeys,
     overviewGeometry,
@@ -1691,6 +1981,7 @@ function PreparedProjectMapLayers({
     network,
     simplifyGeometry,
     roomThree,
+    preciseSurfaces,
     nativeModel,
     relativeHeights,
     route,
@@ -1758,12 +2049,14 @@ function PreparedProjectMapLayers({
         map.setPaintProperty(
           id,
           property,
-          property === "fill-extrusion-opacity" &&
-            nativeFloorLevels.length > 0 &&
-            [
-              "project-relative-floors",
-              "project-flat-selection-surface",
-            ].includes(id)
+          (["project-relative-floors", "project-room-boxes"].includes(id) &&
+            preciseSurfaces) ||
+            (property === "fill-extrusion-opacity" &&
+              nativeFloorLevels.length > 0 &&
+              [
+                "project-relative-floors",
+                "project-flat-selection-surface",
+              ].includes(id))
             ? 0
             : (() => {
                 const opacity = [
@@ -1834,23 +2127,25 @@ function PreparedProjectMapLayers({
       nativeFloorLevels.length > 0 &&
         levelIds.every((id) => nativeFloorLevels.includes(id))
         ? 0
-        : [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            WALL_DETAIL_START,
-            [
-              "case",
+        : keepOverview
+          ? geometryOpacity
+          : [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              ROOM_DETAIL_START,
               [
-                "all",
-                ["in", ["get", "building"], ["literal", nativeBuildings]],
+                "case",
+                [
+                  "all",
+                  ["in", ["get", "building"], ["literal", nativeBuildings]],
+                ],
+                0,
+                geometryOpacity,
               ],
+              ROOM_DETAIL_END,
               0,
-              geometryOpacity,
             ],
-            WALL_DETAIL_END,
-            0,
-          ],
     );
     // Prepared floor layers may finish after the native worker and insert this
     // backing above it again. Keep grey seam coverage beneath both native fills.
@@ -1905,9 +2200,13 @@ function PreparedProjectMapLayers({
     data,
     labelsVisible,
     basemapVisible,
+    keepOverview,
     layers,
     review,
     roomThree,
+    preciseSurfaces,
+    hasNativeMaterial,
+    hasNativeEnvelopes,
   ]);
   return null;
 }

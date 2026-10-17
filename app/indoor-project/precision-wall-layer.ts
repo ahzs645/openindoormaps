@@ -2,9 +2,12 @@ import maplibregl, { type CustomLayerInterface } from "maplibre-gl";
 import * as THREE from "three";
 import type { FeatureCollection, MultiPolygon } from "geojson";
 import { EXPOSED_WALL_HEIGHT_METRES } from "./display-geometry";
+import { HALLWAY_COLOR, OVERVIEW_SOLID_COLOR } from "./display-passages";
 import {
   ROOM_DETAIL_START,
   ROOM_DETAIL_END,
+  WALL_DETAIL_START,
+  WALL_DETAIL_END,
   zoomFade,
 } from "./zoom-presentation";
 import { floorDiagnostic, floorDiagnosticsEnabled } from "./floor-diagnostics";
@@ -17,6 +20,8 @@ export type PrecisionWallMesh = {
   positions: Float32Array;
   /** rgb (or rgba for window glazing) per vertex. */
   colors: Float32Array;
+  /** Grey/circulation colours for a paint-only room reveal on the same mesh. */
+  overviewColors?: Float32Array;
   vertices: number;
   colorSize: 3 | 4;
 };
@@ -36,8 +41,11 @@ export function precisionWallMesh(
   walls: FeatureCollection<MultiPolygon>,
   originGeographic: [number, number],
   windowOpacity = false,
+  overview = false,
+  overviewTint = false,
+  featureColors = false,
 ): PrecisionWallMesh {
-  const key = `${originGeographic[0]},${originGeographic[1]},${windowOpacity}`;
+  const key = `${originGeographic[0]},${originGeographic[1]},${windowOpacity},${overview},${overviewTint},${featureColors}`;
   let byOptions = meshes.get(walls);
   const cached = byOptions?.get(key);
   if (cached) return cached;
@@ -51,46 +59,70 @@ export function precisionWallMesh(
       -(m.y - origin.y) / metre,
     );
   };
-  const sideColor = new THREE.Color("#a3a3a0"),
+  const overviewColor = new THREE.Color(OVERVIEW_SOLID_COLOR),
+    hallwayColor = new THREE.Color(HALLWAY_COLOR),
+    sideColor = new THREE.Color("#a3a3a0"),
     topColor = new THREE.Color("#deded9");
   const colorSize = windowOpacity ? 4 : 3;
   const positionParts: Float32Array[] = [],
-    colorParts: Float32Array[] = [];
+    colorParts: Float32Array[] = [],
+    overviewColorParts: Float32Array[] = [];
   let vertices = 0;
   for (const f of walls.features) {
     const base = Number(f.properties?.base ?? 0),
       top = Number(f.properties?.height ?? EXPOSED_WALL_HEIGHT_METRES);
-    if (!Number.isFinite(base) || !Number.isFinite(top) || top <= base)
+    if (
+      !overview &&
+      (!Number.isFinite(base) || !Number.isFinite(top) || top <= base)
+    )
       continue;
-    const nativeColor = f.properties?.nativeWindowColor
-      ? new THREE.Color(String(f.properties.nativeWindowColor))
-      : undefined;
+    const nativeColor = overview
+      ? featureColors
+        ? new THREE.Color(String(f.properties?.color ?? OVERVIEW_SOLID_COLOR))
+        : overviewTint && f.properties?.circulation === true
+          ? hallwayColor
+          : overviewColor
+      : f.properties?.nativeWindowColor
+        ? new THREE.Color(String(f.properties.nativeWindowColor))
+        : undefined;
     const opacity = Number(f.properties?.opacity ?? 1);
     for (const polygon of f.geometry.coordinates) {
       const shape = new THREE.Shape(polygon[0].map(xy));
       for (const hole of polygon.slice(1))
         shape.holes.push(new THREE.Path(hole.map(xy)));
-      const part = new THREE.ExtrudeGeometry(shape, {
-        depth: top - base,
-        bevelEnabled: false,
-      });
+      const part = overview
+        ? new THREE.ShapeGeometry(shape).toNonIndexed()
+        : new THREE.ExtrudeGeometry(shape, {
+            depth: top - base,
+            bevelEnabled: false,
+          });
       const p = part.getAttribute("position"),
         n = part.getAttribute("normal");
       const positions = new Float32Array(p.count * 3),
-        colors = new Float32Array(p.count * colorSize);
+        colors = new Float32Array(p.count * colorSize),
+        overviewColors =
+          overview && featureColors ? new Float32Array(p.count * 3) : undefined;
       for (let i = 0; i < p.count; i++) {
         positions[i * 3] = p.getX(i);
         positions[i * 3 + 1] = p.getY(i);
-        positions[i * 3 + 2] = p.getZ(i) + base;
+        positions[i * 3 + 2] = overview ? 0 : p.getZ(i) + base;
         const color =
           nativeColor ?? (Math.abs(n.getZ(i)) > 0.5 ? topColor : sideColor);
         colors[i * colorSize] = color.r;
         colors[i * colorSize + 1] = color.g;
         colors[i * colorSize + 2] = color.b;
+        if (overviewColors) {
+          const low =
+            overviewTint && f.properties?.circulation === true
+              ? hallwayColor
+              : overviewColor;
+          overviewColors.set([low.r, low.g, low.b], i * 3);
+        }
         if (windowOpacity) colors[i * colorSize + 3] = opacity;
       }
       positionParts.push(positions);
       colorParts.push(colors);
+      if (overviewColors) overviewColorParts.push(overviewColors);
       vertices += p.count;
       part.dispose();
     }
@@ -108,6 +140,9 @@ export function precisionWallMesh(
   const mesh: PrecisionWallMesh = {
     positions: concat(positionParts, 3),
     colors: concat(colorParts, colorSize),
+    ...(overview && featureColors
+      ? { overviewColors: concat(overviewColorParts, 3) }
+      : {}),
     vertices,
     colorSize,
   };
@@ -132,7 +167,19 @@ export function precisionWallMesh(
 export function precisionWallLayer(
   walls: FeatureCollection<MultiPolygon>,
   originGeographic: [number, number],
-  options: { id?: string; opacity?: number; windowOpacity?: boolean } = {},
+  options: {
+    id?: string;
+    opacity?: number;
+    windowOpacity?: boolean;
+    overview?: boolean;
+    /** Preserve grey/mint native floor tint on the unchanged flat polygons. */
+    overviewTint?: boolean;
+    /** Flat source-native room colours while a full visitor floor is loading. */
+    featureColors?: boolean;
+    /** Interpolate grey/circulation to source colours on every zoom frame. */
+    revealRoomsWithZoom?: boolean;
+    overviewLocked?: boolean;
+  } = {},
 ): CustomLayerInterface {
   const origin = MercatorCoordinate.fromLngLat(originGeographic),
     metre = origin.meterInMercatorCoordinateUnits();
@@ -143,6 +190,9 @@ export function precisionWallLayer(
     walls,
     originGeographic,
     !!options.windowOpacity,
+    !!options.overview,
+    !!options.overviewTint,
+    !!options.featureColors,
   );
   const geometry = new THREE.BufferGeometry();
   // Shared read-only typed arrays: BufferAttribute does not copy them.
@@ -163,6 +213,22 @@ export function precisionWallLayer(
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -1,
   });
+  const roomReveal = { value: 0 };
+  if (options.revealRoomsWithZoom && built.overviewColors) {
+    geometry.setAttribute(
+      "overviewColor",
+      new THREE.BufferAttribute(built.overviewColors, 3),
+    );
+    material.onBeforeCompile = (shader) => {
+      shader.uniforms.roomReveal = roomReveal;
+      shader.vertexShader =
+        `attribute vec3 overviewColor;\nuniform float roomReveal;\n${shader.vertexShader}`.replace(
+          "#include <color_vertex>",
+          "#include <color_vertex>\nvColor.rgb = mix(overviewColor, vColor.rgb, roomReveal);",
+        );
+    };
+    material.customProgramCacheKey = () => "visitor-room-reveal-v1";
+  }
   const mesh = new THREE.Mesh(geometry, material);
   mesh.frustumCulled = false;
   const scene = new THREE.Scene();
@@ -174,7 +240,7 @@ export function precisionWallLayer(
   return {
     id: options.id ?? "project-precision-walls",
     type: "custom",
-    renderingMode: "3d",
+    renderingMode: options.overview ? "2d" : "3d",
     onAdd(map, gl) {
       mapInstance = map;
       renderer = new THREE.WebGLRenderer({
@@ -185,11 +251,25 @@ export function precisionWallLayer(
     },
     render(gl, args) {
       if (!renderer) return;
-      const fade = zoomFade(
+      roomReveal.value = zoomFade(
         mapInstance.getZoom(),
         ROOM_DETAIL_START,
         ROOM_DETAIL_END,
       );
+      const detailFade = zoomFade(
+        mapInstance.getZoom(),
+        options.overview && options.overviewTint
+          ? ROOM_DETAIL_START
+          : WALL_DETAIL_START,
+        options.overview && options.overviewTint
+          ? ROOM_DETAIL_END
+          : WALL_DETAIL_END,
+      );
+      const fade = options.overview
+        ? options.overviewLocked
+          ? 1
+          : 1 - detailFade
+        : detailFade;
       if (!fade) return;
       material.opacity = fade * (options.opacity ?? 1);
       material.transparent = !!options.windowOpacity || material.opacity < 1;

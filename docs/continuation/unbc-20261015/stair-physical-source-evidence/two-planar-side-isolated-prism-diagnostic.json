@@ -1,0 +1,103 @@
+{
+  "kind": "isolated-untrusted-math-only",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "sourceEvidenceSha256": "5bd71b41422cfc6dddd831c0402e08c9246e8ac782241e70212a2daa3255967c",
+  "isolatedHelperSha256": "a6093bd376fd7b55bf0a8f2f3058677401d7ee072d190d9874d76fb539fa89ab",
+  "originalCoordinatesAndFlagsUnchanged": true,
+  "actualSourceCertificateIssued": false,
+  "routeApproved": false,
+  "rows": [
+    {
+      "nativeStairId": 1693246,
+      "nativeRunId": 1693335,
+      "nativeDefinitionId": 1693336,
+      "sourceFrameSha256s": {
+        "1693335:4102": "73716880e6820f1eef4a0017731aa82c21ea5d2142c6bccc7c7555ebf011c35a",
+        "1693336:4133": "c29e40dcb99217ceb530799d65482404f22b4aff6aa2ac0781ebfc2e9e1c0c8e",
+        "1693335:2246": "cb3ed69871962e18732850270e43171310d8a2fce20da359141c99a8205ad64d",
+        "1693336:2246": "91a8f3804472085996880d1c8a7c6de7166d80dde0008809792c4f036c4d0d11"
+      },
+      "originalBlockers": [
+        "Unsupported original face semantics or region/loop census"
+      ],
+      "isolatedCandidateCompleteExactPrismBody": false,
+      "candidateBlockerCounts": {
+        "Original raw UV coedges do not meet exactly": 16,
+        "Original twin-face parametrizations do not identify one exact 3D endpoint": 919
+      },
+      "firstExactWitness": [
+        {
+          "faceToken": 154,
+          "edgeToken": 602,
+          "nextEdgeToken": 603,
+          "from": [
+            1.554312234475219e-14,
+            8.099494192923373
+          ],
+          "to": [
+            1.532107773982716e-14,
+            8.099494192923373
+          ],
+          "exactDelta": [
+            [
+              "-1",
+              "4503599627370496"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "rawReplayExactlyUnchanged": true
+    },
+    {
+      "nativeStairId": 2349441,
+      "nativeRunId": 2349454,
+      "nativeDefinitionId": 2349455,
+      "sourceFrameSha256s": {
+        "2349454:4102": "58c1dde714b3cc21c3475671be9ef5341cabaae8098866549c93e54c14467ef6",
+        "2349455:4133": "78ea81769275cfc5e8d91ffaea2c277be89ba996821c37efe50d5fc41721f6bd",
+        "2349454:2246": "fe787923d507e79a5e718f4dc2df70d5168432ecd65f174ec6c3e5d3f4db0243",
+        "2349455:2246": "9062468891d2f6c4cd00842fa78e734ae6c975c8503508c8c9a8fa00198e29aa"
+      },
+      "originalBlockers": [
+        "Unsupported original face semantics or region/loop census"
+      ],
+      "isolatedCandidateCompleteExactPrismBody": false,
+      "candidateBlockerCounts": {
+        "Original raw UV coedges do not meet exactly": 8,
+        "Original twin-face parametrizations do not identify one exact 3D endpoint": 614
+      },
+      "firstExactWitness": [
+        {
+          "faceToken": 76,
+          "edgeToken": 337,
+          "nextEdgeToken": 338,
+          "from": [
+            0.7791994750656173,
+            0.7392674536762005
+          ],
+          "to": [
+            0.7791994750656137,
+            0.7392674536762005
+          ],
+          "exactDelta": [
+            [
+              "-1",
+              "281474976710656"
+            ],
+            [
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "rawReplayExactlyUnchanged": true
+    }
+  ],
+  "completeDiagnosticSha256": "2778afcecf65a74ded94bbad8ff9498393627eb52e3abd23701e69f7eac667c4"
+}

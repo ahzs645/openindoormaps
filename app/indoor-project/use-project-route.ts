@@ -1,8 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { IndoorDataset } from "./contract";
 import type { RouteCalculation, RouteRequest } from "./route-calculation";
-import { RouteWorkerClient } from "./route-worker-client";
+import {
+  releaseIdleRouteForReview,
+  RouteWorkerClient,
+} from "./route-worker-client";
 import { floorDiagnostic } from "./floor-diagnostics";
+import { sameRoutePlace, missingRouteEntrance } from "./visitor-route-state";
+import {
+  afterRouteWorkerTeardown,
+  releaseIdleRouteBeforeFloor,
+  finishRouteBeforeQueuedFloor,
+} from "./route-worker-startup";
 import {
   automaticRouteWarmup,
   heavyWorkerName,
@@ -17,10 +26,15 @@ export function useProjectRoute(
   start: string,
   end: string,
   mode: RouteRequest["mode"],
-  /** The visitor showed routing intent (directions opened, a start or
-   * destination picked). Large datasets warm routes only after this. */
-  intent = false,
+  /** Retained call compatibility; large maps now wait for both endpoints. */
+  _intent = false,
 ) {
+  const samePlace = sameRoutePlace(start, end);
+  const entranceIssue = useMemo(
+    () => missingRouteEntrance(data, start, end),
+    [data, start, end],
+  );
+  const noRouteWork = samePlace || !!entranceIssue;
   const [client] = useState(
     () =>
       new RouteWorkerClient(() => {
@@ -29,10 +43,13 @@ export function useProjectRoute(
         return trackedHeavyWorker(
           heavyWorkerSchedule,
           name,
-          new Worker(new URL("route-calculation.worker.ts", import.meta.url), {
-            type: "module",
-            name,
-          }),
+          new Worker(
+            new URL("published-route-calculation.worker.ts", import.meta.url),
+            {
+              type: "module",
+              name,
+            },
+          ),
         );
       }),
   );
@@ -50,29 +67,41 @@ export function useProjectRoute(
     error?: string;
   }>();
   useEffect(() => () => client.dispose(), [client]);
-  // Floor preparation never runs beside background route work: stop any
+  // Floor preparation and evidence review stop background route work: stop any
   // warmup the worker is still computing (including one orphaned by an
   // effect cleanup) unless a user route request is active.
   useEffect(
     () =>
       heavyWorkerSchedule.subscribe(() => {
         if (
-          heavyWorkerSchedule.busy("floor") &&
+          (heavyWorkerSchedule.busy("floor") ||
+            heavyWorkerSchedule.busy("review")) &&
           !heavyWorkerSchedule.busy("route") &&
           client.abandonBackgroundWarmup()
         )
-          floorDiagnostic("route:warmup-stopped-for-floor");
+          floorDiagnostic(
+            heavyWorkerSchedule.busy("review")
+              ? "route:warmup-stopped-for-review"
+              : "route:warmup-stopped-for-floor",
+          );
       }),
     [client],
   );
-  // Latched per dataset: once intent was shown, keep the warm graph.
-  const intentFor = useRef<IndoorDataset | undefined>(undefined);
-  if (intent && data) intentFor.current = data;
-  const warm =
-    !!data && (automaticRouteWarmup(data) || intentFor.current === data);
+  // A floor transition (including following a cross-floor route) needs the
+  // large completed route worker's heap. The displayed route stays in state.
+  useEffect(() => {
+    if (!data || automaticRouteWarmup(data)) return;
+    return releaseIdleRouteBeforeFloor(heavyWorkerSchedule, client, () => {
+      floorDiagnostic("route:released-for-floor");
+      setPreparation(undefined);
+    });
+  }, [client, data]);
+  // Opening directions or choosing only a departure must not allocate a
+  // whole-campus graph. Small maps retain their inexpensive background warmup.
+  const warm = !!data && !noRouteWork && automaticRouteWarmup(data);
   // Whether a route is on screen: a shown route keeps its warm worker.
   const routeShown = useRef(false);
-  routeShown.current = !!start && !!end;
+  routeShown.current = !noRouteWork && !!start && !!end;
   useEffect(() => {
     client.resetData(data);
     setResult(undefined);
@@ -94,7 +123,9 @@ export function useProjectRoute(
         floorDiagnostic("route:warmup-start", {
           freshDatasetClone: !client.hasResidentData(data),
         });
-        preparation = client.request(data, "", "", mode);
+        preparation = afterRouteWorkerTeardown(heavyWorkerSchedule, () =>
+          client.request(data, "", "", mode),
+        );
         const own = preparation;
         return {
           promise: own.promise,
@@ -107,14 +138,24 @@ export function useProjectRoute(
           floorDiagnostic("route:warmup-ready");
           if (active) setPreparation({ data, mode });
         },
-        // The worker was released for floor preparation; routes are cold
-        // again until the restarted warmup completes.
+        // The worker was released for floor preparation or review; routes are
+        // cold again until the restarted warmup completes.
         onAbandoned: () => {
-          floorDiagnostic("route:released-for-floor");
+          floorDiagnostic(
+            heavyWorkerSchedule.busy("review")
+              ? "route:released-for-review"
+              : "route:released-for-floor",
+          );
           if (active) setPreparation(undefined);
         },
         releaseIdle: () => {
-          if (routeShown.current || !client.hasResidentData(data)) return false;
+          if (
+            (routeShown.current && !heavyWorkerSchedule.busy("review")) ||
+            !client.hasResidentData(data)
+          )
+            return false;
+          // Review needs exclusive heap space. The displayed route stays in
+          // React state even when its completed worker graph is released.
           client.dispose();
           return true;
         },
@@ -136,8 +177,20 @@ export function useProjectRoute(
       preparation?.cancel(true);
     };
   }, [client, data, mode, warm]);
+  useEffect(
+    () =>
+      releaseIdleRouteForReview(heavyWorkerSchedule, client, () => {
+        floorDiagnostic("route:released-for-review");
+        setPreparation(undefined);
+      }),
+    [client],
+  );
   useEffect(() => {
-    if (!data || !start) return;
+    if (noRouteWork) {
+      client.dispose();
+      return;
+    }
+    if (!data || !start || (!end && !automaticRouteWarmup(data))) return;
     let active = true;
     let request: ReturnType<RouteWorkerClient["request"]> | undefined;
     let release = () => {};
@@ -156,6 +209,14 @@ export function useProjectRoute(
               error: error instanceof Error ? error.message : String(error),
             });
         });
+    if (client.hasCompleted(data, start, end, mode)) {
+      request = client.request(data, start, end, mode);
+      track(request);
+      return () => {
+        active = false;
+        request?.cancel();
+      };
+    }
     // A user request runs now unless it would clone the dataset into a fresh
     // route worker while a floor is being prepared; then it starts right after.
     const waiting = heavyWorkerSchedule.when(
@@ -163,20 +224,34 @@ export function useProjectRoute(
       () => {
         release = heavyWorkerSchedule.begin("route");
         floorDiagnostic("route:request", { destination: !!end });
-        request = client.request(data, start, end, mode);
-        void request.promise.then(release, release);
+        request = afterRouteWorkerTeardown(heavyWorkerSchedule, () =>
+          client.request(data, start, end, mode),
+        );
+        const done = () =>
+          finishRouteBeforeQueuedFloor(
+            heavyWorkerSchedule,
+            client,
+            !automaticRouteWarmup(data),
+            release,
+          );
+        void request.promise.then(done, done);
         track(request);
       },
     );
     return () => {
       active = false;
       waiting();
-      release();
-      // Keep graph/coverage preparation warm through effect cleanup. Actual
-      // destination calculations still stop their CPU work immediately.
-      request?.cancel(!end);
+      // Terminate first, so a queued floor observes teardown before this
+      // route slot opens. Keep start-only preparation only when no floor waits.
+      request?.cancel(!end && !heavyWorkerSchedule.busy("floor"));
+      finishRouteBeforeQueuedFloor(
+        heavyWorkerSchedule,
+        client,
+        !automaticRouteWarmup(data),
+        release,
+      );
     };
-  }, [client, data, start, end, mode]);
+  }, [client, data, start, end, mode, noRouteWork]);
   const current =
     result &&
     result.data === data &&
@@ -195,15 +270,20 @@ export function useProjectRoute(
       : undefined;
   const completedCalculation = result?.data === data && result?.mode === mode;
   return {
-    route: current?.value?.route ?? null,
-    diagnostic: current?.value?.diagnostic,
-    error: current?.error ?? prepared?.error,
-    reachable: coverage,
-    arrivals: current?.value?.arrivals,
-    calculating: !!data && !!start && !!end && !current,
-    // Large datasets warm on intent: no "preparing" state before that.
+    route: noRouteWork ? null : (current?.value?.route ?? null),
+    diagnostic:
+      entranceIssue ?? (samePlace ? undefined : current?.value?.diagnostic),
+    error: noRouteWork ? undefined : (current?.error ?? prepared?.error),
+    reachable: noRouteWork ? undefined : coverage,
+    arrivals: noRouteWork ? undefined : current?.value?.arrivals,
+    calculating: !!data && !noRouteWork && !!start && !!end && !current,
+    // Large datasets prepare only once both endpoints are selected.
     preparing:
-      !!data && (warm || !!start) && !prepared && !completedCalculation,
+      !!data &&
+      !noRouteWork &&
+      (warm || (!!start && !!end)) &&
+      !prepared &&
+      !completedCalculation,
     deferred: !!data && !warm,
   };
 }

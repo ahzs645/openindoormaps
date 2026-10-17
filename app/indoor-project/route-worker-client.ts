@@ -1,4 +1,5 @@
 import type { IndoorDataset } from "./contract";
+import type { HeavyWorkerSchedule } from "./heavy-worker-schedule";
 import { routeWorkerDataset } from "./route-worker-dataset";
 import type {
   RouteCalculation,
@@ -17,6 +18,7 @@ type Pending = {
   warmup: boolean;
   resolve: (value: RouteCalculation) => void;
   reject: (reason: unknown) => void;
+  cacheKey?: string;
 };
 /** The UI supplies immutable dataset snapshots. A source edit sends a new one;
  * an endpoint/profile change reuses the worker's verified graph. Cancelling a
@@ -29,10 +31,28 @@ export class RouteWorkerClient {
    * even after its caller stopped waiting for it (effect cleanup). */
   private warmingId?: number;
   private sequence = 0;
+  private completedData?: IndoorDataset;
+  private completed = new Map<string, RouteCalculation>();
   constructor(private readonly factory: () => RouteWorker) {}
+  hasCompleted(
+    data: IndoorDataset,
+    start: string,
+    end: string,
+    mode: RouteRequest["mode"],
+  ) {
+    return (
+      this.completedData === data &&
+      !!start &&
+      !!end &&
+      this.completed.has(JSON.stringify([start, end, mode]))
+    );
+  }
   /** Scalar: does a live worker already hold this dataset snapshot? */
   hasResidentData(data: IndoorDataset) {
     return !!this.worker && this.workerData === data;
+  }
+  hasResidentWorker() {
+    return !!this.worker;
   }
   /** Terminate the worker if its only work is a background warmup (pending
    * or orphaned by an effect cleanup). A user route request keeps it.
@@ -47,6 +67,10 @@ export class RouteWorkerClient {
    * graph immediately, rather than retaining it until another route is requested. */
   resetData(data: IndoorDataset | undefined) {
     if (this.workerData && this.workerData !== data) this.stop();
+    if (this.completedData !== data) {
+      this.completed.clear();
+      this.completedData = data;
+    }
   }
   private stop(
     reason: unknown = new DOMException(
@@ -55,11 +79,14 @@ export class RouteWorkerClient {
     ),
   ) {
     const pending = this.pending;
+    const worker = this.worker;
     this.pending = undefined;
     this.warmingId = undefined;
-    this.worker?.terminate();
     this.worker = undefined;
     this.workerData = undefined;
+    // Termination announces heavy-worker teardown synchronously. Clear the
+    // resident reference first so its listeners cannot dispose this graph again.
+    worker?.terminate();
     pending?.reject(reason);
   }
   request(
@@ -68,6 +95,7 @@ export class RouteWorkerClient {
     end: string,
     mode: RouteRequest["mode"],
   ) {
+    this.resetData(data);
     if (this.pending) {
       if (this.pending.warmup && this.workerData === data) {
         // Finishing this same-snapshot graph is useful to the queued request.
@@ -78,13 +106,30 @@ export class RouteWorkerClient {
         this.pending = undefined;
       } else this.stop();
     }
+    const key = JSON.stringify([start, end, mode]);
+    const cached = this.completed.get(key);
+    if (cached && start && end) {
+      this.abandonBackgroundWarmup();
+      this.completed.delete(key);
+      this.completed.set(key, cached);
+      return {
+        promise: Promise.resolve(structuredClone(cached)),
+        cancel: (_keepPreparation = false) => {},
+      };
+    }
     const id = ++this.sequence;
     let resolve!: Pending["resolve"], reject!: Pending["reject"];
     const promise = new Promise<RouteCalculation>((ok, fail) => {
       resolve = ok;
       reject = fail;
     });
-    this.pending = { id, warmup: !end, resolve, reject };
+    this.pending = {
+      id,
+      warmup: !end,
+      resolve,
+      reject,
+      cacheKey: start && end ? key : undefined,
+    };
     try {
       if (!this.worker) {
         const worker = this.factory();
@@ -104,6 +149,17 @@ export class RouteWorkerClient {
             return;
           }
           this.pending = undefined;
+          if (pending.cacheKey) {
+            // Small result history survives releasing the large worker graph.
+            // UI snapshots are immutable; resetData invalidates source edits.
+            this.completed.delete(pending.cacheKey);
+            this.completed.set(
+              pending.cacheKey,
+              structuredClone(response.value),
+            );
+            while (this.completed.size > 8)
+              this.completed.delete(this.completed.keys().next().value!);
+          }
           pending.resolve(response.value);
         };
         worker.onerror = (event) => {
@@ -149,4 +205,26 @@ export class RouteWorkerClient {
   dispose() {
     this.stop();
   }
+}
+
+/** A completed user request may have no warmup controller run to release its
+ * graph. Review still needs that idle heap, even while its route stays shown. */
+export function releaseIdleRouteForReview(
+  schedule: HeavyWorkerSchedule,
+  client: RouteWorkerClient,
+  onReleased: () => void,
+) {
+  const changed = () => {
+    if (
+      schedule.busy("review") &&
+      !schedule.busy("route") &&
+      client.hasResidentWorker()
+    ) {
+      client.dispose();
+      onReleased();
+    }
+  };
+  const unsubscribe = schedule.subscribe(changed);
+  changed();
+  return unsubscribe;
 }

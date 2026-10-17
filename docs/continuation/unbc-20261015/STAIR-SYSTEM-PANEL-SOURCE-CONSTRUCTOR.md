@@ -1,0 +1,30 @@
+# Original simple system-panel obstruction enclosures
+
+All 28 held stair connections remain disabled in production. This is new source-only work for the complete Library stair review; it does not certify a route or change the compiled visitor artifact.
+
+The original RVT contains 52 current curtain-panel occurrences whose two shared mode0 `SysPanelFamSym` definitions have empty saved graphics. Their semantic `m_empty` fields are **0**, and all 52 IDs occur in their original current host `CurtainGrid.m_panelIds` and `CGridDivideFaceGStep.m_cellMap`. Empty saved graphics, dormant flags, IFC absence and dependency proximity therefore do not establish material absence.
+
+The new narrow constructor reads original 2031 instance, 4318 system-panel, 3899 wall, instance/definition/host GElement records and the embedded schema from one private actual-RVT census. It checks frame owner, checksum and echo; complete typed FIFO closure; unambiguous source categories; exact current cell ID, tag, output history and final operation order; original instance/GInstance definition and affine agreement; GInstance selectors; and unsupported generator/driver/substitution/extra-data refusals.
+
+For 32 panels the current cell's original finite Plane domain directly supplies the conservative profile. The other 20 cell Planes preserve the invalid sentinel `[1,1]→[0,0]` and have no trim loops; some positive edge tags are absent from the final saved geometry. The constructor does not normalize that sentinel or derive a profile from incomplete trim edges. Instead, a class-specific native 2027 rule binds the exact preceding `CWallGridFaceGStep` version1 input role `[14,-1,-1]` to its original Face tag24, and the final `CGridDivideFaceGStep` version16 output role `[14,V,U]` to the exact current cell. Both operators require flags761725, original parent reference2 and null extra data. The retained input Plane must have exactly the same original frame and a complete finite domain; normalized subdivision ranges cannot extend the input. All available target boundary/twin embeddings must remain inside the complete predecessor enclosure. The full input profile is retained as an obstruction superset, including its original trims and uncertainty.
+
+Thickness and offset come from the complete original mode0 system-panel record. The local symmetric padding is `abs(thickness)+abs(offset)`. Its world expansion uses the exact original affine's row-absolute sums, retaining reflections and nonuniform scale rather than assuming unscaled world feet. All original symbol Plane and finite GLine profile operands remain in separate conservative boxes. A complete line profile must lie in one finite convex Plane enclosure, so the interior cannot disappear between separate line boxes. Unsupported curved or extra construction branches refuse.
+
+A targeted original-source scan recovered 2,201 system-panel native records. It then found 23 nonempty **mode0** controls on 23 of the same current hosts. Every control's original six-face/twelve-edge body, all 72 finite-plane-domain/UV/twin embeddings and strictly face-bound GFilling attributes are retained. Each complete body fits in **one** convex constructor box. The earlier three mode1 bodies are a different source branch; the issued factory refuses mode1 until its host-material delegation has a separate proof. The intact same-model Autodesk IFC has no owner-matched products for the 52 target IDs; that negative result grants no absence authority.
+
+The pure mathematical replay passes all 52 targets and all 23 same-mode controls. None of the resulting conservative boxes intersects the coarse Library review volume `x[-15,6], y[-328,-300], z[23,42]` feet. Actual foreign-census refinement must still match the exact occurrence GElement hash and the same private census before replacing any unknown row; every unmatched source occurrence remains unknown.
+
+The APIs are in `/workspace/reviter/lib/reviter/native-source-simple-system-panel.ts`:
+
+- `inspectSimpleSystemPanelFrames`: pure untrusted-frame mathematics; no source authority.
+- `inspectOriginalNativeSimpleSystemPanelEnvelope`: original-frame-bound diagnostic; no issued certificate.
+- `certifyOriginalSimpleSystemPanelSourceEnvelope(census,id)`: private same-census mode0 obstruction-enclosure certificate.
+- `originalSimpleSystemPanelSourceEnvelopeFact(census,certificate)`: detached exact rational boxes plus source/model/schema/census, original occurrence hash, native IDs and recipe/geometry hashes.
+
+The issued certificate grants only the reconstructed material enclosure. It grants no floor support, material absence, accessibility, headroom or route approval. Copied reports and arbitrary caller flags cannot issue it.
+
+Ten focused constructor tests pass, including altered checksummed operator flags/owner/extra operands, wrong input history, missing tagged input face, swapped V/U, an extending subdivision range, bad selectors/geometry framing, exact affine padding and forged source handles. The related complete host/FIFO tests and scoped TypeScript/ESLint checks pass. The joint actual-RVT source-census and portable v2 runtime replay are separate integration evidence.
+
+Full local source evidence is retained under `/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/`, especially `all52-simple-system-panel-construction-math.json`, `mode0-panel-constructor-controls-math.json`, `actual-mode0-panel-controls-source.json`, `all52-opaque-original-panel-cell-bindings-v1.json` and the corresponding probe scripts. Canonical model/archive bytes were not replaced.
+
+The fresh retained actual-RVT census has now issued all52 panel certificates with zero refusals. Every source occurrence/category/frame matched exactly. Cloned certificate/census objects and mutated transport facts were refused or remained detached for all52. The joint material/profile replay with the16 independently reconstructed mullions is recorded separately by the clearance agent; source material issuance alone does not approve the stair route.

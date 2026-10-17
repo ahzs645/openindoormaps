@@ -1,0 +1,27 @@
+import type { PublishedRouteCellReceipt } from "./published-route-cells";
+// Generated from unchanged exact checks, complete original link policies and graph guards.
+export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[] =
+  Object.freeze([
+    {
+      id: "unbc-verified-route-cells",
+      datasetSha256:
+        "a7f91256cb2bbd8c6951d7fdab154d7f104c5e0c4bd0100b7e2abb1202cd3ddd",
+      engineSha256:
+        "681e71a5b49b7ac79d914f79624be41cea860778d5732289cd2a445e7c2a0d8d",
+      source: {
+        modelFileName:
+          "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        modelSha256:
+          "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        roomsSha256:
+          "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+      },
+      logicalSha256:
+        "974b55890b0717a2c8bbb286a962c5cacb5dcc6e3ad3e33f505e9ff6ff02fd29",
+      logicalBytes: 16298818,
+      compressedSha256:
+        "916af377da94ddda19f1babc063e97d3e9c08cc8af301b5574bd5617068ac6fc",
+      compressedBytes: 2570788,
+      url: "/data/unbc-routing/916af377da94ddda19f1babc063e97d3e9c08cc8af301b5574bd5617068ac6fc.json.gz",
+    },
+  ]);

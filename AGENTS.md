@@ -11,5 +11,6 @@ For indoor room boundaries, missing/low room blocks, doors, circulation, stair/r
 - Review notes are authoring metadata, not geometry approval. Keep them portable in the master, exclude them from visitor assets and bind decisions to the evidence they reviewed.
 - Check the current canonical master/version metadata before consolidation; preserve other chats' changes and unrelated local edits. Use candidate ZIPs, hash comparison and backups when promoting source changes.
 - Run checks appropriate to the affected geometry/routing, scoped typecheck and build; show actual desktop/mobile browser proof for UI/rendering changes. Distinguish audited records from manually verified enclosures and disclose unresolved evidence.
+- Use the [local repair loop](docs/indoor-local-iteration.md): test the changed feature and its physical/policy dependencies, then replay affected cells or physical elevations before a complete map run. Keep foreign obstacles, holes, original owners and access rules in the local context. Batch stable fixes for the required final acceptance, export and browser checks; do not repeat the entire flow after every edit. Selected audit cases and routing shards still perform full imports and are not the fast loop.
 
 No special requirements here apply to unrelated venue demos or ordinary non-indoor changes.

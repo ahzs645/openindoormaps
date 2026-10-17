@@ -29,6 +29,15 @@
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
+}
+.project-view-link {
+  padding: 6px 10px;
+  color: #23665a;
+  background: #edf5ee;
+  border: 1px solid #c5dcca;
+  border-radius: 6px;
+  text-decoration: none;
 }
 .project-review button,
 .project-review select,
@@ -56,6 +65,21 @@
   padding: 8px 24px;
   background: #e2eee9;
   font-size: 12px;
+}
+.project-published-loading {
+  position: absolute;
+  z-index: 12;
+  left: 12px;
+  bottom: 12px;
+  max-width: calc(100% - 24px);
+  padding: 9px 12px;
+  border: 1px solid #d8e0e3;
+  border-radius: 6px;
+  background: #fffffff2;
+  pointer-events: none;
+}
+.project-published-loading button {
+  pointer-events: auto;
 }
 .project-package {
   position: relative;

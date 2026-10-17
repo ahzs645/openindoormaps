@@ -42,7 +42,7 @@ const fixture = () => {
     ];
   const floor = {
     elementId: 12,
-    categoryId: -2000032,
+    categoryId: -2_000_032,
     boundsFeet: { max: { z: 0 } },
     loops: [
       [
@@ -141,7 +141,7 @@ test("worker keeps only independently required ramp top faces; unknown access is
     data.rampDisplay!.ramps[0]!.trianglesFeet,
   );
   assert.equal(worker.rampDisplay!.ramps[0]!.displayTrianglesFeet, undefined);
-  assert.deepEqual(worker.rampDisplay!.ramps[0]!.bodyTrianglesFeet, []);
+  assert.equal(worker.rampDisplay!.ramps[0]!.bodyTrianglesFeet, undefined);
   assert.deepEqual(worker.rampDisplay!.ramps[0]!.platforms, []);
   assert.equal(validatedNativeRampSurface(worker, worker.edges[0]!), true);
   const policy = (mode: "public" | "accessible") =>

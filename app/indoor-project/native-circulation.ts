@@ -6,8 +6,8 @@ import {
   createNativeExactTopologyIndex,
   freezeNativeRationalParts,
   nativeRationalPointInParts,
-  nativeRationalPathSupported,
   nativeRationalAreaCompare,
+  createNativeRationalPathUnionQuery,
   type NativeExactTopologyIndex,
 } from "./native-exact-planar-topology";
 import {
@@ -24,10 +24,8 @@ import type { IndoorDataset, IndoorRecord } from "./contract";
 import { nativeConnectorAnchors } from "./native-connector-anchors";
 import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import { NATIVE_BARRIER_TOPOLOGY_VERSION } from "./native-barrier-topology";
-import {
-  nativeAccessZonesAt,
-  NATIVE_ACCESS_ZONES_VERSION,
-} from "./native-access-zones";
+import { NATIVE_ACCESS_ZONES_VERSION } from "./native-access-zones";
+import { nativeRoutingAccessZonesAt } from "./native-routing-access-zones";
 import {
   routingCalculationValue,
   withRoutingCalculation,
@@ -56,7 +54,7 @@ function nativeCellAccessIsSupported(
       const zones = routingCalculationValue(
         data,
         `native-access-zones:${cell.elevationFeet}`,
-        () => nativeAccessZonesAt(data, cell.elevationFeet),
+        () => nativeRoutingAccessZonesAt(data, cell.elevationFeet),
       );
       if (cell.accessZoneId !== undefined) {
         const zone = zones.find((z) => z.zone.id === cell.accessZoneId);
@@ -162,18 +160,11 @@ export function nativeCirculationExactCellParts(
     data,
     `native-exact-supported-cell:${cell.id}`,
     () => {
-      const authority = routingCalculationValue(
+      return routingCalculationValue(
         data,
         "native-exact-routing-authority",
         () => createNativeExactRoutingAuthority(data),
-      )(cell.elevationFeet);
-      return freezeNativeRationalParts(
-        nativeRationalOverlay(
-          "intersection",
-          face,
-          nativeRationalIntersectionOperand(face, authority),
-        ),
-      );
+      )(cell.elevationFeet, face);
     },
   );
 }
@@ -828,7 +819,7 @@ export function nativeCirculationWalkBlockers(
                       e,
                       routingCalculationValue(
                         data,
-                        "reviewed-circulation-link-material",
+                        "native-route-material-query",
                         () => createNativeRoutingMaterialQuery(data),
                       ),
                     ),
@@ -848,6 +839,7 @@ export function nativeCirculationWalkBlockers(
     return blocked;
   }
   const keys = new Set(prepared.preparedRoomKeys);
+  const pathUnionSupported = createNativeRationalPathUnionQuery();
   const doorApproaches = routingCalculationValue(
     data,
     "native-door-approach-query",
@@ -911,17 +903,11 @@ export function nativeCirculationWalkBlockers(
         .flatMap((a) => a.exactParts ?? []);
       // Face already rechecks current source floor/holes/material independently
       // of a rehashed prepared descriptor. Only checked incident halves extend it.
-      const support =
-        ownHalves.length > 0
-          ? freezeNativeRationalParts(
-              nativeRationalOverlay("union", face, ownHalves),
-            )
-          : face;
       if (
         edge.pointsFeet.some(
           (p) => Math.abs(p[2] - cell.elevationFeet) > 0.05,
         ) ||
-        !nativeRationalPathSupported(edge.pointsFeet, support)
+        !pathUnionSupported(edge.pointsFeet, face, ownHalves)
       )
         blocked.add(edge.id);
       // Coincident metadata aliases need the original unchanged physical point

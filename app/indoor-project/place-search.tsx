@@ -59,11 +59,11 @@ export function ProjectPlaceSearch({
       list.current?.children[active]?.scrollIntoView({ block: "nearest" });
   }, [open, active, query]);
   const connectionNote = (room: IndoorRecord) => {
-    if (!room.arrivalNodeId) return "Entrance needs review";
+    if (!room.arrivalNodeId) return "Entrance unavailable";
     if (reachable && !reachable.has(room.key))
       return mode === "accessible"
-        ? "Step-free connection unverified"
-        : "Connection needs review";
+        ? "No confirmed step-free route"
+        : "No route available";
     return "";
   };
   const choose = (room: IndoorRecord) => {

@@ -1,0 +1,901 @@
+{
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "completeSourcePages": 3666,
+  "scope": "Original source-only unwired helper follow-up; no production qualifier or published asset changed",
+  "currentSourceHelperFiles": {
+    "/workspace/reviter/lib/reviter/native-source-stair-physical-inventory.ts": "29725e375b51054e6b56dfaf570b258d3eaefe2ca8518d36910beb17b1fa78db",
+    "/workspace/reviter/lib/reviter/native-source-stair-solid-proof.ts": "d044b25d17ecdad3a42f2274457d4f75909b54ef2fc84ed69bf562474ad55d5d",
+    "/workspace/reviter/lib/reviter/native-source-stair-support-envelopes.ts": "82e9b801945945d58c1ca73f9ec0147403a477ef610407c03aa7dcc13e37b707",
+    "/workspace/reviter/lib/reviter/native-source-stair-stepped-stations.ts": "23308fb5fb2fe3bd973d5038b4eb6fd1a3770a400360bb2a154c81e2a069ebac",
+    "/workspace/reviter/tests/native-source-stair-physical-inventory.test.ts": "0433d6b80fcd0c5531070c494298dab667f977a73fb804f0f5ece6ee46709612",
+    "/workspace/reviter/tests/native-source-stair-solid-proof.test.ts": "1e6e503846ae721b7e02edafab671f6676f4474cb6ce1b89cfffd39774683fd0",
+    "/workspace/reviter/tests/native-source-stair-support-envelopes.test.ts": "5940c62a7c5157e8810fff098b0bd1f070972b899fc9374680c4d35b8874d938",
+    "/workspace/reviter/tests/native-source-stair-stepped-stations.test.ts": "ea3dfaaf3d56a8d92f3e1bd18e9418496e61082d52760356e85b5a2225b9238f"
+  },
+  "rawSourceReports": {
+    "all38-solid-source-gates.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/all38-solid-source-gates.json",
+      "sha256": "2d09fdb112e0791e55dd38e5d385afe36a688bfc7f203039c1b3e8b1469e04e8",
+      "bytes": 2063076
+    },
+    "1696006-source-support-envelopes.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/1696006-source-support-envelopes.json",
+      "sha256": "a6faf6451bd895aefb7969edcb6e54bb739d6509905ad6b7b17ded33f12a6df3",
+      "bytes": 301747
+    },
+    "1696006-source-support-path-audit.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/1696006-source-support-path-audit.json",
+      "sha256": "12d1a1538502f0ce9e039cdeccd9d579aacc507d0856207f10bf3508a83c87f8",
+      "bytes": 55257
+    },
+    "1696006-upper-native-terminal-audit.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/1696006-upper-native-terminal-audit.json",
+      "sha256": "2c93945f16ed60081d4991590495fd391fefc3b068ace8176573de6f5fbdcbd1",
+      "bytes": 200024
+    },
+    "1696006-original-stepped-stations.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/1696006-original-stepped-stations.json",
+      "sha256": "b08dd8df1e1a701a458c30e4ef5f2b68f8ec3df312d8a4cde907c90e923ae457",
+      "bytes": 92522
+    },
+    "1696006-original-generator-history-census.json": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/1696006-original-generator-history-census.json",
+      "sha256": "74c792ae884fe1b8c6d661432195fa76e31958b2cb62c168bc854af9d35d53c1",
+      "bytes": 712538
+    },
+    "source-proof-tests-final.log": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/source-proof-tests-final.log",
+      "sha256": "66b0c78f9fa128f59e96ef51535c597666513bad6b897fa00624c2d385172a7b",
+      "bytes": 2082
+    },
+    "source-proof-types-final.log": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/source-proof-types-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "source-proof-lint-final.log": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/source-proof-lint-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "runBodyGates": [
+    {
+      "nativeStairId": 2156084,
+      "nativeRunId": 2156103,
+      "nativeDefinitionId": 2156104,
+      "sourceFrameSha256s": {
+        "2156103:4102": "a4181f2aeef1c568313b89bb7ac67d1f069e6ab190a665d8d8202cdfbeab370f",
+        "2156104:4133": "ba4d6901d081d0264cbbbdc6d66810ee4f50b9ba541815f19f82b6ea68c444cc",
+        "2156103:2246": "9f0145a059509fdf7b298e2f0717ac6b35caeceee4e28db0538bea3301e278f0",
+        "2156104:2246": "a4705884b1d4e8efbe9160db02a6d5ad99f8d8eaaf6664bd30c14da6f30dba72"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 312,
+      "originalPhysicalEdges": 630,
+      "uvCoedgeDisagreementCount": 6,
+      "twinFaceEndpointDisagreementCount": 1017,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474569,
+      "nativeDefinitionId": 2474570,
+      "sourceFrameSha256s": {
+        "2474569:4102": "c1d13710f0eb7263798e1bf3860933794b6fe80735d5be366c865e11b6f7ec73",
+        "2474570:4133": "cec4d51cf28ad57e6bf9b5775400dca568ee33cc13c093c8335f3eb8ef8b7f07",
+        "2474569:2246": "57837a790c8c446a92869344485c6f753577443005aa33ba98e60d3c55747237",
+        "2474570:2246": "29b8c40b9d5963d69523bd97ac706c5285c90269bc7cc43351bd769fdbacf25d"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 152,
+      "twinFaceEndpointDisagreementCount": 490,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474572,
+      "nativeDefinitionId": 2474573,
+      "sourceFrameSha256s": {
+        "2474572:4102": "6656ab15c494e8aac467f50cc5cdb35e60b1e8d5d33339c350d45f1004a3cdf3",
+        "2474573:4133": "5c7459572c4f165ee4161060e54a846acd4686952cca3ff0105a8fe71005ace4",
+        "2474572:2246": "4cabb887d725b242277c3608ca8c2754dd5c0ab38b047173457eb6bdc6fcb26a",
+        "2474573:2246": "ff2b555e1b3e779b0892ace41e0b3173982324f02d4e3e272bc22236a6c02edc"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 11,
+      "originalPhysicalFaces": 66,
+      "originalPhysicalEdges": 132,
+      "uvCoedgeDisagreementCount": 68,
+      "twinFaceEndpointDisagreementCount": 230,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2439748,
+      "nativeRunId": 2439788,
+      "nativeDefinitionId": 2439789,
+      "sourceFrameSha256s": {
+        "2439788:4102": "19c86f743855f6f57a2c3184a4c909c977507cafaa8ac2bbcc05b3b7092fd691",
+        "2439789:4133": "4ec7cf99f7d5a73d71a7ed5e819596230337da28bb5e856b2b525f244721db91",
+        "2439788:2246": "863995eb7f9f97fb52ce02109b0ad3b37e423c5b25cd6ac7a127f27ef7c83c52",
+        "2439789:2246": "8727e6f82e0a9e604979c707da682842d2d3f6dfb0e41fc7f9b3d5d3c5e85cea"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 29,
+      "originalPhysicalFaces": 174,
+      "originalPhysicalEdges": 348,
+      "uvCoedgeDisagreementCount": 52,
+      "twinFaceEndpointDisagreementCount": 605,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1779620,
+      "nativeRunId": 1779623,
+      "nativeDefinitionId": 1779624,
+      "sourceFrameSha256s": {
+        "1779623:4102": "20e03439451b1e13c8103677ecc9b9167f312730e3fe91c0f2b81dd4e4b20d37",
+        "1779624:4133": "4f86615d4d4b927136eb0ebade5f5b856adfc5daf0af613bcb12a628d11fc901",
+        "1779623:2246": "59246a79bd4c6ea083670586d1e5a323abfcd3a55ad35f0d5c6cb15c310fa71b",
+        "1779624:2246": "2bb20e0c3c5cb4fbe970b4cb2307ee8846087f519348c4ccbddff56e02016834"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 59,
+      "originalPhysicalFaces": 354,
+      "originalPhysicalEdges": 708,
+      "uvCoedgeDisagreementCount": 286,
+      "twinFaceEndpointDisagreementCount": 1269,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2349441,
+      "nativeRunId": 2349454,
+      "nativeDefinitionId": 2349455,
+      "sourceFrameSha256s": {
+        "2349454:4102": "58c1dde714b3cc21c3475671be9ef5341cabaae8098866549c93e54c14467ef6",
+        "2349455:4133": "78ea81769275cfc5e8d91ffaea2c277be89ba996821c37efe50d5fc41721f6bd",
+        "2349454:2246": "fe787923d507e79a5e718f4dc2df70d5168432ecd65f174ec6c3e5d3f4db0243",
+        "2349455:2246": "9062468891d2f6c4cd00842fa78e734ae6c975c8503508c8c9a8fa00198e29aa"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 31,
+      "originalPhysicalFaces": 188,
+      "originalPhysicalEdges": 378,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 0,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {
+        "Unsupported original face semantics or region/loop census": 1
+      },
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2354630,
+      "nativeRunId": 2354663,
+      "nativeDefinitionId": 2354664,
+      "sourceFrameSha256s": {
+        "2354663:4102": "ce33a21b1b3ce291878f5924be09f046ca72148639a12d171ef5a27a2185f2cc",
+        "2354664:4133": "bfde0a0f879b7e1d137d5395476d7ebf5f4eaeb77311e3f20bb2305e35786260",
+        "2354663:2246": "91ac8a733ddf0730f85dfeafed5e2cc26318c0030e04c6b71efa40e873bad8c6",
+        "2354664:2246": "0dec8ee8daba98939d392a4157758569bd7182be0ff49313724e24c3651585cf"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 43,
+      "originalPhysicalFaces": 262,
+      "originalPhysicalEdges": 528,
+      "uvCoedgeDisagreementCount": 148,
+      "twinFaceEndpointDisagreementCount": 724,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunId": 1496323,
+      "nativeDefinitionId": 1496324,
+      "sourceFrameSha256s": {
+        "1496323:4102": "163670d3a4f89951b209bddaaeba575ca0b317b62567feac8ab5d9ab3120998a",
+        "1496324:4133": "c07c45d5da2a6815e119356048b94a385ae6a2b312fc392aaeacb0979560441f",
+        "1496323:2246": "ab972778de330dd7be18b48c8ad9628d0afccb8a811bfb96998b2524c2006866",
+        "1496324:2246": "52f5cc49da292c6f765e122e736c9a368847517cb665f61a1bb6dc5f3653fda2"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 218,
+      "twinFaceEndpointDisagreementCount": 490,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunId": 1496326,
+      "nativeDefinitionId": 1496327,
+      "sourceFrameSha256s": {
+        "1496326:4102": "ce44b345c35596b1d6211dfb234a9e3332f36ecc1b4334cbc52b17c145d03fca",
+        "1496327:4133": "c5b42683c49c0ea535d51c45a253ed36e3fcb8e1872eeb74e0d3f72a47a4b502",
+        "1496326:2246": "18f57d00158945907237218f4e150f61197255a3ea76f51a73185f59b779b8fb",
+        "1496327:2246": "ed5b5b25b82f07ccb4eeba8c93449a4374e92053bd101eff42e7ee7dd9af3d17"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 11,
+      "originalPhysicalFaces": 66,
+      "originalPhysicalEdges": 132,
+      "uvCoedgeDisagreementCount": 100,
+      "twinFaceEndpointDisagreementCount": 241,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunId": 1498361,
+      "nativeDefinitionId": 1498362,
+      "sourceFrameSha256s": {
+        "1498361:4102": "683d7d17fea8b1008ef67283807b805ae764bfc2a33fc77c5a00e2f41e071de7",
+        "1498362:4133": "00eb115dfc1a4bf102508ed4bd05f88591c690e5de38d52aa469aa7f331b88c3",
+        "1498361:2246": "47f5a3a9a2d4917ed331a1ac9e8a9fa05b14018f4ccdc78a0f61ef8e03ad2457",
+        "1498362:2246": "98e1f97429b3a06a1a6c71544830a689016c141ca4aaddbcebc5755b8df9af28"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 218,
+      "twinFaceEndpointDisagreementCount": 490,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunId": 1498364,
+      "nativeDefinitionId": 1498365,
+      "sourceFrameSha256s": {
+        "1498364:4102": "75efb62b373b93a24dd38a82ff79af26280ea8e746dfc2840321999fc856b11a",
+        "1498365:4133": "9b7f58b93382f215adfdbabfa4a1421dcbd0c40549961814ffef242ac57004f6",
+        "1498364:2246": "ce5f700df1949b4fdb085a698458c8957bc11191839b288018380fefeeb4bb98",
+        "1498365:2246": "12d80f925facbb7fb4580776e4a970561907f1136e56ff1e737d72db4231adec"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 11,
+      "originalPhysicalFaces": 66,
+      "originalPhysicalEdges": 132,
+      "uvCoedgeDisagreementCount": 100,
+      "twinFaceEndpointDisagreementCount": 241,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498458,
+      "nativeDefinitionId": 1498459,
+      "sourceFrameSha256s": {
+        "1498458:4102": "10c89800d31c61784acc626e26f174a0ecc1937a04f2f3e7c334d1c922926022",
+        "1498459:4133": "74b575645e9578a0cd34292a7c7d0cf92b31349fb93d1c81c84c0a869a766c00",
+        "1498458:2246": "4086025d35f73e2e7c4f65409fbdb9fcbe190191ce1460fcf170ced28731a205",
+        "1498459:2246": "1643da565530d457be5f13e88392573f82f640733cbe46d5e3d6077d9797696f"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 21,
+      "originalPhysicalFaces": 126,
+      "originalPhysicalEdges": 252,
+      "uvCoedgeDisagreementCount": 24,
+      "twinFaceEndpointDisagreementCount": 20,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498461,
+      "nativeDefinitionId": 1498462,
+      "sourceFrameSha256s": {
+        "1498461:4102": "62e1804b4cea6d4f8ba2a742fc9801f3cadc97b931ad9f32bc56b7e2365c0a52",
+        "1498462:4133": "a4ae2825326016f3b5d6041ea40bd6532135a2129fd1e8701e6a2ab847a6c8af",
+        "1498461:2246": "2f2d82d28e586526999295ff74cc17d69b88afdb5e451d92c1494dd53031a18d",
+        "1498462:2246": "8de6d27f92bd35983f47984254f89bb140b5c0f18bcfa0ea178784bbc52cd7d9"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 17,
+      "originalPhysicalFaces": 102,
+      "originalPhysicalEdges": 204,
+      "uvCoedgeDisagreementCount": 20,
+      "twinFaceEndpointDisagreementCount": 76,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunId": 1500192,
+      "nativeDefinitionId": 1500193,
+      "sourceFrameSha256s": {
+        "1500192:4102": "6f23271cb6772050dea79932d722218ee26c07ff5f8e9481cf55fb0ef86e1640",
+        "1500193:4133": "d2d877ef7b3deb0d5ff9086fba8798775492d03859b87b68ce88458c9124918d",
+        "1500192:2246": "fc7bc66d9be0f8e345dfc8cbaeac0f8cc8a2d0f1ca2c0a02b8c6b192096d0ff0",
+        "1500193:2246": "c1744b0642d604f5ccb78edc1e932a358de26b158861977e83e372932ef31d4c"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 158,
+      "twinFaceEndpointDisagreementCount": 514,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunId": 1500195,
+      "nativeDefinitionId": 1500196,
+      "sourceFrameSha256s": {
+        "1500195:4102": "a84158e5a6ce277e50f5eae45bfafd8c81047b39766bd43a17ceb1f11f1200fa",
+        "1500196:4133": "caa0508c034340b2e5b1f8addbada46543dadb274376c913af9eb8c95ae4c221",
+        "1500195:2246": "9d1eb0c1d263630e01624d68721fc27746714e81ad9cdcd8d9cb38518079a715",
+        "1500196:2246": "cd0b2c6b9c2650182ada7d560d05c7f07fa79a7fb928da9c8d45b9750f1190ea"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 11,
+      "originalPhysicalFaces": 66,
+      "originalPhysicalEdges": 132,
+      "uvCoedgeDisagreementCount": 104,
+      "twinFaceEndpointDisagreementCount": 230,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500289,
+      "nativeDefinitionId": 1500290,
+      "sourceFrameSha256s": {
+        "1500289:4102": "5828d00e12b3bb0fcfd02d7960c362bf6c601c61478923b2748118aada66e55b",
+        "1500290:4133": "bc95f045b9e6bf66796807463d22a1d8ed1962cd166e5971b16a625351416709",
+        "1500289:2246": "e3035e8f701a2b9adce424d7a9f69ff24bd88f453b1ee2db39a59f62c310e45d",
+        "1500290:2246": "2e2c5b5819d0c23102ba028e468d0b16ed75959a00355c7cf5380dc743b15133"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 21,
+      "originalPhysicalFaces": 126,
+      "originalPhysicalEdges": 252,
+      "uvCoedgeDisagreementCount": 24,
+      "twinFaceEndpointDisagreementCount": 20,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500292,
+      "nativeDefinitionId": 1500293,
+      "sourceFrameSha256s": {
+        "1500292:4102": "d88aeb6f538e53997d8f167d2466e26c82e007ace5060548e700d0dcadd7206c",
+        "1500293:4133": "c9909b64f82c4b0d2b65e4133d679ec315faf6b7439ba226695bb59fa7646665",
+        "1500292:2246": "139628e505e3c9927a872f1e99e0afb5667188170cf730b7e28d02f925dfe9c7",
+        "1500293:2246": "b84eca7c6c8c7afd23373a3680c77b446e268b9c961468055a811c66e0fce6e8"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 17,
+      "originalPhysicalFaces": 102,
+      "originalPhysicalEdges": 204,
+      "uvCoedgeDisagreementCount": 20,
+      "twinFaceEndpointDisagreementCount": 76,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2160665,
+      "nativeRunId": 2160668,
+      "nativeDefinitionId": 2160669,
+      "sourceFrameSha256s": {
+        "2160668:4102": "32989fa7a8d56fe57bf09c4d7c27a3aa28db5872d784f05f73d0f7a5a6f586d2",
+        "2160669:4133": "06a847c18799e8d257be110f802c1c9c3947b94fa13c689102554887341fdaf6",
+        "2160668:2246": "cf15f384271d25f77a4530255a776fe7e83ad55e1384e2ca77f57748fc496f85",
+        "2160669:2246": "c6ed192c56f6d0093eb48c4a0253c67fd0297c9ba36c1538d3368b081f13becb"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 312,
+      "originalPhysicalEdges": 630,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 328,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 2161350,
+      "nativeRunId": 2161353,
+      "nativeDefinitionId": 2161354,
+      "sourceFrameSha256s": {
+        "2161353:4102": "2e625e559eee8be0816d8279e690c9724e1e7ba041a72827a527c16b3aca5f46",
+        "2161354:4133": "ee3aaaeedf46de73a8f5c7613e8d9dcc773315962c419024c3c2eae87087628a",
+        "2161353:2246": "0c282a64dd5ecaedc443c462ea1d05d734284b2ee7243c2b0a890793d7bf6dff",
+        "2161354:2246": "8bef906be0f3be1a72e7a5d73b39cb85019c6e1cfdbbdda581c1d09c01c65352"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 312,
+      "originalPhysicalEdges": 630,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 284,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1298202,
+      "nativeRunId": 1298203,
+      "nativeDefinitionId": 1298204,
+      "sourceFrameSha256s": {
+        "1298203:4102": "072815e481afb97952326758f989d8b2eefa205192a459f8aa5a54829030ad91",
+        "1298204:4133": "7fab2a9bd093ee4842ebafbd5184e3e90a70460b8c5f32fe7225e5679cda93d3",
+        "1298203:2246": "9db47658e95e7c6475ccc07833db9e5436f3fe9aa333f33afcdcc7b9e2c00747",
+        "1298204:2246": "7026e16c7d56b99a79847975e0858aee21adfbd8832dd6516f431e2c0661c482"
+      },
+      "physicalTreadHistoryBindingComplete": false,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 63,
+      "originalPhysicalFaces": 378,
+      "originalPhysicalEdges": 756,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 0,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {
+        "Unsupported source primitive, condition, instance or foreign owner": 1
+      },
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1293981,
+      "nativeDefinitionId": 1293982,
+      "sourceFrameSha256s": {
+        "1293981:4102": "92159142bfe3a1e11dbb165fc074ebf75f8dbed0d32cc33d2b316baf21e3d379",
+        "1293982:4133": "68b95166eabb65118e460658e41f8b93f27e8e7ca643ebde54e8dc5cca407fa3",
+        "1293981:2246": "39fc7c9e812bbdb643c5de4bda1889dc76aabbee450d842ed31044417eb8a47a",
+        "1293982:2246": "b160e68b8f08ad256def9c173eac4af5ef763c63ed2cb618649f56eadb8a1532"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 11,
+      "originalPhysicalFaces": 66,
+      "originalPhysicalEdges": 132,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 0,
+      "completeExactRunBodyCertificate": true,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1294068,
+      "nativeDefinitionId": 1294069,
+      "sourceFrameSha256s": {
+        "1294068:4102": "4aa78703ad0d9b7c7cbc104056d14e3a41f603e671739e9df2b2d865f881e766",
+        "1294069:4133": "32365264fcb0f573b4134716f549971cf44cdfd5381d37bae6a9ff1a0eb07fe3",
+        "1294068:2246": "8b4b26787210fcb774d7f0127f5d8a203760dd49bb774734c875b9a3b0c14a40",
+        "1294069:2246": "8d5b1ccdde435b270aaea60d6870a1742eb23667bc73af5eef73ad7ee69f08cd"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 310,
+      "originalPhysicalEdges": 624,
+      "uvCoedgeDisagreementCount": 76,
+      "twinFaceEndpointDisagreementCount": 1075,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunId": 1296000,
+      "nativeDefinitionId": 1296001,
+      "sourceFrameSha256s": {
+        "1296000:4102": "576e58bf53b8fa088ea83fb233b196d21d5b20d3ee9a5713a3858a2ab0185388",
+        "1296001:4133": "30c0350e894e5b48cff70a498e50f6764369e27b887735e52b5d20b334e196f2",
+        "1296000:2246": "e2c43480b63695297ec3492ed3c5ef6006f0ef92e10b1a904aca5e17a425dd50",
+        "1296001:2246": "5baf2a5484936c9c0ed314f697240034a84e060c61ad84cd33745a636c01595a"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 27,
+      "originalPhysicalFaces": 162,
+      "originalPhysicalEdges": 324,
+      "uvCoedgeDisagreementCount": 86,
+      "twinFaceEndpointDisagreementCount": 550,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunId": 1296189,
+      "nativeDefinitionId": 1296190,
+      "sourceFrameSha256s": {
+        "1296189:4102": "1d18dcfcf2f771713996fcd4fc3ecdfe6af0924722df6ea746cc0374038de296",
+        "1296190:4133": "323582eca0106d81a1701dc12440c424cd1608d3addc2b49d6e90f32edd7729a",
+        "1296189:2246": "656d29f454459cbdaa2a3806c77988f01e6ff389b10a591ddb52b22981ed76ed",
+        "1296190:2246": "0d4fd52200c0352a5ccc59e7dac41127b973aca857f2d77738100795f439a845"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 19,
+      "originalPhysicalFaces": 114,
+      "originalPhysicalEdges": 228,
+      "uvCoedgeDisagreementCount": 54,
+      "twinFaceEndpointDisagreementCount": 56,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514127,
+      "nativeDefinitionId": 1514128,
+      "sourceFrameSha256s": {
+        "1514127:4102": "58919da61a8f2d20fdccb78e77c44a7afed85920d8974823cc43f03d3c28fccf",
+        "1514128:4133": "071d89b9cb323e7f0a93b172ae48dda276261861ef8902468961c8a8cf4c8975",
+        "1514127:2246": "595a6582d4e055d5b289244d0dc8f2fa022d4c11c80e74343f3e47225b7d24fa",
+        "1514128:2246": "9ce7c77647487483bb2ec4848a712630dcf69ff66a27981928c122097dab8376"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 30,
+      "twinFaceEndpointDisagreementCount": 22,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514130,
+      "nativeDefinitionId": 1514131,
+      "sourceFrameSha256s": {
+        "1514130:4102": "76fe4f5b44d447d2b3f4d82b3c04a63684e7f7d07610d1586affd020f982f8bc",
+        "1514131:4133": "99b6ea36e0bb3e4223bc4f38399ea07dfa6a1a3b59ee85b4161e1777853a5b14",
+        "1514130:2246": "62914004f9d76c6bb9cf3ad8145cfd504417811aa1dab3c134af79c0aef91014",
+        "1514131:2246": "772327acfc483a47907fb5690949c5814100cdd5dc43c80bc3994f7bedff3ee7"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 15,
+      "originalPhysicalFaces": 90,
+      "originalPhysicalEdges": 180,
+      "uvCoedgeDisagreementCount": 18,
+      "twinFaceEndpointDisagreementCount": 74,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1988738,
+      "nativeRunId": 1988746,
+      "nativeDefinitionId": 1988747,
+      "sourceFrameSha256s": {
+        "1988746:4102": "0b48a4a0854b3c3092b64dd87f401e6147e31349c5d1fcd1046c1fb1a6228841",
+        "1988747:4133": "e529fa265374c97766e3cdb0ef3ba40bf94e5c9c71716050404413220b0277de",
+        "1988746:2246": "0cd09f151612f407733fce65ce5bea9e09704675104e079c9ee83b07706346f1",
+        "1988747:2246": "1e36b401d8a8e478bd9f0e1b27f8fceee6dae6362d003cd81d5a85919ef8bcfc"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 308,
+      "originalPhysicalEdges": 618,
+      "uvCoedgeDisagreementCount": 208,
+      "twinFaceEndpointDisagreementCount": 1083,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1982431,
+      "nativeRunId": 1984014,
+      "nativeDefinitionId": 1984015,
+      "sourceFrameSha256s": {
+        "1984014:4102": "94e3b9751400a00c2a69304ed5040de9f1d0fb55001c66a386b355e0ffb69259",
+        "1984015:4133": "dc51ccbf34b8579dcb4573578bf762970f05b309a8471c0724d0a99a217301ea",
+        "1984014:2246": "1cc45700a323b8290da9fcb94ba7d373fc8bb7dd4af947f7bcddb37e18b38082",
+        "1984015:2246": "8db7bc7fa56752404de9d6bafb334c2ff3b75f24013155bdabcea7ad237bd037"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 308,
+      "originalPhysicalEdges": 618,
+      "uvCoedgeDisagreementCount": 182,
+      "twinFaceEndpointDisagreementCount": 1078,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1972504,
+      "nativeRunId": 1972518,
+      "nativeDefinitionId": 1972519,
+      "sourceFrameSha256s": {
+        "1972518:4102": "210a7abeabe3ebce9a96d752df97a2929757d3c844d276457f61221b89de1ea4",
+        "1972519:4133": "fc0bc90609689185fe33acd68efa68bb9088c536e9dfb1f892f2c5f22028c1b6",
+        "1972518:2246": "ad180dfde976a4559688d0c11d4064b4344d5eb7d71ddf0ad6400f68142db8ec",
+        "1972519:2246": "78b7b648d5868b2eb43639d52d47aee929d4adfdd46b86f3ee8fb00401a877e0"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 53,
+      "originalPhysicalFaces": 322,
+      "originalPhysicalEdges": 648,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 756,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunId": 1305306,
+      "nativeDefinitionId": 1305307,
+      "sourceFrameSha256s": {
+        "1305306:4102": "19c56b18eac20e029cc917b53ea51df191d8dc15ae9a19caa37f17a233fc2e8d",
+        "1305307:4133": "bef0818e50615e0787bfedb72b6485a409c23805edf286bcd6ea3309cc958512",
+        "1305306:2246": "9dcdf49170e6bb3271f9a109b5ea89ff92f73b1975b017f64d7f10e155c22207",
+        "1305307:2246": "339be6ae41e24597fa2e1f4f3ebd2fe3b1d2ea838425653ab26c58bc99d59cd8"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 23,
+      "originalPhysicalFaces": 138,
+      "originalPhysicalEdges": 276,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 511,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunId": 1305425,
+      "nativeDefinitionId": 1305426,
+      "sourceFrameSha256s": {
+        "1305425:4102": "cf7d9959ef8411a01fa47f724ff712897be0a586c923252e13142d0c86f36199",
+        "1305426:4133": "4d67be2f7eccd766df2617d9796a2e8a7a43e2226dc631ca098127038e2152b7",
+        "1305425:2246": "4107495745efe5d1f261bb715f10b70cc4144a896dd8c3629e6aea604f95c7e3",
+        "1305426:2246": "a21db9e462227b82455c5c034d9e43fb47c2fa8f4168b4a4006732fbce5a5873"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 14,
+      "originalPhysicalFaces": 84,
+      "originalPhysicalEdges": 168,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 285,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1903824,
+      "nativeRunId": 1903837,
+      "nativeDefinitionId": 1903838,
+      "sourceFrameSha256s": {
+        "1903837:4102": "5dc5ca0c3b29d4f3a63bb4eb393ea655054af89a0c85e68d4b3e13e040336ca6",
+        "1903838:4133": "c8d93065e9af34adbbf3bcd31e164a2b8d053208c5529ac871156e9297e156da",
+        "1903837:2246": "638fa3df9f4c20837765cd4e622f3d65ef5015884a4eb802f0cd1d87d4e95539",
+        "1903838:2246": "b0a2ca016b42374919947193229d2557dd7b2d1474fab02074a1468b3459fb4a"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 47,
+      "originalPhysicalFaces": 288,
+      "originalPhysicalEdges": 582,
+      "uvCoedgeDisagreementCount": 154,
+      "twinFaceEndpointDisagreementCount": 1023,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1779403,
+      "nativeRunId": 1779406,
+      "nativeDefinitionId": 1779407,
+      "sourceFrameSha256s": {
+        "1779406:4102": "c61c3c26322702dd702770b12633d63dbfe484e5647c0c7070584601af668856",
+        "1779407:4133": "1dff90dfaae39ada39188c45f08b7facfeb259eedd5d7555df777982a7b2d3c6",
+        "1779406:2246": "116287ab100695de25533f58a610e31006d13c4eeffa6be364fe224ce3b2063a",
+        "1779407:2246": "8848ea098f38e007d08e0262fa495360faf6a033cffc948f830f70c581022866"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 53,
+      "originalPhysicalFaces": 318,
+      "originalPhysicalEdges": 636,
+      "uvCoedgeDisagreementCount": 398,
+      "twinFaceEndpointDisagreementCount": 1160,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1779495,
+      "nativeRunId": 1779498,
+      "nativeDefinitionId": 1779499,
+      "sourceFrameSha256s": {
+        "1779498:4102": "19a74e854d4b68cbd8aeb46fdee6362968f9149c24d7c9d328ac9c1b9b294a8b",
+        "1779499:4133": "73539bab70d9a6f35db34ac995ec430a13560a146051a68417c20b5789e0076d",
+        "1779498:2246": "c3926314d7a41f2a5e875bd3f240f59530bbda67b68ae2f3cfa9f114592088e4",
+        "1779499:2246": "b6e1434230352f3f6326b53d9d2511f3628aff163d4c675999c94387b8cdec75"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 51,
+      "originalPhysicalFaces": 306,
+      "originalPhysicalEdges": 612,
+      "uvCoedgeDisagreementCount": 92,
+      "twinFaceEndpointDisagreementCount": 1042,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1689936,
+      "nativeRunId": 1689940,
+      "nativeDefinitionId": 1689941,
+      "sourceFrameSha256s": {
+        "1689940:4102": "b87d0f8f2a39384180eeb1cede966a78e2541894683d06c17f2f213d771149ee",
+        "1689941:4133": "2bf3750b3a04ca528eafe51c2f426e61e2d8f14b1c5117daa0d64e527505b869",
+        "1689940:2246": "9ee98fd52a7f66f35bc984dff7ffe6899e34f216c9231b923e68a02de5c21fdb",
+        "1689941:2246": "1bd3302968030523503e5fac437ac4b5e90f37097f86fa0bbc1b08db54576b35"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 25,
+      "originalPhysicalFaces": 151,
+      "originalPhysicalEdges": 303,
+      "uvCoedgeDisagreementCount": 22,
+      "twinFaceEndpointDisagreementCount": 460,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1693246,
+      "nativeRunId": 1693335,
+      "nativeDefinitionId": 1693336,
+      "sourceFrameSha256s": {
+        "1693335:4102": "73716880e6820f1eef4a0017731aa82c21ea5d2142c6bccc7c7555ebf011c35a",
+        "1693336:4133": "c29e40dcb99217ceb530799d65482404f22b4aff6aa2ac0781ebfc2e9e1c0c8e",
+        "1693335:2246": "cb3ed69871962e18732850270e43171310d8a2fce20da359141c99a8205ad64d",
+        "1693336:2246": "91a8f3804472085996880d1c8a7c6de7166d80dde0008809792c4f036c4d0d11"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 49,
+      "originalPhysicalFaces": 296,
+      "originalPhysicalEdges": 594,
+      "uvCoedgeDisagreementCount": 0,
+      "twinFaceEndpointDisagreementCount": 0,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {
+        "Unsupported original face semantics or region/loop census": 1
+      },
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1696006,
+      "nativeRunId": 1696012,
+      "nativeDefinitionId": 1696013,
+      "sourceFrameSha256s": {
+        "1696012:4102": "d386f86ab8bb65b64ebd2699d8d81288b65e429ef5e32a252213bad199a9818a",
+        "1696013:4133": "ec2c0af52268ee2d5c4560c8dbd52e75dd08c3fb13173e9b9357b27a8187fa41",
+        "1696012:2246": "eba4bc519a0367388ea5ba091dc43b03116a1c0f180a005d7f3697434ccb4863",
+        "1696013:2246": "9a796fdd3cf1367bc451d4c0a395ff1746a602a50dc4ee936ade2dd8eea12634"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 47,
+      "originalPhysicalFaces": 286,
+      "originalPhysicalEdges": 576,
+      "uvCoedgeDisagreementCount": 212,
+      "twinFaceEndpointDisagreementCount": 834,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    },
+    {
+      "nativeStairId": 1638837,
+      "nativeRunId": 1638854,
+      "nativeDefinitionId": 1638855,
+      "sourceFrameSha256s": {
+        "1638854:4102": "8903b9366171e42ef7afe84531c8aecfd541d2288cb4d96b0cd03517592c77bb",
+        "1638855:4133": "4b067b0c42ee27ebbb9f2d8fb8dc0dd892451e920ec949c8bfef4b260bbfd834",
+        "1638854:2246": "364705358a6fb287bb5a0827144c1be0aa2c3580f39531df6fe2b48cad647928",
+        "1638855:2246": "0dd1e42b4d2c53f1d6affd2766b8f327b4056cdede7de810f817bf59b74d8a48"
+      },
+      "physicalTreadHistoryBindingComplete": true,
+      "closedAbstractSourceTopology": true,
+      "originalSourceComponents": 47,
+      "originalPhysicalFaces": 288,
+      "originalPhysicalEdges": 582,
+      "uvCoedgeDisagreementCount": 114,
+      "twinFaceEndpointDisagreementCount": 1008,
+      "completeExactRunBodyCertificate": false,
+      "otherSourceGeometryBlockerCounts": {},
+      "completeStairRouteApproved": false
+    }
+  ],
+  "library1696006": {
+    "originalWalkingTreads": 23,
+    "fullTwoFootSupportedPhysicalStations": 24,
+    "fullTwoFootLateralStationSupport": true,
+    "explicitVerticalTransferCount": 22,
+    "proposedInternalRiseThenGoPointCount": 46,
+    "originalOrderedRiserCount": 24,
+    "innerCapFlatSupportPassedJoins": 3,
+    "innerCapFlatSupportTotalJoins": 23,
+    "uncertaintyCrossingsAreNotCertifiedAirgaps": true,
+    "originalUpperTerminalFloorElementId": 405772,
+    "originalUpperFloorSixHolesRetained": true,
+    "originalUpperTerminalFullTwoFootProjectedSupport": true,
+    "originalUpperTerminalUncertaintyPartCount": 0,
+    "oldDiagonalSlabMaterialOverlapSquareFeet": 0.1000000000000063,
+    "physicalRiserCorrespondenceApproved": false,
+    "completeTerminalTrajectoryApproved": false,
+    "fullHumanClearanceApproved": false,
+    "routeApproved": false
+  },
+  "focusedValidation": {
+    "testsPassed": 18,
+    "testsFailed": 0,
+    "sourceTestsSkipped": 0,
+    "originalRvtFreshlyScanned": true,
+    "scopedTypecheckPassed": true,
+    "scopedEslintPassed": true
+  },
+  "completeStairRouteApproved": false,
+  "all28ProductionHeldLinksRemainDisabled": true,
+  "canonicalSourceChanged": false
+}

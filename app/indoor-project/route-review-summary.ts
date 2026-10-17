@@ -19,6 +19,10 @@ export function routeTransitRooms(
   const keys = new Set(
     dependencies
       .filter((edge) => !["elevator", "escalator"].includes(edge.kind))
+      // A native walk's roomKeys are the entire cell's membership census.
+      // Only explicit doorway/opening or ordinary walk ownership establishes
+      // room transit here; access policy still consumes its own full evidence.
+      .filter((edge) => edge.kind !== "walk" || !edge.nativeCellId)
       .flatMap((edge) => edge.roomKeys),
   );
   return data.records.filter(

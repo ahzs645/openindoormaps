@@ -1,12 +1,10 @@
 import * as DMath from "./deterministic-math";
-import {
-  nativeRationalOverlay,
-  type NativeRationalParts,
-} from "./native-rational-overlay";
+import { nativeRationalOverlay } from "./native-rational-overlay";
 import {
   freezeNativeRationalParts,
   nativeRationalPointInParts,
   nativeRationalPathSupported,
+  createNativeRationalPathUnionQuery,
 } from "./native-exact-planar-topology";
 import { createNativeDoorApproachQuery } from "./native-door-approach";
 import { routingCalculationValue } from "./routing-cache";
@@ -48,7 +46,7 @@ type XY = [number, number];
 type XYZ = [number, number, number];
 type Rings = XY[][];
 type WalkableArea = {
-  exactParts?: NativeRationalParts;
+  supportsExactSegment?: (a: XY, b: XY) => boolean;
   boundaries: Rings[];
   contains: (point: XY) => boolean;
   boundaryRings?: (bounds: number[]) => XY[][];
@@ -307,8 +305,7 @@ const interpolate = (a: XY, b: XY, t: number): XY => [
   a[1] + (b[1] - a[1]) * t,
 ];
 const validSegment = (a: XY, b: XY, area: WalkableArea) => {
-  if (area.exactParts)
-    return nativeRationalPathSupported([a, b], area.exactParts);
+  if (area.supportsExactSegment) return area.supportsExactSegment(a, b);
   if (DMath.hypot(b[0] - a[0], b[1] - a[1]) < 1e-7) return area.contains(a);
   const ts = breaks(a, b, area.boundaries, area.boundaryRings);
   return (
@@ -795,8 +792,10 @@ function refine(
               overlaps(bounds, box(r.ringsFeet)),
           )
           .map((r) => r.ringsFeet);
-    masks.push(...indoorExclusionParts(data, path.pointsFeet[0][2]));
-    masks.push(...(material?.derivedParts ?? []));
+    masks.push(
+      ...indoorExclusionParts(data, path.pointsFeet[0][2]),
+      ...(material?.derivedParts ?? []),
+    );
     const holes = (data.nativeIndoorEnvelopes ? [] : data.records)
       .filter(
         (r) => r.levelId === levelId && overlaps(bounds, box(r.ringsFeet)),
@@ -871,8 +870,19 @@ function refine(
       : undefined;
     if (data.nativeIndoorEnvelopes && !exactParts?.length)
       return source("missing-native-geometry");
+    // One refinement owns this canonical face. Reuse its original exact rings
+    // for sparse-lane point/segment checks instead of clipping every candidate
+    // to a new tile, which can also discard distant hole-boundary context.
+    const exactQuery = exactParts
+      ? createNativeRationalPathUnionQuery()
+      : undefined;
     const free: WalkableArea = {
-      ...(exactParts ? { exactParts } : {}),
+      ...(exactParts
+        ? {
+            supportsExactSegment: (a: XY, b: XY) =>
+              exactQuery!([a, b], exactParts, []),
+          }
+        : {}),
       boundaries,
       boundaryRings: geometryIndex(boundaries.flat(), boundsOfRing),
       contains: (point) =>

@@ -210,3 +210,35 @@ test("changing source door order changes the shared-node winner, disabled doors 
     assert.deepEqual(createNativeDoorApproachQuery(data)(walk), last);
   }
 });
+
+test("strict threshold support keeps nearby holes while distant floor and envelope holes leave exact halves unchanged", async () => {
+  const data = await sharedPortalFixture(true),
+    walk = data.edges.find((e) => e.id === "shared-walk")!,
+    baseline = createNativeDoorApproachQuery(data)(walk);
+  assert(baseline.length > 0 && baseline.every((part) => part.exactParts));
+  const rect = (x: number, y: number, width: number, height: number) =>
+    [
+      [x, y],
+      [x + width, y],
+      [x + width, y + height],
+      [x, y + height],
+    ] as [number, number][];
+  const farHoles = Array.from({ length: 80 }, (_, i) =>
+    rect(-4 + i * 0.04, -4, 0.015, 0.2),
+  );
+  const outer = rect(-5, -5, 10, 10);
+  data.walkingSupport!.floors[0].partsFeet = [[outer, ...farHoles]];
+  data.nativeIndoorEnvelopes!.levels[0].partsFeet = [[outer, ...farHoles]];
+  data.nativeIndoorEnvelopes!.geometrySha256 = await nativeIndoorEnvelopeHash(
+    data.nativeIndoorEnvelopes!,
+  );
+  const before = JSON.stringify(data);
+  assert.deepEqual(createNativeDoorApproachQuery(data)(walk), baseline);
+  assert.equal(JSON.stringify(data), before);
+  data.walkingSupport!.floors[0].partsFeet![0].push(rect(1.05, -0.1, 0.1, 0.2));
+  assert.deepEqual(
+    createNativeDoorApproachQuery(data)(walk),
+    [],
+    "a real opening at the threshold still blocks both physical doors",
+  );
+});

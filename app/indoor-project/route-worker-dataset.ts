@@ -27,13 +27,16 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
     nativeSourceStairMaterials: nativeSourceStairPhysicalEvidence(
       data.nativeSourceStairMaterials,
     ),
+    // These exact JSON wire values are shared physical stair evidence. Keep
+    // their rational markers intact; they are decoded by the stair verifier.
+    nativeSteppedStairV2SourceIndices: data.nativeSteppedStairV2SourceIndices,
     nativeExploreMapping: undefined,
     windowDisplay: undefined,
     stairDisplay:
       data.stairDisplay &&
       (data.nativeIndoorEnvelopes ||
         data.nativePhysicalLevels ||
-        data.edges.some((e) => e.nativeSourceStair))
+        data.edges.some((e) => e.nativeSourceStair || e.nativeSteppedStairV2))
         ? {
             ...data.stairDisplay,
             flights: [],
@@ -43,7 +46,9 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
                 : data.stairDisplay.sourceFlights?.filter((f) =>
                     data.edges.some(
                       (e) =>
-                        e.nativeSourceStair?.nativeStairId === f.stairElementId,
+                        e.nativeSourceStair?.nativeStairId === f.stairElementId ||
+                        (e.nativeSteppedStairV2 &&
+                          e.nativeElementId === f.stairElementId),
                     ),
                   ),
           }
@@ -64,7 +69,7 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
         .map((r) => ({
           ...r,
           displayTrianglesFeet: undefined,
-          bodyTrianglesFeet: [],
+          bodyTrianglesFeet: undefined,
           platforms: [],
         })),
     },

@@ -1,0 +1,507 @@
+{
+  "authority": "Read-only metadata prerequisites of existing whole-cell-derived walk edges, using original source records and current geometry-bound through-navigation predicate. This is neither a material nor route test, and does not authorize removing owners/restrictions.",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/destination-completeness/isolated-existing-door-approaches.json",
+      "sha256": "73e9a42f9a24dd1c29db0db526fdb883b5980c8fbb2c6f72ae5f744e9de36acd"
+    },
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-records.json",
+      "sha256": "fea2bbd337b6d2767d5a02c5d7cbb9e9ac9d7fff5078c3160c49748b93f3f110"
+    },
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-circulationGeometry.json",
+      "sha256": "7e626fa19df40b9b840cf503f8d586db696b0dfb457ab276c4e81e650bc51300"
+    }
+  ],
+  "inputsUnchanged": true,
+  "rows": [
+    {
+      "key": "rm-1487816-62f28b40713f",
+      "number": "10-1062",
+      "approaches": [
+        {
+          "cellId": "native-cell:3.280840:467",
+          "oppositeNodeId": "door:1487816:2170178:0",
+          "existingNativeDoorId": 2170178,
+          "oppositeRoomNumber": "10-1302",
+          "wholeCellOrdinaryRoomRequirements": [],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 4
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-6b54a84075ea",
+      "number": "10-1096",
+      "approaches": [
+        {
+          "cellId": "native-cell:3.280840:421",
+          "oppositeNodeId": "door:1487816:1501378:1",
+          "existingNativeDoorId": 1501378,
+          "oppositeRoomNumber": "10-1090",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-1487816-603968192edb",
+              "number": "10-1003",
+              "name": "Plinth Lab 2"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 7
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-93055f5b540e",
+      "number": "10-1084",
+      "approaches": [
+        {
+          "cellId": "native-cell:3.280840:421",
+          "oppositeNodeId": "door:1487816:1501373:0",
+          "existingNativeDoorId": 1501373,
+          "oppositeRoomNumber": "10-1060",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-1487816-603968192edb",
+              "number": "10-1003",
+              "name": "Plinth Lab 2"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 7
+        }
+      ]
+    },
+    {
+      "key": "rm-311-40372a304749",
+      "number": "05-175",
+      "approaches": [
+        {
+          "cellId": "native-cell:0.000000:70",
+          "oppositeNodeId": "door:311:1030100:1",
+          "existingNativeDoorId": 1030100,
+          "oppositeRoomNumber": "05-187",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-311-47f7cd792af2",
+              "number": "07-246",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-47fab5792af4",
+              "number": "07-244",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-8aa369094957",
+              "number": "07-223",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-8b32069a6165",
+              "number": "07-301",
+              "name": "Lower Dining Hall"
+            },
+            {
+              "key": "rm-311-9b63fb0f9af0",
+              "number": "07-225",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-9c58eb0f9bc1",
+              "number": "07-220",
+              "name": "Janitor"
+            },
+            {
+              "key": "rm-311-a1a7b5f5e7e7",
+              "number": "03-024",
+              "name": "Utilidor"
+            },
+            {
+              "key": "rm-311-a1c9adf5e803",
+              "number": "03-032",
+              "name": "Mech"
+            },
+            {
+              "key": "rm-311-bb30c6dfc1d2",
+              "number": "07-240",
+              "name": "Bookstore"
+            },
+            {
+              "key": "rm-311-c6f1359a82fc",
+              "number": "07-312",
+              "name": "Food Pick Up"
+            },
+            {
+              "key": "rm-311-d62943fe8220",
+              "number": "07-172",
+              "name": "Multi Purpose Seminar"
+            },
+            {
+              "key": "rm-311-d62cc9fe8223",
+              "number": "07-170",
+              "name": "Multi Purpose Seminar"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 61
+        }
+      ]
+    },
+    {
+      "key": "rm-311-44b68029707a",
+      "number": "05-158",
+      "approaches": [
+        {
+          "cellId": "native-cell:0.000000:70",
+          "oppositeNodeId": "door:311:1816270:0",
+          "existingNativeDoorId": 1816270,
+          "oppositeRoomNumber": "05-187",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-311-47f7cd792af2",
+              "number": "07-246",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-47fab5792af4",
+              "number": "07-244",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-8aa369094957",
+              "number": "07-223",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-8b32069a6165",
+              "number": "07-301",
+              "name": "Lower Dining Hall"
+            },
+            {
+              "key": "rm-311-9b63fb0f9af0",
+              "number": "07-225",
+              "name": "Washroom"
+            },
+            {
+              "key": "rm-311-9c58eb0f9bc1",
+              "number": "07-220",
+              "name": "Janitor"
+            },
+            {
+              "key": "rm-311-a1a7b5f5e7e7",
+              "number": "03-024",
+              "name": "Utilidor"
+            },
+            {
+              "key": "rm-311-a1c9adf5e803",
+              "number": "03-032",
+              "name": "Mech"
+            },
+            {
+              "key": "rm-311-bb30c6dfc1d2",
+              "number": "07-240",
+              "name": "Bookstore"
+            },
+            {
+              "key": "rm-311-c6f1359a82fc",
+              "number": "07-312",
+              "name": "Food Pick Up"
+            },
+            {
+              "key": "rm-311-d62943fe8220",
+              "number": "07-172",
+              "name": "Multi Purpose Seminar"
+            },
+            {
+              "key": "rm-311-d62cc9fe8223",
+              "number": "07-170",
+              "name": "Multi Purpose Seminar"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 61
+        }
+      ]
+    },
+    {
+      "key": "rm-311-d268e1fc2580",
+      "number": "05-156A",
+      "approaches": [
+        {
+          "cellId": "native-cell:0.000000:357",
+          "oppositeNodeId": "door:311:976525:1",
+          "existingNativeDoorId": 976525,
+          "oppositeRoomNumber": "05-150",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-311-44b9f629707d",
+              "number": "05-157",
+              "name": "Reception"
+            },
+            {
+              "key": "rm-311-c97eccfc2061",
+              "number": "05-150A",
+              "name": "KITCHEN"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 3
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-0a89a47adc83",
+      "number": "10-3056",
+      "approaches": [
+        {
+          "cellId": "native-cell:24.278215:907",
+          "oppositeNodeId": "door:400176:2261753:0",
+          "existingNativeDoorId": 2261753,
+          "oppositeRoomNumber": "10-3036",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-400176-0342cc83f580",
+              "number": "10-3004",
+              "name": "Research Office"
+            },
+            {
+              "key": "rm-400176-0353c683f58e",
+              "number": "10-3026",
+              "name": "Grad Office"
+            },
+            {
+              "key": "rm-400176-035a9683f594",
+              "number": "10-3032",
+              "name": "Classroom"
+            },
+            {
+              "key": "rm-400176-0d6bcd83fbad",
+              "number": "10-3034",
+              "name": "Classroom"
+            },
+            {
+              "key": "rm-400176-c45c487227b6",
+              "number": "10-3074",
+              "name": "Office"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 12
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-0f6445c1a3ec",
+      "number": "04-425",
+      "approaches": [
+        {
+          "cellId": "native-cell:34.120735:1077",
+          "oppositeNodeId": "door:402367:2144205:1",
+          "existingNativeDoorId": 2144205,
+          "oppositeRoomNumber": "04-423",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-402367-04a526889a7f",
+              "number": "04-414",
+              "name": "Bio Lab Saftey"
+            },
+            {
+              "key": "rm-402367-04a90e889a83",
+              "number": "04-415",
+              "name": "Lab"
+            },
+            {
+              "key": "rm-402367-6f10b6325a76",
+              "number": "04-403A",
+              "name": "Unnamed area"
+            },
+            {
+              "key": "rm-402367-9777dc917a58",
+              "number": "04-422",
+              "name": "Grad Office"
+            },
+            {
+              "key": "rm-402367-977b4c917a5b",
+              "number": "04-444",
+              "name": "Comm"
+            },
+            {
+              "key": "rm-402367-977e4c917a5d",
+              "number": "04-443A",
+              "name": "Mech"
+            },
+            {
+              "key": "rm-402367-9788dc917a66",
+              "number": "04-441",
+              "name": "Grad Office"
+            },
+            {
+              "key": "rm-402367-da8f18764721",
+              "number": "04-440",
+              "name": "Grad Office"
+            },
+            {
+              "key": "rm-402367-dba21876480a",
+              "number": "04-432",
+              "name": "Research Office"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 13
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-681158c0407d",
+      "number": "05-497",
+      "approaches": [
+        {
+          "cellId": "native-cell:34.120735:1215",
+          "oppositeNodeId": "door:402367:1124269:0",
+          "existingNativeDoorId": 1124269,
+          "oppositeRoomNumber": "05-492",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-402367-5e5e41c03ab3",
+              "number": "05-476",
+              "name": "In Process Material"
+            },
+            {
+              "key": "rm-402367-5e622fc03ab7",
+              "number": "05-484",
+              "name": "Office"
+            },
+            {
+              "key": "rm-402367-5e6511c03ab9",
+              "number": "05-485",
+              "name": "Office"
+            },
+            {
+              "key": "rm-402367-67f90ac04068",
+              "number": "05-481",
+              "name": "Open Work Area"
+            },
+            {
+              "key": "rm-402367-67fc78c0406b",
+              "number": "05-482",
+              "name": "Office"
+            },
+            {
+              "key": "rm-402367-680a08c04076",
+              "number": "05-496",
+              "name": "Meeting Room"
+            },
+            {
+              "key": "rm-402367-e10ced5e0591",
+              "number": "05-455",
+              "name": "Acquisitions,Receiving"
+            },
+            {
+              "key": "rm-402367-e10fcd5e0593",
+              "number": "05-456",
+              "name": "Office"
+            },
+            {
+              "key": "rm-402367-f2a73b5e0f9e",
+              "number": "05-430",
+              "name": "Archives Collections Storage"
+            },
+            {
+              "key": "rm-402367-f2ae0f5e0fa4",
+              "number": "05-426",
+              "name": "Office"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 16
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-f29d0f5e0f95",
+      "number": "05-424",
+      "approaches": [
+        {
+          "cellId": "native-cell:34.120735:1204",
+          "oppositeNodeId": "door:402367:1122022:1",
+          "existingNativeDoorId": 1122022,
+          "oppositeRoomNumber": "05-425",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-402367-e87a525e096d",
+              "number": "05-423",
+              "name": "Archives open area"
+            },
+            {
+              "key": "rm-402367-f2b16b5e0fa6",
+              "number": "05-425",
+              "name": "Office"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 5
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0b2d77582967",
+      "number": "06-284",
+      "approaches": [
+        {
+          "cellId": "native-cell:14.435696:536",
+          "oppositeNodeId": "door:694:1350732:1",
+          "existingNativeDoorId": 1350732,
+          "oppositeRoomNumber": "06-244",
+          "wholeCellOrdinaryRoomRequirements": [
+            {
+              "key": "rm-694-0b3aff582973",
+              "number": "06-278",
+              "name": "Storage"
+            },
+            {
+              "key": "rm-694-24136e583733",
+              "number": "06-248",
+              "name": "Up-Tempo Lounge A"
+            },
+            {
+              "key": "rm-694-2419fa583738",
+              "number": "06-240",
+              "name": "Grab'N Go"
+            },
+            {
+              "key": "rm-694-241d6e58373b",
+              "number": "06-246",
+              "name": "Up-Tempo Lounge B"
+            },
+            {
+              "key": "rm-694-2420f658373e",
+              "number": "06-252",
+              "name": "Events"
+            },
+            {
+              "key": "rm-694-242af6583747",
+              "number": "06-250",
+              "name": "Events"
+            }
+          ],
+          "staffOwners": [],
+          "nonWalkableOwners": [],
+          "ownerCount": 13
+        }
+      ]
+    }
+  ]
+}

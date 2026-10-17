@@ -8,6 +8,9 @@ const ViewerModePage = lazy(() => import("~/pages/viewer-mode-page"));
 const ViewerModesPage = lazy(() => import("~/pages/viewer-modes-page"));
 const WelcomePage = lazy(() => import("~/pages/welcome-page"));
 const IndoorProjectPage = lazy(() => import("~/pages/indoor-project-page"));
+const ProgressiveVisitorPage = lazy(
+  () => import("~/pages/progressive-visitor-page"),
+);
 // Pages has no server-side route fallback. Hash routes also survive a refresh.
 const Router = import.meta.env.MODE === "pages" ? HashRouter : BrowserRouter;
 
@@ -29,6 +32,10 @@ export default function App() {
             element={<RevitImportPage />}
           />
           <Route path="/projects/indoor" element={<IndoorProjectPage />} />
+          <Route
+            path="/projects/visitor"
+            element={<ProgressiveVisitorPage />}
+          />
           <Route path="/:locationId" element={<LocationPage />} />
         </Routes>
       </Suspense>

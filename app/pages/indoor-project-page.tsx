@@ -1,3 +1,7 @@
+import {
+  loadBuildingOverview,
+  saveBuildingOverview,
+} from "~/indoor-project/building-overview";
 import type { NativeExploreResult } from "../indoor-project/native-explore";
 import type { PatchComparisonView } from "../indoor-project/patch-comparison-controls";
 import {
@@ -25,7 +29,7 @@ import { PinRecommendationsPanel } from "../indoor-project/pin-recommendations-p
 import { NativeGapScanLayer } from "../indoor-project/native-gap-scan-layer";
 import type { GapScanPreview } from "../indoor-project/native-gap-scan";
 import type { WindowExportMode } from "../indoor-project/native-window-display";
-import { projectBoundaryEvidence } from "../indoor-project/boundary-evidence";
+import { useBoundaryEvidence } from "../indoor-project/use-boundary-evidence";
 import {
   initializeNativeExactGeosOverlay,
   nativeExactGeosOverlayInitialized,
@@ -55,16 +59,17 @@ import { ConnectorDetails } from "../indoor-project/connector-details";
 import { hasReviewedThroughNavigation } from "../indoor-project/through-navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchHostedProject } from "~/indoor-project/hosted-project";
+import { readPublishedProject } from "~/indoor-project/published-project-client";
+import type { PublishedProjectReceipt } from "~/indoor-project/published-project";
+import { PublishedProjectMapLayers } from "~/indoor-project/published-project-layers";
 import {
   MapProvider,
   MapCanvas,
   MapControls,
   useMap,
 } from "~/components/map/map";
-import {
-  ProjectMapLayers,
-  ProjectRouteFocus,
-} from "~/indoor-project/map-layers";
+import { ProjectRouteFocus } from "~/indoor-project/map-layers";
 import {
   loadArrivalMode,
   saveArrivalMode,
@@ -234,6 +239,14 @@ function EditorFocus({
   return null;
 }
 export default function IndoorProjectPage() {
+  const hostedParams = useMemo(() => new URLSearchParams(routeSearch()), []);
+  const hostedPackageUrl = hostedParams.get("package");
+  const visitorManifestUrl = hostedParams.get("manifest");
+  const binaryPreviewUrl = hostedParams.get("preview");
+  const [publishedSource, setPublishedSource] = useState<{
+    data: IndoorProject["dataset"];
+    receipt: PublishedProjectReceipt;
+  }>();
   const [windowMode, setWindowMode] = useState<WindowExportMode | undefined>();
   const [review, setReview] = useState(false);
   const [roomReview, setRoomReview] = useState(false);
@@ -280,6 +293,12 @@ export default function IndoorProjectPage() {
     useState<BasemapAreaShape>("rectangle");
   const [arrivalMode, setArrivalMode] = useState(loadArrivalMode);
   useEffect(() => saveArrivalMode(arrivalMode), [arrivalMode]);
+  const [keepBuildingOverview, setKeepBuildingOverview] =
+    useState(loadBuildingOverview);
+  useEffect(
+    () => saveBuildingOverview(keepBuildingOverview),
+    [keepBuildingOverview],
+  );
   const [labelSettings, setLabelSettings] = useState(loadLabelSettings);
   useEffect(() => saveLabelSettings(labelSettings), [labelSettings]);
   const [project, setProject] = useState<IndoorProject | null>(null),
@@ -534,6 +553,7 @@ export default function IndoorProjectPage() {
   const nativeAreaAnchorKey = useRef<string>();
   const accept = useCallback(
     (p: IndoorProject, fileName?: string, restored = false) => {
+      setPublishedSource(undefined);
       latestProject.current = p;
       // Rendering a native project runs exact checks on this thread (e.g. the
       // boundary evidence of routing-on circulation cells); both load paths
@@ -617,6 +637,87 @@ export default function IndoorProjectPage() {
     const current = () => active && loads.current === request;
     const controller = new AbortController();
     packageLoadController.current = controller;
+    const hostedUrl = hostedPackageUrl;
+    if (hostedUrl) {
+      const startedAt = performance.now();
+      setBusy(true);
+      setImportNotice(true);
+      setMessage("Downloading the complete campus map…");
+      void (async () => {
+        const snapshot = await restoreProjectSnapshot().catch(() => undefined);
+        const hosted = await fetchHostedProject(
+          new URL(hostedUrl, location.href).href,
+          {
+            signal: controller.signal,
+            cachedBytes: snapshot?.bytes,
+            onProgress: (received, total) => {
+              if (current())
+                setMessage(
+                  `Downloading the complete campus map… ${(received / 1e6).toFixed(1)} / ${(total / 1e6).toFixed(1)} MB`,
+                );
+            },
+          },
+        );
+        if (!current()) return;
+        setImportProgress({ fileName: hosted.fileName, startedAt });
+        const opened = await (hostedParams.get("validation") === "full"
+          ? readIndoorProject(
+              hosted.bytes,
+              (progress) => {
+                if (current())
+                  setImportProgress({
+                    fileName: hosted.fileName,
+                    startedAt,
+                    progress,
+                  });
+              },
+              controller.signal,
+            ).then((project) => ({ project, receipt: undefined }))
+          : readPublishedProject(
+              hosted.bytes,
+              (progress) => {
+                if (current())
+                  setImportProgress({
+                    fileName: hosted.fileName,
+                    startedAt,
+                    progress,
+                  });
+              },
+              controller.signal,
+            ));
+        const loaded = opened.project;
+        await initializeNativeExactGeosOverlay();
+        if (!current()) return;
+        accept(loaded, hosted.fileName, hosted.cached);
+        if (opened.receipt)
+          setPublishedSource({ data: loaded.dataset, receipt: opened.receipt });
+        setImportProgress(null);
+        if (!hosted.cached)
+          await persistProject(hosted.bytes, hosted.fileName).catch(() => {
+            if (current())
+              setMessage(
+                "Map loaded. Browser storage is unavailable; the complete map will download again next visit.",
+              );
+          });
+      })()
+        .catch((error) => {
+          if (current())
+            setMessage(
+              `Could not open the hosted map: ${error instanceof Error ? error.message : String(error)}. Reload to retry or import a project ZIP.`,
+            );
+        })
+        .finally(() => {
+          if (current()) {
+            setBusy(false);
+            setImportProgress(null);
+          }
+        });
+      return () => {
+        active = false;
+        controller.abort();
+        loads.current++;
+      };
+    }
     void restoreProjectSnapshot()
       .then(async (snapshot) => {
         if (snapshot && current()) {
@@ -654,7 +755,7 @@ export default function IndoorProjectPage() {
       controller.abort();
       loads.current++;
     };
-  }, [accept]);
+  }, [accept, hostedPackageUrl]);
   async function load(file: File, folderFiles?: File[]) {
     const request = ++projectLoad.current;
     packageLoadController.current?.abort();
@@ -945,10 +1046,15 @@ export default function IndoorProjectPage() {
   ]);
   const displayData = useMemo(() => {
     if (!project) return;
-    const data = editorVisitorDataset(project);
+    const data =
+      publishedSource?.data === project.dataset && !review && !editing
+        ? project.dataset
+        : editorVisitorDataset(project);
     const previewMode = roomReview && roomWindowPreview ? "native" : windowMode;
     const display =
-      data.windowDisplay && previewMode
+      data.windowDisplay &&
+      previewMode &&
+      previewMode !== data.windowDisplay.mode
         ? {
             ...data,
             windowDisplay: { ...data.windowDisplay, mode: previewMode },
@@ -962,6 +1068,9 @@ export default function IndoorProjectPage() {
     windowMode,
     roomReview,
     roomWindowPreview,
+    publishedSource,
+    review,
+    editing,
   ]);
   useEffect(
     () => setRoomWindowPreview(false),
@@ -1254,13 +1363,6 @@ export default function IndoorProjectPage() {
     },
     [nativeAreaResult],
   );
-  const boundaryEvidence = useMemo(
-    () =>
-      data && project
-        ? projectBoundaryEvidence(data, project.rooms)
-        : new Map<string, string>(),
-    [data, project],
-  );
   const pins = project?.rooms.reviewPins?.pins ?? noPins;
   const chosenPin = pins.find(
     (p) => p.id === pinId && levelIds.includes(p.levelId),
@@ -1334,6 +1436,18 @@ export default function IndoorProjectPage() {
   const record = data?.records.find((r) => r.key === selected),
     edge = data?.edges.find((e) => e.id === edgeId),
     door = data?.doors?.find((d) => d.id === edgeId);
+  const boundaryEvidence = useBoundaryEvidence(
+    data,
+    project?.rooms,
+    review &&
+      !pinReview &&
+      !roomReview &&
+      !nativeAreas &&
+      !!record &&
+      !sourceStair &&
+      !(chosenPin && !editing) &&
+      !(wallContext && wallMode && !editing),
+  );
   // Large datasets build the route graph on visitor intent, not at import.
   const routeCalculation = useProjectRoute(
     data,
@@ -1624,10 +1738,24 @@ export default function IndoorProjectPage() {
           </h1>
         </div>
         <nav>
+          {visitorManifestUrl && (
+            <a
+              className="project-view-link"
+              href={`${import.meta.env.BASE_URL}index.html#/projects/visitor?manifest=${encodeURIComponent(new URL(visitorManifestUrl, location.href).href)}`}
+              title="Open the lightweight offline-download view to save the map and app for offline use."
+            >
+              Offline map
+            </a>
+          )}
+          {binaryPreviewUrl && /^\/(?!\/)/.test(binaryPreviewUrl) && (
+            <a className="project-view-link" href={binaryPreviewUrl}>
+              Binary preview
+            </a>
+          )}
           <button disabled={busy} onClick={() => void clearMap()}>
             Clear map
           </button>
-          {project && (
+          {project && !isViewerProject(project) && (
             <button
               disabled={busy}
               aria-pressed={roomReview}
@@ -2940,11 +3068,18 @@ export default function IndoorProjectPage() {
                 zoom: 17,
                 pitch: view === "2d" ? 0 : 55,
                 maxZoom: 23,
+                canvasContextAttributes: { antialias: true },
               }}
               styles={mapStyles}
             >
               <MapCanvas>
-                <ProjectMapLayers
+                <PublishedProjectMapLayers
+                  publication={
+                    publishedSource?.data === data && !review && !editing
+                      ? publishedSource.receipt
+                      : undefined
+                  }
+                  manifestUrl={visitorManifestUrl ?? undefined}
                   onNativeDisplay={receivePreparedNativeDisplay}
                   data={data}
                   nativeFloorLevels={nativeFloorLevels}
@@ -2958,6 +3093,7 @@ export default function IndoorProjectPage() {
                   circulationOnly={circulation}
                   network={network}
                   roomThree={view === "3d" || view === "relative"}
+                  overviewLocked={keepBuildingOverview && !review}
                   nativeModel={view === "native"}
                   relativeHeights={view === "relative"}
                   showPillars={review ? showPillars : !simplifyGeometry}
@@ -2974,6 +3110,7 @@ export default function IndoorProjectPage() {
                   selected={selected}
                   onPick={pickMapPlace}
                   pickEnabled={
+                    !(keepBuildingOverview && !review) &&
                     !nativeAreas &&
                     !drawingBasemapArea &&
                     !(review && (wallMode || placingPin) && !editing) &&
@@ -2984,6 +3121,7 @@ export default function IndoorProjectPage() {
                 />
                 {nativeExplore && (
                   <NativeExploreLayer
+                    overviewLocked={keepBuildingOverview}
                     usePreparedDisplay={!!data.nativeIndoorEnvelopes}
                     onRetryPreparedDisplay={
                       preparedNativeDisplay?.data === data &&
@@ -3162,6 +3300,8 @@ export default function IndoorProjectPage() {
                     showStructures={showStructures}
                     simplifyGeometry={simplifyGeometry}
                     onSimplifyGeometry={setSimplifyGeometry}
+                    keepBuildingOverview={keepBuildingOverview}
+                    onKeepBuildingOverview={setKeepBuildingOverview}
                     labelSettings={labelSettings}
                     onLabelSettings={setLabelSettings}
                     basemapBuildings={basemapBuildings}
@@ -3209,15 +3349,6 @@ export default function IndoorProjectPage() {
                         : undefined
                     }
                     onFloor={chooseLevel}
-                    onReview={() => {
-                      setPinReview(false);
-                      setRoomReview(false);
-                      setNativeAreas(false);
-                      setEditing(false);
-                      setPlacingPin(false);
-                      setWallMode(false);
-                      setReview(true);
-                    }}
                     showPassThroughPlaces={showPassThroughPlaces}
                     onPassThroughPlaces={setShowPassThroughPlaces}
                     showVestibuleDoors={showVestibuleDoors}
@@ -3357,7 +3488,10 @@ export default function IndoorProjectPage() {
               )}
             </div>
           </section>
-          {review && !pinReview && (!editing || record || edge || door) && (
+          {!isViewerProject(project) &&
+            review &&
+            !pinReview &&
+            (!editing || record || edge || door) && (
             <aside className="project-inspector">
               <h2>
                 {chosenPin && !editing
@@ -3494,7 +3628,11 @@ export default function IndoorProjectPage() {
                     <dt>Source ID</dt>
                     <dd>{record.key}</dd>
                     <dt>Room boundary</dt>
-                    <dd>{boundaryEvidence.get(record.key)}</dd>
+                    <dd>
+                      {boundaryEvidence?.value?.get(record.key) ??
+                        boundaryEvidence?.error ??
+                        "Checking native boundary evidence…"}
+                    </dd>
                     <dt>Arrival</dt>
                     <dd>
                       {record.arrivalNodeId

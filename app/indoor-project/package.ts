@@ -1,4 +1,12 @@
 import {
+  validateNativeDoorBoundarySourceReviewEvidence,
+  type NativeDoorBoundarySourceReviewEvidence,
+} from "./native-door-boundary-source-review-evidence";
+import {
+  validateReviewedDrawingReferences,
+  type ReviewedDrawingReferences,
+} from "./reviewed-drawing-references";
+import {
   validateNativeSelectionContactRepairs,
   deriveNativeSelectionContactRepairs,
   type NativeSelectionContactRepairs,
@@ -153,6 +161,21 @@ function validateIndoorScopeBinding(
   rooms: ProjectRooms,
   dataset: IndoorDataset,
 ) {
+  validateReviewedDrawingReferences(
+    rooms.reviewedDrawingReferences,
+    dataset.source.modelSha256,
+  );
+  validateReviewedDrawingReferences(
+    dataset.reviewedDrawingReferences,
+    dataset.source.modelSha256,
+  );
+  if (
+    JSON.stringify(rooms.reviewedDrawingReferences) !==
+    JSON.stringify(dataset.reviewedDrawingReferences)
+  )
+    throw new Error(
+      "Source and prepared drawing-reference reviews do not match.",
+    );
   validateNativeDisplayScopes(
     rooms.nativeDisplayScopes,
     dataset.source.modelSha256,
@@ -323,6 +346,7 @@ type Manifest = ArchiveManifest | ViewerManifest;
 export const isViewerProject = (project: IndoorProject) =>
   project.manifest.format === "openindoormaps-viewer";
 export type ProjectRooms = {
+  reviewedDrawingReferences?: ReviewedDrawingReferences;
   format: string;
   version: number;
   model: { fileName: string };
@@ -344,6 +368,7 @@ export type ProjectRooms = {
   reviewBundle?: ReviewBundle;
   nativeSelectionContactRepairs?: NativeSelectionContactRepairs;
   nativeDoorBoundaryClosures?: NativeDoorBoundaryClosures;
+  nativeDoorBoundaryClosureReviewHistory?: NativeDoorBoundarySourceReviewEvidence[];
   nativeWallPositionRepairs?: NativeWallPositionRepairs;
   selectionDoorThresholds?: SelectionDoorThresholds;
   reviewedAreaPartitions?: ReviewedAreaPartitions;
@@ -531,6 +556,9 @@ export async function readIndoorProject(
     dataset = JSON.parse(
       strFromU8(files["viewer/indoor.json"]),
     ) as IndoorDataset;
+  validateNativeDoorBoundarySourceReviewEvidence(
+    rooms.nativeDoorBoundaryClosureReviewHistory, manifest.model.sha256,
+  );
   const reviewWire = rooms.reviewBundle as unknown as
     | { format?: string; storage?: string }
     | undefined;
@@ -715,6 +743,7 @@ export async function exportIndoorProject(
     throw new Error(
       "A campus viewer package cannot regenerate a source project. Use the full reviewed master ZIP.",
     );
+  validateNativeDoorBoundarySourceReviewEvidence(project.rooms.nativeDoorBoundaryClosureReviewHistory, project.dataset.source.modelSha256);
   validateEnclosureReviews(project.rooms.enclosureReviews);
   validateEnclosureProposals(project.rooms.enclosureProposals);
   await verifyReviewBundle(project.rooms.reviewBundle);
@@ -902,6 +931,9 @@ async function readViewerFiles(
       throw new Error(`Damaged viewer entry: ${paths[i]}`);
   }
   progress("decode");
+  const viewerMetadata = JSON.parse(strFromU8(files["viewer/metadata.json"])) as ProjectRooms;
+  if (viewerMetadata?.nativeDoorBoundaryClosureReviewHistory !== undefined)
+    throw new Error("Authoring review files must not be embedded in a campus viewer.");
   const dataset: unknown = JSON.parse(strFromU8(files["viewer/indoor.json"]));
   progress("geometry");
   validateIndoorDataset(dataset);
@@ -923,7 +955,8 @@ async function readViewerFiles(
   progress("identity");
   const rooms = await hydrateRoomNativeMaterials(
     await hydrateViewerMetadata(
-      JSON.parse(strFromU8(files["viewer/metadata.json"])) as ProjectRooms,
+      viewerMetadata,
+      dataset,
     ),
   );
   if (
@@ -964,6 +997,7 @@ async function readViewerFiles(
     rooms.reviewedAreaPartitions !== undefined ||
     dataset.reviewedAreaPartitions !== undefined ||
     rooms.nativeDoorBoundaryClosures !== undefined ||
+    rooms.nativeDoorBoundaryClosureReviewHistory !== undefined ||
     rooms.nativeWallPositionRepairs !== undefined
   )
     throw new Error(
@@ -1003,6 +1037,7 @@ export async function exportCampusViewer(
       "Regenerate applied boundary patches in Reviter before exporting a campus viewer.",
     );
   validateIndoorDataset(project.dataset);
+  validateNativeDoorBoundarySourceReviewEvidence(project.rooms.nativeDoorBoundaryClosureReviewHistory, project.dataset.source.modelSha256);
   await verifyNativeMaterialSections(
     project.dataset.nativeMaterialSections,
     project.dataset.source.modelSha256,
@@ -1055,6 +1090,7 @@ export async function exportCampusViewer(
       })),
     georeference: project.rooms.georeference,
     visitorMetadata: project.dataset.visitor,
+    reviewedDrawingReferences: project.dataset.reviewedDrawingReferences,
     nativeProvisionalCornerSeals: project.dataset.nativeProvisionalCornerSeals,
     nativeDerivedFrameReturns: project.dataset.nativeDerivedFrameReturns,
     nativeMaterialSections: project.dataset.nativeMaterialSections,
@@ -1139,7 +1175,7 @@ export async function exportCampusViewer(
   );
   const files: AsyncZippable = {
     "viewer/metadata.json": strToU8(
-      JSON.stringify(await packViewerMetadata(metadata)),
+      JSON.stringify(await packViewerMetadata(metadata, visitorDataset)),
     ),
     "gis/reference-points.json": strToU8(JSON.stringify(metadata.georeference)),
     "viewer/indoor.json": strToU8(JSON.stringify(visitorDataset)),

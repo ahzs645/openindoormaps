@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { dirname, relative, resolve } from "node:path";
+import nodePath from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 
@@ -20,7 +20,7 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
   const visited = new Set<string>();
   const dependencies = new Map<string, string>();
   const resolveImport = (parent: string, specifier: string) => {
-    const base = resolve(dirname(parent), specifier);
+    const base = nodePath.resolve(nodePath.dirname(parent), specifier);
     const candidates = [
       base,
       ...[".ts", ".tsx", ".js", ".mjs", "/index.ts", "/index.tsx"].map(
@@ -34,7 +34,7 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
   const visit = (path: string) => {
     if (visited.has(path)) return;
     visited.add(path);
-    const name = relative(projectRoot, path).replaceAll("\\", "/");
+    const name = nodePath.relative(projectRoot, path).replaceAll("\\", "/");
     if (name === generated) return;
     const bytes = readFileSync(path);
     dependencies.set(name, hash(bytes));
@@ -60,8 +60,10 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
       if (
         !target &&
         directoryAllowed &&
-        existsSync(resolve(dirname(path), value.text)) &&
-        statSync(resolve(dirname(path), value.text)).isDirectory()
+        existsSync(nodePath.resolve(nodePath.dirname(path), value.text)) &&
+        statSync(
+          nodePath.resolve(nodePath.dirname(path), value.text),
+        ).isDirectory()
       )
         return;
       // Generated loaders contain unused fallback URL literals; the checked
@@ -92,8 +94,8 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
     };
     scan(source);
   };
-  for (const path of roots) visit(resolve(projectRoot, path));
-  const lock = resolve(projectRoot, "package-lock.json");
+  for (const path of roots) visit(nodePath.resolve(projectRoot, path));
+  const lock = nodePath.resolve(projectRoot, "package-lock.json");
   dependencies.set("package-lock.json", hash(readFileSync(lock)));
   const modules = [...dependencies].sort(([a], [b]) => a.localeCompare(b));
   return {
@@ -107,8 +109,8 @@ export function preparedDisplayEngineBinding(projectRoot: string) {
 
 export function writePreparedDisplayEngineBinding(projectRoot: string) {
   const binding = preparedDisplayEngineBinding(projectRoot);
-  const path = resolve(projectRoot, generated);
-  const source = `// Generated from the complete local preparation module graph and dependency lock.\n// Refresh through Vite or scripts/indoor/prepared-display-engine-binding.ts.\nexport const PREPARED_DISPLAY_ENGINE_SHA256 = ${JSON.stringify(binding.sha256)};\n`;
+  const path = nodePath.resolve(projectRoot, generated);
+  const source = `// Generated from the complete local preparation module graph and dependency lock.\n// Refresh through Vite or scripts/indoor/prepared-display-engine-binding.ts.\nexport const PREPARED_DISPLAY_ENGINE_SHA256 =\n  ${JSON.stringify(binding.sha256)};\n`;
   if (!existsSync(path) || readFileSync(path, "utf8") !== source)
     writeFileSync(path, source);
   return binding;
@@ -116,10 +118,10 @@ export function writePreparedDisplayEngineBinding(projectRoot: string) {
 
 if (
   process.argv[1] &&
-  resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+  nodePath.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   const binding = writePreparedDisplayEngineBinding(
-    resolve(process.argv[2] ?? "."),
+    nodePath.resolve(process.argv[2] ?? "."),
   );
   console.log(
     JSON.stringify({ sha256: binding.sha256, modules: binding.modules.length }),

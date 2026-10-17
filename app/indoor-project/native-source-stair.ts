@@ -1,8 +1,10 @@
+import { validateReviewedDrawingReferences } from "./reviewed-drawing-references";
 import { nativeAuthoredStairTreads } from "./native-authored-stair-treads.ts";
 import { validNativeSourceStairBody } from "./native-source-stair-body";
 import { validNativeSourceStairMaterial } from "./native-source-stair-material";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import { validateNativeSourceStairWidth } from "./native-source-stair-width";
+import { validNativeSteppedStairV2Binding } from "./native-stepped-stair-v2";
 
 const samePoint = (a: number[], b: number[]) =>
   a.length === b.length && a.every((v, i) => v === b[i]);
@@ -30,6 +32,10 @@ export function validNativeSourceStairBinding(
   edge: IndoorEdge,
 ): boolean {
   try {
+    validateReviewedDrawingReferences(
+      data.reviewedDrawingReferences,
+      data.source.modelSha256,
+    );
     const proof = edge.nativeSourceStair;
     if (
       !data.nativeIndoorEnvelopes ||
@@ -164,6 +170,7 @@ export function validNativeSourceStairBinding(
         data.nativeDerivedFrameReturns,
         data.nativeProvisionalCornerSeals,
         true,
+        data.reviewedDrawingReferences,
       ) &&
       validateNativeSourceStairWidth(proof, data.walkingSupport.floors, true)
     );
@@ -192,6 +199,7 @@ export function nativeStairRouteQualified(
   data: IndoorDataset,
   edge: IndoorEdge,
 ): boolean {
+  if (edge.nativeSteppedStairV2) return validNativeSteppedStairV2Binding(data, edge);
   if (edge.nativeSourceStair) return validNativeSourceStairBinding(data, edge);
   return !(
     data.nativeIndoorEnvelopes &&

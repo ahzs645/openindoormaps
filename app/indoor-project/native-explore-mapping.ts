@@ -11,6 +11,7 @@ import {
 } from "./native-rational-overlay";
 import { NATIVE_CONTAINED_DISPLAY_VERSION } from "./native-contained-display";
 import { nativeExactNumericIdentity } from "./native-exact-numeric-identity";
+import { createExactDisplayBoundaryProof } from "./native-exact-display-boundary-proof";
 import {
   createNativeExactTopologyIndex,
   encodeNativeExactTopology,
@@ -517,24 +518,24 @@ async function validatePublishedNativeExploreMappingUncachedInProcess(
     )
       throw new Error("Invalid published native level.");
     ids.add(level.levelId);
-    const exactIndex =
+    const boundaryProof =
       v.version === 3
-        ? createNativeExactTopologyIndex(level.exactTopology!, {
-            sourceModelSha256: data.source.modelSha256,
-            sourceGeometryKey: await nativeAreaGeometrySha256(
-              data,
-              level.levelId,
-              { mode: "connected", maxGapFeet: 0 },
-            ),
-            kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
-          })
+        ? createExactDisplayBoundaryProof(
+            level.exactTopology!,
+            level.displayResidualTopology!,
+            {
+              sourceModelSha256: data.source.modelSha256,
+              sourceGeometryKey: await nativeAreaGeometrySha256(
+                data,
+                level.levelId,
+                { mode: "connected", maxGapFeet: 0 },
+              ),
+              kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+            },
+          )
         : undefined;
-    const residualIndex = exactIndex
-      ? createNativeExactTopologyIndex(
-          level.displayResidualTopology!,
-          exactIndex.binding,
-        )
-      : undefined;
+    const exactIndex = boundaryProof?.sourceIndex;
+    const residualIndex = boundaryProof?.residualIndex;
     const regions = new Set<string>();
     for (const r of level.regions) {
       if (
@@ -750,6 +751,7 @@ async function validatePublishedNativeExploreMappingUncachedInProcess(
             residual.length === 0 &&
             nativeExactNumericIdentity(r.displayPartsFeet!, source)
           ) &&
+          !boundaryProof!(r.exactFaceId!, r.displayPartsFeet!).proved &&
           (nativeRationalOverlay("difference", r.displayPartsFeet!, source)
             .length ||
             nativeRationalOverlay(

@@ -23,8 +23,9 @@ import pc from "polygon-clipping";
 import { indoorExclusionParts } from "./indoor-exclusions";
 import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
 import type { IndoorDataset, IndoorEdge } from "./contract";
-import { nativeAccessZonesAt } from "./native-access-zones";
+import { nativeRoutingAccessZonesAt } from "./native-routing-access-zones";
 import { nativeRecordOnPhysicalLevel } from "./native-physical-level-records";
+import { createNativeRationalSupportTileQuery } from "./native-rational-support-tiles";
 type Point = [number, number];
 type Rings = Point[][];
 type IndexedPart = {
@@ -78,7 +79,11 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const edges = new Map(data.edges.map((e) => [e.id, e]));
   const records = new Map(data.records.map((r) => [r.key, r]));
-  const materialQuery = createNativeRoutingMaterialQuery(data);
+  const materialQuery = routingCalculationValue(
+    data,
+    "native-route-material-query",
+    () => createNativeRoutingMaterialQuery(data),
+  );
   const boundaryMaterial = createNativeBoundaryMaterialQuery(data);
   const exactBoundaryMaterial = data.nativeIndoorEnvelopes
     ? createNativeExactBoundaryMaterialQuery(data)
@@ -92,6 +97,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
       envelopes: IndexedPart[];
       masks: IndexedPart[];
       ownsAperture: ReturnType<typeof createNativeHostApertureQuery>;
+      exactSupport?: ReturnType<typeof createNativeRationalSupportTileQuery>;
     }
   >();
   const levelParts = (z: number, levelId: number) => {
@@ -158,6 +164,11 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
           ),
       ],
     };
+    if (data.nativeIndoorEnvelopes)
+      level.exactSupport = createNativeRationalSupportTileQuery(
+        level.floors.map((part) => part.rings),
+        level.envelopes.map((part) => part.rings),
+      );
     levels.set(key, level);
     return level;
   };
@@ -282,7 +293,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
     // doorway halves for that zone's restricted circulation branches.
     const zoneMembers = new Set(
       routingCalculationValue(data, `native-access-zones:${z}`, () =>
-        nativeAccessZonesAt(data, z),
+        nativeRoutingAccessZonesAt(data, z),
       )
         .filter((zone) => zone.zone.access === "staff")
         .flatMap((zone) => zone.zone.memberRoomKeys),
@@ -359,27 +370,12 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
         .map((p) => p.rings);
       try {
         if (data.nativeIndoorEnvelopes) {
-          const floors = level.floors
-              .filter((p) => overlaps(box, p.box))
-              .map((p) => p.rings),
-            envelope = level.envelopes
-              .filter((p) => overlaps(box, p.box))
-              .map((p) => p.rings);
           const exactHalf = nativeRationalThresholdHalf(
             footprint,
             normal,
             node!.pointFeet,
           );
-          let exactParts = nativeRationalOverlay(
-            "intersection",
-            exactHalf,
-            floors,
-          );
-          exactParts = nativeRationalOverlay(
-            "intersection",
-            exactParts,
-            envelope,
-          );
+          let exactParts = level.exactSupport!(exactHalf);
           const exactMasks = level.masks
             .filter(
               (p) =>

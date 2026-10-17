@@ -1,0 +1,235 @@
+{
+  "authority": "Scratch-only query-local support operand filtering using the existing exact rational nativeRationalIntersectionOperand followed by unchanged nativeRationalFootprintSupported/tile clipping. This is a floor-only check for one saved landing-candidate segment, not the full source walking region, ownership, wall/mask/headroom qualification, route calculation or end-to-end performance. No source/canonical/runtime mutation.",
+  "currentImplementation": "Footprint support already exact-clips frozen large operands to cached16ft tiles, retaining all holes of retained components. Strict disjoint hole pruning exists in intersection broadphase but is not currently used by footprint support.",
+  "mathematicalScope": "For valid polygon operands, B and filteredB agree inside every subject-shell bound; therefore A\\B=A\\filteredB. Whole outer components and hole rings are omitted only on strict exact rational bounds disjointness from EVERY actual A shell. Touching/unknown bounds retain original rings; all coordinates and source material stay unchanged.",
+  "controls": [
+    {
+      "name": "distant-component-and-hole",
+      "reverse": false,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 1
+    },
+    {
+      "name": "distant-component-and-hole",
+      "reverse": true,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 1
+    },
+    {
+      "name": "enclosing-hole-must-remain",
+      "reverse": false,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "enclosing-hole-must-remain",
+      "reverse": true,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "crossing-hole-must-remain",
+      "reverse": false,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "crossing-hole-must-remain",
+      "reverse": true,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "touching-hole-bounds-must-remain",
+      "reverse": false,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "touching-hole-bounds-must-remain",
+      "reverse": true,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "touching-outer-component-must-remain",
+      "reverse": false,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 2,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "touching-outer-component-must-remain",
+      "reverse": true,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 2,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "multipart-query-keeps-second-relevant-shell",
+      "reverse": false,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 2,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "multipart-query-keeps-second-relevant-shell",
+      "reverse": true,
+      "boolean": true,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 2,
+      "rawSelectedRings": 2
+    },
+    {
+      "name": "unsupported-positive-sliver-remains",
+      "reverse": false,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 1
+    },
+    {
+      "name": "unsupported-positive-sliver-remains",
+      "reverse": true,
+      "boolean": false,
+      "exactDifferenceBytesEqual": true,
+      "sourceBytesUnchanged": true,
+      "rawSelectedComponents": 1,
+      "rawSelectedRings": 1
+    }
+  ],
+  "unknownSubjectRetained": true,
+  "input": {
+    "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints/inputs/landing-dataset-a2c81e7c1b01e5d9f3c529c943326132123c709571588f1af3e33d15fa3c68cf.bin",
+    "sha256": "a2c81e7c1b01e5d9f3c529c943326132123c709571588f1af3e33d15fa3c68cf",
+    "bytes": 86932498
+  },
+  "savedCandidate": {
+    "bindingSha256": "a04393b680a280a45af4872d2cc94d14e21c555c13fafbfd33d14e645fc4625d",
+    "pairKey": "213b2ed1f5d008901a4e99f5f29c3a91600186e077f972a9d7e7d45b72377491",
+    "candidateSha256": "b95865e4d3e924c209966fe769bf8c94ea7f5ccaea015357772e8acd7a021fda",
+    "selectedCandidateSha256": "6e8b4b13d949ea25e3a782ba5614bb4f5e664fea871a2f88f1cb84c7c441a7d6",
+    "firstSegment": [
+      [
+        -292.6856555282945,
+        -41.01676031527947,
+        29.855643044619423
+      ],
+      [
+        -291.62581699982735,
+        -39.32066412296706,
+        29.855643044619423
+      ]
+    ],
+    "planeFeet": 29.855643044619423
+  },
+  "floorNativeIds": [
+    1779842
+  ],
+  "stats": {
+    "original": {
+      "components": 1,
+      "rings": 6,
+      "vertices": 124
+    },
+    "selected": {
+      "components": 1,
+      "rings": 1,
+      "vertices": 90
+    }
+  },
+  "timings": [
+    {
+      "label": "baseline-existing-support-cold",
+      "result": true,
+      "elapsedMs": 22.056348999999955,
+      "userCpuMs": 48.782,
+      "systemCpuMs": 6.471,
+      "rssBefore": 549330944,
+      "rssAfter": 549986304
+    },
+    {
+      "label": "query-local-filter-plus-existing-support-cold",
+      "result": true,
+      "elapsedMs": 12.813270000000102,
+      "userCpuMs": 18.603,
+      "systemCpuMs": 1.134,
+      "rssBefore": 549986304,
+      "rssAfter": 549986304
+    },
+    {
+      "label": "baseline-existing-support-warm-0",
+      "result": true,
+      "elapsedMs": 22.101104000000305,
+      "userCpuMs": 26.219,
+      "systemCpuMs": 5.628,
+      "rssBefore": 549986304,
+      "rssAfter": 549986304
+    },
+    {
+      "label": "query-local-filter-plus-existing-support-repeat-0",
+      "result": true,
+      "elapsedMs": 6.248008999999911,
+      "userCpuMs": 6.466,
+      "systemCpuMs": 0.925,
+      "rssBefore": 549986304,
+      "rssAfter": 549986304
+    },
+    {
+      "label": "baseline-existing-support-warm-1",
+      "result": true,
+      "elapsedMs": 48.17807700000003,
+      "userCpuMs": 110.362,
+      "systemCpuMs": 19.793,
+      "rssBefore": 549986304,
+      "rssAfter": 555753472
+    },
+    {
+      "label": "query-local-filter-plus-existing-support-repeat-1",
+      "result": true,
+      "elapsedMs": 7.086565000000064,
+      "userCpuMs": 9.134,
+      "systemCpuMs": 0.003,
+      "rssBefore": 555753472,
+      "rssAfter": 555753472
+    }
+  ],
+  "actualDifferenceBytesEqual": true,
+  "actualDifferenceParts": 0,
+  "supportBytesUnchanged": true,
+  "sourceInputUnchanged": true,
+  "productionChanged": false,
+  "visitorLatencyClaim": false
+}

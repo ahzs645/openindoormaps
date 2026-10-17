@@ -1,0 +1,24 @@
+--- progressive-visitor-page.before.tsx
++++ app/pages/progressive-visitor-page.tsx
+@@ -30,6 +30,7 @@
+   routeRequestReady,
+ } from "~/indoor-project/heavy-worker-schedule";
+ import { ProgressiveRouteClient } from "~/indoor-project/progressive-route-client";
++import { sameRoutePlace } from "~/indoor-project/visitor-route-state";
+ import { PreparedProjectMapLayers } from "~/indoor-project/map-layers";
+ import { nativeRampLayer } from "~/indoor-project/ramp-layer";
+ import { NativeExploreLayer } from "~/indoor-project/native-explore-layer";
+@@ -594,6 +595,13 @@
+   };
+   const calculate = async () => {
+     if (!client || !start || !end) return;
++    if (sameRoutePlace(start, end)) {
++      resetDirections();
++      setRouteMessage(
++        "Departure and destination are the same place. Choose another destination.",
++      );
++      return;
++    }
+     const requestEpoch = ++routeEpoch.current;
+     const requestedMap = mapEpoch.current;
+     const controller = new AbortController();

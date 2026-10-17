@@ -8,7 +8,7 @@ import { createNativeRoutingMaterialQuery } from "./native-routing-material";
 import { createNativeExactBoundaryMaterialQuery } from "./native-boundary-material";
 import { indoorExclusionParts } from "./indoor-exclusions";
 import { nativeSlabJoinClosures } from "./native-slab-join-closures";
-import { nativeAccessZonesAt } from "./native-access-zones";
+import { nativeRoutingAccessZonesAt } from "./native-routing-access-zones";
 import { nativeRoomIdentityRings } from "./native-floor-opening-ownership";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 
@@ -264,7 +264,7 @@ export function reviewedCirculationLinkSupport(
             (w.reviewPatchId && material.present.has(w.nativeElementId))),
       )
       .flatMap((w) => boundary(w));
-    const zoneParts = nativeAccessZonesAt(data, z).flatMap(
+    const zoneParts = nativeRoutingAccessZonesAt(data, z).flatMap(
       (zone) => zone.parts,
     );
     const vetoes: NativeRationalParts =

@@ -234,3 +234,31 @@ test("independent exact boolean fallback retains a thin floor hole and a separat
     assert.deepEqual(outside, source(threshold, floors));
   }
 });
+
+test("bounded doorway support retains enclosing and touching original holes while ignoring strictly distant holes", () => {
+  for (const hole of [
+    rect(3, 0, 7, 4),
+    rect(5, 1, 5 + 1e-10, 3),
+    rect(6, 1, 7, 3),
+  ]) {
+    const data = fixture();
+    const floors = data.walkingSupport!.floors[0].partsFeet![0];
+    floors[0] = rect(-200, -200, 200, 200);
+    for (let i = 0; i < 40; i++)
+      floors.push(rect(30 + i * 3, 30, 31 + i * 3, 31));
+    floors.push(hole);
+    const before = JSON.stringify(data);
+    assert.deepEqual(nativeDoorFloorBlockers(data), sourceBlockers(data));
+    assert.equal(JSON.stringify(data), before);
+  }
+});
+
+test("doorway support bounds are rebuilt after a source hole moves into the measured threshold", () => {
+  const data = fixture();
+  data.walkingSupport!.floors[0].partsFeet![0].push(rect(8, 8, 9, 9));
+  assert.equal(nativeDoorFloorBlockers(data).size, 0);
+  const hole = data.walkingSupport!.floors[0].partsFeet![0][1];
+  hole.splice(0, hole.length, ...rect(5, 1.5, 5 + 1e-9, 2.5));
+  assert(nativeDoorFloorBlockers(data).has("door"));
+  assert.deepEqual(nativeDoorFloorBlockers(data), sourceBlockers(data));
+});

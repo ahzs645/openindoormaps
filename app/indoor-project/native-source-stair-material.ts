@@ -84,11 +84,11 @@ export function validateNativeSourceStairMaterials(
           (s) =>
             !copy.sourceElementIds.includes(s.nativeElementId) ||
             !Array.isArray(s.partsFeet) ||
-            !s.partsFeet.length ||
+            s.partsFeet.length === 0 ||
             s.partsFeet.some(
               (p) =>
                 !Array.isArray(p) ||
-                !p.length ||
+                p.length === 0 ||
                 p.some(
                   (r) =>
                     !Array.isArray(r) ||
@@ -107,8 +107,7 @@ export function validateNativeSourceStairMaterials(
       band.sections = [];
       band.unclassifiedSourceElementIds = [];
     }
-    copy.sourceWallPositionRepairsSha256 =
-      nativeSourceStairPlacementHash(undefined);
+    copy.sourceWallPositionRepairsSha256 = nativeSourceStairPlacementHash();
     copy.geometrySha256 = nativeSourceStairMaterialHash(copy);
     if (
       !validNativeSourceStairMaterial(
@@ -131,7 +130,7 @@ export function validateNativeSourceStairMaterials(
   const ring = (value: unknown): boolean =>
     Array.isArray(value) &&
     value.length >= 3 &&
-    value.length <= 100000 &&
+    value.length <= 100_000 &&
     value.every(
       (p) => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite),
     );
@@ -145,14 +144,14 @@ export function validateNativeSourceStairMaterials(
       body.geometrySha256 !== nativeSourceStairBodyHash(body) ||
       body.completeOriginalBody !== true ||
       !Array.isArray(body.nativeRunIds) ||
-      !body.nativeRunIds.length ||
+      body.nativeRunIds.length === 0 ||
       new Set(body.nativeRunIds).size !== body.nativeRunIds.length ||
       body.nativeRunIds.some((id) => !Number.isSafeInteger(id) || id <= 0) ||
       !Array.isArray(body.unclassifiedSourceElementIds) ||
-      body.unclassifiedSourceElementIds.length ||
+      body.unclassifiedSourceElementIds.length > 0 ||
       !Array.isArray(body.treads) ||
-      !body.treads.length ||
-      body.treads.length > 100000 ||
+      body.treads.length === 0 ||
+      body.treads.length > 100_000 ||
       body.treads.some(
         (t) =>
           !body.nativeRunIds.includes(t.runElementId) ||
@@ -160,14 +159,14 @@ export function validateNativeSourceStairMaterials(
           !ring(t.ringFeet),
       ) ||
       !Array.isArray(body.landings) ||
-      body.landings.length > 100000 ||
+      body.landings.length > 100_000 ||
       body.landings.some(
         (l) =>
           !Number.isSafeInteger(l.nativeElementId) ||
           l.nativeElementId <= 0 ||
           !Number.isFinite(l.elevationFeet) ||
           !Array.isArray(l.ringsFeet) ||
-          !l.ringsFeet.length ||
+          l.ringsFeet.length === 0 ||
           l.ringsFeet.some((r) => !ring(r)),
       )
     )
@@ -175,10 +174,27 @@ export function validateNativeSourceStairMaterials(
   }
 }
 export function nativeSourceStairPlacementHash(
-  value: unknown,
+  value?: unknown,
   derivedFrameReturns?: unknown,
   provisionalCornerSeals?: unknown,
+  drawingReferences?: unknown,
 ): string {
+  if (drawingReferences !== undefined)
+    return bytesToHex(
+      sha256(
+        new TextEncoder().encode(
+          JSON.stringify([
+            "reviewed-drawing-references-v1",
+            nativeSourceStairPlacementHash(
+              value,
+              derivedFrameReturns,
+              provisionalCornerSeals,
+            ),
+            drawingReferences,
+          ]),
+        ),
+      ),
+    );
   const oldBinding =
     derivedFrameReturns === undefined
       ? (nativeWallPositionMaterialBinding(
@@ -260,6 +276,7 @@ export function validNativeSourceStairMaterial(
   derivedFrameReturns?: unknown,
   provisionalCornerSeals?: unknown,
   exactNative = false,
+  drawingReferences?: unknown,
 ): boolean {
   try {
     if (
@@ -274,11 +291,12 @@ export function validNativeSourceStairMaterial(
           wallPositionRepairs,
           derivedFrameReturns,
           provisionalCornerSeals,
+          drawingReferences,
         ) ||
       value.geometrySha256 !== nativeSourceStairMaterialHash(value) ||
       JSON.stringify(value.pointsFeet) !== JSON.stringify(points) ||
       !Array.isArray(value.sourceElementIds) ||
-      value.sourceElementIds.length > 100000 ||
+      value.sourceElementIds.length > 100_000 ||
       new Set(value.sourceElementIds).size !== value.sourceElementIds.length ||
       value.sourceElementIds.some(
         (id) => !Number.isSafeInteger(id) || id <= 0 || id === nativeStairId,
@@ -301,9 +319,9 @@ export function validNativeSourceStairMaterial(
         band.maximumElevationFeet !== Math.max(a[2], b[2]) + 0.1 ||
         length < 1e-8 ||
         !Array.isArray(band.unclassifiedSourceElementIds) ||
-        band.unclassifiedSourceElementIds.length ||
+        band.unclassifiedSourceElementIds.length > 0 ||
         !Array.isArray(band.sections) ||
-        band.sections.length > 100000 ||
+        band.sections.length > 100_000 ||
         new Set(band.sections.map((s) => s.nativeElementId)).size !==
           band.sections.length
       )
@@ -322,11 +340,11 @@ export function validNativeSourceStairMaterial(
         if (
           !census.has(section.nativeElementId) ||
           !Array.isArray(section.partsFeet) ||
-          !section.partsFeet.length ||
+          section.partsFeet.length === 0 ||
           section.partsFeet.some(
             (p) =>
               !Array.isArray(p) ||
-              !p.length ||
+              p.length === 0 ||
               p.some(
                 (r) =>
                   !Array.isArray(r) ||

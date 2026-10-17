@@ -1,0 +1,246 @@
+{
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "edges": [
+    {
+      "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+      "from": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0",
+      "to": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1",
+      "kind": "stairs",
+      "lengthMetres": 7.2349289583835885,
+      "pointsFeet": [
+        [
+          2.327728994970098,
+          -320.89781591346036,
+          24.278215223097114
+        ],
+        [
+          1.578773765958708,
+          -320.9697773842104,
+          34.120734908136484
+        ]
+      ],
+      "roomKeys": [
+        "rm-400176-561f2a7098b2",
+        "rm-402367-1fc9594ffaa7"
+      ],
+      "evidence": "native-flight",
+      "nativeElementId": 1696006,
+      "accessible": "no",
+      "enabled": false
+    }
+  ],
+  "nodes": [
+    {
+      "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0",
+      "roomKey": "rm-400176-561f2a7098b2",
+      "kind": "stair",
+      "levelId": 400176,
+      "building": "03",
+      "surfaceId": "03:400176:24.278",
+      "pointFeet": [
+        2.327728994970098,
+        -320.89781591346036,
+        24.278215223097114
+      ],
+      "geographic": [
+        -122.81321115413637,
+        53.89132680598268
+      ]
+    },
+    {
+      "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1",
+      "roomKey": "rm-402367-1fc9594ffaa7",
+      "kind": "stair",
+      "levelId": 402367,
+      "building": "03",
+      "surfaceId": "03:402367:34.121",
+      "pointFeet": [
+        1.578773765958708,
+        -320.9697773842104,
+        34.120734908136484
+      ],
+      "geographic": [
+        -122.81321440205365,
+        53.891326043677346
+      ]
+    }
+  ],
+  "records": [
+    {
+      "key": "rm-400176-561f2a7098b2",
+      "number": "03-S201",
+      "name": "Stair",
+      "building": "03",
+      "levelId": 400176,
+      "elevationFeet": 24.278215223097114,
+      "elevationEvidence": "Room level; slab match needs review",
+      "surfaceId": "03:400176:24.278",
+      "circulation": false,
+      "stair": true,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 0.9,
+      "ringsFeet": [
+        [
+          [
+            -12.779954780979901,
+            -325.6763592205104
+          ],
+          [
+            4.175434261220101,
+            -325.6763592205104
+          ],
+          [
+            4.175434261220101,
+            -326.33252719951037
+          ],
+          [
+            4.1906536499200975,
+            -326.33252719951037
+          ],
+          [
+            4.1906536499200975,
+            -316.19801276381037
+          ],
+          [
+            4.111913492420101,
+            -316.19801276381037
+          ],
+          [
+            4.111913492420101,
+            -316.2800337612104
+          ],
+          [
+            0.6112573244200998,
+            -316.2800337612104
+          ],
+          [
+            0.6112573244200998,
+            -316.19801276381037
+          ],
+          [
+            0.4648043400200983,
+            -316.19801276381037
+          ],
+          [
+            0.4648043400200983,
+            -325.5155980657104
+          ],
+          [
+            -12.779954780979901,
+            -325.5155980657104
+          ],
+          [
+            -12.779954780979901,
+            -325.6763592205104
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "03 CJMH LVL 2",
+          "entityHandle": "E0020",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "03-S201",
+          "anchorDwg": [
+            272369.58511553425,
+            21521.613643594028
+          ],
+          "registrationId": "s4@56486c18b014"
+        }
+      },
+      "arrivalNodeId": "arrival:rm-400176-561f2a7098b2"
+    },
+    {
+      "key": "rm-402367-1fc9594ffaa7",
+      "number": "03-S301",
+      "name": "Stair",
+      "building": "03",
+      "levelId": 402367,
+      "elevationFeet": 34.120734908136484,
+      "elevationEvidence": "Room level; slab match needs review",
+      "surfaceId": "03:402367:34.121",
+      "circulation": false,
+      "stair": true,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 1,
+      "ringsFeet": [
+        [
+          [
+            -1.0331061180412924,
+            -325.6763592205104
+          ],
+          [
+            4.175434261258708,
+            -325.6763592205104
+          ],
+          [
+            4.175434261258708,
+            -326.33252719951037
+          ],
+          [
+            4.190653649958708,
+            -326.33252719951037
+          ],
+          [
+            4.190653649958708,
+            -316.2631955479104
+          ],
+          [
+            0.9393413139587068,
+            -316.2631955479104
+          ],
+          [
+            0.9393413139587068,
+            -316.18117455061036
+          ],
+          [
+            -1.0331061180412924,
+            -316.18117455061036
+          ],
+          [
+            -1.0331061180412924,
+            -325.6763592205104
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "03 CJMH LVL 3",
+          "entityHandle": "E4665",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "03-S301",
+          "anchorDwg": [
+            359948.0957423197,
+            19313.485386881046
+          ],
+          "registrationId": "s5@281ebae5991f"
+        }
+      },
+      "arrivalNodeId": "arrival:rm-402367-1fc9594ffaa7"
+    }
+  ],
+  "nativeLevels": [
+    {
+      "id": 400176,
+      "name": "Floor 3",
+      "elevationFeet": 24.278215223097114
+    },
+    {
+      "id": 402367,
+      "name": "Floor 4",
+      "elevationFeet": 34.120734908136484
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "extends": "/workspace/openindoormaps/tsconfig.json",
+  "include": [],
+  "files": [
+    "/workspace/openindoormaps/app/pages/progressive-visitor-page.tsx",
+    "/workspace/openindoormaps/tests/unit/progressive-route-entry.test.ts",
+    "/workspace/openindoormaps/node_modules/vite/client.d.ts"
+  ],
+  "compilerOptions": {
+    "typeRoots": ["/workspace/openindoormaps/node_modules/@types"],
+    "types": ["node"]
+  }
+}

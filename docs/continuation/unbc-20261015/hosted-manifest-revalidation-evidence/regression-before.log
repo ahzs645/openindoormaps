@@ -1,0 +1,35 @@
+✖ revalidates the mutable manifest while retaining content-addressed part and verified ZIP behavior (112.379689ms)
+✔ reassembles the original archive in order with per-part and whole-archive checks (25.165871ms)
+✔ a verified saved ZIP avoids all part downloads; a different saved ZIP is replaced (15.541255ms)
+✔ corrupt parts and a wrong overall digest never reach the package reader (12.870683ms)
+✔ rejects external/traversing part paths and inconsistent sizes before downloading parts (5.732965ms)
+✔ cancelling a superseded load stops before requesting the next part (2.70778ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 859.090324
+
+✖ failing tests:
+
+test at tests/unit/hosted-project.test.ts:1:1235
+✖ revalidates the mutable manifest while retaining content-addressed part and verified ZIP behavior (112.379689ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + undefined
+  - 'no-cache'
+  
+      at TestContext.<anonymous> (/workspace/openindoormaps/tests/unit/hosted-project.test.ts:49:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'no-cache',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

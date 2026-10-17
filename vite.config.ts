@@ -1,7 +1,9 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig, type Plugin } from "vite";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { writePreparedDisplayEngineBinding } from "./scripts/indoor/prepared-display-engine-binding";
+import { visitorOfflineShellPlugin } from "./scripts/indoor/visitor-offline-shell-build";
 
 function preparedDisplayBindingPlugin(): Plugin {
   let root = "";
@@ -42,9 +44,25 @@ export default defineConfig(({ mode }) => ({
     mode === "pages"
       ? (process.env.PAGES_BASE_PATH ?? "/openindoormaps/")
       : "/",
-  plugins: [preparedDisplayBindingPlugin(), geojsonPlugin(), react()],
+  plugins: [
+    preparedDisplayBindingPlugin(),
+    geojsonPlugin(),
+    react(),
+    visitorOfflineShellPlugin(),
+  ],
   resolve: {
     tsconfigPaths: true,
+    alias:
+      process.env.SITE_DEMOS === "hospital"
+        ? [
+            {
+            find: /^(?:~|\.\.)\/data\/locations$/,
+              replacement: fileURLToPath(
+                new URL("./app/data/hospital-locations.ts", import.meta.url),
+              ),
+            },
+          ]
+        : [],
   },
   build: {
     rollupOptions: {

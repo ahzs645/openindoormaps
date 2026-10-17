@@ -1,0 +1,60 @@
+--- a/app/indoor-project/hosted-project.ts
++++ b/app/indoor-project/hosted-project.ts
+@@ -65,7 +65,7 @@
+   if (!/^https?:$/.test(url.protocol) || url.username || url.password)
+     throw new Error("Unsupported hosted map URL.");
+   const raw = await boundedResponse(
+-    await fetcher(url.href, { signal: options.signal }),
++    await fetcher(url.href, { signal: options.signal, cache: "no-cache" }),
+     65536,
+   );
+   const manifest = JSON.parse(
+--- a/tests/unit/hosted-project.test.ts
++++ b/tests/unit/hosted-project.test.ts
+@@ -20,18 +20,44 @@
+     })),
+   };
+   const requests: string[] = [];
+-  const fetcher = (async (input: RequestInfo | URL) => {
++  const requestOptions: (RequestInit | undefined)[] = [];
++  const fetcher = (async (input: RequestInfo | URL, init?: RequestInit) => {
+     const url = String(input);
+     requests.push(url);
++    requestOptions.push(init);
+     if (url.endsWith("project.json")) return Response.json(manifest);
+     const index = manifest.parts.findIndex((p) => url.endsWith(p.path));
+     return index < 0
+       ? new Response(null, { status: 404 })
+       : new Response(pieces[index]);
+   }) as typeof fetch;
+-  return { manifest, bytes, pieces, requests, fetcher };
++  return { manifest, bytes, pieces, requests, requestOptions, fetcher };
+ }
+ const url = "https://maps.example.test/campus/project.json";
++test("revalidates the mutable manifest while retaining content-addressed part and verified ZIP behavior", async () => {
++  for (const savedZip of [false, true]) {
++    const f = fixture();
++    const controller = new AbortController();
++    const progress: number[] = [];
++    const result = await fetchHostedProject(url, {
++      signal: controller.signal,
++      fetcher: f.fetcher,
++      cachedBytes: savedZip ? f.bytes : undefined,
++      onProgress: (received) => progress.push(received),
++    });
++    assert.equal(f.requests[0], url);
++    assert.equal(f.requestOptions[0]?.cache, "no-cache");
++    assert.ok(
++      f.requestOptions.every((init) => init?.signal === controller.signal),
++    );
++    assert.ok(f.requestOptions.slice(1).every((init) => init?.cache === undefined));
++    assert.equal(result.cached, savedZip);
++    assert.deepEqual(result.bytes, f.bytes);
++    assert.deepEqual(progress, savedZip ? [6] : [3, 6]);
++    assert.equal(f.requests.length, savedZip ? 1 : 3);
++    if (savedZip) assert.equal(result.bytes, f.bytes);
++  }
++});
+ test("reassembles the original archive in order with per-part and whole-archive checks", async () => {
+   const f = fixture(),
+     progress: number[] = [];

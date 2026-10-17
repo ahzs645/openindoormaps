@@ -1,0 +1,14 @@
+✔ revalidates the mutable manifest while retaining content-addressed part and verified ZIP behavior (149.895936ms)
+✔ reassembles the original archive in order with per-part and whole-archive checks (13.465211ms)
+✔ a verified saved ZIP avoids all part downloads; a different saved ZIP is replaced (6.741314ms)
+✔ corrupt parts and a wrong overall digest never reach the package reader (9.752486ms)
+✔ rejects external/traversing part paths and inconsistent sizes before downloading parts (2.402156ms)
+✔ cancelling a superseded load stops before requesting the next part (4.703823ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 823.016371

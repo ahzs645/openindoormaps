@@ -1,3 +1,4 @@
+import { activeNativeDoorBoundaryClosures } from "./native-door-boundary-closures";
 import type { IndoorDataset } from "./contract";
 import { NATIVE_EXACT_GEOS_BINDING } from "./native-exact-geos-overlay";
 
@@ -442,9 +443,10 @@ export async function reviewedAreaPartitionLocalEvidence(
     );
   add(
     "doorBoundaryClosures",
-    data.nativeDoorBoundaryClosures?.doors.filter(
-      (d) => d.levelId === p.levelId,
-    ),
+    activeNativeDoorBoundaryClosures(
+      data.nativeDoorBoundaryClosures,
+      data.source.modelSha256,
+    ).filter((d) => d.levelId === p.levelId),
     (d: { id: string }) => d.id,
   );
   add(

@@ -1,0 +1,1397 @@
+{
+  "createdAt": "2026-10-16T07:29:41.862160+00:00",
+  "scope": "All24 currently handled planar held links; complete original source station/typed-mode audit, not24 completed route qualifications",
+  "sourceModelSHA256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSHA256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "sourcePages": 3666,
+  "actualSourceMissingRequestedRecords": 0,
+  "all38SourceRunRequests": 38,
+  "sourceBodyCount": 38,
+  "counts": {
+    "source-derived-station-proposal-ready": 3,
+    "multi-run-landing-contract-required": 10,
+    "current-axis-only-station-contract-insufficient": 5,
+    "original-typed-riser-consumer-mode-required": 6
+  },
+  "rows": [
+    {
+      "nativeStairId": 2156084,
+      "nativeRunIds": [
+        2156103
+      ],
+      "originalGraphLabels": [
+        [
+          "04-S101",
+          "04-S201"
+        ]
+      ],
+      "group": "source-derived-station-proposal-ready",
+      "firstUnsupportedCondition": "Actual named terminal floor/cap, canonical approaches, full six-foot own/foreign clearance, access and navigation pending",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2156103,
+          "nativeDefinitionId": 2156104,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 0,
+          "actualTopElevationFeet": 14.435695538057743,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 26,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "216f74ed3db6a93242a494b40b9b8d4c639f8d3925981d178e1ba36462a6fde8"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunIds": [
+        2474569,
+        2474572
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S101",
+          "10-S201"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2474569,
+          "nativeDefinitionId": 2474570,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 3.2808398950131235,
+          "actualTopElevationFeet": 10.717410323709537,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "62daef73877e7f7fe6cdfed350cb68a2d74b9a36c50e6bb9ecc55f93fa300776",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "3271729921670362669300515537546464070502428871335042651270815424469889908521",
+                  "1761492756267081091414063310016669367570509868197364528905339166109716185088"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "766005410410405256892573344630453789201965172997515607200371237988489993236653307566240830937106474343487851275827113593",
+                  "660003180823134910089754924227164958097234086324675945718260566866395964433060596409956232405640984419396788207654797312"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        },
+        {
+          "nativeRunId": 2474572,
+          "nativeDefinitionId": 2474573,
+          "typedTreads": 5,
+          "actualBottomElevationFeet": 10.717410323709537,
+          "actualTopElevationFeet": 14.435695538057743,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 18,
+          "actualOrderedRiserCount": 6,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "792d3d9a9ab709ed4dc501278afc4cf166cb3bb92fff61b96d9c5b8d95f8db03"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2439748,
+      "nativeRunIds": [
+        2439788
+      ],
+      "originalGraphLabels": [
+        [
+          "05-S101",
+          "05-S201"
+        ]
+      ],
+      "group": "current-axis-only-station-contract-insufficient",
+      "firstUnsupportedCondition": "No full2ft x/y lateral line exists in exact physical-cap/native-intent intersection",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2439788,
+          "nativeDefinitionId": 2439789,
+          "typedTreads": 14,
+          "actualBottomElevationFeet": 0,
+          "actualTopElevationFeet": 14.435695538057743,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 15,
+          "actualOrderedRiserCount": 15,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "6e0493f82f3c14699fe04ef389b9a289382f038d17d3cd1932d03c21e45f6d18",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "25507895682431287800927858038633036317095205764309841964851837390419953839611050558061589589855846352396127291163831816138447497",
+                  "13733399317165938266007372742113617088153244077525855803067168277676796079343429955272332400043652140698045410916452824164335616"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "25507895682431287800927858038633036317095205764309841964851837390419953839611050558061589589855846352396127291163831816138447497",
+                  "21978033128369182869479014850192465561077711248636444476567048179191079379286980376818969257764264323962312901443500946405457920"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1779620,
+      "nativeRunIds": [
+        1779623
+      ],
+      "originalGraphLabels": [
+        [
+          "06-S206",
+          "06-S306"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Original finite boundary cannot be oriented by the declared riser direction",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1779623,
+          "nativeDefinitionId": 1779624,
+          "typedTreads": 29,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 29.855643044619423,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 30,
+          "actualOrderedRiserCount": 30,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original finite boundary cannot be oriented by the declared riser direction"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "e9ced0cb2fd2001f22eaf853e35e209890b7d6db430504ce83481b5d3276c27b"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2354630,
+      "nativeRunIds": [
+        2354663
+      ],
+      "originalGraphLabels": [
+        [
+          "03-S104",
+          "03-S204"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Unsupported original begin/end/ordered-riser layout",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2354663,
+          "nativeDefinitionId": 2354664,
+          "typedTreads": 21,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 44,
+          "actualOrderedRiserCount": 22,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "a335ba3eb70fa65d1e6c2aee04f0d95835aa399ffdd056ab33e9e7da8f7aa9d4"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunIds": [
+        1496323,
+        1496326
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S301",
+          "10-S401"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1496323,
+          "nativeDefinitionId": 1496324,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 30.83989501312336,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "97b9502a097f4c0c8f6b31fe56f13c4f847834d185f4933153171278e762c9b4",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "3271729921670362669300515537546464070502428871335042651270815424469889908521",
+                  "1761492756267081091414063310016669367570509868197364528905339166109716185088"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "766005410410405256892573344630453789201965172997515607200371237988489993236653307566240830937106474343487851275827113593",
+                  "660003180823134910089754924227164958097234086324675945718260566866395964433060596409956232405640984419396788207654797312"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1496326,
+          "nativeDefinitionId": 1496327,
+          "typedTreads": 5,
+          "actualBottomElevationFeet": 30.83989501312336,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 18,
+          "actualOrderedRiserCount": 6,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "420ee97f87bc4463f26f39c6dd984eb621efa33a18591d3e61ad6d8fed1754d0"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunIds": [
+        1498361,
+        1498364
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S301",
+          "10-S401"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1498361,
+          "nativeDefinitionId": 1498362,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 30.83989501312336,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "81781cac7ae50f2de5af8df755abff00a974cc3fa50f4fd7550482f7961ab43d",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "3271729921670362669300515537546464070502428871335042651270815424469889908521",
+                  "1761492756267081091414063310016669367570509868197364528905339166109716185088"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "766005410410405256892573344630453789201965172997515607200371237988489993236653307566240830937106474343487851275827113593",
+                  "660003180823134910089754924227164958097234086324675945718260566866395964433060596409956232405640984419396788207654797312"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1498364,
+          "nativeDefinitionId": 1498365,
+          "typedTreads": 5,
+          "actualBottomElevationFeet": 30.83989501312336,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 18,
+          "actualOrderedRiserCount": 6,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "d560853a78d7d91c63e75f591fc060dd4edab65088f7789209badd6576938a8f"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunIds": [
+        1498458,
+        1498461
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S302",
+          "10-S402"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1498458,
+          "nativeDefinitionId": 1498459,
+          "typedTreads": 10,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 29.691601049868765,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 11,
+          "actualOrderedRiserCount": 11,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "95f2ec2e94b2b1de84f6b87726333fc3e9ff7484572eaf7a51e6491424f2c9cd"
+        },
+        {
+          "nativeRunId": 1498461,
+          "nativeDefinitionId": 1498462,
+          "typedTreads": 8,
+          "actualBottomElevationFeet": 29.691601049868765,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 11,
+          "actualTopRiserIndex": 20,
+          "actualOrderedRiserCount": 9,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "c2269e07a929e78568a053af71ef7ee3908926108b4bea205e5ab2eb8ee2c07a"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunIds": [
+        1500192,
+        1500195
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S201",
+          "10-S301"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1500192,
+          "nativeDefinitionId": 1500193,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 20.99737532808399,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "a4bb907a0faf84649909cb6b30b0d8d6d44f0862049113e9c4b21e1dd1ce1b06",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "3271729921670362669300515537546464070502428871335042651270815424469889908521",
+                  "1761492756267081091414063310016669367570509868197364528905339166109716185088"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "766005410410405256892573344630453789201965172997515607200371237988489993236653307566240830937106474343487851275827113593",
+                  "660003180823134910089754924227164958097234086324675945718260566866395964433060596409956232405640984419396788207654797312"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1500195,
+          "nativeDefinitionId": 1500196,
+          "typedTreads": 5,
+          "actualBottomElevationFeet": 20.99737532808399,
+          "actualTopElevationFeet": 24.278215223097114,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 18,
+          "actualOrderedRiserCount": 6,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "447adebd1c97af6ce57caf08edd739c6a4950134dfe528df6211facf7fc4bbce"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunIds": [
+        1500289,
+        1500292
+      ],
+      "originalGraphLabels": [
+        [
+          "10-S302",
+          "10-S402"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1500289,
+          "nativeDefinitionId": 1500290,
+          "typedTreads": 10,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 29.691601049868765,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 11,
+          "actualOrderedRiserCount": 11,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "6ea159479db3e57726eafed2fbd1427ede5cd9ffe355fe55ae3eae17eb7cfe8a"
+        },
+        {
+          "nativeRunId": 1500292,
+          "nativeDefinitionId": 1500293,
+          "typedTreads": 8,
+          "actualBottomElevationFeet": 29.691601049868765,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 11,
+          "actualTopRiserIndex": 20,
+          "actualOrderedRiserCount": 9,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "d51586cea09f5ff5dafd2760ed77feabb16abfb0ccc82ad56376fbc7bffda887"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2160665,
+      "nativeRunIds": [
+        2160668
+      ],
+      "originalGraphLabels": [
+        [
+          "04-S201",
+          "04-S301"
+        ]
+      ],
+      "group": "source-derived-station-proposal-ready",
+      "firstUnsupportedCondition": "Actual named terminal floor/cap, canonical approaches, full six-foot own/foreign clearance, access and navigation pending",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2160668,
+          "nativeDefinitionId": 2160669,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 24.278215223097114,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 26,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "a14e3b2d084e844691c7f796d4f1c91c1fa8da4f7dc6930a33230a650e748d5a"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2161350,
+      "nativeRunIds": [
+        2161353
+      ],
+      "originalGraphLabels": [
+        [
+          "04-S301",
+          "04-S401"
+        ]
+      ],
+      "group": "source-derived-station-proposal-ready",
+      "firstUnsupportedCondition": "Actual named terminal floor/cap, canonical approaches, full six-foot own/foreign clearance, access and navigation pending",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 2161353,
+          "nativeDefinitionId": 2161354,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 26,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "1bb0c62d51361064585280f8275d17b59fb26451a4e0652080ce99377a65801b"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1293690,
+      "nativeRunIds": [
+        1293981,
+        1294068
+      ],
+      "originalGraphLabels": [
+        [
+          "04-S102",
+          "04-S202"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1293981,
+          "nativeDefinitionId": 1293982,
+          "typedTreads": 5,
+          "actualBottomElevationFeet": 0,
+          "actualTopElevationFeet": 2.706692913385827,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 6,
+          "actualOrderedRiserCount": 6,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": true,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "be0ee37efc48b5015a096514723c3c9e6730f12d87fa4e5888bc879d6636e656"
+        },
+        {
+          "nativeRunId": 1294068,
+          "nativeDefinitionId": 1294069,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 2.706692913385827,
+          "actualTopElevationFeet": 16.240157480314963,
+          "actualBaseRiserIndex": 6,
+          "actualTopRiserIndex": 36,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "bd5193dfc822c31127265d46ab3d7ffd23ee5d1c14b7b5051fe9ca01be3b3552"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunIds": [
+        1296000,
+        1296189
+      ],
+      "originalGraphLabels": [
+        [
+          "04-S302",
+          "04-S402"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1296000,
+          "nativeDefinitionId": 1296001,
+          "typedTreads": 13,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 30.01968503937008,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 14,
+          "actualOrderedRiserCount": 14,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 6,
+          "sourceFactSHA256": "077c89aece4b0ca9172a50b53e6b42351d98e32c5d705eadc5d608bc5c06d094",
+          "fullAxisLineImpossibilityProven": false,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "14396473979978764921187234089616017422369743211473852748107058173",
+                  "14060199457422580443196854046621335455003142073335922031448817664"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "2993717008184139788631274538648405590927504277328665840748027064048582666081773163275774511983",
+                  "838383124043488742521053639874046515629045248151189889970580324792882921948662964240169041920"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": false
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1296189,
+          "nativeDefinitionId": 1296190,
+          "typedTreads": 9,
+          "actualBottomElevationFeet": 30.01968503937008,
+          "actualTopElevationFeet": 35.35104986876641,
+          "actualBaseRiserIndex": 14,
+          "actualTopRiserIndex": 27,
+          "actualOrderedRiserCount": 10,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "31f98732a8320654fe7272874871929424b0953a3eed48b36b96ca5d4f550ff6"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunIds": [
+        1514127,
+        1514130
+      ],
+      "originalGraphLabels": [
+        [
+          "08-S302",
+          "08-S402"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1514127,
+          "nativeDefinitionId": 1514128,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 24.278215223097114,
+          "actualTopElevationFeet": 30.183727034120736,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 3,
+          "sourceFactSHA256": "f4ff8d134402d80db58726a5144fd59432d7d561f35e8967487c9778f335ba55",
+          "fullAxisLineImpossibilityProven": false,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 2,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "138521149956031",
+                  "140737488355328"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 2,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "15150750776441",
+                  "4398046511104"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": false
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1514130,
+          "nativeDefinitionId": 1514131,
+          "typedTreads": 7,
+          "actualBottomElevationFeet": 30.183727034120736,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 20,
+          "actualOrderedRiserCount": 8,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original tread does not bind consecutive named riser indices"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "374251f8e39ac37ea30deea09342b8aadc6bcc9b3e788dc2632e1b2299575602"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1988738,
+      "nativeRunIds": [
+        1988746
+      ],
+      "originalGraphLabels": [
+        [
+          "08-S201",
+          "08-S301"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Unsupported original begin/end/ordered-riser layout",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1988746,
+          "nativeDefinitionId": 1988747,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 34.120734908136484,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 52,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "2b5d5b694769446c717e51465a16b06b560ec974fc5687ec317b419cc5b92ece"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1982431,
+      "nativeRunIds": [
+        1984014
+      ],
+      "originalGraphLabels": [
+        [
+          "08-S101",
+          "08-S201"
+        ]
+      ],
+      "group": "current-axis-only-station-contract-insufficient",
+      "firstUnsupportedCondition": "No full2ft x/y lateral line exists in exact physical-cap/native-intent intersection",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1984014,
+          "nativeDefinitionId": 1984015,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 3.2808398950131235,
+          "actualTopElevationFeet": 14.435695538057743,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 26,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "092ff149c585eaf9c8325ce7013234ce60e6ea0d6a39cdf1ef7844cb2671157d",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 5,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "19085516224716670328082657749536984563188678747",
+                  "19776524150017332514197821281541315131944730624"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 5,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "42273101380705673541968114691881340090360381451214295103233987",
+                  "25290041180443290384019044755476011777802979943654663932346368"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1972504,
+      "nativeRunIds": [
+        1972518
+      ],
+      "originalGraphLabels": [
+        [
+          "09-S202",
+          "09-S302"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Unsupported original begin/end/ordered-riser layout",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1972518,
+          "nativeDefinitionId": 1972519,
+          "typedTreads": 26,
+          "actualBottomElevationFeet": -3.2808398950131235,
+          "actualTopElevationFeet": 17.716535433070867,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 32,
+          "actualOrderedRiserCount": 27,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "247d56b2f6804a54e84b210646cd8257b31c38b256c6976dd1532c0283f8834e"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunIds": [
+        1305306,
+        1305425
+      ],
+      "originalGraphLabels": [
+        [
+          "05-S103",
+          "05-S203"
+        ]
+      ],
+      "group": "multi-run-landing-contract-required",
+      "firstUnsupportedCondition": "Current v2 index has one nativeRunId; complete multi-run assembly and connecting landing contract is not implemented",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1305306,
+          "nativeDefinitionId": 1305307,
+          "typedTreads": 11,
+          "actualBottomElevationFeet": 0,
+          "actualTopElevationFeet": 9.117281392457523,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 12,
+          "actualOrderedRiserCount": 12,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "8d84d4d94de9e2472760bbb3a4547978531a2378f1b1fd670bb0b3df5dc58260",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "10035225830761320829128301642933410667622290413915127626911604125532579011465365590247645953",
+                  "5402945240469650061139159214232775246486254190127342059287272786409755010131817130574741504"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "1115025092306813425458700182548156740846921157101680847434622680614731001273929510027516217",
+                  "960724425204622930562843168092058528660505232856269685471213332899367485314253493695938560"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        },
+        {
+          "nativeRunId": 1305425,
+          "nativeDefinitionId": 1305426,
+          "typedTreads": 7,
+          "actualBottomElevationFeet": 9.117281392457523,
+          "actualTopElevationFeet": 14.435695538057743,
+          "actualBaseRiserIndex": 12,
+          "actualTopRiserIndex": 19,
+          "actualOrderedRiserCount": 7,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "9073d46484c2e9697888b1006e256596438f2cf423c4076dd286ca8fc61037ef"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1903824,
+      "nativeRunIds": [
+        1903837
+      ],
+      "originalGraphLabels": [
+        [
+          "05-S201",
+          "05-S301"
+        ]
+      ],
+      "group": "current-axis-only-station-contract-insufficient",
+      "firstUnsupportedCondition": "No full2ft x/y lateral line exists in exact physical-cap/native-intent intersection",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1903837,
+          "nativeDefinitionId": 1903838,
+          "typedTreads": 23,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 24.278215223097114,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 24,
+          "actualOrderedRiserCount": 24,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 1,
+          "sourceFactSHA256": "a379456595500dddeecd71621886a03a92ef15c08d8f4236912a4e1f56759cdf",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "59155525065309875717873396703820103446033700689042398462695797",
+                  "33525489215799927805451458557450832233354450842645601953251328"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "94648840104494936279107781957234050100310462958170977809979491",
+                  "85843196792161599718678607667204367340726447338977879841046528"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1779403,
+      "nativeRunIds": [
+        1779406
+      ],
+      "originalGraphLabels": [
+        [
+          "06-S204",
+          "06-S204"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Unsupported original begin/end/ordered-riser layout",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1779406,
+          "nativeDefinitionId": 1779407,
+          "typedTreads": 26,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 30.426752211529113,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 28,
+          "actualOrderedRiserCount": 27,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Unsupported original begin/end/ordered-riser layout"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "a388289f6bc5ac77d3e85e55a444780d33f6a6c8c4483613b4d3a06c0d7b7c2c"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1779495,
+      "nativeRunIds": [
+        1779498
+      ],
+      "originalGraphLabels": [
+        [
+          "06-S205",
+          "06-S205"
+        ]
+      ],
+      "group": "current-axis-only-station-contract-insufficient",
+      "firstUnsupportedCondition": "No full2ft x/y lateral line exists in exact physical-cap/native-intent intersection",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1779498,
+          "nativeDefinitionId": 1779499,
+          "typedTreads": 25,
+          "actualBottomElevationFeet": 15.091863517060368,
+          "actualTopElevationFeet": 29.855643044619427,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 26,
+          "actualOrderedRiserCount": 26,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "80b036000064705724789a4d270c8d54c1c013bb04f769010d2a48b903613a26",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "60473992859440697047743079824944215854916815147792055553616777965184054067457654736834936987019439804194539",
+                  "49044652819300235050727983625496859444915662802078530249884239607302940369309029859876603317612162211381248"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "20157997619813565682581026608314738618305605049264018517872259321728018022485884912278312329006479934731513",
+                  "13476430616269642838741493602853157866869563878481427463541211528605587914352863050296102025757066432348160"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1689936,
+      "nativeRunIds": [
+        1689940
+      ],
+      "originalGraphLabels": [
+        [
+          "03-S101",
+          "03-S201"
+        ]
+      ],
+      "group": "original-typed-riser-consumer-mode-required",
+      "firstUnsupportedCondition": "Original finite boundary cannot be oriented by the declared riser direction",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1689940,
+          "nativeDefinitionId": 1689941,
+          "typedTreads": 12,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 24.278215223097114,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 13,
+          "actualOrderedRiserCount": 13,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [
+            "Original finite boundary cannot be oriented by the declared riser direction"
+          ],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": null,
+          "sourceFactSHA256": "323dc163d126840a2ca3ef6907c37c5f169251ffa547c1f986cbccb152fae36c"
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1638837,
+      "nativeRunIds": [
+        1638854
+      ],
+      "originalGraphLabels": [
+        [
+          "05-S204",
+          "05-S304"
+        ]
+      ],
+      "group": "current-axis-only-station-contract-insufficient",
+      "firstUnsupportedCondition": "No full2ft x/y lateral line exists in exact physical-cap/native-intent intersection",
+      "allOriginalPhysicalBodiesPresent": true,
+      "originalSourceStationAuthorityGranted": false,
+      "routeApproved": false,
+      "actualSourceFactoryBothDirectionsPassed": false,
+      "runs": [
+        {
+          "nativeRunId": 1638854,
+          "nativeDefinitionId": 1638855,
+          "typedTreads": 23,
+          "actualBottomElevationFeet": 14.435695538057743,
+          "actualTopElevationFeet": 24.278215223097114,
+          "actualBaseRiserIndex": 0,
+          "actualTopRiserIndex": 24,
+          "actualOrderedRiserCount": 24,
+          "actualTreadHistoryBindingComplete": true,
+          "riserConsumerBlockers": [],
+          "stationMathCandidatePassed": false,
+          "firstUnsupportedTypedIndex": 0,
+          "sourceFactSHA256": "e6abf06f5f22938c70ea24d0e76aec1b2c779569d310d9b14fef843b8ddf1103",
+          "fullAxisLineImpossibilityProven": true,
+          "exactAxisSectionWitnesses": [
+            {
+              "lateralAxis": "x",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "580129635163201753501036274267415727563498639980175559385275922759612744173089758832364430584844804736361",
+                  "340735221093919061814621403381001324302365241112378480504081608581821222934528846231590430062283497406464"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            },
+            {
+              "lateralAxis": "y",
+              "vertexOrdinateCount": 4,
+              "affineBandCensusStable": true,
+              "maximumPossibleSliceWidthFeet": {
+                "$rational": [
+                  "580129635163201753501036274267415727563498639980175559385275922759612744173089758832364430584844804736361",
+                  "545290339577709425539557433484507265591474586491254037882118658561387883379794255403428845857117040541696"
+                ]
+              },
+              "fullTwoFootAxisLineImpossible": true
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "runtimeEditsMade": false,
+  "linksEnabled": 0,
+  "actualNavigationCalculations": 0,
+  "originalSourceAuthorityGranted": false,
+  "routeApproved": false,
+  "evidence": [
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/all38-generic-source-station-proposals.v2.json",
+      "sha256": "ae906c7a60f5eeee79be0c66e3fa7d64d4ecce20130f963089db407425023691"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/all38-copied-source-station-proposals.v3.json",
+      "sha256": "3ecf6cec1fa827480c218821d3a0a54fd739a277ef9051e860773fd6527540b9"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/generic-source-station-proposer.v3.mts",
+      "sha256": "5a6bfdd793433724a77d5f9954f746a7ef0514e96244a64cfdbe1d477c479ff7"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-bodies/test-generic-source-station-proposer.mts",
+      "sha256": "4044784332f3b50a065aad4bba15ea754eeaae63c376808f18e5dc3a11e80685"
+    }
+  ]
+}

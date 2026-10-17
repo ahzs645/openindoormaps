@@ -1,6 +1,45 @@
 import * as DMath from "./deterministic-math";
 import type { IndoorDataset, IndoorEdge } from "./contract";
+import {
+  orient2d,
+  rational,
+} from "./vendor/native-rational-overlay-arithmetic.mjs";
 type XY = [number, number];
+// Convert original finite IEEE operands before determinant arithmetic: a tiny
+// positive displacement or a corner contact must never become a door crossing.
+const orientation = (a: XY, b: XY, c: XY) =>
+  orient2d(
+    rational(a[0]),
+    rational(a[1]),
+    rational(b[0]),
+    rational(b[1]),
+    rational(c[0]),
+    rational(c[1]),
+  );
+function crossesOriginalAperture(
+  aperture: XY[],
+  a: XY,
+  b: XY,
+  stripWidth: number,
+) {
+  const turns = aperture.map((p, i) =>
+    orientation(p, aperture[(i + 1) % 4]!, aperture[(i + 2) % 4]!),
+  );
+  if (turns.some((turn) => !turn || turn !== turns[0])) return false;
+  const crossed: number[] = [];
+  for (let i = 0; i < 4; i++) {
+    const p = aperture[i]!,
+      q = aperture[(i + 1) % 4]!;
+    if (
+      orientation(a, b, p) * orientation(a, b, q) < 0 &&
+      orientation(p, q, a) * orientation(p, q, b) < 0
+    ) {
+      if (DMath.hypot(q[0] - p[0], q[1] - p[1]) < stripWidth) return false;
+      crossed.push(i);
+    }
+  }
+  return crossed.length === 2 && crossed[1]! - crossed[0]! === 2;
+}
 export type SourceDoorProof = {
   version: 1;
   sourceModelSha256: string;
@@ -43,9 +82,21 @@ export function validatedSourceDoorProof(
     p.registrationErrorFeet > 0.05 ||
     !Number.isFinite(p.walkingStripWidthFeet) ||
     p.walkingStripWidthFeet < 2 ||
+    p.walkingStripWidthFeet > 40 ||
     !Array.isArray(p.apertureFeet) ||
     p.apertureFeet.length !== 4 ||
-    !p.apertureFeet.every((x) => x.length === 2 && x.every(Number.isFinite))
+    !p.apertureFeet.every(
+      (x) => Array.isArray(x) && x.length === 2 && x.every(Number.isFinite),
+    ) ||
+    !Number.isFinite(p.elevationFeet) ||
+    !Array.isArray(edge.pointsFeet) ||
+    edge.pointsFeet.length !== 2 ||
+    edge.pointsFeet.some(
+      (point) =>
+        !Array.isArray(point) ||
+        point.length !== 3 ||
+        !point.every(Number.isFinite),
+    )
   )
     return;
   const nodes = [edge.from, edge.to].map((id) =>
@@ -56,12 +107,24 @@ export function validatedSourceDoorProof(
       (n) =>
         !n ||
         n.levelId !== p.levelId ||
+        !Array.isArray(n.pointFeet) ||
+        n.pointFeet.length !== 3 ||
+        !n.pointFeet.every(Number.isFinite) ||
         Math.abs(n.pointFeet[2] - p.elevationFeet) > 0.01,
     )
   )
     return;
   if (
     edge.roomKeys.length !== 2 ||
+    new Set(edge.roomKeys).size !== 2 ||
+    nodes[0]!.roomKey === nodes[1]!.roomKey ||
+    nodes.some(
+      (node, i) =>
+        !edge.roomKeys.includes(node!.roomKey) ||
+        node!.pointFeet.some(
+          (coordinate, k) => coordinate !== edge.pointsFeet[i]![k],
+        ),
+    ) ||
     !edge.roomKeys.every((key) => {
       const r = data.records.find((r) => r.key === key),
         dwg = r?.properties.dwg as
@@ -73,6 +136,15 @@ export function validatedSourceDoorProof(
         dwg?.sectionId === p.sectionId
       );
     })
+  )
+    return;
+  if (
+    !crossesOriginalAperture(
+      p.apertureFeet,
+      [edge.pointsFeet[0]![0], edge.pointsFeet[0]![1]],
+      [edge.pointsFeet[1]![0], edge.pointsFeet[1]![1]],
+      p.walkingStripWidthFeet,
+    )
   )
     return;
   if (

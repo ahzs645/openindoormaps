@@ -1,0 +1,328 @@
+{
+  "authority": "Read-only fixed existing original doorway terminals and complete original exact-cell centrelines only. No doorway invention, no full-width material/permission approval or source mutation.",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceGeometryKey": "native-circulation-sha256-v1:2e3949b7f3d6aeddd2ebbec550d4ba4ba0228fbc9690e5f12eb1df9a7b83b8da",
+  "exactTopologySha256": "7abc43ab4c0c7dae6ae331848574fe53c1c6241c4d5cf156287ba55a8552424a",
+  "sourceInputs": [
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-nodes.json",
+      "sha256": "da9549885570604bfa860f2adfb6b3d2d248174bfedc1eae84589ed7c3f37bfb"
+    },
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-edges.json",
+      "sha256": "7dab0a329ed35530bbad4f60a248e8a1d603062f612c653699f8bc37490e0e64"
+    },
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-records.json",
+      "sha256": "fea2bbd337b6d2767d5a02c5d7cbb9e9ac9d7fff5078c3160c49748b93f3f110"
+    },
+    {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-circulationGeometry.json",
+      "sha256": "7e626fa19df40b9b840cf503f8d586db696b0dfb457ab276c4e81e650bc51300"
+    }
+  ],
+  "sourceInputsUnchanged": true,
+  "summary": {
+    "destinations": 11,
+    "withExactSupportedProposal": 0
+  },
+  "rows": [
+    {
+      "key": "rm-1487816-62f28b40713f",
+      "number": "10-1062",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:1487816:2170178"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 2170178,
+          "doorEdgeId": "door:1487816:2170178",
+          "oppositeNodeId": "door:1487816:2170178:0",
+          "oppositeRoomKey": "rm-1487816-555ae048650d",
+          "oppositeRoomNumber": "10-1302",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:3.280840:467",
+          "originalPointInsideExactCell": true,
+          "existingOutsideComponentPeers": 18,
+          "firstThreePeerIds": [
+            "door:1487816:2190048:1",
+            "arrival:rm-1487816-555ae048650d",
+            "arrival:rm-1487816-556850486518"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-6b54a84075ea",
+      "number": "10-1096",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:1487816:1501378"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1501378,
+          "doorEdgeId": "door:1487816:1501378",
+          "oppositeNodeId": "door:1487816:1501378:1",
+          "oppositeRoomKey": "rm-1487816-9319f35b541f",
+          "oppositeRoomNumber": "10-1090",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:3.280840:421",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 51,
+          "firstThreePeerIds": [
+            "arrival:rm-1487816-9319f35b541f",
+            "door:1487816:1501376:1",
+            "door:1487816:1501377:1"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-1487816-93055f5b540e",
+      "number": "10-1084",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:1487816:1501373"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1501373,
+          "doorEdgeId": "door:1487816:1501373",
+          "oppositeNodeId": "door:1487816:1501373:0",
+          "oppositeRoomKey": "rm-1487816-1949cc41e164",
+          "oppositeRoomNumber": "10-1060",
+          "oppositeAccess": "public",
+          "cellId": "native-cell:3.280840:421",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 51,
+          "firstThreePeerIds": [
+            "door:1487816:1501374:0",
+            "door:1487816:2169243:0",
+            "door:1487816:2169185:1"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-311-40372a304749",
+      "number": "05-175",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:311:1030100"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1030100,
+          "doorEdgeId": "door:311:1030100",
+          "oppositeNodeId": "door:311:1030100:1",
+          "oppositeRoomKey": "rm-311-403b1c30474d",
+          "oppositeRoomNumber": "05-187",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:0.000000:70",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 292,
+          "firstThreePeerIds": [
+            "door:311:1030152:1",
+            "arrival:rm-311-403b1c30474d",
+            "door:311:1029924:0"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-311-44b68029707a",
+      "number": "05-158",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:311:1816270"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1816270,
+          "doorEdgeId": "door:311:1816270",
+          "oppositeNodeId": "door:311:1816270:0",
+          "oppositeRoomKey": "rm-311-403b1c30474d",
+          "oppositeRoomNumber": "05-187",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:0.000000:70",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 292,
+          "firstThreePeerIds": [
+            "opening:recovered-circulation-seam:rm-311-403b1c30474d:rm-311-5de373297e81:10:3:0",
+            "opening:recovered-circulation-seam:rm-311-04790b3025b4:rm-311-403b1c30474d:0:1:0",
+            "opening:recovered-circulation-seam:rm-311-04790b3025b4:rm-311-403b1c30474d:0:1:1"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-311-d268e1fc2580",
+      "number": "05-156A",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:311:976525"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 976525,
+          "doorEdgeId": "door:311:976525",
+          "oppositeNodeId": "door:311:976525:1",
+          "oppositeRoomKey": "rm-311-c97808fc205b",
+          "oppositeRoomNumber": "05-150",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:0.000000:357",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 11,
+          "firstThreePeerIds": [
+            "door:311:1030351:0",
+            "door:311:976641:0",
+            "door:311:1030396:1"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-400176-0a89a47adc83",
+      "number": "10-3056",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:400176:2261753"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 2261753,
+          "doorEdgeId": "door:400176:2261753",
+          "oppositeNodeId": "door:400176:2261753:0",
+          "oppositeRoomKey": "rm-400176-045fc483f671",
+          "oppositeRoomNumber": "10-3036",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:24.278215:907",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 61,
+          "firstThreePeerIds": [
+            "door:400176:2255519:0",
+            "door:400176:2261777:0",
+            "door:400176:2255520:0"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-0f6445c1a3ec",
+      "number": "04-425",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:402367:2144205"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 2144205,
+          "doorEdgeId": "door:402367:2144205",
+          "oppositeNodeId": "door:402367:2144205:1",
+          "oppositeRoomKey": "rm-402367-133b24ba6565",
+          "oppositeRoomNumber": "04-423",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:34.120735:1077",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 58,
+          "firstThreePeerIds": [
+            "door:402367:2144227:1",
+            "door:402367:2144171:1",
+            "door:402367:2142708:0"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-681158c0407d",
+      "number": "05-497",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:402367:1124269"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1124269,
+          "doorEdgeId": "door:402367:1124269",
+          "oppositeNodeId": "door:402367:1124269:0",
+          "oppositeRoomKey": "rm-402367-5e5131c03aa8",
+          "oppositeRoomNumber": "05-492",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:34.120735:1215",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 56,
+          "firstThreePeerIds": [
+            "door:402367:1126770:0",
+            "door:402367:1118471:0",
+            "door:402367:1118471:1"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-402367-f29d0f5e0f95",
+      "number": "05-424",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:402367:1122022"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1122022,
+          "doorEdgeId": "door:402367:1122022",
+          "oppositeNodeId": "door:402367:1122022:1",
+          "oppositeRoomKey": "rm-402367-f2b16b5e0fa6",
+          "oppositeRoomNumber": "05-425",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:34.120735:1204",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 16,
+          "firstThreePeerIds": [
+            "door:402367:1122058:1",
+            "door:402367:1119728:1",
+            "arrival:rm-402367-f2b16b5e0fa6"
+          ],
+          "proposed": null
+        }
+      ]
+    },
+    {
+      "key": "rm-694-0b2d77582967",
+      "number": "06-284",
+      "originalComponentNodes": 3,
+      "existingComponentDoorEdges": [
+        "door:694:1350732"
+      ],
+      "approaches": [
+        {
+          "existingNativeDoorId": 1350732,
+          "doorEdgeId": "door:694:1350732",
+          "oppositeNodeId": "door:694:1350732:1",
+          "oppositeRoomKey": "rm-694-0b30ff58296a",
+          "oppositeRoomNumber": "06-244",
+          "oppositeAccess": "unknown",
+          "cellId": "native-cell:14.435696:536",
+          "originalPointInsideExactCell": false,
+          "existingOutsideComponentPeers": 42,
+          "firstThreePeerIds": [
+            "arrival:rm-694-0b29f3582964",
+            "door:694:1328384:1",
+            "door:694:1328384:0"
+          ],
+          "proposed": null
+        }
+      ]
+    }
+  ]
+}

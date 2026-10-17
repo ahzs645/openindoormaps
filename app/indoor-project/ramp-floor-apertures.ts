@@ -4,9 +4,11 @@ import type { IndoorDataset } from "./contract";
 import { floorHeightDatum } from "./relative-heights";
 import { geographicPoint } from "./routing";
 import { nativeRationalOverlay } from "./native-rational-overlay";
+import { nativeRationalIntersectionOperand } from "./native-rational-intersection-broadphase";
 import {
   nativeRenderExactParts,
   nativeRenderProperties,
+  nativeRenderPartsMayIntersect,
 } from "./native-render-parts";
 
 const bounds = (p: number[][]) => [
@@ -78,17 +80,17 @@ export function rampFloorApertures(
       );
       if (nearby.length === 0) return f;
       if (data.nativeIndoorEnvelopes) {
+        const cuts = nearby.flatMap((c) => c.nativeParts);
+        if (!nativeRenderPartsMayIntersect(f.properties, cuts)) return f;
         const source = nativeRenderExactParts(f.properties);
         if (!source)
           throw new Error(
             "Strict native ramp visibility lacks native drawing coordinates.",
           );
+        const localCuts = nativeRationalIntersectionOperand(source, cuts);
+        if (localCuts.length === 0) return f;
         const drawing = nativeRenderProperties(
-          nativeRationalOverlay(
-            "difference",
-            source,
-            ...nearby.flatMap((c) => c.nativeParts.map((part) => [part])),
-          ),
+          nativeRationalOverlay("difference", source, localCuts),
         );
         return {
           ...f,

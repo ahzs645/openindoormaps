@@ -191,7 +191,7 @@ test("finite interval cannot choose a far face, invent a trimmed source cap or s
     /full actual/,
   );
   const r = repair.target.ringsFeet[0],
-    concave = [r[0], r[1], [2, 0.5], r[2], r[3]];
+    concave: P[] = [r[0], r[1], [2, 0.5], r[2], r[3]];
   data.nativeMaterialSections!.levels[0].sections[1].partsFeet = [[concave]];
   bind(data, repair);
   assert.throws(

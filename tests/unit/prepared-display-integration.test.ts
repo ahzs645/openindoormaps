@@ -180,7 +180,7 @@ function fixture() {
       warningCount: 0,
     },
     preparedFloor: {
-      presentation: { display: {} },
+      presentation: { display: {}, overviewGeometry: drawing },
       nativeStairKeys: [],
       stairSurroundKeys: [],
       assumedRoomBlocks: fc(),
@@ -818,12 +818,22 @@ async function actualWorkerCacheHit(module: "floor" | "native") {
       response.memoryCostBytes,
       floorMemoryCostBytes(
         module === "floor"
-          ? { value: response.value, nativeFaces: response.nativeFaces }
+          ? {
+              value: response.value,
+              nativeFaces: response.nativeFaces,
+              overviewGround: response.overviewGround,
+              overviewFloor: response.overviewFloor,
+            }
           : response.result,
       ),
     );
-    if (module === "floor")
+    if (module === "floor") {
       assert.deepEqual(response.nativeFaces, payload.nativeFaces);
+      for (const drawing of [response.overviewGround, response.overviewFloor]) {
+        assert.equal((drawing as { type: string }).type, "FeatureCollection");
+        assert(Array.isArray((drawing as { features: unknown[] }).features));
+      }
+    }
     assert(
       Number.isFinite(response.memoryCostBytes) &&
         Number(response.memoryCostBytes) > 0,

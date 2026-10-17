@@ -22,8 +22,11 @@ export function nativeRampLayer(
   route: ProjectRoute | null = null,
   nativeModel = false,
   relativeHeights = false,
+  displayContext?: { physicalHeights: boolean; datumFeet: number },
 ): CustomLayerInterface {
-  const physicalHeights = relativeHeights || !!data.nativeIndoorEnvelopes;
+  const physicalHeights =
+    displayContext?.physicalHeights ??
+    (relativeHeights || !!data.nativeIndoorEnvelopes);
   const origin = MercatorCoordinate.fromLngLat(data.alignment.originGeographic);
   const metre = origin.meterInMercatorCoordinateUnits();
   const transform = new THREE.Matrix4()
@@ -69,20 +72,24 @@ export function nativeRampLayer(
     NonNullable<ProjectRoute>["paths"][number],
     number
   >();
-  const sharedDatum = floorHeightDatum(data, levelIds);
+  const sharedDatum =
+    displayContext?.datumFeet ?? floorHeightDatum(data, levelIds);
   if (physicalHeights && (three || nativeModel))
     for (const path of route?.paths ?? [])
       if (path.levelIds.some((id) => levelIds.includes(id)))
         routePaths.set(path, sharedDatum);
   for (const ramp of data.rampDisplay?.ramps ?? []) {
     const edge = data.edges.find((e) => e.id === ramp.edgeId);
-    const datum = nativeRampHeightDatum(
-      data,
-      levelIds,
-      ramp.edgeId,
-      nativeModel,
-      physicalHeights,
-    );
+    const datum =
+      displayContext && physicalHeights
+        ? displayContext.datumFeet
+        : nativeRampHeightDatum(
+            data,
+            levelIds,
+            ramp.edgeId,
+            nativeModel,
+            physicalHeights,
+          );
     if (
       !ramp.levelIds.some((id) => levelIds.includes(id)) ||
       (building !== "all" &&

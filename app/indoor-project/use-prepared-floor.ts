@@ -50,19 +50,23 @@ export function usePreparedFloor(
   const sentData = useRef<IndoorDataset>();
   const pending = useRef(false);
   // Only one dataset-holding heavy worker kind stays resident: when route
-  // work (warmup or a user request) starts and no floor is preparing, release
+  // work (warmup or a user request) or evidence review starts, release
   // the idle floor worker (its dataset clone and uncollected decode garbage).
   // The shown floor stays in React state; the next floor request re-uploads.
   useEffect(
     () =>
       releaseWhenOthersStart(
         heavyWorkerSchedule,
-        ["route", "warmup"],
+        ["route", "warmup", "review"],
         () => !pending.current && !!sentData.current,
         () => {
           sentData.current = undefined;
           client.dispose();
-          floorDiagnostic("floor-main:released-for-route");
+          floorDiagnostic(
+            heavyWorkerSchedule.busy("review")
+              ? "floor-main:released-for-review"
+              : "floor-main:released-for-route",
+          );
         },
       ),
     [client],

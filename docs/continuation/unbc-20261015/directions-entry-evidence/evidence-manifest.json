@@ -1,0 +1,127 @@
+{
+  "purpose": "Simulated-DOM actual hook+UI effects for460missing and3728same identities, positive preparation/cancellation controls; actual compact-page handler regression and8line outside-freeze source fix. No browser/mobile/hosted/calculator completion claim.",
+  "nodeVersion": "v24.19.0",
+  "dependencyVersions": {
+    "happy-dom": "21.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "5.8.3",
+    "esbuild": "0.28.2"
+  },
+  "testCommand": "node --import tsx --test tests/unit/progressive-route-entry.test.ts tests/unit/visitor-route-efficiency.test.ts",
+  "scopedTypecheckCommand": "node --max-old-space-size=2048 node_modules/typescript/bin/tsc --project /workspace/scratch/unbc-pathway-repair-20261015/route-entry-component-qa/tsconfig.scoped.json --pretty false",
+  "buildCommand": "node --max-old-space-size=2048 node_modules/vite/bin/vite.js build --outDir /workspace/scratch/unbc-pathway-repair-20261015/route-entry-component-qa/app-build --emptyOutDir",
+  "sourceProductEdit": {
+    "path": "/workspace/openindoormaps/app/pages/progressive-visitor-page.tsx",
+    "sha256": "89232f1c1b2710eeee0accbe6193adb8dbbc00c2614e8170fc4f9b94ed05856c",
+    "addedLines": 8,
+    "removedLines": 0,
+    "outsideBoth946FileCompilerManifests": true
+  },
+  "newUnitTest": {
+    "path": "/workspace/openindoormaps/tests/unit/progressive-route-entry.test.ts",
+    "sha256": "4b749487925da4fe37eedd99087256c4054863df9e30f2824f2f7839fdef0898"
+  },
+  "baselineVisitorSha256": "6cb0ff0f40efd478d3058da29fa2a1bcd3cb16419042f3d5b8567c9c7f7cee22",
+  "originalRecordsSha256": "fea2bbd337b6d2767d5a02c5d7cbb9e9ac9d7fff5078c3160c49748b93f3f110",
+  "files": [
+    {
+      "name": "actual-hook-and-ui-results.json.gz",
+      "bytes": 36829,
+      "sha256": "4d29e140abdeb36c3922fdfe1f50dcd43f62586dccb5d452b81db3270578f11f",
+      "uncompressedBytes": 758042,
+      "uncompressedSha256": "e5049c2750e29cce745535df6186d90b38f36104eb8af71b0a3ed462d524c52f"
+    },
+    {
+      "name": "simulated-dom-source-closure-before.json.gz",
+      "bytes": 110665,
+      "sha256": "5cf6101774d09574c4fb053e5ddd24f7b19e1b56df5585b83187281817dfe7ca",
+      "uncompressedBytes": 465530,
+      "uncompressedSha256": "92d1ffdf99cac95cc44e9158e3491ae6b26fe4d0c3b68631e94c453323e5e020"
+    },
+    {
+      "name": "source-preservation-and-fix-receipt.json",
+      "bytes": 1717,
+      "sha256": "4a9a3f5e630b42255ba3f05b2bd0aa5e3b77cc3025c1cb192270839f9b92a8b9",
+      "uncompressedBytes": 1717,
+      "uncompressedSha256": "4a9a3f5e630b42255ba3f05b2bd0aa5e3b77cc3025c1cb192270839f9b92a8b9"
+    },
+    {
+      "name": "compact-same-origin-fix.patch",
+      "bytes": 996,
+      "sha256": "5bac6ceddf07b1ff3ab5b534ab394fafbb0909665739953d51342e55f2e43fe1",
+      "uncompressedBytes": 996,
+      "uncompressedSha256": "5bac6ceddf07b1ff3ab5b534ab394fafbb0909665739953d51342e55f2e43fe1"
+    },
+    {
+      "name": "compact-handler-before-fix.log",
+      "bytes": 1101,
+      "sha256": "d1b5673d09c4d969e85c2fa1f820fd00d5b85a0c6fe354a630674ede1cde45f1",
+      "uncompressedBytes": 1101,
+      "uncompressedSha256": "d1b5673d09c4d969e85c2fa1f820fd00d5b85a0c6fe354a630674ede1cde45f1"
+    },
+    {
+      "name": "compact-handler-after-fix.log",
+      "bytes": 948,
+      "sha256": "42446df8ed550bf4619ed5a714871c731306cef8badd70bf463058b1e77d8a8d",
+      "uncompressedBytes": 948,
+      "uncompressedSha256": "42446df8ed550bf4619ed5a714871c731306cef8badd70bf463058b1e77d8a8d"
+    },
+    {
+      "name": "actual-hook-and-ui.log",
+      "bytes": 696,
+      "sha256": "adbb04e3620a7e96833864b64ef946ca2355314adb087f42a4c298a4a4c0e57c",
+      "uncompressedBytes": 696,
+      "uncompressedSha256": "adbb04e3620a7e96833864b64ef946ca2355314adb087f42a4c298a4a4c0e57c"
+    },
+    {
+      "name": "scoped-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedBytes": 0,
+      "uncompressedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "app-build.log.gz",
+      "bytes": 3189,
+      "sha256": "93848a3fe20db421369735dc4c872c6a0016611813a40226494c74d0e3ab1f75",
+      "uncompressedBytes": 21562,
+      "uncompressedSha256": "78d6cd42366b056ed78be7d44851cc833ae7d21e0ab2ecbfe8a98296cba18652"
+    },
+    {
+      "name": "build.log",
+      "bytes": 44,
+      "sha256": "7f85439370b1cc55066d3f0e680cfb731a84709b2ce306aa1b88601fd8045d51",
+      "uncompressedBytes": 44,
+      "uncompressedSha256": "7f85439370b1cc55066d3f0e680cfb731a84709b2ce306aa1b88601fd8045d51"
+    },
+    {
+      "name": "probe.tsx",
+      "bytes": 12765,
+      "sha256": "71d29fbddf3c1ce3b2a5d316b98327b1a30e9478aa42f9a8e68af0c4614d6ef9",
+      "uncompressedBytes": 12765,
+      "uncompressedSha256": "71d29fbddf3c1ce3b2a5d316b98327b1a30e9478aa42f9a8e68af0c4614d6ef9"
+    },
+    {
+      "name": "bootstrap.mjs",
+      "bytes": 1007,
+      "sha256": "d959e040d07154dc00b9bde84cad87d427ef46525cb9cc85f994e707fd46230e",
+      "uncompressedBytes": 1007,
+      "uncompressedSha256": "d959e040d07154dc00b9bde84cad87d427ef46525cb9cc85f994e707fd46230e"
+    },
+    {
+      "name": "build-probe.mjs",
+      "bytes": 1224,
+      "sha256": "cf1ac63cd1ede05595a970880ecb694f89b470d8b91a03bdf1149c82fe21dad9",
+      "uncompressedBytes": 1224,
+      "uncompressedSha256": "cf1ac63cd1ede05595a970880ecb694f89b470d8b91a03bdf1149c82fe21dad9"
+    },
+    {
+      "name": "tsconfig.scoped.json",
+      "bytes": 422,
+      "sha256": "27a35b1c13f7728ff0a9d79a00c16a61144b0044e8b4a10869a567e37320ec3f",
+      "uncompressedBytes": 422,
+      "uncompressedSha256": "27a35b1c13f7728ff0a9d79a00c16a61144b0044e8b4a10869a567e37320ec3f"
+    }
+  ]
+}

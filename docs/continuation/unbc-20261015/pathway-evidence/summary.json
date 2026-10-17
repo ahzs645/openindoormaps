@@ -1,0 +1,72 @@
+{
+  "sourceRoutingDatasetSha256": "a7f91256cb2bbd8c6951d7fdab154d7f104c5e0c4bd0100b7e2abb1202cd3ddd",
+  "engineSha256": "681e71a5b49b7ac79d914f79624be41cea860778d5732289cd2a445e7c2a0d8d",
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "places": 1855,
+  "records": 1864,
+  "nodes": 5476,
+  "edges": 7063,
+  "samePlaceUiCases": 1855,
+  "elapsedMs": 252776,
+  "limits": "Exhaustive directed graph reachability for every destination and both profiles; not a claim that every pair was individually centred, drawn or browser-tested. Actual original reachability is cross-checked for every origin using the original reachability function.",
+  "profiles": [
+    {
+      "mode": "public",
+      "allDirectedPairs": 3439170,
+      "reachable": 2332104,
+      "unreachable": 1107066,
+      "defaultVisitorDirectedPairs": 2629262,
+      "defaultVisitorReachable": 1771260,
+      "crossFloorReachable": 1731046,
+      "oracleChecks": 1855,
+      "blockerCounts": {
+        "native-circulation-proof": 6,
+        "native-floor-hole": 1,
+        "source-proof": 28,
+        "disabled": 28,
+        "staff": 12,
+        "off-limits": 1
+      }
+    },
+    {
+      "mode": "accessible",
+      "allDirectedPairs": 3439170,
+      "reachable": 8,
+      "unreachable": 3439162,
+      "defaultVisitorDirectedPairs": 2629262,
+      "defaultVisitorReachable": 8,
+      "crossFloorReachable": 0,
+      "oracleChecks": 1855,
+      "blockerCounts": {
+        "step-free": 7059,
+        "native-circulation-proof": 6,
+        "native-floor-hole": 1,
+        "source-proof": 28,
+        "disabled": 28,
+        "staff": 12,
+        "off-limits": 1
+      }
+    }
+  ],
+  "worker": {
+    "cases": 192,
+    "failures": 0,
+    "unmappedConnectors": 0,
+    "available": 100,
+    "correctlyUnavailable": 92,
+    "allReturnedRoutesUsedIntendedConnector": true,
+    "maxSampledWorkerHeapMiB": 643.9656829833984
+  },
+  "physicalValidation": {
+    "walkEdges": 5226,
+    "doorEdges": 1561,
+    "walkBlockers": 6,
+    "doorFloorHoleBlockers": 1,
+    "heldStairLinks": 28,
+    "missingEntrances": 115
+  }
+}

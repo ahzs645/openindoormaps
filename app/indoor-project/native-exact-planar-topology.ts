@@ -495,6 +495,103 @@ function localExactParts(
   }
   return clipped;
 }
+/** Away from raw ring boundaries, membership in the normalized union is the
+ * union of original point memberships. Extra raw cuts only subdivide constant
+ * intervals. A raw boundary sample must replay the full normalized union:
+ * overlap can remove a hole boundary or close an exterior bay into a hole.
+ * No geometry is clipped, widened or concatenated as normalized authority. */
+export function nativeRationalPathUnionSupported(
+  points: readonly (readonly (number | Rational)[])[],
+  parts: NativeRationalParts,
+  extensions: NativeRationalParts,
+): boolean {
+  return pathUnionSupported(points, parts, extensions, () =>
+    nativeRationalOverlay("union", parts, extensions),
+  );
+}
+/** The caller owns this query for one validation operation. Repeated boundary
+ * replays reuse only deeply frozen original operands, keyed by the original
+ * extension-part identities rather than temporary flattened arrays. */
+export function createNativeRationalPathUnionQuery() {
+  type Part = NativeRationalParts[number];
+  const immutable = new WeakSet<object>();
+  const frozenPart = (part: Part): boolean => {
+    if (immutable.has(part)) return true;
+    if (
+      !Object.isFrozen(part) ||
+      !part.every(
+        (ring) =>
+          Object.isFrozen(ring) &&
+          ring.every(
+            (point) =>
+              Object.isFrozen(point) && point.every((q) => Object.isFrozen(q)),
+          ),
+      )
+    )
+      return false;
+    immutable.add(part);
+    return true;
+  };
+  const ids = new WeakMap<Part, number>();
+  let nextId = 0;
+  const unions = new WeakMap<
+    NativeRationalParts,
+    Map<string, NativeRationalParts>
+  >();
+  const lifetime: { owner: NativeRationalParts; key: string }[] = [];
+  return (
+    points: readonly (readonly (number | Rational)[])[],
+    parts: NativeRationalParts,
+    extensions: NativeRationalParts,
+  ): boolean =>
+    pathUnionSupported(points, parts, extensions, () => {
+      // Uncached overlays may share Rational scalars with mutable callers.
+      // Freeze only the cached branch, whose operands are already immutable.
+      const compute = () => nativeRationalOverlay("union", parts, extensions);
+      if (
+        !Object.isFrozen(parts) ||
+        !parts.every(frozenPart) ||
+        !extensions.every(frozenPart)
+      )
+        return compute();
+      const key = extensions
+        .map((part) => {
+          let id = ids.get(part);
+          if (id === undefined) ids.set(part, (id = nextId++));
+          return id;
+        })
+        .join(",");
+      let cache = unions.get(parts);
+      if (!cache) unions.set(parts, (cache = new Map()));
+      const saved = cache.get(key);
+      if (saved) return saved;
+      const result = freezeNativeRationalParts(compute());
+      cache.set(key, result);
+      lifetime.push({ owner: parts, key });
+      if (lifetime.length > 32) {
+        const oldest = lifetime.shift()!;
+        unions.get(oldest.owner)?.delete(oldest.key);
+      }
+      return result;
+    });
+}
+function pathUnionSupported(
+  points: readonly (readonly (number | Rational)[])[],
+  parts: NativeRationalParts,
+  extensions: NativeRationalParts,
+  fullUnion: () => NativeRationalParts,
+): boolean {
+  if (points.length === 0) return false;
+  const path = points.map(nativeRationalPoint);
+  // The original face is already a normalized exact authority. Keeping it
+  // whole preserves excluded hole boundaries, including distant hole context.
+  if (extensions.length === 0) return exactPathSupported(path, parts);
+  let boundary = false;
+  const result = exactPathSupported(path, [...parts, ...extensions], () => {
+    boundary = true;
+  });
+  return boundary ? exactPathSupported(path, fullUnion()) : result;
+}
 /** Every rational boundary cut is retained, including collinear endpoints and
  * arbitrarily narrow positive gaps. A degenerate trace still needs point support. */
 export function nativeRationalPathSupported(
@@ -503,8 +600,25 @@ export function nativeRationalPathSupported(
 ): boolean {
   if (points.length === 0 || parts.length === 0) return false;
   const path = points.map(nativeRationalPoint);
-  parts = localExactParts(parts, path);
-  if (path.some((p) => !nativeRationalPointInParts(p, parts))) return false;
+  return exactPathSupported(path, localExactParts(parts, path));
+}
+function exactPathSupported(
+  path: NativeRationalPoint[],
+  parts: NativeRationalParts,
+  onBoundary?: () => void,
+): boolean {
+  if (path.length === 0 || parts.length === 0) return false;
+  const pointSupported = (p: NativeRationalPoint) => {
+    if (
+      onBoundary &&
+      parts.some((part) =>
+        part.some((ring) => nativeRationalPointInRing(p, ring) === -1),
+      )
+    )
+      onBoundary();
+    return nativeRationalPointInParts(p, parts);
+  };
+  if (path.some((p) => !pointSupported(p))) return false;
   for (let i = 1; i < path.length; i++) {
     const a = path[i - 1],
       b = path[i],
@@ -533,6 +647,13 @@ export function nativeRationalPathSupported(
             (cmp(p[1], hi[1]) > 0 && cmp(q[1], hi[1]) > 0)
           )
             continue;
+          // Strictly same-side endpoints cannot cross this finite path.
+          // Integer determinants retain every rational bit without reducing
+          // fractions. Exact zero, tangency and collinearity keep the kernel.
+          const sideP = integerOrientation(a, b, p),
+            sideQ = integerOrientation(a, b, q);
+          if ((sideP > 0n && sideQ > 0n) || (sideP < 0n && sideQ < 0n))
+            continue;
           const w = delta(q, p),
             offset = delta(p, a),
             den = cross(v, w);
@@ -553,7 +674,7 @@ export function nativeRationalPathSupported(
         add(a[0], mul(v[0], t)),
         add(a[1], mul(v[1], t)),
       ];
-      if (!nativeRationalPointInParts(p, parts)) return false;
+      if (!pointSupported(p)) return false;
     }
   }
   return true;
@@ -648,22 +769,20 @@ function validateExactPartTopology(part: NativeRationalPoint[][]) {
     c: NativeRationalPoint,
     d: NativeRationalPoint,
   ) => {
-    const ab = delta(b, a),
-      cd = delta(d, c),
-      ca = delta(c, a),
-      den = cross(ab, cd);
-    if (den.n) {
-      const t = div(cross(ca, cd), den),
-        u = div(cross(ca, ab), den);
-      return (
-        cmp(t, zero()) >= 0 &&
-        cmp(t, one()) <= 0 &&
-        cmp(u, zero()) >= 0 &&
-        cmp(u, one()) <= 0
-      );
+    // Denominators are positive, so determinant signs exactly decide closed
+    // segment crossings without constructing/reducing intermediate fractions.
+    // The caller already rejects zero edges; retain the original finite-axis
+    // overlap test for collinear edges, including isolated endpoint contacts.
+    const cSide = integerOrientation(a, b, c),
+      dSide = integerOrientation(a, b, d);
+    if (cSide || dSide) {
+      if ((cSide < 0n && dSide < 0n) || (cSide > 0n && dSide > 0n))
+        return false;
+      const aSide = integerOrientation(c, d, a),
+        bSide = integerOrientation(c, d, b);
+      return !((aSide < 0n && bSide < 0n) || (aSide > 0n && bSide > 0n));
     }
-    if (cross(ca, ab).n) return false;
-    const axis = ab[0].n ? 0 : 1;
+    const axis = cmp(a[0], b[0]) ? 0 : 1;
     const min = (a: Rational, b: Rational) => (cmp(a, b) < 0 ? a : b),
       max = (a: Rational, b: Rational) => (cmp(a, b) > 0 ? a : b);
     return (

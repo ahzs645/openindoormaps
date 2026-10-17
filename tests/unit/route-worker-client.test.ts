@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import {
   RouteWorkerClient,
+  releaseIdleRouteForReview,
   type RouteWorker,
 } from "../../app/indoor-project/route-worker-client";
 import type {
@@ -10,6 +11,10 @@ import type {
   RouteResponse,
   RouteCalculation,
 } from "../../app/indoor-project/route-calculation";
+import {
+  HeavyWorkerSchedule,
+  scheduleRouteWarmup,
+} from "../../app/indoor-project/heavy-worker-schedule";
 class ControlledWorker implements RouteWorker {
   onmessage: RouteWorker["onmessage"] = null;
   onerror: RouteWorker["onerror"] = null;
@@ -38,6 +43,102 @@ function setup() {
   });
   return { client, workers };
 }
+test("review releases a completed user graph before warmup ever ran, retaining its returned route", async () => {
+  const { client, workers } = setup();
+  const schedule = new HeavyWorkerSchedule();
+  const warmup = scheduleRouteWarmup(
+    schedule,
+    () => assert.fail("The warmup gate has not elapsed."),
+    { onReady() {}, onError: (error) => assert.fail(String(error)) },
+    { ms: 5000, setTimer: () => 1, clearTimer() {} },
+  );
+  let released = 0;
+  const stop = releaseIdleRouteForReview(schedule, client, () => released++);
+  const finishRoute = schedule.begin("route");
+  const request = client.request(data, "a", "b", "public");
+  let finishTeardown = () => {};
+  let terminations = 0;
+  workers[0].terminate = () => {
+    workers[0].terminated = true;
+    terminations++;
+    // The real tracked worker announces teardown synchronously, notifying the
+    // release listener again while dispose() is still on the call stack.
+    finishTeardown = schedule.begin("teardown");
+  };
+  const actual: RouteCalculation = {
+    route: {
+      nodeIds: ["a", "b"],
+      edges: [],
+      distanceMetres: 12,
+      sourceDistanceMetres: 12,
+      paths: [],
+      unknownAccessAreas: [],
+      unknownAccessibilityEdges: 0,
+    },
+  };
+  const snapshot = structuredClone(actual);
+  workers[0].reply(actual);
+  const shown = await request.promise;
+  finishRoute();
+  assert.equal(warmup.state(), "idle", "no warmup run owns this graph");
+  const floor = schedule.begin("floor");
+  assert.equal(
+    workers[0].terminated,
+    false,
+    "floor alone retains shown routes",
+  );
+  floor();
+  const review = schedule.begin("review");
+  assert.equal(workers[0].terminated, true);
+  assert.equal(client.hasResidentWorker(), false);
+  assert.equal(terminations, 1, "teardown notifications do not dispose twice");
+  assert.equal(released, 1);
+  assert.equal(schedule.busy("teardown"), true);
+  assert.deepEqual(shown, snapshot, "the displayed route remains available");
+  stop();
+  finishTeardown();
+  review();
+  warmup.dispose();
+  const next = client.request(data, "b", "a", "public");
+  assert.notEqual(workers[1].messages[0].data, undefined);
+  workers[1].reply({ route: null });
+  await next.promise;
+  client.dispose();
+});
+
+test("review release protects an active user request and catches an already active review", async () => {
+  const { client, workers } = setup();
+  const schedule = new HeavyWorkerSchedule();
+  const finishRoute = schedule.begin("route");
+  const request = client.request(data, "a", "b", "public");
+  const review = schedule.begin("review");
+  let released = 0;
+  const stop = releaseIdleRouteForReview(schedule, client, () => released++);
+  assert.equal(workers[0].terminated, false);
+  workers[0].reply({ route: null });
+  await request.promise;
+  finishRoute();
+  assert.equal(workers[0].terminated, true);
+  assert.equal(released, 1);
+  stop();
+  const next = client.request(data, "b", "a", "public");
+  workers[1].reply({ route: null });
+  await next.promise;
+  const stopLate = releaseIdleRouteForReview(
+    schedule,
+    client,
+    () => released++,
+  );
+  assert.equal(
+    workers[1].terminated,
+    true,
+    "registration checks current review",
+  );
+  assert.equal(released, 2);
+  stopLate();
+  review();
+});
+
 test("changing endpoints cancels CPU work and cannot accept obsolete routes", async () => {
   const { client, workers } = setup();
   const first = client.request(data, "old-start", "old-end", "public");
@@ -62,8 +163,9 @@ test("completed requests reuse a verified dataset, but imported or edited snapsh
   await second.promise;
   const changed = {} as IndoorDataset;
   const edited = client.request(changed, "a", "b", "public");
-  assert.notEqual(workers[0].messages[2].data, undefined);
-  workers[0].reply({ route: null });
+  assert.equal(workers[0].terminated, true);
+  assert.notEqual(workers[1].messages[0].data, undefined);
+  workers[1].reply({ route: null });
   await edited.promise;
   client.dispose();
 });
@@ -95,6 +197,8 @@ test("import or clear releases a completed dataset even before new route endpoin
   assert.notEqual(workers[1].messages[0].data, undefined);
   workers[1].reply({ route: null });
   await next.promise;
+  // The required argument models clearing the imported project.
+  // eslint-disable-next-line unicorn/no-useless-undefined
   client.resetData(undefined);
   assert.equal(workers[1].terminated, true);
 });

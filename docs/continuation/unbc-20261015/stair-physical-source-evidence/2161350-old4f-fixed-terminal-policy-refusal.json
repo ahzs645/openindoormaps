@@ -1,0 +1,720 @@
+{
+  "format": "2161350-bounded-original-fixed-terminal-policy-refusal-v1",
+  "scope": "saved-old4f-original-nodes-and-claimed-cell-policy-only",
+  "oldDataPreliminaryOnly": true,
+  "freshR1ReplayStillRequired": true,
+  "nativeStairId": 2161350,
+  "nativeRunId": 2161353,
+  "nativeDefinitionId": 2161354,
+  "originalCanonicalDatasetSHA256": "31b3bc2d226fe006c404cfb4914ddac723e984c2d2f42cc91d6bdc095b1f2a27",
+  "originalCanonicalGraphLocatorPath": "/workspace/scratch/unbc-pathway-repair-20261015/stair-parent-native-source/case2161350/2161350-original-graph-floor-locators.json",
+  "originalCanonicalGraphLocatorSHA256": "14eb1dd9116de14c8f59cfb714857b165b3d1def8d725237d8864a4b2276a2d4",
+  "unchangedOriginalHeldEdge": {
+    "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+    "from": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+    "to": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1",
+    "kind": "stairs",
+    "lengthMetres": 8.422669720495469,
+    "pointsFeet": [
+      [
+        -80.27704023901612,
+        502.3220358610997,
+        24.278215223097114
+      ],
+      [
+        -77.91496803126898,
+        501.2417305435581,
+        34.120734908136484
+      ]
+    ],
+    "roomKeys": [
+      "rm-400176-408e02ec17d8",
+      "rm-402367-136decba6590"
+    ],
+    "evidence": "native-flight",
+    "nativeElementId": 2161350,
+    "accessible": "no",
+    "enabled": false
+  },
+  "originalNodesExactlyMatchCanonical31b": true,
+  "currentDataPreflight": {
+    "oldDataPreliminaryOnly": true,
+    "r1ReplayStillRequired": true,
+    "originalNodesAndEdgesUnchanged": true,
+    "format": "bounded-original-compiled-cell-stair-terminal-policy-preflight-v1",
+    "originalDataset": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/native-full-clearance/working-original-source-indoor-4f814aca.json",
+      "sha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d"
+    },
+    "nativeStairId": 2161350,
+    "rows": [
+      {
+        "side": 0,
+        "originalNode": {
+          "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+          "roomKey": "rm-400176-408e02ec17d8",
+          "kind": "stair",
+          "levelId": 400176,
+          "building": "04",
+          "surfaceId": "04:400176:24.278",
+          "pointFeet": [
+            -80.27704023901612,
+            502.3220358610997,
+            24.278215223097114
+          ],
+          "geographic": [
+            -122.81464871768289,
+            53.89342780579898
+          ]
+        },
+        "existingEnabledLateralWalkIds": [
+          "native-cell:24.278215:837:alias:arrival:rm-400176-408e02ec17d8|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+          "native-cell:24.278215:837:alias:stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0"
+        ],
+        "candidates": [
+          {
+            "nativeCellId": "native-cell:24.278215:837",
+            "nativeFloorIds": [
+              437656
+            ],
+            "roomKeys": [
+              "rm-400176-408e02ec17d8",
+              "rm-400176-409188ec17db",
+              "rm-400176-b24e426325b2"
+            ],
+            "pointSupported": true,
+            "standingSquareSupported": true,
+            "sameNativeLevel": true,
+            "ownerTracked": true,
+            "accessSupported": true,
+            "policies": [
+              {
+                "blockers": [],
+                "requiredRooms": [
+                  "rm-400176-b24e426325b2"
+                ]
+              },
+              {
+                "blockers": [],
+                "requiredRooms": [
+                  "rm-400176-b24e426325b2"
+                ]
+              }
+            ],
+            "untrackedOrdinaryRoomKeys": [
+              "rm-400176-b24e426325b2"
+            ],
+            "preflightPassed": false
+          }
+        ],
+        "preflightPassed": false
+      },
+      {
+        "side": 1,
+        "originalNode": {
+          "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1",
+          "roomKey": "rm-402367-136decba6590",
+          "kind": "stair",
+          "levelId": 402367,
+          "building": "04",
+          "surfaceId": "04:402367:34.121",
+          "pointFeet": [
+            -77.91496803126898,
+            501.2417305435581,
+            34.120734908136484
+          ],
+          "geographic": [
+            -122.81463677672046,
+            53.893426773244485
+          ]
+        },
+        "existingEnabledLateralWalkIds": [
+          "native-cell:34.120735:1095:alias:arrival:rm-402367-136decba6590|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1"
+        ],
+        "candidates": [
+          {
+            "nativeCellId": "native-cell:34.120735:1095",
+            "nativeFloorIds": [
+              501699
+            ],
+            "roomKeys": [
+              "rm-402367-136decba6590"
+            ],
+            "pointSupported": true,
+            "standingSquareSupported": true,
+            "sameNativeLevel": true,
+            "ownerTracked": true,
+            "accessSupported": true,
+            "policies": [
+              {
+                "blockers": [],
+                "requiredRooms": []
+              },
+              {
+                "blockers": [],
+                "requiredRooms": []
+              }
+            ],
+            "untrackedOrdinaryRoomKeys": [],
+            "preflightPassed": true
+          }
+        ],
+        "preflightPassed": true
+      }
+    ],
+    "allNodePreflightsPassed": false,
+    "currentPhysicalClaimedCellsAndWholeCellRoomRequirementsChecked": true,
+    "onlyStationaryPolicyProjectionUsed": true,
+    "flatApproachPathOrFullBodySupportClaimed": false,
+    "freshR1CellsChecked": false,
+    "originalGraphNodesChanged": false,
+    "routeApproved": false,
+    "elapsedMs": 23460.016917,
+    "memory": {
+      "rss": 1165795328,
+      "heapTotal": 850198528,
+      "heapUsed": 775813608,
+      "external": 257912280,
+      "arrayBuffers": 186394550
+    }
+  },
+  "currentClaimedCellOwnerRecords": [
+    {
+      "key": "rm-400176-408e02ec17d8",
+      "number": "04-S301",
+      "name": "Stair",
+      "building": "04",
+      "levelId": 400176,
+      "elevationFeet": 24.278215223097114,
+      "elevationEvidence": "Recovered slab #437656",
+      "surfaceId": "04:400176:24.278",
+      "circulation": false,
+      "stair": true,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 0.9,
+      "ringsFeet": [
+        [
+          [
+            -82.1351753729988,
+            489.79766907479086
+          ],
+          [
+            -78.5351753729988,
+            489.79766907479086
+          ],
+          [
+            -78.5351753729988,
+            494.5976690747909
+          ],
+          [
+            -72.5351753729988,
+            494.5976690747909
+          ],
+          [
+            -72.5351753729988,
+            506.5976690747909
+          ],
+          [
+            -76.5351753729988,
+            506.19766907479084
+          ],
+          [
+            -76.5351753729988,
+            499.79766907479086
+          ],
+          [
+            -78.1351753729988,
+            499.79766907479086
+          ],
+          [
+            -78.1351753729988,
+            516.5976690747909
+          ],
+          [
+            -76.5351753729988,
+            516.5976690747909
+          ],
+          [
+            -76.5351753729988,
+            508.19766907479084
+          ],
+          [
+            -72.5351753729988,
+            508.5976690747909
+          ],
+          [
+            -72.5351753729988,
+            519.7976690747909
+          ],
+          [
+            -81.33517537299879,
+            519.7976690747909
+          ],
+          [
+            -82.1351753729988,
+            498.5976690747909
+          ],
+          [
+            -86.5351753729988,
+            498.5976690747909
+          ],
+          [
+            -86.5351753729988,
+            494.99766907479085
+          ],
+          [
+            -82.1351753729988,
+            494.99766907479085
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 3N",
+          "entityHandle": "17CFD4",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-S301",
+          "anchorDwg": [
+            490289.04061886587,
+            -130489.05847656183
+          ],
+          "registrationId": "s11@a8a54ab1f6b9"
+        }
+      },
+      "arrivalNodeId": "arrival:rm-400176-408e02ec17d8"
+    },
+    {
+      "key": "rm-400176-409188ec17db",
+      "number": "04-301",
+      "name": "Vestibule",
+      "building": "04",
+      "levelId": 400176,
+      "elevationFeet": 24.278215223097114,
+      "elevationEvidence": "Recovered slab #437656",
+      "surfaceId": "04:400176:24.278",
+      "circulation": true,
+      "stair": false,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 0.9,
+      "ringsFeet": [
+        [
+          [
+            -77.7351753729988,
+            489.3976690747909
+          ],
+          [
+            -72.5351753729988,
+            489.79766907479086
+          ],
+          [
+            -72.5351753729988,
+            493.79766907479086
+          ],
+          [
+            -77.7351753729988,
+            493.79766907479086
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 3N",
+          "entityHandle": "17CFE4",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-301",
+          "anchorDwg": [
+            487037.2294740466,
+            -131767.91356725505
+          ],
+          "registrationId": "s11@a8a54ab1f6b9"
+        }
+      },
+      "arrivalNodeId": "arrival:rm-400176-409188ec17db"
+    },
+    {
+      "key": "rm-400176-b24e426325b2",
+      "number": "04-312",
+      "name": "Jianbing Li",
+      "building": "04",
+      "levelId": 400176,
+      "elevationFeet": 24.278215223097114,
+      "elevationEvidence": "Recovered slab #437656",
+      "surfaceId": "04:400176:24.278",
+      "circulation": false,
+      "stair": false,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 1,
+      "ringsFeet": [
+        [
+          [
+            -95.7779,
+            480.7566
+          ],
+          [
+            -84.5532,
+            480.7566
+          ],
+          [
+            -84.5532,
+            484.5296
+          ],
+          [
+            -73.5821,
+            484.5296
+          ],
+          [
+            -73.5821,
+            484.9528
+          ],
+          [
+            -73.6641,
+            484.9528
+          ],
+          [
+            -73.6641,
+            488.4535
+          ],
+          [
+            -73.5821,
+            488.4535
+          ],
+          [
+            -73.5821,
+            488.5321
+          ],
+          [
+            -73.5822,
+            488.5322
+          ],
+          [
+            -83.2081,
+            488.5322
+          ],
+          [
+            -83.2081,
+            494.359
+          ],
+          [
+            -87.0598,
+            494.359
+          ],
+          [
+            -87.0598,
+            498.6208
+          ],
+          [
+            -95.7779,
+            498.6208
+          ],
+          [
+            -95.7779,
+            480.7566
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 3N",
+          "entityHandle": "16793D",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-312",
+          "anchorDwg": [
+            486291.9356140187,
+            -126513.4746207665
+          ],
+          "registrationId": "s11@a8a54ab1f6b9"
+        },
+        "originalSourceRingsFeet": [
+          [
+            [
+              -95.7779,
+              480.7566
+            ],
+            [
+              -95.7779,
+              498.6208
+            ],
+            [
+              -87.0598,
+              498.6208
+            ],
+            [
+              -87.0598,
+              494.359
+            ],
+            [
+              -83.2081,
+              494.359
+            ],
+            [
+              -83.2081,
+              488.5322
+            ],
+            [
+              -73.5821,
+              488.5322
+            ],
+            [
+              -73.5821,
+              488.4535
+            ],
+            [
+              -73.6641,
+              488.4535
+            ],
+            [
+              -73.6641,
+              484.9528
+            ],
+            [
+              -73.5821,
+              484.9528
+            ],
+            [
+              -73.5821,
+              484.5296
+            ],
+            [
+              -84.5532,
+              484.5296
+            ],
+            [
+              -84.5532,
+              480.7566
+            ]
+          ]
+        ],
+        "nativeRoutingBoundary": {
+          "version": 1,
+          "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+          "boundarySource": "native-wall-enclosure",
+          "boundaryElementIds": [
+            -700000175,
+            439593,
+            439846,
+            440021,
+            1612153,
+            1612192,
+            1612289,
+            1612381,
+            1613339,
+            1613390,
+            1618676,
+            2109342,
+            2112643
+          ],
+          "originalRingsFeet": [
+            [
+              [
+                -95.3351753729988,
+                480.99766907479085
+              ],
+              [
+                -84.9351753729988,
+                480.99766907479085
+              ],
+              [
+                -84.5351753729988,
+                484.99766907479085
+              ],
+              [
+                -73.7351753729988,
+                484.99766907479085
+              ],
+              [
+                -73.7351753729988,
+                487.79766907479086
+              ],
+              [
+                -83.33517537299879,
+                488.19766907479084
+              ],
+              [
+                -83.33517537299879,
+                494.19766907479084
+              ],
+              [
+                -87.3351753729988,
+                494.19766907479084
+              ],
+              [
+                -87.3351753729988,
+                498.5976690747909
+              ],
+              [
+                -95.3351753729988,
+                498.19766907479084
+              ]
+            ]
+          ],
+          "sourceCoverage": 0.9999999999792849,
+          "cellCoverage": 1
+        }
+      },
+      "arrivalNodeId": "arrival:rm-400176-b24e426325b2"
+    },
+    {
+      "key": "rm-402367-136decba6590",
+      "number": "04-S401",
+      "name": "Stair",
+      "building": "04",
+      "levelId": 402367,
+      "elevationFeet": 34.120734908136484,
+      "elevationEvidence": "Recovered slab #501699",
+      "surfaceId": "04:402367:34.121",
+      "circulation": false,
+      "stair": true,
+      "access": "unknown",
+      "walkable": true,
+      "confidence": 0.9,
+      "ringsFeet": [
+        [
+          [
+            -82.10670386492389,
+            489.7866791240689
+          ],
+          [
+            -78.50670386492388,
+            489.7866791240689
+          ],
+          [
+            -78.50670386492388,
+            496.18667912406886
+          ],
+          [
+            -72.50670386492388,
+            496.18667912406886
+          ],
+          [
+            -72.50670386492388,
+            510.18667912406886
+          ],
+          [
+            -75.30670386492388,
+            510.18667912406886
+          ],
+          [
+            -75.30670386492388,
+            508.98667912406887
+          ],
+          [
+            -76.50670386492388,
+            508.98667912406887
+          ],
+          [
+            -76.50670386492388,
+            506.18667912406886
+          ],
+          [
+            -78.10670386492389,
+            506.18667912406886
+          ],
+          [
+            -78.10670386492389,
+            516.586679124069
+          ],
+          [
+            -76.50670386492388,
+            516.586679124069
+          ],
+          [
+            -76.50670386492388,
+            515.3866791240689
+          ],
+          [
+            -72.90670386492388,
+            515.3866791240689
+          ],
+          [
+            -72.50670386492388,
+            519.7866791240689
+          ],
+          [
+            -81.30670386492388,
+            519.7866791240689
+          ],
+          [
+            -81.30670386492388,
+            512.9866791240688
+          ],
+          [
+            -82.10670386492389,
+            512.586679124069
+          ]
+        ]
+      ],
+      "properties": {
+        "dwg": {
+          "fileName": "floorplan.dwg",
+          "sha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+          "sectionId": "04 Res Lab LVL 4N",
+          "entityHandle": "17E36A",
+          "tag": "ROOMNUM",
+          "layer": "3_Text",
+          "rawText": "04-S401",
+          "anchorDwg": [
+            649585.1505860529,
+            -130682.1707844866
+          ],
+          "registrationId": "s13@9c074efdfb78"
+        }
+      },
+      "arrivalNodeId": "arrival:rm-402367-136decba6590"
+    }
+  ],
+  "concreteFirstBlocker": {
+    "side": 0,
+    "originalRoomNumber": "04-S301",
+    "claimedNativeCellId": "native-cell:24.278215:837",
+    "claimedFloorNativeId": 437656,
+    "wholeCellOwnerNumbers": [
+      "04-S301",
+      "04-301",
+      "04-312"
+    ],
+    "ordinaryRoomRequiredInBothDirections": {
+      "key": "rm-400176-b24e426325b2",
+      "number": "04-312",
+      "name": "Jianbing Li",
+      "access": "unknown",
+      "circulation": false,
+      "stair": false
+    },
+    "sourcePhysicalPathThroughThatOfficeClaimed": false,
+    "reason": "The current whole claimed cell inherits an ordinary-room requirement outside the original stair edge room pair. The bounded strict policy preflight refuses; no ownership or access annotation was weakened."
+  },
+  "actualUnchangedFunctionProvenance": {
+    "virtualChange": "export keyword only for existing private nativeCellAccessIsSupported; unchanged predicate",
+    "capturedOriginalFiles": 279,
+    "allCapturedOriginalFilesUnchanged": true,
+    "bundleSHA256": "9e272b542cd37609763afb0168d477661b530dbd0f7fd9af293d35fb07159c76",
+    "originalEngineAsset": {
+      "source": "/workspace/openindoormaps/app/indoor-project/vendor/native-exact-geos/native-exact-geos.wasm",
+      "copy": "/workspace/scratch/unbc-pathway-repair-20261015/stair-parent-native-source/case2161350/vendor/native-exact-geos/native-exact-geos.wasm",
+      "sha256": "2beb9e41b0d0efd6b9ab6dbb2dad62d96041f3fc1119c0360e855be10a63797a"
+    }
+  },
+  "nativeOriginalRvtFloorCheckPerformed": false,
+  "fullFlatApproachesChecked": false,
+  "headroomChecked": false,
+  "originalSourceHeadroomQueued": false,
+  "stopReason": "FIRST_CURRENT_CLAIMED_CELL_ORDINARY_ROOM_DEPENDENCY",
+  "newNodeOrRecipeSearchPerformed": false,
+  "originalGraphNodesOrEdgeChanged": false,
+  "sourceCapabilityIssued": false,
+  "productionFilesEdited": false,
+  "productionIntegrationApproved": false,
+  "routeApproved": false
+}

@@ -1,0 +1,429 @@
+{
+  "format": "1972504-all3-existing-lower-recipes-old4f-current-policy-diagnostic-v1",
+  "input": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/native-full-clearance/working-original-source-indoor-4f814aca.json",
+  "inputSHA256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+  "sourceModelSHA256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "oldDataPreliminaryOnly": true,
+  "r1ReplayStillRequired": true,
+  "originalHeldEdge": {
+    "id": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276",
+    "from": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+    "to": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1",
+    "kind": "stairs",
+    "lengthMetres": 9.584691965646892,
+    "pointsFeet": [
+      [
+        338.0255871195201,
+        503.126768562458,
+        -3.2808398950131235
+      ],
+      [
+        338.5186400497123,
+        502.6799255009287,
+        14.435695538057743
+      ]
+    ],
+    "roomKeys": [
+      "rm-1450417-dbd81729f08f",
+      "rm-694-e4108d414276"
+    ],
+    "evidence": "native-flight",
+    "nativeElementId": 1972504,
+    "accessible": "no",
+    "enabled": false
+  },
+  "originalHeldNodes": [
+    {
+      "id": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+      "roomKey": "rm-1450417-dbd81729f08f",
+      "kind": "stair",
+      "levelId": 1450417,
+      "building": "09",
+      "surfaceId": "09:1450417:-3.281",
+      "pointFeet": [
+        338.0255871195201,
+        503.126768562458,
+        -3.2808398950131235
+      ],
+      "geographic": [
+        -122.81278355989731,
+        53.89375001832507
+      ]
+    },
+    {
+      "id": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1",
+      "roomKey": "rm-694-e4108d414276",
+      "kind": "stair",
+      "levelId": 694,
+      "building": "09",
+      "surfaceId": "09:694:14.436",
+      "pointFeet": [
+        338.5186400497123,
+        502.6799255009287,
+        14.435695538057743
+      ],
+      "geographic": [
+        -122.81278077993544,
+        53.893749220890896
+      ]
+    }
+  ],
+  "proposedDistinctNewNode": {
+    "id": "proposal:source-stair:1972504:upper-native-cap1521608-face5",
+    "roomKey": "rm-694-e4108d414276",
+    "kind": "stair",
+    "levelId": 694,
+    "building": "09",
+    "surfaceId": "09:694:14.436",
+    "pointFeet": [
+      320.81416998836045,
+      497.78745765030067,
+      14.435695538057743
+    ]
+  },
+  "originalMemberships": [
+    {
+      "nodeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+      "walks": [
+        {
+          "id": "native-cell:-3.280840:60:alias:arrival:rm-1450417-dbd81729f08f|stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+          "nativeCellId": "native-cell:-3.280840:60",
+          "roomKeys": [
+            "rm-1450417-dbd81729f08f"
+          ]
+        }
+      ],
+      "claimedCellIds": [
+        "native-cell:-3.280840:60"
+      ]
+    },
+    {
+      "nodeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1",
+      "walks": [
+        {
+          "id": "native-cell:14.435696:824:alias:arrival:rm-694-e4108d414276|stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1",
+          "nativeCellId": "native-cell:14.435696:824",
+          "roomKeys": [
+            "rm-694-e4108d414276"
+          ]
+        }
+      ],
+      "claimedCellIds": [
+        "native-cell:14.435696:824"
+      ]
+    }
+  ],
+  "currentPolicyResult": {
+    "summary": {
+      "claimedUpperCellId": "native-cell:14.435696:824",
+      "claimedUpperRoomKey": "rm-694-e4108d414276",
+      "currentClaimedCellRoomKeys": [
+        "rm-694-e4108d414276"
+      ],
+      "claimedCellIncludesIntendedRoom": true,
+      "rawPointInClaimedCell": true,
+      "currentOwners": [
+        {
+          "key": "rm-694-e4108d414276",
+          "number": "09-S302",
+          "name": "Stair",
+          "levelId": 694,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true
+        }
+      ],
+      "otherOrdinaryOwnerKeys": [],
+      "pointInPhysicalClaimedCell": true,
+      "standingUnsupportedParts": 0,
+      "accessSupported": true
+    },
+    "stage": "all3 existing lower recipes with one unchanged new upper anchor, real full current policy",
+    "blocked": true,
+    "fullFlatPolicyExecuted": true,
+    "allLowerRecipePolicyResults": [
+      {
+        "recipeIndex": 0,
+        "existingSourceFloorRecipe": {
+          "nativeFloorElementId": 1521516,
+          "originalCapFaceToken": 5,
+          "lateralAxis": "y",
+          "approachXYFeet": [
+            [
+              338.0255871195201,
+              503.126768562458
+            ],
+            [
+              320.8142878953185,
+              502.74152589177083
+            ]
+          ]
+        },
+        "policy": {
+          "rows": [
+            {
+              "side": 0,
+              "nodeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+              "cellId": "native-cell:-3.280840:60",
+              "accessSupported": true,
+              "centerlineSupported": false,
+              "fullProfileSupported": false,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": false
+            },
+            {
+              "side": 1,
+              "nodeId": "proposal:source-stair:1972504:upper-native-cap1521608-face5",
+              "cellId": "native-cell:14.435696:824",
+              "accessSupported": true,
+              "centerlineSupported": true,
+              "fullProfileSupported": true,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": true
+            }
+          ],
+          "passed": false
+        }
+      },
+      {
+        "recipeIndex": 1,
+        "existingSourceFloorRecipe": {
+          "nativeFloorElementId": 1521516,
+          "originalCapFaceToken": 5,
+          "lateralAxis": "y",
+          "approachXYFeet": [
+            [
+              338.0255871195201,
+              503.126768562458
+            ],
+            [
+              338.0255871195201,
+              502.74152589177083
+            ],
+            [
+              320.8142878953185,
+              502.74152589177083
+            ]
+          ]
+        },
+        "policy": {
+          "rows": [
+            {
+              "side": 0,
+              "nodeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+              "cellId": "native-cell:-3.280840:60",
+              "accessSupported": true,
+              "centerlineSupported": false,
+              "fullProfileSupported": false,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": false
+            },
+            {
+              "side": 1,
+              "nodeId": "proposal:source-stair:1972504:upper-native-cap1521608-face5",
+              "cellId": "native-cell:14.435696:824",
+              "accessSupported": true,
+              "centerlineSupported": true,
+              "fullProfileSupported": true,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": true
+            }
+          ],
+          "passed": false
+        }
+      },
+      {
+        "recipeIndex": 2,
+        "existingSourceFloorRecipe": {
+          "nativeFloorElementId": 1521516,
+          "originalCapFaceToken": 5,
+          "lateralAxis": "y",
+          "approachXYFeet": [
+            [
+              338.0255871195201,
+              503.126768562458
+            ],
+            [
+              320.8142878953185,
+              503.126768562458
+            ],
+            [
+              320.8142878953185,
+              502.74152589177083
+            ]
+          ]
+        },
+        "policy": {
+          "rows": [
+            {
+              "side": 0,
+              "nodeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0",
+              "cellId": "native-cell:-3.280840:60",
+              "accessSupported": true,
+              "centerlineSupported": false,
+              "fullProfileSupported": false,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [
+                    {
+                      "kind": "native-circulation-proof",
+                      "edgeId": "stepped-flat-policy:proposal:1972504:new-upper-anchor-policy-only:0"
+                    }
+                  ],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": false
+            },
+            {
+              "side": 1,
+              "nodeId": "proposal:source-stair:1972504:upper-native-cap1521608-face5",
+              "cellId": "native-cell:14.435696:824",
+              "accessSupported": true,
+              "centerlineSupported": true,
+              "fullProfileSupported": true,
+              "exclusionContact": false,
+              "staffContact": false,
+              "policies": [
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                },
+                {
+                  "blockers": [],
+                  "requiredRooms": []
+                }
+              ],
+              "untrackedRoomKeys": [],
+              "passed": true
+            }
+          ],
+          "passed": false
+        }
+      }
+    ],
+    "temporaryNewIdProjectionOnly": true,
+    "existingWalkDoesNotYetBindNewNode": true,
+    "sourceProofIssued": false
+  },
+  "originalNodesAndEdgesUnchanged": true,
+  "headroomSixFootChecked": false,
+  "sourceCapabilityIssued": false,
+  "sourceQualifiedTerminalApproved": false,
+  "productionIntegrationApproved": false,
+  "routeApproved": false,
+  "elapsedMs": 72393.841502,
+  "memory": {
+    "rss": 1013854208,
+    "heapTotal": 831639552,
+    "heapUsed": 729904744,
+    "external": 77295570,
+    "arrayBuffers": 5409163
+  },
+  "peakRSSKiB": 1272524,
+  "boundedExistingRecipeCount": 3,
+  "allExistingLowerRecipesRefused": true,
+  "singleUpperCandidatePolicyPassedInAllCombinations": true,
+  "existingLowerNodeAndRoomRetained": true,
+  "allOriginalGraphHistoryRetained": true,
+  "reasonNoFreshHeadroomRun": "Every existing lower flat recipe leaves its original claimed physical native cell; current policy refuses each in both directions. Stop before further original-source six-foot clearance per task scope.",
+  "originalSourceHeadroomQueued": false,
+  "headroomStatus": "NOT_CHECKED_STOPPED_ON_CURRENT_CELL_CONTAINMENT",
+  "sourceAnchorProposal": {
+    "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-parent-native-source/floor-census/1972504-single-new-upper-source-anchor-proposal.json",
+    "sha256": "c88a678ae7fe9ffa20b632126a3a1e3b6c70897d2ea4a30c9e15977e94f9d2b6"
+  },
+  "actualUnchangedPolicyProvenance": {
+    "strictFlatHelperPath": "/workspace/scratch/unbc-pathway-repair-20261015/entrances/flat-transit-review/ready/native-stepped-stair-v2-flat-policy.ts",
+    "strictFlatHelperSHA256": "1e43631165cd3089587a5005b9fb12eb6fe528a903acc53cae844083dc93d6da",
+    "originalNativeCirculationSHA256": "9111fce89985fc59badb4107d3e3268d0b6798c1822f6ee2e1121191cd0afb96",
+    "privateFunctionExportOnlySHA256": "0b1e869890cf1a901af58adb3a4700c0efcf966aaf3f7053f629d8c1356e5bcf",
+    "bundleSHA256": "63d935bc046dfe5426dba12bd33a144d1795adbcdcdbbb50124d8fc17aeea83b",
+    "capturedInputCount": 276,
+    "allCapturedOriginalInputsUnchanged": true,
+    "isolatedExportOnlyChange": "nativeCellAccessIsSupported export keyword only; function body unchanged",
+    "currentProductionGuardAdopted": false
+  },
+  "sourceAuthority": false
+}

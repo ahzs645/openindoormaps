@@ -1,4 +1,6 @@
 import { holdHeavyWorkerLifetimeLock } from "./heavy-worker-schedule";
+import { prepareOverviewGround } from "./overview-ground";
+import { prepareOverviewFloor } from "./overview-floor";
 import type { NativeExploreResult } from "./native-explore";
 import { initializeNativeExactGeosOverlay } from "./native-exact-geos-overlay";
 import { deriveNativeExplore } from "./native-explore";
@@ -83,14 +85,22 @@ async function nativeFaces(
  * timed as its own stage rather than attributed to preparation. */
 function reply(
   request: FloorWorkerRequest,
+  dataset: IndoorDataset,
   value: PreparedFloor,
   faces: NativeExploreResult | undefined,
 ) {
   const requestId = request.requestId;
   const nativeFaces = request.omitNativeDisplay ? undefined : faces;
+  const overviewGround = timeFloorStage("floor-worker:overview-ground", () =>
+    prepareOverviewGround(dataset, value, faces?.walls),
+  );
+  const overviewFloor = timeFloorStage("floor-worker:overview-floor", () =>
+    prepareOverviewFloor(dataset, value),
+  );
   const memoryCost = timeFloorStage(
     "floor-worker:memory-cost",
-    () => memoryCostBytes(nativeFaces ? { value, nativeFaces } : { value }),
+    () =>
+      memoryCostBytes({ value, nativeFaces, overviewGround, overviewFloor }),
     (bytes) => ({
       requestId,
       memoryCostBytes: bytes,
@@ -99,8 +109,12 @@ function reply(
   );
   const message: FloorPreparationResponse & {
     nativeFaces?: NativeExploreResult;
+    overviewGround?: typeof overviewGround;
+    overviewFloor?: typeof overviewFloor;
   } = { requestId, value, memoryCostBytes: memoryCost };
   if (nativeFaces) message.nativeFaces = nativeFaces;
+  message.overviewGround = overviewGround;
+  message.overviewFloor = overviewFloor;
   timeFloorStage(
     "floor-worker:postMessage",
     () => scope.postMessage(message),
@@ -140,7 +154,7 @@ scope.onmessage = async ({ data: request }) => {
       (value) => ({ requestId, used: !!value }),
     );
     if (saved) {
-      reply(request, saved.preparedFloor, saved.nativeFaces);
+      reply(request, dataset, saved.preparedFloor, saved.nativeFaces);
       return;
     }
     const offered = request.preparedDisplay?.descriptor.binding;
@@ -168,7 +182,7 @@ scope.onmessage = async ({ data: request }) => {
         }),
       () => ({ requestId }),
     );
-    reply(request, value, faces);
+    reply(request, dataset, value, faces);
   } catch (error) {
     floorDiagnostic("floor-worker:error", { requestId });
     scope.postMessage({

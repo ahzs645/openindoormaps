@@ -1,0 +1,205 @@
+{
+  "version": 14,
+  "mode": "full",
+  "identity": "03-S201 \u2194 03-S301, Building 03, native Floor 3/4",
+  "sourcePath": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/native-full-clearance/strict-final-source-session-v14/1696006-current-source-wire-v14.json",
+  "sourceSha256": "78caca93d84bfe21d3f59883f1087716ee97544dc6db5b8616d4f30688c49dfc",
+  "sourceBytes": 56221972,
+  "sourceBindings": {
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+    "originalExplicitSourceReview": null,
+    "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+    "originalDatasetSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+    "sourceCensusSha256": "85dc9aa83af9b297acc7b7cb3071deb3f940bfcc962cbb0c8f9429be8faaf79d",
+    "originalEdgeId": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+    "nativeStairId": 1696006,
+    "nativeRunId": 1696012,
+    "nativeDefinitionId": 1696013,
+    "originalGraphBindingSha256": "449e59e0c0c31a3e1fca60649ddd308708fbb8ebde0852313948e984c3aa9fe6",
+    "proposalSha256": "631ece2686eefb9f0ac55257e993306237d9567225599a75f2378458842bdc72",
+    "physicalWireSha256": "d32efece651ea65735958bfd0b0b0f27f5dbe8957b99b1e7f4dd509df212133f",
+    "receiptWireSha256": "76020f2dbc2fda7129475a1bb5062def91b2277088c29d74525ea4da31860c44",
+    "completeForeignRowsSha256": "c678739019b0b666d073bbdc4d3bd6d033e82429008e3e5c5c19f5a5b1dd37f7",
+    "completeForeignRows": 39798,
+    "sourceIssuedMullionCount": 16,
+    "sourceIssuedPanelCount": 52,
+    "sourceIssuedForeignFactsSha256": "d81fcbb9e543c90c8aeab6496fad248804d0b9470b462971eaad2377f4169c1d",
+    "implementation": [
+      {
+        "path": "/workspace/openindoormaps/scripts/indoor/source-stepped-stair-v2-producer.ts",
+        "sha256": "9f7e159449e9a75e5a959059f3cf1e2a3f1298a9ab08c0e45ddb067b64b2e117"
+      },
+      {
+        "path": "/workspace/openindoormaps/scripts/indoor/proposals/stepped-stair-v2-source-adapter.ts",
+        "sha256": "94ac7d5e5ad3ad814a3b452aaf9981324122f7ef5483d72274374fcbb0ad4c15"
+      },
+      {
+        "path": "/workspace/openindoormaps/scripts/indoor/proposals/stepped-stair-v2-kernel.ts",
+        "sha256": "bdda96da42ae32d18b75793f62ab44cd063d35374afb4e72fb4235717d5ebc01"
+      },
+      {
+        "path": "/workspace/openindoormaps/scripts/indoor/proposals/original-stepped-stair-graph-demand.ts",
+        "sha256": "91d18b2c8f1d17abe1fd8ea6d055c9a45a75105212c111f38330c7b16a431b2f"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-foreign-envelope-census.ts",
+        "sha256": "53500033e21de4974d39c1ae465580ddc6382bacea2bf8720d7a27ca3d50c222"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-stair-physical-inventory.ts",
+        "sha256": "747e2f19fd0532ba8c7bff622182e3fea26413ff02f63bb3f8b7246db5a0edfb"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-stair-placed-envelope.ts",
+        "sha256": "f655530286d1ba54be423d7e1a89e83ae76edc697091f9e4f60215c4ad25985f"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-planar-slab-envelope.ts",
+        "sha256": "9573cfe3b05f1963f7ea51ac943ea586c5013aba6cb512ce03a67c8e09750064"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-floor-obstacle-domains.ts",
+        "sha256": "1bf37dbd7d2d553a4a37620b9c2765ac9ffdab4adefd5580f3c54cd8a7c1393f"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-placed-trim-obstacles.ts",
+        "sha256": "d56ec803ddf0bd2598d21351956dbc185582a8739d7418a1745854477daf5948"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-rectangular-mullion-envelope.ts",
+        "sha256": "02cb13e8f326c70dc833b72ede1d4b4c9c72af86fc8b3b0d3e29bff7888b87eb"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-mullion-host-enclosure.ts",
+        "sha256": "b127de95aa7316901ac64237609629e0cc40449c558c862bfc70c7dafbed99a9"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-simple-system-panel.ts",
+        "sha256": "5e27c422d630688f2257f1cdfc15fe61ada1658b18306c8f1ed2dbe3c2bcaacf"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-kernel.ts",
+        "sha256": "59066a74267fc41879ec8f559e0ce7faf2722aa7e93498a191b508ec8965e4f3"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-graph-binding.ts",
+        "sha256": "f40cd70276a9d4f4b8ca2c42810850255cedef094d8c1262a9c6aeeca3c133f7"
+      }
+    ],
+    "bothOriginalSourceDirectionsPassed": true,
+    "runtimeIntegrationApproved": false,
+    "stepFreeApproved": false
+  },
+  "sourceCensusScopeFeetWire": {
+    "minimum": [
+      {
+        "$rational": [
+          "-15",
+          "1"
+        ]
+      },
+      {
+        "$rational": [
+          "-328",
+          "1"
+        ]
+      },
+      {
+        "$rational": [
+          "23",
+          "1"
+        ]
+      }
+    ],
+    "maximum": [
+      {
+        "$rational": [
+          "6",
+          "1"
+        ]
+      },
+      {
+        "$rational": [
+          "-300",
+          "1"
+        ]
+      },
+      {
+        "$rational": [
+          "42",
+          "1"
+        ]
+      }
+    ]
+  },
+  "sourceScopeRequiredAndReplayed": true,
+  "before": {
+    "rss": 121655296,
+    "heapTotal": 18870272,
+    "heapUsed": 9013424,
+    "external": 60045235,
+    "arrayBuffers": 57453563
+  },
+  "rawWireMemory": {
+    "rss": 369205248,
+    "heapTotal": 271228928,
+    "heapUsed": 135972496,
+    "external": 116231951,
+    "arrayBuffers": 57418267
+  },
+  "preparedMemory": {
+    "rss": 792969216,
+    "heapTotal": 615862272,
+    "heapUsed": 236379280,
+    "external": 116231951,
+    "arrayBuffers": 57418267
+  },
+  "finalMemory": {
+    "rss": 764080128,
+    "heapTotal": 571822080,
+    "heapUsed": 238473192,
+    "external": 60009979,
+    "arrayBuffers": 57418267
+  },
+  "preparedMs": 18973.346604000002,
+  "hydration": {
+    "fullCells": 40322,
+    "conservativeDisjointCells": 0
+  },
+  "supports": 49,
+  "physicalBodies": 39814,
+  "cells": 40322,
+  "results": [
+    {
+      "direction": "forward",
+      "elapsedMs": 38023.060472,
+      "navigationProfile": "stepped-transverse-2ft-headroom-6ft-flat-standing-caps-v2",
+      "mathematicalReplayPassed": true,
+      "issues": [],
+      "unknownPhysicalBodyKeys": [],
+      "materialContacts": [],
+      "checkedMovements": 61,
+      "originalSourceAuthorityGranted": false,
+      "humanoidGaitApproved": false,
+      "routeApproved": false
+    },
+    {
+      "direction": "reverse",
+      "elapsedMs": 42588.62057600001,
+      "navigationProfile": "stepped-transverse-2ft-headroom-6ft-flat-standing-caps-v2",
+      "mathematicalReplayPassed": true,
+      "issues": [],
+      "unknownPhysicalBodyKeys": [],
+      "materialContacts": [],
+      "checkedMovements": 61,
+      "originalSourceAuthorityGranted": false,
+      "humanoidGaitApproved": false,
+      "routeApproved": false
+    }
+  ],
+  "originalSourceAuthorityGranted": false,
+  "routeApproved": false,
+  "maximumResidentSetBytes": 851103744,
+  "maximumResidentSetMeasurement": "Linux process VmHWM sampled during complete source-wire replay"
+}

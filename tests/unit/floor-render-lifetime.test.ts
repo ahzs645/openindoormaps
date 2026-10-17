@@ -9,7 +9,11 @@ import {
   timeFloorStage,
   type FloorDiagnosticEntry,
 } from "../../app/indoor-project/floor-diagnostics";
-import { bridgeFloorDisplayWorker } from "../../app/indoor-project/floor-display-worker-bridge";
+import {
+  bridgeFloorDisplayWorker,
+  preparedFloorOverviewGround,
+  preparedFloorOverviewFloor,
+} from "../../app/indoor-project/floor-display-worker-bridge";
 import type { FloorWorker } from "../../app/indoor-project/floor-worker-client";
 import type {
   FloorPreparationRequest,
@@ -27,6 +31,10 @@ import {
   precisionWallMesh,
 } from "../../app/indoor-project/precision-wall-layer";
 import { EXPOSED_WALL_HEIGHT_METRES } from "../../app/indoor-project/display-geometry";
+import {
+  HALLWAY_COLOR,
+  OVERVIEW_SOLID_COLOR,
+} from "../../app/indoor-project/display-passages";
 
 const { MercatorCoordinate } = maplibregl;
 
@@ -59,6 +67,9 @@ test("prepared-floor teardown removes every custom 3D layer, including window gl
   assert(removed.includes("project-native-window-glass"));
   assert(removed.includes("project-native-window-frames"));
   assert(removed.includes("project-precision-walls"));
+  assert(removed.includes("project-precision-floors"));
+  assert(removed.includes("project-precision-room-roofs"));
+  assert(removed.includes("project-overview-ground-mesh"));
   assert.deepEqual([...map.layers], ["project-room-fill"]);
   // Idempotent, and a disposed map (no style) is never touched.
   assert.deepEqual(removePreparedCustomLayers(map), []);
@@ -80,6 +91,7 @@ test("a loading floor scope empties every prepared drawing source, including per
     "project-native-windows",
     "project-exposed-walls",
     "project-selection-areas",
+    "project-overview-floor",
   ])
     assert(emptied.includes(id), id);
   for (const id of PREPARED_FLOOR_SOURCE_IDS)
@@ -139,8 +151,10 @@ function referenceMesh(
     colors: new Float32Array(colors),
   };
 }
-const origin: [number, number] = [-122.8140180885126, 53.892922780400426];
-const d = 0.00001;
+const origin: [number, number] = [
+  -122.814_018_088_512_6, 53.892_922_780_400_426,
+];
+const d = 0.000_01;
 const square = (x: number, y: number, s: number) => [
   [x, y],
   [x + s, y],
@@ -225,6 +239,88 @@ test("precision meshes are reused only for the identical immutable collection an
   assert.deepEqual(rebuilt.positions, first.positions);
 });
 
+test("flat overview triangles preserve polygon holes and disconnected parts", () => {
+  const input = walls(),
+    before = JSON.stringify(input);
+  const mesh = precisionWallMesh(input, origin, false, true);
+  const anchor = MercatorCoordinate.fromLngLat(origin),
+    unit = anchor.meterInMercatorCoordinateUnits();
+  const area = (ring: number[][]) => {
+    const ps = ring.map((p) => {
+      const q = MercatorCoordinate.fromLngLat([p[0], p[1]]);
+      return [(q.x - anchor.x) / unit, -(q.y - anchor.y) / unit];
+    });
+    return (
+      Math.abs(
+        ps.reduce((n, p, i) => {
+          const q = ps[(i + 1) % ps.length];
+          return n + p[0] * q[1] - q[0] * p[1];
+        }, 0),
+      ) / 2
+    );
+  };
+  const expected = input.features
+    .flatMap((f) => f.geometry.coordinates)
+    .reduce(
+      (n, r) => n + area(r[0]) - r.slice(1).reduce((n, h) => n + area(h), 0),
+      0,
+    );
+  let actual = 0;
+  assert.equal(mesh.vertices % 3, 0);
+  for (let i = 0; i < mesh.positions.length; i += 9) {
+    const p = mesh.positions;
+    assert.equal(p[i + 2], 0);
+    assert.equal(p[i + 5], 0);
+    assert.equal(p[i + 8], 0);
+    actual +=
+      Math.abs(
+        (p[i + 3] - p[i]) * (p[i + 7] - p[i + 1]) -
+          (p[i + 6] - p[i]) * (p[i + 4] - p[i + 1]),
+      ) / 2;
+  }
+  assert(Math.abs(actual - expected) < 0.0001);
+  assert.notEqual(precisionWallMesh(input, origin), mesh);
+  assert.equal(precisionWallMesh(input, origin, false, true), mesh);
+  assert.equal(JSON.stringify(input), before);
+});
+
+test("native overview tint changes only colours, preserving the same hole and disconnected polygons", () => {
+  const input = walls();
+  input.features[0].properties!.circulation = true;
+  input.features[1].properties!.circulation = false;
+  const before = JSON.stringify(input),
+    grey = precisionWallMesh(input, origin, false, true),
+    tinted = precisionWallMesh(input, origin, false, true, true);
+  assert.notEqual(tinted, grey, "the tint option owns a separate cache entry");
+  assert.equal(precisionWallMesh(input, origin, false, true, true), tinted);
+  // This fixture includes a real hole and a second disconnected part. Every
+  // original triangle stays byte-identical when floor tint is enabled.
+  assert.deepEqual(tinted.positions, grey.positions);
+  assert.equal(tinted.vertices, grey.vertices);
+  const mint = new THREE.Color(HALLWAY_COLOR),
+    solid = new THREE.Color(OVERVIEW_SOLID_COLOR),
+    mintRGB = new Float32Array([mint.r, mint.g, mint.b]),
+    greyRGB = new Float32Array([solid.r, solid.g, solid.b]),
+    circulationVertices = precisionWallMesh(
+      { ...input, features: [input.features[0]] },
+      origin,
+      false,
+      true,
+    ).vertices;
+  assert(circulationVertices > 0 && circulationVertices < tinted.vertices);
+  for (let vertex = 0; vertex < tinted.vertices; vertex++) {
+    assert.deepEqual(
+      tinted.colors.subarray(vertex * 3, vertex * 3 + 3),
+      vertex < circulationVertices ? mintRGB : greyRGB,
+    );
+  }
+  assert.equal(JSON.stringify(input), before, "no source mutation");
+  const wallsWithoutTint = precisionWallMesh(input, origin),
+    wallsWithTint = precisionWallMesh(input, origin, false, false, true);
+  assert.deepEqual(wallsWithTint.positions, wallsWithoutTint.positions);
+  assert.deepEqual(wallsWithTint.colors, wallsWithoutTint.colors);
+});
+
 test("removing a precision wall layer releases its GPU geometry and material", () => {
   const input = walls();
   const layer = precisionWallLayer(input, origin, {
@@ -287,6 +383,35 @@ const request = (requestId: number): FloorPreparationRequest => ({
     review: false,
     simplifyGeometry: false,
   },
+});
+
+test("worker overview drawings stay bound to the current prepared floor", () => {
+  const raw = new ControlledWorker(),
+    bridge = bridgeFloorDisplayWorker(raw);
+  const current = {} as PreparedFloor,
+    stale = {} as PreparedFloor,
+    drawing = walls(),
+    floorDrawing = walls();
+  bridge.postMessage(request(2));
+  raw.reply({
+    requestId: 1,
+    value: stale,
+    overviewGround: drawing,
+    overviewFloor: floorDrawing,
+  });
+  assert.equal(preparedFloorOverviewGround(stale), undefined);
+  assert.equal(preparedFloorOverviewFloor(stale), undefined);
+  raw.reply({
+    requestId: 2,
+    value: current,
+    overviewGround: drawing,
+    overviewFloor: floorDrawing,
+  });
+  assert.equal(preparedFloorOverviewGround(current), drawing);
+  assert.equal(preparedFloorOverviewFloor(current), floorDrawing);
+  assert.equal(preparedFloorOverviewGround({} as PreparedFloor), undefined);
+  assert.equal(preparedFloorOverviewFloor({} as PreparedFloor), undefined);
+  bridge.terminate();
 });
 
 test("diagnostics are opt-in, scalar-only and never reach the floor client", () => {

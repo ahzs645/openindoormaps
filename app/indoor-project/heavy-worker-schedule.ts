@@ -1,5 +1,5 @@
-/** Page-wide coordination of the two heavy worker kinds that each hold a full
- * dataset clone plus GB-scale derived state: floor preparation and routing.
+/** Page-wide coordination of heavy workers that each hold a full dataset
+ * clone plus GB-scale derived state: floor preparation, routing and review.
  *
  * All dedicated workers of a tab share one renderer process and one V8 heap
  * reservation. Browser evidence (prepared 04-128 ZIP, Chromium 141): the 3D
@@ -10,13 +10,14 @@
  * one heavy worker while the other kind is busy.
  *
  * It only orders work; it never changes what a worker computes. */
-export type HeavyJob = "floor" | "route" | "warmup" | "teardown";
+export type HeavyJob = "floor" | "route" | "warmup" | "review" | "teardown";
 
 export class HeavyWorkerSchedule {
   private counts: Record<HeavyJob, number> = {
     floor: 0,
     route: 0,
     warmup: 0,
+    review: 0,
     teardown: 0,
   };
   private listeners = new Set<() => void>();
@@ -60,6 +61,8 @@ export class HeavyWorkerSchedule {
     };
   }
   private notify() {
+    // A callback may subscribe again; only notify this update's snapshot.
+    // eslint-disable-next-line unicorn/no-useless-spread
     for (const listener of [...this.listeners]) listener();
   }
 }
@@ -104,25 +107,40 @@ export function shouldRecreateMapForScope(
 export const heavyWorkerSchedule = new HeavyWorkerSchedule();
 
 /** A floor request that must clone the dataset into a fresh worker waits for
- * a user route calculation; a request to a resident floor worker does not. */
+ * a user route calculation; a resident floor worker may reuse its data. Both
+ * wait for an exclusive authoring evidence review. */
 export function floorPreparationReady(
   schedule: HeavyWorkerSchedule,
   freshDatasetClone: boolean,
 ) {
   // Never allocate a floor beside a worker that is still being torn down.
   return () =>
+    !schedule.busy("review") &&
     !schedule.busy("teardown") &&
     (!freshDatasetClone || !schedule.busy("route"));
 }
 /** A user route request that must clone the dataset into a fresh route worker
- * waits for floor preparation; one to a resident route worker does not. */
+ * waits for floor preparation; a resident route worker may reuse its data.
+ * Both wait for an exclusive authoring evidence review. */
 export function routeRequestReady(
   schedule: HeavyWorkerSchedule,
   freshDatasetClone: boolean,
 ) {
   return () =>
-    !freshDatasetClone ||
-    (!schedule.busy("floor") && !schedule.busy("teardown"));
+    !schedule.busy("review") &&
+    (!freshDatasetClone ||
+      (!schedule.busy("floor") && !schedule.busy("teardown")));
+}
+
+/** Optional whole-project evidence reserves its own exclusive slot. Starting
+ * the review releases idle floor/route workers; the caller then waits for their
+ * teardown before allocating its dataset clone. */
+export function reviewRequestReady(schedule: HeavyWorkerSchedule) {
+  return () =>
+    !schedule.busy("review") &&
+    !schedule.busy("floor") &&
+    !schedule.busy("route") &&
+    !schedule.busy("teardown");
 }
 
 export type WarmupRun = {
@@ -144,13 +162,13 @@ export const DEFAULT_WARMUP_IDLE_GATE: WarmupIdleGate = {
   setTimer: (run, ms) => setTimeout(run, ms),
   clearTimer: (timer) => clearTimeout(timer as ReturnType<typeof setTimeout>),
 };
-/** Background route warmup that yields to floor preparation.
+/** Background route warmup that yields to floor preparation or review.
  *
- * - Starts only while no floor preparation is active.
- * - If a floor preparation begins while no user route request is active, the
+ * - Starts only while no floor preparation or review is active.
+ * - If floor preparation or review begins without an active user route, the
  *   route worker is terminated, whether its warmup is still running or has
  *   completed and only holds the warm graph (about 1.0–1.4 GB measured), and
- *   the warmup is restarted once floor preparation is idle again.
+ *   the warmup restarts after the exclusive work finishes.
  * - A user route request keeps its worker; a failed warmup is not retried in
  *   a loop; two warmups never run at once. */
 export function scheduleRouteWarmup(
@@ -190,7 +208,7 @@ export function scheduleRouteWarmup(
     if (disposed || failed) return;
     if (state === "done") {
       if (
-        schedule.busy("floor") &&
+        (schedule.busy("floor") || schedule.busy("review")) &&
         !schedule.busy("route") &&
         callbacks.releaseIdle?.()
       ) {
@@ -200,7 +218,11 @@ export function scheduleRouteWarmup(
       return;
     }
     if (state === "running") {
-      if (current && schedule.busy("floor") && !schedule.busy("route")) {
+      if (
+        current &&
+        (schedule.busy("floor") || schedule.busy("review")) &&
+        !schedule.busy("route")
+      ) {
         const abandoned = current;
         state = "idle";
         settle();
@@ -213,6 +235,7 @@ export function scheduleRouteWarmup(
     // warmup started meanwhile would only supersede its reply.
     if (
       schedule.busy("floor") ||
+      schedule.busy("review") ||
       schedule.busy("teardown") ||
       schedule.busy("route")
     ) {
@@ -357,7 +380,7 @@ export function trackHeavyWorkerTeardown(
     timer = setTimer(finish, options.fallbackMs ?? 9000);
     return;
   }
-  timer = setTimer(finish, options.timeoutMs ?? 30000);
+  timer = setTimer(finish, options.timeoutMs ?? 30_000);
   const released = () => {
     if (timer !== undefined) clearTimer(timer);
     const releaseMs = options.releaseMs ?? 6000;

@@ -1,0 +1,139 @@
+{
+  "authority": "Read-only exact planar closed-cell diagnostic from the current source-contact reconstruction. No snapping, automatic junction repairs, artificial crop walls or record polygons generate a boundary. Existing native doorway footprints are separately disclosed threshold proposals, not opaque source certificates. Does not certify original room ownership or authorize removing any requirement.",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "freshCacheSha256": "5bf0e31bf51bcf72fc05ccd7ba3c344027f39098c6c422a8d89ee7f7243d5339",
+  "recordKey": "rm-1487816-603968192edb",
+  "recordNumber": "10-1003",
+  "levelId": 1487816,
+  "labelPointFeet": [
+    113.62461444754763,
+    804.9830418398346
+  ],
+  "queryBoundsFeetOnly": [
+    88.9119,
+    782.4962,
+    135.5597,
+    831.3967
+  ],
+  "completeIntersectingSourcePartsRetained": true,
+  "sourceMaterialRowIds": [
+    1501296,
+    1501297,
+    1501298,
+    1501318,
+    1501322,
+    1501331,
+    1501332,
+    1501343,
+    1501344,
+    1501345,
+    1501346,
+    1501347,
+    1501349,
+    1501359,
+    1501369,
+    1501371,
+    1501388,
+    1501399,
+    1501400,
+    2235301,
+    2235615,
+    2238884,
+    2238990
+  ],
+  "currentMaterialKinds": {
+    "provisional-native-corner-seal": 10,
+    "original-native-material-section": 28
+  },
+  "proposedThresholds": [
+    {
+      "id": "door:1487816:2178773",
+      "nativeElementId": 2178773,
+      "state": "connected",
+      "roomKeys": [
+        "rm-1487816-1942e041e15e",
+        "rm-1487816-62e57b407134"
+      ],
+      "hostWallNativeElementId": 1501388
+    },
+    {
+      "id": "door:1487816:1501387",
+      "nativeElementId": 1501387,
+      "state": "connected",
+      "roomKeys": [
+        "rm-1487816-1949cc41e164",
+        "rm-1487816-62e85b407136"
+      ],
+      "hostWallNativeElementId": 1501318
+    },
+    {
+      "id": "door:1487816:2178037",
+      "nativeElementId": 2178037,
+      "state": "connected",
+      "roomKeys": [
+        "rm-1487816-603968192edb",
+        "rm-1487816-93a8f05b5499"
+      ],
+      "hostWallNativeElementId": 1501371
+    },
+    {
+      "id": "door:1487816:2178100",
+      "nativeElementId": 2178100,
+      "state": "connected",
+      "roomKeys": [
+        "rm-1487816-603968192edb",
+        "rm-1487816-62e57b407134"
+      ],
+      "hostWallNativeElementId": 1501344
+    }
+  ],
+  "sourceInputs": {
+    "materials": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/physical/boundary-contact-diagnosis/current-material-walls-all-patch-levels.json",
+      "sha256": "d7f948855a972afd1babab9b125de778c3336eb257e29698cf018962bb289f10"
+    },
+    "doors": {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-doors.json",
+      "sha256": "8ac028777d021f91a22409c9672ca3e1514c4661c144305600c7c42e10fb876f"
+    },
+    "records": {
+      "path": "/workspace/scratch/unbc-four-door-review-20261015/field-records.json",
+      "sha256": "fea2bbd337b6d2767d5a02c5d7cbb9e9ac9d7fff5078c3160c49748b93f3f110"
+    },
+    "labels": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/ordinary-owner-boundaries/all-original-same-level-labels.json",
+      "sha256": "e0b3c43ca897d24c92644c4e3f0a1043640f2d0490ce6f631d89d9774e5b158c"
+    }
+  },
+  "sourceInputsUnchanged": true,
+  "sourcePhysicalOwnerProofIssued": false,
+  "rows": [
+    {
+      "mode": "original-native-material-only",
+      "barrierRows": 28,
+      "thresholdRows": 0,
+      "exactClosedFreeCellCount": 0,
+      "cellsContainingOriginalLabel": 0,
+      "containingCells": [],
+      "elapsedMs": 118
+    },
+    {
+      "mode": "original-native-material-plus-existing-thresholds",
+      "barrierRows": 28,
+      "thresholdRows": 4,
+      "exactClosedFreeCellCount": 0,
+      "cellsContainingOriginalLabel": 0,
+      "containingCells": [],
+      "elapsedMs": 104
+    },
+    {
+      "mode": "current-composed-material-plus-existing-thresholds",
+      "barrierRows": 38,
+      "thresholdRows": 4,
+      "exactClosedFreeCellCount": 1,
+      "cellsContainingOriginalLabel": 0,
+      "containingCells": [],
+      "elapsedMs": 150
+    }
+  ]
+}

@@ -74,3 +74,68 @@ test("connector ownership, staff and non-walkable records do not imply ordinary 
     [],
   );
 });
+
+test("native cell membership does not describe distant room transit; explicit route owners still do", () => {
+  const data = fixture();
+  const room = (key: string, building = "01") => ({
+    ...data.records[0],
+    key,
+    number: `${building}-${key}`,
+    building,
+    properties: {},
+  });
+  const inside = room("inside"),
+    distant = {
+      ...room("distant-washroom", "07"),
+      ringsFeet: [
+        [
+          [1000, 1000],
+          [1010, 1000],
+          [1010, 1010],
+          [1000, 1010],
+        ],
+      ] as [number, number][][],
+    },
+    walking = room("explicit-walk"),
+    opening = room("explicit-opening");
+  data.records.push(inside, distant, walking, opening);
+  const cellWalk: IndoorEdge = {
+    ...edge("cell-walk", ["0", "1", "inside", "distant-washroom"]),
+    nativeCellId: "native-cell-with-many-room-labels",
+    pointsFeet: [
+      [20, 5, 0],
+      [30, 5, 0],
+    ],
+  };
+  data.edges = [edge("hidden-door", ["inside", "1"], "door")];
+  const path = {
+    ...route(
+      [
+        cellWalk,
+        edge("ordinary-walk", ["explicit-walk", "1"]),
+        edge("ordinary-opening", ["explicit-opening", "1"], "opening"),
+      ],
+      ["hidden-door"],
+    ),
+    // Access policy retains its own full list, independent of this description.
+    unknownAccessAreas: ["inside", "distant-washroom", "explicit-walk"],
+  };
+  const before = structuredClone({ data, path });
+  assert.deepEqual(routeTransitRooms(data, route([cellWalk]), "0", "3"), []);
+  assert.deepEqual(
+    routeTransitRooms(data, path, "0", "3").map((record) => record.key),
+    ["inside", "explicit-walk", "explicit-opening"],
+  );
+  assert.deepEqual(
+    routeTransitRooms(data, path, "inside", "explicit-walk").map(
+      (record) => record.key,
+    ),
+    ["explicit-opening"],
+    "ordinary endpoint rooms remain excluded",
+  );
+  assert.deepEqual(
+    { data, path },
+    before,
+    "disclosure never edits route/access evidence",
+  );
+});

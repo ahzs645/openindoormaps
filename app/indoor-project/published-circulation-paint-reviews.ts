@@ -1,0 +1,64 @@
+// Display-only review of source-bound faces identified by the user. No access or geometry changes.
+export const PUBLISHED_CIRCULATION_PAINT_REVIEW = {
+  format: "openindoormaps-published-circulation-paint-v1",
+  datasetSha256:
+    "f4761c369fd010e48b95e18a467b3adae76723220523b4cf54821f10bc2cafd8",
+  engineSha256:
+    "681e71a5b49b7ac79d914f79624be41cea860778d5732289cd2a445e7c2a0d8d",
+  revisionSha256:
+    "c2a275a008cf4c578da9f9f7ec547afa82241ed0a2f0d9220a95697c18c5a3d1",
+  preparedLogicalSha256:
+    "9d2da4313767fb3a01468108eb1e2b5675e13a41e47ab1b9c116523b42aefed3",
+  scopeId:
+    "scope-417415075e131becade76762147b6c0c5e71b7c86ac38584fa4586e780aa0d4b",
+  additionalScopes: [
+    {
+      scopeId:
+        "scope-9b5a012c2eb1f1bae19265d7da672225a484b7ed3ee6506a4f6efa903b22db56",
+      preparedLogicalSha256:
+        "09649ae8dfeb683e011608477f7f403b63d2f18d8eb3564ba04b88864cf7e549",
+    },
+  ],
+  decisions: [
+    {
+      nativeRegionId: "native-region:311:80",
+      levelId: 311,
+      roomKeys: ["landing:ramp:1587605:lower"],
+      evidence: "source-corridor-majority",
+      sourceRoomKeys: ["rm-311-df4c89e6b168"],
+      nativeAreaSquareFeet: 302.66283175484386,
+      corridorOverlapSquareFeet: 266.37516197239756,
+      color: "#bdd5c9",
+    },
+    {
+      nativeRegionId: "native-region:311:183",
+      levelId: 311,
+      roomKeys: ["landing:ramp:1586431:lower"],
+      evidence: "source-corridor-majority",
+      sourceRoomKeys: ["rm-311-203cecddb83e"],
+      nativeAreaSquareFeet: 54.81661310558684,
+      corridorOverlapSquareFeet: 49.75549377078124,
+      color: "#bdd5c9",
+    },
+    {
+      nativeRegionId: "native-region:311:232",
+      levelId: 311,
+      roomKeys: [],
+      evidence: "source-corridor-majority",
+      sourceRoomKeys: ["rm-311-399064f64ec1"],
+      nativeAreaSquareFeet: 477.2735546161447,
+      corridorOverlapSquareFeet: 439.81988457288344,
+      color: "#bdd5c9",
+    },
+    {
+      nativeRegionId: "native-region:1487816:38",
+      levelId: 1487816,
+      roomKeys: ["landing:ramp:1622190:upper"],
+      evidence: "user-confirmed-ramp-landing",
+      sourceRoomKeys: ["landing:ramp:1622190:upper"],
+      nativeAreaSquareFeet: 100.33373173673135,
+      corridorOverlapSquareFeet: null,
+      color: "#bdd5c9",
+    },
+  ],
+} as const;

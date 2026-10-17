@@ -1,0 +1,16 @@
+{
+  "extends": "/workspace/openindoormaps/tsconfig.json",
+  "include": [],
+  "files": [
+    "/workspace/openindoormaps/app/indoor-project/hosted-project.ts",
+    "/workspace/openindoormaps/tests/unit/hosted-project.test.ts"
+  ],
+  "compilerOptions": {
+    "typeRoots": [
+      "/workspace/openindoormaps/node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  }
+}
