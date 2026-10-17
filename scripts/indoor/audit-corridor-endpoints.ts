@@ -93,7 +93,9 @@ for (const item of selected) {
     assert.ok(edge.from === id || edge.to === id);
     nodeIds.push(edge.from === id ? edge.to : edge.from);
   }
-  const paths = run(() => centeredRoutePaths(data, edges, nodeIds, true, true));
+  const paths = run(() =>
+    centeredRoutePaths(data, edges, nodeIds, true, true, true),
+  );
   assert.ok(paths.some((p) => p.sharedCorridorGuideUsed));
   assert.deepEqual(paths[0].pointsFeet[0], nodes.get(nodeIds[0])!.pointFeet);
   assert.deepEqual(
