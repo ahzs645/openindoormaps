@@ -33,7 +33,15 @@ for (let i = 0; i < flags.length; i++) {
 }
 if (!input || !output || resolve(input) === resolve(output))
   throw new Error(
-    "Usage: tsx scripts/indoor/prepare-routing.ts input.zip output.zip [--shared-corridors] [--cell id] [--guides-from prepared-routing.json] (distinct paths)",
+    "Usage: tsx scripts/indoor/prepare-routing.ts input.zip output.zip [--shared-corridors [--cell id]] [--guides-from prepared-routing.json] [--verify-navigation] (distinct paths)",
+  );
+if (cellIds.size > 0 && method !== "shared-corridor")
+  throw new Error(
+    "--cell requires --shared-corridors; no full-map preparation started",
+  );
+if (guidesFrom && (method === "shared-corridor" || cellIds.size > 0))
+  throw new Error(
+    "Choose either --guides-from or new --shared-corridors compilation",
   );
 await initializeNativeExactGeosOverlay();
 const validationStarted = performance.now();

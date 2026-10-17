@@ -1599,29 +1599,17 @@ export function centeredRoutePaths(
       groups.push({ edges: [edge], first: from.id, last: to.id });
     }
   });
-  const refined = paths.flatMap((path, i) => {
-    if (!enabled)
-      return [
-        {
-          ...path,
-          sourceReason: groups[i].edges.some((e) =>
-            ["stairs", "local-steps", "ramp", "elevator", "escalator"].includes(
-              e.kind,
-            ),
-          )
-            ? ("vertical-transition" as const)
-            : ("centering-disabled" as const),
-        },
-      ];
-    const group = groups[i];
+  // A fixed doorway may split a composite route below. Compose each resulting
+  // walking run through the same bound guide and original orientation checks.
+  const guideFor = (walkingEdges: IndoorEdge[]) => {
     let usedPreparedGuide = false;
     const preferSharedGuide =
       useSharedGuides &&
-      group.edges.some((edge) => sharedGuideIds.has(edge.id));
+      walkingEdges.some((edge) => sharedGuideIds.has(edge.id));
     let preparedGuide =
       prepared.size === 0
         ? undefined
-        : group.edges
+        : walkingEdges
             .flatMap((edge) => {
               const stored = prepared.get(edge.id);
               if (stored) usedPreparedGuide = true;
@@ -1642,6 +1630,27 @@ export function centeredRoutePaths(
             );
     if (preferSharedGuide && preparedGuide)
       preparedGuide = removeSharedGuideRetraces(preparedGuide);
+    return {
+      preparedGuide: usedPreparedGuide ? preparedGuide : undefined,
+      preferSharedGuide,
+    };
+  };
+  const refined = paths.flatMap((path, i) => {
+    if (!enabled)
+      return [
+        {
+          ...path,
+          sourceReason: groups[i].edges.some((e) =>
+            ["stairs", "local-steps", "ramp", "elevator", "escalator"].includes(
+              e.kind,
+            ),
+          )
+            ? ("vertical-transition" as const)
+            : ("centering-disabled" as const),
+        },
+      ];
+    const group = groups[i];
+    const { preparedGuide, preferSharedGuide } = guideFor(group.edges);
     const resolved = refine(
       data,
       path,
@@ -1656,7 +1665,7 @@ export function centeredRoutePaths(
       ),
       false,
       false,
-      usedPreparedGuide ? preparedGuide : undefined,
+      preparedGuide,
       false,
       preferSharedGuide,
     );
@@ -1686,6 +1695,7 @@ export function centeredRoutePaths(
     let points: XYZ[] = [];
     const flush = () => {
       if (run.length === 0) return;
+      const { preparedGuide, preferSharedGuide } = guideFor(run);
       parts.push(
         refine(
           data,
@@ -1704,6 +1714,11 @@ export function centeredRoutePaths(
               e.kind === "door" &&
               [e.from, e.to].some((id) => id === runFirst || id === runLast),
           ),
+          false,
+          false,
+          preparedGuide,
+          false,
+          preferSharedGuide,
         ),
       );
       run = [];
@@ -1773,6 +1788,7 @@ export function centeredRoutePaths(
     if (
       parts.some(
         (p) =>
+          p.sharedCorridorGuideUsed ||
           !p.centered ||
           !p.nativeFloorSupported ||
           p.shape === "curved" ||
@@ -1835,6 +1851,7 @@ export function centeredRoutePaths(
   for (let i = 0; i < refined.length; i++) {
     const path = refined[i];
     if (
+      path.sharedCorridorGuideUsed ||
       !path.centered ||
       !path.nativeFloorSupported ||
       path.shape === "curved" ||

@@ -47,9 +47,14 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
             });
         });
       }
-      postMessage(message: Parameters<Worker["postMessage"]>[0]) {
+      postMessage(
+        message: Parameters<Worker["postMessage"]>[0],
+        transferOrOptions?: Transferable[] | StructuredSerializeOptions,
+      ) {
         this.requests.set(message.requestId, message.options ?? {});
-        super.postMessage(message);
+        if (Array.isArray(transferOrOptions))
+          super.postMessage(message, transferOrOptions);
+        else super.postMessage(message, transferOrOptions);
       }
     };
   });
