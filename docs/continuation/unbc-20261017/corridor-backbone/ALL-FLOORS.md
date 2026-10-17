@@ -1,5 +1,9 @@
 # Shared hallway centerlines on every UNBC floor
 
+The [straight-hallway follow-up](straight-hallways/README.md) adds averaged
+straight axes and hallway-center start/finish points with resolver version 3.
+This document preserves the preceding version 2 package and evidence.
+
 The implementation now generates one shared auxiliary corridor network per independently supported physical component, with branches to the original doorway/arrival coordinates. Route queries reuse the same shared chains. Islands retain alternatives; junctions retain their branches. The original source graph, nodes, ownership, door thresholds, source geometry and enabled/disabled connections remain unchanged.
 
 This supersedes the limited 05-415 proposal in REPORT.md. It does not supersede the October 16 source rebuild hold or resolve missing entrances, held stairs, outdoor-stair evidence or step-free coverage.
@@ -19,13 +23,13 @@ The candidate adds 223,374 compressed bytes (0.49%). It is a derived visitor pac
 ## Coverage
 
 | Campus floor | Shared guides | Eligible planar hallway walking edges | Existing-path fallbacks |
-| --- | ---: | ---: | ---: |
-| Basement | 8 | 8 | 0 |
-| Floor 1 | 948 | 1,008 | 60 |
-| Floor 2 | 688 | 771 | 83 |
-| Floor 3 | 497 | 552 | 55 |
-| Floor 4 | 476 | 487 | 11 |
-| Total | 2,617 | 2,826 | 209 |
+| ------------ | ------------: | ------------------------------------: | ----------------------: |
+| Basement     |             8 |                                     8 |                       0 |
+| Floor 1      |           948 |                                 1,008 |                      60 |
+| Floor 2      |           688 |                                   771 |                      83 |
+| Floor 3      |           497 |                                   552 |                      55 |
+| Floor 4      |           476 |                                   487 |                      11 |
+| Total        |         2,617 |                                 2,826 |                     209 |
 
 All 112 eligible cells were enumerated across eight physical elevations; no sampling budget was exceeded. They contain 118 exact physical components. Eligible means enabled native-cell walking edges between walkable circulation owners, on exactly the same native level and elevation, with no staff endpoint. The other 2,400 enabled walking edges retain the original solver by design. Vertical connectors, rooms and accessibility confirmations are unchanged.
 

@@ -151,11 +151,16 @@ export async function prepareSharedCorridorRouting(
       );
       for (const edge of edges) {
         const paths = networks
-          .map((network) => network.route(edge.from, edge.to))
-          .filter((p): p is [number, number][] => !!p)
-          .sort((a, b) => corridorGuideLength(a) - corridorGuideLength(b));
+          .flatMap((network) => {
+            const route = network.routeDetails(edge.from, edge.to);
+            return route ? [route] : [];
+          })
+          .sort(
+            (a, b) =>
+              corridorGuideLength(a.points) - corridorGuideLength(b.points),
+          );
         const candidate = paths.find(
-          (p) =>
+          ({ points: p }) =>
             p.length >= 2 &&
             p.length <= 10_000 &&
             corridorGuideLength(p) <=
@@ -175,11 +180,9 @@ export async function prepareSharedCorridorRouting(
           continue;
         }
         // Require exact original coordinates, including physical elevation.
-        const pointsFeet = candidate.map((p): [number, number, number] => [
-          p[0],
-          p[1],
-          cell.elevationFeet,
-        ]);
+        const pointsFeet = candidate.points.map(
+          (p): [number, number, number] => [p[0], p[1], cell.elevationFeet],
+        );
         if (
           ![0, pointsFeet.length - 1].every((i, j) =>
             pointsFeet[i].every(
@@ -198,6 +201,7 @@ export async function prepareSharedCorridorRouting(
           edgeId: edge.id,
           pointsFeet,
           kind: "shared-corridor",
+          hallwayJoins: candidate.hallwayJoins,
         });
         report.guideIds.push(edge.id);
         report.compiledEdges++;

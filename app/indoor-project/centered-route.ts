@@ -20,7 +20,7 @@ import {
   preparedSharedCorridorGuideIds,
 } from "./prepared-routing";
 import {
-  removeSharedGuideRetraces,
+  straightenSharedGuideProposal,
   MAX_SHARED_CORRIDOR_APPROACH_FEET,
 } from "./shared-corridor-guides";
 import { centeredJunctions } from "./centered-junction";
@@ -1629,7 +1629,7 @@ export function centeredRoutePaths(
                   : DMath.hypot(...p.map((v, k) => v - all[j - 1][k])) > 1e-8),
             );
     if (preferSharedGuide && preparedGuide)
-      preparedGuide = removeSharedGuideRetraces(preparedGuide);
+      preparedGuide = straightenSharedGuideProposal(preparedGuide);
     return {
       preparedGuide: usedPreparedGuide ? preparedGuide : undefined,
       preferSharedGuide,

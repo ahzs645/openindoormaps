@@ -2,6 +2,7 @@ import Delaunator from "delaunator";
 import * as DMath from "./deterministic-math";
 import { createRingPointQuery } from "./ring-point-query";
 import { MAX_SHARED_CORRIDOR_APPROACH_FEET } from "./shared-corridor-guides";
+import { proposeStraightCorridorAxis } from "./corridor-straight-axis";
 
 export type CorridorXY = [number, number];
 export type CorridorCenterlineTerminal = {
@@ -9,6 +10,11 @@ export type CorridorCenterlineTerminal = {
   point: CorridorXY;
   /** Original doorway normal, oriented from the threshold into this owner. */
   approachDirection?: CorridorXY;
+};
+export type CorridorCenterlineRoute = {
+  points: CorridorXY[];
+  /** Indices of the hallway joins; original doorway branches stay in points. */
+  hallwayJoins: [number, number];
 };
 
 /** A sampled boundary Voronoi graph proposes shared corridor lanes. Neither
@@ -331,7 +337,69 @@ export function createCorridorCenterline(
     }
     return chain.points;
   };
-  function route(from: string, to: string): CorridorXY[] | null {
+  const straightAxis = exceeded ? null : proposeStraightCorridorAxis(rings);
+  const straightApproaches = new Map<string, CorridorXY[]>();
+  if (straightAxis)
+    for (const terminal of terminals) {
+      const point = straightAxis.project(terminal.point);
+      if (
+        DMath.hypot(
+          point[0] - terminal.point[0],
+          point[1] - terminal.point[1],
+        ) > MAX_SHARED_CORRIDOR_APPROACH_FEET
+      )
+        continue;
+      const candidates: CorridorXY[][] = [[terminal.point, point]];
+      if (terminal.approachDirection) {
+        const [nx, ny] = terminal.approachDirection,
+          magnitude = DMath.hypot(nx, ny);
+        if (magnitude > 0)
+          for (const distance of [0.5, 1, 2, 3])
+            candidates.push([
+              terminal.point,
+              [
+                terminal.point[0] + (nx / magnitude) * distance,
+                terminal.point[1] + (ny / magnitude) * distance,
+              ],
+              point,
+            ]);
+      }
+      const approach = candidates.find((p) => supported(p, terminal.id));
+      if (approach) straightApproaches.set(terminal.id, approach);
+    }
+  const compose = (
+    start: CorridorXY[],
+    core: CorridorXY[],
+    end: CorridorXY[],
+  ): CorridorCenterlineRoute => {
+    const points: CorridorXY[] = [];
+    const append = (p: CorridorXY) => {
+      if (points.length === 0 || p.some((v, k) => v !== points.at(-1)![k]))
+        points.push(p);
+    };
+    start.forEach(append);
+    const first = points.length - 1;
+    core.forEach(append);
+    const last = points.length - 1;
+    end.toReversed().forEach(append);
+    return { points, hallwayJoins: [first, last] };
+  };
+  function routeDetails(
+    from: string,
+    to: string,
+  ): CorridorCenterlineRoute | null {
+    const straightStart = straightApproaches.get(from),
+      straightEnd = straightApproaches.get(to);
+    if (
+      straightStart &&
+      straightEnd &&
+      supported([straightStart.at(-1)!, straightEnd.at(-1)!])
+    )
+      return compose(
+        straightStart,
+        [straightStart.at(-1)!, straightEnd.at(-1)!],
+        straightEnd,
+      );
     const start = joins.get(from),
       end = joins.get(to);
     if (!start || !end) return null;
@@ -400,13 +468,10 @@ export function createCorridorCenterline(
         points = chain.points!;
       backwards.push(chain.from === previous[v] ? points : points.toReversed());
     }
-    const points = [
-      ...start.approach,
-      ...backwards.reverse().flatMap((path) => path.slice(1)),
-      ...end.approach.toReversed().slice(1),
-    ];
-    return points.filter(
-      (p, i) => !i || p[0] !== points[i - 1][0] || p[1] !== points[i - 1][1],
+    return compose(
+      start.approach,
+      backwards.reverse().flatMap((path) => path.slice(1)),
+      end.approach,
     );
   }
   return {
@@ -414,7 +479,8 @@ export function createCorridorCenterline(
     coreEdges,
     joins,
     missing,
-    route,
+    route: (from: string, to: string) => routeDetails(from, to)?.points ?? null,
+    routeDetails,
     statistics: () => ({
       sites: sites.length,
       budgetExceeded: exceeded,
@@ -426,6 +492,8 @@ export function createCorridorCenterline(
       supportedCoreEdges: [...coreChecks.values()].filter(Boolean).length,
       attachedTerminals: joins.size,
       missingTerminals: missing.length,
+      straightAxisProposed: !!straightAxis,
+      straightAxisTerminals: straightApproaches.size,
     }),
   };
 }

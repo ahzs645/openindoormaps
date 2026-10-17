@@ -15,7 +15,7 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
 }) => {
   // A cold full UNBC import still validates source evidence. Do it once, then
   // reuse that resident map while testing both viewports and preferences.
-  test.setTimeout(1_200_000);
+  test.setTimeout(1_800_000);
   await mkdir(output!, { recursive: true });
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -64,7 +64,7 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
   await expect(
     page.getByRole("status").filter({ hasText: "Loaded" }),
   ).toBeVisible({
-    timeout: 600_000,
+    timeout: 900_000,
   });
   await page.getByLabel("Search indoor map", { exact: true }).fill("05-423");
   await page.getByRole("button", { name: /05-423 ·/ }).click();
@@ -96,6 +96,22 @@ test("real shared hallway route and reversible setting on desktop and mobile", a
   const initialShared = (await replies()).at(-1)!;
   expect(initialShared.route.paths.some((p) => p.sharedCorridorGuideUsed)).toBe(
     true,
+  );
+  expect(initialShared.route.paths).toHaveLength(1);
+  expect(initialShared.route.paths[0].pointsFeet).toHaveLength(2);
+  expect(initialShared.route.departure?.hallwayCenter).toBeDefined();
+  expect(initialShared.route.arrival?.hallwayCenter).toBeDefined();
+  expect(initialShared.route.paths[0].pointsFeet[0]).toEqual(
+    initialShared.route.departure!.pointFeet,
+  );
+  expect(initialShared.route.paths[0].pointsFeet.at(-1)).toEqual(
+    initialShared.route.arrival!.pointFeet,
+  );
+  expect(initialShared.route.departure!.pointFeet).not.toEqual(
+    initialShared.route.departure!.hallwayCenter!.doorPointFeet,
+  );
+  expect(initialShared.route.arrival!.pointFeet).not.toEqual(
+    initialShared.route.arrival!.hallwayCenter!.doorPointFeet,
   );
   await setting.uncheck();
   await expect

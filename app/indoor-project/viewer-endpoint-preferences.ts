@@ -13,7 +13,8 @@ export const arrivalChoices = [
   {
     value: "hallway" as const,
     name: "Hallway outside door",
-    description: "Start and finish on the hallway sides of the selected doors",
+    description:
+      "Use the hallway center with centerlines enabled, or the hallway side of each door",
   },
 ];
 export function loadArrivalMode(): ProjectArrivalMode {

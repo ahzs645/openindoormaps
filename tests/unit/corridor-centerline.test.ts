@@ -13,6 +13,7 @@ import {
   nativeRationalFootprintSupported,
   nativeRationalPathSupported,
 } from "../../app/indoor-project/native-exact-planar-topology";
+import { proposeStraightCorridorAxis } from "../../app/indoor-project/corridor-straight-axis";
 const rect = (x: number, y: number, w: number, h: number): CorridorXY[] => [
   [x, y],
   [x + w, y],
@@ -91,6 +92,7 @@ test("a T junction preserves all three corridor branches without a corner shortc
     terminal("top", 20, 27),
   ];
   const network = createCorridorCenterline(rings, terminals, clearance(parts));
+  assert.equal(network.statistics().straightAxisProposed, false);
   assert.deepEqual(network.missing, []);
   for (const [a, b] of [
     ["left", "right"],
@@ -101,6 +103,69 @@ test("a T junction preserves all three corridor branches without a corner shortc
     assert.ok(route);
     assert.ok(clearance(parts)(route));
   }
+});
+
+test("small wall recesses are averaged into one straight axis, with separate checked doorway approaches", () => {
+  const rings: CorridorXY[][] = [
+    [
+      [0, 0],
+      [12, 0],
+      [12, -0.5],
+      [15, -0.5],
+      [15, 0],
+      [60, 0],
+      [60, 10],
+      [43, 10],
+      [43, 10.4],
+      [40, 10.4],
+      [40, 10],
+      [0, 10],
+    ],
+  ];
+  const parts = nativeRationalOverlay("union", [rings]);
+  const terminals = [
+    terminal("a", 5, 1),
+    terminal("b", 55, 9),
+    terminal("c", 24, 9),
+  ];
+  const network = createCorridorCenterline(rings, terminals, clearance(parts));
+  assert.equal(network.statistics().straightAxisProposed, true);
+  const route = network.routeDetails("a", "b")!;
+  assert.ok(clearance(parts)(route.points));
+  assert.equal(route.hallwayJoins[1] - route.hallwayJoins[0], 1);
+  const axis = proposeStraightCorridorAxis(rings)!;
+  const a = route.points[route.hallwayJoins[0]],
+    b = route.points[route.hallwayJoins[1]];
+  for (const id of ["a", "b", "c"]) {
+    const p = axis.project(terminals.find((t) => t.id === id)!.point);
+    assert.ok(
+      Math.abs((b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0])) <
+        1e-10,
+    );
+  }
+  assert.deepEqual(network.route("b", "a"), route.points.toReversed());
+  assert.deepEqual(route.points[0], terminals[0].point);
+  assert.deepEqual(route.points.at(-1), terminals[1].point);
+});
+
+test("an L hallway and a curved hallway do not become one averaged diagonal", () => {
+  const l = nativeExactPartsForProposals(
+    nativeRationalOverlay("union", [[rect(0, 0, 60, 8)], [rect(52, 0, 8, 35)]]),
+  )[0];
+  assert.equal(proposeStraightCorridorAxis(l), null);
+  const curve: CorridorXY[][] = [
+    [
+      ...Array.from(
+        { length: 21 },
+        (_, i): CorridorXY => [i * 3, (i * 3) ** 2 / 300],
+      ),
+      ...Array.from(
+        { length: 21 },
+        (_, i): CorridorXY => [(20 - i) * 3, ((20 - i) * 3) ** 2 / 300 + 8],
+      ),
+    ],
+  ];
+  assert.equal(proposeStraightCorridorAxis(curve), null);
 });
 
 test("both alternatives around an island survive; a newly blocked side uses the other", () => {

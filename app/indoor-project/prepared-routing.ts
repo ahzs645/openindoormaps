@@ -3,7 +3,7 @@ import { bytesToHex } from "@noble/hashes/utils.js";
 import type { IndoorDataset } from "./contract";
 import { routingCalculationValue, routingSnapshot } from "./routing-cache";
 import { routeWorkerDataset } from "./route-worker-dataset";
-export const ROUTING_GUIDE_VERSION = "native-walking-guides-2";
+export const ROUTING_GUIDE_VERSION = "native-walking-guides-3";
 export type PreparedRouting = {
   version: 1;
   resolverVersion: string;
@@ -13,6 +13,8 @@ export type PreparedRouting = {
     edgeId: string;
     pointsFeet: [number, number, number][];
     kind?: "shared-corridor";
+    /** Full guides keep their source endpoints; these mark the shared trunk. */
+    hallwayJoins?: [number, number];
   }[];
 };
 type PreparedDataset = IndoorDataset & { preparedRouting?: PreparedRouting };
@@ -94,6 +96,19 @@ export function validatePreparedRouting(data: IndoorDataset): void {
         !Array.isArray(g.pointsFeet) ||
         g.pointsFeet.length < 2 ||
         g.pointsFeet.length > 10_000 ||
+        (g.hallwayJoins !== undefined &&
+          (g.kind !== "shared-corridor" ||
+            !Array.isArray(g.hallwayJoins) ||
+            g.hallwayJoins.length !== 2 ||
+            g.hallwayJoins[0] > 2 ||
+            g.pointsFeet.length - 1 - g.hallwayJoins[1] > 2 ||
+            g.hallwayJoins.some(
+              (index) =>
+                !Number.isInteger(index) ||
+                index < 0 ||
+                index >= g.pointsFeet.length,
+            ) ||
+            g.hallwayJoins[0] > g.hallwayJoins[1])) ||
         g.pointsFeet.some(
           (p) =>
             !Array.isArray(p) ||
@@ -163,5 +178,26 @@ export function preparedSharedCorridorGuideIds(data: IndoorDataset) {
     ((data as PreparedDataset).preparedRouting?.guides ?? [])
       .filter((g) => g.kind === "shared-corridor" && usable.has(g.edgeId))
       .map((g) => g.edgeId),
+  );
+}
+
+/** Endpoint proposals are usable only with their full, currently bound guide.
+ * Runtime must additionally find the join in the checked resolved path. */
+export function preparedSharedCorridorJoins(data: IndoorDataset) {
+  const usable = preparedWalkingGuides(data);
+  return new Map(
+    ((data as PreparedDataset).preparedRouting?.guides ?? []).flatMap((g) =>
+      g.kind === "shared-corridor" && g.hallwayJoins && usable.has(g.edgeId)
+        ? [
+            [
+              g.edgeId,
+              g.hallwayJoins.map((i) => g.pointsFeet[i]) as [
+                [number, number, number],
+                [number, number, number],
+              ],
+            ] as const,
+          ]
+        : [],
+    ),
   );
 }

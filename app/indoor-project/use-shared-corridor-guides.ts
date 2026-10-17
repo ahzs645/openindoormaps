@@ -1,6 +1,9 @@
 import { useMemo, useState } from "react";
 import type { IndoorDataset } from "./contract";
-import type { PreparedRouting } from "./prepared-routing";
+import {
+  ROUTING_GUIDE_VERSION,
+  type PreparedRouting,
+} from "./prepared-routing";
 import {
   loadSharedCorridorPreference,
   saveSharedCorridorPreference,
@@ -13,15 +16,20 @@ export function useSharedCorridorGuides(data?: IndoorDataset) {
       choice?.sha === sha ? choice.enabled : loadSharedCorridorPreference(sha),
     [choice, sha],
   );
-  const available = useMemo(
-    () =>
-      !!(
-        data as
-          | (IndoorDataset & { preparedRouting?: PreparedRouting })
-          | undefined
-      )?.preparedRouting?.guides.some((g) => g.kind === "shared-corridor"),
-    [data],
-  );
+  const available = useMemo(() => {
+    const prepared = (
+      data as
+        | (IndoorDataset & { preparedRouting?: PreparedRouting })
+        | undefined
+    )?.preparedRouting;
+    // Cheap wire checks only: the worker performs the complete physical and
+    // policy binding. An older package must not advertise unavailable guides.
+    return (
+      prepared?.resolverVersion === ROUTING_GUIDE_VERSION &&
+      prepared.sourceModelSha256 === sha &&
+      prepared.guides.some((g) => g.kind === "shared-corridor")
+    );
+  }, [data, sha]);
   return {
     available,
     enabled,

@@ -21,6 +21,30 @@ export function removeSharedGuideRetraces(points: SharedGuidePoint[]) {
   }
   return result;
 }
+
+/** Average-axis projections differ by a few floating-point ulps. Remove their
+ * redundant intermediate vertices (including an unused overshoot) before the
+ * caller's continuous physical/policy checks. This numeric proposal alone has
+ * no authority to erase a real bend, doorway or obstacle. */
+export function straightenSharedGuideProposal(points: SharedGuidePoint[]) {
+  const result: SharedGuidePoint[] = [];
+  for (const point of removeSharedGuideRetraces(points)) {
+    while (result.length >= 2) {
+      const a = result.at(-2)!,
+        b = result.at(-1)!;
+      if (a[2] !== b[2] || b[2] !== point[2]) break;
+      const ux = b[0] - a[0],
+        uy = b[1] - a[1];
+      const vx = point[0] - b[0],
+        vy = point[1] - b[1];
+      const scale = DMath.hypot(ux, uy) * DMath.hypot(vx, vy);
+      if (Math.abs(ux * vy - uy * vx) > 1e-12 * scale) break;
+      result.pop();
+    }
+    result.push([...point]);
+  }
+  return removeSharedGuideRetraces(result);
+}
 export const corridorGuideLength = (points: readonly (readonly number[])[]) =>
   points
     .slice(1)

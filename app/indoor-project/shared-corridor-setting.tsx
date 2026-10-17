@@ -9,7 +9,10 @@ export function SharedCorridorSetting({
 }) {
   if (!available) return null;
   return (
-    <label className="flex items-center gap-2 text-sm">
+    <label
+      className="flex items-center gap-2 text-sm"
+      title="Average straight hallway sections. Hallway directions start and end at the center near each selected door."
+    >
       <input
         type="checkbox"
         checked={enabled}

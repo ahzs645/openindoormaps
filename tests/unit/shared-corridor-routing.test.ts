@@ -31,6 +31,8 @@ import {
   loadSharedCorridorPreference,
   saveSharedCorridorPreference,
 } from "../../app/indoor-project/shared-corridor-preferences";
+import { centerHallwayRouteEndpoints } from "../../app/indoor-project/hallway-center-endpoints";
+import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 
 async function fixture() {
   await initializeNativeExactGeosOverlay();
@@ -234,6 +236,75 @@ test("tampered wall-side guides cannot claim shared two-foot clearance; physical
   prepared.dataset.walkingSupport!.floors[0].ringsFeet[0][1][0] -= 0.001;
   assert.equal(preparedWalkingGuides(prepared.dataset).size, 0);
   assert.equal(preparedSharedCorridorGuideIds(prepared.dataset).size, 0);
+});
+
+test("hallway-center endpoints remove both door hooks but preserve the original graph, approaches and instructions", async () => {
+  const prepared = await prepareRouting(await fixture(), {
+    method: "shared-corridor",
+  });
+  for (const [from, to] of [
+    ["A", "C"],
+    ["C", "A"],
+  ]) {
+    const data = prepared.dataset;
+    const original = findProjectRoute(data, from, to, "public", {
+      endpointMode: "inside",
+    })!;
+    const sourcePoints = [
+      original.paths[0].pointsFeet[0],
+      original.paths.at(-1)!.pointsFeet.at(-1)!,
+    ];
+    original.departure = {
+      mode: "hallway",
+      pointFeet: sourcePoints[0],
+      levelId: 1,
+      building: "test",
+      entranceEdgeId: "source-start-door",
+    };
+    original.arrival = {
+      mode: "hallway",
+      pointFeet: sourcePoints[1],
+      levelId: 1,
+      building: "test",
+      entranceEdgeId: "source-end-door",
+    };
+    const before = JSON.stringify(original);
+    const route = centerHallwayRouteEndpoints(data, original);
+    assert.equal(JSON.stringify(original), before);
+    assert.deepEqual(route.edges, original.edges);
+    assert.deepEqual(route.nodeIds, original.nodeIds);
+    assert.equal(route.sourceDistanceMetres, original.sourceDistanceMetres);
+    assert.deepEqual(
+      route.departure!.hallwayCenter!.doorPointFeet,
+      sourcePoints[0],
+    );
+    assert.deepEqual(
+      route.arrival!.hallwayCenter!.doorPointFeet,
+      sourcePoints[1],
+    );
+    assert.deepEqual(route.departure!.pointFeet, route.paths[0].pointsFeet[0]);
+    assert.deepEqual(
+      route.arrival!.pointFeet,
+      route.paths.at(-1)!.pointsFeet.at(-1),
+    );
+    assert.equal(route.paths.length, 1);
+    assert.equal(route.paths[0].pointsFeet.length, 2);
+    assert.ok(
+      route.paths[0].pointsFeet.every((p) => Math.abs(p[1] - 5) < 1e-10),
+    );
+    assert.ok(Math.abs(route.distanceMetres - 32 * 0.3048) < 1e-10);
+    const steps = projectNavigationSteps(data, route, from, to);
+    assert.match(steps[0].message, /hallway center/);
+    assert.match(steps.at(-1)!.message, /hallway center/);
+    const unavailable = {
+      ...original,
+      paths: original.paths.map((p) => ({
+        ...p,
+        sharedCorridorGuideUsed: false,
+      })),
+    };
+    assert.equal(centerHallwayRouteEndpoints(data, unavailable), unavailable);
+  }
 });
 
 test("source directions and exact terminal positions remain authoritative", async () => {

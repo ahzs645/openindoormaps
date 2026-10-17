@@ -21,6 +21,7 @@ import {
   type ProjectRoutingGraph,
 } from "./routing-graph";
 import { hallwayRouteEndpoints, type RouteEndpoint } from "./route-endpoints";
+import { centerHallwayRouteEndpoints } from "./hallway-center-endpoints";
 import {
   projectRoutingOptionsKey,
   type ProjectRoutingOptions,
@@ -43,10 +44,34 @@ const originalCenteringRouteCache = new WeakMap<
 const copyRoute = (route: ProjectRoute): ProjectRoute => ({
   ...route,
   departure: route.departure
-    ? { ...route.departure, pointFeet: [...route.departure.pointFeet] }
+    ? {
+        ...route.departure,
+        pointFeet: [...route.departure.pointFeet],
+        hallwayCenter: route.departure.hallwayCenter
+          ? {
+              doorPointFeet: [...route.departure.hallwayCenter.doorPointFeet],
+              approachPointsFeet:
+                route.departure.hallwayCenter.approachPointsFeet.map((p) => [
+                  ...p,
+                ]),
+            }
+          : undefined,
+      }
     : undefined,
   arrival: route.arrival
-    ? { ...route.arrival, pointFeet: [...route.arrival.pointFeet] }
+    ? {
+        ...route.arrival,
+        pointFeet: [...route.arrival.pointFeet],
+        hallwayCenter: route.arrival.hallwayCenter
+          ? {
+              doorPointFeet: [...route.arrival.hallwayCenter.doorPointFeet],
+              approachPointsFeet:
+                route.arrival.hallwayCenter.approachPointsFeet.map((p) => [
+                  ...p,
+                ]),
+            }
+          : undefined,
+      }
     : undefined,
   edges: [...route.edges],
   nodeIds: [...route.nodeIds],
@@ -454,5 +479,10 @@ function resolveProjectRoute(
       .filter((e) => e.kind === "door")
       .map((e) => e.id),
   };
-  return remember(result);
+  return remember(
+    options.endpointMode === "hallway" &&
+      options.useSharedCorridorGuides !== false
+      ? centerHallwayRouteEndpoints(data, result)
+      : result,
+  );
 }

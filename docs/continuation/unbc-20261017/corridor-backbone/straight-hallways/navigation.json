@@ -1,0 +1,4649 @@
+{
+  "engineSha256": "aaa335577ffdeb27b45b1b405d94c49a673dc7a36cbd46f3bbc463e202265bda",
+  "seconds": 407.023733453,
+  "cases": 51,
+  "failures": [],
+  "floorCoverage": [
+    {
+      "floorId": "storey:2295121",
+      "name": "Basement",
+      "caseId": "floor:storey:2295121"
+    },
+    {
+      "floorId": "storey:1450417+311+1487816",
+      "name": "Floor 1",
+      "caseId": "floor:storey:1450417+311+1487816"
+    },
+    {
+      "floorId": "storey:694",
+      "name": "Floor 2",
+      "caseId": "floor:storey:694"
+    },
+    {
+      "floorId": "storey:400176+1487353",
+      "name": "Floor 3",
+      "caseId": "floor:storey:400176+1487353"
+    },
+    {
+      "floorId": "storey:402367",
+      "name": "Floor 4",
+      "caseId": "floor:storey:402367"
+    }
+  ],
+  "heldStairEdges": [
+    "stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae",
+    "stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e",
+    "stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8",
+    "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+    "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+    "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+    "stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448",
+    "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+    "stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448",
+    "stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4",
+    "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+    "stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2",
+    "stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4",
+    "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+    "stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3",
+    "stair:1779495:rm-694-b17d80e3d57c:rm-1487353-b7dc671f702f",
+    "stair:1779620:rm-694-607258e63bb3:rm-1487353-6e5cbce7fec2",
+    "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+    "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276",
+    "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+    "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69",
+    "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+    "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+    "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+    "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd",
+    "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+    "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2",
+    "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4"
+  ],
+  "originalNodesEdgesAndRecordsUnchanged": true,
+  "results": [
+    {
+      "id": "05-415:05-411->05-412",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 279.32185865899993,
+      "legacySeconds": 0.17888939899997786,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-411->05-413",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 0.08299573699990287,
+      "legacySeconds": 0.040369842999847604,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-411->05-414",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 0.8561093079999554,
+      "legacySeconds": 0.7807561129999813,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e870225e0964",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-411->05-416",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 0.07109850600012578,
+      "legacySeconds": 0.03939789200015366,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-411->05-417",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 0.06181441600015387,
+      "legacySeconds": 0.03277379699982703,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-411->05-423",
+      "from": "rm-402367-f1426b5e0e6f",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-411",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.0747668869998306,
+      "legacySeconds": 0.03565222100005485,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [101.20649055996962, 224.62866177218183, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-412->05-411",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.05209399600001052,
+      "legacySeconds": 0.03682153599988669,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-412->05-413",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 0.04555157899996266,
+      "legacySeconds": 0.03312309299991466,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-412->05-414",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 1.0391759659999515,
+      "legacySeconds": 0.6815197890000417,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e870225e0964",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-412->05-416",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 0.05419774700002745,
+      "legacySeconds": 0.031438187000108885,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-412->05-417",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 0.05662280799984001,
+      "legacySeconds": 0.04266415800014511,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-412->05-423",
+      "from": "rm-402367-f2a35b5e0f9a",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-412",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.06739079899992793,
+      "legacySeconds": 0.044845017999876294,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [114.26979269998739, 245.50794674703494, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-413->05-411",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.09591951499995775,
+      "legacySeconds": 0.049204217999940736,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-413->05-412",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 0.09547702599992045,
+      "legacySeconds": 0.06733349899994209,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119546:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-413->05-414",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 1.0193741780000274,
+      "legacySeconds": 0.7004199960001278,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e870225e0964",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-413->05-416",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 0.05582449399982579,
+      "legacySeconds": 0.03607385700009763,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-413->05-417",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 0.06791454600007273,
+      "legacySeconds": 0.03666660400014371,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-413->05-423",
+      "from": "rm-402367-e873065e0966",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-413",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.07850135200005025,
+      "legacySeconds": 0.03721552100009285,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [113.13030488729319, 243.6866851309745, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-414->05-411",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.80560382999992,
+      "legacySeconds": 0.6399203570000828,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119215:1|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6",
+        "rm-402367-e870225e0964"
+      ]
+    },
+    {
+      "id": "05-415:05-414->05-412",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 1.0712894570000935,
+      "legacySeconds": 1.0373374999999068,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6",
+        "rm-402367-e870225e0964"
+      ]
+    },
+    {
+      "id": "05-415:05-414->05-413",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 1.5853154459998477,
+      "legacySeconds": 1.5115635909999254,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6",
+        "rm-402367-e870225e0964"
+      ]
+    },
+    {
+      "id": "05-415:05-414->05-416",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 2.209146030999953,
+      "legacySeconds": 1.8180959280000535,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6",
+        "rm-402367-e870225e0964"
+      ]
+    },
+    {
+      "id": "05-415:05-414->05-417",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 2.4803890519998966,
+      "legacySeconds": 1.948596302999882,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6",
+        "rm-402367-e870225e0964"
+      ]
+    },
+    {
+      "id": "05-415:05-414->05-423",
+      "from": "rm-402367-e85f225e0955",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-414",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.8276460530001204,
+      "legacySeconds": 0.3888038200000301,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          139.77759954275507, 248.1120092622239, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1122198",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            139.45742034968242, 249.5181095575371, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [139.45742034968242, 249.5181095575371, 34.120734908136484],
+            [138.85982864446677, 248.7163089876586, 34.120734908136484],
+            [139.77759954275507, 248.1120092622239, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [125.09841644396556, 235.0187006757228, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [127.5824138835037, 234.26203632379233, 34.120734908136484],
+            [127.70591977519035, 235.31753771375722, 34.120734908136484],
+            [128.4204699130222, 237.16073487372896, 34.120734908136484],
+            [130.47671930421225, 240.45524293230332, 34.120734908136484],
+            [131.81133008079243, 241.9109832027963, 34.120734908136484],
+            [132.7217261782855, 242.49408343683973, 34.120734908136484],
+            [135.64374672325377, 247.18393614906978, 34.120734908136484],
+            [139.77759954275507, 248.1120092622239, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-416->05-411",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.12256363600003534,
+      "legacySeconds": 0.06284836699999868,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-416->05-412",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 0.09451094299997204,
+      "legacySeconds": 0.04647486600000411,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-416->05-413",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 0.08846145299985074,
+      "legacySeconds": 0.07600055600004271,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-416->05-414",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 1.89173861700017,
+      "legacySeconds": 1.4874733969999943,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119257:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e870225e0964",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-416->05-417",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 0.22196633500000462,
+      "legacySeconds": 0.0733520500001032,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-416->05-423",
+      "from": "rm-402367-e876f65e096a",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-416",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.1280924909999594,
+      "legacySeconds": 0.07061813399987295,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [115.67281423837724, 247.7504185364732, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-417->05-411",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.13037881199992263,
+      "legacySeconds": 0.0764111579998862,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-417->05-412",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 0.10822119299997576,
+      "legacySeconds": 0.08181814499991015,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-417->05-413",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 0.11754297000006772,
+      "legacySeconds": 0.08028129400010221,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-417->05-414",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 1.9636672650000546,
+      "legacySeconds": 1.5838657849999145,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1",
+        "door:402367:1119215",
+        "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119215:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [102.30816928732996, 226.38949252176891, 34.120734908136484],
+            [104.54462269467865, 224.99023643529588, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["door:402367:1119215"],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [104.54462269467865, 224.99023643529588, 34.120734908136484],
+            [105.59349776176528, 224.4072603691971, 34.120734908136484]
+          ],
+          "centered": false,
+          "sourceReason": "native-door"
+        },
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:door:402367:1119215:0|door:402367:1126090:1",
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1126090:1"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [105.59349776176528, 224.4072603691971, 34.120734908136484],
+            [106.03052903971805, 224.1643536749893, 34.120734908136484],
+            [106.9427900485388, 224.649117660876, 34.120734908136484],
+            [107.52717166050014, 222.0500514830742, 34.120734908136484],
+            [108.39423907599544, 221.48124330555927, 34.120734908136484],
+            [114.13671585326053, 218.05158905926157, 34.120734908136484],
+            [115.71842953415944, 218.93965547725594, 34.120734908136484],
+            [117.57676709684559, 221.0396560097137, 34.120734908136484],
+            [120.10065691785142, 222.32495151327512, 34.120734908136484],
+            [120.91772259158444, 223.53139059797067, 34.120734908136484],
+            [117.41101583561294, 220.28785070424664, 34.120734908136484],
+            [120.57801900371382, 223.23712654268388, 34.120734908136484],
+            [121.40031108490807, 224.3288100755424, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e870225e0964",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-417->05-416",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 0.15267083300021478,
+      "legacySeconds": 0.05783561700000427,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-417->05-423",
+      "from": "rm-402367-f2992b5e0f91",
+      "to": "rm-402367-e87a525e096d",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-417",
+      "toNumber": "05-423",
+      "available": true,
+      "sharedSeconds": 0.08375348900002427,
+      "legacySeconds": 0.09992910299985669,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.24807613783705, 258.2597649108906, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-423->05-411",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-f1426b5e0e6f",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-411",
+      "available": true,
+      "sharedSeconds": 0.2699499540000688,
+      "legacySeconds": 0.12791941800015047,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+        "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          101.20649055996962, 224.62866177218183, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119439",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            98.9502207936406, 226.04031613211043, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [98.9502207936406, 226.04031613211043, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.933116049176, 259.35467516977366, 34.120734908136484],
+            [101.20649055996962, 224.62866177218183, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-423->05-412",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-f2a35b5e0f9a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-412",
+      "available": true,
+      "sharedSeconds": 0.11174302900000475,
+      "legacySeconds": 0.07017344899987801,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          114.26979269998739, 245.50794674703494, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119546",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            111.95010521575222, 246.95927894128766, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [111.95010521575222, 246.95927894128766, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.933116049176, 259.35467516977366, 34.120734908136484],
+            [114.26979269998739, 245.50794674703494, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-423->05-413",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-e873065e0966",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-413",
+      "available": true,
+      "sharedSeconds": 1.0719528319998644,
+      "legacySeconds": 0.08429613499995321,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          113.13030488729319, 243.6866851309745, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119257",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            114.97965335190119, 242.52962454271926, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [114.97965335190119, 242.52962454271926, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119257:0|door:402367:1119614:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.933116049176, 259.35467516977366, 34.120734908136484],
+            [113.13030488729319, 243.6866851309745, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-423->05-414",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-e85f225e0955",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-414",
+      "available": true,
+      "sharedSeconds": 1.127219100000104,
+      "legacySeconds": 0.370261816999875,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [
+          139.77759954275507, 248.1120092622239, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1122198",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            139.45742034968242, 249.5181095575371, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [139.45742034968242, 249.5181095575371, 34.120734908136484],
+            [138.85982864446677, 248.7163089876586, 34.120734908136484],
+            [139.77759954275507, 248.1120092622239, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1204:walk:arrival:rm-402367-e85f225e0955|door:402367:1122198:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [139.77759954275507, 248.1120092622239, 34.120734908136484],
+            [135.64374672325377, 247.18393614906978, 34.120734908136484],
+            [132.7217261782855, 242.49408343683973, 34.120734908136484],
+            [131.81133008079243, 241.9109832027963, 34.120734908136484],
+            [130.47671930421225, 240.45524293230332, 34.120734908136484],
+            [128.4204699130222, 237.16073487372896, 34.120734908136484],
+            [127.70591977519035, 235.31753771375722, 34.120734908136484],
+            [127.5824138835037, 234.26203632379233, 34.120734908136484],
+            [127.01710707213991, 233.4750511258658, 34.120734908136484],
+            [125.09841644396556, 235.0187006757228, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ]
+    },
+    {
+      "id": "05-415:05-423->05-416",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-e876f65e096a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-416",
+      "available": true,
+      "sharedSeconds": 0.12483906100015156,
+      "legacySeconds": 0.07631049999990501,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+        "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          115.67281423837724, 247.7504185364732, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119614",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            117.31155761629631, 246.7251248110658, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [117.31155761629631, 246.7251248110658, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "native-cell:34.120735:1199:walk:door:402367:1119614:0|door:402367:1119678:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.933116049176, 259.35467516977366, 34.120734908136484],
+            [115.67281423837724, 247.7504185364732, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "05-415:05-423->05-417",
+      "from": "rm-402367-e87a525e096d",
+      "to": "rm-402367-f2992b5e0f91",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-423",
+      "toNumber": "05-417",
+      "available": true,
+      "sharedSeconds": 0.09169006799999624,
+      "legacySeconds": 0.05247994300001301,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+      ],
+      "departure": {
+        "mode": "hallway",
+        "pointFeet": [122.933116049176, 259.35467516977366, 34.120734908136484],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119728",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            122.44246977580232, 259.6616521817103, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [122.44246977580232, 259.6616521817103, 34.120734908136484],
+            [122.32355241929152, 259.1759993609417, 34.120734908136484],
+            [122.933116049176, 259.35467516977366, 34.120734908136484]
+          ]
+        }
+      },
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [
+          122.24807613783705, 258.2597649108906, 34.120734908136484
+        ],
+        "levelId": 402367,
+        "building": "05",
+        "entranceEdgeId": "door:402367:1119678",
+        "hallwayCenter": {
+          "doorPointFeet": [
+            120.28618110907362, 259.4872412137718, 34.120734908136484
+          ],
+          "approachPointsFeet": [
+            [120.28618110907362, 259.4872412137718, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [122.933116049176, 259.35467516977366, 34.120734908136484],
+            [122.24807613783705, 258.2597649108906, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": ["rm-402367-e870225e0964"]
+    },
+    {
+      "id": "floor:storey:2295121",
+      "from": "rm-2295121-7509922f7d32",
+      "to": "rm-2295121-398346497705",
+      "mode": "public",
+      "floorId": "storey:2295121",
+      "fromNumber": "10-B500",
+      "toNumber": "10-B510",
+      "available": true,
+      "sharedSeconds": 0.07627534799999558,
+      "legacySeconds": 0.017719888999825344,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:-7.217848:2:walk:arrival:rm-2295121-7509922f7d32|door:2295121:2303755:1",
+        "door:2295121:2303755",
+        "native-cell:-7.217848:2:walk:arrival:rm-2295121-398346497705|door:2295121:2303755:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:-7.217848:2:walk:arrival:rm-2295121-7509922f7d32|door:2295121:2303755:1",
+        "door:2295121:2303755",
+        "native-cell:-7.217848:2:walk:arrival:rm-2295121-398346497705|door:2295121:2303755:0"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:-7.217848:2:walk:arrival:rm-2295121-7509922f7d32|door:2295121:2303755:1",
+            "door:2295121:2303755",
+            "native-cell:-7.217848:2:walk:arrival:rm-2295121-398346497705|door:2295121:2303755:0"
+          ],
+          "levelIds": [2295121],
+          "pointsFeet": [
+            [301.11640976534954, 752.4833266023243, -7.217847769028872],
+            [299.87857627442844, 751.590094465693, -7.217847769028872],
+            [298.68467482414326, 752.66572693446, -7.217847769028872],
+            [296.32098525050094, 750.4504312443024, -7.217847769028872],
+            [295.29186161889976, 752.6322345997523, -7.217847769028872],
+            [293.09187930448275, 752.6234132476824, -7.217847769028872],
+            [292.3413339018585, 750.663425021253, -7.217847769028872],
+            [289.79209538764826, 752.6770144391979, -7.217847769028872],
+            [291.0944981006623, 753.9892284163119, -7.217847769028872],
+            [291.6329425677459, 753.4319058193416, -7.217847769028872]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-2295121-398346497705",
+        "rm-2295121-7509922f7d32"
+      ]
+    },
+    {
+      "id": "floor:storey:1450417+311+1487816",
+      "from": "rm-1450417-dbcd6929f085",
+      "to": "rm-1450417-dbab6729f069",
+      "mode": "public",
+      "floorId": "storey:1450417+311+1487816",
+      "fromNumber": "09-218",
+      "toNumber": "09-260",
+      "available": true,
+      "sharedSeconds": 1.275605014000088,
+      "legacySeconds": 1.6638272259999067,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbcd6929f085|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:1",
+        "opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1",
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbab6729f069|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbcd6929f085|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:1",
+        "opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1",
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbab6729f069|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:0"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbcd6929f085|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:1",
+            "opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1",
+            "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbab6729f069|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:0"
+          ],
+          "levelIds": [1450417],
+          "pointsFeet": [
+            [261.03544033121693, 514.6775146038995, -3.2808398950131235],
+            [260.958554757411, 514.2116986602205, -3.2808398950131235],
+            [265.02283953987626, 513.991242819047, -3.2808398950131235],
+            [268.85287786565635, 514.160800850532, -3.2808398950131235],
+            [273.41895508822006, 514.8285343697468, -3.2808398950131235],
+            [276.15894800494544, 515.4964808533484, -3.2808398950131235],
+            [279.0823903444088, 515.7261321314024, -3.2808398950131235],
+            [280.1650636398077, 514.7172449509695, -3.2808398950131235],
+            [281.7156387589632, 512.0357727048773, -3.2808398950131235],
+            [282.31362514943515, 510.4084951194301, -3.2808398950131235],
+            [282.63439040383116, 508.7569638272861, -3.2808398950131235],
+            [282.63236590211767, 507.07743230322325, -3.2808398950131235],
+            [282.2705372832916, 505.3418468179984, -3.2808398950131235],
+            [283.43804304977976, 504.5456307393849, -3.2808398950131235],
+            [282.22036498065006, 502.76012777653244, -3.2808398950131235],
+            [283.22036498065006, 502.76012777653244, -3.2808398950131235],
+            [284.0695780856285, 504.11493620734586, -3.2808398950131235],
+            [286.01284479267474, 503.4419611453822, -3.2808398950131235],
+            [289.95567046765746, 503.4401701182134, -3.2808398950131235],
+            [291.89539263151175, 503.4396086018899, -3.2808398950131235],
+            [293.835114795366, 503.4390449153671, -3.2808398950131235],
+            [301.5940034507831, 503.43676846728187, -3.2808398950131235],
+            [302.1250428033318, 503.43371823365595, -3.2808398950131235],
+            [303.50224515609085, 502.8093955871916, -3.2808398950131235],
+            [305.70050603911494, 502.6974049720678, -3.2808398950131235],
+            [307.36779052387857, 501.9342840108507, -3.2808398950131235],
+            [309.39137935574814, 500.1265725013142, -3.2808398950131235],
+            [309.8855332448298, 499.6256117223264, -3.2808398950131235],
+            [309.9070837859897, 499.42606496117764, -3.2808398950131235],
+            [309.89340810316645, 497.8542555352739, -3.2808398950131235],
+            [309.78608025724367, 497.315683629048, -3.2808398950131235],
+            [309.8823202136979, 495.81786980276615, -3.2808398950131235],
+            [309.6848124655039, 495.82048824936146, -3.2808398950131235]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "landing:ramp:1643796:lower",
+        "rm-1450417-dba13529f060",
+        "rm-1450417-dbab6729f069",
+        "rm-1450417-dbca0729f083",
+        "rm-1450417-dbcd6929f085",
+        "rm-1450417-dbd43929f08b",
+        "rm-1450417-dbde6729f094",
+        "rm-1450417-dbe24929f098",
+        "rm-1450417-f65fe5d929e4",
+        "rm-1450417-f669f7d929ed",
+        "rm-1450417-f77d65d92ad7",
+        "rm-1450417-f780e3d92ada"
+      ]
+    },
+    {
+      "id": "floor:storey:694",
+      "from": "rm-694-2408fa58372a",
+      "to": "rm-694-0b30ff58296a",
+      "mode": "public",
+      "floorId": "storey:694",
+      "fromNumber": "06-214",
+      "toNumber": "06-244",
+      "available": true,
+      "sharedSeconds": 2.929946100000059,
+      "legacySeconds": 2.1396423589999323,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:14.435696:536:walk:arrival:rm-694-2408fa58372a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+        "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+        "native-cell:14.435696:536:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:14.435696:536:walk:arrival:rm-694-2408fa58372a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+        "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+        "native-cell:14.435696:536:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:14.435696:536:walk:arrival:rm-694-2408fa58372a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+            "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+            "native-cell:14.435696:536:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0"
+          ],
+          "levelIds": [694],
+          "pointsFeet": [
+            [-163.74737315240304, -110.64596805089673, 14.435695538057743],
+            [-163.3921074163087, -112.12210072161818, 14.435695538057743],
+            [-163.66695883855385, -112.18825012321146, 14.435695538057743],
+            [-164.19316041378178, -112.25599811005377, 14.435695538057743],
+            [-169.65438007529696, -112.3954846949416, 14.435695538057743],
+            [-172.37652683372443, -112.10554178370295, 14.435695538057743],
+            [-174.0696715709113, -109.7994512152091, 14.435695538057743],
+            [-176.12903774595193, -107.98823969847722, 14.435695538057743],
+            [-183.20934325706415, -105.10708497385608, 14.435695538057743],
+            [-186.31318868569596, -103.56178081318473, 14.435695538057743],
+            [-187.0257916146512, -105.51964126952649, 14.435695538057743],
+            [-186.89462837749988, -105.56738078367957, 14.435695538057743],
+            [-187.89462837749988, -105.56738078367957, 14.435695538057743],
+            [-187.05021830002664, -105.58675303602757, 14.435695538057743],
+            [-186.31318868569596, -103.56178081318473, 14.435695538057743],
+            [-188.68333520699866, -102.08482000336224, 14.435695538057743],
+            [-190.59600854524652, -101.53041723088987, 14.435695538057743],
+            [-193.50684968590534, -101.36231271551306, 14.435695538057743],
+            [-194.56289125498915, -96.84504355601474, 14.435695538057743],
+            [-197.45162403938963, -95.25102763995083, 14.435695538057743],
+            [-203.27247251869142, -90.99280681875204, 14.435695538057743],
+            [-203.81681826726538, -91.72686519421177, 14.435695538057743]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-694-0b29f3582964",
+        "rm-694-0b30ff58296a",
+        "rm-694-0b3aff582973",
+        "rm-694-0e0ad8ab64e9",
+        "rm-694-0e0ebcab64ec",
+        "rm-694-240576583727",
+        "rm-694-2408fa58372a",
+        "rm-694-24136e583733",
+        "rm-694-2419fa583738",
+        "rm-694-241d6e58373b",
+        "rm-694-2420f658373e",
+        "rm-694-242af6583747",
+        "rm-694-b17d7fe3d57c"
+      ]
+    },
+    {
+      "id": "floor:storey:400176+1487353",
+      "from": "rm-400176-969baec4c053",
+      "to": "rm-400176-9683a6c4c03f",
+      "mode": "public",
+      "floorId": "storey:400176+1487353",
+      "fromNumber": "10-3564",
+      "toNumber": "10-3588",
+      "available": true,
+      "sharedSeconds": 0.38425931000011043,
+      "legacySeconds": 0.3141187450001016,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-969baec4c053|door:400176:2215394:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215394:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:1",
+        "opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10",
+        "native-cell:24.278215:1013:walk:door:400176:2215393:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:0",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215393:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215549:1",
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-9683a6c4c03f|door:400176:2215549:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-969baec4c053|door:400176:2215394:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215394:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:1",
+        "opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10",
+        "native-cell:24.278215:1013:walk:door:400176:2215393:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:0",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215393:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215549:1",
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-9683a6c4c03f|door:400176:2215549:1"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:24.278215:1013:walk:arrival:rm-400176-969baec4c053|door:400176:2215394:1",
+            "native-cell:24.278215:1013:walk:door:400176:2215394:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:1",
+            "opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10",
+            "native-cell:24.278215:1013:walk:door:400176:2215393:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:0",
+            "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215393:1",
+            "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215549:1",
+            "native-cell:24.278215:1013:walk:arrival:rm-400176-9683a6c4c03f|door:400176:2215549:1"
+          ],
+          "levelIds": [400176],
+          "pointsFeet": [
+            [276.34472183291973, 779.2162723188023, 24.278215223097114],
+            [276.36707070977997, 779.5653503657368, 24.278215223097114],
+            [276.95664694682347, 779.5276041744848, 24.278215223097114],
+            [280.2718409971601, 779.5090122313981, 24.278215223097114],
+            [281.0104246438593, 779.0968278851332, 24.278215223097114],
+            [282.6406860951105, 778.7915072998244, 24.278215223097114],
+            [287.1933415575181, 778.8558419753365, 24.278215223097114],
+            [287.7102089039839, 777.1179531459984, 24.278215223097114],
+            [287.64479481868574, 767.3303343931045, 24.278215223097114],
+            [288.16167633889995, 767.2475740763978, 24.278215223097114],
+            [288.16167633889995, 766.2475740763978, 24.278215223097114],
+            [287.6435657352149, 766.1446603216858, 24.278215223097114],
+            [287.6583395394175, 764.3375715060828, 24.278215223097114],
+            [287.6485261175746, 760.9713813795744, 24.278215223097114],
+            [287.7097231736615, 755.9963350512205, 24.278215223097114],
+            [287.2369621836601, 754.2439146911174, 24.278215223097114],
+            [286.6455808600187, 753.2745940638022, 24.278215223097114],
+            [284.0870746157296, 753.8434670332261, 24.278215223097114],
+            [280.9333371479426, 753.7839475340899, 24.278215223097114],
+            [278.09299224619554, 753.8497228796986, 24.278215223097114],
+            [276.39671441629656, 753.5804244654047, 24.278215223097114],
+            [276.3527863666832, 753.8606208073181, 24.278215223097114]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-400176-072911afc43a",
+        "rm-400176-0904d5f8f1a0",
+        "rm-400176-8520f28ccbd8",
+        "rm-400176-8527de8ccbde",
+        "rm-400176-8f197dc4bc66",
+        "rm-400176-8f350dc4bc7e",
+        "rm-400176-9683a6c4c03f",
+        "rm-400176-969baec4c053",
+        "rm-400176-9780428cd68c"
+      ]
+    },
+    {
+      "id": "floor:storey:402367",
+      "from": "rm-402367-03844688998a",
+      "to": "rm-402367-133b24ba6565",
+      "mode": "public",
+      "floorId": "storey:402367",
+      "fromNumber": "04-402",
+      "toNumber": "04-423",
+      "available": true,
+      "sharedSeconds": 1.8531882780001032,
+      "legacySeconds": 3.87069287499995,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-03844688998a|door:402367:2147516:0",
+        "native-cell:34.120735:1077:walk:door:402367:2147516:0|door:402367:2147550:1",
+        "native-cell:34.120735:1077:walk:door:402367:2147550:1|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:0",
+        "opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14",
+        "native-cell:34.120735:1077:walk:door:402367:2144274:0|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:1",
+        "native-cell:34.120735:1077:walk:connector:unbc-04-lift:3|door:402367:2144274:0",
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-133b24ba6565|connector:unbc-04-lift:3"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-03844688998a|door:402367:2147516:0",
+        "native-cell:34.120735:1077:walk:door:402367:2147516:0|door:402367:2147550:1",
+        "native-cell:34.120735:1077:walk:door:402367:2147550:1|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:0",
+        "opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14",
+        "native-cell:34.120735:1077:walk:door:402367:2144274:0|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:1",
+        "native-cell:34.120735:1077:walk:connector:unbc-04-lift:3|door:402367:2144274:0",
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-133b24ba6565|connector:unbc-04-lift:3"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:34.120735:1077:walk:arrival:rm-402367-03844688998a|door:402367:2147516:0",
+            "native-cell:34.120735:1077:walk:door:402367:2147516:0|door:402367:2147550:1",
+            "native-cell:34.120735:1077:walk:door:402367:2147550:1|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:0",
+            "opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14",
+            "native-cell:34.120735:1077:walk:door:402367:2144274:0|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:1",
+            "native-cell:34.120735:1077:walk:connector:unbc-04-lift:3|door:402367:2144274:0",
+            "native-cell:34.120735:1077:walk:arrival:rm-402367-133b24ba6565|connector:unbc-04-lift:3"
+          ],
+          "levelIds": [402367],
+          "pointsFeet": [
+            [-68.43387600474028, 454.32509522174746, 34.120734908136484],
+            [-67.90532332208849, 454.39511700464453, 34.120734908136484],
+            [-67.94198553120172, 424.8430923188007, 34.120734908136484],
+            [-68.01074402309746, 424.77894263886174, 34.120734908136484],
+            [-67.97498082664556, 407.65225214954023, 34.120734908136484],
+            [-68.35457878028672, 406.0046778116512, 34.120734908136484],
+            [-67.9542226485612, 403.3725555663388, 34.120734908136484],
+            [-67.93628502633595, 398.35833486869774, 34.120734908136484],
+            [-65.7079983361913, 398.28667493488535, 34.120734908136484],
+            [-65.70186957064762, 397.33978065838517, 34.120734908136484],
+            [-67.92742824101623, 396.9278923992347, 34.120734908136484],
+            [-67.97618970326536, 384.3777898537554, 34.120734908136484],
+            [-68.32729679588326, 384.04983354838186, 34.120734908136484],
+            [-67.86904470813631, 379.1644407460442, 34.120734908136484],
+            [-68.67670227715227, 375.72586945228943, 34.120734908136484],
+            [-68.26018468258152, 373.8002026702057, 34.120734908136484],
+            [-68.3198470692708, 372.01212331159286, 34.120734908136484],
+            [-69.27837691779864, 368.43596459436714, 34.120734908136484],
+            [-69.74087234465587, 367.50021557865404, 34.120734908136484],
+            [-69.96559487223527, 364.40938820738097, 34.120734908136484],
+            [-72.25397028116168, 360.47669657552336, 34.120734908136484],
+            [-77.05311222764391, 360.948680641425, 34.120734908136484],
+            [-78.88113369860707, 362.2286753919341, 34.120734908136484],
+            [-86.89717554788031, 366.8390671845082, 34.120734908136484],
+            [-86.57034651251627, 367.2878160044702, 34.120734908136484]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-402367-03844688998a",
+        "rm-402367-039546889998",
+        "rm-402367-04a526889a7f",
+        "rm-402367-04a90e889a83",
+        "rm-402367-133b24ba6565",
+        "rm-402367-442aa2d548ef",
+        "rm-402367-6f10b6325a76",
+        "rm-402367-9777dc917a58",
+        "rm-402367-977b4c917a5b",
+        "rm-402367-977e4c917a5d",
+        "rm-402367-9788dc917a66",
+        "rm-402367-da8f18764721",
+        "rm-402367-dba21876480a"
+      ]
+    },
+    {
+      "id": "regression:05-136->05-173",
+      "from": "rm-311-ac6ce9426f1c",
+      "to": "rm-311-4030ea304744",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-136",
+      "toNumber": "05-173",
+      "available": true,
+      "sharedSeconds": 16.600267033000012,
+      "legacySeconds": 42.12114411700005,
+      "sharedPaths": 1,
+      "sourceEdgeIds": [
+        "native-cell:0.000000:70:walk:arrival:rm-311-ac6ce9426f1c|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:0",
+        "opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:0",
+        "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:1",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10",
+        "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:1",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10",
+        "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:0",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|door:311:1030297:1",
+        "native-cell:0.000000:70:walk:door:311:1030178:1|door:311:1030297:1",
+        "native-cell:0.000000:70:walk:door:311:1029924:0|door:311:1030178:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1029924:0",
+        "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1030152:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:0.000000:70:walk:arrival:rm-311-ac6ce9426f1c|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:0",
+        "opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:0",
+        "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:1",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10",
+        "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:1",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10",
+        "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:0",
+        "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|door:311:1030297:1",
+        "native-cell:0.000000:70:walk:door:311:1030178:1|door:311:1030297:1",
+        "native-cell:0.000000:70:walk:door:311:1029924:0|door:311:1030178:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1029924:0",
+        "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1030152:1"
+      ],
+      "arrival": {
+        "mode": "hallway",
+        "pointFeet": [259.6317117419262, 222.54373875973445, 0],
+        "levelId": 311,
+        "building": "05",
+        "entranceEdgeId": "door:311:1030152",
+        "hallwayCenter": {
+          "doorPointFeet": [260.68630404284625, 222.70305354529322, 0],
+          "approachPointsFeet": [
+            [260.68630404284625, 222.70305354529322, 0],
+            [259.03531940405384, 223.8318802469935, 0],
+            [259.6317117419262, 222.54373875973445, 0]
+          ]
+        }
+      },
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:0.000000:70:walk:arrival:rm-311-ac6ce9426f1c|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:0",
+            "opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-ac6ce9426f1c:rm-311-ac7069426f1f:5:1:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:0",
+            "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-4181394a7eb5:16:1:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-4181394a7eb5|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:1",
+            "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10",
+            "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-4181394a7eb5:14:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:1",
+            "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10",
+            "native-cell:0.000000:70:walk:opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-44abfe297071:11:10:0|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:0",
+            "opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|opening:recovered-circulation-seam:rm-311-4168ef4a7ea0:rm-311-5de373297e81:10:1:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-5de373297e81|door:311:1030297:1",
+            "native-cell:0.000000:70:walk:door:311:1030178:1|door:311:1030297:1",
+            "native-cell:0.000000:70:walk:door:311:1029924:0|door:311:1030178:1",
+            "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1029924:0",
+            "native-cell:0.000000:70:walk:arrival:rm-311-403b1c30474d|door:311:1030152:1"
+          ],
+          "levelIds": [311],
+          "pointsFeet": [
+            [125.27943955573346, 216.57433676145382, 0],
+            [126.45320904654471, 217.3725689909081, 0],
+            [126.64409404016925, 217.09188002157975, 0],
+            [130.0236360183125, 222.5292411932761, 0],
+            [130.22046545770945, 222.40696732263373, 0],
+            [130.22046545770945, 223.44506256072896, 0],
+            [130.4881508817571, 223.27699048495248, 0],
+            [133.96051781127275, 228.8637506350657, 0],
+            [139.0697368893997, 228.3906841224748, 0],
+            [143.9197231183472, 228.9704843493546, 0],
+            [147.27190636772843, 229.8373585132316, 0],
+            [150.94879529541294, 235.7363884541187, 0],
+            [152.47993766397616, 241.88075697005414, 0],
+            [152.6076740683997, 241.9465200702162, 0],
+            [157.1822030207107, 245.7895384607365, 0],
+            [160.37637104119165, 250.9033910453, 0],
+            [159.82632626357028, 251.24506256072902, 0],
+            [159.82632626357028, 252.24506256072902, 0],
+            [160.82459356868068, 251.62496849417812, 0],
+            [164.47927121946725, 257.47314250655296, 0],
+            [165.36034238622187, 258.4434532090141, 0],
+            [167.28602877420258, 260.32176357434, 0],
+            [169.2529469332081, 264.3658527687817, 0],
+            [170.3075308164511, 265.595009277879, 0],
+            [173.56645658104387, 270.3228102814747, 0],
+            [174.87994937825962, 274.10946772170934, 0],
+            [179.76810759678037, 281.88170985539756, 0],
+            [181.9645560085161, 283.66727989570256, 0],
+            [184.00068735619132, 284.4858895521462, 0],
+            [185.11094164818564, 281.7665679370731, 0],
+            [186.11094164818564, 281.7665679370731, 0],
+            [184.85780905955332, 284.8358382469399, 0],
+            [190.3883826750803, 287.1210575013908, 0],
+            [194.16799073980468, 284.97299784211685, 0],
+            [195.08417048855077, 282.45816174689, 0],
+            [196.15815113367057, 278.05695462971175, 0],
+            [196.39164495967105, 276.81569938227074, 0],
+            [197.61094164818567, 277.045062560729, 0],
+            [197.61094164818567, 276.045062560729, 0],
+            [196.58817305645314, 275.8386272909457, 0],
+            [197.05526189403977, 273.871688535229, 0],
+            [198.497954357178, 271.77214232907846, 0],
+            [199.11094164818564, 272.345062560729, 0],
+            [200.11094164818564, 272.345062560729, 0],
+            [198.96420688996935, 271.2732825206583, 0],
+            [201.1852455056503, 269.44517631455653, 0],
+            [212.77096192315435, 262.2358406108502, 0],
+            [214.911550351979, 260.92640827995274, 0],
+            [216.84503548825487, 260.2199512544146, 0],
+            [219.33860313145945, 258.6201148717506, 0],
+            [220.62953044382692, 257.3830214526076, 0],
+            [222.41021196298598, 256.3022939003218, 0],
+            [235.32129352872977, 248.2106573564385, 0],
+            [237.05516644463256, 247.16794066796848, 0],
+            [237.6492535798441, 246.81500964818866, 0],
+            [238.37809476568574, 246.32984304461303, 0],
+            [238.8814979442351, 246.07776144935764, 0],
+            [240.11664359554885, 245.22946555612873, 0],
+            [242.41734000742593, 244.36211628534357, 0],
+            [246.53260296894624, 241.88372424455972, 0],
+            [245.93376672140366, 235.66024016153148, 0],
+            [255.9198089874156, 229.4319394894191, 0],
+            [258.4108278901339, 227.8513716728882, 0],
+            [259.6317117419262, 222.54373875973445, 0]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "circulation:07:311:400238:1331:17290",
+        "landing:ramp:1622190:lower",
+        "rm-311-033e0b326c5c",
+        "rm-311-04790b3025b4",
+        "rm-311-05a95d8222f3",
+        "rm-311-0850e3c8e4ce",
+        "rm-311-1f9c5af51998",
+        "rm-311-238958c8f493",
+        "rm-311-2740cc4a6fc3",
+        "rm-311-3578f4ca0bc1",
+        "rm-311-38b5a830435d",
+        "rm-311-399064f64ec1",
+        "rm-311-3a294ef64f43",
+        "rm-311-3fa50c3046cd",
+        "rm-311-403b1c30474d",
+        "rm-311-4168ef4a7ea0",
+        "rm-311-416c514a7ea3",
+        "rm-311-4170374a7ea7",
+        "rm-311-4177074a7eac",
+        "rm-311-4181394a7eb5",
+        "rm-311-44abfe297071",
+        "rm-311-47f7cd792af2",
+        "rm-311-47fab5792af4",
+        "rm-311-4ddcbfa88cc4",
+        "rm-311-537bd6f65d6a",
+        "rm-311-539686f65d80",
+        "rm-311-57784be66f65",
+        "rm-311-5dceef297e70",
+        "rm-311-5de373297e81",
+        "rm-311-5de6f9297e84",
+        "rm-311-5e4b23464af3",
+        "rm-311-6ecd9309a135",
+        "rm-311-802ece0942e9",
+        "rm-311-86e02816d8fe",
+        "rm-311-86e3ac16d901",
+        "rm-311-89fd150948ca",
+        "rm-311-8a44270f914c",
+        "rm-311-8aa369094957",
+        "rm-311-8b2f269a6163",
+        "rm-311-8b32069a6165",
+        "rm-311-930f94094e0b",
+        "rm-311-9356d20f968d",
+        "rm-311-935a520f9690",
+        "rm-311-9466cb0f9774",
+        "rm-311-9b63fb0f9af0",
+        "rm-311-9b6e6b0f9af9",
+        "rm-311-9b71eb0f9afd",
+        "rm-311-9c58eb0f9bc1",
+        "rm-311-a1a7b5f5e7e7",
+        "rm-311-a1c62ff5e800",
+        "rm-311-a1c9adf5e803",
+        "rm-311-a61bf9a36e17",
+        "rm-311-ac6ce9426f1c",
+        "rm-311-ac7069426f1f",
+        "rm-311-bb30c6dfc1d2",
+        "rm-311-c64e159a8271",
+        "rm-311-c6f1359a82fc",
+        "rm-311-d62943fe8220",
+        "rm-311-d62cc9fe8223",
+        "rm-311-f015ce646f7a"
+      ]
+    },
+    {
+      "id": "regression:05-143->05-242",
+      "from": "rm-311-4170374a7ea7",
+      "to": "rm-694-b5dfde9d939a",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-143",
+      "toNumber": "05-242",
+      "available": true,
+      "sharedSeconds": 3.632559120999882,
+      "legacySeconds": 6.676800535999937,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+          ],
+          "levelIds": [311],
+          "pointsFeet": [
+            [138.37993792257498, 184.39147779916453, 0],
+            [138.4573526202157, 184.51536721285433, 0],
+            [139.96774832538384, 183.5715672274402, 0],
+            [140.20470856768335, 184.52445697015688, 0],
+            [141.9252368517162, 187.7512380512212, 0],
+            [142.4357712136523, 190.0756337639776, 0],
+            [142.87230611097576, 190.19306200487134, 0],
+            [145.0257709129193, 188.79352320500584, 0],
+            [144.9, 188.6, 0]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["connector:unbc-05-library-east-lift:0:1"],
+          "levelIds": [311, 694],
+          "pointsFeet": [
+            [144.9, 188.6, 0],
+            [144.9, 188.6, 14.435695538057743]
+          ],
+          "centered": false,
+          "sourceReason": "vertical-transition"
+        },
+        {
+          "edgeIds": [
+            "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+          ],
+          "levelIds": [694],
+          "pointsFeet": [
+            [144.9, 188.6, 14.435695538057743],
+            [145.05197515400036, 188.838988831693, 14.435695538057743],
+            [143.60386190244702, 189.75985711183714, 14.435695538057743],
+            [142.88807765555413, 189.5927066828892, 14.435695538057743],
+            [142.40270755868113, 190.7137847510883, 14.435695538057743],
+            [142.00758630753444, 190.54271723546583, 14.435695538057743]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "circulation:07:311:400238:1331:17290",
+        "landing:ramp:1622190:lower",
+        "rm-311-033e0b326c5c",
+        "rm-311-04790b3025b4",
+        "rm-311-05a95d8222f3",
+        "rm-311-0850e3c8e4ce",
+        "rm-311-1f9c5af51998",
+        "rm-311-238958c8f493",
+        "rm-311-2740cc4a6fc3",
+        "rm-311-3578f4ca0bc1",
+        "rm-311-38b5a830435d",
+        "rm-311-399064f64ec1",
+        "rm-311-3a294ef64f43",
+        "rm-311-3fa50c3046cd",
+        "rm-311-403b1c30474d",
+        "rm-311-4168ef4a7ea0",
+        "rm-311-416c514a7ea3",
+        "rm-311-4170374a7ea7",
+        "rm-311-4177074a7eac",
+        "rm-311-4181394a7eb5",
+        "rm-311-44abfe297071",
+        "rm-311-47f7cd792af2",
+        "rm-311-47fab5792af4",
+        "rm-311-4ddcbfa88cc4",
+        "rm-311-537bd6f65d6a",
+        "rm-311-539686f65d80",
+        "rm-311-57784be66f65",
+        "rm-311-5dceef297e70",
+        "rm-311-5de373297e81",
+        "rm-311-5de6f9297e84",
+        "rm-311-5e4b23464af3",
+        "rm-311-6ecd9309a135",
+        "rm-311-802ece0942e9",
+        "rm-311-86e02816d8fe",
+        "rm-311-86e3ac16d901",
+        "rm-311-89fd150948ca",
+        "rm-311-8a44270f914c",
+        "rm-311-8aa369094957",
+        "rm-311-8b2f269a6163",
+        "rm-311-8b32069a6165",
+        "rm-311-930f94094e0b",
+        "rm-311-9356d20f968d",
+        "rm-311-935a520f9690",
+        "rm-311-9466cb0f9774",
+        "rm-311-9b63fb0f9af0",
+        "rm-311-9b6e6b0f9af9",
+        "rm-311-9b71eb0f9afd",
+        "rm-311-9c58eb0f9bc1",
+        "rm-311-a1a7b5f5e7e7",
+        "rm-311-a1c62ff5e800",
+        "rm-311-a1c9adf5e803",
+        "rm-311-a61bf9a36e17",
+        "rm-311-ac6ce9426f1c",
+        "rm-311-ac7069426f1f",
+        "rm-311-bb30c6dfc1d2",
+        "rm-311-c64e159a8271",
+        "rm-311-c6f1359a82fc",
+        "rm-311-d62943fe8220",
+        "rm-311-d62cc9fe8223",
+        "rm-311-f015ce646f7a",
+        "rm-694-b5dfde9d939a",
+        "rm-694-1a939d8c895c",
+        "rm-694-1ab59d8c8979",
+        "rm-694-1ae52d8c89a2",
+        "rm-694-1ae8378c89a4",
+        "rm-694-54c346297935",
+        "rm-694-54c64c297937",
+        "rm-694-54d0ce297940",
+        "rm-694-54d3d4297942",
+        "rm-694-54d74a297945",
+        "rm-694-54dad0297949",
+        "rm-694-5d2f75297de9",
+        "rm-694-5d32fb297dec",
+        "rm-694-5d35f1297dee",
+        "rm-694-5d3977297df1",
+        "rm-694-5d3cfd297df4",
+        "rm-694-5dfe73297e98",
+        "rm-694-5e01f9297e9b",
+        "rm-694-6412a117d7ca",
+        "rm-694-64209917d7d6",
+        "rm-694-64272517d7db",
+        "rm-694-642e2117d7e1",
+        "rm-694-6431a517d7e4",
+        "rm-694-64382117d7ea",
+        "rm-694-a61f68a36e1a",
+        "rm-694-ae4c939d8f9e",
+        "rm-694-ae5aab9d8faa",
+        "rm-694-ae61739d8fb0",
+        "rm-694-ae645d9d8fb2",
+        "rm-694-b5ecf69d93a4",
+        "rm-694-b5f0dc9d93a8",
+        "rm-694-b78b969d9505",
+        "rm-694-ecf634619eae"
+      ]
+    },
+    {
+      "id": "regression:05-242->05-143",
+      "from": "rm-694-b5dfde9d939a",
+      "to": "rm-311-4170374a7ea7",
+      "mode": "public",
+      "expected": true,
+      "fromNumber": "05-242",
+      "toNumber": "05-143",
+      "available": true,
+      "sharedSeconds": 3.305510835999856,
+      "legacySeconds": 4.746447561000008,
+      "sharedPaths": 2,
+      "sourceEdgeIds": [
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+      ],
+      "baselineEdgeIds": [
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+      ],
+      "paths": [
+        {
+          "edgeIds": [
+            "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+          ],
+          "levelIds": [694],
+          "pointsFeet": [
+            [142.00758630753444, 190.54271723546583, 14.435695538057743],
+            [142.40270755868113, 190.7137847510883, 14.435695538057743],
+            [142.88807765555413, 189.5927066828892, 14.435695538057743],
+            [143.60386190244702, 189.75985711183714, 14.435695538057743],
+            [145.05197515400036, 188.838988831693, 14.435695538057743],
+            [144.9, 188.6, 14.435695538057743]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        },
+        {
+          "edgeIds": ["connector:unbc-05-library-east-lift:0:1"],
+          "levelIds": [694, 311],
+          "pointsFeet": [
+            [144.9, 188.6, 14.435695538057743],
+            [144.9, 188.6, 0]
+          ],
+          "centered": false,
+          "sourceReason": "vertical-transition"
+        },
+        {
+          "edgeIds": [
+            "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+          ],
+          "levelIds": [311],
+          "pointsFeet": [
+            [144.9, 188.6, 0],
+            [145.0257709129193, 188.79352320500584, 0],
+            [142.87230611097576, 190.19306200487134, 0],
+            [142.4357712136523, 190.0756337639776, 0],
+            [141.9252368517162, 187.7512380512212, 0],
+            [140.20470856768335, 184.52445697015688, 0],
+            [139.96774832538384, 183.5715672274402, 0],
+            [138.4573526202157, 184.51536721285433, 0],
+            [138.37993792257498, 184.39147779916453, 0]
+          ],
+          "centered": true,
+          "nativeFloorSupported": true,
+          "nativeCirculationUsed": true,
+          "preparedGuideUsed": true,
+          "sharedCorridorGuideUsed": true,
+          "shape": "centered"
+        }
+      ],
+      "unknownAccessAreas": [
+        "rm-694-1a939d8c895c",
+        "rm-694-1ab59d8c8979",
+        "rm-694-1ae52d8c89a2",
+        "rm-694-1ae8378c89a4",
+        "rm-694-54c346297935",
+        "rm-694-54c64c297937",
+        "rm-694-54d0ce297940",
+        "rm-694-54d3d4297942",
+        "rm-694-54d74a297945",
+        "rm-694-54dad0297949",
+        "rm-694-5d2f75297de9",
+        "rm-694-5d32fb297dec",
+        "rm-694-5d35f1297dee",
+        "rm-694-5d3977297df1",
+        "rm-694-5d3cfd297df4",
+        "rm-694-5dfe73297e98",
+        "rm-694-5e01f9297e9b",
+        "rm-694-6412a117d7ca",
+        "rm-694-64209917d7d6",
+        "rm-694-64272517d7db",
+        "rm-694-642e2117d7e1",
+        "rm-694-6431a517d7e4",
+        "rm-694-64382117d7ea",
+        "rm-694-a61f68a36e1a",
+        "rm-694-ae4c939d8f9e",
+        "rm-694-ae5aab9d8faa",
+        "rm-694-ae61739d8fb0",
+        "rm-694-ae645d9d8fb2",
+        "rm-694-b5dfde9d939a",
+        "rm-694-b5ecf69d93a4",
+        "rm-694-b5f0dc9d93a8",
+        "rm-694-b78b969d9505",
+        "rm-694-ecf634619eae",
+        "rm-311-4170374a7ea7",
+        "circulation:07:311:400238:1331:17290",
+        "landing:ramp:1622190:lower",
+        "rm-311-033e0b326c5c",
+        "rm-311-04790b3025b4",
+        "rm-311-05a95d8222f3",
+        "rm-311-0850e3c8e4ce",
+        "rm-311-1f9c5af51998",
+        "rm-311-238958c8f493",
+        "rm-311-2740cc4a6fc3",
+        "rm-311-3578f4ca0bc1",
+        "rm-311-38b5a830435d",
+        "rm-311-399064f64ec1",
+        "rm-311-3a294ef64f43",
+        "rm-311-3fa50c3046cd",
+        "rm-311-403b1c30474d",
+        "rm-311-4168ef4a7ea0",
+        "rm-311-416c514a7ea3",
+        "rm-311-4177074a7eac",
+        "rm-311-4181394a7eb5",
+        "rm-311-44abfe297071",
+        "rm-311-47f7cd792af2",
+        "rm-311-47fab5792af4",
+        "rm-311-4ddcbfa88cc4",
+        "rm-311-537bd6f65d6a",
+        "rm-311-539686f65d80",
+        "rm-311-57784be66f65",
+        "rm-311-5dceef297e70",
+        "rm-311-5de373297e81",
+        "rm-311-5de6f9297e84",
+        "rm-311-5e4b23464af3",
+        "rm-311-6ecd9309a135",
+        "rm-311-802ece0942e9",
+        "rm-311-86e02816d8fe",
+        "rm-311-86e3ac16d901",
+        "rm-311-89fd150948ca",
+        "rm-311-8a44270f914c",
+        "rm-311-8aa369094957",
+        "rm-311-8b2f269a6163",
+        "rm-311-8b32069a6165",
+        "rm-311-930f94094e0b",
+        "rm-311-9356d20f968d",
+        "rm-311-935a520f9690",
+        "rm-311-9466cb0f9774",
+        "rm-311-9b63fb0f9af0",
+        "rm-311-9b6e6b0f9af9",
+        "rm-311-9b71eb0f9afd",
+        "rm-311-9c58eb0f9bc1",
+        "rm-311-a1a7b5f5e7e7",
+        "rm-311-a1c62ff5e800",
+        "rm-311-a1c9adf5e803",
+        "rm-311-a61bf9a36e17",
+        "rm-311-ac6ce9426f1c",
+        "rm-311-ac7069426f1f",
+        "rm-311-bb30c6dfc1d2",
+        "rm-311-c64e159a8271",
+        "rm-311-c6f1359a82fc",
+        "rm-311-d62943fe8220",
+        "rm-311-d62cc9fe8223",
+        "rm-311-f015ce646f7a"
+      ]
+    },
+    {
+      "id": "step-free:05-143->05-242",
+      "from": "rm-311-4170374a7ea7",
+      "to": "rm-694-b5dfde9d939a",
+      "mode": "accessible",
+      "fromNumber": "05-143",
+      "toNumber": "05-242",
+      "available": false,
+      "sharedSeconds": 0.05339367399993353,
+      "legacySeconds": 0.026271634000120683,
+      "sharedPaths": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-05-library-east-lift:0:1",
+            "nativeElementId": 1882068
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0",
+          "connector:unbc-05-library-east-lift:0:1",
+          "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+        ],
+        "reviewEdgeId": "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0",
+        "reviewRoomKey": "circulation:07:311:400238:1331:17290"
+      }
+    }
+  ]
+}
