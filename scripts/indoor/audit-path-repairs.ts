@@ -31,6 +31,10 @@ const before = sha(JSON.stringify(data));
 const prior = JSON.parse(
   gunzipSync(await readFile(examplesFile)).toString(),
 ) as Record<string, { route: ProjectRoute }>;
+assert.ok(
+  prior && !Array.isArray(prior) && typeof prior === "object",
+  "Expected keyed route examples; adapt the normal-calculator result array before replay",
+);
 await initializeNativeExactGeosOverlay();
 const run = createImmutableRoutingSession(data),
   nodes = new Map(data.nodes.map((n) => [n.id, n]));
@@ -207,6 +211,10 @@ for (const [id, item] of Object.entries(prior).filter(
   assert.ok(source.every(Boolean));
   replay(id, source, item.route.nodeIds, item.route.paths, item.route);
 }
+assert.ok(
+  results.length > 0,
+  "No original route chains matched the selected scope",
+);
 assert.equal(sha(JSON.stringify(data)), before);
 assert.equal(
   localRoutingImplementation().sha256,

@@ -1,5 +1,14 @@
 # UNBC: start here for the next AI
 
+October 17 update: [the pathway repair continuation](../unbc-20261017/pathway-repairs/README.md)
+records current private Site version **11**, its 45.52 MB shared-guide visitor
+package, straight-vestibule replay, hallway inspection flag/dotted door branches,
+bounded floor reuse and source archive availability. The continuation is on
+`codex/unbc-corridor-analysis-20261017` / PR #3, not merged main. Existing
+geometry, graph/access and the 28 held stairs are unchanged. The October 16
+publication and transfer descriptions below are historical; the previously
+created large authoring archive is absent from this filesystem.
+
 This is the consolidated continuation for the October 14–16 work in
 OpenIndoorMaps and its sibling Reviter. Read both repositories' `AGENTS.md`,
 this file, [the compiler handoff](https://github.com/ahzs645/reviter/blob/main/docs/UNBC-HANDOFF-2026-10-16.md),
