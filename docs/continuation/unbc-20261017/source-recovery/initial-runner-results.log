@@ -1,0 +1,66 @@
+✔ persisted pattern operands bind original tread indices while support faces stay separate (1.782447ms)
+✔ an uninstantiated original tread keeps its direct source index (0.211553ms)
+✔ missing or duplicated original physical tread faces cannot be replaced by a matching count (0.537202ms)
+✔ out-of-range source index, missing prototype, conflicting history and unsupported role refuse (0.288624ms)
+✔ a caller-supplied source label cannot create original RVT authority (1.441027ms)
+✔ actual original bodies bind109 priority/curved tread roles while retaining all source curves and body holds (14743.582824ms)
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/reviter/lib/reviter/native-rational-overlay' imported from /workspace/reviter/lib/reviter/native-exact-planar-topology.ts
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+    at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///workspace/reviter/lib/reviter/native-rational-overlay'
+}
+
+Node.js v24.19.0
+✖ tests/native-source-stair-solid-proof.test.ts (218.695692ms)
+node:internal/modules/esm/resolve:271
+    throw new ERR_MODULE_NOT_FOUND(
+          ^
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/workspace/reviter/lib/reviter/native-rational-overlay' imported from /workspace/reviter/lib/reviter/native-exact-planar-topology.ts
+    at finalizeResolution (node:internal/modules/esm/resolve:271:11)
+    at moduleResolve (node:internal/modules/esm/resolve:865:10)
+    at defaultResolve (node:internal/modules/esm/resolve:992:11)
+    at #cachedDefaultResolve (node:internal/modules/esm/loader:701:20)
+    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:721:38)
+    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:759:56)
+    at #resolve (node:internal/modules/esm/loader:683:17)
+    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:603:35)
+    at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+    at ModuleJob.link (node:internal/modules/esm/module_job:253:17) {
+  code: 'ERR_MODULE_NOT_FOUND',
+  url: 'file:///workspace/reviter/lib/reviter/native-rational-overlay'
+}
+
+Node.js v24.19.0
+✖ tests/native-source-stair-stepped-stations.test.ts (108.519817ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 6
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15344.937343
+
+✖ failing tests:
+
+test at tests/native-source-stair-solid-proof.test.ts:1:1
+✖ tests/native-source-stair-solid-proof.test.ts (218.695692ms)
+  'test failed'
+
+test at tests/native-source-stair-stepped-stations.test.ts:1:1
+✖ tests/native-source-stair-stepped-stations.test.ts (108.519817ms)
+  'test failed'

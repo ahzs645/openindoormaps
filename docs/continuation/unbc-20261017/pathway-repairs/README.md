@@ -1,5 +1,11 @@
 # UNBC pathway and loading repairs · October 17
 
+[Later source recovery](../source-recovery/README.md) restores the original RVT,
+accepted master, canonical rooms/GIS and 890 companions; freshly reviews all
+28 held stair sources; and reconstructs the failed input indoor JSON exactly.
+Earlier statements below about those files being absent are historical. The
+version-13 app download predates this recovery and has not gained native data.
+
 Private Site **version 13 is live**, with [portable source downloads and connection
 inspection](PORTABLE-DEVELOPMENT.md). The development ZIP is 116,526,015 bytes
 (116.53 MB); fresh restore matched all 3,774 tracked source files and the visitor.

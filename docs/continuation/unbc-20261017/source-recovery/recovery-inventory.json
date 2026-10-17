@@ -1,0 +1,79 @@
+{
+  "createdAt": "2026-10-17T22:13:56.647616+00:00",
+  "recovered": [
+    {
+      "name": "Original RVT",
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.original.rvt",
+      "bytes": 70336512,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "driveUrl": "https://drive.google.com/file/d/1WG5xZyTyEmmLvvRYobSRNer87ce4yEQ4/view"
+    },
+    {
+      "name": "Historical accepted authoring master",
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.master.20261014.reviter.zip",
+      "bytes": 289031229,
+      "sha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520",
+      "driveUrl": "https://drive.google.com/file/d/11I2soDO6XbFvtKPtJ_OYvv6sxhd4FPUv/view"
+    },
+    {
+      "name": "Paired IFC",
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.paired.ifc",
+      "bytes": 83798926,
+      "sha256": "adb85a6fb3f831e185f23ebc58f7416e3054c4c118f490275aa7e6cd31b599a0",
+      "driveUrl": "https://drive.google.com/file/d/18sMrIHas_xJTgLFwk-c-X7aNh_1zNSQw/view"
+    },
+    {
+      "name": "Autodesk SVF reference",
+      "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.autodesk-svf.zip",
+      "bytes": 12850240,
+      "sha256": "d74cb3cd45d79bb46c4b044b3426cd33c60fd079146127ef1c024a6c69fad372",
+      "driveUrl": "https://drive.google.com/file/d/17Z9XGjhsj3QjJ2VxYSTCkWyesfXCVkwX/view"
+    }
+  ],
+  "reconstructedWorkingInput": {
+    "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.reconstructed-working-input.reviter.zip",
+    "bytes": 274706116,
+    "sha256": "d5a829e8100c81dd6587549bafd9ac1460fd68a56e69284cc5b806d449a49811",
+    "exactRecordedFailedInputIndoorSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+    "originalFailedZipWrapperByteIdentical": false,
+    "allOtherArchiveEntriesByteIdentical": true,
+    "historicalWorkingInputReconstructionOnly": true,
+    "acceptedNewMaster": false
+  },
+  "freshConverterCache": {
+    "createdAt": "2026-10-17T22:10:30.532Z",
+    "path": "/workspace/scratch/unbc-recovery-20261017/UNBC.fresh-current-converter.native-cache.json",
+    "bytes": 405405300,
+    "sha256": "a36d46455ae741b01c99646fb60653c26c8d3de52d931bacfff0ac479cdc13d9",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "converterCommit": "325160f",
+    "freshConversion": true,
+    "historicalEnrichedCacheRestored": false,
+    "historicalSourceEnrichmentsReapplied": false,
+    "geometryOrRoutingApproved": false
+  },
+  "historicalCompanionFilesVerified": 890,
+  "unrecovered": [
+    {
+      "name": "Earlier 1.27 GB transfer archive",
+      "sha256": "24119b663b78afc8250ceeefd13f5a0854a3c94a29f0d566d97961bd5f375253",
+      "neededFor": "Exact restoration of that transfer, not reading the recovered source master"
+    },
+    {
+      "name": "Historical enriched native cache",
+      "sha256": "5bf0e31bf51bcf72fc05ccd7ba3c344027f39098c6c422a8d89ee7f7243d5339",
+      "neededFor": "Exact historical replay; two instance and 16 planar-definition source enrichments need fresh source replay before using the new base cache"
+    },
+    {
+      "name": "Nine completed physical-floor checkpoint pairs",
+      "neededFor": "Historical comparison or identical-bound resume; derived checkpoints can be regenerated and never authorize a route"
+    },
+    {
+      "name": "Remaining failed-run source review/configuration sidecars",
+      "neededFor": "Recover exact originals where absent or reconstruct proposals from retained source and revalidate; log receipts alone are not authority"
+    }
+  ],
+  "all28SourceReviewed": true,
+  "all28StillDisabled": true,
+  "fullNativeNavigationAcceptance": false
+}

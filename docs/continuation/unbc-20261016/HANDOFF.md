@@ -1,5 +1,13 @@
 # UNBC: start here for the next AI
 
+Latest recovery: [the source recovery review](../unbc-20261017/source-recovery/README.md)
+restores the exact original RVT, accepted historical authoring master, canonical
+rooms/GIS and all 890 companions. All 28 held stair sources were freshly reread.
+A working-input dataset was reconstructed exactly and a new base conversion
+cache generated. Historical enriched cache, checkpoint pairs and later review
+sidecars still need recovery/revalidation; the failed rebuild produced no newer
+accepted master. The private Site is version 13; older statuses below are historical.
+
 October 17 update: [the pathway repair continuation](../unbc-20261017/pathway-repairs/README.md)
 records current private Site version **11**, its 45.52 MB shared-guide visitor
 package, straight-vestibule replay, hallway inspection flag/dotted door branches,
