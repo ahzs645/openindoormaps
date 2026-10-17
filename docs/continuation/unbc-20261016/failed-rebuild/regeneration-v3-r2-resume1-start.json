@@ -1,0 +1,132 @@
+{
+  "format": "unbc-native-regeneration-execution-start-v1",
+  "createdAt": "2026-10-16T15:46:10.960Z",
+  "runId": "unbc-native-v3-r2-resume1",
+  "pid": 211379,
+  "procStartTicks": "14589601",
+  "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+  "executableSha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+  "args": [
+    "--max-old-space-size=6144",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/regenerate-from-native-cache.ts",
+    "/workspace/scratch/unbc-pathway-repair-20261015/UNBC.source-rebuild-without-derived-mapping.reviter.zip",
+    "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/direction-source-enrichment/UNBC.direction-selection.with-source-envelopes.native-cache.json",
+    "/workspace/scratch/unbc-pathway-repair-20261015/regenerated-v3-r2-resume1",
+    "--native-workers",
+    "1",
+    "--native-worker-heap-mib",
+    "4096",
+    "--landing-workers",
+    "2",
+    "--landing-worker-heap-mib",
+    "3072",
+    "--checkpoint-dir",
+    "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints-r2",
+    "--drawing-reference-review",
+    "/workspace/scratch/unbc-stair-completion-20261015/reviewed-drawing-application-20261015/reviewed-drawing-references.json",
+    "--refresh-drawing-floor-bindings",
+    "checked",
+    "--boundary-contact-review",
+    "/workspace/scratch/unbc-pathway-repair-20261015/physical/boundary-contact-diagnosis/checked-boundary-review-bundle.json",
+    "--door-boundary-closure-review",
+    "/workspace/scratch/unbc-pathway-repair-20261015/door-boundary-source-review/source-door-boundary-closure-review.current-v3.json",
+    "--source-flat-landing-review",
+    "checked",
+    "--source-stepped-stair-review",
+    "/workspace/scratch/unbc-pathway-repair-20261015/stair-stepped-v2-review.json",
+    "--validated-import-checkpoint-dir",
+    "/workspace/scratch/unbc-pathway-repair-20261015/private-import-data"
+  ],
+  "cwd": "/workspace/openindoormaps",
+  "sourceClosure": {
+    "path": "/workspace/scratch/unbc-pathway-repair-20261015/regeneration-source-v3-r2-before.json",
+    "sha256": "5d918463420214b01486c77aa22580efa6830fe01f6a20fd06cb22d4cd62684a",
+    "files": 955
+  },
+  "continuationOf": {
+    "start": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/regeneration-v3-r2-start.json",
+      "sha256": "253cbef4ebd15e3859579b7c79abb10989f924bcd88dbc3dcc56dd89f6bef823"
+    },
+    "interruption": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/regeneration-v3-r2-interruption.json",
+      "sha256": "51937f38310a642fbbd6306d6301c76843647c943d357569bfc3730db8af8ec2"
+    },
+    "originalSuccessClaimed": false,
+    "originalCheckpointFiles": [
+      {
+        "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints-r2/inputs/landing-dataset-36af0089c727983daad0c4d1d11f8e786de5716dc0b00bf3108e37b0dec1619b.bin",
+        "bytes": 86939390,
+        "sha256": "36af0089c727983daad0c4d1d11f8e786de5716dc0b00bf3108e37b0dec1619b"
+      },
+      {
+        "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints-r2/inputs/native-model-7ca2be98b749794e70f267c05828359cd75f1f6190dba4badc4c01d404da966a.bin",
+        "bytes": 251342215,
+        "sha256": "7ca2be98b749794e70f267c05828359cd75f1f6190dba4badc4c01d404da966a"
+      },
+      {
+        "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints-r2/landing-approaches/182ed6932726157b670d8cac631f4592a1234e33c223b4bcb417ce5aa0562070.jsonl",
+        "bytes": 402975,
+        "sha256": "baf91431979056e8def19764ee2ad418b23c0991c8dae67d91c95c077af18d10"
+      }
+    ],
+    "priorMemoSnapshot": {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints-r2-pre-resume1/182ed6932726157b670d8cac631f4592a1234e33c223b4bcb417ce5aa0562070.jsonl",
+      "sha256": "baf91431979056e8def19764ee2ad418b23c0991c8dae67d91c95c077af18d10",
+      "bytes": 402975
+    },
+    "reusingOnlyUnchangedSourceBoundCheckpoints": true
+  },
+  "preparationEngineSha256": "33803571dd73acbd005931d25d0f936e42a9516c47ccf66ab948bed18f96308f",
+  "inputs": [
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/UNBC.source-rebuild-without-derived-mapping.reviter.zip",
+      "bytes": 273551343,
+      "sha256": "4fb92eb91885cd3eba23d83a0330e6ef0292ad95de785a3abe788608eb58372f"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/direction-source-enrichment/UNBC.direction-selection.with-source-envelopes.native-cache.json",
+      "bytes": 407909023,
+      "sha256": "5bf0e31bf51bcf72fc05ccd7ba3c344027f39098c6c422a8d89ee7f7243d5339"
+    },
+    {
+      "path": "/workspace/scratch/unbc-stair-completion-20261015/reviewed-drawing-application-20261015/reviewed-drawing-references.json",
+      "bytes": 8808,
+      "sha256": "9d3348c0130b016732b1a4ffdc27e1c40773b39d2c7597f9bddcc1c9848185a3"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/physical/boundary-contact-diagnosis/checked-boundary-review-bundle.json",
+      "bytes": 225735,
+      "sha256": "d58ecf9f50e4a04f9b08af009f6ea3ee78cd6648c12062d65016059065dac21f"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/door-boundary-source-review/source-door-boundary-closure-review.current-v3.json",
+      "bytes": 54167,
+      "sha256": "9467cc99732562ceed3d6172bb146f26b51fadc7004ac2b4de28652299d9d0e3"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-stepped-v2-review.json",
+      "bytes": 8834,
+      "sha256": "37de09e634f160184914b6a75f6fa411819d5844b925f32fee41618079fa732e"
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/checkpoints/inputs/landing-dataset-a2c81e7c1b01e5d9f3c529c943326132123c709571588f1af3e33d15fa3c68cf.bin",
+      "bytes": 86932498,
+      "sha256": "a2c81e7c1b01e5d9f3c529c943326132123c709571588f1af3e33d15fa3c68cf"
+    }
+  ],
+  "physicalGuardsWaived": false,
+  "historicalCheckpointRelabeling": false,
+  "memory": {
+    "cgroupLimitBytes": 17179869184,
+    "parentOldSpaceMiB": 6144,
+    "nativeWorkers": 1,
+    "nativeWorkerOldSpaceMiB": 4096,
+    "landingWorkers": 2,
+    "landingWorkerOldSpaceMiB": 3072,
+    "hardRssBoundClaimed": false
+  }
+}

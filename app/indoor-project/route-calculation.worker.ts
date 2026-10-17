@@ -27,7 +27,12 @@ async function handle(request: RouteRequest) {
     if (!calculate) throw new Error("The route worker has no project data.");
     scope.postMessage({
       requestId: request.requestId,
-      value: calculate(request.start, request.end, request.mode),
+      value: calculate(
+        request.start,
+        request.end,
+        request.mode,
+        request.options,
+      ),
     });
   } catch (error) {
     scope.postMessage({

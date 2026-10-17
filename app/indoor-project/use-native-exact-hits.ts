@@ -7,26 +7,32 @@ import {
  * pending reply before a different floor can acquire the old click. */
 export function useNativeExactHits(scopes: NativeExactHitScope[] | undefined) {
   const client = useRef<ReturnType<typeof startNativeExactHitClient>>();
+  const activeScopes = useRef<NativeExactHitScope[]>();
   useEffect(() => {
-    if (!scopes?.length) return;
-    const current = startNativeExactHitClient(
-      scopes,
-      () =>
-        new Worker(new URL("native-exact-hit.worker.ts", import.meta.url), {
-          type: "module",
-        }),
-    );
-    client.current = current;
+    activeScopes.current = scopes;
     return () => {
-      current.cancel();
-      if (client.current === current) client.current = undefined;
+      activeScopes.current = undefined;
+      client.current?.cancel();
+      client.current = undefined;
     };
   }, [scopes]);
   return useMemo(
     () => ({
       enabled: !!scopes?.length,
-      hit: (point: [number, number]) =>
-        client.current?.hit(point) ?? Promise.resolve([]),
+      hit: (point: [number, number]) => {
+        if (!scopes?.length || activeScopes.current !== scopes)
+          return Promise.resolve([]);
+        // Search and route selection do not need an exact map-hit index.
+        // Start it only for a real hit; init and hit retain worker FIFO order.
+        client.current ??= startNativeExactHitClient(
+          scopes,
+          () =>
+            new Worker(new URL("native-exact-hit.worker.ts", import.meta.url), {
+              type: "module",
+            }),
+        );
+        return client.current.hit(point);
+      },
     }),
     [scopes],
   );

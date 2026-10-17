@@ -1,6 +1,7 @@
 import type { IndoorDataset } from "./contract";
 import type { HeavyWorkerSchedule } from "./heavy-worker-schedule";
 import { routeWorkerDataset } from "./route-worker-dataset";
+import { routeRequestOptionsKey } from "./routing-options";
 import type {
   RouteCalculation,
   RouteRequest,
@@ -39,12 +40,15 @@ export class RouteWorkerClient {
     start: string,
     end: string,
     mode: RouteRequest["mode"],
+    options: RouteRequest["options"] = {},
   ) {
     return (
       this.completedData === data &&
       !!start &&
       !!end &&
-      this.completed.has(JSON.stringify([start, end, mode]))
+      this.completed.has(
+        JSON.stringify([start, end, mode, routeRequestOptionsKey(options)]),
+      )
     );
   }
   /** Scalar: does a live worker already hold this dataset snapshot? */
@@ -94,6 +98,7 @@ export class RouteWorkerClient {
     start: string,
     end: string,
     mode: RouteRequest["mode"],
+    options: RouteRequest["options"] = {},
   ) {
     this.resetData(data);
     if (this.pending) {
@@ -106,7 +111,12 @@ export class RouteWorkerClient {
         this.pending = undefined;
       } else this.stop();
     }
-    const key = JSON.stringify([start, end, mode]);
+    const key = JSON.stringify([
+      start,
+      end,
+      mode,
+      routeRequestOptionsKey(options),
+    ]);
     const cached = this.completed.get(key);
     if (cached && start && end) {
       this.abandonBackgroundWarmup();
@@ -181,6 +191,7 @@ export class RouteWorkerClient {
         start,
         end,
         mode,
+        options,
       });
       this.workerData = data;
     } catch (error) {

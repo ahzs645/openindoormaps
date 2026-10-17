@@ -3,7 +3,7 @@ import {
   sameRoutePlace,
   visitorRouteFailureMessage,
 } from "./visitor-route-state";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { LngLatBounds } from "maplibre-gl";
 import {
   ArrowLeft,
@@ -24,7 +24,8 @@ import { summarizeRoute } from "../utils/route-summary";
 import { hospitalFollowPadding } from "../utils/hospital-follow-padding";
 import { fitProjectPlaceBounds } from "./place-camera";
 import type { IndoorDataset, IndoorRecord } from "./contract";
-import { geographicPoint, type ProjectRoute } from "./routing";
+import { geographicPoint } from "./routing";
+import type { ProjectRoute } from "./viewer-routing";
 import { projectFloorName, projectNavigationSteps } from "./navigation-steps";
 import { ProjectPlaceSearch } from "./place-search";
 import {
@@ -108,6 +109,7 @@ export function ProjectNavigation({
   onArrivalMode,
   arrivalMessage,
   arrivalReasons,
+  routeSettings,
   selected,
   onStart,
   onEnd,
@@ -156,6 +158,7 @@ export function ProjectNavigation({
   onArrivalMode: (mode: ProjectArrivalMode) => void;
   arrivalMessage?: string;
   arrivalReasons: Partial<Record<ProjectArrivalMode, string>>;
+  routeSettings?: ReactNode;
   selected: string;
   onStart: (key: string) => void;
   onEnd: (key: string) => void;
@@ -494,6 +497,7 @@ export function ProjectNavigation({
                 onChange={onArrivalMode}
                 reasons={arrivalReasons}
               />
+              {routeSettings}
               {start &&
                 end &&
                 (sameRoutePlace(start, end) ? (

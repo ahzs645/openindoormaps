@@ -1,0 +1,69 @@
+.project-download-page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #edf3f1;
+  color: #17382f;
+  font-family: system-ui, sans-serif;
+}
+.project-download-page article {
+  width: min(100%, 640px);
+  padding: clamp(24px, 5vw, 44px);
+  border: 1px solid #c6d8d0;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 40px #17382f0d;
+}
+.project-download-page h1 {
+  font-size: clamp(24px, 4vw, 32px);
+  line-height: 1.2;
+  margin: 8px 0 20px;
+}
+.project-download-page p {
+  line-height: 1.6;
+  margin: 14px 0;
+}
+.project-download-page .download-kicker {
+  color: #537469;
+  font-weight: 650;
+}
+.project-download-page .download-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.project-download-page button,
+.project-download-page .download-save {
+  display: inline-block;
+  background: #17654f;
+  color: white;
+  padding: 12px 16px;
+  border: 1px solid #17654f;
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.project-download-page button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+.project-download-page :is(button, a, summary):focus-visible {
+  outline: 3px solid #1584bc;
+  outline-offset: 4px;
+}
+.project-download-page details {
+  margin-top: 18px;
+}
+.project-download-page code {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+.project-download-page .download-return {
+  color: #537469;
+  font-size: 14px;
+  margin-top: 28px;
+}

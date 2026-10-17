@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "scope": "Targeted real desktop/mobile download and header link, ZIP integrity, no map/route preparation; synthetic cancellation explicitly separated.",
+  "outcomes": [
+    {
+      "device": "desktop",
+      "passed": true,
+      "zipBytes": 45290239,
+      "zipSha256": "6cb0ff0f40efd478d3058da29fa2a1bcd3cb16419042f3d5b8567c9c7f7cee22",
+      "workers": [],
+      "initialRequests": [
+        "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+        "http://127.0.0.1:8931/openindoormaps/assets/index-DgfEVLcC.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/rolldown-runtime-DF2fYuay.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/preload-helper-C-9StTOk.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/react-CmKNXuX7.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/dist-DYM1kC_I.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/jsx-runtime-BDH3faWl.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/use-theme-CREOEqQt.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/index-DztUQkgB.css",
+        "http://127.0.0.1:8931/openindoormaps/assets/project-download-page-FA6qorgJ.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/hosted-project-C_6OiWaH.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/project-download-page-FQf5ZN5g.css",
+        "https://fonts.gstatic.com/s/inter/v20/UcCo3FwrK3iLTcviYwY.woff2",
+        "http://127.0.0.1:8931/openindoormaps/favicon.svg",
+        "http://127.0.0.1:8931/data/unbc-full/project.json",
+        "http://127.0.0.1:8931/data/unbc-full/parts/9949c3f879d4d13c49e63855ea6f708a699e977b356a2c46146f04e340ee2187.bin",
+        "http://127.0.0.1:8931/data/unbc-full/parts/c7331c2c0d6b224fa45239a017b6f90a51282e909a56a3221a3f263af4f6cde9.bin",
+        "http://127.0.0.1:8931/data/unbc-full/parts/29bd5e79c9fef4468f48b383593293bdde722737048349cd66bb52edd12470ef.bin"
+      ],
+      "downloadOnly": true,
+      "recheck": true
+    },
+    {
+      "device": "mobile",
+      "passed": true,
+      "zipBytes": 45290239,
+      "zipSha256": "6cb0ff0f40efd478d3058da29fa2a1bcd3cb16419042f3d5b8567c9c7f7cee22",
+      "workers": [],
+      "initialRequests": [
+        "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+        "http://127.0.0.1:8931/openindoormaps/assets/index-DgfEVLcC.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/rolldown-runtime-DF2fYuay.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/preload-helper-C-9StTOk.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/react-CmKNXuX7.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/dist-DYM1kC_I.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/jsx-runtime-BDH3faWl.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/use-theme-CREOEqQt.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/index-DztUQkgB.css",
+        "http://127.0.0.1:8931/openindoormaps/assets/project-download-page-FA6qorgJ.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/hosted-project-C_6OiWaH.js",
+        "http://127.0.0.1:8931/openindoormaps/assets/project-download-page-FQf5ZN5g.css",
+        "https://fonts.gstatic.com/s/inter/v20/UcCo3FwrK3iLTcviYwY.woff2",
+        "http://127.0.0.1:8931/openindoormaps/favicon.svg",
+        "http://127.0.0.1:8931/data/unbc-full/project.json",
+        "http://127.0.0.1:8931/data/unbc-full/parts/9949c3f879d4d13c49e63855ea6f708a699e977b356a2c46146f04e340ee2187.bin",
+        "http://127.0.0.1:8931/data/unbc-full/parts/c7331c2c0d6b224fa45239a017b6f90a51282e909a56a3221a3f263af4f6cde9.bin",
+        "http://127.0.0.1:8931/data/unbc-full/parts/29bd5e79c9fef4468f48b383593293bdde722737048349cd66bb52edd12470ef.bin"
+      ],
+      "downloadOnly": true,
+      "recheck": true
+    },
+    {
+      "case": "synthetic-cancellation-and-real-retry",
+      "passed": true
+    },
+    {
+      "case": "ordinary-local-publication-and-refresh",
+      "passed": true
+    }
+  ]
+}

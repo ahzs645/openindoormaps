@@ -1,7 +1,8 @@
 import { useId } from "react";
 import * as Menu from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronDown, DoorOpen } from "lucide-react";
-import { arrivalChoices, type ProjectArrivalMode } from "./route-arrival";
+import type { ProjectArrivalMode } from "./route-arrival";
+import { arrivalChoices } from "./viewer-endpoint-preferences";
 export function ProjectRouteArrivalMenu({
   mode,
   onChange,
@@ -14,13 +15,13 @@ export function ProjectRouteArrivalMenu({
   const id = useId();
   return (
     <div className="project-profile-field">
-      <label htmlFor={id}>Stop directions</label>
+      <label htmlFor={id}>Route endpoints</label>
       <Menu.Root modal={false}>
         <Menu.Trigger asChild>
           <button
             id={id}
             type="button"
-            aria-label="Stop directions"
+            aria-label="Route endpoints"
             className="project-profile-trigger"
           >
             <DoorOpen size={18} aria-hidden="true" />

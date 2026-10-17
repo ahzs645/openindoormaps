@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "app/indoor-project/viewer-routing.ts",
+    "app/indoor-project/viewer-route-graph.ts",
+    "app/indoor-project/viewer-endpoint-preferences.ts",
+    "app/indoor-project/route-endpoints.ts",
+    "app/indoor-project/routing-options.ts",
+    "app/indoor-project/stair-exclusions.tsx",
+    "app/indoor-project/route-worker-client.ts",
+    "app/indoor-project/route-calculation.ts",
+    "app/indoor-project/project-navigation.tsx",
+    "app/indoor-project/native-stair-review.tsx",
+    "app/indoor-project/use-project-route.ts",
+    "app/pages/indoor-project-page.tsx",
+    "tests/unit/hallway-routing.test.ts",
+    "tests/unit/native-stair-landing-marker.test.ts",
+    "tests/unit/route-worker-client.test.ts",
+    "tests/unit/route-worker-calculation.test.ts",
+    "tests/unit/hosted-project.test.ts",
+    "tests/unit/viewer-stair-exclusion-choices.test.ts",
+    "tests/unit/viewer-centered-route.test.ts",
+    "tests/unit/viewer-route-lanes.test.ts"
+  ]
+}

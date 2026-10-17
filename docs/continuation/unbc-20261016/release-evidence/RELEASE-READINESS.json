@@ -1,0 +1,60 @@
+{
+  "format": "unbc-viewer-local-release-readiness-v1",
+  "createdAtUtc": "2026-10-16T22:33:50.747454+00:00",
+  "releaseId": "c061acca78ff",
+  "published": false,
+  "viewerDeltaSha256": "597131a542f4efd6e855249fa0b269094c44d198df063105361a174d48599f00",
+  "stageInventorySha256": "87bf29cea1438106ef83a2b75e5b1e9ee85e004d261edc89d67c31c8d4506fa0",
+  "sourceCopyReceiptSha256": "a5c0364f6d479a24103787e9236b0728bba87dbd7d1bc51a71e6d24706b01f04",
+  "calculatorReceiptSha256": "59d81617b082ec687b1d77b909ab18c3293b91177382d8b7224d21ee23c11bdb",
+  "actualMovingCalculatorCases": 8,
+  "expectedRefusals": 2,
+  "calculatorSourceUnchangedSinceCases": true,
+  "uiOnlyAmendmentSha256": "c125627d783aa90ebb367e5c09d8d79e3639d1347aed983396844bc844d18f5c",
+  "memoReadinessSha256": "afabfeb5ca4316bf8b2d675203501879865387e03ff06d279032d1a331ab0be0",
+  "lazyHitReadinessSha256": "79e7d8167638f446928e761d538ec1af2b8ab5836dc3ca6c0e6093dd67eda0c5",
+  "preparationEngine": "681e71a5b49b7ac79d914f79624be41cea860778d5732289cd2a445e7c2a0d8d",
+  "originalOrderedModules": 179,
+  "buildLogSha256": "102eda421a851684a94b4c29e5378507d57a2bec2f42590e05674143619b51bc",
+  "browserReceipts": [
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/hallway-viewer-release/qa/browser/desktop-observations.json",
+      "sha256": "0c6596dc14e73b8c7c5931c59cefa11954d9b758906368719c1a3c53240179b9",
+      "passed": true
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/hallway-viewer-release/qa/browser-mobile-targeted/mobile-observations.json",
+      "sha256": "54a27002f491f9a18bc4e1d3ab97a4658f89548549e435e4660dbbfd75c39413",
+      "passed": true
+    },
+    {
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/hallway-viewer-release/qa/browser-mobile-visual/mobile-observations.json",
+      "sha256": "2f7fb6b71b72d0025ddc1053706b85fa063a3f259d04fafab2ad512a1da82018",
+      "passed": true
+    }
+  ],
+  "mobilePaintChecks": [
+    {
+      "floorId": "storey:1450417+311+1487816",
+      "metricsSha256": "d1307a27264b1086a1baa4c4ed11445f861645b6866037b85f383638a56dcad4",
+      "screenshot": "/workspace/scratch/unbc-pathway-repair-20261015/hallway-viewer-release/qa/browser-mobile-visual/mobile-lift-floor-storey:1450417+311+1487816.png",
+      "screenshotSha256": "32d58b455cc0b9e8285549b6dad2a5bebea83e626f449b2855cbd12a1fcfe08e",
+      "uncoveredMapGreenFraction": 0.6353369111508647
+    },
+    {
+      "floorId": "storey:694",
+      "metricsSha256": "3178551a63749c8605a921a2dba18ba17533bc42e9db001a9406e15840444044",
+      "screenshot": "/workspace/scratch/unbc-pathway-repair-20261015/hallway-viewer-release/qa/browser-mobile-visual/mobile-lift-floor-storey:694.png",
+      "screenshotSha256": "7188a593bc2d5676c3ef36978cb3060d6c3f7280d833221a9db37e364bf09d4b",
+      "uncoveredMapGreenFraction": 0.5138640429338104
+    }
+  ],
+  "supersededRuns": "Original broad mobile run deliberately stopped after desktop passed; targeted mobile results retained. Earlier premature blank screenshots do not establish visual acceptance.",
+  "mapAssetFilesPreserved": 234,
+  "limits": [
+    "Desktop and mobile viewports in Linux Chromium; not physical phone performance",
+    "Cold loading and floor preparation remain slow",
+    "All 28 held stair links stay held; 08-S401 upward connection remains unverified",
+    "Original source geometry regeneration remains separate"
+  ]
+}

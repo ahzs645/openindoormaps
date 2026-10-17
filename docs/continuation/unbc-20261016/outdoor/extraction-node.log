@@ -1,0 +1,14 @@
+file:///workspace/scratch/unbc-download-outdoor-20261016/outdoor/extract-targeted-viewer.mjs:22
+  if(path.length===1){result.topLevelFields.push(path[0]);if(path[0]==='source')result.source=v;delete this.value[this.key];return;}
+                                                                                                                       ^
+
+TypeError: Cannot convert undefined or null to object
+    at p.onValue (file:///workspace/scratch/unbc-download-outdoor-20261016/outdoor/extract-targeted-viewer.mjs:22:120)
+    at proto.emit (/workspace/openindoormaps/node_modules/jsonparse/jsonparse.js:337:8)
+    at proto.pop (/workspace/openindoormaps/node_modules/jsonparse/jsonparse.js:332:8)
+    at proto.onToken (/workspace/openindoormaps/node_modules/jsonparse/jsonparse.js:402:12)
+    at proto.write (/workspace/openindoormaps/node_modules/jsonparse/jsonparse.js:135:34)
+    at file:///workspace/scratch/unbc-download-outdoor-20261016/outdoor/extract-targeted-viewer.mjs:57:81
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.19.0

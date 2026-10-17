@@ -68,7 +68,20 @@ test("overview floor backs a supported doorway threshold while retaining physica
     properties: Record<string, unknown>,
   ): FeatureCollection<MultiPolygon>["features"][number] => ({
     type: "Feature",
-    properties: { levelId: 1, ...properties },
+    properties: {
+      levelId: 1,
+      ...properties,
+      // Match the retained native-feet carrier emitted by real preparation;
+      // geographic drawing coordinates alone no longer certify this backing.
+      ...(properties.nativePhysical === true
+        ? {
+            nativeDisplayPartsFeet: [rings],
+            nativeDisplayExactParts: [
+              rings.map((ring) => ring.map((p) => p.map((n) => `${n}/1`))),
+            ],
+          }
+        : {}),
+    },
     geometry: {
       type: "MultiPolygon",
       coordinates: [

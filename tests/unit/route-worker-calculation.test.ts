@@ -12,6 +12,7 @@ import {
   reachableProjectDestinations,
 } from "../../app/indoor-project/routing-graph";
 import { resolveRouteArrival } from "../../app/indoor-project/route-arrival";
+import { findProjectRoute } from "../../app/indoor-project/viewer-routing";
 const fixture = () =>
   JSON.parse(
     readFileSync(
@@ -60,11 +61,16 @@ test("worker snapshot retains exact routing and step-free policy while excluding
       "warm result matches cold geometry/policy",
     );
     if (expected.route)
-      for (const choice of ["doorway", "hallway"] as const)
-        assert.deepEqual(
-          actual.arrivals?.[choice],
-          resolveRouteArrival(data, expected.route, endKey, choice),
-        );
+      assert.deepEqual(
+        actual.arrivals?.doorway,
+        resolveRouteArrival(data, expected.route, endKey, "doorway"),
+      );
+    assert.deepEqual(
+      actual.arrivals?.hallway?.route,
+      findProjectRoute(data, startKey, endKey, mode, {
+        endpointMode: "hallway",
+      }),
+    );
   }
 });
 

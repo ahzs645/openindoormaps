@@ -1,15 +1,15 @@
 import type { IndoorDataset } from "./contract";
-import {
-  projectRoutingGraph,
-  reachableProjectDestinations,
-} from "./routing-graph";
+import { projectRoutingGraph } from "./routing-graph";
+import { reachableViewerDestinations } from "./viewer-route-graph";
 import { createImmutableRoutingSession } from "./routing-cache";
 import { resolveRouteArrival, type ProjectArrivalMode } from "./route-arrival";
+import { routeRequestOptionsKey } from "./routing-options";
 import {
   findProjectRoute,
-  projectRouteFailure,
   type ProjectRoute,
-} from "./routing";
+  type ProjectRoutingOptions,
+} from "./viewer-routing";
+import { projectRouteFailure } from "./routing";
 import {
   createProjectRouteDiagnostics,
   type ProjectRouteDiagnostic,
@@ -28,6 +28,7 @@ export type RouteRequest = {
   start: string;
   end: string;
   mode: "public" | "accessible";
+  options?: ProjectRoutingOptions;
 };
 export type RouteResponse = { requestId: number } & (
   | { value: RouteCalculation }
@@ -59,14 +60,24 @@ export function calculateRoute(
   start: string,
   end: string,
   mode: RouteRequest["mode"],
+  options: RouteRequest["options"] = {},
 ): RouteCalculation {
   if (pendingBoundaryReview(data)) return pendingBoundaryResult(data, mode);
-  const route = findProjectRoute(data, start, end, mode);
+  const route = findProjectRoute(data, start, end, mode, options);
+  const diagnostic = route
+    ? undefined
+    : createProjectRouteDiagnostics(data, mode).inspect(start, end);
+  if (
+    diagnostic?.kind === "connected" &&
+    options.excludedNativeStairIds?.length
+  ) {
+    diagnostic.kind = "blocked";
+    diagnostic.message =
+      "No supported route was found with the current staircase exclusions. You can change them in Excluded stairs.";
+  }
   return {
     route,
-    diagnostic: route
-      ? undefined
-      : createProjectRouteDiagnostics(data, mode).inspect(start, end),
+    diagnostic,
   };
 }
 
@@ -84,6 +95,7 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
     start: string,
     end: string,
     mode: RouteRequest["mode"],
+    options: RouteRequest["options"] = {},
   ): RouteCalculation =>
     run(() => {
       if (!start) {
@@ -91,25 +103,58 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
         return { route: null };
       }
       const result = end
-        ? calculateRoute(data, start, end, mode)
+        ? calculateRoute(data, start, end, mode, options)
         : { route: null };
-      const key = JSON.stringify([start, end, mode]);
+      const key = JSON.stringify([
+        start,
+        end,
+        mode,
+        routeRequestOptionsKey(options),
+      ]);
       let choices = arrivals.get(key);
-      if (result.route && !choices) {
-        choices = {
-          doorway: resolveRouteArrival(data, result.route, end, "doorway"),
-          hallway: resolveRouteArrival(data, result.route, end, "hallway"),
-        };
+      if (end && !choices) {
+        choices =
+          options.endpointMode === "hallway"
+            ? { hallway: { route: result.route } }
+            : {
+                doorway: resolveRouteArrival(
+                  data,
+                  result.route,
+                  end,
+                  "doorway",
+                ),
+              };
+        // Legacy callers can request all choices. The visitor supplies its
+        // selected mode, so hallway directions do not also solve an interior
+        // route or prepare the unused endpoint variants.
+        if (options.endpointMode === undefined)
+          choices.hallway = {
+            route: findProjectRoute(data, start, end, mode, {
+              ...options,
+              endpointMode: "hallway",
+            }),
+          };
+        if (choices.hallway && !choices.hallway.route)
+          choices.hallway.message =
+            "A verified hallway entrance is unavailable at one of these places. Choose Inside room or another entrance.";
         arrivals.set(key, choices);
         while (arrivals.size > 16)
           arrivals.delete(arrivals.keys().next().value!);
       }
       return {
         ...result,
-        reachable: reachableProjectDestinations(
-          projectRoutingGraph(data, mode),
-          start,
-        ),
+        // Interior-arrival coverage is not hallway-endpoint coverage. Keep it
+        // unset for an explicit hallway request instead of disabling a place
+        // whose outside doorway is reachable but interior approach is not.
+        reachable:
+          options.endpointMode === "hallway"
+            ? undefined
+            : reachableViewerDestinations(
+                data,
+                mode,
+                start,
+                options.excludedNativeStairIds,
+              ),
         arrivals: choices,
       };
     });

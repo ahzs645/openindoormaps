@@ -73,8 +73,13 @@ import { ProjectRouteFocus } from "~/indoor-project/map-layers";
 import {
   loadArrivalMode,
   saveArrivalMode,
-} from "~/indoor-project/route-arrival";
+} from "~/indoor-project/viewer-endpoint-preferences";
 import { ProjectRouteArrivalMenu } from "~/indoor-project/route-arrival-menu";
+import {
+  StairExclusionSettings,
+  useStairExclusions,
+  type HostedStairPreferences,
+} from "~/indoor-project/stair-exclusions";
 import { ProjectNavigation } from "~/indoor-project/project-navigation";
 import { isProjectDestination } from "~/indoor-project/routing-graph";
 import {
@@ -243,6 +248,8 @@ export default function IndoorProjectPage() {
   const hostedPackageUrl = hostedParams.get("package");
   const visitorManifestUrl = hostedParams.get("manifest");
   const binaryPreviewUrl = hostedParams.get("preview");
+  const [hostedStairPreferences, setHostedStairPreferences] =
+    useState<HostedStairPreferences>();
   const [publishedSource, setPublishedSource] = useState<{
     data: IndoorProject["dataset"];
     receipt: PublishedProjectReceipt;
@@ -686,8 +693,17 @@ export default function IndoorProjectPage() {
               controller.signal,
             ));
         const loaded = opened.project;
+        if (
+          hosted.viewerPreferences &&
+          hosted.viewerPreferences.sourceModelSha256 !==
+            loaded.dataset.source.modelSha256
+        )
+          throw new Error(
+            "Staircase preferences belong to a different source model.",
+          );
         await initializeNativeExactGeosOverlay();
         if (!current()) return;
+        setHostedStairPreferences(hosted.viewerPreferences);
         accept(loaded, hosted.fileName, hosted.cached);
         if (opened.receipt)
           setPublishedSource({ data: loaded.dataset, receipt: opened.receipt });
@@ -1449,12 +1465,22 @@ export default function IndoorProjectPage() {
       !(wallContext && wallMode && !editing),
   );
   // Large datasets build the route graph on visitor intent, not at import.
+  const stairExclusions = useStairExclusions(data, hostedStairPreferences);
+  const routingOptions = useMemo(
+    () => ({
+      excludedNativeStairIds: stairExclusions.ids,
+      endpointMode:
+        arrivalMode === "hallway" ? ("hallway" as const) : ("inside" as const),
+    }),
+    [stairExclusions.ids, arrivalMode],
+  );
   const routeCalculation = useProjectRoute(
     data,
     start,
     end,
     mode,
     routePickTarget !== null || !!start || !!end,
+    routingOptions,
   );
   const baseRoute = routeCalculation.route;
   const arrivalResult = useMemo(
@@ -1738,6 +1764,16 @@ export default function IndoorProjectPage() {
           </h1>
         </div>
         <nav>
+          {hostedPackageUrl && (
+            <Link
+              className="project-view-link"
+              to={`/projects/download?package=${encodeURIComponent(hostedPackageUrl)}`}
+              target="_blank"
+              rel="noopener"
+            >
+              Download latest map ZIP
+            </Link>
+          )}
           {visitorManifestUrl && (
             <a
               className="project-view-link"
@@ -3121,6 +3157,7 @@ export default function IndoorProjectPage() {
                 />
                 {nativeExplore && (
                   <NativeExploreLayer
+                    visitorOnly={isViewerProject(project)}
                     overviewLocked={keepBuildingOverview}
                     usePreparedDisplay={!!data.nativeIndoorEnvelopes}
                     onRetryPreparedDisplay={
@@ -3326,6 +3363,13 @@ export default function IndoorProjectPage() {
                     onArrivalMode={setArrivalMode}
                     arrivalMessage={arrivalResult.message}
                     arrivalReasons={arrivalReasons}
+                    routeSettings={
+                      <StairExclusionSettings
+                        data={data}
+                        ids={stairExclusions.ids}
+                        onChange={stairExclusions.onChange}
+                      />
+                    }
                     selected={selected}
                     onStart={setStart}
                     onEnd={setEnd}
@@ -3420,7 +3464,25 @@ export default function IndoorProjectPage() {
                     }}
                   />
                   {sourceStair ? (
-                    <NativeStairInspector data={data} stair={sourceStair} />
+                    <NativeStairInspector
+                      data={data}
+                      stair={sourceStair}
+                      excluded={stairExclusions.ids.includes(
+                        sourceStair.stairElementId,
+                      )}
+                      onExclude={(exclude) =>
+                        stairExclusions.onChange(
+                          exclude
+                            ? [
+                                ...stairExclusions.ids,
+                                sourceStair.stairElementId,
+                              ]
+                            : stairExclusions.ids.filter(
+                                (id) => id !== sourceStair.stairElementId,
+                              ),
+                        )
+                      }
+                    />
                   ) : (
                     <ConnectorDetails
                       data={data}
@@ -3492,389 +3554,411 @@ export default function IndoorProjectPage() {
             review &&
             !pinReview &&
             (!editing || record || edge || door) && (
-            <aside className="project-inspector">
-              <h2>
-                {chosenPin && !editing
-                  ? "Selected reference pin"
-                  : wallContext && wallMode && !editing
-                    ? "Selected wall area"
-                    : record
-                      ? "Selected area"
-                      : edge
-                        ? "Selected connection"
-                        : door
-                          ? "Entrance review"
-                          : "Map inspector"}
-              </h2>
-              <ConnectorFloorLinks
-                data={data}
-                room={record?.stair ? record : undefined}
-                edge={edge}
-                nativeElementId={sourceStair?.stairElementId}
-                onNavigate={(target) => {
-                  setFloorId(target.floorId);
-                  setNativePlaneId(
-                    nativePhysicalDisplayPlaneForLevel(
-                      data,
-                      target.floorId,
-                      target.node.levelId,
-                    ),
-                  );
-                  if (nativeAreas) setNativeAreaLevel(target.node.levelId);
-                  setBuilding("all");
-                  setSelected("");
-                  setEdgeId(connectorFloorSelectionId(data, target));
-                  setEditorFocus({
-                    point: [target.node.pointFeet[0], target.node.pointFeet[1]],
-                    nonce: Date.now(),
-                    zoom: 20,
-                    connector: true,
-                  });
-                }}
-              />
-              {sourceStair ? (
-                <NativeStairInspector
+              <aside className="project-inspector">
+                <h2>
+                  {chosenPin && !editing
+                    ? "Selected reference pin"
+                    : wallContext && wallMode && !editing
+                      ? "Selected wall area"
+                      : record
+                        ? "Selected area"
+                        : edge
+                          ? "Selected connection"
+                          : door
+                            ? "Entrance review"
+                            : "Map inspector"}
+                </h2>
+                <ConnectorFloorLinks
                   data={data}
-                  stair={sourceStair}
-                  onSelectConnection={setEdgeId}
-                />
-              ) : chosenPin && !editing ? (
-                <ReviewPinPanel
-                  key={chosenPin.id + ":" + chosenPin.pointFeet.join(",")}
-                  pin={chosenPin}
-                  data={data}
-                  onLocate={() => pinFit.current?.()}
-                  onInspectStair={(stair) => {
-                    // The native-flight focus takes precedence over a pending
-                    // whole-floor fit from asynchronous floor preparation.
-                    fitted.current = true;
-                    setSelected("");
-                    setEdgeId(sourceStairId(stair.stairElementId));
-                    setPinId("");
-                    const points = [
-                      ...stair.treads.flatMap((t) => t.ringFeet),
-                      ...(stair.landings ?? []).flatMap((l) =>
-                        l.ringsFeet.flat(),
+                  room={record?.stair ? record : undefined}
+                  edge={edge}
+                  nativeElementId={sourceStair?.stairElementId}
+                  onNavigate={(target) => {
+                    setFloorId(target.floorId);
+                    setNativePlaneId(
+                      nativePhysicalDisplayPlaneForLevel(
+                        data,
+                        target.floorId,
+                        target.node.levelId,
                       ),
-                    ];
+                    );
+                    if (nativeAreas) setNativeAreaLevel(target.node.levelId);
+                    setBuilding("all");
+                    setSelected("");
+                    setEdgeId(connectorFloorSelectionId(data, target));
                     setEditorFocus({
                       point: [
-                        (Math.min(...points.map((p) => p[0])) +
-                          Math.max(...points.map((p) => p[0]))) /
-                          2,
-                        (Math.min(...points.map((p) => p[1])) +
-                          Math.max(...points.map((p) => p[1]))) /
-                          2,
+                        target.node.pointFeet[0],
+                        target.node.pointFeet[1],
                       ],
                       nonce: Date.now(),
                       zoom: 20,
+                      connector: true,
                     });
                   }}
-                  onSave={(pin) =>
-                    commit(
-                      setReviewPins(
-                        project,
-                        pins.map((p) => (p.id === pin.id ? pin : p)),
-                      ),
-                    )
-                  }
-                  onMove={() => {
-                    setPinLevel(chosenPin.levelId);
-                    setMovingPin(true);
-                    setPlacingPin(true);
-                    setView("2d");
-                  }}
-                  onRemove={() => {
-                    commit(
-                      setReviewPins(
-                        project,
-                        pins.filter((p) => p.id !== chosenPin.id),
-                      ),
-                    );
-                    setPinId("");
-                    setPlacingPin(false);
-                    setMovingPin(false);
-                  }}
-                  capture={() =>
-                    wallCapture.current
-                      ? wallCapture.current()
-                      : Promise.reject(new Error("Map is not ready yet."))
-                  }
                 />
-              ) : wallContext && wallMode && !editing ? (
-                <WallReviewPanel
-                  onFit={() => wallFit.current?.()}
-                  key={wallId}
-                  context={wallContext}
-                  capture={() => {
-                    if (!wallCapture.current)
-                      return Promise.reject(new Error("Map is not ready yet."));
-                    return wallCapture.current();
-                  }}
-                />
-              ) : record ? (
-                <>
-                  <h3>
-                    {record.number} · {record.name}
-                  </h3>
-                  <dl>
-                    <dt>Building / native level</dt>
-                    <dd>
-                      {record.building} · #{record.levelId} ·{" "}
-                      {record.elevationFeet.toFixed(2)} ft
-                    </dd>
-                    <dt>Surface evidence</dt>
-                    <dd>{record.elevationEvidence}</dd>
-                    <dt>Source ID</dt>
-                    <dd>{record.key}</dd>
-                    <dt>Room boundary</dt>
-                    <dd>
-                      {boundaryEvidence?.value?.get(record.key) ??
-                        boundaryEvidence?.error ??
-                        "Checking native boundary evidence…"}
-                    </dd>
-                    <dt>Arrival</dt>
-                    <dd>
-                      {record.arrivalNodeId
-                        ? "Supported graph anchor"
-                        : "Needs boundary / entrance review"}
-                    </dd>
-                    {data.stairDisplay?.flights.some(
-                      (f) => f.roomKey === record.key,
-                    ) && (
-                      <>
-                        <dt>Stair area / landing selection</dt>
-                        <dd>
-                          This outline selects the source floor area at{" "}
-                          {record.elevationFeet.toFixed(2)} ft beneath or beside
-                          the elevated flight. It is not the shape of the steps.
-                          {data.stairDisplay.flights
-                            .filter((f) => f.roomKey === record.key)
-                            .map((f) => (
-                              <p key={f.stairElementId}>
-                                Stair #{f.stairElementId}: tread surfaces{" "}
-                                {Math.min(
-                                  ...f.treads.map((t) => t.elevationFeet),
-                                ).toFixed(2)}
-                                –
-                                {Math.max(
-                                  ...f.treads.map((t) => t.elevationFeet),
-                                ).toFixed(2)}{" "}
-                                ft.
-                                {data.stairDisplay?.sourceFlights?.some(
-                                  (s) => s.stairElementId === f.stairElementId,
-                                ) && (
-                                  <button
-                                    onClick={() => {
-                                      setSelected("");
-                                      setEdgeId(
-                                        sourceStairId(f.stairElementId),
-                                      );
-                                    }}
-                                  >
-                                    Inspect physical staircase #
-                                    {f.stairElementId}
-                                  </button>
-                                )}
-                              </p>
-                            ))}
-                          A graph anchor for this area does not confirm access
-                          to every flight above it. Stair directions require
-                          reviewed landing connections; wheelchair routes
-                          exclude stairs.
-                        </dd>
-                      </>
+                {sourceStair ? (
+                  <NativeStairInspector
+                    data={data}
+                    stair={sourceStair}
+                    onSelectConnection={setEdgeId}
+                    excluded={stairExclusions.ids.includes(
+                      sourceStair.stairElementId,
                     )}
-                  </dl>
-                  <div className="project-actions">
-                    <button
-                      disabled={!record.arrivalNodeId}
-                      onClick={() => setStart(record.key)}
-                    >
-                      Use as start
-                    </button>
-                    <button
-                      disabled={!record.arrivalNodeId}
-                      onClick={() => setEnd(record.key)}
-                    >
-                      Use as destination
-                    </button>
-                  </div>
-                  <label>
-                    Area name
-                    <input
-                      aria-label="Area name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </label>
-                  <label>
-                    Public access
-                    <select
-                      aria-label="Area access"
-                      value={access}
-                      onChange={(e) =>
-                        setAccess(e.target.value as typeof access)
-                      }
-                    >
-                      <option value="unknown">Needs review</option>
-                      <option value="public">Public · user reviewed</option>
-                      <option value="staff">Staff only · user reviewed</option>
-                    </select>
-                  </label>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={walkable}
-                      onChange={(e) => setWalkable(e.target.checked)}
-                    />
-                    Walkable floor
-                  </label>
-                  {!record.circulation && !record.stair && (
-                    <>
-                      <label>
-                        <input
-                          type="checkbox"
-                          checked={throughNavigation}
-                          disabled={!walkable || access === "staff"}
-                          onChange={(e) =>
-                            setThroughNavigation(e.target.checked)
-                          }
-                        />
-                        Prefer as a through passage
-                      </label>
-                      <p className="project-help">
-                        Connected walkable rooms are usable automatically, with
-                        a preference for corridors. Confirming this passage
-                        removes the room penalty. Add the evidence in Review
-                        notes; entrances and access rules still apply.
-                      </p>
-                    </>
-                  )}
-                  <details>
-                    <summary>Preserved model relationships</summary>
-                    <pre>{JSON.stringify(record.properties, null, 2)}</pre>
-                  </details>
-                  <VisitorMetadataEditor
-                    project={project}
-                    room={record}
-                    onApply={(next) => {
-                      commit(next);
-                      setDownload(null);
-                      setMessage(
-                        "Visitor details applied. Export the reviewed project to preserve them in Reviter.",
+                    onExclude={(exclude) =>
+                      stairExclusions.onChange(
+                        exclude
+                          ? [...stairExclusions.ids, sourceStair.stairElementId]
+                          : stairExclusions.ids.filter(
+                              (id) => id !== sourceStair.stairElementId,
+                            ),
+                      )
+                    }
+                  />
+                ) : chosenPin && !editing ? (
+                  <ReviewPinPanel
+                    key={chosenPin.id + ":" + chosenPin.pointFeet.join(",")}
+                    pin={chosenPin}
+                    data={data}
+                    onLocate={() => pinFit.current?.()}
+                    onInspectStair={(stair) => {
+                      // The native-flight focus takes precedence over a pending
+                      // whole-floor fit from asynchronous floor preparation.
+                      fitted.current = true;
+                      setSelected("");
+                      setEdgeId(sourceStairId(stair.stairElementId));
+                      setPinId("");
+                      const points = [
+                        ...stair.treads.flatMap((t) => t.ringFeet),
+                        ...(stair.landings ?? []).flatMap((l) =>
+                          l.ringsFeet.flat(),
+                        ),
+                      ];
+                      setEditorFocus({
+                        point: [
+                          (Math.min(...points.map((p) => p[0])) +
+                            Math.max(...points.map((p) => p[0]))) /
+                            2,
+                          (Math.min(...points.map((p) => p[1])) +
+                            Math.max(...points.map((p) => p[1]))) /
+                            2,
+                        ],
+                        nonce: Date.now(),
+                        zoom: 20,
+                      });
+                    }}
+                    onSave={(pin) =>
+                      commit(
+                        setReviewPins(
+                          project,
+                          pins.map((p) => (p.id === pin.id ? pin : p)),
+                        ),
+                      )
+                    }
+                    onMove={() => {
+                      setPinLevel(chosenPin.levelId);
+                      setMovingPin(true);
+                      setPlacingPin(true);
+                      setView("2d");
+                    }}
+                    onRemove={() => {
+                      commit(
+                        setReviewPins(
+                          project,
+                          pins.filter((p) => p.id !== chosenPin.id),
+                        ),
                       );
+                      setPinId("");
+                      setPlacingPin(false);
+                      setMovingPin(false);
+                    }}
+                    capture={() =>
+                      wallCapture.current
+                        ? wallCapture.current()
+                        : Promise.reject(new Error("Map is not ready yet."))
+                    }
+                  />
+                ) : wallContext && wallMode && !editing ? (
+                  <WallReviewPanel
+                    onFit={() => wallFit.current?.()}
+                    key={wallId}
+                    context={wallContext}
+                    capture={() => {
+                      if (!wallCapture.current)
+                        return Promise.reject(
+                          new Error("Map is not ready yet."),
+                        );
+                      return wallCapture.current();
                     }}
                   />
-                </>
-              ) : edge ? (
-                <>
-                  <h3>
-                    {connectionName(edge)}{" "}
-                    {edge.nativeElementId ? "#" + edge.nativeElementId : ""}
-                  </h3>
-                  <dl>
-                    <dt>Movement</dt>
-                    <dd>{connectionLevelChange(data, edge)}</dd>
-                    {edge.kind === "ramp" && (
+                ) : record ? (
+                  <>
+                    <h3>
+                      {record.number} · {record.name}
+                    </h3>
+                    <dl>
+                      <dt>Building / native level</dt>
+                      <dd>
+                        {record.building} · #{record.levelId} ·{" "}
+                        {record.elevationFeet.toFixed(2)} ft
+                      </dd>
+                      <dt>Surface evidence</dt>
+                      <dd>{record.elevationEvidence}</dd>
+                      <dt>Source ID</dt>
+                      <dd>{record.key}</dd>
+                      <dt>Room boundary</dt>
+                      <dd>
+                        {boundaryEvidence?.value?.get(record.key) ??
+                          boundaryEvidence?.error ??
+                          "Checking native boundary evidence…"}
+                      </dd>
+                      <dt>Arrival</dt>
+                      <dd>
+                        {record.arrivalNodeId
+                          ? "Supported graph anchor"
+                          : "Needs boundary / entrance review"}
+                      </dd>
+                      {data.stairDisplay?.flights.some(
+                        (f) => f.roomKey === record.key,
+                      ) && (
+                        <>
+                          <dt>Stair area / landing selection</dt>
+                          <dd>
+                            This outline selects the source floor area at{" "}
+                            {record.elevationFeet.toFixed(2)} ft beneath or
+                            beside the elevated flight. It is not the shape of
+                            the steps.
+                            {data.stairDisplay.flights
+                              .filter((f) => f.roomKey === record.key)
+                              .map((f) => (
+                                <p key={f.stairElementId}>
+                                  Stair #{f.stairElementId}: tread surfaces{" "}
+                                  {Math.min(
+                                    ...f.treads.map((t) => t.elevationFeet),
+                                  ).toFixed(2)}
+                                  –
+                                  {Math.max(
+                                    ...f.treads.map((t) => t.elevationFeet),
+                                  ).toFixed(2)}{" "}
+                                  ft.
+                                  {data.stairDisplay?.sourceFlights?.some(
+                                    (s) =>
+                                      s.stairElementId === f.stairElementId,
+                                  ) && (
+                                    <button
+                                      onClick={() => {
+                                        setSelected("");
+                                        setEdgeId(
+                                          sourceStairId(f.stairElementId),
+                                        );
+                                      }}
+                                    >
+                                      Inspect physical staircase #
+                                      {f.stairElementId}
+                                    </button>
+                                  )}
+                                </p>
+                              ))}
+                            A graph anchor for this area does not confirm access
+                            to every flight above it. Stair directions require
+                            reviewed landing connections; wheelchair routes
+                            exclude stairs.
+                          </dd>
+                        </>
+                      )}
+                    </dl>
+                    <div className="project-actions">
+                      <button
+                        disabled={!record.arrivalNodeId}
+                        onClick={() => setStart(record.key)}
+                      >
+                        Use as start
+                      </button>
+                      <button
+                        disabled={!record.arrivalNodeId}
+                        onClick={() => setEnd(record.key)}
+                      >
+                        Use as destination
+                      </button>
+                    </div>
+                    <label>
+                      Area name
+                      <input
+                        aria-label="Area name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </label>
+                    <label>
+                      Public access
+                      <select
+                        aria-label="Area access"
+                        value={access}
+                        onChange={(e) =>
+                          setAccess(e.target.value as typeof access)
+                        }
+                      >
+                        <option value="unknown">Needs review</option>
+                        <option value="public">Public · user reviewed</option>
+                        <option value="staff">
+                          Staff only · user reviewed
+                        </option>
+                      </select>
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={walkable}
+                        onChange={(e) => setWalkable(e.target.checked)}
+                      />
+                      Walkable floor
+                    </label>
+                    {!record.circulation && !record.stair && (
                       <>
-                        <dt>Maximum source slope</dt>
-                        <dd>
-                          {rampSourceSlope(edge)!.toFixed(1)}% · native geometry
-                        </dd>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={throughNavigation}
+                            disabled={!walkable || access === "staff"}
+                            onChange={(e) =>
+                              setThroughNavigation(e.target.checked)
+                            }
+                          />
+                          Prefer as a through passage
+                        </label>
+                        <p className="project-help">
+                          Connected walkable rooms are usable automatically,
+                          with a preference for corridors. Confirming this
+                          passage removes the room penalty. Add the evidence in
+                          Review notes; entrances and access rules still apply.
+                        </p>
                       </>
                     )}
-                    <dt>Evidence</dt>
-                    <dd>{edge.evidence}</dd>
-                    <dt>Source areas</dt>
-                    <dd>
-                      {edge.roomKeys
-                        .map((k) => connectionAreaName(data, k))
-                        .join(" ↔ ")}
-                    </dd>
-                    <dt>Endpoints</dt>
-                    <dd>
-                      {[edge.from, edge.to]
-                        .map((id) => {
-                          const n = data.nodes.find((x) => x.id === id)!;
-                          return `${n.building} · #${n.levelId} · ${n.pointFeet[2].toFixed(2)} ft`;
-                        })
-                        .join(" ↔ ")}
-                    </dd>
-                    <dt>Connection ID</dt>
-                    <dd>{edge.id}</dd>
-                  </dl>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={enabled}
-                      onChange={(e) => setEnabled(e.target.checked)}
+                    <details>
+                      <summary>Preserved model relationships</summary>
+                      <pre>{JSON.stringify(record.properties, null, 2)}</pre>
+                    </details>
+                    <VisitorMetadataEditor
+                      project={project}
+                      room={record}
+                      onApply={(next) => {
+                        commit(next);
+                        setDownload(null);
+                        setMessage(
+                          "Visitor details applied. Export the reviewed project to preserve them in Reviter.",
+                        );
+                      }}
                     />
-                    Enabled for routing
-                  </label>
-                  <label>
-                    Step-free verification
-                    <select
-                      aria-label="Connection accessibility"
-                      value={accessible}
-                      onChange={(e) =>
-                        setAccessible(e.target.value as typeof accessible)
-                      }
-                    >
-                      <option value="unknown">Needs review</option>
-                      <option value="no">Has steps / not accessible</option>
-                      <option value="yes">Step-free · user verified</option>
-                    </select>
-                  </label>
+                  </>
+                ) : edge ? (
+                  <>
+                    <h3>
+                      {connectionName(edge)}{" "}
+                      {edge.nativeElementId ? "#" + edge.nativeElementId : ""}
+                    </h3>
+                    <dl>
+                      <dt>Movement</dt>
+                      <dd>{connectionLevelChange(data, edge)}</dd>
+                      {edge.kind === "ramp" && (
+                        <>
+                          <dt>Maximum source slope</dt>
+                          <dd>
+                            {rampSourceSlope(edge)!.toFixed(1)}% · native
+                            geometry
+                          </dd>
+                        </>
+                      )}
+                      <dt>Evidence</dt>
+                      <dd>{edge.evidence}</dd>
+                      <dt>Source areas</dt>
+                      <dd>
+                        {edge.roomKeys
+                          .map((k) => connectionAreaName(data, k))
+                          .join(" ↔ ")}
+                      </dd>
+                      <dt>Endpoints</dt>
+                      <dd>
+                        {[edge.from, edge.to]
+                          .map((id) => {
+                            const n = data.nodes.find((x) => x.id === id)!;
+                            return `${n.building} · #${n.levelId} · ${n.pointFeet[2].toFixed(2)} ft`;
+                          })
+                          .join(" ↔ ")}
+                      </dd>
+                      <dt>Connection ID</dt>
+                      <dd>{edge.id}</dd>
+                    </dl>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={enabled}
+                        onChange={(e) => setEnabled(e.target.checked)}
+                      />
+                      Enabled for routing
+                    </label>
+                    <label>
+                      Step-free verification
+                      <select
+                        aria-label="Connection accessibility"
+                        value={accessible}
+                        onChange={(e) =>
+                          setAccessible(e.target.value as typeof accessible)
+                        }
+                      >
+                        <option value="unknown">Needs review</option>
+                        <option value="no">Has steps / not accessible</option>
+                        <option value="yes">Step-free · user verified</option>
+                      </select>
+                    </label>
+                    <p>
+                      Confirm clearance, threshold and access before assigning
+                      step-free use. Endpoint or boundary changes require
+                      regeneration in Reviter.
+                    </p>
+                  </>
+                ) : door ? (
+                  <>
+                    <h3>Door #{door.nativeElementId}</h3>
+                    <p>
+                      Native level #{door.levelId} · {door.state}
+                    </p>
+                    <p>
+                      This source entrance has no usable route connection.
+                      Correct its room or door relationships in Reviter and
+                      regenerate the project.
+                    </p>
+                    <p>
+                      {door.footprintFeet
+                        ? "Recovered oriented footprint"
+                        : "Source position only; opening shape needs review"}
+                    </p>
+                  </>
+                ) : (
                   <p>
-                    Confirm clearance, threshold and access before assigning
-                    step-free use. Endpoint or boundary changes require
-                    regeneration in Reviter.
+                    Click an area or a door/stair marker. Source IDs,
+                    elevations, evidence and review controls appear here.
                   </p>
-                </>
-              ) : door ? (
-                <>
-                  <h3>Door #{door.nativeElementId}</h3>
-                  <p>
-                    Native level #{door.levelId} · {door.state}
-                  </p>
-                  <p>
-                    This source entrance has no usable route connection. Correct
-                    its room or door relationships in Reviter and regenerate the
-                    project.
-                  </p>
-                  <p>
-                    {door.footprintFeet
-                      ? "Recovered oriented footprint"
-                      : "Source position only; opening shape needs review"}
-                  </p>
-                </>
-              ) : (
-                <p>
-                  Click an area or a door/stair marker. Source IDs, elevations,
-                  evidence and review controls appear here.
+                )}
+                {(record || edge) && (
+                  <>
+                    <label>
+                      Review notes
+                      <textarea
+                        aria-label="Review notes"
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                      />
+                    </label>
+                    <button onClick={apply}>Apply review</button>
+                  </>
+                )}
+                <p className="project-note">
+                  This is a review workspace. Unknown access is shown in public
+                  route tests; step-free tests require confirmed edges. Original
+                  source geometry stays in the archive.
                 </p>
-              )}
-              {(record || edge) && (
-                <>
-                  <label>
-                    Review notes
-                    <textarea
-                      aria-label="Review notes"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                    />
-                  </label>
-                  <button onClick={apply}>Apply review</button>
-                </>
-              )}
-              <p className="project-note">
-                This is a review workspace. Unknown access is shown in public
-                route tests; step-free tests require confirmed edges. Original
-                source geometry stays in the archive.
-              </p>
-            </aside>
-          )}
+              </aside>
+            )}
         </div>
       )}
     </main>

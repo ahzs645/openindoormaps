@@ -14,3 +14,5 @@ For indoor room boundaries, missing/low room blocks, doors, circulation, stair/r
 - Use the [local repair loop](docs/indoor-local-iteration.md): test the changed feature and its physical/policy dependencies, then replay affected cells or physical elevations before a complete map run. Keep foreign obstacles, holes, original owners and access rules in the local context. Batch stable fixes for the required final acceptance, export and browser checks; do not repeat the entire flow after every edit. Selected audit cases and routing shards still perform full imports and are not the fast loop.
 
 No special requirements here apply to unrelated venue demos or ordinary non-indoor changes.
+
+For the current UNBC continuation, start with [the October 16 handoff](docs/continuation/unbc-20261016/HANDOFF.md). It distinguishes the live publication, failed source rebuild, next targeted repairs and portable data. Older handoffs are historical.

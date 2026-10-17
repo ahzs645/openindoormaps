@@ -1,3 +1,7 @@
+import {
+  checkedStairPreferences,
+  type HostedStairPreferences,
+} from "./stair-exclusions";
 /** Transport for an unchanged project ZIP split to fit static hosting limits.
  * The ordinary package worker still validates geometry, identities and routes. */
 type HostedProjectManifest = {
@@ -7,6 +11,7 @@ type HostedProjectManifest = {
   bytes: number;
   sha256: string;
   parts: { path: string; bytes: number; sha256: string }[];
+  viewerPreferences?: HostedStairPreferences;
 };
 const MAX_PACKAGE = 900 * 1024 * 1024;
 const MAX_PART = 24 * 1024 * 1024;
@@ -104,6 +109,10 @@ export async function fetchHostedProject(
   }
   if (total !== manifest.bytes)
     throw new Error("Hosted map part sizes do not match.");
+  const viewerPreferences =
+    manifest.viewerPreferences === undefined
+      ? undefined
+      : checkedStairPreferences(manifest.viewerPreferences);
   options.signal.throwIfAborted();
   if (
     options.cachedBytes?.length === manifest.bytes &&
@@ -114,7 +123,9 @@ export async function fetchHostedProject(
     return {
       bytes: options.cachedBytes,
       fileName: manifest.fileName,
+      sha256: manifest.sha256,
       cached: true,
+      viewerPreferences,
     };
   }
   const bytes = new Uint8Array(total);
@@ -134,5 +145,11 @@ export async function fetchHostedProject(
   if ((await digest(bytes)) !== manifest.sha256)
     throw new Error("Downloaded map failed its checksum.");
   options.signal.throwIfAborted();
-  return { bytes, fileName: manifest.fileName, cached: false };
+  return {
+    bytes,
+    fileName: manifest.fileName,
+    sha256: manifest.sha256,
+    cached: false,
+    viewerPreferences,
+  };
 }

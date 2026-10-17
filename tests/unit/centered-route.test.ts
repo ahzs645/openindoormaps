@@ -175,7 +175,8 @@ function sourceDoorFixture(): IndoorDataset {
     wallSegmentIndices: [2, 3],
     doorSymbolSegmentIndices: [7, 8],
     doorSymbolCollection: "wallSegments",
-    apertureFeet: rect(1, 7, 6, 2),
+    // Both fixed terminals must cross the complete finite wall aperture.
+    apertureFeet: rect(1, 7.75, 6, 0.5),
     walkingStripWidthFeet: 2,
   };
   return d;
@@ -206,6 +207,13 @@ test("a source-proved door has a fixed threshold without a manufactured native e
     ),
   );
   assert.equal(findProjectRoute(d, "a", "b", "accessible"), null);
+  edge.sourceDoorProof!.apertureFeet = rect(1, 7, 6, 2);
+  assert.equal(
+    findProjectRoute(d, "a", "b"),
+    null,
+    "two endpoints inside a broad aperture do not certify a complete crossing",
+  );
+  edge.sourceDoorProof!.apertureFeet = rect(1, 7.75, 6, 0.5);
   edge.direction = "from-to";
   assert.equal(findProjectRoute(d, "b", "a"), null);
   edge.enabled = false;

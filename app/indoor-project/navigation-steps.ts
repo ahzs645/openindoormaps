@@ -1,6 +1,7 @@
 import type { RouteInstruction } from "../indoor-directions/types";
 import type { IndoorDataset } from "./contract";
-import { geographicPoint, type ProjectRoute } from "./routing";
+import { geographicPoint } from "./routing";
+import type { ProjectRoute } from "./viewer-routing";
 export type ProjectStep = RouteInstruction & {
   levelId: number;
   building: string;
@@ -110,7 +111,10 @@ export function projectNavigationSteps(
       else if (Math.abs(turn) < 60) turnKind = "slight";
       if (result.length === 0) {
         type = "depart";
-        message = `Leave ${departure} and head straight`;
+        message =
+          route.departure?.mode === "hallway"
+            ? `Start outside ${departure} and head straight`
+            : `Leave ${departure} and head straight`;
       } else if (turning) {
         type = "turn";
         message = `Turn ${direction}`;

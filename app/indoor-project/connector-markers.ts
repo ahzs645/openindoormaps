@@ -106,7 +106,10 @@ export function stairDisplayPoint(
       return centre;
     return tread.ringFeet[0];
   }
-  if (data.nativeIndoorEnvelopes) return undefined;
+  // A labelled stair area can still be located when its source flight or
+  // entrance is unavailable. This is an explicitly unconnected landing marker,
+  // never a tread, raised volume, arrival node or route connection.
+  if (data.nativeIndoorEnvelopes) return interiorLabelPoint(room.ringsFeet);
   const ring = room.ringsFeet[0],
     polygon = {
       type: "Polygon" as const,
@@ -210,9 +213,6 @@ export function projectConnectorMarkers(
     .filter(
       (r) =>
         r.stair &&
-        (!data.nativeIndoorEnvelopes ||
-          data.nodes.some((n) => n.id === r.arrivalNodeId) ||
-          nativeFlights.some((f) => f.roomKey === r.key)) &&
         !sourceRooms.has(r.key) &&
         !multipleFlights.has(r.key) &&
         levelIds.includes(r.levelId) &&
@@ -228,7 +228,11 @@ export function projectConnectorMarkers(
           properties: {
             key: r.key,
             kind: "stairs",
-            name: `Stairs · ${r.number || r.name}`,
+            name:
+              !r.arrivalNodeId &&
+              !nativeFlights.some((f) => f.roomKey === r.key)
+                ? `Stair landing · ${r.number || r.name} · connection unavailable`
+                : `Stairs · ${r.number || r.name}`,
             heightMetres: r.circulation ? 0.04 : 0.64,
             elevationFeet:
               data.nativeIndoorEnvelopes && arrival

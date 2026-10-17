@@ -143,6 +143,24 @@ function PublishedLayers({
     [client, optionsKey],
   );
   const current = scope && view?.id === scope.id ? view.current : undefined;
+  const visitorContext = useMemo(
+    () =>
+      current?.display && current.context && client
+        ? {
+            ...client.shell.display,
+            ...current.context,
+            visitorLabels: props.roomThree
+              ? current.display.preparedFloor.presentation.display.labels
+              : current.context.visitorLabels,
+          }
+        : undefined,
+    [
+      client?.shell.display,
+      current?.context,
+      current?.display?.preparedFloor.presentation.display.labels,
+      props.roomThree,
+    ],
+  );
   useMemo(() => {
     if (current?.display)
       registerVerifiedPreparedDisplay(
@@ -303,13 +321,7 @@ function PublishedLayers({
       {...props}
       prepared={current.display.preparedFloor}
       basemapVisibility={basemapVisibility}
-      visitorContext={{
-        ...client!.shell.display,
-        ...current.context,
-        visitorLabels: props.roomThree
-          ? current.display.preparedFloor.presentation.display.labels
-          : current.context.visitorLabels,
-      }}
+      visitorContext={visitorContext}
     />
   );
 }

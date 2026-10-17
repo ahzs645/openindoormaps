@@ -7,6 +7,7 @@ import {
 } from "./route-worker-client";
 import { floorDiagnostic } from "./floor-diagnostics";
 import { sameRoutePlace, missingRouteEntrance } from "./visitor-route-state";
+import { projectRoutingOptionsKey } from "./routing-options";
 import {
   afterRouteWorkerTeardown,
   releaseIdleRouteBeforeFloor,
@@ -28,7 +29,14 @@ export function useProjectRoute(
   mode: RouteRequest["mode"],
   /** Retained call compatibility; large maps now wait for both endpoints. */
   _intent = false,
+  options: RouteRequest["options"] = {},
 ) {
+  const optionsKey = projectRoutingOptionsKey(options);
+  const requestOptions = useMemo(() => {
+    const [endpointMode, preferHallways, excludedNativeStairIds] =
+      JSON.parse(optionsKey);
+    return { endpointMode, preferHallways, excludedNativeStairIds };
+  }, [optionsKey]);
   const samePlace = sameRoutePlace(start, end);
   const entranceIssue = useMemo(
     () => missingRouteEntrance(data, start, end),
@@ -58,6 +66,7 @@ export function useProjectRoute(
     start: string;
     end: string;
     mode: RouteRequest["mode"];
+    optionsKey: string;
     value?: RouteCalculation;
     error?: string;
   }>();
@@ -197,7 +206,7 @@ export function useProjectRoute(
     const track = (request: ReturnType<RouteWorkerClient["request"]>) =>
       void request.promise
         .then((value) => {
-          if (active) setResult({ data, start, end, mode, value });
+          if (active) setResult({ data, start, end, mode, optionsKey, value });
         })
         .catch((error: unknown) => {
           if (active)
@@ -206,11 +215,12 @@ export function useProjectRoute(
               start,
               end,
               mode,
+              optionsKey,
               error: error instanceof Error ? error.message : String(error),
             });
         });
-    if (client.hasCompleted(data, start, end, mode)) {
-      request = client.request(data, start, end, mode);
+    if (client.hasCompleted(data, start, end, mode, requestOptions)) {
+      request = client.request(data, start, end, mode, requestOptions);
       track(request);
       return () => {
         active = false;
@@ -225,7 +235,7 @@ export function useProjectRoute(
         release = heavyWorkerSchedule.begin("route");
         floorDiagnostic("route:request", { destination: !!end });
         request = afterRouteWorkerTeardown(heavyWorkerSchedule, () =>
-          client.request(data, start, end, mode),
+          client.request(data, start, end, mode, requestOptions),
         );
         const done = () =>
           finishRouteBeforeQueuedFloor(
@@ -251,24 +261,31 @@ export function useProjectRoute(
         release,
       );
     };
-  }, [client, data, start, end, mode, noRouteWork]);
+  }, [client, data, start, end, mode, noRouteWork, optionsKey, requestOptions]);
   const current =
     result &&
     result.data === data &&
     result.start === start &&
     result.end === end &&
-    result.mode === mode
+    result.mode === mode &&
+    result.optionsKey === optionsKey
       ? result
       : undefined;
   const coverage =
-    result?.data === data && result?.start === start && result?.mode === mode
+    result?.data === data &&
+    result?.start === start &&
+    result?.mode === mode &&
+    result.optionsKey === optionsKey
       ? result.value?.reachable
       : undefined;
   const prepared =
     preparation?.data === data && preparation?.mode === mode
       ? preparation
       : undefined;
-  const completedCalculation = result?.data === data && result?.mode === mode;
+  const completedCalculation =
+    result?.data === data &&
+    result?.mode === mode &&
+    result.optionsKey === optionsKey;
   return {
     route: noRouteWork ? null : (current?.value?.route ?? null),
     diagnostic:

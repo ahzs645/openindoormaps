@@ -43,6 +43,51 @@ function setup() {
   });
   return { client, workers };
 }
+test("changing staircase exclusions reroutes without recloning a resident map and cannot reuse a different preference result", async () => {
+  const { client, workers } = setup();
+  const first = client.request(data, "a", "b", "public");
+  workers[0].reply({ route: null, reachable: new Set(["b"]) });
+  await first.promise;
+  const excluded = client.request(data, "a", "b", "public", {
+    excludedNativeStairIds: [987],
+  });
+  assert.equal(workers.length, 1);
+  assert.equal(workers[0].messages.length, 2);
+  assert.equal(workers[0].messages[1].data, undefined);
+  assert.deepEqual(workers[0].messages[1].options?.excludedNativeStairIds, [
+    987,
+  ]);
+  workers[0].reply({ route: null, reachable: new Set() });
+  assert.equal((await excluded.promise).reachable!.has("b"), false);
+  const restored = client.request(data, "a", "b", "public");
+  assert.equal((await restored.promise).reachable!.has("b"), true);
+  assert.equal(workers[0].messages.length, 2);
+  client.dispose();
+});
+test("selected endpoint responses never mask a legacy all-choices response in the client cache", async () => {
+  const { client, workers } = setup();
+  const selected = client.request(data, "a", "b", "public", {
+    endpointMode: "inside",
+  });
+  workers[0].reply({ route: null, arrivals: { doorway: { route: null } } });
+  await selected.promise;
+  const legacy = client.request(data, "a", "b", "public");
+  assert.equal(workers[0].messages.length, 2);
+  workers[0].reply({
+    route: null,
+    arrivals: { doorway: { route: null }, hallway: { route: null } },
+  });
+  assert.ok((await legacy.promise).arrivals?.hallway);
+  assert.equal(
+    (
+      await client.request(data, "a", "b", "public", { endpointMode: "inside" })
+        .promise
+    ).arrivals?.hallway,
+    undefined,
+  );
+  assert.equal(workers[0].messages.length, 2);
+  client.dispose();
+});
 test("review releases a completed user graph before warmup ever ran, retaining its returned route", async () => {
   const { client, workers } = setup();
   const schedule = new HeavyWorkerSchedule();

@@ -73,7 +73,12 @@ async function handle(request: RouteRequest) {
       throw new Error("Directions have no checked source snapshot.");
     scope.postMessage({
       requestId: request.requestId,
-      value: calculate(request.start, request.end, request.mode),
+      value: calculate(
+        request.start,
+        request.end,
+        request.mode,
+        request.options,
+      ),
     });
   } catch (error) {
     scope.postMessage({

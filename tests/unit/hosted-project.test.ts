@@ -34,6 +34,43 @@ function fixture() {
   return { manifest, bytes, pieces, requests, requestOptions, fetcher };
 }
 const url = "https://maps.example.test/campus/project.json";
+test("model-bound staircase defaults survive both cached and fresh ZIP transport", async () => {
+  for (const cached of [false, true]) {
+    const f = fixture(),
+      prefs = {
+        sourceModelSha256: "a".repeat(64),
+        excludedNativeStairIds: [987, 123, 987],
+      };
+    Object.assign(f.manifest, { viewerPreferences: prefs });
+    const result = await fetchHostedProject(url, {
+      signal: new AbortController().signal,
+      fetcher: f.fetcher,
+      cachedBytes: cached ? f.bytes : undefined,
+    });
+    assert.deepEqual(result.viewerPreferences, {
+      sourceModelSha256: prefs.sourceModelSha256,
+      excludedNativeStairIds: [123, 987],
+    });
+    assert.deepEqual(result.bytes, f.bytes);
+  }
+});
+test("invalid staircase defaults are rejected before fetching any ZIP part", async () => {
+  const f = fixture();
+  Object.assign(f.manifest, {
+    viewerPreferences: {
+      sourceModelSha256: "wrong",
+      excludedNativeStairIds: [-1],
+    },
+  });
+  await assert.rejects(
+    fetchHostedProject(url, {
+      signal: new AbortController().signal,
+      fetcher: f.fetcher,
+    }),
+    /staircase preferences/,
+  );
+  assert.equal(f.requests.length, 1);
+});
 test("revalidates the mutable manifest while retaining content-addressed part and verified ZIP behavior", async () => {
   for (const savedZip of [false, true]) {
     const f = fixture();
@@ -50,8 +87,11 @@ test("revalidates the mutable manifest while retaining content-addressed part an
     assert.ok(
       f.requestOptions.every((init) => init?.signal === controller.signal),
     );
-    assert.ok(f.requestOptions.slice(1).every((init) => init?.cache === undefined));
+    assert.ok(
+      f.requestOptions.slice(1).every((init) => init?.cache === undefined),
+    );
     assert.equal(result.cached, savedZip);
+    assert.equal(result.sha256, f.manifest.sha256);
     assert.deepEqual(result.bytes, f.bytes);
     assert.deepEqual(progress, savedZip ? [6] : [3, 6]);
     assert.equal(f.requests.length, savedZip ? 1 : 3);
@@ -68,6 +108,7 @@ test("reassembles the original archive in order with per-part and whole-archive 
   });
   assert.deepEqual(result.bytes, f.bytes);
   assert.equal(result.cached, false);
+  assert.equal(result.sha256, f.manifest.sha256);
   assert.deepEqual(progress, [3, 6]);
   assert.equal(f.requests.length, 3);
 });

@@ -1,0 +1,204 @@
+{
+  "version": 2,
+  "supersedes": {
+    "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/receipt.json",
+    "sha256": "5c788c4c9d29b0cb692740d12725ee936a1b1ef670a1e14aceb5cda48bfda235",
+    "reason": "First seal included its own then-empty stdout log; v2 excludes its active stdout log and preserves that receipt as history."
+  },
+  "createdAt": "2026-10-16T23:03:38.290651+00:00",
+  "taskScope": "seven excluded source assemblies and narrow historical context-retention proposal",
+  "publishedZip": {
+    "path": "/workspace/scratch/unbc-download-outdoor-20261016/UNBC.campus-viewer.zip",
+    "sha256": "6cb0ff0f40efd478d3058da29fa2a1bcd3cb16419042f3d5b8567c9c7f7cee22"
+  },
+  "verifiedIndoorEntry": {
+    "path": "viewer/indoor.json",
+    "bytes": 229156273,
+    "sha256": "f4761c369fd010e48b95e18a467b3adae76723220523b4cf54821f10bc2cafd8",
+    "verified": true
+  },
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "historicalOrigin": {
+    "path": "/workspace/openindoormaps/scripts/indoor/prepare-unbc-stair-contacts.ts",
+    "sha256": "d83ecfb30d3190a90c47898cdd09003468afa5932b2f186efb11973811ad050c",
+    "reviewDate": "2026-10-02",
+    "inventoryDatasetSha256": "f4761c369fd010e48b95e18a467b3adae76723220523b4cf54821f10bc2cafd8"
+  },
+  "focusedTests": {
+    "passed": 8,
+    "failed": 0,
+    "log": "retention-tests-final.log"
+  },
+  "selectedActualParity": {
+    "version": 1,
+    "scope": "selected nine published source flights only; isolated metadata application",
+    "inputIndoorSha256": "f4761c369fd010e48b95e18a467b3adae76723220523b4cf54821f10bc2cafd8",
+    "inputModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceFlightCountInPublishedDataset": 82,
+    "selectedFlightCount": 9,
+    "changedContexts": [
+      {
+        "stairElementId": 1842431,
+        "context": "outdoor"
+      },
+      {
+        "stairElementId": 1460777,
+        "context": "outdoor"
+      },
+      {
+        "stairElementId": 1801478,
+        "context": "tiered-seating"
+      },
+      {
+        "stairElementId": 1779473,
+        "context": "tiered-seating"
+      }
+    ],
+    "selectedGeometryPreserved": true,
+    "selectedRoomDisplayFlightsPreserved": true,
+    "unreviewedFiveUnclassified": true,
+    "graphWasNotAnInputToTheHelper": true,
+    "currentPreparationFingerprintUnchangedClaimed": false,
+    "nativeSourceClearanceCertified": false,
+    "routesEnabled": false,
+    "sourceAuthoringOrCompiledDatasetModified": false,
+    "originalSelectedFlightsJsonSha256": "522b56d8ef673164e513a45d08fb9b6c09b4aec2b113a30ab5ded6645215f7ca",
+    "originalGeometryJsonSha256": "522b56d8ef673164e513a45d08fb9b6c09b4aec2b113a30ab5ded6645215f7ca",
+    "changedRunOwnerNegatives": 4
+  },
+  "optionalNeighborhoodExtraction": "refused at1536MiB address space; no output; not retried",
+  "protectedInventories": [
+    {
+      "name": "compiler955",
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/regeneration-source-v3-r2-before.json",
+      "sha256": "5d918463420214b01486c77aa22580efa6830fe01f6a20fd06cb22d4cd62684a",
+      "filesChecked": 955,
+      "allExact": true
+    },
+    {
+      "name": "coordinator1031",
+      "path": "/workspace/scratch/unbc-pathway-repair-20261015/stair-clearance/r2-resume1-serial-pipeline/reviewed-configuration-v2.json",
+      "sha256": "3b08f92a3e3de3337625e183673ea6c705302ed233eee807589bbfe5d222d4d6",
+      "filesChecked": 1031,
+      "allExact": true
+    }
+  ],
+  "sourceOrRouteAuthorityGranted": false,
+  "productionWired": false,
+  "authoringOrCompiledDatasetModified": false,
+  "routesEnabled": false,
+  "all28RemainHeld": true,
+  "preparationCacheIdentityPreservationClaimed": false,
+  "artifactFiles": [
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/REPORT.md",
+      "bytes": 7791,
+      "sha256": "a8608866a1797839a0b9d96d155ea12364c03f940b0f71b1b2e22977ef59c39d"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/actual-retention-parity.json",
+      "bytes": 1278,
+      "sha256": "9ad158478dde66e0edbaa25fab3d7a2f2deac47bb8d213db6c096091e9e3dfb7"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/actual-retention-test.log",
+      "bytes": 1098,
+      "sha256": "bf51df1b4d0364ffaac5c53f6b3d58c507898bc8e21dd8ba872ba2f30773fd82"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/extract-targeted-neighborhoods.py",
+      "bytes": 2856,
+      "sha256": "d7d6dee11af33a7f0417db8a94ebb3bcd2525ee1fa7f01dc44e3bfc8ac36737c"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/extract-targeted-viewer.mjs",
+      "bytes": 5014,
+      "sha256": "98134c3859cacc03a86eee58efde2ab380a3b8d161b3db3584057092581b102a"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/extraction-final.log",
+      "bytes": 471,
+      "sha256": "324543dbc85a4100f1e31fc061a11ce6c1d87017af9981008752706554176851"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/extraction-node.log",
+      "bytes": 1088,
+      "sha256": "e8280f1f5bb8775fef1dc2411680148b929825dc9823304a81f17e8413f13f43"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/extraction.log",
+      "bytes": 60,
+      "sha256": "3e737f6a9117cec194b02103b357f8668fae9adb86a8a8cd0bf25efab8948548"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/neighborhood-extraction.log",
+      "bytes": 853,
+      "sha256": "d004ea6cef80d0432f656c906f9a475cbd0824cbfa9f01eeba86b4a3cd5570f8"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/receipt.json",
+      "bytes": 7764,
+      "sha256": "5c788c4c9d29b0cb692740d12725ee936a1b1ef670a1e14aceb5cda48bfda235"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/retention-tests-final.log",
+      "bytes": 791,
+      "sha256": "8a1cff821d0ce83e479dda5f337702cb24c2dd499cdc54972e3d5947f7277cd0"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/retention-tests-v2.log",
+      "bytes": 795,
+      "sha256": "855ba277bba7fb31db0c217a1ecc5040b553aa3bfd39af99085334c7608924e2"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/retention-tests.log",
+      "bytes": 691,
+      "sha256": "e957eab26641d2cc9e3a48b952ed74143bbdc83cd2da3ca06e6cad0f8e39184d"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/reviewed-stair-contexts.authoring-proposal.json",
+      "bytes": 1028,
+      "sha256": "58c43ed60394e740b172f386e7a2863593a328a6d2b09cca7d68f6158749e154"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/reviewed-stair-contexts.mjs",
+      "bytes": 3957,
+      "sha256": "7b6e34d7534b3cb8c5908617df39f16036505ccd4e4c235d8388c1d09dff4973"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/reviewed-stair-contexts.test.mjs",
+      "bytes": 4556,
+      "sha256": "fd6cac8cf28eb577df39cd4e232707e75217abffabf4d6c5ddfe44e3325a8831"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/seal-outdoor-v2.py",
+      "bytes": 2872,
+      "sha256": "bda16ff748aade13ecd481e3883a4f24a10c91b2d704b3086ddc6feafec6af1d"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/seal-outdoor.py",
+      "bytes": 2619,
+      "sha256": "b141b847ae4ad11bab8feeb8984a6dd861016b2d1d70a47074f9a00211577d76"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/sealing.log",
+      "bytes": 711,
+      "sha256": "2aae2a779b6c4703c3abc16e190826cf83b4a14d0506bd5b4660da9cb962396e"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/seven-assembly-inventory.json",
+      "bytes": 13862,
+      "sha256": "3c5136a18e79890997210506089628e2438ecdde1d5e903b9e02b84a29161a45"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/targeted-viewer-evidence.json",
+      "bytes": 1202048,
+      "sha256": "e8b6d23b8cde34eab404335440ddd2eaefb7f79bcbf395e8682f16e90c0134a8"
+    },
+    {
+      "path": "/workspace/scratch/unbc-download-outdoor-20261016/outdoor/test-actual-retention.mjs",
+      "bytes": 2961,
+      "sha256": "5959b5ef9e32ea621335b803099b227c5a2d00a5837457847a9713d7d44e17fb"
+    }
+  ]
+}

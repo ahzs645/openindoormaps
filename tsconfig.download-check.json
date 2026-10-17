@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.hallway-viewer-check.json",
+  "include": [
+    "app/app.tsx",
+    "app/pages/indoor-project-page.tsx",
+    "app/pages/project-download-page.tsx",
+    "app/indoor-project/hosted-project.ts",
+    "tests/unit/hosted-project.test.ts",
+    "app/geojson.d.ts"
+  ]
+}

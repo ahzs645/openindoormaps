@@ -1,3 +1,5 @@
+> Latest UNBC continuation: [October 16 handoff](continuation/unbc-20261016/HANDOFF.md). The report below is historical; use the latest handoff for current artifacts, failed rebuild and next steps.
+
 # UNBC indoor map and CAD handoff — 2026-10-07
 
 ## Goal and repository roles

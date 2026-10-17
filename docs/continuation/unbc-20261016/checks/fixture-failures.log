@@ -1,0 +1,58 @@
+✖ a source-proved door has a fixed threshold without a manufactured native element or step-free claim (79.233308ms)
+✖ implicit walking branches cannot bypass a closed, foreign or unsupported source doorway (8.556342ms)
+✖ overview floor backs a supported doorway threshold while retaining physical holes, exclusions and source geometry (3.774224ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6857.584275
+
+✖ failing tests:
+
+test at tests/unit/centered-route.test.ts:1:3713
+✖ a source-proved door has a fixed threshold without a manufactured native element or step-free claim (79.233308ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(route)
+  
+      at TestContext.<anonymous> (/workspace/scratch/unbc-main-sync-20261016/openindoormaps/tests/unit/centered-route.test.ts:191:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/unit/centered-route.test.ts:1:4835
+✖ implicit walking branches cannot bypass a closed, foreign or unsupported source doorway (8.556342ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(findProjectRoute(d, "a", "b"))
+  
+      at TestContext.<anonymous> (/workspace/scratch/unbc-main-sync-20261016/openindoormaps/tests/unit/centered-route.test.ts:227:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at tests/unit/overview-floor.test.ts:1:515
+✖ overview floor backs a supported doorway threshold while retaining physical holes, exclusions and source geometry (3.774224ms)
+  Error: Prepared physical floor lacks its retained exact carrier
+      at projectStrictOverviewFloor (/workspace/scratch/unbc-main-sync-20261016/openindoormaps/app/indoor-project/overview-floor-projection.ts:59:13)
+      at prepareOverviewFloor (/workspace/scratch/unbc-main-sync-20261016/openindoormaps/app/indoor-project/overview-floor.ts:23:12)
+      at TestContext.<anonymous> (/workspace/scratch/unbc-main-sync-20261016/openindoormaps/tests/unit/overview-floor.test.ts:118:18)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

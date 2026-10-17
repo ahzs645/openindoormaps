@@ -82,10 +82,14 @@ export function NativeStairInspector({
   data,
   stair,
   onSelectConnection,
+  excluded = false,
+  onExclude,
 }: {
   data: IndoorDataset;
   stair: SourceStair;
   onSelectConnection?: (id: string) => void;
+  excluded?: boolean;
+  onExclude?: (excluded: boolean) => void;
 }) {
   const edges = sourceStairEdges(data, stair),
     nodes = new Map(data.nodes.map((n) => [n.id, n]));
@@ -97,7 +101,9 @@ export function NativeStairInspector({
   ];
   let connectionMessage =
     "Entrance connection needs review before directions are available. Stairs are excluded from wheelchair paths.";
-  if (edges.some((e) => e.enabled))
+  if (excluded)
+    connectionMessage = "Excluded from directions by your staircase settings.";
+  else if (edges.some((e) => e.enabled))
     connectionMessage =
       "Route connection available. Stairs are excluded from wheelchair paths.";
   else if (internal)
@@ -133,6 +139,16 @@ export function NativeStairInspector({
         </p>
       )}
       <p>{connectionMessage}</p>
+      {onExclude && (
+        <label>
+          <input
+            type="checkbox"
+            checked={excluded}
+            onChange={(e) => onExclude(e.target.checked)}
+          />
+          Exclude this staircase from directions
+        </label>
+      )}
       <dl>
         <dt>Native height span</dt>
         <dd>

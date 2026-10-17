@@ -9,12 +9,14 @@ import {
   restorePublishedFloorPool,
 } from "../../app/indoor-project/published-floor-decoder";
 import { PUBLISHED_PROJECT_RECEIPTS } from "../../app/indoor-project/published-project-receipts";
+import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
 
 const pinned = (
   manifest: ReturnType<typeof preparedDeliveryFixture>["manifest"],
 ) => [
   {
     ...PUBLISHED_PROJECT_RECEIPTS[0],
+    validatorSha256: PREPARED_DISPLAY_ENGINE_SHA256,
     progressiveRevisionSha256: manifest.revisionSha256,
     datasetSha256: manifest.provenance.datasetSha256,
     packageSha256: manifest.provenance.packageSha256,
