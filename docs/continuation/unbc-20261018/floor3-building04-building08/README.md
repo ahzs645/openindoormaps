@@ -161,3 +161,9 @@ original RVT SHA-256 is
 `8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178`.
 No candidate master, publication, physical authority or source-material removal
 is produced by this investigation. Evidence files are covered by `SHA256SUMS`.
+
+[Verified private 7.45 MB continuation increment](https://drive.google.com/file/d/1aTpRz5bGZQf6uwy7kJytgg-tw9CrsM8u/view)
+contains the exact committed source changes and evidence, with all 3,885 tracked
+files verified after fresh bundle restore and complete Drive readback. Original
+native data remain in the preceding separate verified archives. See
+`portable-backup.json`; later receipt-only commits are not inside this increment.
