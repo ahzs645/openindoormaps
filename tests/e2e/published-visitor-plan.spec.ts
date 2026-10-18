@@ -18,6 +18,8 @@ import type {
   ProgressiveShell,
 } from "../../app/indoor-project/progressive-delivery";
 
+import { progressivePlaceLabel } from "../../app/pages/progressive-instruction-preview";
+
 const manifestUrl =
   process.env.PROGRESSIVE_PLAN_MANIFEST_URL ??
   process.env.PROGRESSIVE_MANIFEST_URL;
@@ -426,6 +428,209 @@ test("actual compact plan rejects a corrupt carrier and retries the checked floo
   await ready(page);
 });
 
+test("actual selected-floor 3D retry retains the chosen journey", async ({
+  page,
+}) => {
+  test.skip(
+    !manifestUrl,
+    "Supply a matching real compiled UNBC plan publication.",
+  );
+  test.setTimeout(600_000);
+  const { manifest, receipts, shell } = await source();
+  const full = receipts
+    .filter((receipt) => !receipt.delta)
+    .sort((a, b) => a.logicalBytes - b.logicalBytes)[0]!;
+  const scope = manifest.scopes.find((value) => value.id === full.scopeId)!;
+  const contextUrls = new Set(
+    manifest.assets[scope.contextAssetId].representations.map(
+      (representation) => new URL(representation.path, manifestUrl!).href,
+    ),
+  );
+  const errors: string[] = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() =>
+    localStorage.setItem("openindoormaps.reveal-rooms-on-zoom.v2", "true"),
+  );
+  await page.goto(
+    `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
+  );
+  await ready(page);
+  await page.getByLabel("Floor", { exact: true }).selectOption(scope.id);
+  await ready(page);
+  await page.getByText("Directions", { exact: true }).click();
+  const start = shell.records.find((record) => record.number === "05-136")!;
+  const end = shell.records.find((record) => record.number === "05-173")!;
+  expect(start).toBeTruthy();
+  expect(end).toBeTruthy();
+  await page.getByLabel("From", { exact: true }).selectOption(start.key);
+  await page.getByLabel("To", { exact: true }).selectOption(end.key);
+  await page
+    .getByLabel("Route preference", { exact: true })
+    .selectOption("accessible");
+  let blockedRequests = 0;
+  const contextRequest = (url: URL) => contextUrls.has(url.href);
+  await page.route(contextRequest, (request) => {
+    blockedRequests++;
+    return request.abort("failed");
+  });
+  await page.getByLabel("Map view", { exact: true }).selectOption("3d");
+  const retry = page.getByRole("button", {
+    name: "Retry selected floor",
+    exact: true,
+  });
+  await expect(retry).toBeVisible({ timeout: 180_000 });
+  expect(blockedRequests).toBeGreaterThan(0);
+  await page.unroute(contextRequest);
+  await retry.click();
+  await expect(page.getByTestId("visitor-render-status")).toHaveAttribute(
+    "data-state",
+    "ready",
+    { timeout: 180_000 },
+  );
+  await expect(page.locator(".visitor-map")).toHaveAttribute(
+    "data-floor-detail",
+    "true",
+  );
+  await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(scope.id);
+  await expect(page.getByLabel("Map view", { exact: true })).toHaveValue("3d");
+  await expect(page.getByLabel("From", { exact: true })).toHaveValue(start.key);
+  await expect(page.getByLabel("To", { exact: true })).toHaveValue(end.key);
+  await expect(
+    page.getByLabel("Route preference", { exact: true }),
+  ).toHaveValue("accessible");
+  await expect(retry).toHaveCount(0);
+  await page.screenshot({
+    path: test.info().outputPath("actual-small-floor-3d-retry.png"),
+  });
+  await test.info().attach("actual-selected-floor-retry", {
+    contentType: "application/json",
+    body: JSON.stringify({
+      scopeId: scope.id,
+      contextAssetId: scope.contextAssetId,
+      blockedRequests,
+      start: start.key,
+      end: end.key,
+      profile: "accessible",
+      routeRequested: false,
+      physicalDevice: false,
+    }),
+  });
+  await page.getByLabel("Map view", { exact: true }).selectOption("2d");
+  await ready(page);
+  expect(errors).toEqual([]);
+});
+
+test("actual same-floor duplicate endpoints can be compared on the map without changing the journey", async ({
+  page,
+}) => {
+  test.skip(
+    !manifestUrl,
+    "Supply a matching real compiled UNBC plan publication.",
+  );
+  test.setTimeout(360_000);
+  const { shell, known, receipts } = await source();
+  const first = shell.records.find(
+    (record) => record.key === "landing:ramp:1586431:lower",
+  )!;
+  const second = shell.records.find(
+    (record) => record.key === "landing:ramp:1587605:lower",
+  )!;
+  expect(first?.geographic).toBeTruthy();
+  expect(second?.geographic).toBeTruthy();
+  expect(first.geographic).not.toEqual(second.geographic);
+  const label = "Native ramp lower approach · Building 04 · Floor 1";
+  expect(progressivePlaceLabel(first, shell)).toBe(label);
+  expect(progressivePlaceLabel(second, shell)).toBe(label);
+  const requests: string[] = [];
+  page.on("request", (request) => requests.push(request.url()));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.addInitScript(() =>
+    localStorage.setItem("openindoormaps.reveal-rooms-on-zoom.v2", "true"),
+  );
+  await page.goto(
+    `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
+  );
+  await ready(page);
+  const scopeBefore = await page
+    .getByLabel("Floor", { exact: true })
+    .inputValue();
+  await page.getByText("Directions", { exact: true }).click();
+  await page.getByLabel("From", { exact: true }).selectOption(first.key);
+  await page.getByLabel("To", { exact: true }).selectOption(second.key);
+  await page
+    .getByLabel("Route preference", { exact: true })
+    .selectOption("accessible");
+  const beforeFocus = requests.length;
+  await page
+    .getByRole("button", { name: "Show start on map", exact: true })
+    .click();
+  await ready(page);
+  await expect(page.getByTestId("selected-place")).toHaveAttribute(
+    "data-place-key",
+    first.key,
+  );
+  await expect(page.getByTestId("selected-place-context")).toHaveText(
+    "Building 04 · Floor 1",
+  );
+  await expect
+    .poll(async () =>
+      Number(await page.locator(".visitor-map").getAttribute("data-zoom")),
+    )
+    .toBeGreaterThanOrEqual(19.9);
+  await page.screenshot({
+    path: test.info().outputPath("duplicate-start-source-focus.png"),
+  });
+  await page
+    .getByRole("button", { name: "Show destination on map", exact: true })
+    .click();
+  await ready(page);
+  await expect(page.getByTestId("selected-place")).toHaveAttribute(
+    "data-place-key",
+    second.key,
+  );
+  await expect(page.getByLabel("From", { exact: true })).toHaveValue(first.key);
+  await expect(page.getByLabel("To", { exact: true })).toHaveValue(second.key);
+  await expect(
+    page.getByLabel("Route preference", { exact: true }),
+  ).toHaveValue("accessible");
+  await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
+    scopeBefore,
+  );
+  const planUrls = new Set(
+    receipts.map((receipt) => new URL(receipt.url, manifestUrl!).href),
+  );
+  const unexpected = requests
+    .slice(beforeFocus)
+    .filter(
+      (url) =>
+        planUrls.has(url) ||
+        [
+          "overview",
+          "presentation-context",
+          "prepared-chunk",
+          "routing",
+        ].includes(known.get(url) ?? ""),
+    );
+  expect(unexpected).toEqual([]);
+  await page.screenshot({
+    path: test.info().outputPath("duplicate-destination-source-focus.png"),
+  });
+  await test.info().attach("actual-duplicate-endpoint-map-comparison", {
+    contentType: "application/json",
+    body: JSON.stringify({
+      originalLabel: label,
+      first: { key: first.key, geographic: first.geographic },
+      second: { key: second.key, geographic: second.geographic },
+      retainedScopeId: scopeBefore,
+      unexpectedRequests: unexpected,
+      routeRequested: false,
+      physicalDevice: false,
+      geometryOrAccessApproval: false,
+    }),
+  });
+});
+
 test("actual compact neighboring room can be picked from the genuine plan", async ({
   page,
 }) => {
@@ -457,7 +662,10 @@ test("actual compact neighboring room can be picked from the genuine plan", asyn
   expect(end).toBeTruthy();
   await page.getByLabel("Find a place", { exact: true }).fill(start.number);
   await page
-    .getByRole("button", { name: `${start.number} ${start.name}`, exact: true })
+    .getByRole("button", {
+      name: progressivePlaceLabel(start, shell),
+      exact: true,
+    })
     .click();
   await ready(page);
   await expect(page.locator(".visitor-map")).toHaveAttribute(
@@ -938,7 +1146,10 @@ test("actual compact walking route remains visibly above the checked plan", asyn
   expect(end).toBeTruthy();
   await page.getByLabel("Find a place", { exact: true }).fill(start.number);
   await page
-    .getByRole("button", { name: `${start.number} ${start.name}`, exact: true })
+    .getByRole("button", {
+      name: progressivePlaceLabel(start, shell),
+      exact: true,
+    })
     .click();
   await ready(page);
   const beforeRoute = await canvasPixels(page);
@@ -980,12 +1191,34 @@ test("actual compact walking route remains visibly above the checked plan", asyn
   await expect(page.getByTestId("instruction-warning-notice")).toBeInViewport({
     ratio: 1,
   });
+  await page.screenshot({
+    path: test
+      .info()
+      .outputPath("mobile-current-instruction-before-interaction.png"),
+  });
+  await test.info().attach("mobile-current-instruction-layout", {
+    contentType: "application/json",
+    body: JSON.stringify({
+      viewport: page.viewportSize(),
+      instruction: await page.getByTestId("current-instruction").boundingBox(),
+      previous: await previous.boundingBox(),
+      next: await next.boundingBox(),
+      warning: await page
+        .getByTestId("instruction-warning-notice")
+        .boundingBox(),
+      panel: await page.locator(".visitor-panel").boundingBox(),
+      journeyCollapsed: true,
+      noPostResultClickOrTestScroll: true,
+      physicalDevice: false,
+    }),
+  });
   await expect(previous).toBeDisabled();
   expect((await previous.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   expect((await next.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   const allSteps = page.getByTestId("visitor-all-steps");
   await expect(allSteps).toHaveJSProperty("open", false);
   const total = Number((await progress.textContent())!.match(/of (\d+)/)![1]);
+  expect(total).toBeGreaterThan(1);
   if (total > 1) {
     const beforeStep = requests.length;
     const scopeBefore = await page
@@ -998,28 +1231,25 @@ test("actual compact walking route remains visibly above the checked plan", asyn
     const scope = manifest.scopes.find((value) => value.id === scopeBefore)!;
     const level = Number(await context.getAttribute("data-level-id"));
     const building = await context.getAttribute("data-building");
-    if (
-      scope.levelIds.includes(level) &&
-      (scope.building === "all" || scope.building === building)
-    ) {
-      await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
-        scopeBefore,
-      );
-      const planUrls = new Set(
-        receipts.map((value) => new URL(value.url, manifestUrl!).href),
-      );
-      expect(
-        requests
-          .slice(beforeStep)
-          .filter(
-            (url) =>
-              planUrls.has(url) ||
-              ["overview", "prepared-chunk", "presentation-context"].includes(
-                known.get(url) ?? "",
-              ),
-          ),
-      ).toEqual([]);
-    }
+    expect(scope.levelIds).toContain(level);
+    expect(scope.building === "all" || scope.building === building).toBe(true);
+    await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
+      scopeBefore,
+    );
+    const planUrls = new Set(
+      receipts.map((value) => new URL(value.url, manifestUrl!).href),
+    );
+    expect(
+      requests
+        .slice(beforeStep)
+        .filter(
+          (url) =>
+            planUrls.has(url) ||
+            ["overview", "prepared-chunk", "presentation-context"].includes(
+              known.get(url) ?? "",
+            ),
+        ),
+    ).toEqual([]);
     await previous.click();
     await expect(progress).toHaveText(`Step 1 of ${total}`);
     await ready(page);

@@ -29,6 +29,8 @@ import { isVisitorHallway } from "~/indoor-project/place-discovery";
 import { HospitalInstructionIcon } from "~/components/discovery-panel/hospital-route-preview";
 import {
   progressiveInstructionPreview,
+  progressivePlaceContext,
+  progressivePlaceLabel,
   progressivePlaceScope,
 } from "./progressive-instruction-preview";
 import { PublishedVisitorPlanLayer } from "~/indoor-project/published-visitor-plan-layer";
@@ -66,11 +68,7 @@ import type {
   ProgressiveShell,
 } from "~/indoor-project/progressive-delivery";
 import type { ProgressiveRouteSummary } from "~/indoor-project/progressive-route-summary";
-import {
-  projectFloorName,
-  type ProjectStep,
-} from "~/indoor-project/navigation-steps";
-import { projectBuildingName } from "~/indoor-project/visitor-metadata";
+import type { ProjectStep } from "~/indoor-project/navigation-steps";
 import "./indoor-project.css";
 import "./progressive-visitor.css";
 
@@ -387,6 +385,12 @@ export default function ProgressiveVisitorPage() {
   const [mapNotice, setMapNotice] = useState("");
   const [street, setStreet] = useState(false);
   const [error, setError] = useState("");
+  const [scopeFailure, setScopeFailure] = useState<{
+    scopeKey: string;
+    detail: boolean;
+    message: string;
+  }>();
+  const [scopeRetry, setScopeRetry] = useState(0);
   const [storageError, setStorageError] = useState("");
   const [loading, setLoading] = useState(false);
   const [offline, setOffline] = useState<VisitorOfflineProgress>();
@@ -462,6 +466,7 @@ export default function ProgressiveVisitorPage() {
       openController.current = controller;
       setLoading(true);
       setError("");
+      setScopeFailure(undefined);
       setCurrent(undefined);
       setPlanState(undefined);
       setMapChoices([]);
@@ -641,6 +646,10 @@ export default function ProgressiveVisitorPage() {
     !locked &&
     (detail || requestedDetailScope === scopeKey) &&
     (!planWanted || currentPlan?.status === "missing");
+  const currentScopeFailure =
+    scopeFailure?.scopeKey === scopeKey && scopeFailure.detail === requestDetail
+      ? scopeFailure
+      : undefined;
   useEffect(() => {
     if (detail) setRequestedDetailScope(scopeKey);
   }, [detail, scopeKey]);
@@ -671,6 +680,7 @@ export default function ProgressiveVisitorPage() {
     let release: (() => void) | undefined;
     setLoading(true);
     setError("");
+    setScopeFailure(undefined);
     setCurrent((old) => (old?.scope.id === scopeId ? old : undefined));
     const run = async () => {
       if (requestDetail) {
@@ -694,7 +704,16 @@ export default function ProgressiveVisitorPage() {
           setCurrent(next);
       })
       .catch((error) => {
-        if (!isAbort(error)) setError(message(error));
+        if (
+          !controller.signal.aborted &&
+          sequence === scopeSequence.current &&
+          !isAbort(error)
+        )
+          setScopeFailure({
+            scopeKey,
+            detail: requestDetail,
+            message: message(error),
+          });
       })
       .finally(() => {
         release?.();
@@ -703,7 +722,7 @@ export default function ProgressiveVisitorPage() {
     return () => controller.abort();
     // Current is the result of this effect, not a trigger for a second request.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [client, scopeId, requestDetail, calculating, routes]);
+  }, [client, scopeId, requestDetail, calculating, routes, scopeRetry]);
   const matches =
     client?.shell.records
       .filter((record) =>
@@ -715,6 +734,10 @@ export default function ProgressiveVisitorPage() {
   const selectedPlace = client?.shell.records.find(
     (record) => record.key === selected,
   );
+  const startPlace = client?.shell.records.find(
+    (record) => record.key === start,
+  );
+  const endPlace = client?.shell.records.find((record) => record.key === end);
   const mapChoicePlaces = (client?.shell.records ?? []).filter((record) =>
     mapChoices.includes(record.key),
   );
@@ -1044,12 +1067,21 @@ export default function ProgressiveVisitorPage() {
           </div>
         </details>
       </header>
-      {error && (
+      {(error || currentScopeFailure) && (
         <div role="alert">
-          <p>{error}</p>
+          {error && <p>{error}</p>}
+          {currentScopeFailure && <p>{currentScopeFailure.message}</p>}
           {!client && (
             <button onClick={() => void load(url)} disabled={loading || !url}>
               Retry loading map
+            </button>
+          )}
+          {currentScopeFailure && (
+            <button
+              onClick={() => setScopeRetry((value) => value + 1)}
+              disabled={loading}
+            >
+              Retry selected floor
             </button>
           )}
         </div>
@@ -1135,7 +1167,7 @@ export default function ProgressiveVisitorPage() {
                 {matches.map((record) => (
                   <li key={record.key}>
                     <button onClick={() => locate(record.key)}>
-                      {record.number} {record.name}
+                      {progressivePlaceLabel(record, client.shell)}
                     </button>
                   </li>
                 ))}
@@ -1146,10 +1178,19 @@ export default function ProgressiveVisitorPage() {
                 className="visitor-place-card"
                 aria-label="Selected place"
               >
-                <p data-testid="selected-place">
+                <p
+                  data-testid="selected-place"
+                  data-place-key={selectedPlace.key}
+                >
                   <strong>
                     {selectedPlace.number} {selectedPlace.name}
                   </strong>
+                </p>
+                <p
+                  className="visitor-place-context"
+                  data-testid="selected-place-context"
+                >
+                  {progressivePlaceContext(selectedPlace, client.shell)}
                 </p>
                 {selectedUnavailable ? (
                   <p>{selectedUnavailable}</p>
@@ -1175,7 +1216,7 @@ export default function ProgressiveVisitorPage() {
                   {mapChoicePlaces.map((record) => (
                     <li key={record.key}>
                       <button onClick={() => locate(record.key)}>
-                        {record.number} {record.name}
+                        {progressivePlaceLabel(record, client.shell)}
                       </button>
                     </li>
                   ))}
@@ -1204,8 +1245,7 @@ export default function ProgressiveVisitorPage() {
                       data-level-id={instruction.levelId}
                       data-building={instruction.building}
                     >
-                      {projectBuildingName(routeData, instruction.building)} ·{" "}
-                      {projectFloorName(routeData, instruction.levelId)}
+                      {progressivePlaceContext(instruction, client.shell)}
                     </p>
                     <div className="visitor-current-instruction">
                       <span aria-hidden="true">
@@ -1294,11 +1334,18 @@ export default function ProgressiveVisitorPage() {
                     {<option value="">Choose starting place</option>}
                     {endpointPlaces.map((record) => (
                       <option key={record.key} value={record.key}>
-                        {record.number} {record.name}
+                        {progressivePlaceLabel(record, client.shell)}
                       </option>
                     ))}
                   </select>
                 </label>
+                <button
+                  className="visitor-endpoint-focus"
+                  disabled={!startPlace?.geographic || loading}
+                  onClick={() => locate(start)}
+                >
+                  Show start on map
+                </button>
                 <label>
                   To
                   <select
@@ -1313,11 +1360,18 @@ export default function ProgressiveVisitorPage() {
                     <option value="">Choose destination</option>
                     {endpointPlaces.map((record) => (
                       <option key={record.key} value={record.key}>
-                        {record.number} {record.name}
+                        {progressivePlaceLabel(record, client.shell)}
                       </option>
                     ))}
                   </select>
                 </label>
+                <button
+                  className="visitor-endpoint-focus"
+                  disabled={!endPlace?.geographic || loading}
+                  onClick={() => locate(end)}
+                >
+                  Show destination on map
+                </button>
                 {profile === "accessible" && (
                   <p>
                     Uses confirmed step-free connections. Some places may have

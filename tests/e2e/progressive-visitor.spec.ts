@@ -134,7 +134,9 @@ for (const mobile of [false, true])
     await page.getByLabel("Find a place", { exact: true }).fill(start.number);
     await page
       .getByRole("button", {
-        name: new RegExp(`^${escape(start.number)} ${escape(start.name)}$`),
+        name: new RegExp(
+          `^${escape(start.number)} ${escape(start.name)} · Building ${escape(start.building)} · `,
+        ),
       })
       .click();
     await expect(
