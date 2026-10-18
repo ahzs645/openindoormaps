@@ -26,6 +26,11 @@ import {
   type PublishedVisitorPlan,
 } from "~/indoor-project/published-visitor-plan";
 import { isVisitorHallway } from "~/indoor-project/place-discovery";
+import { HospitalInstructionIcon } from "~/components/discovery-panel/hospital-route-preview";
+import {
+  progressiveInstructionPreview,
+  progressivePlaceScope,
+} from "./progressive-instruction-preview";
 import { PublishedVisitorPlanLayer } from "~/indoor-project/published-visitor-plan-layer";
 import { emptyPreparedFloorSources } from "~/indoor-project/prepared-layer-lifetime";
 import { prepareVisitorOfflineShell } from "~/indoor-project/visitor-offline-shell-client";
@@ -59,10 +64,13 @@ import type { IndoorDataset } from "~/indoor-project/contract";
 import type {
   ProgressiveOverview,
   ProgressiveShell,
-  ProgressiveScope,
 } from "~/indoor-project/progressive-delivery";
 import type { ProgressiveRouteSummary } from "~/indoor-project/progressive-route-summary";
-import type { ProjectStep } from "~/indoor-project/navigation-steps";
+import {
+  projectFloorName,
+  type ProjectStep,
+} from "~/indoor-project/navigation-steps";
+import { projectBuildingName } from "~/indoor-project/visitor-metadata";
 import "./indoor-project.css";
 import "./progressive-visitor.css";
 
@@ -392,12 +400,16 @@ export default function ProgressiveVisitorPage() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const directionsRef = useRef<HTMLDetailsElement>(null);
+  const journeyRef = useRef<HTMLDetailsElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  const instructionRef = useRef<HTMLElement>(null);
   const startRef = useRef<HTMLSelectElement>(null);
   const endRef = useRef<HTMLSelectElement>(null);
   const [profile, setProfile] = useState<"public" | "accessible">("public");
   const [calculating, setCalculating] = useState(false);
   const [route, setRoute] = useState<ProjectRoute | null>(null);
   const [steps, setSteps] = useState<ProjectStep[]>([]);
+  const [activeStep, setActiveStep] = useState(0);
   const [routeSummary, setRouteSummary] = useState<ProgressiveRouteSummary>({
     transitPlaces: [],
   });
@@ -425,14 +437,17 @@ export default function ProgressiveVisitorPage() {
   const mapEpoch = useRef(0);
   const routeEpoch = useRef(0);
   const resetDirections = useCallback(() => {
+    if (journeyRef.current) journeyRef.current.open = true;
     routeEpoch.current++;
     routeWaiting.current?.abort();
     routes.cancelPending();
     setCalculating(false);
     setRoute(null);
     setSteps([]);
+    setActiveStep(0);
     setRouteSummary({ transitPlaces: [] });
     setRouteMessage("");
+    setMapNotice("");
   }, [routes]);
   const load = useCallback(
     async (manifestUrl: string, offlineOnly = false) => {
@@ -737,15 +752,35 @@ export default function ProgressiveVisitorPage() {
     (target === "start" ? endRef : startRef).current?.focus();
   };
   const scopeForPlace = (levelId: number, building: string) => {
-    const scopes = client?.manifest.scopes ?? [];
-    const contains = (scope: ProgressiveScope) =>
-      scope.levelIds.includes(levelId) &&
-      (scope.building === "all" || scope.building === building);
-    return (
-      scopes.find((scope) => scope.id === scopeId && contains(scope)) ??
-      scopes.find((scope) => scope.building === "all" && contains(scope)) ??
-      scopes.find((scope) => contains(scope))
+    return progressivePlaceScope(
+      client?.manifest.scopes ?? [],
+      scopeId,
+      levelId,
+      building,
     );
+  };
+  const focusInstruction = (step: ProjectStep) => {
+    const preview = progressiveInstructionPreview(
+      client?.manifest.scopes ?? [],
+      scopeId,
+      step,
+    );
+    if (!preview) {
+      setMapNotice(
+        "The floor for this instruction is not available in this map publication.",
+      );
+      setFocus(undefined);
+      return;
+    }
+    setMapNotice("");
+    if (preview.scope.id !== scopeId) setScopeId(preview.scope.id);
+    setFocus(preview.position);
+  };
+  const previewStep = (index: number) => {
+    const step = steps[index];
+    if (!step) return;
+    setActiveStep(index);
+    focusInstruction(step);
   };
   const locate = (key: string) => {
     const record = client?.shell.records.find((entry) => entry.key === key);
@@ -783,7 +818,9 @@ export default function ProgressiveVisitorPage() {
     setCalculating(true);
     setRoute(null);
     setSteps([]);
+    setActiveStep(0);
     setRouteSummary({ transitPlaces: [] });
+    setMapNotice("");
     setRouteMessage("Loading and checking directions…");
     try {
       await waitForWorkerSlot(
@@ -815,13 +852,18 @@ export default function ProgressiveVisitorPage() {
         return;
       setRoute(result.value.route);
       setSteps(result.steps);
+      setActiveStep(0);
       setRouteSummary(result.summary);
       setRouteMessage(
         result.value.route
           ? `${Math.round(result.value.route.distanceMetres)} m`
           : visitorRouteFailureMessage(result.value.diagnostic, profile, false),
       );
-      if (result.value.route) locate(start);
+      if (result.value.route) {
+        if (journeyRef.current) journeyRef.current.open = false;
+        locate(start);
+        if (result.steps[0]) focusInstruction(result.steps[0]);
+      }
     } catch (error) {
       if (
         !isAbort(error) &&
@@ -919,6 +961,33 @@ export default function ProgressiveVisitorPage() {
   const legacyLoadingMessage = current
     ? "Preparing interactive room details… You can keep zooming."
     : "Loading map…";
+  const instruction = steps[activeStep];
+  const instructionPreview = instruction
+    ? progressiveInstructionPreview(
+        client?.manifest.scopes ?? [],
+        scopeId,
+        instruction,
+      )
+    : undefined;
+  let instructionWarning =
+    "Check permission to pass through rooms on this route.";
+  if (route && route.unknownAccessAreas.length > 0)
+    instructionWarning = "Public access is unknown for parts of this route.";
+  else if (route && route.unknownAccessibilityEdges > 0)
+    instructionWarning =
+      "Step-free access is unconfirmed for parts of this route.";
+
+  useEffect(() => {
+    if (!route || steps.length === 0) return;
+    if (directionsRef.current) directionsRef.current.open = true;
+    const panel = panelRef.current;
+    const instruction = instructionRef.current;
+    if (panel && instruction)
+      panel.scrollTop +=
+        instruction.getBoundingClientRect().top -
+        panel.getBoundingClientRect().top -
+        panel.clientTop;
+  }, [route, steps.length]);
 
   return (
     <main className="progressive-visitor">
@@ -990,7 +1059,7 @@ export default function ProgressiveVisitorPage() {
       )}
       {client && (
         <div className="visitor-layout">
-          <aside className="visitor-panel">
+          <aside ref={panelRef} className="visitor-panel">
             {client.manifest.unavailableScopes.length > 0 && (
               <p role="status">
                 Some floors are unavailable in this publication. Only the listed
@@ -1116,91 +1185,186 @@ export default function ProgressiveVisitorPage() {
             )}
             <details ref={directionsRef}>
               <summary>Directions</summary>
-              <p>Choose the room or entrance you are starting from.</p>
-              <label>
-                From
-                <select
-                  ref={startRef}
-                  aria-label="From"
-                  value={start}
-                  onChange={(event) => {
-                    resetDirections();
-                    setStart(event.target.value);
-                  }}
+              {instruction && routeData && (
+                <section
+                  ref={instructionRef}
+                  className="visitor-instruction"
+                  aria-label="Current direction"
                 >
-                  {<option value="">Choose starting place</option>}
-                  {endpointPlaces.map((record) => (
-                    <option key={record.key} value={record.key}>
-                      {record.number} {record.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                To
-                <select
-                  ref={endRef}
-                  aria-label="To"
-                  value={end}
-                  onChange={(event) => {
-                    resetDirections();
-                    setEnd(event.target.value);
-                  }}
-                >
-                  <option value="">Choose destination</option>
-                  {endpointPlaces.map((record) => (
-                    <option key={record.key} value={record.key}>
-                      {record.number} {record.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              {profile === "accessible" && (
-                <p>
-                  Uses confirmed step-free connections. Some places may have no
-                  available route.
-                </p>
+                  <div aria-live="polite" aria-atomic="true">
+                    <p
+                      className="visitor-step-progress"
+                      data-testid="route-step-progress"
+                    >
+                      Step {activeStep + 1} of {steps.length}
+                    </p>
+                    <p
+                      className="visitor-step-context"
+                      data-testid="route-step-context"
+                      data-level-id={instruction.levelId}
+                      data-building={instruction.building}
+                    >
+                      {projectBuildingName(routeData, instruction.building)} ·{" "}
+                      {projectFloorName(routeData, instruction.levelId)}
+                    </p>
+                    <div className="visitor-current-instruction">
+                      <span aria-hidden="true">
+                        <HospitalInstructionIcon instruction={instruction} />
+                      </span>
+                      <h2 data-testid="current-instruction">
+                        {instruction.message}
+                      </h2>
+                    </div>
+                  </div>
+                  {!instructionPreview && (
+                    <p
+                      role="status"
+                      data-testid="instruction-floor-unavailable"
+                    >
+                      The floor for this instruction is not available in this
+                      map publication. The map remains on the previous floor.
+                    </p>
+                  )}
+                  <p className="visitor-manual-preview">
+                    Manual preview. Your position is not tracked.
+                  </p>
+                  <div className="visitor-step-controls">
+                    <button
+                      aria-label="Previous step"
+                      disabled={activeStep === 0}
+                      onClick={() => previewStep(activeStep - 1)}
+                    >
+                      Previous
+                    </button>
+                    <button
+                      aria-label="Next step"
+                      disabled={activeStep >= steps.length - 1}
+                      onClick={() => previewStep(activeStep + 1)}
+                    >
+                      Next
+                    </button>
+                  </div>
+                  {route &&
+                    (route.unknownAccessAreas.length > 0 ||
+                      route.unknownAccessibilityEdges > 0 ||
+                      routeSummary.transitPlaces.length > 0) && (
+                      <p
+                        className="visitor-preview-warning"
+                        data-testid="instruction-warning-notice"
+                      >
+                        {instructionWarning} Review the warnings below.
+                      </p>
+                    )}
+                  <details
+                    className="visitor-all-steps"
+                    data-testid="visitor-all-steps"
+                  >
+                    <summary>All steps</summary>
+                    <ol aria-label="All directions steps">
+                      {steps.map((step, index) => (
+                        <li key={index}>
+                          <button
+                            aria-current={
+                              index === activeStep ? "step" : undefined
+                            }
+                            onClick={() => previewStep(index)}
+                          >
+                            {step.message}
+                          </button>
+                        </li>
+                      ))}
+                    </ol>
+                  </details>
+                </section>
               )}
-              <button
-                disabled={!start && !end}
-                onClick={() => {
-                  resetDirections();
-                  setStart(end);
-                  setEnd(start);
-                }}
-              >
-                Swap places
-              </button>
-              <label>
-                Route preference
-                <select
-                  aria-label="Route preference"
-                  value={profile}
-                  onChange={(event) => {
-                    resetDirections();
-                    setProfile(event.target.value as "public" | "accessible");
-                  }}
-                >
-                  <option value="public">Walking</option>
-                  <option value="accessible">Step-free</option>
-                </select>
-              </label>
-              <button
-                onClick={() => void calculate()}
-                disabled={!start || !end || calculating || loading}
-              >
-                Get directions
-              </button>
-              {calculating && (
+              <details ref={journeyRef} open data-testid="visitor-journey">
+                <summary>{route ? "Change journey" : "Choose journey"}</summary>
+                <p>Choose the room or entrance you are starting from.</p>
+                <label>
+                  From
+                  <select
+                    ref={startRef}
+                    aria-label="From"
+                    value={start}
+                    onChange={(event) => {
+                      resetDirections();
+                      setStart(event.target.value);
+                    }}
+                  >
+                    {<option value="">Choose starting place</option>}
+                    {endpointPlaces.map((record) => (
+                      <option key={record.key} value={record.key}>
+                        {record.number} {record.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label>
+                  To
+                  <select
+                    ref={endRef}
+                    aria-label="To"
+                    value={end}
+                    onChange={(event) => {
+                      resetDirections();
+                      setEnd(event.target.value);
+                    }}
+                  >
+                    <option value="">Choose destination</option>
+                    {endpointPlaces.map((record) => (
+                      <option key={record.key} value={record.key}>
+                        {record.number} {record.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {profile === "accessible" && (
+                  <p>
+                    Uses confirmed step-free connections. Some places may have
+                    no available route.
+                  </p>
+                )}
                 <button
+                  disabled={!start && !end}
                   onClick={() => {
                     resetDirections();
-                    setRouteMessage("Directions cancelled.");
+                    setStart(end);
+                    setEnd(start);
                   }}
                 >
-                  Cancel directions
+                  Swap places
                 </button>
-              )}
+                <label>
+                  Route preference
+                  <select
+                    aria-label="Route preference"
+                    value={profile}
+                    onChange={(event) => {
+                      resetDirections();
+                      setProfile(event.target.value as "public" | "accessible");
+                    }}
+                  >
+                    <option value="public">Walking</option>
+                    <option value="accessible">Step-free</option>
+                  </select>
+                </label>
+                <button
+                  onClick={() => void calculate()}
+                  disabled={!start || !end || calculating || loading}
+                >
+                  Get directions
+                </button>
+                {calculating && (
+                  <button
+                    onClick={() => {
+                      resetDirections();
+                      setRouteMessage("Directions cancelled.");
+                    }}
+                  >
+                    Cancel directions
+                  </button>
+                )}
+              </details>
               <p role="status" aria-live="polite" data-testid="route-status">
                 {routeMessage}
               </p>
@@ -1238,28 +1402,6 @@ export default function ProgressiveVisitorPage() {
                   . Check that these rooms permit passage.
                 </p>
               )}
-              <ol>
-                {steps.map((step, index) => (
-                  <li key={index}>
-                    <button
-                      onClick={() => {
-                        const scope = scopeForPlace(
-                          step.levelId,
-                          step.building,
-                        );
-                        if (scope) setScopeId(scope.id);
-                        setFocus(
-                          step.position
-                            ? [step.position[0], step.position[1]]
-                            : undefined,
-                        );
-                      }}
-                    >
-                      {step.message}
-                    </button>
-                  </li>
-                ))}
-              </ol>
             </details>
             <button
               onClick={() => void fullDownload()}

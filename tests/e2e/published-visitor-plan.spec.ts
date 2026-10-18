@@ -915,10 +915,12 @@ test("actual compact walking route remains visibly above the checked plan", asyn
     "Supply a matching real compiled UNBC plan publication.",
   );
   test.setTimeout(900_000);
-  const { shell } = await source();
+  const { manifest, receipts, shell, known } = await source();
   const errors: string[] = [];
+  const requests: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
-  await page.setViewportSize({ width: 1440, height: 1000 });
+  page.on("request", (request) => requests.push(request.url()));
+  await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript(() =>
     localStorage.setItem("openindoormaps.reveal-rooms-on-zoom.v2", "true"),
   );
@@ -951,6 +953,82 @@ test("actual compact walking route remains visibly above the checked plan", asyn
   });
   await ready(page);
   await expect(page.getByTestId("route-unknown-access")).toBeVisible();
+  const progress = page.getByTestId("route-step-progress");
+  await expect(progress).toHaveText(/^Step 1 of \d+$/);
+  await expect(page.getByTestId("current-instruction")).not.toBeEmpty();
+  await expect(page.getByTestId("route-step-context")).not.toBeEmpty();
+  await expect(
+    page.getByText("Manual preview. Your position is not tracked.", {
+      exact: true,
+    }),
+  ).toBeVisible();
+  const previous = page.getByRole("button", {
+    name: "Previous step",
+    exact: true,
+  });
+  const next = page.getByRole("button", { name: "Next step", exact: true });
+  // Check the actual post-result layout before any click can auto-scroll it.
+  await expect(page.getByTestId("visitor-journey")).toHaveJSProperty(
+    "open",
+    false,
+  );
+  await expect(page.getByTestId("current-instruction")).toBeInViewport({
+    ratio: 1,
+  });
+  await expect(previous).toBeInViewport({ ratio: 1 });
+  await expect(next).toBeInViewport({ ratio: 1 });
+  await expect(page.getByTestId("instruction-warning-notice")).toBeInViewport({
+    ratio: 1,
+  });
+  await expect(previous).toBeDisabled();
+  expect((await previous.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  expect((await next.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  const allSteps = page.getByTestId("visitor-all-steps");
+  await expect(allSteps).toHaveJSProperty("open", false);
+  const total = Number((await progress.textContent())!.match(/of (\d+)/)![1]);
+  if (total > 1) {
+    const beforeStep = requests.length;
+    const scopeBefore = await page
+      .getByLabel("Floor", { exact: true })
+      .inputValue();
+    await next.click();
+    await expect(progress).toHaveText(`Step 2 of ${total}`);
+    await ready(page);
+    const context = page.getByTestId("route-step-context");
+    const scope = manifest.scopes.find((value) => value.id === scopeBefore)!;
+    const level = Number(await context.getAttribute("data-level-id"));
+    const building = await context.getAttribute("data-building");
+    if (
+      scope.levelIds.includes(level) &&
+      (scope.building === "all" || scope.building === building)
+    ) {
+      await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
+        scopeBefore,
+      );
+      const planUrls = new Set(
+        receipts.map((value) => new URL(value.url, manifestUrl!).href),
+      );
+      expect(
+        requests
+          .slice(beforeStep)
+          .filter(
+            (url) =>
+              planUrls.has(url) ||
+              ["overview", "prepared-chunk", "presentation-context"].includes(
+                known.get(url) ?? "",
+              ),
+          ),
+      ).toEqual([]);
+    }
+    await previous.click();
+    await expect(progress).toHaveText(`Step 1 of ${total}`);
+    await ready(page);
+  }
+  await allSteps.locator("summary").click();
+  await expect(allSteps.locator('button[aria-current="step"]')).toHaveCount(1);
+  await allSteps.getByRole("button").first().click();
+  await expect(progress).toHaveText(`Step 1 of ${total}`);
+  await allSteps.locator("summary").click();
   await expect
     .poll(async () => (await canvasPixels(page)).blue, { timeout: 30_000 })
     .toBeGreaterThan(beforeRoute.blue + 20);

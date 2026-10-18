@@ -107,6 +107,74 @@
   text-align: left;
   padding: 4px 0;
 }
+.visitor-instruction {
+  margin-block: 12px;
+  border-top: 1px solid #d8e0e3;
+  padding-top: 12px;
+}
+.visitor-step-progress {
+  margin: 0;
+  font-weight: 700;
+}
+.visitor-step-context {
+  margin: 4px 0 10px;
+  color: #49616b;
+}
+.visitor-current-instruction {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.visitor-current-instruction > span {
+  flex: 0 0 28px;
+}
+.visitor-current-instruction svg {
+  width: 28px;
+  height: 28px;
+}
+.visitor-current-instruction h2 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+.visitor-manual-preview {
+  margin-block: 10px;
+  font-size: 12px;
+  color: #49616b;
+}
+.visitor-preview-warning {
+  margin-block: 8px;
+  font-size: 12px;
+  color: #694800;
+}
+.visitor-step-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.visitor-step-controls button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.visitor-all-steps {
+  margin-top: 8px;
+}
+.visitor-all-steps ol {
+  max-height: 240px;
+  overflow-y: auto;
+  margin-block: 4px;
+}
+.progressive-visitor .visitor-all-steps ol button {
+  min-height: 44px;
+  width: 100%;
+  padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+.progressive-visitor .visitor-all-steps button[aria-current="step"] {
+  background: #e2eee9;
+}
 .visitor-search {
   list-style: none;
   padding: 0;

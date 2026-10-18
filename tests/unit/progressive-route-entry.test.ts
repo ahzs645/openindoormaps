@@ -55,14 +55,22 @@ const reset = sourceNode(
   "resetDirections",
   "variable",
 ) as ts.VariableDeclaration;
+const selectEndpoint = sourceNode(
+  "selectEndpoint",
+  "variable",
+) as ts.VariableDeclaration;
 assert(calculate.initializer && ts.isArrowFunction(calculate.initializer));
+assert(
+  selectEndpoint.initializer && ts.isArrowFunction(selectEndpoint.initializer),
+);
 assert(reset.initializer && ts.isCallExpression(reset.initializer));
 const resetCallback = reset.initializer.arguments[0];
 assert(ts.isArrowFunction(resetCallback));
 const compiled = ts.transpileModule(
   `${sourceNode("waitForWorkerSlot", "function").getText(pageSource)}
 const resetDirections = (${resetCallback.getText(pageSource)});
-globalThis.runPageDirections = (${calculate.initializer.getText(pageSource)});`,
+globalThis.runPageDirections = (${calculate.initializer.getText(pageSource)});
+globalThis.runSelectEndpoint = (${selectEndpoint.initializer.getText(pageSource)});`,
   { compilerOptions: { target: ts.ScriptTarget.ES2022 } },
 ).outputText;
 
@@ -100,6 +108,18 @@ function setup(start: string, end: string, mode = "public") {
     return begin(kind);
   };
   const states: Record<string, unknown[]> = {};
+  const journey = { open: false };
+  const directions = { open: false };
+  const focused: string[] = [];
+  const focus = (name: string) => () => {
+    assert.equal(journey.open, true, "The journey must open before ref focus");
+    assert.equal(
+      directions.open,
+      true,
+      "Directions must open before ref focus",
+    );
+    focused.push(name);
+  };
   const write = (key: string) => (value: unknown) =>
     (states[key] ??= []).push(value);
   const context = vm.createContext({
@@ -117,6 +137,14 @@ function setup(start: string, end: string, mode = "public") {
     routeRequestReady,
     routeEpoch: { current: 0 },
     mapEpoch: { current: 0 },
+    journeyRef: { current: journey },
+    directionsRef: { current: directions },
+    startRef: { current: { focus: focus("start") } },
+    endRef: { current: { focus: focus("end") } },
+    selectedPlace: { key: "picked-original-room" },
+    selectedUnavailable: undefined,
+    setStart: write("start"),
+    setEnd: write("end"),
     routeWaiting: { current: undefined },
     sameRoutePlace,
     visitorRouteFailureMessage,
@@ -131,14 +159,21 @@ function setup(start: string, end: string, mode = "public") {
     setCalculating: write("calculating"),
     setRoute: write("route"),
     setSteps: write("steps"),
+    setActiveStep: write("activeStep"),
     setRouteSummary: write("summary"),
     setRouteMessage: write("message"),
+    setMapNotice: write("mapNotice"),
   });
   vm.runInContext(compiled, context);
   return {
     run: context.runPageDirections as () => Promise<void>,
+    selectEndpoint: context.runSelectEndpoint as (
+      target: "start" | "end",
+    ) => void,
     messages,
     states,
+    journey,
+    focused,
     starts,
     workerCount: () => workerCount,
     dispose: () => routes.dispose(),
@@ -153,6 +188,8 @@ test("actual compact-page handler returns same-place status without scheduling o
     assert.equal(check.messages.length, 0);
     assert.deepEqual(check.starts, []);
     assert.deepEqual(check.states.calculating, [false]);
+    assert.deepEqual(check.states.activeStep, [0]);
+    assert.equal(check.journey.open, true);
     assert.match(String(check.states.message.at(-1)), /same place/i);
     assert(
       !check.states.message.some((m) => /Loading|checking/.test(String(m))),
@@ -194,6 +231,18 @@ test("actual compact-page handler does not start directions with an unselected e
     assert.equal(check.workerCount(), 0);
     assert.equal(check.messages.length, 0);
     assert.deepEqual(check.starts, []);
+    check.dispose();
+  }
+});
+
+test("actual place-card endpoint action reopens the collapsed journey before focusing its other select", () => {
+  for (const target of ["start", "end"] as const) {
+    const check = setup("old-start", "old-end");
+    check.selectEndpoint(target);
+    assert.deepEqual(check.states[target], ["picked-original-room"]);
+    assert.deepEqual(check.focused, [target === "start" ? "end" : "start"]);
+    assert.deepEqual(check.states.activeStep, [0]);
+    assert.equal(check.messages.length, 0);
     check.dispose();
   }
 });
