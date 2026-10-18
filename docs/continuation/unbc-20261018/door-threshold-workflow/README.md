@@ -157,3 +157,11 @@ Full dataset/state/tool checksums are in the survey receipts and `SHA256SUMS`.
 
 **Live Site remains version 13.** No new accepted master, actual route,
 stair approval or publication is claimed by this review.
+
+The [private 3.82 MB source/evidence increment](https://drive.google.com/file/d/1ni0O01s-kcMlINDu8yhSaK_GuSqvUzEF/view)
+contains OpenIndoorMaps `d8aea42` and Reviter `cd13067`. Fresh Git restoration
+verified all **3,921 tracked files**, and complete Drive download/readback
+matched the archive SHA-256 and every entry. See `portable-backup.json`.
+This receipt-only follow-up is outside those bundled commits. Original large
+native inputs remain separate verified dependencies; the increment's manifest
+and restore instructions link their private continuation folder.
