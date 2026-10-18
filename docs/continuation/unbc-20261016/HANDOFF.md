@@ -1,5 +1,7 @@
 # UNBC: start here for the next AI
 
+> **Floor 3 gateway follow-up:** [Building 04–08 remains disconnected at native door 2315416](../unbc-20261018/floor3-building04-building08/README.md). Its original room sides are unmatched and its curtain assembly contains a 50 mm sill. Exact slab support does not clear that physical material. The earlier 21-gap inventory excluded ownerless doors; a new fast gateway reachability check covers this blind spot. No source material or routing edge has been bypassed.
+
 > **October 18 pathway update:** [Systemic four-floor candidate and evidence](../unbc-20261018/systemic-pathways/README.md) cover common hallway, doorway, stair/ramp approaches and exact ordinary-room transit checks. Thirteen frozen actual requests produced ten routes and three refusals. Twenty-one lateral gaps and 28 held full stairs remain. The guarded rebuild finished and failed preservation of 05-S204 and 03-S104; all nine checkpoints and final failed state are privately backed up. No new master or Site publication was accepted.
 
 > **October 17 regeneration update:** [Fresh original-source materials and all four later review inputs are checked and backed up](../unbc-20261017/regeneration-recovery/README.md). All nine new production floor checkpoints are regenerated and verified by complete Drive download/readback in an isolated guarded build; use the linked private Drive progress index for the current count. No historical digest has been rebound, no original-arrival guard waived, and no newer master accepted or published.

@@ -1,5 +1,11 @@
 # Systemic pathways across the four campus floors
 
+[Later Floor 3 Building 04–08 inspection](../floor3-building04-building08/README.md)
+finds an additional missing connection at ownerless native door 2315416 and a
+50 mm source sill. The 21 approach gaps below count existing graph stops, not
+all unmatched doorways or disconnected building pairs. The new scoped gateway
+reachability check prevents interpreting that inventory as complete connectivity.
+
 October 18, 2026. This is a tested **local candidate**, not a new publication or
 accepted authoring master. Private Site version 13 and its 45.52 MB visitor ZIP
 remain unchanged. The implementation is shared across buildings, doorway
