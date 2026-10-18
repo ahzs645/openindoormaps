@@ -452,7 +452,7 @@ export function NativeExploreLayer({
     for (const layer of map.getStyle().layers ?? []) {
       if (
         layer.id === "project-label" ||
-        /^project.*(?:route|portal|connector|entrance)/.test(layer.id)
+        /^project.*(?:route|network|portal|connector|entrance)/.test(layer.id)
       )
         map.moveLayer(layer.id);
     }

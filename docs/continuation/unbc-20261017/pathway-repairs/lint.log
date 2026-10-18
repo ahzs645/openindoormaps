@@ -1,0 +1,29 @@
+
+/workspace/openindoormaps/app/indoor-project/map-layers.tsx
+    56:44  warning  '/workspace/openindoormaps/app/indoor-project/display-geometry.ts' imported multiple times                                                                                                                          import/no-duplicates
+    82:42  warning  '/workspace/openindoormaps/app/indoor-project/display-geometry.ts' imported multiple times                                                                                                                          import/no-duplicates
+   346:6   warning  React Hook useMemo has a missing dependency: 'nativeModel'. Either include it or remove the dependency array                                                                                                        react-hooks/exhaustive-deps
+  1965:6   warning  React Hook useEffect has missing dependencies: 'hasNativeEnvelopes', 'hasNativeMaterial', 'prepared.selectionAreas', 'selectionOnlyKeys', and 'visitorContext'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  2204:6   warning  React Hook useEffect has missing dependencies: 'basemapVisibility' and 'levelIds'. Either include them or remove the dependency array                                                                               react-hooks/exhaustive-deps
+
+/workspace/openindoormaps/app/indoor-project/project-navigation.tsx
+  279:5   warning  React Hook useMemo has a missing dependency: 'tagsFor'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  796:26  warning  Classname 'project-place-description' is not a Tailwind CSS class!                                        tailwindcss/no-custom-classname
+
+/workspace/openindoormaps/app/pages/indoor-project-page.tsx
+   245:6   warning  React Hook useEffect has a missing dependency: 'data'. Either include it or remove the dependency array                                    react-hooks/exhaustive-deps
+   448:5   warning  React Hook useMemo has unnecessary dependencies: 'pinPatchId' and 'pinRecommendation'. Either exclude them or remove the dependency array  react-hooks/exhaustive-deps
+   515:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+   522:5   warning  React Hook useEffect has a complex expression in the dependency array. Extract it to a separate variable so it can be statically checked   react-hooks/exhaustive-deps
+   777:6   warning  React Hook useEffect has a missing dependency: 'hostedParams'. Either include it or remove the dependency array                            react-hooks/exhaustive-deps
+  1053:5   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1084:6   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1266:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+  1360:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+  1612:5   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1766:7   warning  Classname 'project-pin-review' is not a Tailwind CSS class!                                                                                tailwindcss/no-custom-classname
+  3876:28  warning  Classname 'project-help' is not a Tailwind CSS class!                                                                                      tailwindcss/no-custom-classname
+
+✖ 19 problems (0 errors, 19 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

@@ -1,0 +1,164 @@
+{
+  "format": "fresh-directions-production-worker-benchmark-v1",
+  "sourceSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "routingDatasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+  "cacheSha256": "27ea7e9692a098fd76969d5872ac52259996c2ada56f50f24991097a6e4300b2",
+  "cacheBytes": 2592076,
+  "workerStarts": 1,
+  "results": [
+    {
+      "id": "floor1",
+      "available": true,
+      "workerReplySeconds": 36.653137615,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "floor3",
+      "available": true,
+      "workerReplySeconds": 2.168362710999994,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "08-10-floor2",
+      "available": false,
+      "workerReplySeconds": 0.05861590100000467,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "lift-up",
+      "available": true,
+      "workerReplySeconds": 2.7235281289999986,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "lift-down",
+      "available": true,
+      "workerReplySeconds": 2.684793550000002,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "ramp-to-08",
+      "available": true,
+      "workerReplySeconds": 0.8840564960000047,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "ramp-from-08",
+      "available": true,
+      "workerReplySeconds": 0.6903943999999974,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "step-free-refusal",
+      "available": false,
+      "workerReplySeconds": 0.04731693500000256,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "floor1:retained-result-after-release",
+      "available": true,
+      "workerReplySeconds": 0.00038332599999557713,
+      "newWorkerNeeded": false
+    }
+  ],
+  "fetches": [
+    {
+      "url": "https://candidate.test/data/candidate-routing/27ea7e9692a098fd76969d5872ac52259996c2ada56f50f24991097a6e4300b2.json.gz",
+      "bytes": 2592076,
+      "memory": {
+        "rss": 1280008192,
+        "heapTotal": 335118336,
+        "heapUsed": 295377304,
+        "external": 80690931,
+        "arrayBuffers": 5450215,
+        "heapLimit": 855638016
+      }
+    }
+  ],
+  "observations": [
+    {
+      "rss": 1065861120,
+      "heapTotal": 12054528,
+      "heapUsed": 8850928,
+      "external": 8131686,
+      "arrayBuffers": 1795972,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1737678848,
+      "heapTotal": 599191552,
+      "heapUsed": 433122320,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1741737984,
+      "heapTotal": 603500544,
+      "heapUsed": 473138752,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1742671872,
+      "heapTotal": 604434432,
+      "heapUsed": 475400704,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1747046400,
+      "heapTotal": 609325056,
+      "heapUsed": 523537264,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1748865024,
+      "heapTotal": 611155968,
+      "heapUsed": 566686224,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1753137152,
+      "heapTotal": 631681024,
+      "heapUsed": 590325104,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1754771456,
+      "heapTotal": 640917504,
+      "heapUsed": 597368768,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 1756737536,
+      "heapTotal": 642883584,
+      "heapUsed": 611110864,
+      "external": 81880314,
+      "arrayBuffers": 9191139,
+      "heapLimit": 855638016
+    }
+  ],
+  "scope": "Actual production worker/client in a 768 MiB Node isolate; isolated candidate receipt only. No browser, network latency or floor-worker co-residency measured.",
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "geometryOrAccessChanged": false
+}

@@ -1,5 +1,12 @@
 # Indoor project work
 
+For native first-person/source-model inspection, use the sibling Reviter
+[source inspection workflow](../reviter/docs/source-model-inspection/README.md).
+It defines verified scene export, reusable camera recipes, complete-source
+renders and receipts. Inspect both sides and the original threshold/landing;
+preserve physical geometry and distinguish renders from actual viewer/browser
+proof or route qualification. Reuse the scene and render only affected views.
+
 For indoor room boundaries, missing/low room blocks, doors, circulation, stair/ramp/lift geometry, access review or the UNBC master pipeline, read [.agents/skills/indoor-enclosure-review/SKILL.md](.agents/skills/indoor-enclosure-review/SKILL.md) and the relevant parts of [docs/indoor-enclosure-review.md](docs/indoor-enclosure-review.md).
 
 - Review **actual visitor geometry** in ordinary and native-height modes. A source outline, prepared boundary label or selection mask alone does not certify a complete raised room.
@@ -16,3 +23,30 @@ For indoor room boundaries, missing/low room blocks, doors, circulation, stair/r
 No special requirements here apply to unrelated venue demos or ordinary non-indoor changes.
 
 For the current UNBC continuation, start with [the October 16 handoff](docs/continuation/unbc-20261016/HANDOFF.md). It distinguishes the live publication, failed source rebuild, next targeted repairs and portable data. Older handoffs are historical.
+
+The [October 17 pathway repairs](docs/continuation/unbc-20261017/pathway-repairs/README.md) add current viewer checks and data availability: the previously created large handoff archive and failed-run checkpoints are absent from this filesystem. Do not assume old scratch paths still exist or treat the visitor ZIP as authoring evidence.
+
+Every UNBC site publication must pair its exact visitor and both committed source
+trees using `scripts/indoor/package-development-snapshot.py`, verify a fresh
+restore and the final paired archive, and retain the missing-native-input list.
+See [portable development procedure](docs/continuation/unbc-20261017/pathway-repairs/PORTABLE-DEVELOPMENT.md).
+The development snapshot supports application edits; it is not a complete native
+backup until actual authoring inputs have been recovered and included.
+
+For UNBC directions-cache publications, run
+`scripts/indoor/check-published-directions-cache.ts` against the final complete
+visitor JSON, its expected checksum and the actual publication root after the
+final build. A current compiled receipt and exact served carrier must match;
+stale/missing caches must not silently pass publication by falling back to long
+physical preparation. Pair the root `/data/unbc-routing/` asset, progressive/
+offline companions and development download, then verify normal live URLs and
+desktop/mobile directions. See the [October 18 startup findings](docs/continuation/unbc-20261018/directions-and-threshold-blockers/README.md).
+
+Also run `scripts/indoor/check-published-project.ts PUBLIC_ROOT NEW_REPORT.json`
+for a UNBC publication. Its compiled map receipt must match the exact visitor,
+current validator and selected progressive-manifest revision. It checks actual
+ZIP entry hashes, normal metadata hydration and all default prepared floor scopes;
+unlisted or changed packages must retain full normal import. Generate a receipt
+only from a successful normal import under the unchanged current engine, retain
+the validation evidence, and never relabel a stale cache. This catches repeated
+startup validation separately from the directions-cell gate.

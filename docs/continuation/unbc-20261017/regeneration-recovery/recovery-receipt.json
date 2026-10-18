@@ -1,0 +1,94 @@
+{
+  "format": "unbc-original-source-regeneration-recovery-v1",
+  "originalRvtSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "originalAcceptedMasterSha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520",
+  "enrichedCache": {
+    "bytes": 420947461,
+    "sha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb",
+    "oldHistoricalCacheRelabelled": false,
+    "sourceInstanceEnvelopes": 2,
+    "supportedPlanarDefinitions": 120,
+    "planarComponents": 2502,
+    "otherNativeCacheBytesPreserved": true
+  },
+  "reviewInputs": [
+    {
+      "name": "reviewed-drawing-references.json",
+      "bytes": 8808,
+      "sha256": "ee97659f456a03fee79c9743e9190c9a07bf0a9f5fd425505eb02396e41d3d1a",
+      "freshOriginalSourceReplayPassed": true
+    },
+    {
+      "name": "checked-boundary-review-bundle.json",
+      "bytes": 230563,
+      "sha256": "f9f65fe212bda98ffb343db1539a1cb04e3e1607f067a57d0436f1a8ec204dff",
+      "freshOriginalSourceReplayPassed": true
+    },
+    {
+      "name": "checked-door-boundary-review.json",
+      "bytes": 52632,
+      "sha256": "38c8623b08bfe5d59ea1b68c685bf2a873351b556c6522b22742c37d0baf1552",
+      "freshOriginalSourceReplayPassed": true
+    },
+    {
+      "name": "checked-stepped-stair-review.json",
+      "bytes": 9108,
+      "sha256": "636326fac35a0a5c3cf98a6cec8fc635ab0baa06f3fc401486b823aae63c8379",
+      "freshOriginalSourceReplayPassed": true
+    }
+  ],
+  "phaseData": [
+    {
+      "format": "prelanding-diagnostic-capture-v1",
+      "createdAt": "2026-10-17T23:10:54.955Z",
+      "bytes": 87918504,
+      "sha256": "cb5d6d3e290ff548b4acaf8428a0011baf898e322c189ca2b5ef8df51220a25c",
+      "sourceStateSha256": "fdd383a5919ac9dcf065c514cb13c76afe18024dddba729e332f8910f9bad391",
+      "nativeCacheSha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb",
+      "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "sourceRoomsSha256": "f550db575864223c68f197885b7f8a1634bbbe8a00f82bad8854789e73f9774b",
+      "records": 1864,
+      "doors": 1899,
+      "graphEdges": 1823,
+      "stage": "after-original-doors-before-closure-validation-and-landing-search",
+      "validationAuthorityRestored": false,
+      "physicalOrRoutingApprovalGranted": false
+    },
+    {
+      "format": "unbc-source-state-restoration-seed-v1",
+      "node": "v24.19.0",
+      "bytes": 331385340,
+      "sha256": "2fcfda284ab9bd61422a08b94847cf2b84275fb858a15439fe1cef864f6f71f9",
+      "originalMasterSha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520",
+      "originalRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+      "originalDatasetSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+      "nativeCacheSha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb",
+      "validationAuthorityRestored": false
+    },
+    {
+      "format": "native-model-restoration-seed-v1",
+      "node": "v24.19.0",
+      "nativeCacheSha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb",
+      "bytes": 264032561,
+      "sha256": "616b83cdb5ae11cb0aae4cc5ec38a1eba8294c3c35d5edb21915665de3e7ae5d",
+      "validationAuthorityRestored": false
+    }
+  ],
+  "historicalCheckpointDigestsRecovered": false,
+  "newAcceptedMasterProduced": false,
+  "liveSiteChanged": false,
+  "allFourReviewInputsReissuedAndChecked": true,
+  "newProductionNativeFloorCheckpoints": 9,
+  "allNineFloorArchivesRemoteFullReadbackPassed": true,
+  "floorArchiveTotalBytes": 9448044,
+  "floorBindingSha256": "6c3bc0b88f73a28682ef49b55d97a7e95ade5cc11325ade1748234104baec6d1",
+  "landingEvaluations": 985,
+  "landingPairs": 1148,
+  "landingSupportedLocalConnections": 80,
+  "all985CandidateCarriersRemoteFullReadbackPassed": true,
+  "landingElapsedMs": 5307356.209836001,
+  "landingBindingSha256": "8d020b318cce16c89a345087f38a70ecd2b2c3c7bfc788d6309567792279ce0b",
+  "sourceInputRecoveryFunctionallyComplete": true,
+  "wholeProjectCiPassed": false,
+  "finalCandidateChecks": "still running; no gate waived"
+}

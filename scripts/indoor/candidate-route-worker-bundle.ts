@@ -1,5 +1,6 @@
-/** Test/publication-candidate bundle only. The caller must validate the fresh
- * candidate receipt. The production worker and checked WASM remain unchanged. */
+/** Test/publication-candidate bundle only. Use a freshly checked isolated
+ * receipt or explicitly test the compiled source receipt. The production
+ * worker and checked WASM remain unchanged. Profiling is wrapper-only. */
 import fs from "node:fs/promises";
 import path from "node:path";
 import assert from "node:assert/strict";
@@ -10,6 +11,7 @@ export async function buildCandidateProductionRouteBundle(
   root: string,
   out: string,
   receipt: PublishedRouteCellReceipt,
+  options: { useCompiledReceipt?: boolean; profileFirstRequest?: boolean } = {},
 ) {
   const workerEntry = path.join(
       root,
@@ -23,6 +25,8 @@ export async function buildCandidateProductionRouteBundle(
     `import { parentPort, workerData } from "node:worker_threads";
 import { readFile } from "node:fs/promises";
 import { getHeapStatistics } from "node:v8";
+${options.profileFirstRequest ? 'import inspector from "node:inspector/promises"; import { writeFile } from "node:fs/promises"; const profileSession=new inspector.Session(); profileSession.connect(); await profileSession.post("Profiler.enable"); await profileSession.post("Profiler.start"); let profilePending=true;' : ""}
+const began=performance.now();
 globalThis.name = "oim-heavy-node-route-audit";
 globalThis.location = { href: "https://candidate.test/openindoormaps/assets/route.worker.js" };
 globalThis.indexedDB = { open() { throw Error("Persistent browser cache intentionally unavailable"); } };
@@ -31,13 +35,16 @@ globalThis.fetch = async input => {
  const url=String(input instanceof Request ? input.url : input);
  if(url !== new URL(workerData.receipt.url,globalThis.location.href).href) throw Error("Unexpected worker download: "+url);
  const bytes=await readFile(workerData.cachePath);
- parentPort.postMessage({ _qaFetch: { url, bytes:bytes.length, memory:memory() } });
+ parentPort.postMessage({ _qaFetch: { url, bytes:bytes.length, elapsedSeconds:(performance.now()-began)/1000, memory:memory() } });
  return new Response(bytes,{status:200,headers:{"content-length":String(bytes.length)}});
 };
-globalThis.postMessage = response => parentPort.postMessage({ _qaResponse: response, memory: memory() });
+globalThis.postMessage = async response => {
+ ${options.profileFirstRequest ? 'if(profilePending){profilePending=false; const value=await profileSession.post("Profiler.stop"); await writeFile(new URL("./first-request.cpuprofile",import.meta.url),JSON.stringify(value.profile));profileSession.disconnect();}' : ""}
+ parentPort.postMessage({ _qaResponse: response, memory: memory(), elapsedSeconds:(performance.now()-began)/1000 });
+};
 await import(${JSON.stringify(workerEntry)});
 parentPort.on("message", data => globalThis.onmessage({data}));
-parentPort.postMessage({ _qaReady:true,memory:memory() });
+parentPort.postMessage({ _qaReady:true,memory:memory(),elapsedSeconds:(performance.now()-began)/1000 });
 `,
     { flag: "wx" },
   );
@@ -55,28 +62,30 @@ parentPort.postMessage({ _qaReady:true,memory:memory() });
     banner: {
       js: 'import { createRequire as __qaCreateRequire } from "node:module"; const require = __qaCreateRequire(import.meta.url);',
     },
-    plugins: [
-      {
-        name: "fresh-candidate-publisher-receipt",
-        setup(api) {
-          api.onLoad(
-            { filter: /[/\\]published-route-cell-receipts\.ts$/ },
-            () => {
-              receiptReplacements++;
-              return {
-                contents: `export const PUBLISHED_ROUTE_CELL_RECEIPTS=Object.freeze([${JSON.stringify(receipt)}]);`,
-                loader: "ts",
-              };
+    plugins: options.useCompiledReceipt
+      ? []
+      : [
+          {
+            name: "fresh-candidate-publisher-receipt",
+            setup(api) {
+              api.onLoad(
+                { filter: /[/\\]published-route-cell-receipts\.ts$/ },
+                () => {
+                  receiptReplacements++;
+                  return {
+                    contents: `export const PUBLISHED_ROUTE_CELL_RECEIPTS=Object.freeze([${JSON.stringify(receipt)}]);`,
+                    loader: "ts",
+                  };
+                },
+              );
             },
-          );
-        },
-      },
-    ],
+          },
+        ],
   });
   assert.equal(
     receiptReplacements,
-    1,
-    "Isolated bundle must replace exactly the generated publisher receipt",
+    options.useCompiledReceipt ? 0 : 1,
+    "Isolated bundle receipt mode must match its declared source",
   );
   const wasmRelative =
       "app/indoor-project/vendor/native-exact-geos/native-exact-geos.wasm",

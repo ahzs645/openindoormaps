@@ -1,0 +1,20 @@
+✔ rotated corridors resolve to two centred straight legs and one right turn, ignoring an unused side doorway (23.251657ms)
+✔ centreline resolution cannot cut through a native pillar, void, staff area or divider (31.201977ms)
+✔ a centreline needs the selected precise doorway and retains geometry-bound step-free approvals (1.295578ms)
+✔ same XY on another native floor remains disconnected, and stair geometry remains intact (3.482107ms)
+✔ rotated serpentine corridors resolve five real corners rather than a grid zigzag (14.861585ms)
+✔ split corridor legs retain the native doorway at a portal inside its wall (2.382109ms)
+✔ native slab profiles constrain every new centered leg continuously and retain holes (28.80739ms)
+✔ unresolved positive native slab holes block unsafe source fallbacks and name their evidence (796.114576ms)
+✔ a known floor opening triggers a safe alternate source branch instead of abandoning a viable route (1.729957ms)
+✔ fixed stair and doorway anchors do not create microscopic orthogonal approach spurs (5.129734ms)
+✔ short native stair vestibules use a direct supported approach without inventing an axis elbow (3.835684ms)
+✔ sparse lanes prefer fewer real turns within budget and retain a shorter alternative for a tighter budget (0.828745ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2109.562645

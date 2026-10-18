@@ -11,6 +11,7 @@ import {
   nativeCirculationWalkBlockers,
 } from "./native-circulation";
 import type { WalkPassage } from "./route-passages";
+import { nativeWalkTouchesTransitRoom } from "./native-walk-transit-owners";
 
 export type RouteBlockerKind =
   | "outdoor"
@@ -154,7 +155,12 @@ export function projectLinkPolicy(
       !room.circulation &&
       !hasReviewedThroughNavigation(room, modelSha256) &&
       !room.stair &&
-      !["elevator", "escalator"].includes(edge.kind)
+      !["elevator", "escalator"].includes(edge.kind) &&
+      dependencies.some(
+        (dependency) =>
+          dependency.roomKeys.includes(key) &&
+          nativeWalkTouchesTransitRoom(data, dependency, room),
+      )
     );
   });
   // Physical/access proof is identical in both profiles. Retain its exact

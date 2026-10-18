@@ -126,6 +126,7 @@ export function PreparedProjectMapLayers({
   building,
   circulationOnly,
   network,
+  heldPaths = false,
   roomThree: requestedRoomThree,
   overviewLocked = false,
   nativeModel = false,
@@ -160,6 +161,7 @@ export function PreparedProjectMapLayers({
   building: string;
   circulationOnly: boolean;
   network: boolean;
+  heldPaths?: boolean;
   roomThree: boolean;
   overviewLocked?: boolean;
   nativeModel?: boolean;
@@ -580,6 +582,7 @@ export function PreparedProjectMapLayers({
         "project-block-perimeters",
         "project-overview-ground",
         "project-overview-floor",
+        "project-network-connections",
       ],
       ids = [
         "project-room-fill",
@@ -607,7 +610,11 @@ export function PreparedProjectMapLayers({
     const values = [
       stairCutAreas,
       wallsShown ? layers.walls : HIDDEN_SOURCE,
-      layers.lines,
+      review
+        ? layers.lines
+        : network
+          ? (prepared.hallwayPaths ?? HIDDEN_SOURCE)
+          : HIDDEN_SOURCE,
       layers.portals,
       layers.routeLines,
       layers.doorFootprints,
@@ -621,6 +628,9 @@ export function PreparedProjectMapLayers({
       roomPerimeters,
       overviewBacking,
       overviewFloor,
+      network && !review
+        ? (prepared.pathConnections ?? HIDDEN_SOURCE)
+        : HIDDEN_SOURCE,
     ];
     for (const [i, id] of sources.entries()) {
       const value = values[i];
@@ -792,8 +802,8 @@ export function PreparedProjectMapLayers({
         source: sources[2],
         paint: {
           "line-color": "#338d83",
-          "line-opacity": 0.4,
-          "line-width": 1,
+          "line-opacity": 0.8,
+          "line-width": 2,
         },
       });
       map.addLayer({
@@ -1709,7 +1719,127 @@ export function PreparedProjectMapLayers({
           ]
         : ["!=", ["get", "openDrop"], true],
     ]);
+    if (!map.getLayer("project-network-approach-line"))
+      map.addLayer({
+        id: "project-network-approach-line",
+        type: "line",
+        source: "project-network",
+        filter: ["==", ["get", "role"], "approach"],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": "#b86b16",
+          "line-opacity": 0.9,
+          "line-width": 2,
+          "line-dasharray": [0.5, 2],
+        },
+      });
+    // Unclassified source-network lines remain available in review mode.
+    map.setFilter(ids[3], ["!=", ["get", "role"], "approach"]);
+    map.setPaintProperty(ids[3], "line-color", [
+      "case",
+      ["==", ["get", "role"], "fallback"],
+      "#687a85",
+      "#338d83",
+    ]);
+    map.setPaintProperty(ids[3], "line-opacity", 1);
     map.setLayoutProperty(ids[3], "visibility", network ? "visible" : "none");
+    map.setLayoutProperty(
+      "project-network-approach-line",
+      "visibility",
+      network && !review ? "visible" : "none",
+    );
+    if (network) {
+      map.moveLayer(ids[3]);
+      map.moveLayer("project-network-approach-line");
+      for (const role of ["passage", "transition", "held", "gap"]) {
+        const color =
+          role === "passage"
+            ? "#338d83"
+            : role === "gap"
+              ? "#b44b47"
+              : role === "held"
+                ? "#8b6d48"
+                : "#7054a1";
+        const line = `project-network-${role}-connection`;
+        if (!map.getLayer(line))
+          map.addLayer({
+            id: line,
+            type: "line",
+            source: "project-network-connections",
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "LineString"],
+            ],
+            paint: {
+              "line-color": color,
+              "line-width": role === "passage" ? 2 : 3,
+              ...(role === "held" ? { "line-dasharray": [2, 2] } : {}),
+            },
+          });
+        const point = `project-network-${role}-stop`;
+        if (!map.getLayer(point))
+          map.addLayer({
+            id: point,
+            type: "circle",
+            source: "project-network-connections",
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "Point"],
+            ],
+            paint: {
+              "circle-color": [
+                "case",
+                ["==", ["get", "approachStatus"], "missing-walking-approach"],
+                "#b44b47",
+                color,
+              ],
+              "circle-radius": 5,
+              "circle-stroke-color": "#fff",
+              "circle-stroke-width": 1.5,
+            },
+          });
+        const label = `project-network-${role}-label`;
+        if (!map.getLayer(label))
+          map.addLayer({
+            id: label,
+            type: "symbol",
+            source: "project-network-connections",
+            minzoom: 18,
+            filter: [
+              "all",
+              ["==", ["get", "role"], role],
+              ["==", ["geometry-type"], "Point"],
+            ],
+            layout: {
+              "text-field": ["get", "label"],
+              "text-font": ["Noto Sans Regular"],
+              "text-size": 11,
+              "text-offset": [0, 1.4],
+            },
+            paint: {
+              "text-color": color,
+              "text-halo-color": "#fff",
+              "text-halo-width": 1.2,
+            },
+          });
+        for (const id of [line, point, label]) {
+          map.setLayoutProperty(
+            id,
+            "visibility",
+            !review && (role !== "held" || heldPaths) ? "visible" : "none",
+          );
+          map.moveLayer(id);
+        }
+      }
+      map.moveLayer(ids[4]);
+    } else
+      for (const role of ["passage", "transition", "held", "gap"])
+        for (const suffix of ["connection", "stop", "label"]) {
+          const id = `project-network-${role}-${suffix}`;
+          if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");
+        }
     // Selection paint belongs to the same synchronization pass as base paint.
     // An unrelated UI render can refresh layers without changing the selection.
     const selectedStairKeys = visitorContext
@@ -1936,68 +2066,9 @@ export function PreparedProjectMapLayers({
             duration: 650,
           });
       });
-    if (effectStarted)
-      floorDiagnostic("layers:effect", {
-        roomThree,
-        uploads,
-        ms: performance.now() - effectStarted,
-      });
-    const restoreOverview = keepOverview
-      ? lockBuildingOverviewLayers(map)
-      : undefined;
-    return () => {
-      restoreOverview?.();
-      map.off("click", pick);
-      // The parent map may already be removed during route navigation or Clear
-      // map. MapLibre's getLayer throws once its style has been disposed.
-      // Every custom (three.js) layer this effect can add is removed, including
-      // window glass/frames, so a loading or unmounted floor keeps no meshes.
-      removePreparedCustomLayers(map);
-    };
-  }, [
-    windows,
-    windowParts,
-    map,
-    isLoaded,
-    layers,
-    stairCutAreas,
-    stairCutRooms,
-    display,
-    connectorMarkers,
-    areaPerimeters,
-    roomPerimeters,
-    overviewBacking,
-    overviewFloor,
-    overviewDrawing,
-    geometryOpacity,
-    keepOverview,
-    nativeStairs,
-    nativeStairKeys,
-    overviewGeometry,
-    data,
-    levelIds,
-    building,
-    circulationOnly,
-    network,
-    simplifyGeometry,
-    roomThree,
-    preciseSurfaces,
-    nativeModel,
-    relativeHeights,
-    route,
-    review,
-    showPassThroughPlaces,
-    showDoorLocations,
-    onPick,
-    pickEnabled,
-    nativeFloorLevels,
-    onFitReady,
-    selectionPadding,
-    selected,
-    labelSettings,
-  ]);
-  useEffect(() => {
-    if (!mapReady(map, isLoaded) || !map.getLayer("project-room-fill")) return;
+    // Apply native masking after every base-layer synchronization. A later
+    // independent effect missed route/network/selection-only updates, exposing
+    // triangulated fallback fills as white stripes over the native floor.
     const nativeKeys = data.records
       .filter((r) => nativeFloorLevels.includes(r.levelId))
       .map((r) => r.key);
@@ -2192,19 +2263,70 @@ export function PreparedProjectMapLayers({
           : "none",
       );
     }
+    if (effectStarted)
+      floorDiagnostic("layers:effect", {
+        roomThree,
+        uploads,
+        ms: performance.now() - effectStarted,
+      });
+    const restoreOverview = keepOverview
+      ? lockBuildingOverviewLayers(map)
+      : undefined;
+    return () => {
+      restoreOverview?.();
+      map.off("click", pick);
+      // The parent map may already be removed during route navigation or Clear
+      // map. MapLibre's getLayer throws once its style has been disposed.
+      // Every custom (three.js) layer this effect can add is removed, including
+      // window glass/frames, so a loading or unmounted floor keeps no meshes.
+      removePreparedCustomLayers(map);
+    };
   }, [
+    windows,
+    windowParts,
     map,
     isLoaded,
-    geometryOpacity,
-    nativeFloorLevels,
-    data,
-    labelsVisible,
-    basemapVisible,
-    keepOverview,
     layers,
-    review,
+    stairCutAreas,
+    stairCutRooms,
+    display,
+    connectorMarkers,
+    areaPerimeters,
+    roomPerimeters,
+    overviewBacking,
+    overviewFloor,
+    prepared.hallwayPaths,
+    prepared.pathConnections,
+    overviewDrawing,
+    geometryOpacity,
+    keepOverview,
+    nativeStairs,
+    nativeStairKeys,
+    overviewGeometry,
+    data,
+    levelIds,
+    building,
+    circulationOnly,
+    network,
+    heldPaths,
+    simplifyGeometry,
     roomThree,
     preciseSurfaces,
+    nativeModel,
+    relativeHeights,
+    route,
+    review,
+    showPassThroughPlaces,
+    showDoorLocations,
+    onPick,
+    pickEnabled,
+    nativeFloorLevels,
+    onFitReady,
+    selectionPadding,
+    selected,
+    labelSettings,
+    labelsVisible,
+    basemapVisible,
     hasNativeMaterial,
     hasNativeEnvelopes,
   ]);

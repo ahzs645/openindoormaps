@@ -137,7 +137,7 @@ const loadedImplementation = implementationBindings();
 function stableImplementationBindings() {
   const current = implementationBindings();
   if (JSON.stringify(current) !== JSON.stringify(loadedImplementation))
-    throw Error(
+    throw new Error(
       "Original source implementation changed after module load; start a fresh frozen source process",
     );
   return current;
@@ -164,7 +164,7 @@ function checkedOriginalSourceReview(options: {
   originalEdgeId: string;
 }) {
   const data = JSON.parse(
-    new TextDecoder("utf-8", { fatal: true }).decode(
+    new TextDecoder("utf8", { fatal: true }).decode(
       options.originalDatasetBytes,
     ),
   );
@@ -174,11 +174,11 @@ function checkedOriginalSourceReview(options: {
     !(options.originalSourceRoomsBytes instanceof Uint8Array) ||
     hash(options.originalSourceRoomsBytes) !== expected
   )
-    throw Error(
+    throw new Error(
       "Original source room bytes do not match the checked full graph source checksum",
     );
   const source = JSON.parse(
-    new TextDecoder("utf-8", { fatal: true }).decode(
+    new TextDecoder("utf8", { fatal: true }).decode(
       options.originalSourceRoomsBytes,
     ),
   );
@@ -190,12 +190,12 @@ function checkedOriginalSourceReview(options: {
     (reviews !== undefined &&
       (!object(reviews) || reviews.version !== 1 || !object(reviews.edges)))
   )
-    throw Error(
+    throw new Error(
       "Original source edge reviews require direct version1 data; unresolved packed companions refuse",
     );
-  if (reviews !== undefined) {
-    if (
-      !object(reviews.records) ||
+  if (
+    reviews !== undefined &&
+    (!object(reviews.records) ||
       Object.keys(reviews).some(
         (k) => !["version", "records", "edges"].includes(k),
       ) ||
@@ -213,12 +213,11 @@ function checkedOriginalSourceReview(options: {
           (value.notes !== undefined && typeof value.notes !== "string") ||
           (value.geometryKey !== undefined &&
             typeof value.geometryKey !== "string"),
-      )
-    )
-      throw Error(
-        "Original source edge reviews contain unresolved packed or unsupported values",
-      );
-  }
+      ))
+  )
+    throw new Error(
+      "Original source edge reviews contain unresolved packed or unsupported values",
+    );
   const decision =
     reviews === undefined ||
     !Object.prototype.hasOwnProperty.call(reviews.edges, options.originalEdgeId)
@@ -229,9 +228,9 @@ function checkedOriginalSourceReview(options: {
     (!object(decision) ||
       (decision.enabled !== undefined && typeof decision.enabled !== "boolean"))
   )
-    throw Error("Malformed original explicit source edge review");
+    throw new Error("Malformed original explicit source edge review");
   if (decision?.enabled === false)
-    throw Error("An explicit original source review disables this stair");
+    throw new Error("An explicit original source review disables this stair");
   return {
     sourceRoomsSha256: expected,
     originalExplicitSourceReview: structuredClone(decision) as Record<
@@ -279,7 +278,7 @@ export function createOriginalSteppedStairV2SourceProof(
     !isHash(options.expectedSourceModelSha256) ||
     hash(options.originalRVTBytes) !== options.expectedSourceModelSha256
   )
-    throw Error("Original RVT source checksum differs");
+    throw new Error("Original RVT source checksum differs");
   if (
     !request ||
     request.nativeStairId !== graph.edge.nativeElementId ||
@@ -291,7 +290,9 @@ export function createOriginalSteppedStairV2SourceProof(
         options.proposal.terminals[i]!.nativeFloorElementId,
     )
   )
-    throw Error("Source request/proposal/original stair graph demand disagree");
+    throw new Error(
+      "Source request/proposal/original stair graph demand disagree",
+    );
   checkedOriginalSourceReview({ ...options, originalEdgeId: demand.edgeId });
   const bytes = Uint8Array.from(options.originalRVTBytes),
     sha = options.expectedSourceModelSha256,
@@ -321,14 +322,14 @@ export function createOriginalSteppedStairV2SourceProof(
     mullionIds = [
       ...new Set(
         unknown
-          .filter((r) => r.categoryId === -2000171)
+          .filter((r) => r.categoryId === -2_000_171)
           .map((r) => r.nativeElementId),
       ),
     ],
     panelIds = [
       ...new Set(
         unknown
-          .filter((r) => r.categoryId === -2000170)
+          .filter((r) => r.categoryId === -2_000_170)
           .map((r) => r.nativeElementId),
       ),
     ];
@@ -345,7 +346,7 @@ export function createOriginalSteppedStairV2SourceProof(
         id,
       );
       if (!result.ok)
-        throw Error(
+        throw new Error(
           `Original mullion${id} refuses: ${result.blockers.join("; ")}`,
         );
       return result.certificate;
@@ -353,7 +354,7 @@ export function createOriginalSteppedStairV2SourceProof(
     simpleSystemPanels = panelIds.map((id) => {
       const result = certifyOriginalSimpleSystemPanelSourceEnvelope(census, id);
       if (!result.ok)
-        throw Error(
+        throw new Error(
           `Original panel${id} refuses: ${result.blockers.join("; ")}`,
         );
       return result.certificate;
@@ -364,7 +365,7 @@ export function createOriginalSteppedStairV2SourceProof(
       request.nativeRunId,
     );
   if (!ownResult.ok)
-    throw Error(
+    throw new Error(
       `Original placed stair refuses: ${ownResult.blockers.join("; ")}`,
     );
   const terminalMaterials = options.terminalMaterials.map((recipe) => {
@@ -374,24 +375,27 @@ export function createOriginalSteppedStairV2SourceProof(
         recipe.nativeFloorElementId,
       );
       if (!r.ok)
-        throw Error(`Original floor domains refuse: ${r.blockers.join("; ")}`);
+        throw new Error(
+          `Original floor domains refuse: ${r.blockers.join("; ")}`,
+        );
       return { kind: "floor-domains" as const, certificate: r.certificate };
     }
     if (recipe.kind !== "planar-slab")
-      throw Error("Unsupported original terminal material recipe");
+      throw new Error("Unsupported original terminal material recipe");
     const r = certifyOriginalNativePlanarSlabEnvelope(
       bytes,
       sha,
       recipe.nativeFloorElementId,
     );
-    if (!r.ok) throw Error(`Original slab refuses: ${r.blockers.join("; ")}`);
+    if (!r.ok)
+      throw new Error(`Original slab refuses: ${r.blockers.join("; ")}`);
     return { kind: "planar-slab" as const, certificate: r.certificate };
   }) as Sources["terminalMaterials"];
   const trimRequests = options.placedTrimRequests ?? [],
     additionalForeignMaterials: NonNullable<
       Sources["additionalForeignMaterials"]
     > = [];
-  if (trimRequests.length) {
+  if (trimRequests.length > 0) {
     const context = createOriginalPlacedTrimObstacleContext(
       bytes,
       sha,
@@ -403,7 +407,7 @@ export function createOriginalSteppedStairV2SourceProof(
         r.nativeElementId,
       );
       if (!result.ok)
-        throw Error(
+        throw new Error(
           `Original placed material${r.nativeElementId} refuses: ${result.blockers.join("; ")}`,
         );
       additionalForeignMaterials.push(result.certificate);
@@ -425,9 +429,10 @@ export function createOriginalSteppedStairV2SourceProof(
     expectedOriginalDatasetSha256: options.expectedOriginalDatasetSha256,
     expectedSourceModelSha256: sha,
     proposal: options.proposal,
+    log,
   });
   if (JSON.stringify(before) !== JSON.stringify(stableImplementationBindings()))
-    throw Error(
+    throw new Error(
       "Original source producer implementation changed during construction",
     );
   log({
@@ -450,6 +455,7 @@ export function createOriginalSteppedStairV2SourceProofFromSources(options: {
   expectedOriginalDatasetSha256: string;
   expectedSourceModelSha256: string;
   proposal: SteppedSourceRouteProposal;
+  log?: (value: unknown) => void;
 }): OriginalSteppedStairV2SourceProof {
   const before = stableImplementationBindings(),
     demand = checkedDemand({
@@ -463,7 +469,7 @@ export function createOriginalSteppedStairV2SourceProofFromSources(options: {
       options.expectedOriginalDatasetSha256 ||
     JSON.stringify(original) !== JSON.stringify(checked)
   )
-    throw Error(
+    throw new Error(
       "Original opaque graph demand and checked complete graph bytes differ",
     );
   const sourceReview = checkedOriginalSourceReview({
@@ -485,10 +491,27 @@ export function createOriginalSteppedStairV2SourceProofFromSources(options: {
   if (
     !extracted.replay.mathematicalReplayPassed ||
     !reverse.mathematicalReplayPassed
-  )
-    throw Error(
+  ) {
+    // Detached refusal diagnostics identify the exact source owner/movement so
+    // a proposal can be repaired without relaxing the source or kernel guards.
+    options.log?.({
+      stage: "original-v2-source-profile-refused",
+      forwardIssues: [...extracted.replay.issues],
+      reverseIssues: [...reverse.issues],
+      forwardContacts: structuredClone(
+        extracted.replay.materialContacts.slice(0, 128),
+      ),
+      reverseContacts: structuredClone(reverse.materialContacts.slice(0, 128)),
+      contactDetailsTruncated:
+        extracted.replay.materialContacts.length > 128 ||
+        reverse.materialContacts.length > 128,
+      unknownPhysicalBodyKeys: [...extracted.replay.unknownPhysicalBodyKeys],
+      routeApproved: false,
+    });
+    throw new Error(
       `Original complete source profile refuses: ${[...extracted.replay.issues, ...reverse.issues].join("; ")}`,
     );
+  }
   const foreign = originalNativeForeignEnvelopeFacts(options.sources.foreign),
     sourceModelSha256 = options.expectedSourceModelSha256,
     physical = encodeSteppedStairV2WireValue(extracted.index),
@@ -507,13 +530,13 @@ export function createOriginalSteppedStairV2SourceProofFromSources(options: {
     ],
     after = stableImplementationBindings();
   if (JSON.stringify(before) !== JSON.stringify(after))
-    throw Error("Source producer implementation changed during proof");
+    throw new Error("Source producer implementation changed during proof");
   if (
     foreign.sourceModelSha256 !== sourceModelSha256 ||
     demand.sourceModelSha256 !== sourceModelSha256 ||
     extracted.index.sourceModelSha256 !== sourceModelSha256
   )
-    throw Error("Original source model binding differs");
+    throw new Error("Original source model binding differs");
   const payload: OriginalSteppedStairV2SourceProofPayload = {
     sourceIndex: {
       id: `original-stepped-v2:${extracted.index.nativeRunId}:${physicalWireSha256}`,
@@ -569,7 +592,7 @@ export function readOriginalSteppedStairV2SourceProof(
   stableImplementationBindings();
   const payload = issued.get(proof);
   if (!payload)
-    throw Error(
+    throw new Error(
       "A genuine same-process original stepped stair v2 source proof is required",
     );
   return structuredClone(payload);

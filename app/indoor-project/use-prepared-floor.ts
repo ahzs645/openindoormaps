@@ -52,7 +52,8 @@ export function usePreparedFloor(
   // Only one dataset-holding heavy worker kind stays resident: when route
   // work (warmup or a user request) or evidence review starts, release
   // the idle floor worker (its dataset clone and uncollected decode garbage).
-  // The shown floor stays in React state; the next floor request re-uploads.
+  // Completed floors stay in the bounded client cache. An uncached floor
+  // re-uploads the dataset; revisiting a cached floor needs no worker.
   useEffect(
     () =>
       releaseWhenOthersStart(
@@ -60,8 +61,8 @@ export function usePreparedFloor(
         ["route", "warmup", "review"],
         () => !pending.current && !!sentData.current,
         () => {
+          if (!client.releaseIdleWorker()) return;
           sentData.current = undefined;
-          client.dispose();
           floorDiagnostic(
             heavyWorkerSchedule.busy("review")
               ? "floor-main:released-for-review"
@@ -88,8 +89,8 @@ export function usePreparedFloor(
     const hit = client.peek(data, key);
     if (hit) {
       floorDiagnostic("floor-main:cache-hit", { levels: levels.length });
-      // Keep the shown floor in state too: releasing the worker for routing
-      // also clears the client cache.
+      // Keep the shown floor in state too, including oversized results that
+      // do not fit in the bounded cache.
       setResult({ data, key, value: hit });
       return;
     }

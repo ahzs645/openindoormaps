@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "arrival:rm-400176-a4b94b10b2f8",
+      "roomKey": "rm-400176-a4b94b10b2f8",
+      "kind": "arrival",
+      "levelId": 400176,
+      "building": "08",
+      "surfaceId": "08:400176:24.278",
+      "pointFeet": [-3.2856309629428324, 527.2413197559322, 24.278215223097114],
+      "geographic": [-122.81433759069198, 53.89355223356504]
+    },
+    {
+      "id": "door:400176:2112703:1",
+      "roomKey": "rm-400176-a4b94b10b2f8",
+      "kind": "portal",
+      "levelId": 400176,
+      "building": "08",
+      "surfaceId": "08:400176:24.278",
+      "pointFeet": [-44.535303427963505, 522.0450628843496, 24.278215223097114],
+      "geographic": [-122.81451487288713, 53.89350700741065]
+    }
+  ],
+  "edges": [
+    {
+      "id": "door:400176:2112703",
+      "from": "door:400176:2112703:0",
+      "to": "door:400176:2112703:1",
+      "kind": "door",
+      "lengthMetres": 0.7752415495741725,
+      "pointsFeet": [
+        [-44.467730946011336, 519.5025172486495, 24.278215223097114],
+        [-44.535303427963505, 522.0450628843496, 24.278215223097114]
+      ],
+      "roomKeys": ["rm-400176-79fc94dd782c", "rm-400176-a4b94b10b2f8"],
+      "evidence": "native-door",
+      "nativeElementId": 2112703,
+      "accessible": "unknown",
+      "enabled": true
+    },
+    {
+      "id": "native-cell:24.278215:816:walk:arrival:rm-400176-a4b94b10b2f8|door:400176:2112703:1",
+      "nativeCellId": "native-cell:24.278215:816",
+      "from": "door:400176:2112703:1",
+      "to": "arrival:rm-400176-a4b94b10b2f8",
+      "kind": "walk",
+      "roomKeys": ["rm-400176-a4b94b10b2f8"],
+      "pointsFeet": [
+        [-44.535303427963505, 522.0450628843496, 24.278215223097114],
+        [-44.8099797581023, 521.8046640527776, 24.278215223097114],
+        [-44.80997975810228, 527.2046640527776, 24.278215223097114],
+        [-3.40997975810228, 527.2046640527775, 24.278215223097114],
+        [-3.2856309629428324, 527.2413197559322, 24.278215223097114]
+      ],
+      "lengthMetres": 14.41541167272633,
+      "enabled": true,
+      "accessible": "unknown",
+      "evidence": "Native floor-bound circulation cell native-cell:24.278215:816; slab profiles 1505065; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+    }
+  ]
+}

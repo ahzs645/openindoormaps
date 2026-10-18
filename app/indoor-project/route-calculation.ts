@@ -4,6 +4,7 @@ import { reachableViewerDestinations } from "./viewer-route-graph";
 import { createImmutableRoutingSession } from "./routing-cache";
 import { resolveRouteArrival, type ProjectArrivalMode } from "./route-arrival";
 import { routeRequestOptionsKey } from "./routing-options";
+import { missingRouteEntrance } from "./visitor-route-state";
 import {
   findProjectRoute,
   type ProjectRoute,
@@ -63,17 +64,34 @@ export function calculateRoute(
   options: RouteRequest["options"] = {},
 ): RouteCalculation {
   if (pendingBoundaryReview(data)) return pendingBoundaryResult(data, mode);
+  const entranceIssue = missingRouteEntrance(data, start, end);
+  if (entranceIssue) return { route: null, diagnostic: entranceIssue };
   const route = findProjectRoute(data, start, end, mode, options);
-  const diagnostic = route
+  let diagnostic = route
     ? undefined
     : createProjectRouteDiagnostics(data, mode).inspect(start, end);
   if (
     diagnostic?.kind === "connected" &&
+    options.allowOtherRoomTransit === false
+  ) {
+    diagnostic = {
+      ...diagnostic,
+      kind: "blocked",
+      constraint: "hallways",
+      message:
+        "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+    };
+  } else if (
+    diagnostic?.kind === "connected" &&
     options.excludedNativeStairIds?.length
   ) {
-    diagnostic.kind = "blocked";
-    diagnostic.message =
-      "No supported route was found with the current staircase exclusions. You can change them in Excluded stairs.";
+    diagnostic = {
+      ...diagnostic,
+      kind: "blocked",
+      constraint: "stair-exclusions",
+      message:
+        "No supported route was found with the current staircase exclusions. You can change them in Excluded stairs.",
+    };
   }
   return {
     route,
@@ -105,6 +123,7 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
       const result = end
         ? calculateRoute(data, start, end, mode, options)
         : { route: null };
+      if (result.diagnostic?.kind === "missing-entrance") return result;
       const key = JSON.stringify([
         start,
         end,
@@ -136,7 +155,12 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
           };
         if (choices.hallway && !choices.hallway.route)
           choices.hallway.message =
-            "A verified hallway entrance is unavailable at one of these places. Choose Inside room or another entrance.";
+            options.allowOtherRoomTransit === false &&
+            result.diagnostic?.constraint === "hallways"
+              ? mode === "accessible"
+                ? "No confirmed step-free hallway route is available."
+                : "No hallway-only route is available. You can allow paths through other rooms in Directions."
+              : "A verified hallway entrance is unavailable at one of these places. Choose Inside room or another entrance.";
         arrivals.set(key, choices);
         while (arrivals.size > 16)
           arrivals.delete(arrivals.keys().next().value!);
@@ -147,7 +171,8 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
         // unset for an explicit hallway request instead of disabling a place
         // whose outside doorway is reachable but interior approach is not.
         reachable:
-          options.endpointMode === "hallway"
+          options.endpointMode === "hallway" ||
+          options.allowOtherRoomTransit === false
             ? undefined
             : reachableViewerDestinations(
                 data,

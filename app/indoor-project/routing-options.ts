@@ -1,7 +1,10 @@
 export type ProjectRoutingOptions = {
   endpointMode?: "inside" | "hallway";
   preferHallways?: boolean;
+  /** False refuses ordinary-room transit even when no hallway route exists. */
+  allowOtherRoomTransit?: boolean;
   excludedNativeStairIds?: readonly number[];
+  useSharedCorridorGuides?: boolean;
 };
 export function projectRoutingOptionsKey(options: ProjectRoutingOptions = {}) {
   const ids = [...new Set(options.excludedNativeStairIds ?? [])].sort(
@@ -22,10 +25,22 @@ export function projectRoutingOptionsKey(options: ProjectRoutingOptions = {}) {
     typeof options.preferHallways !== "boolean"
   )
     throw new Error("Invalid hallway preference.");
+  if (
+    options.allowOtherRoomTransit !== undefined &&
+    typeof options.allowOtherRoomTransit !== "boolean"
+  )
+    throw new Error("Invalid other-room transit preference.");
+  if (
+    options.useSharedCorridorGuides !== undefined &&
+    typeof options.useSharedCorridorGuides !== "boolean"
+  )
+    throw new Error("Invalid shared-corridor preference.");
   return JSON.stringify([
     options.endpointMode ?? "inside",
     options.preferHallways !== false,
     ids,
+    options.useSharedCorridorGuides !== false,
+    options.allowOtherRoomTransit !== false,
   ]);
 }
 /** Legacy requests return all endpoint choices; selected-mode requests return

@@ -1,0 +1,4128 @@
+{
+  "status": "passed",
+  "errors": [],
+  "scope": "multifloor-only",
+  "multifloorCase": {
+    "start": "rm-402367-f1426b5e0e6f",
+    "end": "rm-400176-4b8c011c20b2",
+    "from": "05-411",
+    "to": "05-341"
+  },
+  "replies": [
+    {
+      "worker": 5,
+      "start": "rm-402367-f1426b5e0e6f",
+      "end": "rm-400176-4b8c011c20b2",
+      "mode": "public",
+      "options": {
+        "endpointMode": "hallway",
+        "preferHallways": true,
+        "excludedNativeStairIds": [],
+        "useSharedCorridorGuides": true,
+        "allowOtherRoomTransit": false
+      },
+      "route": null,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+        "blockers": [],
+        "sourceEdgeIds": [
+          "native-cell:34.120735:1191:walk:arrival:rm-402367-f1426b5e0e6f|door:402367:1119439:1",
+          "door:402367:1119439",
+          "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+          "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+          "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+          "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+          "door:402367:1119728",
+          "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|door:402367:1119728:1",
+          "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|arrival:rm-402367-f2b16b5e0fa6",
+          "native-cell:34.120735:1204:walk:arrival:rm-402367-f2b16b5e0fa6|door:402367:1122152:1",
+          "door:402367:1122152",
+          "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1122152:0",
+          "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1927060:0",
+          "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1927060:0",
+          "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1926926:1",
+          "door:402367:1926926",
+          "native-cell:34.120735:1215:walk:connector:unbc-library-lift:3|door:402367:1926926:0",
+          "connector:unbc-library-lift:2:3",
+          "native-cell:24.278215:938:walk:connector:unbc-library-lift:2|door:400176:1919713:1",
+          "native-cell:24.278215:938:walk:door:400176:1919713:1|door:400176:1919749:1",
+          "door:400176:1919749",
+          "native-cell:24.278215:938:walk:door:400176:1915300:0|door:400176:1919749:0",
+          "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|door:400176:1915300:0",
+          "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+          "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1",
+          "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+          "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+          "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10",
+          "native-cell:24.278215:938:walk:opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+          "native-cell:24.278215:938:walk:door:400176:1923860:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+          "door:400176:1923860",
+          "native-cell:24.278215:1001:walk:arrival:rm-400176-4b8c011c20b2|door:400176:1923860:0"
+        ],
+        "constraint": "hallways"
+      }
+    },
+    {
+      "worker": 5,
+      "start": "rm-402367-f1426b5e0e6f",
+      "end": "rm-400176-4b8c011c20b2",
+      "mode": "public",
+      "options": {
+        "endpointMode": "hallway",
+        "preferHallways": true,
+        "excludedNativeStairIds": [],
+        "useSharedCorridorGuides": true,
+        "allowOtherRoomTransit": true
+      },
+      "route": {
+        "departure": {
+          "mode": "hallway",
+          "pointFeet": [
+            101.20649055996962,
+            224.62866177218183,
+            34.120734908136484
+          ],
+          "levelId": 402367,
+          "building": "05",
+          "entranceEdgeId": "door:402367:1119439",
+          "hallwayCenter": {
+            "doorPointFeet": [
+              98.9502207936406,
+              226.04031613211043,
+              34.120734908136484
+            ],
+            "approachPointsFeet": [
+              [
+                98.9502207936406,
+                226.04031613211043,
+                34.120734908136484
+              ],
+              [
+                101.20649055996962,
+                224.62866177218183,
+                34.120734908136484
+              ]
+            ]
+          }
+        },
+        "arrival": {
+          "mode": "hallway",
+          "pointFeet": [
+            193.53034543514005,
+            173.79024893345158,
+            24.278215223097114
+          ],
+          "levelId": 400176,
+          "building": "05",
+          "entranceEdgeId": "door:400176:1923860"
+        },
+        "edges": [
+          {
+            "id": "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119439:0",
+            "to": "arrival:rm-402367-e870225e0964",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e870225e0964"
+            ],
+            "pointsFeet": [
+              [
+                98.9502207936406,
+                226.04031613211043,
+                34.120734908136484
+              ],
+              [
+                98.85567425997041,
+                225.8104265814558,
+                34.120734908136484
+              ],
+              [
+                99.36450317501888,
+                225.49247511470244,
+                34.120734908136484
+              ],
+              [
+                106.99533837709942,
+                237.70436907586543,
+                34.120734908136484
+              ],
+              [
+                107.36674284247056,
+                237.77635790249747,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 4.763075863990169,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "arrival:rm-402367-e870225e0964",
+            "to": "door:402367:1119546:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e870225e0964"
+            ],
+            "pointsFeet": [
+              [
+                107.36674284247056,
+                237.77635790249747,
+                34.120734908136484
+              ],
+              [
+                106.99533837709942,
+                237.70436907586543,
+                34.120734908136484
+              ],
+              [
+                112.40051331190642,
+                246.3544606316892,
+                34.120734908136484
+              ],
+              [
+                111.89168439685795,
+                246.67241209844255,
+                34.120734908136484
+              ],
+              [
+                111.95010521575222,
+                246.95927894128766,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 3.4963827571791217,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119546:0",
+            "to": "door:402367:1119678:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e870225e0964"
+            ],
+            "pointsFeet": [
+              [
+                111.95010521575222,
+                246.95927894128766,
+                34.120734908136484
+              ],
+              [
+                111.89168439685795,
+                246.67241209844255,
+                34.120734908136484
+              ],
+              [
+                112.40051331190642,
+                246.3544606316892,
+                34.120734908136484
+              ],
+              [
+                120.66725144749367,
+                259.5840124229491,
+                34.120734908136484
+              ],
+              [
+                120.28618110907362,
+                259.4872412137718,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 5.146828675762449,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0",
+            "nativeCellId": "native-cell:34.120735:1199",
+            "from": "door:402367:1119728:0",
+            "to": "door:402367:1119678:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e870225e0964"
+            ],
+            "pointsFeet": [
+              [
+                122.44246977580232,
+                259.6616521817103,
+                34.120734908136484
+              ],
+              [
+                122.32081221109729,
+                259.9657673195393,
+                34.120734908136484
+              ],
+              [
+                121.68490927759058,
+                258.9481094894424,
+                34.120734908136484
+              ],
+              [
+                120.66725144749367,
+                259.5840124229491,
+                34.120734908136484
+              ],
+              [
+                120.28618110907362,
+                259.4872412137718,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 0.951193019091885,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1199; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1119728",
+            "from": "door:402367:1119728:0",
+            "to": "door:402367:1119728:1",
+            "kind": "door",
+            "lengthMetres": 0.494958037630721,
+            "pointsFeet": [
+              [
+                122.44246977580232,
+                259.6616521817103,
+                34.120734908136484
+              ],
+              [
+                122.82868435204132,
+                261.23893411830767,
+                34.120734908136484
+              ]
+            ],
+            "roomKeys": [
+              "rm-402367-e870225e0964",
+              "rm-402367-e87a525e096d"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 1119728,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|door:402367:1119728:1",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "door:402367:1119728:1",
+            "to": "arrival:rm-402367-e87a525e096d",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [
+                122.82868435204132,
+                261.23893411830767,
+                34.120734908136484
+              ],
+              [
+                123.03914036276396,
+                261.4494624398211,
+                34.120734908136484
+              ],
+              [
+                126.8554772561535,
+                267.55483488678567,
+                34.120734908136484
+              ],
+              [
+                136.5223169638474,
+                261.51230147225226,
+                34.120734908136484
+              ],
+              [
+                136.19020042496572,
+                261.42647440104554,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 5.8645678325342265,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|arrival:rm-402367-f2b16b5e0fa6",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "arrival:rm-402367-f2b16b5e0fa6",
+            "to": "arrival:rm-402367-e87a525e096d",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [
+                138.04724976652165,
+                276.06020596372844,
+                34.120734908136484
+              ],
+              [
+                137.9223431920107,
+                276.20379311062766,
+                34.120734908136484
+              ],
+              [
+                143.51893460172818,
+                272.70548429168724,
+                34.120734908136484
+              ],
+              [
+                136.5223169638474,
+                261.51230147225226,
+                34.120734908136484
+              ],
+              [
+                136.19020042496572,
+                261.42647440104554,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 6.197602008982677,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1204:walk:arrival:rm-402367-f2b16b5e0fa6|door:402367:1122152:1",
+            "nativeCellId": "native-cell:34.120735:1204",
+            "from": "door:402367:1122152:1",
+            "to": "arrival:rm-402367-f2b16b5e0fa6",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-e840165e093b",
+              "rm-402367-e85b465e0952",
+              "rm-402367-e85f225e0955",
+              "rm-402367-e87a525e096d",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "pointsFeet": [
+              [
+                135.39318798962998,
+                286.92938327379034,
+                34.120734908136484
+              ],
+              [
+                135.44255467563772,
+                286.95231156267795,
+                34.120734908136484
+              ],
+              [
+                131.30818970779907,
+                280.33815807846634,
+                34.120734908136484
+              ],
+              [
+                137.9223431920107,
+                276.20379311062766,
+                34.120734908136484
+              ],
+              [
+                138.04724976652165,
+                276.06020596372844,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 4.829477996217299,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1204; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1122152",
+            "from": "door:402367:1122152:0",
+            "to": "door:402367:1122152:1",
+            "kind": "door",
+            "lengthMetres": 0.3545934170111256,
+            "pointsFeet": [
+              [
+                135.8691332072104,
+                287.99093519398554,
+                34.120734908136484
+              ],
+              [
+                135.39318798962998,
+                286.92938327379034,
+                34.120734908136484
+              ]
+            ],
+            "roomKeys": [
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2b16b5e0fa6"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 1122152,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1122152:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "door:402367:1122152:0",
+            "to": "arrival:rm-402367-f2a73b5e0f9e",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [
+                135.8691332072104,
+                287.99093519398554,
+                34.120734908136484
+              ],
+              [
+                135.83248204149734,
+                287.90568416854217,
+                34.120734908136484
+              ],
+              [
+                151.09306481877036,
+                312.33015168163234,
+                34.120734908136484
+              ],
+              [
+                157.19918169704292,
+                308.5150059873141,
+                34.120734908136484
+              ],
+              [
+                157.3947451600318,
+                308.41249252965997,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 11.068384966733774,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1927060:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-f2a73b5e0f9e",
+            "to": "door:402367:1927060:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [
+                157.3947451600318,
+                308.41249252965997,
+                34.120734908136484
+              ],
+              [
+                157.19918169704292,
+                308.5150059873141,
+                34.120734908136484
+              ],
+              [
+                150.0753786723916,
+                312.96600929735206,
+                34.120734908136484
+              ],
+              [
+                161.8387445632062,
+                331.7932030053591,
+                34.120734908136484
+              ],
+              [
+                161.85189277002542,
+                331.80108231019415,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 9.398852917661943,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1927060:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-e82f165e092c",
+            "to": "door:402367:1927060:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [
+                170.60357933378418,
+                342.5764688641824,
+                34.120734908136484
+              ],
+              [
+                170.67763636355104,
+                342.54280726513525,
+                34.120734908136484
+              ],
+              [
+                163.36527378277435,
+                330.8394165817795,
+                34.120734908136484
+              ],
+              [
+                161.8387445632062,
+                331.7932030053591,
+                34.120734908136484
+              ],
+              [
+                161.85189277002542,
+                331.80108231019415,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 4.7843470494927685,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1926926:1",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "arrival:rm-402367-e82f165e092c",
+            "to": "door:402367:1926926:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [
+                170.60357933378418,
+                342.5764688641824,
+                34.120734908136484
+              ],
+              [
+                170.67763636355104,
+                342.54280726513525,
+                34.120734908136484
+              ],
+              [
+                175.25722402225546,
+                339.6814479943966,
+                34.120734908136484
+              ],
+              [
+                184.7950882580511,
+                354.94674019007795,
+                34.120734908136484
+              ],
+              [
+                185.81277440442986,
+                354.31088257435823,
+                34.120734908136484
+              ],
+              [
+                185.92470855883005,
+                354.116537492607,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 7.59123397697563,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:402367:1926926",
+            "from": "door:402367:1926926:0",
+            "to": "door:402367:1926926:1",
+            "kind": "door",
+            "lengthMetres": 0.18288000000000687,
+            "pointsFeet": [
+              [
+                186.44914609237338,
+                353.8250494595576,
+                34.120734908136484
+              ],
+              [
+                185.92470855883005,
+                354.116537492607,
+                34.120734908136484
+              ]
+            ],
+            "roomKeys": [
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 1926926,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:34.120735:1215:walk:connector:unbc-library-lift:3|door:402367:1926926:0",
+            "nativeCellId": "native-cell:34.120735:1215",
+            "from": "door:402367:1926926:0",
+            "to": "connector:unbc-library-lift:3",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-402367-5e5131c03aa8",
+              "rm-402367-5e540fc03aaa",
+              "rm-402367-5e5e41c03ab3",
+              "rm-402367-5e622fc03ab7",
+              "rm-402367-5e6511c03ab9",
+              "rm-402367-67f90ac04068",
+              "rm-402367-67fc78c0406b",
+              "rm-402367-680a08c04076",
+              "rm-402367-680d6ac04079",
+              "rm-402367-e10ced5e0591",
+              "rm-402367-e10fcd5e0593",
+              "rm-402367-e11ded5e05a0",
+              "rm-402367-e120c95e05a2",
+              "rm-402367-e82f165e092c",
+              "rm-402367-f2a73b5e0f9e",
+              "rm-402367-f2ae0f5e0fa4"
+            ],
+            "pointsFeet": [
+              [
+                186.44914609237338,
+                353.8250494595576,
+                34.120734908136484
+              ],
+              [
+                186.3216174776192,
+                353.9929537664984,
+                34.120734908136484
+              ],
+              [
+                193.44542050227054,
+                349.54195045646037,
+                34.120734908136484
+              ],
+              [
+                193.12749169441068,
+                349.03310738327104,
+                34.120734908136484
+              ],
+              [
+                193,
+                349,
+                34.120734908136484
+              ]
+            ],
+            "lengthMetres": 2.8476137440630924,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:34.120735:1215; slab profiles 515291; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "connector:unbc-library-lift:2:3",
+            "from": "connector:unbc-library-lift:2",
+            "to": "connector:unbc-library-lift:3",
+            "kind": "elevator",
+            "connectorId": "unbc-library-lift",
+            "direction": "both",
+            "lengthMetres": 3.0000000000000004,
+            "pointsFeet": [
+              [
+                193,
+                349,
+                24.278215223097114
+              ],
+              [
+                193,
+                349,
+                34.120734908136484
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-4c46e91c2150",
+              "rm-402367-e120c95e05a2"
+            ],
+            "evidence": "User identifies elevator at Review pin 14. Five native shaft wall elements 1891690/1891602/1891507/1891768/1891807 surround the pin from 0 to 43.307ft. West lobby opening supports native floors 311,694,400176,402367 on slabs 447970/503705/511340/515291. Roof excluded: walls stop below roof slab 530368.",
+            "nativeElementId": 1891690,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:connector:unbc-library-lift:2|door:400176:1919713:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "connector:unbc-library-lift:2",
+            "to": "door:400176:1919713:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                193,
+                349,
+                24.278215223097114
+              ],
+              [
+                192.7221205396072,
+                348.90467006399194,
+                24.278215223097114
+              ],
+              [
+                190.49683107769832,
+                345.3426359806742,
+                24.278215223097114
+              ],
+              [
+                188.46138303008817,
+                346.6142299589078,
+                24.278215223097114
+              ],
+              [
+                188.4523914071348,
+                346.65104374502664,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 2.112773849820643,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1919713:1|door:400176:1919749:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1919749:1",
+            "to": "door:400176:1919713:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                187.94425541021837,
+                343.46015079655,
+                24.278215223097114
+              ],
+              [
+                187.88961458110123,
+                343.4341229102783,
+                24.278215223097114
+              ],
+              [
+                189.47910705389324,
+                345.97843296979096,
+                24.278215223097114
+              ],
+              [
+                188.46138303008817,
+                346.6142299589078,
+                24.278215223097114
+              ],
+              [
+                188.4523914071348,
+                346.65104374502664,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 1.3101581949360233,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "door:400176:1919749",
+            "from": "door:400176:1919749:0",
+            "to": "door:400176:1919749:1",
+            "kind": "door",
+            "lengthMetres": 0.5486399999999761,
+            "pointsFeet": [
+              [
+                187.02124169833542,
+                341.9148205122173,
+                24.278215223097114
+              ],
+              [
+                187.94425541021837,
+                343.46015079655,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c46e91c2150"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 1919749,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1915300:0|door:400176:1919749:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1915300:0",
+            "to": "door:400176:1919749:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                178.3994729562331,
+                330.99030204421564,
+                24.278215223097114
+              ],
+              [
+                178.60652969877756,
+                330.83950758992916,
+                24.278215223097114
+              ],
+              [
+                179.62425372258264,
+                330.2037106008123,
+                24.278215223097114
+              ],
+              [
+                186.93591909742602,
+                341.90753687457067,
+                24.278215223097114
+              ],
+              [
+                187.02124169833542,
+                341.9148205122173,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 4.676174625704612,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|door:400176:1915300:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c3d391c2149",
+            "to": "door:400176:1915300:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                199.9797508652207,
+                317.0077982808182,
+                24.278215223097114
+              ],
+              [
+                199.6608357041258,
+                316.97890880657354,
+                24.278215223097114
+              ],
+              [
+                178.2886312042192,
+                330.33064557802663,
+                24.278215223097114
+              ],
+              [
+                178.60652969877756,
+                330.83950758992916,
+                24.278215223097114
+              ],
+              [
+                178.3994729562331,
+                330.99030204421564,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 8.039517067993694,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "to": "arrival:rm-400176-4c3d391c2149",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                213.07946278391557,
+                305.70998814324497,
+                24.278215223097114
+              ],
+              [
+                213.14624007106573,
+                305.7244044167696,
+                24.278215223097114
+              ],
+              [
+                214.41783404929936,
+                307.7598524643797,
+                24.278215223097114
+              ],
+              [
+                199.6608357041258,
+                316.97890880657354,
+                24.278215223097114
+              ],
+              [
+                199.9797508652207,
+                317.0077982808182,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 6.153465983106378,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "kind": "opening",
+            "lengthMetres": 0.3048000000000148,
+            "pointsFeet": [
+              [
+                213.07946278391557,
+                305.70998814324497,
+                24.278215223097114
+              ],
+              [
+                213.78656956510207,
+                305.0028813620583,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b"
+            ],
+            "evidence": "recovered registered source open front; widthFeet=2; boundaryGapFeet=0; registrationErrorFeet=5.240704272917406e-13; continuously native-floor-covered squareFeet=1.999999999996362; native/repaired-wall, column, source-wall, other-room and hole vetoes passed; access/accessibility unverified",
+            "accessible": "unknown",
+            "enabled": true,
+            "openingSpan": {
+              "version": 1,
+              "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+              "levelId": 400176,
+              "pointsFeet": [
+                [
+                  212.72590939332218,
+                  304.6493279714652,
+                  24.278215223097114
+                ],
+                [
+                  215.5543365180687,
+                  307.477755096211,
+                  24.278215223097114
+                ]
+              ],
+              "nativeFloorElementIds": [
+                511340
+              ],
+              "walkingStripWidthFeet": 2,
+              "apertureFeet": [
+                [
+                  215.5543365180689,
+                  308.8919686585841
+                ],
+                [
+                  216.96855008044184,
+                  307.4777550962108
+                ],
+                [
+                  212.725909393322,
+                  303.23511440909203
+                ],
+                [
+                  211.31169583094908,
+                  304.64932797146537
+                ]
+              ]
+            }
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c40191c214b",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                185.81032014954758,
+                257.5317506631976,
+                24.278215223097114
+              ],
+              [
+                185.93502661930242,
+                257.6375053435025,
+                24.278215223097114
+              ],
+              [
+                215.18168811867588,
+                304.45281043853595,
+                24.278215223097114
+              ],
+              [
+                214.1639640948708,
+                305.08860742765273,
+                24.278215223097114
+              ],
+              [
+                213.78656956510207,
+                305.0028813620583,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 17.35851826275108,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "arrival:rm-400176-4c40191c214b",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                185.81032014954758,
+                257.5317506631976,
+                24.278215223097114
+              ],
+              [
+                185.93502661930242,
+                257.6375053435025,
+                24.278215223097114
+              ],
+              [
+                205.27178307159883,
+                245.557362550283,
+                24.278215223097114
+              ],
+              [
+                190.64845232191206,
+                222.14971000276626,
+                24.278215223097114
+              ],
+              [
+                190.39551617450886,
+                221.99951727692348,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 15.50142033819643,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+            "kind": "opening",
+            "lengthMetres": 0.3048,
+            "pointsFeet": [
+              [
+                190.39551617450886,
+                221.99951727692348,
+                24.278215223097114
+              ],
+              [
+                191.39551617450886,
+                221.99951727692348,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c51191c2159"
+            ],
+            "evidence": "recovered registered source open front; widthFeet=2; boundaryGapFeet=0; registrationErrorFeet=5.240704272917406e-13; continuously native-floor-covered squareFeet=1.999999999992724; native/repaired-wall, column, source-wall, other-room and hole vetoes passed; access/accessibility unverified",
+            "accessible": "unknown",
+            "enabled": true,
+            "openingSpan": {
+              "version": 1,
+              "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+              "levelId": 400176,
+              "pointsFeet": [
+                [
+                  190.89551617450886,
+                  218.99951727692348,
+                  24.278215223097114
+                ],
+                [
+                  190.89551617450886,
+                  224.99951727692348,
+                  24.278215223097114
+                ]
+              ],
+              "nativeFloorElementIds": [
+                511340
+              ],
+              "walkingStripWidthFeet": 2,
+              "apertureFeet": [
+                [
+                  189.89551617450886,
+                  225.99951727692348
+                ],
+                [
+                  191.89551617450886,
+                  225.99951727692348
+                ],
+                [
+                  191.89551617450886,
+                  217.99951727692348
+                ],
+                [
+                  189.89551617450886,
+                  217.99951727692348
+                ]
+              ]
+            }
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                191.39551617450886,
+                221.99951727692348,
+                24.278215223097114
+              ],
+              [
+                191.1573143338146,
+                221.83181150820786,
+                24.278215223097114
+              ],
+              [
+                207.4408987146958,
+                211.65905968233884,
+                24.278215223097114
+              ],
+              [
+                204.26191376911174,
+                206.57043956331344,
+                24.278215223097114
+              ],
+              [
+                203.99551617450885,
+                206.61893475265163,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 7.852285712671449,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          },
+          {
+            "id": "native-cell:24.278215:938:walk:door:400176:1923860:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "nativeCellId": "native-cell:24.278215:938",
+            "from": "door:400176:1923860:1",
+            "to": "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+            "kind": "walk",
+            "roomKeys": [
+              "rm-400176-4671ea1dd0fd",
+              "rm-400176-4b8fe81c20b5",
+              "rm-400176-4ba0e61c20c4",
+              "rm-400176-4ba3c41c20c6",
+              "rm-400176-4c2f211c213c",
+              "rm-400176-4c3d391c2149",
+              "rm-400176-4c40191c214b",
+              "rm-400176-4c46e91c2150",
+              "rm-400176-4c51191c2159",
+              "rm-400176-4c55011c215d",
+              "rm-400176-ae535b9d8fa3",
+              "rm-400176-b9e01d7b63c6",
+              "rm-400176-b9e71c7b63cd",
+              "rm-400176-b9ea8e7b63d0",
+              "rm-400176-b9f49c7b63d8",
+              "rm-400176-e290e4852927",
+              "rm-400176-f91a4f2d9cb3"
+            ],
+            "pointsFeet": [
+              [
+                193.53034543514005,
+                173.79024893345158,
+                24.278215223097114
+              ],
+              [
+                203.99551617450885,
+                206.61893475265163,
+                24.278215223097114
+              ]
+            ],
+            "lengthMetres": 10.502305900099161,
+            "enabled": true,
+            "accessible": "unknown",
+            "evidence": "Native floor-bound circulation cell native-cell:24.278215:938; slab profiles 511340; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+          }
+        ],
+        "nodeIds": [
+          "door:402367:1119439:0",
+          "arrival:rm-402367-e870225e0964",
+          "door:402367:1119546:0",
+          "door:402367:1119678:0",
+          "door:402367:1119728:0",
+          "door:402367:1119728:1",
+          "arrival:rm-402367-e87a525e096d",
+          "arrival:rm-402367-f2b16b5e0fa6",
+          "door:402367:1122152:1",
+          "door:402367:1122152:0",
+          "arrival:rm-402367-f2a73b5e0f9e",
+          "door:402367:1927060:0",
+          "arrival:rm-402367-e82f165e092c",
+          "door:402367:1926926:1",
+          "door:402367:1926926:0",
+          "connector:unbc-library-lift:3",
+          "connector:unbc-library-lift:2",
+          "door:400176:1919713:1",
+          "door:400176:1919749:1",
+          "door:400176:1919749:0",
+          "door:400176:1915300:0",
+          "arrival:rm-400176-4c3d391c2149",
+          "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+          "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+          "arrival:rm-400176-4c40191c214b",
+          "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+          "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1",
+          "opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+          "door:400176:1923860:1"
+        ],
+        "paths": [
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119439:0",
+              "native-cell:34.120735:1199:walk:arrival:rm-402367-e870225e0964|door:402367:1119546:0",
+              "native-cell:34.120735:1199:walk:door:402367:1119546:0|door:402367:1119678:0",
+              "native-cell:34.120735:1199:walk:door:402367:1119678:0|door:402367:1119728:0"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                101.20649055996962,
+                224.62866177218183,
+                34.120734908136484
+              ],
+              [
+                122.32355241929152,
+                259.1759993609417,
+                34.120734908136484
+              ],
+              [
+                122.44246977580232,
+                259.6616521817103,
+                34.120734908136484
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": [
+              "door:402367:1119728"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                122.44246977580232,
+                259.6616521817103,
+                34.120734908136484
+              ],
+              [
+                122.82868435204132,
+                261.23893411830767,
+                34.120734908136484
+              ]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|door:402367:1119728:1",
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-e87a525e096d|arrival:rm-402367-f2b16b5e0fa6",
+              "native-cell:34.120735:1204:walk:arrival:rm-402367-f2b16b5e0fa6|door:402367:1122152:1"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                122.82868435204132,
+                261.23893411830767,
+                34.120734908136484
+              ],
+              [
+                136.3316928302025,
+                282.83525466818736,
+                34.120734908136484
+              ],
+              [
+                135.39318798962998,
+                286.92938327379034,
+                34.120734908136484
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": [
+              "door:402367:1122152"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                135.39318798962998,
+                286.92938327379034,
+                34.120734908136484
+              ],
+              [
+                135.8691332072104,
+                287.99093519398554,
+                34.120734908136484
+              ]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1122152:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-f2a73b5e0f9e|door:402367:1927060:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1927060:0",
+              "native-cell:34.120735:1215:walk:arrival:rm-402367-e82f165e092c|door:402367:1926926:1"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                135.8691332072104,
+                287.99093519398554,
+                34.120734908136484
+              ],
+              [
+                141.987232667591,
+                284.1683127094367,
+                34.120734908136484
+              ],
+              [
+                185.75681441472017,
+                354.221438685282,
+                34.120734908136484
+              ],
+              [
+                185.92470855883005,
+                354.116537492607,
+                34.120734908136484
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": [
+              "door:402367:1926926"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                185.92470855883005,
+                354.116537492607,
+                34.120734908136484
+              ],
+              [
+                186.44914609237338,
+                353.8250494595576,
+                34.120734908136484
+              ]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:34.120735:1215:walk:connector:unbc-library-lift:3|door:402367:1926926:0"
+            ],
+            "levelIds": [
+              402367
+            ],
+            "pointsFeet": [
+              [
+                186.44914609237338,
+                353.8250494595576,
+                34.120734908136484
+              ],
+              [
+                188.19727120418443,
+                352.85342268272626,
+                34.120734908136484
+              ],
+              [
+                189.45222782988856,
+                351.28297227607675,
+                34.120734908136484
+              ],
+              [
+                191.5068226206669,
+                351.73650489904,
+                34.120734908136484
+              ],
+              [
+                192.12196147945903,
+                349.98632346936864,
+                34.120734908136484
+              ],
+              [
+                193.1966849473138,
+                349.3147617125293,
+                34.120734908136484
+              ],
+              [
+                193,
+                349,
+                34.120734908136484
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": [
+              "connector:unbc-library-lift:2:3"
+            ],
+            "levelIds": [
+              402367,
+              400176
+            ],
+            "pointsFeet": [
+              [
+                193,
+                349,
+                34.120734908136484
+              ],
+              [
+                193,
+                349,
+                24.278215223097114
+              ]
+            ],
+            "centered": false,
+            "sourceReason": "vertical-transition"
+          },
+          {
+            "edgeIds": [
+              "native-cell:24.278215:938:walk:connector:unbc-library-lift:2|door:400176:1919713:1",
+              "native-cell:24.278215:938:walk:door:400176:1919713:1|door:400176:1919749:1"
+            ],
+            "levelIds": [
+              400176
+            ],
+            "pointsFeet": [
+              [
+                193,
+                349,
+                24.278215223097114
+              ],
+              [
+                192.90006675523918,
+                348.89258805527436,
+                24.278215223097114
+              ],
+              [
+                190.16102129848676,
+                344.63718119860755,
+                24.278215223097114
+              ],
+              [
+                188.757492563741,
+                344.2659247925683,
+                24.278215223097114
+              ],
+              [
+                188.08997070160035,
+                344.1805363082794,
+                24.278215223097114
+              ],
+              [
+                187.67389632877027,
+                343.9516802804269,
+                24.278215223097114
+              ],
+              [
+                187.94425541021837,
+                343.46015079655,
+                24.278215223097114
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "preparedGuideUsed": true,
+            "sharedCorridorGuideUsed": true,
+            "shape": "centered"
+          },
+          {
+            "edgeIds": [
+              "door:400176:1919749"
+            ],
+            "levelIds": [
+              400176
+            ],
+            "pointsFeet": [
+              [
+                187.94425541021837,
+                343.46015079655,
+                24.278215223097114
+              ],
+              [
+                187.02124169833542,
+                341.9148205122173,
+                24.278215223097114
+              ]
+            ],
+            "centered": false,
+            "sourceReason": "native-door"
+          },
+          {
+            "edgeIds": [
+              "native-cell:24.278215:938:walk:door:400176:1915300:0|door:400176:1919749:0",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|door:400176:1915300:0",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c3d391c2149|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:0",
+              "opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c3d391c2149:rm-400176-4c40191c214b:1:1:1",
+              "native-cell:24.278215:938:walk:arrival:rm-400176-4c40191c214b|opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:0",
+              "opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10",
+              "native-cell:24.278215:938:walk:opening:recovered-circulation-seam:rm-400176-4c40191c214b:rm-400176-4c51191c2159:1:10:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1",
+              "native-cell:24.278215:938:walk:door:400176:1923860:1|opening:recovered-circulation-seam:rm-400176-4c51191c2159:rm-400176-4c55011c215d:10:1:1"
+            ],
+            "levelIds": [
+              400176
+            ],
+            "pointsFeet": [
+              [
+                187.02124169833542,
+                341.9148205122173,
+                24.278215223097114
+              ],
+              [
+                191.58921069276457,
+                322.04285404748936,
+                24.278215223097114
+              ],
+              [
+                214.41783404929936,
+                307.7598524643797,
+                24.278215223097114
+              ],
+              [
+                231.326874220304,
+                234.2007106140894,
+                24.278215223097114
+              ],
+              [
+                193.53034543514005,
+                173.79024893345158,
+                24.278215223097114
+              ]
+            ],
+            "centered": true,
+            "nativeFloorSupported": true,
+            "nativeCirculationUsed": true,
+            "shape": "orthogonal"
+          }
+        ],
+        "sourceDistanceMetres": 145.63685219860636,
+        "distanceMetres": 118.18245960993349,
+        "preferenceCost": 526.4516078463545,
+        "unknownAccessAreas": [
+          "rm-402367-e870225e0964",
+          "rm-402367-e87a525e096d",
+          "rm-402367-e840165e093b",
+          "rm-402367-e85b465e0952",
+          "rm-402367-e85f225e0955",
+          "rm-402367-f2b16b5e0fa6",
+          "rm-402367-f2a73b5e0f9e",
+          "rm-402367-5e5131c03aa8",
+          "rm-402367-5e540fc03aaa",
+          "rm-402367-5e5e41c03ab3",
+          "rm-402367-5e622fc03ab7",
+          "rm-402367-5e6511c03ab9",
+          "rm-402367-67f90ac04068",
+          "rm-402367-67fc78c0406b",
+          "rm-402367-680a08c04076",
+          "rm-402367-680d6ac04079",
+          "rm-402367-e10ced5e0591",
+          "rm-402367-e10fcd5e0593",
+          "rm-402367-e11ded5e05a0",
+          "rm-402367-e120c95e05a2",
+          "rm-402367-e82f165e092c",
+          "rm-402367-f2ae0f5e0fa4",
+          "rm-400176-4c46e91c2150",
+          "rm-400176-4671ea1dd0fd",
+          "rm-400176-4b8fe81c20b5",
+          "rm-400176-4ba0e61c20c4",
+          "rm-400176-4ba3c41c20c6",
+          "rm-400176-4c2f211c213c",
+          "rm-400176-4c3d391c2149",
+          "rm-400176-4c40191c214b",
+          "rm-400176-4c51191c2159",
+          "rm-400176-4c55011c215d",
+          "rm-400176-ae535b9d8fa3",
+          "rm-400176-b9e01d7b63c6",
+          "rm-400176-b9e71c7b63cd",
+          "rm-400176-b9ea8e7b63d0",
+          "rm-400176-b9f49c7b63d8",
+          "rm-400176-e290e4852927",
+          "rm-400176-f91a4f2d9cb3"
+        ],
+        "unknownAccessibilityEdges": 28,
+        "doorEdgeIds": [
+          "door:402367:1119728",
+          "door:402367:1122152",
+          "door:402367:1926926",
+          "door:400176:1919749"
+        ]
+      }
+    }
+  ],
+  "floorDiagnostics": [
+    {
+      "stage": "import:archive",
+      "realm": "main",
+      "at": 846.7000000029802,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 0
+    },
+    {
+      "stage": "import:checksums",
+      "realm": "main",
+      "at": 3693.3000000044703,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 2846.2000000029802
+    },
+    {
+      "stage": "import:decode",
+      "realm": "main",
+      "at": 5256.20000000298,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 4409.60000000149
+    },
+    {
+      "stage": "import:geometry",
+      "realm": "main",
+      "at": 8017.39999999851,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 7166.30000000447
+    },
+    {
+      "stage": "import:materials",
+      "realm": "main",
+      "at": 107000.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 106153.60000000149
+    },
+    {
+      "stage": "import:routes",
+      "realm": "main",
+      "at": 110692.60000000149,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 109845.90000000596
+    },
+    {
+      "stage": "import:mapping",
+      "realm": "main",
+      "at": 110697.39999999851,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 109849.20000000298
+    },
+    {
+      "stage": "import:identity",
+      "realm": "main",
+      "at": 274615.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 273768.40000000596
+    },
+    {
+      "stage": "import:transfer",
+      "realm": "main",
+      "at": 278429.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "elapsedMs": 277583
+    },
+    {
+      "stage": "package:import:result",
+      "realm": "main",
+      "at": 282848.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "error": false
+    },
+    {
+      "stage": "route:warmup-deferred-until-intent",
+      "realm": "main",
+      "at": 282900.80000000447,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000
+    },
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 283998.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "levels": 3,
+      "freshDatasetClone": true,
+      "routeBusy": false,
+      "waitedMs": 0.29999999701976776
+    },
+    {
+      "stage": "floor-main:postMessage",
+      "realm": "main",
+      "at": 289511.80000000447,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "requestId": 1,
+      "datasetIncluded": true,
+      "levels": 3,
+      "preparedAssetOffered": false,
+      "ms": 5511.60000000149
+    },
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 290008.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "levels": 1,
+      "freshDatasetClone": false,
+      "routeBusy": false,
+      "waitedMs": 0
+    },
+    {
+      "stage": "floor-main:postMessage",
+      "realm": "main",
+      "at": 296204.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "requestId": 2,
+      "datasetIncluded": true,
+      "levels": 1,
+      "preparedAssetOffered": false,
+      "ms": 6191.79999999702
+    },
+    {
+      "stage": "floor-worker:request",
+      "realm": "worker",
+      "at": 5183,
+      "requestId": 2,
+      "datasetIncluded": true,
+      "levels": 1,
+      "preparedAssetOffered": false,
+      "residentDisplayOffered": false,
+      "engineMatches": false,
+      "engine": "19c3b8bc"
+    },
+    {
+      "stage": "floor-worker:prepared-asset",
+      "realm": "worker",
+      "at": 5184.20000000298,
+      "requestId": 2,
+      "used": false,
+      "ms": 0.30000000447034836
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 355926.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 355927.80000000447,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 355928,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 355928.1000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 355928.200000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "floor-worker:native-faces",
+      "realm": "worker",
+      "at": 231699.3999999985,
+      "requestId": 2,
+      "regions": 1143,
+      "ms": 226427.69999999553
+    },
+    {
+      "stage": "floor-worker:prepare-floor",
+      "realm": "worker",
+      "at": 249377.1000000015,
+      "requestId": 2,
+      "ms": 17677.30000000447
+    },
+    {
+      "stage": "floor-worker:overview-ground",
+      "realm": "worker",
+      "at": 253480,
+      "ms": 4102.5
+    },
+    {
+      "stage": "floor-worker:overview-floor",
+      "realm": "worker",
+      "at": 259760.79999999702,
+      "ms": 6280.60000000149
+    },
+    {
+      "stage": "floor-worker:memory-cost",
+      "realm": "worker",
+      "at": 259991.29999999702,
+      "requestId": 2,
+      "memoryCostBytes": 172702562,
+      "nativeDisplay": true,
+      "ms": 230.5
+    },
+    {
+      "stage": "floor-worker:pack-resident",
+      "realm": "worker",
+      "at": 289481.8999999985,
+      "requestId": 2,
+      "bytes": 4908995,
+      "ms": 29490.5
+    },
+    {
+      "stage": "floor-main:receive",
+      "realm": "main",
+      "at": 587092,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "requestId": 2,
+      "deserializeMs": 0,
+      "sincePostMs": 290887.3999999985,
+      "error": false
+    },
+    {
+      "stage": "floor-main:released-for-route",
+      "realm": "main",
+      "at": 587093.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000
+    },
+    {
+      "stage": "floor-main:released-for-route",
+      "realm": "main",
+      "at": 587095,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000
+    },
+    {
+      "stage": "route:request",
+      "realm": "main",
+      "at": 587095.1000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "destination": true
+    },
+    {
+      "stage": "floor-main:resolved",
+      "realm": "main",
+      "at": 587095.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "levels": 1,
+      "cached": false,
+      "nativeDisplay": true,
+      "ms": 297086.799999997
+    },
+    {
+      "stage": "layers:stable-wall-geometry",
+      "realm": "main",
+      "at": 587243.200000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "features": 11363,
+      "ms": 29.600000001490116
+    },
+    {
+      "stage": "layers:prepared-mount",
+      "realm": "main",
+      "at": 587262.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587275.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-areas",
+      "features": 934,
+      "vertices": 70061,
+      "propertyKeys": 17697,
+      "propertyBytes": 397698,
+      "estimatedBytes": 1518674
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587277.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587278.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-network",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587279.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-portals",
+      "features": 400,
+      "vertices": 400,
+      "propertyKeys": 2628,
+      "propertyBytes": 59544,
+      "estimatedBytes": 65944
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587279.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-route",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587281,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-doors",
+      "features": 355,
+      "vertices": 1775,
+      "propertyKeys": 3550,
+      "propertyBytes": 73130,
+      "estimatedBytes": 101530
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587281.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-lower-rooms",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587284.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-labels",
+      "features": 273,
+      "vertices": 273,
+      "propertyKeys": 7003,
+      "propertyBytes": 162371,
+      "estimatedBytes": 166739
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587288,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-room-blocks",
+      "features": 248,
+      "vertices": 21986,
+      "propertyKeys": 4712,
+      "propertyBytes": 111851,
+      "estimatedBytes": 463627
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587288.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-exposed-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587291.200000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-stairs",
+      "features": 648,
+      "vertices": 3614,
+      "propertyKeys": 11689,
+      "propertyBytes": 254113,
+      "estimatedBytes": 311937
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587295.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-selection-areas",
+      "features": 927,
+      "vertices": 56080,
+      "propertyKeys": 17613,
+      "propertyBytes": 395864,
+      "estimatedBytes": 1293144
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587300.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-area-perimeters",
+      "features": 934,
+      "vertices": 19691,
+      "propertyKeys": 18631,
+      "propertyBytes": 426652,
+      "estimatedBytes": 741708
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587302.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-block-perimeters",
+      "features": 248,
+      "vertices": 6382,
+      "propertyKeys": 4960,
+      "propertyBytes": 119539,
+      "estimatedBytes": 221651
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587308,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground",
+      "features": 10922,
+      "vertices": 73980,
+      "propertyKeys": 27741,
+      "propertyBytes": 638915,
+      "estimatedBytes": 1822595
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 587308.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-floor",
+      "features": 7,
+      "vertices": 14347,
+      "propertyKeys": 14,
+      "propertyBytes": 294,
+      "estimatedBytes": 229846
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 587464.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 10922,
+      "vertices": 116772,
+      "bytes": 2802528,
+      "ms": 131.89999999850988
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 588370,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-windows",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 588382.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 13.799999997019768
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 588393.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 16,
+      "ms": 1129.3000000044703
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 588941.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground-mesh",
+      "vertices": 116772,
+      "ms": 48.70000000298023
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 589322.1000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 10627,
+      "vertices": 46104,
+      "bytes": 1106496,
+      "ms": 263.29999999701977
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 589912.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 11537,
+      "vertices": 63781,
+      "propertyKeys": 46148,
+      "propertyBytes": 1185936,
+      "estimatedBytes": 2206432
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 589999.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 1149,
+      "vertices": 18901,
+      "propertyKeys": 4596,
+      "propertyBytes": 118466,
+      "estimatedBytes": 420882
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 590002.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 6,
+      "vertices": 13,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 208
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 590175.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 10627,
+      "vertices": 62055,
+      "propertyKeys": 42508,
+      "propertyBytes": 1092837,
+      "estimatedBytes": 2085717
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 590199.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 11953,
+      "vertices": 71388,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 1142208
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 590810.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview-mesh",
+      "vertices": 46104,
+      "ms": 10.199999995529652
+    },
+    {
+      "stage": "route:request",
+      "realm": "main",
+      "at": 749225.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "destination": true
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 765499.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-route",
+      "features": 8,
+      "vertices": 25,
+      "propertyKeys": 16,
+      "propertyBytes": 264,
+      "estimatedBytes": 664
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 765520.5,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 4.699999995529652
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 765531.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 32.400000005960464
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 765618.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground-mesh",
+      "vertices": 116772,
+      "ms": 48.899999998509884
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 790563,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-network",
+      "features": 819,
+      "vertices": 1638,
+      "propertyKeys": 1638,
+      "propertyBytes": 117893,
+      "estimatedBytes": 144101
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 790594.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 25.200000002980232
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 790601.3000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 40.20000000298023
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 831963.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "project-network",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 831977,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 5.199999995529652
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 831986.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 23.100000001490116
+    },
+    {
+      "stage": "layers:prepared-unmount",
+      "realm": "main",
+      "at": 922733.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "roomThree": false
+    },
+    {
+      "stage": "route:released-for-floor",
+      "realm": "main",
+      "at": 922743.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000
+    },
+    {
+      "stage": "map:recreated-for-scope",
+      "realm": "main",
+      "at": 922744.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "levels": 2
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 922751.1000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 922751.3999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 922751.700000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 922751.8000000045,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 922752,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 945409.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 945409.8999999985,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 945410,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 945410.1000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 945410.200000003,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 945567,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "levels": 2,
+      "freshDatasetClone": true,
+      "routeBusy": false,
+      "waitedMs": 22824.69999999553
+    },
+    {
+      "stage": "floor-main:postMessage",
+      "realm": "main",
+      "at": 949801.6000000015,
+      "heapUsed": 60300000,
+      "heapTotal": 64000000,
+      "heapLimit": 3760000000,
+      "requestId": 3,
+      "datasetIncluded": true,
+      "levels": 2,
+      "preparedAssetOffered": false,
+      "ms": 4233.60000000149
+    },
+    {
+      "stage": "floor-worker:request",
+      "realm": "worker",
+      "at": 3599.10000000149,
+      "requestId": 3,
+      "datasetIncluded": true,
+      "levels": 2,
+      "preparedAssetOffered": false,
+      "residentDisplayOffered": false,
+      "engineMatches": false,
+      "engine": "19c3b8bc"
+    },
+    {
+      "stage": "floor-worker:prepared-asset",
+      "realm": "worker",
+      "at": 3599.6999999955297,
+      "requestId": 3,
+      "used": false,
+      "ms": 0.3999999985098839
+    },
+    {
+      "stage": "floor-worker:native-faces",
+      "realm": "worker",
+      "at": 220323.1000000015,
+      "requestId": 3,
+      "regions": 1216,
+      "ms": 216315.6000000015
+    },
+    {
+      "stage": "floor-worker:prepare-floor",
+      "realm": "worker",
+      "at": 273247.1000000015,
+      "requestId": 3,
+      "ms": 52923.40000000596
+    },
+    {
+      "stage": "floor-worker:overview-ground",
+      "realm": "worker",
+      "at": 281587.3999999985,
+      "ms": 8339.89999999851
+    },
+    {
+      "stage": "floor-worker:overview-floor",
+      "realm": "worker",
+      "at": 295644.8999999985,
+      "ms": 14057.29999999702
+    },
+    {
+      "stage": "floor-worker:memory-cost",
+      "realm": "worker",
+      "at": 296260.69999999553,
+      "requestId": 3,
+      "memoryCostBytes": 216091564,
+      "nativeDisplay": true,
+      "ms": 615.5
+    },
+    {
+      "stage": "floor-worker:pack-resident",
+      "realm": "worker",
+      "at": 354354.69999999553,
+      "requestId": 3,
+      "bytes": 6262707,
+      "ms": 58093.89999999851
+    },
+    {
+      "stage": "floor-main:receive",
+      "realm": "main",
+      "at": 1307412,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "requestId": 3,
+      "deserializeMs": 0,
+      "sincePostMs": 357610.5,
+      "error": false
+    },
+    {
+      "stage": "floor-main:resolved",
+      "realm": "main",
+      "at": 1307413.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "levels": 2,
+      "cached": false,
+      "nativeDisplay": true,
+      "ms": 384671
+    },
+    {
+      "stage": "floor-worker:postMessage",
+      "realm": "worker",
+      "at": 355106.6000000015,
+      "requestId": 3,
+      "ms": 751.2000000029802
+    },
+    {
+      "stage": "floor-worker:done",
+      "realm": "worker",
+      "at": 355106.8999999985,
+      "requestId": 3
+    },
+    {
+      "stage": "layers:stable-wall-geometry",
+      "realm": "main",
+      "at": 1307572.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "features": 13253,
+      "ms": 113.5
+    },
+    {
+      "stage": "layers:prepared-mount",
+      "realm": "main",
+      "at": 1307601,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307625,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-areas",
+      "features": 964,
+      "vertices": 80343,
+      "propertyKeys": 18239,
+      "propertyBytes": 410267,
+      "estimatedBytes": 1695755
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307625.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307627.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-network",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307628.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-portals",
+      "features": 438,
+      "vertices": 438,
+      "propertyKeys": 2782,
+      "propertyBytes": 64046,
+      "estimatedBytes": 71054
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307629.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-route",
+      "features": 4,
+      "vertices": 16,
+      "propertyKeys": 8,
+      "propertyBytes": 132,
+      "estimatedBytes": 388
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307630.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-doors",
+      "features": 366,
+      "vertices": 1830,
+      "propertyKeys": 3660,
+      "propertyBytes": 75431,
+      "estimatedBytes": 104711
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307631.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-lower-rooms",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307634.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-labels",
+      "features": 283,
+      "vertices": 283,
+      "propertyKeys": 7244,
+      "propertyBytes": 168390,
+      "estimatedBytes": 172918
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307636.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-room-blocks",
+      "features": 251,
+      "vertices": 22362,
+      "propertyKeys": 4769,
+      "propertyBytes": 113240,
+      "estimatedBytes": 471032
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307637.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-exposed-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307649.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-stairs",
+      "features": 2883,
+      "vertices": 16406,
+      "propertyKeys": 51942,
+      "propertyBytes": 1126722,
+      "estimatedBytes": 1389218
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307655.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-selection-areas",
+      "features": 953,
+      "vertices": 65870,
+      "propertyKeys": 18107,
+      "propertyBytes": 407385,
+      "estimatedBytes": 1461305
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307665.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-area-perimeters",
+      "features": 964,
+      "vertices": 21775,
+      "propertyKeys": 19203,
+      "propertyBytes": 440151,
+      "estimatedBytes": 788551
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307668.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-block-perimeters",
+      "features": 251,
+      "vertices": 6303,
+      "propertyKeys": 5020,
+      "propertyBytes": 121021,
+      "estimatedBytes": 221869
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307673.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground",
+      "features": 12208,
+      "vertices": 82576,
+      "propertyKeys": 31149,
+      "propertyBytes": 717685,
+      "estimatedBytes": 2038901
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1307674.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-floor",
+      "features": 11,
+      "vertices": 14879,
+      "propertyKeys": 22,
+      "propertyBytes": 462,
+      "estimatedBytes": 238526
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 1307921.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 12208,
+      "vertices": 130704,
+      "bytes": 3136896,
+      "ms": 213.09999999403954
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1308319.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-windows",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 1308328.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 9.899999998509884
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 1308339.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 16,
+      "ms": 738.1999999955297
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 1310202,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 13685,
+      "vertices": 59325,
+      "bytes": 1423800,
+      "ms": 278.69999999552965
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1310227.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 15858,
+      "vertices": 84329,
+      "propertyKeys": 63432,
+      "propertyBytes": 1632561,
+      "estimatedBytes": 2981825
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1310229,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 1223,
+      "vertices": 21182,
+      "propertyKeys": 4892,
+      "propertyBytes": 126077,
+      "estimatedBytes": 464989
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1310229.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 6,
+      "vertices": 15,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 240
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1310238.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 13685,
+      "vertices": 80239,
+      "propertyKeys": 54740,
+      "propertyBytes": 1408742,
+      "estimatedBytes": 2692566
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1310244.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 13995,
+      "vertices": 84861,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 1357776
+    },
+    {
+      "stage": "layers:prepared-unmount",
+      "realm": "main",
+      "at": 1367269,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false
+    },
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 1367302.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "levels": 1,
+      "freshDatasetClone": false,
+      "routeBusy": false,
+      "waitedMs": 0
+    },
+    {
+      "stage": "floor-main:postMessage",
+      "realm": "main",
+      "at": 1367335.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "requestId": 4,
+      "datasetIncluded": false,
+      "levels": 1,
+      "preparedAssetOffered": false,
+      "ms": 30.099999994039536
+    },
+    {
+      "stage": "map:recreated-for-scope",
+      "realm": "main",
+      "at": 1367337,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "levels": 1
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1367340.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1367340.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1367341.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1367344.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1367345.200000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "floor-worker:request",
+      "realm": "worker",
+      "at": 417479.69999999553,
+      "requestId": 4,
+      "datasetIncluded": false,
+      "levels": 1,
+      "preparedAssetOffered": false,
+      "residentDisplayOffered": true,
+      "engineMatches": false,
+      "engine": "19c3b8bc"
+    },
+    {
+      "stage": "prepared-asset:inflated",
+      "realm": "worker",
+      "at": 434235.6000000015,
+      "pooledJsonBytes": 38902128,
+      "chunks": 10
+    },
+    {
+      "stage": "prepared-asset:parse",
+      "realm": "worker",
+      "at": 435983.6000000015,
+      "ms": 1719.1000000014901
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1386107.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1386107.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1386110.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1386111.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1386111.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "prepared-asset:restore",
+      "realm": "worker",
+      "at": 446257.5,
+      "ms": 277
+    },
+    {
+      "stage": "prepared-asset:logical-checksum",
+      "realm": "worker",
+      "at": 450695.5,
+      "ms": 4437.60000000149
+    },
+    {
+      "stage": "prepared-asset:freeze",
+      "realm": "worker",
+      "at": 451340.6000000015,
+      "ms": 644.8999999985099
+    },
+    {
+      "stage": "floor-worker:restore-resident",
+      "realm": "worker",
+      "at": 451342.799999997,
+      "requestId": 4,
+      "ms": 33863
+    },
+    {
+      "stage": "floor-worker:overview-ground",
+      "realm": "worker",
+      "at": 460049.1000000015,
+      "ms": 8706.10000000149
+    },
+    {
+      "stage": "floor-worker:overview-floor",
+      "realm": "worker",
+      "at": 472604,
+      "ms": 12554.70000000298
+    },
+    {
+      "stage": "floor-worker:memory-cost",
+      "realm": "worker",
+      "at": 473256,
+      "requestId": 4,
+      "memoryCostBytes": 163556108,
+      "nativeDisplay": true,
+      "ms": 651.8000000044703
+    },
+    {
+      "stage": "floor-main:receive",
+      "realm": "main",
+      "at": 1425786.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "requestId": 4,
+      "deserializeMs": 0,
+      "sincePostMs": 58450.5,
+      "error": false
+    },
+    {
+      "stage": "floor-main:resolved",
+      "realm": "main",
+      "at": 1425786.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "levels": 1,
+      "cached": false,
+      "nativeDisplay": true,
+      "ms": 58484.30000000447
+    },
+    {
+      "stage": "floor-worker:postMessage",
+      "realm": "worker",
+      "at": 474073.69999999553,
+      "requestId": 4,
+      "ms": 817.5
+    },
+    {
+      "stage": "floor-worker:done",
+      "realm": "worker",
+      "at": 474073.69999999553,
+      "requestId": 4
+    },
+    {
+      "stage": "layers:stable-wall-geometry",
+      "realm": "main",
+      "at": 1425992.6000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "features": 11363,
+      "ms": 176.60000000149012
+    },
+    {
+      "stage": "layers:prepared-mount",
+      "realm": "main",
+      "at": 1426048.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426071.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-areas",
+      "features": 934,
+      "vertices": 70061,
+      "propertyKeys": 16433,
+      "propertyBytes": 376842,
+      "estimatedBytes": 1497818
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426072.700000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426073.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-network",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426074.6000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-portals",
+      "features": 400,
+      "vertices": 400,
+      "propertyKeys": 2628,
+      "propertyBytes": 59544,
+      "estimatedBytes": 65944
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426075.200000003,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-route",
+      "features": 8,
+      "vertices": 25,
+      "propertyKeys": 16,
+      "propertyBytes": 264,
+      "estimatedBytes": 664
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426076.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-doors",
+      "features": 355,
+      "vertices": 1775,
+      "propertyKeys": 3550,
+      "propertyBytes": 73130,
+      "estimatedBytes": 101530
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426077.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-lower-rooms",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426080.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-labels",
+      "features": 273,
+      "vertices": 273,
+      "propertyKeys": 7003,
+      "propertyBytes": 162371,
+      "estimatedBytes": 166739
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426084.6000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-room-blocks",
+      "features": 248,
+      "vertices": 21986,
+      "propertyKeys": 4712,
+      "propertyBytes": 111851,
+      "estimatedBytes": 463627
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426085.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-exposed-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426091.3000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-stairs",
+      "features": 648,
+      "vertices": 3614,
+      "propertyKeys": 11689,
+      "propertyBytes": 254113,
+      "estimatedBytes": 311937
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426098.6000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-selection-areas",
+      "features": 927,
+      "vertices": 56080,
+      "propertyKeys": 16349,
+      "propertyBytes": 375008,
+      "estimatedBytes": 1272288
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426107.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-area-perimeters",
+      "features": 934,
+      "vertices": 19691,
+      "propertyKeys": 17367,
+      "propertyBytes": 405796,
+      "estimatedBytes": 720852
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426110.3999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-block-perimeters",
+      "features": 248,
+      "vertices": 6382,
+      "propertyKeys": 4960,
+      "propertyBytes": 119539,
+      "estimatedBytes": 221651
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426117.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground",
+      "features": 10922,
+      "vertices": 73980,
+      "propertyKeys": 27741,
+      "propertyBytes": 638915,
+      "estimatedBytes": 1822595
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426118.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-floor",
+      "features": 7,
+      "vertices": 14347,
+      "propertyKeys": 14,
+      "propertyBytes": 294,
+      "estimatedBytes": 229846
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 1426413.6000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 10922,
+      "vertices": 116772,
+      "bytes": 2802528,
+      "ms": 236.20000000298023
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1426471.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-native-windows",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 1426480.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "ms": 9.299999997019768
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 1426491.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "roomThree": false,
+      "uploads": 16,
+      "ms": 442.20000000298023
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 1427848.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "windowOpacity": false,
+      "features": 10627,
+      "vertices": 46104,
+      "bytes": 1106496,
+      "ms": 399.6000000014901
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1427897.8999999985,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-fill",
+      "features": 11537,
+      "vertices": 63781,
+      "propertyKeys": 46148,
+      "propertyBytes": 1185936,
+      "estimatedBytes": 2206432
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1427901.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-outline",
+      "features": 1149,
+      "vertices": 18901,
+      "propertyKeys": 4596,
+      "propertyBytes": 118466,
+      "estimatedBytes": 420882
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1427901.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-partitions",
+      "features": 6,
+      "vertices": 13,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 208
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1427924.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview",
+      "features": 10627,
+      "vertices": 62055,
+      "propertyKeys": 42508,
+      "propertyBytes": 1092837,
+      "estimatedBytes": 2085717
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 1427934.5,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-material",
+      "features": 11953,
+      "vertices": 71388,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 1142208
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 1429036.8000000045,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "project-overview-ground-mesh",
+      "vertices": 116772,
+      "ms": 39.100000001490116
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 1429071.1000000015,
+      "heapUsed": 894000000,
+      "heapTotal": 949000000,
+      "heapLimit": 3760000000,
+      "id": "native-explore-overview-mesh",
+      "vertices": 46104,
+      "ms": 24.700000002980232
+    }
+  ]
+}

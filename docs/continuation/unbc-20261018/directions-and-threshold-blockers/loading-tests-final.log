@@ -1,0 +1,34 @@
+✔ exact publication carrier is decoded and retained without changing either route profile (51.187251ms)
+✔ offline verified carrier is usable, while HTTP-decoded logical bytes are not stored as compressed bytes (11.418712ms)
+✔ no compiled publication match performs full validation without requesting an optional cache (3.331643ms)
+✔ different engine, source, or whole dataset cannot select a historical receipt (13.283972ms)
+✔ missing optional caches use ordinary full validation, including on offline/cache-storage failure (12.389825ms)
+✔ a matching receipt without its carrier cannot replace full structural validation (1.92251ms)
+✔ a declared present corrupt carrier refuses instead of falling back to normal calculation (6.316618ms)
+✔ rehashed carrier still cannot change its original topology or introduce an unlisted native face (3.00431ms)
+✔ worker constructor supplies only real downloaded data and delivery options, never a remote publication policy (20.052791ms)
+✔ only exact dataset and validator matches admit publisher geometry results (18.468235ms)
+✔ verified physical cells retain exact rationals and holes; corrupt and mismatched inventories fail (16.968298ms)
+✔ incomplete profile policies cannot be seeded into a route session (5.20101ms)
+✔ graph guards reject stale bindings, unknown cells, duplicate rows and invalid anchors (8.701607ms)
+✔ the published session retains original public and step-free route behavior on ordinary inputs (10.695691ms)
+✔ changing staircase exclusions reroutes without recloning a resident map and cannot reuse a different preference result (3.905627ms)
+✔ selected endpoint responses never mask a legacy all-choices response in the client cache (0.689385ms)
+✔ review releases a completed user graph before warmup ever ran, retaining its returned route (1.845228ms)
+✔ review release protects an active user request and catches an already active review (1.091692ms)
+✔ changing endpoints cancels CPU work and cannot accept obsolete routes (1.089246ms)
+✔ completed requests reuse a verified dataset, but imported or edited snapshots replace it (0.65037ms)
+✔ worker failures are visible and the next request starts with a fresh dataset (0.631385ms)
+✔ import or clear releases a completed dataset even before new route endpoints are chosen (0.391452ms)
+✔ snapshot reset cancels pending work and rejects stale replies (0.601446ms)
+✔ a real destination reuses an in-flight same-snapshot warmup and ignores its stale reply (0.866501ms)
+✔ choosing a destination retains in-flight departure coverage but rejects its stale result (0.502827ms)
+✔ effect cleanup retains same-snapshot coverage preparation and rejects its stale reply before the next destination (0.653787ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1687.271434

@@ -1,0 +1,76 @@
+{
+  "format": "reviter-existing-ci-failure-baseline-v1",
+  "before": "b0085be9c475fdb322859a181a0999911ab19793",
+  "after": "b6861b3ecb9b916589da342986e2bc05bed882ba",
+  "currentUnitRun": "https://github.com/ahzs645/reviter/actions/runs/39080355867",
+  "currentLintBuildRun": "https://github.com/ahzs645/reviter/actions/runs/39080355995",
+  "failures": [
+    "deterministic-math source policy: 11 pre-existing Math usages in seven unchanged library modules",
+    "React set-state-in-effect lint in two unchanged DWG components"
+  ],
+  "files": [
+    {
+      "path": "lib/reviter/native-arrival-owner.ts",
+      "bytes": 9803,
+      "sha256": "ecdb9091fdef451aac8383eaa7784c5a6aaef8df04f478b52e1943984ccf9bf0",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/native-terminal-refinement.ts",
+      "bytes": 3457,
+      "sha256": "7987a7c9093bdbc5e98234d64b41b8c6977463eda543d300372a3abbde8cc313",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/revit-2027-garc.ts",
+      "bytes": 4637,
+      "sha256": "effddd99a8498803bb2ccfc9b3e607fd504484e502724ed64a9f0babb62bed40",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/revit-2027-gcondition-dir.ts",
+      "bytes": 2455,
+      "sha256": "9c162de92519dfcf76d944579243e3fa60c6614a0065da7001449054ddf0ef90",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/revit-2027-gellipse.ts",
+      "bytes": 4198,
+      "sha256": "aadefc755ff59b664bb0bdc0122ff56358e7a0f7cc9b16e02ca21e1a946103e6",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/revit-2027-gline.ts",
+      "bytes": 3280,
+      "sha256": "81adfae5010b9e439769f0905846c79eb26d90e14bf3918e1b073bfb697b740c",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "lib/reviter/revit-2027-owner-mesh-trim.ts",
+      "bytes": 16071,
+      "sha256": "bbd3dfef0fc76d0d7413610dc7e8ace8395d5675d058c35bd3ba2ccd57852746",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "tests/deterministic-math.test.ts",
+      "bytes": 9870,
+      "sha256": "37275ff04a30e9b3275f925fd6dab1d49bba68d32e65f7b1074c0f5a5cc25d90",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "app/studio/DwgBuildingModel.tsx",
+      "bytes": 17591,
+      "sha256": "378407c491e9eb3aff4905bb84fc7bc47a5c066e3074e9b7e6263694b9a303d4",
+      "unchangedFromBeforeRecovery": true
+    },
+    {
+      "path": "app/studio/DwgFloorReview.tsx",
+      "bytes": 6424,
+      "sha256": "cbc865cbce9151c942574c37f35dd175b27209a4b74cb40490e3a47709ffbc5e",
+      "unchangedFromBeforeRecovery": true
+    }
+  ],
+  "recoveryTargetedChecksPassed": true,
+  "wholeRepositoryCiPassed": false,
+  "currentGuardedBuildFrozenSourceNotModified": true
+}

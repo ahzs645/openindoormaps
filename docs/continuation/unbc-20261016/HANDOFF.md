@@ -1,9 +1,67 @@
+> Current publication and restoration entry: [October 18 START-HERE](../unbc-20261018/live-publication/START-HERE.md). Exact live results are external publication receipts; older missing-input wording below is historical. Original native inputs and functional regenerated checkpoints are now in the linked private Drive backups.
+
 # UNBC: start here for the next AI
+
+> **Directions startup / exact threshold blockers:** [Fresh cache and original-body follow-up](../unbc-20261018/directions-and-threshold-blockers/README.md) recover all 15 placed records and eight shared definitions. The four sill definitions contain complete six-face filled representations that the available strict prism diagnostic does not support. No doorway is enabled. A freshly validated 2.59 MB cache is compiled into the next build: eight production-worker requests retain exact route geometry; first reply 36.7 s, later available queries 0.69–2.72 s. A compiled-receipt profile and fast publication gate pass. This is local Node/build evidence; browser/offline/Site publication remain pending, with live version 13 unchanged.
+
+> **Reusable 3D inspection and threshold review:** [The defined source workflow and four-floor survey](../unbc-20261018/door-threshold-workflow/README.md) now include verified full-scene export, reusable camera recipes, a shared skill/renderer and targeted tests. Forty-two doors match the 50 mm curtain-sill pattern; 22 lack paired owners. Five unpaired doors have source-checked owner/envelope proposals, including the Floor 2 and Floor 3 Building 04–08 links, with exact reversal replay in both saved datasets. These are not admitted routes: original body/cap/continuous clearance and production integration remain. No new master or live publication.
+
+> **Floor 3 gateway follow-up:** [Building 04–08 remains disconnected at native door 2315416](../unbc-20261018/floor3-building04-building08/README.md). Its original room sides are unmatched and its curtain assembly contains a 50 mm sill. Exact slab support does not clear that physical material. The earlier 21-gap inventory excluded ownerless doors; a new fast gateway reachability check covers this blind spot. No source material or routing edge has been bypassed.
+
+> **October 18 pathway update:** [Systemic four-floor candidate and evidence](../unbc-20261018/systemic-pathways/README.md) cover common hallway, doorway, stair/ramp approaches and exact ordinary-room transit checks. Thirteen frozen actual requests produced ten routes and three refusals. Twenty-one lateral gaps and 28 held full stairs remain. The guarded rebuild finished and failed preservation of 05-S204 and 03-S104; all nine checkpoints and final failed state are privately backed up. No new master or Site publication was accepted.
+
+> **October 17 regeneration update:** [Fresh original-source materials and all four later review inputs are checked and backed up](../unbc-20261017/regeneration-recovery/README.md). All nine new production floor checkpoints are regenerated and verified by complete Drive download/readback in an isolated guarded build; use the linked private Drive progress index for the current count. No historical digest has been rebound, no original-arrival guard waived, and no newer master accepted or published.
+
+Latest recovery: [the source recovery review](../unbc-20261017/source-recovery/README.md)
+restores the exact original RVT, accepted historical authoring master, canonical
+rooms/GIS and all 890 companions. All 28 held stair sources were freshly reread.
+A working-input dataset was reconstructed exactly and a new base conversion
+cache generated. Historical enriched cache, checkpoint pairs and later review
+sidecars still need recovery/revalidation; the failed rebuild produced no newer
+accepted master. The private Site is version 13; older statuses below are historical.
+
+October 17 update: [the pathway repair continuation](../unbc-20261017/pathway-repairs/README.md)
+records current private Site version **11**, its 45.52 MB shared-guide visitor
+package, straight-vestibule replay, hallway inspection flag/dotted door branches,
+bounded floor reuse and source archive availability. The continuation is on
+`codex/unbc-corridor-analysis-20261017` / PR #3, not merged main. Existing
+geometry, graph/access and the 28 held stairs are unchanged. The October 16
+publication and transfer descriptions below are historical; the previously
+created large authoring archive is absent from this filesystem.
 
 This is the consolidated continuation for the October 14–16 work in
 OpenIndoorMaps and its sibling Reviter. Read both repositories' `AGENTS.md`,
 this file, [the compiler handoff](https://github.com/ahzs645/reviter/blob/main/docs/UNBC-HANDOFF-2026-10-16.md),
 and [the local repair loop](../../indoor-local-iteration.md).
+
+October 17 addenda: [package audit](../unbc-20261017/corridor-backbone/REPORT.md)
+checks the published visitor ZIP and further evidence pooling.
+[Shared hallway centerlines on all floors](../unbc-20261017/corridor-backbone/ALL-FLOORS.md)
+records the optional compiler, 2,617 guides, a 45.51 MB derived visitor candidate
+and actual navigation comparisons. The live map, source graph and route
+approvals are unchanged. The failed rebuild and held-stair status below remain
+authoritative.
+
+Latest derived route-style follow-up:
+[averaged straight hallways and centerline endpoints](../unbc-20261017/corridor-backbone/straight-hallways/README.md).
+Its 45.52 MB visitor candidate uses resolver version 3, passes 51 normal route
+comparisons and the desktop/mobile viewer check, and preserves original source
+geometry/graph/door connections. It also includes an agent's two-venue Mappedin
+review. Use the updated app in draft PR #3 with that candidate; the live Site
+and the native rebuild/held-stair status are unchanged.
+
+Latest broader routing acceptance:
+[complete Floor 4 and multifloor tests](../unbc-20261017/floor-multifloor-tests/README.md).
+All 345 Floor 4 destinations are covered as origins/destinations; each profile
+has 118,680 ordered connectivity pairs. The 1,538 actual requests produce 508
+available and 1,030 unavailable outcomes after six focused numeric-assertion
+replays. Floor 4 still has 75 unqualified hallway endpoints plus two isolated
+places. Held stairs remain excluded, and long Building 10 zigzags / Library
+other-room fallback and cold preparation remain open. This tests the same
+version 3 candidate; source geometry and the live publication are unchanged.
+The targeted desktop/mobile multifloor controls passed, but the desktop lift
+step screenshot has a blank floor canvas; following-step/mobile geometry
+returns. Treat that as a visual blocker and investigate render readiness.
 
 ## Current state
 

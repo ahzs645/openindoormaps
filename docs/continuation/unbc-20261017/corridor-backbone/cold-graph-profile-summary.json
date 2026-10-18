@@ -1,0 +1,96 @@
+{
+  "note": "Short sampled cold graph profile, not an end-to-end timing; original profile retained in task scratch",
+  "sampledMicroseconds": 12197047,
+  "topSelf": [
+    {
+      "function": "gcd",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 5602310,
+      "percent": 45.93169149877016
+    },
+    {
+      "function": "compare",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 2834061,
+      "percent": 23.235632362489053
+    },
+    {
+      "function": "rational",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 788078,
+      "percent": 6.461219670630112
+    },
+    {
+      "function": "bounds",
+      "file": "native-rational-intersection-broadphase.ts",
+      "microseconds": 518070,
+      "percent": 4.24750351458021
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "microseconds": 314676,
+      "percent": 2.579935946791055
+    },
+    {
+      "function": "",
+      "file": "native-rational-intersection-broadphase.ts",
+      "microseconds": 294438,
+      "percent": 2.414010538780411
+    },
+    {
+      "function": "compare",
+      "file": "native-rational-polygon-clipping.mjs",
+      "microseconds": 290853,
+      "percent": 2.3846181784820537
+    },
+    {
+      "function": "lt",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 203847,
+      "percent": 1.6712815815172313
+    },
+    {
+      "function": "orient2d",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 171523,
+      "percent": 1.4062666151897258
+    },
+    {
+      "function": "",
+      "file": "native-exact-planar-topology.ts",
+      "microseconds": 140551,
+      "percent": 1.152336299105841
+    },
+    {
+      "function": "Rational",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 82545,
+      "percent": 0.6767621703843562
+    },
+    {
+      "function": "process",
+      "file": "native-rational-polygon-clipping.mjs",
+      "microseconds": 77099,
+      "percent": 0.6321120185894176
+    },
+    {
+      "function": "",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 70188,
+      "percent": 0.5754507627952897
+    },
+    {
+      "function": "RingIn",
+      "file": "native-rational-polygon-clipping.mjs",
+      "microseconds": 59718,
+      "percent": 0.4896103130536432
+    },
+    {
+      "function": "gt",
+      "file": "native-rational-overlay-arithmetic.mjs",
+      "microseconds": 58360,
+      "percent": 0.4784764705752138
+    }
+  ]
+}

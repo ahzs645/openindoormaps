@@ -1,0 +1,363 @@
+{
+  "status": "rejected-implementation-drift",
+  "accepted": false,
+  "reason": "The final source-implementation guard rejected the audit after a concurrent Pages build changed a transitive generated fingerprint. Preserve the actual request outputs; do not relabel this as a passing run.",
+  "initialImplementationSha256": "73aa24b599454365084b0401552aa9d6207c019b53394c3f42a7891b646324f8",
+  "finalImplementationSha256": "e9a275e19da17c648c0e0606e0721d0d97580771f9a59bbdd2dc079d07794402",
+  "results": [
+    {
+      "id": "floor3",
+      "from": "rm-400176-969baec4c053",
+      "to": "rm-400176-9683a6c4c03f",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "10-3564",
+      "toNumber": "10-3588",
+      "available": true,
+      "seconds": 1.624934470999986,
+      "distanceMetres": 14.838538090796,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-969baec4c053|door:400176:2215394:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215394:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:1",
+        "opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10",
+        "native-cell:24.278215:1013:walk:door:400176:2215393:1|opening:recovered-circulation-seam:rm-400176-9683a6c4c03f:rm-400176-969baec4c053:8:10:0",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215393:1",
+        "native-cell:24.278215:1013:walk:door:400176:2215392:1|door:400176:2215549:1",
+        "native-cell:24.278215:1013:walk:arrival:rm-400176-9683a6c4c03f|door:400176:2215549:1"
+      ],
+      "paths": 1
+    },
+    {
+      "id": "ramp-from-08",
+      "from": "rm-1487816-1a09473066a2",
+      "to": "rm-311-86e02816d8fe",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "08-S101",
+      "toNumber": "07-180",
+      "available": true,
+      "seconds": 1.8444977119999821,
+      "distanceMetres": 54.012206333503784,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:3.280840:418:walk:arrival:rm-1487816-1a09473066a2|door:1487816:2018182:1",
+        "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+        "door:1487816:1630256",
+        "native-cell:3.280840:392:walk:door:1487816:1630256:0|ramp:1622190:upper",
+        "ramp:1622190",
+        "walk:ramp:1622190:lower"
+      ],
+      "paths": 5
+    },
+    {
+      "id": "floor2",
+      "from": "rm-694-2408fa58372a",
+      "to": "rm-694-0b30ff58296a",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "06-214",
+      "toNumber": "06-244",
+      "available": true,
+      "seconds": 7.826349910999998,
+      "distanceMetres": 15.548150749283714,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:14.435696:536:walk:arrival:rm-694-2408fa58372a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+        "opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2",
+        "native-cell:14.435696:536:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0"
+      ],
+      "paths": 1
+    },
+    {
+      "id": "08-10-floor2",
+      "from": "rm-694-01803a06bb62",
+      "to": "rm-694-d302635a3d75",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "08-264",
+      "toNumber": "10-2006",
+      "available": false,
+      "seconds": 0.98277281699999,
+      "turnAroundInstructions": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+        "blockers": [],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:633:walk:arrival:rm-694-01803a06bb62|door:694:2468795:0",
+          "door:694:2468795",
+          "native-cell:14.435696:633:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+          "native-cell:14.435696:633:walk:arrival:rm-694-43988ffdc334|door:694:2000729:1",
+          "native-cell:14.435696:633:walk:door:694:1499620:0|door:694:2000729:1",
+          "door:694:1499620",
+          "native-cell:14.435696:668:walk:arrival:rm-694-7ecf02632b2a|door:694:1499620:1",
+          "native-cell:14.435696:668:walk:arrival:rm-694-7ecf02632b2a|door:694:1499619:0",
+          "door:694:1499619",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d30ff45a3d81|door:694:1499619:1",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d30ff45a3d81|door:694:1499392:0",
+          "native-cell:14.435696:664:walk:door:694:1499392:0|door:694:1499394:0",
+          "native-cell:14.435696:664:walk:door:694:1499394:0|door:694:1499395:0",
+          "native-cell:14.435696:664:walk:door:694:1499395:0|door:694:1499396:0",
+          "native-cell:14.435696:664:walk:door:694:1499396:0|opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10:0",
+          "opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10",
+          "native-cell:14.435696:664:walk:door:694:1499398:0|opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10:1",
+          "native-cell:14.435696:664:walk:door:694:1499398:0|door:694:1499399:0",
+          "native-cell:14.435696:664:walk:door:694:1499399:0|door:694:1499400:0",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d3135e5a3d84|door:694:1499400:0",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d3135e5a3d84|door:694:1499402:1",
+          "native-cell:14.435696:664:walk:door:694:1499402:1|door:694:1499403:0",
+          "native-cell:14.435696:664:walk:door:694:1499371:0|door:694:1499403:0",
+          "native-cell:14.435696:664:walk:door:694:1499371:0|door:694:1499372:0",
+          "native-cell:14.435696:664:walk:door:694:1499372:0|door:694:1499373:1",
+          "door:694:1499373",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d302635a3d75|door:694:1499373:0"
+        ],
+        "constraint": "hallways"
+      }
+    },
+    {
+      "id": "lift-up",
+      "from": "rm-311-4170374a7ea7",
+      "to": "rm-694-b5dfde9d939a",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "05-143",
+      "toNumber": "05-242",
+      "available": true,
+      "seconds": 4.103795817000035,
+      "distanceMetres": 8.869321860838923,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1"
+      ],
+      "paths": 3
+    },
+    {
+      "id": "local-stairs-down",
+      "from": "rm-311-86e02816d8fe",
+      "to": "rm-1450417-f65fe5d929e4",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "07-180",
+      "toNumber": "09-201",
+      "available": true,
+      "seconds": 8.011626028000029,
+      "distanceMetres": 61.623174737640284,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "walk:ramp:1622190:lower",
+        "native-cell:0.000000:70:walk:door:311:1951047:1|ramp:1622190:lower",
+        "door:311:1951047",
+        "native-cell:0.000000:277:walk:arrival:reviewed-native:pin-9|door:311:1951047:0",
+        "native-cell:0.000000:277:walk:arrival:reviewed-native:pin-9|local:local:07:311:09:1450417:1644499:1",
+        "local:local:07:311:09:1450417:1644499",
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-f65fe5d929e4|local:local:07:311:09:1450417:1644499:0"
+      ],
+      "paths": 6
+    },
+    {
+      "id": "lift-down",
+      "from": "rm-694-b5dfde9d939a",
+      "to": "rm-311-4170374a7ea7",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "05-242",
+      "toNumber": "05-143",
+      "available": true,
+      "seconds": 5.451085409999999,
+      "distanceMetres": 8.869321860838923,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:14.435696:672:walk:arrival:rm-694-b5dfde9d939a|connector:unbc-05-library-east-lift:1",
+        "connector:unbc-05-library-east-lift:0:1",
+        "native-cell:0.000000:70:walk:arrival:rm-311-4170374a7ea7|connector:unbc-05-library-east-lift:0"
+      ],
+      "paths": 3
+    },
+    {
+      "id": "local-stairs-up",
+      "from": "rm-1450417-f65fe5d929e4",
+      "to": "rm-311-86e02816d8fe",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "09-201",
+      "toNumber": "07-180",
+      "available": true,
+      "seconds": 12.030487525000003,
+      "distanceMetres": 61.6231747376403,
+      "turnAroundInstructions": 1,
+      "sourceEdgeIds": [
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-f65fe5d929e4|local:local:07:311:09:1450417:1644499:0",
+        "local:local:07:311:09:1450417:1644499",
+        "native-cell:0.000000:277:walk:arrival:reviewed-native:pin-9|local:local:07:311:09:1450417:1644499:1",
+        "native-cell:0.000000:277:walk:arrival:reviewed-native:pin-9|door:311:1951047:0",
+        "door:311:1951047",
+        "native-cell:0.000000:70:walk:door:311:1951047:1|ramp:1622190:lower",
+        "walk:ramp:1622190:lower"
+      ],
+      "paths": 6
+    },
+    {
+      "id": "floor1",
+      "from": "rm-1450417-dbcd6929f085",
+      "to": "rm-1450417-dbab6729f069",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "09-218",
+      "toNumber": "09-260",
+      "available": true,
+      "seconds": 344.811025808,
+      "distanceMetres": 19.36082901095677,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbcd6929f085|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:1",
+        "opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1",
+        "native-cell:-3.280840:13:walk:arrival:rm-1450417-dbab6729f069|opening:recovered-circulation-seam:rm-1450417-dbab6729f069:rm-1450417-dbcd6929f085:13:1:0"
+      ],
+      "paths": 1
+    },
+    {
+      "id": "10-08-floor2",
+      "from": "rm-694-d302635a3d75",
+      "to": "rm-694-01803a06bb62",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "10-2006",
+      "toNumber": "08-264",
+      "available": false,
+      "seconds": 0.09383577000000515,
+      "turnAroundInstructions": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+        "blockers": [],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:664:walk:arrival:rm-694-d302635a3d75|door:694:1499373:0",
+          "door:694:1499373",
+          "native-cell:14.435696:664:walk:door:694:1499372:0|door:694:1499373:1",
+          "native-cell:14.435696:664:walk:door:694:1499371:0|door:694:1499372:0",
+          "native-cell:14.435696:664:walk:door:694:1499371:0|door:694:1499403:0",
+          "native-cell:14.435696:664:walk:door:694:1499402:1|door:694:1499403:0",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d3135e5a3d84|door:694:1499402:1",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d3135e5a3d84|door:694:1499400:0",
+          "native-cell:14.435696:664:walk:door:694:1499399:0|door:694:1499400:0",
+          "native-cell:14.435696:664:walk:door:694:1499398:0|door:694:1499399:0",
+          "native-cell:14.435696:664:walk:door:694:1499398:0|opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10:1",
+          "opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10",
+          "native-cell:14.435696:664:walk:door:694:1499396:0|opening:recovered-circulation-seam:rm-694-d30ff45a3d81:rm-694-d3135e5a3d84:7:10:0",
+          "native-cell:14.435696:664:walk:door:694:1499395:0|door:694:1499396:0",
+          "native-cell:14.435696:664:walk:door:694:1499394:0|door:694:1499395:0",
+          "native-cell:14.435696:664:walk:door:694:1499392:0|door:694:1499394:0",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d30ff45a3d81|door:694:1499392:0",
+          "native-cell:14.435696:664:walk:arrival:rm-694-d30ff45a3d81|door:694:1499619:1",
+          "door:694:1499619",
+          "native-cell:14.435696:668:walk:arrival:rm-694-7ecf02632b2a|door:694:1499619:0",
+          "native-cell:14.435696:668:walk:arrival:rm-694-7ecf02632b2a|door:694:1499620:1",
+          "door:694:1499620",
+          "native-cell:14.435696:633:walk:door:694:1499620:0|door:694:2000729:1",
+          "native-cell:14.435696:633:walk:arrival:rm-694-43988ffdc334|door:694:2000729:1",
+          "native-cell:14.435696:633:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+          "door:694:2468795",
+          "native-cell:14.435696:633:walk:arrival:rm-694-01803a06bb62|door:694:2468795:0"
+        ],
+        "constraint": "hallways"
+      }
+    },
+    {
+      "id": "floor4",
+      "from": "rm-402367-03844688998a",
+      "to": "rm-402367-133b24ba6565",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "04-402",
+      "toNumber": "04-423",
+      "available": true,
+      "seconds": 4.081643007999984,
+      "distanceMetres": 35.53771096927895,
+      "turnAroundInstructions": 1,
+      "sourceEdgeIds": [
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-03844688998a|door:402367:2147516:0",
+        "native-cell:34.120735:1077:walk:door:402367:2147516:0|door:402367:2147550:1",
+        "native-cell:34.120735:1077:walk:door:402367:2147550:1|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:0",
+        "opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14",
+        "native-cell:34.120735:1077:walk:door:402367:2144274:0|opening:recovered-circulation-seam:rm-402367-03844688998a:rm-402367-133b24ba6565:0:14:1",
+        "native-cell:34.120735:1077:walk:connector:unbc-04-lift:3|door:402367:2144274:0",
+        "native-cell:34.120735:1077:walk:arrival:rm-402367-133b24ba6565|connector:unbc-04-lift:3"
+      ],
+      "paths": 1
+    },
+    {
+      "id": "ramp-to-08",
+      "from": "rm-311-86e02816d8fe",
+      "to": "rm-1487816-1a09473066a2",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "checkFailures": [],
+      "fromNumber": "07-180",
+      "toNumber": "08-S101",
+      "available": true,
+      "seconds": 1.004953737999953,
+      "distanceMetres": 54.012206333503784,
+      "turnAroundInstructions": 0,
+      "sourceEdgeIds": [
+        "walk:ramp:1622190:lower",
+        "ramp:1622190",
+        "native-cell:3.280840:392:walk:door:1487816:1630256:0|ramp:1622190:upper",
+        "door:1487816:1630256",
+        "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+        "native-cell:3.280840:418:walk:arrival:rm-1487816-1a09473066a2|door:1487816:2018182:1"
+      ],
+      "paths": 5
+    }
+  ]
+}

@@ -1,11 +1,25 @@
 import { useEffect, useRef, useState } from "react";
-import { fetchHostedProject } from "~/indoor-project/hosted-project";
+import {
+  fetchHostedProject,
+  hostedDevelopmentOffer,
+} from "~/indoor-project/hosted-project";
+import {
+  buildDevelopmentDownload,
+  readDevelopmentSnapshot,
+  type DevelopmentSnapshot,
+} from "~/indoor-project/development-download";
 import "./project-download-page.css";
 
 /** Download transport only: no project import, floor preparation or route worker. */
 export default function ProjectDownloadPage() {
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
+  const [development, setDevelopment] = useState<{
+    url: string;
+    viewerSha256: string;
+    snapshot: DevelopmentSnapshot;
+  }>();
+  const [developmentStatus, setDevelopmentStatus] = useState("");
   const [saved, setSaved] = useState<{
     url: string;
     name: string;
@@ -13,6 +27,40 @@ export default function ProjectDownloadPage() {
     sha256: string;
   }>();
   const controller = useRef<AbortController>();
+  useEffect(() => {
+    const request = new AbortController();
+    const query = location.hash.includes("?")
+      ? location.hash.slice(location.hash.indexOf("?") + 1)
+      : location.search;
+    const manifest = new URLSearchParams(query).get("package");
+    if (manifest)
+      void (async () => {
+        try {
+          const offer = await hostedDevelopmentOffer(
+            new URL(manifest, location.href).href,
+            request.signal,
+          );
+          if (!offer) return;
+          const snapshot = await readDevelopmentSnapshot(
+            offer.url,
+            request.signal,
+          );
+          if (snapshot.viewer.sha256 !== offer.viewerSha256)
+            throw new Error(
+              "The development snapshot does not match this visitor release.",
+            );
+          if (!request.signal.aborted) setDevelopment({ ...offer, snapshot });
+        } catch (error) {
+          if (!request.signal.aborted)
+            setDevelopmentStatus(
+              error instanceof Error
+                ? error.message
+                : "Development download is unavailable.",
+            );
+        }
+      })();
+    return () => request.abort();
+  }, []);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => {
     return () => {
@@ -20,7 +68,7 @@ export default function ProjectDownloadPage() {
     };
   }, [saved]);
 
-  async function download() {
+  async function download(kind: "viewer" | "development" = "viewer") {
     if (controller.current) return;
     const request = new AbortController();
     controller.current = request;
@@ -33,18 +81,22 @@ export default function ProjectDownloadPage() {
         : location.search;
       const manifest = new URLSearchParams(query).get("package");
       if (!manifest) throw new Error("Open the download link from your map.");
-      const result = await fetchHostedProject(
-        new URL(manifest, location.href).href,
-        {
-          signal: request.signal,
-          onProgress: (received, total) => {
-            if (!request.signal.aborted)
-              setStatus(
-                `${received === total ? "Verifying ZIP" : "Downloading"} · ${(received / 1e6).toFixed(2)} / ${(total / 1e6).toFixed(2)} MB`,
-              );
-          },
-        },
-      );
+      const result =
+        kind === "development" && development
+          ? await buildDevelopmentDownload(
+              development.url,
+              development.viewerSha256,
+              { signal: request.signal, onProgress: setStatus },
+            )
+          : await fetchHostedProject(new URL(manifest, location.href).href, {
+              signal: request.signal,
+              onProgress: (received, total) => {
+                if (!request.signal.aborted)
+                  setStatus(
+                    `${received === total ? "Verifying ZIP" : "Downloading"} · ${(received / 1e6).toFixed(2)} / ${(total / 1e6).toFixed(2)} MB`,
+                  );
+              },
+            });
       request.signal.throwIfAborted();
       const blob = new Blob([result.bytes as Uint8Array<ArrayBuffer>], {
         type: "application/zip",
@@ -52,7 +104,7 @@ export default function ProjectDownloadPage() {
       const url = URL.createObjectURL(blob);
       // The transport validates a bounded ZIP name. Strip path/control characters
       // before using a name supplied by a hosted manifest as a local filename.
-      const name = result.fileName.replace(/[\\/\x00-\x1f\x7f]/g, "_");
+      const name = result.fileName.replaceAll(/[^\w.-]/g, "_");
       setSaved({
         url,
         name,
@@ -98,11 +150,71 @@ export default function ProjectDownloadPage() {
           browser.
         </p>
         <div className="download-actions">
-          <button onClick={() => void download()} disabled={busy}>
+          <button onClick={() => void download("viewer")} disabled={busy}>
             {saved ? "Check for a newer package" : "Prepare latest map ZIP"}
           </button>
           {busy && <button onClick={cancel}>Cancel download</button>}
         </div>
+        {development && (
+          <section
+            className="development-download"
+            aria-label="Development snapshot"
+          >
+            <h2>Continue development elsewhere</h2>
+            <p>
+              Download both repositories at their recorded commits, the current
+              visitor map, checksums and restore instructions. Dependencies can
+              be installed again with npm.
+            </p>
+            <p>
+              <strong>
+                {development.snapshot.nativeRebuildReady
+                  ? "Native authoring inputs included."
+                  : "Native rebuild backup is incomplete."}
+              </strong>{" "}
+              {development.snapshot.nativeRebuildReady
+                ? ""
+                : "The missing inputs below are needed to resume the native source work."}
+            </p>
+            <ul>
+              {development.snapshot.missingInputs.map((x) => (
+                <li key={x.name}>
+                  <strong>{x.name}</strong> — {x.reason}
+                </li>
+              ))}
+            </ul>
+            <button
+              disabled={busy}
+              onClick={() => void download("development")}
+            >
+              Prepare development snapshot ·{" "}
+              {(
+                (development.snapshot.viewer.bytes +
+                  development.snapshot.repositories.reduce(
+                    (n, r) => n + r.bytes,
+                    0,
+                  )) /
+                1e6
+              ).toFixed(1)}{" "}
+              MB
+            </button>
+            <details>
+              <summary>Source versions and contents</summary>
+              {development.snapshot.repositories.map((r) => (
+                <p key={r.name}>
+                  {r.name} · <code>{r.commit}</code>
+                </p>
+              ))}
+              <p>
+                Map SHA-256 <code>{development.viewerSha256}</code>
+              </p>
+              <p>
+                Release <code>{development.snapshot.releaseId}</code>
+              </p>
+            </details>
+          </section>
+        )}
+        {developmentStatus && <p>{developmentStatus}</p>}
         <p role="status" aria-live="polite">
           {status}
         </p>

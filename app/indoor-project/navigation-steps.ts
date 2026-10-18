@@ -111,8 +111,9 @@ export function projectNavigationSteps(
       else if (Math.abs(turn) < 60) turnKind = "slight";
       if (result.length === 0) {
         type = "depart";
-        message =
-          route.departure?.mode === "hallway"
+        message = route.departure?.hallwayCenter
+          ? `Start in the hallway center near ${departure} and head straight`
+          : route.departure?.mode === "hallway"
             ? `Start outside ${departure} and head straight`
             : `Leave ${departure} and head straight`;
       } else if (turning) {
@@ -158,8 +159,9 @@ export function projectNavigationSteps(
   if (last && endNode)
     result.push({
       type: "arrive",
-      message:
-        route.arrival?.mode === "hallway"
+      message: route.arrival?.hallwayCenter
+        ? `Arrive in the hallway center near ${destination}`
+        : route.arrival?.mode === "hallway"
           ? `Arrive outside ${destination}`
           : route.arrival?.mode === "doorway"
             ? `Arrive at the doorway of ${destination}`

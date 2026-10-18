@@ -31,7 +31,7 @@ export function lockBuildingOverviewLayers(map: MapLibreMap): () => void {
     if (
       !layer.id.startsWith("project-") ||
       (layer.type as string) === "custom" ||
-      /^project-(?:overview-|label$|route-|connector-|portal-|entrance-|annotation-|basemap-)/.test(
+      /^project-(?:overview-|label$|route-|network-|connector-|portal-|entrance-|annotation-|basemap-)/.test(
         layer.id,
       )
     )

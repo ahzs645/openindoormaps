@@ -1,0 +1,96 @@
+{
+  "format": "selected-floor-path-network-v1",
+  "createdAt": "2026-10-18T04:42:29.088Z",
+  "sourceIndoorSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "alignment": {
+    "originFeet": [-1.5131448815317867, 287.29482336869, -7.217847769028872],
+    "originGeographic": [-122.8140180885126, 53.892922780400426],
+    "projectionLatitude": 53.894657620000004,
+    "rotationRadians": 0.2832500807584849,
+    "horizontalMetresPerFoot": 0.3048,
+    "verticalMetresPerFoot": 0.3048,
+    "rmsMetres": 0.1441649870412355,
+    "referenceCount": 2
+  },
+  "sourceUnchanged": true,
+  "elapsedSeconds": 11.730190563,
+  "limitations": [
+    "This is complete selected-floor saved-source/display coverage, not a physical all-destination navigation acceptance.",
+    "Red gaps have no saved lateral approach; gray original paths are not shared-centerline or clearance certification.",
+    "Held stair links and ordinary-room transit requirements remain unchanged. No source node or portal is joined by proximity."
+  ],
+  "floors": [
+    {
+      "floor": "Floor 1",
+      "levelIds": [1450417, 311, 1487816, 1425915],
+      "displaySegments": 3068,
+      "sharedSegments": 2820,
+      "savedFallbackSegments": 248,
+      "originalWalkingEdgesShown": 1025,
+      "connectionFeatures": 212,
+      "verticalEdges": 36,
+      "enabledVerticalEdges": 28,
+      "heldVerticalEdges": 8,
+      "status": {
+        "saved-approach": 585,
+        "ordinary-room-requirements": 10,
+        "held": 8,
+        "missing-walking-approach": 10
+      }
+    },
+    {
+      "floor": "Floor 2",
+      "levelIds": [694],
+      "displaySegments": 2185,
+      "sharedSegments": 1872,
+      "savedFallbackSegments": 313,
+      "originalWalkingEdgesShown": 786,
+      "connectionFeatures": 129,
+      "verticalEdges": 43,
+      "enabledVerticalEdges": 23,
+      "heldVerticalEdges": 20,
+      "status": {
+        "saved-approach": 444,
+        "ordinary-room-requirements": 21,
+        "held": 20,
+        "missing-walking-approach": 2
+      }
+    },
+    {
+      "floor": "Floor 3",
+      "levelIds": [400176, 1487353],
+      "displaySegments": 1603,
+      "sharedSegments": 1409,
+      "savedFallbackSegments": 194,
+      "originalWalkingEdgesShown": 569,
+      "connectionFeatures": 100,
+      "verticalEdges": 42,
+      "enabledVerticalEdges": 22,
+      "heldVerticalEdges": 20,
+      "status": {
+        "saved-approach": 335,
+        "ordinary-room-requirements": 21,
+        "held": 20,
+        "missing-walking-approach": 4
+      }
+    },
+    {
+      "floor": "Floor 4",
+      "levelIds": [402367],
+      "displaySegments": 1310,
+      "sharedSegments": 1235,
+      "savedFallbackSegments": 75,
+      "originalWalkingEdgesShown": 499,
+      "connectionFeatures": 61,
+      "verticalEdges": 26,
+      "enabledVerticalEdges": 18,
+      "heldVerticalEdges": 8,
+      "status": {
+        "saved-approach": 303,
+        "held": 8,
+        "ordinary-room-requirements": 22,
+        "missing-walking-approach": 5
+      }
+    }
+  ]
+}

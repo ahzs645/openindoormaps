@@ -1,0 +1,62 @@
+{
+  "format": "fresh-directions-production-worker-benchmark-v1",
+  "sourceSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "routingDatasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+  "cacheSha256": "27ea7e9692a098fd76969d5872ac52259996c2ada56f50f24991097a6e4300b2",
+  "cacheBytes": 2592076,
+  "workerStarts": 1,
+  "results": [
+    {
+      "id": "floor1",
+      "available": true,
+      "workerReplySeconds": 37.182399067000006,
+      "originalRouteGeometryMatches": true,
+      "workerStarts": 1
+    },
+    {
+      "id": "floor1:retained-result-after-release",
+      "available": true,
+      "workerReplySeconds": 0.00021691599999758182,
+      "newWorkerNeeded": false
+    }
+  ],
+  "fetches": [
+    {
+      "url": "https://candidate.test/data/unbc-routing/27ea7e9692a098fd76969d5872ac52259996c2ada56f50f24991097a6e4300b2.json.gz",
+      "bytes": 2592076,
+      "elapsedSeconds": 5.485732402,
+      "memory": {
+        "rss": 1976705024,
+        "heapTotal": 331706368,
+        "heapUsed": 301544176,
+        "external": 81094784,
+        "arrayBuffers": 5842223,
+        "heapLimit": 855638016
+      }
+    }
+  ],
+  "observations": [
+    {
+      "rss": 1657487360,
+      "heapTotal": 13676544,
+      "heapUsed": 11001800,
+      "external": 8204443,
+      "arrayBuffers": 1797697,
+      "heapLimit": 855638016
+    },
+    {
+      "rss": 2440314880,
+      "heapTotal": 595369984,
+      "heapUsed": 441839704,
+      "external": 85231114,
+      "arrayBuffers": 12529574,
+      "heapLimit": 855638016
+    }
+  ],
+  "scope": "Actual production worker/client in a 768 MiB Node isolate; isolated candidate receipt only. No browser, network latency or floor-worker co-residency measured.",
+  "compiledTrustRootChanged": false,
+  "usedCompiledReceipt": true,
+  "firstRequestCpuProfile": true,
+  "published": false,
+  "geometryOrAccessChanged": false
+}

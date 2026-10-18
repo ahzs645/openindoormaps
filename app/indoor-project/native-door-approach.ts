@@ -461,6 +461,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
   };
   return (
     edge: IndoorEdge,
+    onlyNodeIds?: ReadonlySet<string>,
   ): { z: number; rings: Rings; exactParts?: NativeRationalParts }[] => {
     if (edge.kind !== "walk") return [];
     const ends = [
@@ -469,6 +470,7 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
     ];
     for (const end of ends) approachForNode(end.id);
     return ends.flatMap(({ id, p, other }) => {
+      if (onlyNodeIds && !onlyNodeIds.has(id)) return [];
       const a = approaches.get(id);
       if (
         !a ||

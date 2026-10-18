@@ -1,0 +1,52 @@
+# UNBC original-source regeneration recovery · October 17
+
+The missing **functional later inputs are now freshly reconstructed and checked** against the recovered original RVT and historical accepted master. They are backed up incrementally in the [owner-private regeneration folder](https://drive.google.com/drive/folders/13ZLJpZEs-70wVXQiCUzhYera0aVqVpVL), underneath the [original-source recovery folder](https://drive.google.com/drive/folders/1FO-aO6JTBXKR0-Wkyfdrw3GLPvZ9pZ1g). Read its **RECOVERY-PROGRESS.md** and **STAGES.json** for the newest checkpoint counts; this committed receipt can precede a long-running worker. The historical lost archive/cache/checkpoint digests were not byte-recovered or relabelled. No new master has been accepted and the published map is unchanged.
+
+## Completed inputs
+
+- **Material proof:** scanned all 3,666 original RVT pages. Reissued two supported source instance envelopes and 120 supported planar definitions, comprising 2,502 components. Unsupported definitions retain conservative fallback bodies. Exact final enriched-cache SHA is recorded in recovery-receipt.json. A lossless nativeMaterialSource patch restores all 420,947,461 bytes from the base cache; every unrelated byte is preserved. Source locators alone confer no capability: the production consumer rederives the facts from originals.
+- **Drawing/floor:** restored the existing owner's decision that 27 imported DWGs are drawing references. Complete original physical/drawing replay passed; 100 source floor bindings were refreshed.
+- **Boundary:** reconstructed 29 documented source-cap/member proposals. Full physical replay and independent exact source-delta proof passed. Original identities/history/owners/access remain intact.
+- **Stepped stair source:** reconstructed the later request for source stair 1696006/run 1696012/landing 1696013, retained 112 locators for the complete census of 68 unknown panel/mullion occurrences, and rederived full source clearance in both directions. The older x=0.5 upper approach correctly hits retained stringer 1697062. The documented later approach uses the original upper entrance X and passes. This is source-proof qualification, **not final runtime/landing-policy or public stair admission**.
+- **Door closures:** retained all 413 original recipes in order: 395 unchanged, eight superseded with checked replacements, ten held because original-source physical replay refuses them. Both physical consumers and independent exact source-delta checks passed for 403 active records. Five replacements keep original thresholds and three use the existing 0.15 ft one-sided jamb bound. No physical portal, source access or unrelated geometry/logical-partition window changed. Final prepared fixtures still require normal replay.
+
+Targeted checks passed before the single full rebuild: 19 material/drawing guards, six source-column proposal cases, 55 boundary/floor/delta/member guards, 16 pipeline cases including two new detached-observer checks, five source-proof provenance cases and 14 door guards. Scoped typechecks and new-tool lint passed. An existing diagnostic-directory probe refused replacement before any original import, retaining its sentinel. No new browser/render/navigation claim is made by artifact recovery.
+
+## Compact verified backup
+
+Six stage archives currently add about **53.3 MB** to the original **466.1 MB** recovery archive. The existing master supplies the RVT, rooms, GIS and 890 companion files once; the base cache and source archives are reused. Every new stage was downloaded back from Drive and verified against its entire SHA and restored file hashes. Stage 5a's latest archive revision corrects the measured zlib version and auxiliary namespace handling; its review/state payloads are unchanged.
+
+| Stage | Content | Compressed bytes |
+|---|---|---:|
+| 1 | Source material proofs and lossless field restore | 1,867,386 |
+| 2 | Drawing/floor/boundary inputs, replay receipts and source tools | 171,683 |
+| 3 | Stepped source request, complete dependency locators, replay/tool changes | 14,723 |
+| 4 | 87.9 MB prelanding context and exact 3,800-file source freeze | 15,659,969 |
+| 5a | Door review, ~6 MB source-state delta and restore helpers | 6,464,720 |
+| 5b | ~29 MB checked-door-state delta | 29,095,709 |
+
+Stage 4 reuses the two existing source archives plus 18 changed/added files; complete fresh restoration passed all 3,800 source files. Git history/dependencies/credentials are omitted. Stage 5 rehydrates an exact seed from the original master using that source tree and Node v24.19.0; an independently restored source tree reproduced the seed's exact 331,385,340 bytes. Actual downloaded deltas restored the exact checked states (336,452,364 and 369,717,530 bytes); a wrong seed was refused without creating an output. A tiny verified ZIP recipe restores the 274,706,116-byte failed-source wrapper and avoids a further ~65 MiB transfer.
+
+All V8 snapshots are ordinary mathematical data, not saved private validation capability. Recorded absolute paths/runtime/algorithm hashes are part of checkpoint validity. A different workspace must reissue source capabilities and obtain normal compiler binding; do not edit old receipts to make stale work appear reusable. Each stage includes restoration instructions and file hashes.
+
+## One guarded build and incremental checkpoints
+
+The complete candidate build runs in an isolated read-only source copy with copied pinned dependencies. `guarded-rebuild-01-start.json` records its exact invocation and source-freeze binding. Both original importers, all four current source reviews and the complete stepped profile were rechecked again in this actual driver. The original-arrival preservation guard remains active for `rm-694-0bed6b73a3bd` and `rm-694-504b25e5319a`; no guard is waived to export a master.
+
+The new `--prepared-diagnostic-dir` option saves the complete computed dataset **before** stair finalization/preservation gates, so a later refusal retains expensive work for targeted investigation. The new detached prelanding observer likewise preserves a bounded mathematical phase before door/landing work, and tests prove it cannot mutate production data. Neither snapshot is import authority or an accepted map.
+
+The checkpoint packager verifies each complete floor container/payload SHA, task input, full native model/dataset, resolved compiler/engine/Node binding and exact source files. Common native inputs are lossless deltas against already backed-up cache/prelanding data. Each finished floor is independently archived and uploaded, then downloaded and hash-checked before the Drive progress index marks it complete. Parts stay below 32 MiB if transport splitting is needed. Keep `checkpoint-backup-stages/UPLOAD-RECEIPTS.json`; repeated invocations retain upload identities instead of duplicating completed files. Landing-pair namespaces are distinct from floor checkpoint namespaces.
+
+**Recovered/reissued inputs complete:** material proofs, all four later reviews, 985 evaluated landing candidate carriers and all nine production physical-floor checkpoints are backed up and full-file readback checked. **Pending at this snapshot:** completion of full candidate fixture/preservation/physical/navigation checks and resolution of any remaining refusal. All 28 complete stair links remain disabled in the live map. Never replace the historical accepted master with a partial/diagnostic candidate. The previous failed rebuild produced no newer accepted master.
+
+## Broader CI follow-up
+
+The recovery checks above pass, but Reviter's [full CI](https://github.com/ahzs645/reviter/actions/runs/39080355867) still fails its deterministic-math source policy (11 pre-existing Math usages in seven library files). Its [deployment lint](https://github.com/ahzs645/reviter/actions/runs/39080355995) reports synchronous effect state updates in the two existing DWG components. The reported files and policy test were confirmed byte-identical between pre-recovery b0085be and b6861b3. The original source freeze is preserved and no policy/test is disabled. CI-BASELINE.json and CI-NOTE.md are retained with final recovery evidence; whole-repository CI and final map acceptance remain separate from these successful targeted/source replay and backup-integrity checks.
+
+## Nine-floor and landing recovery completed
+
+All nine new physical-floor checkpoint containers/payloads, task hashes, complete model/dataset/resolved compiler/engine/Node bindings and downloaded Drive archive hashes passed. Their compressed archives total **9,448,044 bytes**; the shared native input/algorithm backup adds **6,505,122 bytes** using lossless deltas against existing verified seeds. The exact new physical elevations are -7.217847769028872, -3.2808398950131235, 0, 3.2808398950131235, 9.84251968503937, 14.435695538057743, 24.278215223097114, 29.855643044619423 and 34.120734908136484 ft. See NINE-FLOOR-BACKUP-SUMMARY.json for every archive hash/path; STAGES.json maps those hashes to Drive file identities and verified downloads. These replace the functional need for the lost historical checkpoint pairs without reusing or relabelling historical hashes.
+
+The actual landing stage completed all **1,148 pairs**, evaluated **985** candidates and found **80** supported mathematical local connections (5,307,356 ms, two workers). Every candidate carrier is saved in the final 985-entry prefix with its full binding. Their common **3,643,392-byte** archive restores exactly **351,160,225 bytes** of immutable model/landing data, using shared seeds and the exact frozen compiler/engine source files. The latest complete prefix supersedes shorter progressive backups; do not add their counts. Candidate outcomes and mathematical work do not authorize public or step-free routes.
+
+The complete additional recovery stages, shared inputs, nine floors, resume tools and progressive landing prefixes currently total **73,655,785 compressed bytes**, alongside the existing **466,093,911-byte** original-source recovery archive. A final state archive is queued automatically after the actual process exits. It will preserve the real completion/refusal log and available computed mathematical data, using verified lossless deltas. It must not promote a failed candidate, replace the historical accepted master or disable either protected arrival. The final Drive progress index can be newer than this committed snapshot.

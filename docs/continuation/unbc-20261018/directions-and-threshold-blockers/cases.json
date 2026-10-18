@@ -1,0 +1,89 @@
+[
+  {
+    "id": "floor1",
+    "from": "rm-1450417-dbcd6929f085",
+    "to": "rm-1450417-dbab6729f069",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "floor3",
+    "from": "rm-400176-969baec4c053",
+    "to": "rm-400176-9683a6c4c03f",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "08-10-floor2",
+    "from": "rm-694-01803a06bb62",
+    "to": "rm-694-d302635a3d75",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    }
+  },
+  {
+    "id": "lift-up",
+    "from": "rm-311-4170374a7ea7",
+    "to": "rm-694-b5dfde9d939a",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "lift-down",
+    "from": "rm-694-b5dfde9d939a",
+    "to": "rm-311-4170374a7ea7",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "ramp-to-08",
+    "from": "rm-311-86e02816d8fe",
+    "to": "rm-1487816-1a09473066a2",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "ramp-from-08",
+    "from": "rm-1487816-1a09473066a2",
+    "to": "rm-311-86e02816d8fe",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true
+  },
+  {
+    "id": "step-free-refusal",
+    "from": "rm-311-86e02816d8fe",
+    "to": "rm-1487816-1a09473066a2",
+    "mode": "accessible",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": false
+  }
+]

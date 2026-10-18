@@ -33,9 +33,20 @@ export function useProjectRoute(
 ) {
   const optionsKey = projectRoutingOptionsKey(options);
   const requestOptions = useMemo(() => {
-    const [endpointMode, preferHallways, excludedNativeStairIds] =
-      JSON.parse(optionsKey);
-    return { endpointMode, preferHallways, excludedNativeStairIds };
+    const [
+      endpointMode,
+      preferHallways,
+      excludedNativeStairIds,
+      useSharedCorridorGuides,
+      allowOtherRoomTransit,
+    ] = JSON.parse(optionsKey);
+    return {
+      endpointMode,
+      preferHallways,
+      excludedNativeStairIds,
+      useSharedCorridorGuides,
+      allowOtherRoomTransit,
+    };
   }, [optionsKey]);
   const samePlace = sameRoutePlace(start, end);
   const entranceIssue = useMemo(

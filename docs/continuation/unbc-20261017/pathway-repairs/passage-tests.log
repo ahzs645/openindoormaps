@@ -1,0 +1,25 @@
+✔ hallway inspection flag preserves package and floor queries in both route modes (1.09422ms)
+✔ shared preparation preserves the graph; actual routes use a common centre in both directions (250.844817ms)
+✔ tampered wall-side guides cannot claim shared two-foot clearance; physical edits invalidate bindings (41.533872ms)
+✔ hallway-center endpoints remove both door hooks but preserve the original graph, approaches and instructions (40.315167ms)
+✔ source directions and exact terminal positions remain authoritative (57.161327ms)
+✔ scoped enumeration uses the same physical/policy binding and retains restrictions (7.599462ms)
+✔ exact retraces remove unused spurs while preserving fixed outer endpoints and non-retraced bends (0.272325ms)
+✔ switching shared guides off and back on reuses a calculator without poisoning its guide cache (114.714044ms)
+✔ the corridor setting defaults on and persists independently for each model (0.366119ms)
+✔ compact vestibule routes straighten through intermediate arrival anchors, while holes veto the chord (326.108604ms)
+✔ path view uses bound shared guides on the selected floor, drops repeated segments and cannot include held stairs (22.335671ms)
+✔ path inspection distinguishes saved door approaches from hallway trunks without adding arrival spurs (35.248832ms)
+✔ internal hallway, vestibule and rotunda doors have no dotted room-entry branches (110.975397ms)
+✔ short reverse hooks are proposed for cleanup; long U-shaped halls and vertical endpoints are retained (0.373194ms)
+✔ one blocked hook retains its bend without vetoing another checked cleanup, in either direction (0.633542ms)
+✔ cleanup retains the exact hallway stop anchors even when their outer approaches reverse (0.311859ms)
+✔ compact vestibule shortcuts preserve both outer hallway-center stops before trimming door approaches (53.497696ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2121.799483

@@ -1,0 +1,19 @@
+{
+  "status": "partial-browser-proof",
+  "viewerCommit": "612e37c55c65df6de59f6945caa25a660c98cde9",
+  "sourceZipSha256": "09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+  "passed": [
+    "Real unchanged UNBC shared-guide ZIP imported normally",
+    "Floor 4 native display completed",
+    "paths=1 displayed dotted door approaches without opening Directions",
+    "Rendered approach layer returned features",
+    "Actual screenshot shows both line styles with native floor tint"
+  ],
+  "interruptedAt": "Test accessed private MapLibre source._data.features; source data was not a FeatureCollection there. No viewer page error was reported.",
+  "notCompleted": [
+    "Checkbox/legend interaction assertions on this build",
+    "Repeated toggle worker-request comparison",
+    "Mobile screenshot"
+  ],
+  "followup": "The recorded script now uses the public getData() API, but has not been rerun. Browser skill became available afterward and its browser-control tool is not connected; no alternate browser automation was launched. Earlier eb870bd desktop/mobile network-toggle/cache proof remains separate."
+}

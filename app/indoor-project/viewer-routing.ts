@@ -21,6 +21,7 @@ import {
   type ProjectRoutingGraph,
 } from "./routing-graph";
 import { hallwayRouteEndpoints, type RouteEndpoint } from "./route-endpoints";
+import { centerHallwayRouteEndpoints } from "./hallway-center-endpoints";
 import {
   projectRoutingOptionsKey,
   type ProjectRoutingOptions,
@@ -43,10 +44,34 @@ const originalCenteringRouteCache = new WeakMap<
 const copyRoute = (route: ProjectRoute): ProjectRoute => ({
   ...route,
   departure: route.departure
-    ? { ...route.departure, pointFeet: [...route.departure.pointFeet] }
+    ? {
+        ...route.departure,
+        pointFeet: [...route.departure.pointFeet],
+        hallwayCenter: route.departure.hallwayCenter
+          ? {
+              doorPointFeet: [...route.departure.hallwayCenter.doorPointFeet],
+              approachPointsFeet:
+                route.departure.hallwayCenter.approachPointsFeet.map((p) => [
+                  ...p,
+                ]),
+            }
+          : undefined,
+      }
     : undefined,
   arrival: route.arrival
-    ? { ...route.arrival, pointFeet: [...route.arrival.pointFeet] }
+    ? {
+        ...route.arrival,
+        pointFeet: [...route.arrival.pointFeet],
+        hallwayCenter: route.arrival.hallwayCenter
+          ? {
+              doorPointFeet: [...route.arrival.hallwayCenter.doorPointFeet],
+              approachPointsFeet:
+                route.arrival.hallwayCenter.approachPointsFeet.map((p) => [
+                  ...p,
+                ]),
+            }
+          : undefined,
+      }
     : undefined,
   edges: [...route.edges],
   nodeIds: [...route.nodeIds],
@@ -205,7 +230,7 @@ function resolveProjectRoute(
       options.endpointMode === "hallway"
         ? hallwayRouteEndpoints(data, graph, end, false)
         : [{ nodeId: end.arrivalNodeId }];
-  if (!starts.length || !ends.length) return remember(null);
+  if (starts.length === 0 || ends.length === 0) return remember(null);
   const goals = new Set(ends.map((e) => e.nodeId)),
     roots = new Set(starts.map((e) => e.nodeId)),
     excludedStairs = new Set(options.excludedNativeStairIds ?? []);
@@ -244,9 +269,11 @@ function resolveProjectRoute(
   let reached: string | undefined;
   // Try circulation-only transit first. Retain the physically/policy-checked
   // ordinary-room fallback when the map has no hallway-only connection.
-  for (const allowOrdinaryTransit of options.preferHallways === false
-    ? [true]
-    : [false, true]) {
+  for (const allowOrdinaryTransit of options.allowOtherRoomTransit === false
+    ? [false]
+    : options.preferHallways === false
+      ? [true]
+      : [false, true]) {
     distances.clear();
     previous.clear();
     heap.length = 0;
@@ -317,7 +344,16 @@ function resolveProjectRoute(
   });
   const reviewedEdges = [...dependencies.values()],
     used = [...new Set(reviewedEdges.flatMap((e) => e.roomKeys))];
-  const paths = centerPaths(data, edges, nodeIds, mode === "public");
+  const pathArguments = [
+    data,
+    edges,
+    nodeIds,
+    mode === "public",
+    options.useSharedCorridorGuides !== false,
+  ] as const;
+  const paths = originalCentering
+    ? originalCenteredRoutePaths(...pathArguments)
+    : centeredRoutePaths(...pathArguments, options.endpointMode === "hallway");
   const outside = createIndoorExclusionQuery(data);
   const pathExclusions = (path: RoutePath) => {
     const edge =
@@ -448,5 +484,10 @@ function resolveProjectRoute(
       .filter((e) => e.kind === "door")
       .map((e) => e.id),
   };
-  return remember(result);
+  return remember(
+    options.endpointMode === "hallway" &&
+      options.useSharedCorridorGuides !== false
+      ? centerHallwayRouteEndpoints(data, result)
+      : result,
+  );
 }

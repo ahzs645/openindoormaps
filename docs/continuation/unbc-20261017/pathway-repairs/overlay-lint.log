@@ -1,0 +1,31 @@
+
+/workspace/openindoormaps/app/indoor-project/hallway-path-legend.tsx
+  5:12  warning  Classname 'project-path-trunk' is not a Tailwind CSS class!  tailwindcss/no-custom-classname
+
+/workspace/openindoormaps/app/indoor-project/map-layers.tsx
+    56:44  warning  '/workspace/openindoormaps/app/indoor-project/display-geometry.ts' imported multiple times                                                                                                    import/no-duplicates
+    82:42  warning  '/workspace/openindoormaps/app/indoor-project/display-geometry.ts' imported multiple times                                                                                                    import/no-duplicates
+   346:6   warning  React Hook useMemo has a missing dependency: 'nativeModel'. Either include it or remove the dependency array                                                                                  react-hooks/exhaustive-deps
+  2184:6   warning  React Hook useEffect has missing dependencies: 'basemapVisibility', 'prepared.selectionAreas', 'selectionOnlyKeys', and 'visitorContext'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/workspace/openindoormaps/app/indoor-project/project-navigation.tsx
+  280:5   warning  React Hook useMemo has a missing dependency: 'tagsFor'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  792:26  warning  Classname 'project-place-description' is not a Tailwind CSS class!                                        tailwindcss/no-custom-classname
+
+/workspace/openindoormaps/app/pages/indoor-project-page.tsx
+   247:6   warning  React Hook useEffect has a missing dependency: 'data'. Either include it or remove the dependency array                                    react-hooks/exhaustive-deps
+   468:5   warning  React Hook useMemo has unnecessary dependencies: 'pinPatchId' and 'pinRecommendation'. Either exclude them or remove the dependency array  react-hooks/exhaustive-deps
+   535:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+   542:5   warning  React Hook useEffect has a complex expression in the dependency array. Extract it to a separate variable so it can be statically checked   react-hooks/exhaustive-deps
+   797:6   warning  React Hook useEffect has a missing dependency: 'hostedParams'. Either include it or remove the dependency array                            react-hooks/exhaustive-deps
+  1073:5   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1104:6   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1286:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+  1380:6   warning  React Hook useEffect has a missing dependency: 'project'. Either include it or remove the dependency array                                 react-hooks/exhaustive-deps
+  1632:5   warning  React Hook useMemo has a missing dependency: 'project'. Either include it or remove the dependency array                                   react-hooks/exhaustive-deps
+  1786:7   warning  Classname 'project-pin-review' is not a Tailwind CSS class!                                                                                tailwindcss/no-custom-classname
+  3897:28  warning  Classname 'project-help' is not a Tailwind CSS class!                                                                                      tailwindcss/no-custom-classname
+
+✖ 19 problems (0 errors, 19 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

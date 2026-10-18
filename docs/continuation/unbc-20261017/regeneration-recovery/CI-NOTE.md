@@ -1,0 +1,5 @@
+# Broader CI status (separate from source-recovery checks)
+
+The targeted source/material/review/pipeline checks passed, including actual original-source replays. The whole Reviter repository CI is not green: its deterministic-math source policy test reports 11 existing Math usages in seven library files, and deployment lint reports synchronous effect state updates in app/studio/DwgBuildingModel.tsx and DwgFloorReview.tsx. CI-BASELINE.json records exact before/after commits and hashes: all reported source files and the policy test are byte-identical to before this recovery change. The new pipeline diagnostic tests passed in the remote suite as well.
+
+These existing failures are retained as follow-up; no policy or test is disabled. The isolated ongoing native build still uses the exact backed-up source freeze and unchanged physical/source/arrival gates. Backup integrity or a successful targeted replay does not mean whole-project CI, final route qualification or publication acceptance has passed. No new master is accepted or Site published by this recovery work.

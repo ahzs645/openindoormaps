@@ -1,0 +1,238 @@
+{
+  "format": "hallway-display-links-inspection-v1",
+  "createdAt": "2026-10-18T03:55:12.937Z",
+  "sourceIndoorSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "boundGuideCount": 2617,
+  "witnesses": [
+    {
+      "floor": "Floor 1",
+      "from": "08-159",
+      "to": "10-1060",
+      "topologyFilter": "Conservative: every edge owner must be a display passage; not the physical route calculator",
+      "savedTopologyConnected": false,
+      "edges": []
+    },
+    {
+      "floor": "Floor 1",
+      "from": "10-1060",
+      "to": "08-159",
+      "topologyFilter": "Conservative: every edge owner must be a display passage; not the physical route calculator",
+      "savedTopologyConnected": false,
+      "edges": []
+    },
+    {
+      "floor": "Floor 2",
+      "from": "08-267",
+      "to": "10-2066",
+      "topologyFilter": "Conservative: every edge owner must be a display passage; not the physical route calculator",
+      "savedTopologyConnected": false,
+      "edges": []
+    },
+    {
+      "floor": "Floor 2",
+      "from": "10-2066",
+      "to": "08-267",
+      "topologyFilter": "Conservative: every edge owner must be a display passage; not the physical route calculator",
+      "savedTopologyConnected": false,
+      "edges": []
+    }
+  ],
+  "entrances": [
+    {
+      "floor": "Floor 1",
+      "bridge": "door:1487816:1501580",
+      "inner": "door:1487816:1501582",
+      "mainHallNode": "door:1487816:1501582:0",
+      "doors": [
+        {
+          "id": "door:1487816:1501580",
+          "from": "door:1487816:1501580:0",
+          "to": "door:1487816:1501580:1",
+          "kind": "door",
+          "lengthMetres": 0.41223983665533115,
+          "pointsFeet": [
+            [76.35378250937987, 761.6442634687032, 3.2808398950131235],
+            [75.09244877260029, 761.1561300284045, 3.2808398950131235]
+          ],
+          "roomKeys": ["rm-1487816-93135f5b541a", "rm-1487816-959fe1d830e0"],
+          "evidence": "reviewed-native-door",
+          "nativeElementId": 1501580,
+          "accessible": "unknown",
+          "enabled": true
+        },
+        {
+          "id": "door:1487816:1501582",
+          "from": "door:1487816:1501582:0",
+          "to": "door:1487816:1501582:1",
+          "kind": "door",
+          "lengthMetres": 0.25863137628677413,
+          "pointsFeet": [
+            [77.88935115376279, 771.7280142063199, 3.2808398950131235],
+            [77.20586177835105, 771.2251799655415, 3.2808398950131235]
+          ],
+          "roomKeys": ["rm-1487816-1949cc41e164", "rm-1487816-93135f5b541a"],
+          "evidence": "native-door",
+          "nativeElementId": 1501582,
+          "accessible": "unknown",
+          "enabled": true
+        }
+      ],
+      "mainHallTerminal": {
+        "id": "door:1487816:1501582:0",
+        "roomKey": "rm-1487816-1949cc41e164",
+        "kind": "portal",
+        "levelId": 1487816,
+        "building": "10",
+        "surfaceId": "10:1487816:3.281",
+        "pointFeet": [77.88935115376279, 771.7280142063199, 3.2808398950131235],
+        "geographic": [-122.8142929294216, 53.89425709645648]
+      },
+      "walkingEdgesAtMainHallTerminal": []
+    },
+    {
+      "floor": "Floor 2",
+      "bridge": "door:694:1499620",
+      "inner": "door:694:1499619",
+      "mainHallNode": "door:694:1499619:1",
+      "doors": [
+        {
+          "id": "door:694:1499620",
+          "from": "door:694:1499620:0",
+          "to": "door:694:1499620:1",
+          "kind": "door",
+          "lengthMetres": 0.9236639938312305,
+          "pointsFeet": [
+            [75.02538192474373, 760.247799871926, 14.435695538057743],
+            [76.46979484241191, 762.9118113550811, 14.435695538057743]
+          ],
+          "roomKeys": ["rm-694-43988ffdc334", "rm-694-7ecf02632b2a"],
+          "evidence": "native-door",
+          "nativeElementId": 1499620,
+          "accessible": "unknown",
+          "enabled": true
+        },
+        {
+          "id": "door:694:1499619",
+          "from": "door:694:1499619:0",
+          "to": "door:694:1499619:1",
+          "kind": "door",
+          "lengthMetres": 0.36576000000002856,
+          "pointsFeet": [
+            [80.71339659294537, 768.7898930304976, 14.435695538057743],
+            [80.95023509813421, 769.9662890192957, 14.435695538057743]
+          ],
+          "roomKeys": ["rm-694-7ecf02632b2a", "rm-694-d30ff45a3d81"],
+          "evidence": "native-door",
+          "nativeElementId": 1499619,
+          "accessible": "unknown",
+          "enabled": true
+        }
+      ],
+      "mainHallTerminal": {
+        "id": "door:694:1499619:1",
+        "roomKey": "rm-694-d30ff45a3d81",
+        "kind": "portal",
+        "levelId": 694,
+        "building": "10",
+        "surfaceId": "10:694:14.436",
+        "pointFeet": [80.95023509813421, 769.9662890192957, 14.435695538057743],
+        "geographic": [-122.81427698590974, 53.8942548072274]
+      },
+      "walkingEdgesAtMainHallTerminal": [
+        {
+          "id": "native-cell:14.435696:664:walk:arrival:rm-694-d30ff45a3d81|door:694:1499619:1",
+          "pointsFeet": [
+            [80.95023509813421, 769.9662890192957, 14.435695538057743],
+            [89.79971273923184, 778.6835056964637, 14.435695538057743]
+          ],
+          "sharedGuide": false,
+          "ordinaryOwners": [
+            {
+              "key": "rm-694-d302635a3d75",
+              "number": "10-2006",
+              "name": "Office"
+            },
+            {
+              "key": "rm-694-d3ac6f5a3e06",
+              "number": "10-2084",
+              "name": "Coffee"
+            },
+            {
+              "key": "rm-694-e208de51289b",
+              "number": "10-2068",
+              "name": "Office"
+            },
+            {
+              "key": "rm-694-ec366a5a4b83",
+              "number": "10-2054",
+              "name": "Research Lab"
+            },
+            {
+              "key": "rm-694-ec396e5a4b85",
+              "number": "10-2056",
+              "name": "Office"
+            },
+            {
+              "key": "rm-694-ec3cde5a4b88",
+              "number": "10-2072",
+              "name": "Office"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Saved graph connectivity is not a fresh physical navigation calculation.",
+    "The passage-only topology filter checks every cell owner, and can refuse a path because the cell also lists ordinary rooms. A failed witness is not independently a physical-route refusal.",
+    "Fallback originals and saved transitions are distinguished from fitted centerlines.",
+    "No source geometry, access, stair status, graph or published viewer was changed."
+  ],
+  "floors": [
+    {
+      "id": "storey:2295121",
+      "name": "Basement",
+      "levelIds": [2295121],
+      "elevationFeet": -7.217847769028872,
+      "displaySegments": 22,
+      "conservativePassageFallbackCount": 0,
+      "connectionLines": 1
+    },
+    {
+      "id": "storey:1450417+311+1487816",
+      "name": "Floor 1",
+      "levelIds": [1450417, 311, 1487816, 1425915],
+      "elevationFeet": -3.2808398950131235,
+      "displaySegments": 2717,
+      "conservativePassageFallbackCount": 18,
+      "connectionLines": 175
+    },
+    {
+      "id": "storey:694",
+      "name": "Floor 2",
+      "levelIds": [694],
+      "elevationFeet": 14.435695538057743,
+      "displaySegments": 1793,
+      "conservativePassageFallbackCount": 19,
+      "connectionLines": 78
+    },
+    {
+      "id": "storey:400176+1487353",
+      "name": "Floor 3",
+      "levelIds": [400176, 1487353],
+      "elevationFeet": 24.278215223097114,
+      "displaySegments": 1357,
+      "conservativePassageFallbackCount": 0,
+      "connectionLines": 48
+    },
+    {
+      "id": "storey:402367",
+      "name": "Floor 4",
+      "levelIds": [402367],
+      "elevationFeet": 34.120734908136484,
+      "displaySegments": 1194,
+      "conservativePassageFallbackCount": 0,
+      "connectionLines": 34
+    }
+  ]
+}
