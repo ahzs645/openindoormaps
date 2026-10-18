@@ -153,3 +153,12 @@ Original RVT SHA-256:
 `network.json.gz` contains the complete selected-floor saved-source display
 inventory. It is analytical evidence and grants no import/physical authority.
 All committed evidence files are covered by `SHA256SUMS`.
+
+The [4.08 MB continuation increment](https://drive.google.com/file/d/1xIX7LiGg9qy50y2jhxKk0Ba8_7wYr3fd/view)
+contains Git bundles, tracked-file checksums, restore instructions and a verified
+fresh restore receipt for OpenIndoorMaps `17d2464` and Reviter `e311f16`.
+All 3,858 tracked files matched after fetching only each prerequisite base and
+then its bundle. The final archive entries and complete private Drive download
+also matched SHA-256. See `portable-backup.json`. This is code and evidence;
+the original model/review/checkpoint archives remain separate in the same Drive
+folder. Subsequent receipt-only commits are outside this increment.
