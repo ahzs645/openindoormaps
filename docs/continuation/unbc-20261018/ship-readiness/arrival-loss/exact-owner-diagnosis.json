@@ -1,0 +1,779 @@
+{
+  "mathematicalDiagnosticOnly": true,
+  "physicalApproval": false,
+  "states": [
+    {
+      "name": "original",
+      "file": "original-master-indoor.json",
+      "bytes": 233060975,
+      "sha256": "31b3bc2d226fe006c404cfb4914ddac723e984c2d2f42cc91d6bdc095b1f2a27",
+      "exactTopology": true,
+      "rows": [
+        {
+          "key": "rm-694-0bed6b73a3bd",
+          "number": "05-S204",
+          "arrivalNodeId": "arrival:rm-694-0bed6b73a3bd",
+          "point": [
+            146.81505975575146,
+            236.25467561569565,
+            14.435695538057743
+          ],
+          "arrivalInIdentity": false,
+          "nodes": [
+            {
+              "id": "arrival:rm-694-0bed6b73a3bd",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "kind": "arrival",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                146.81505975575146,
+                236.25467561569565,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81329006077993,
+                53.89290210284785
+              ]
+            },
+            {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                146.81505975575146,
+                236.25467561569565,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81329006077993,
+                53.89290210284785
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+              "from": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "to": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1",
+              "kind": "stairs",
+              "lengthMetres": 7.850328159875335,
+              "pointsFeet": [
+                [
+                  146.81505975575146,
+                  236.25467561569565,
+                  14.435695538057743
+                ],
+                [
+                  142.34337354598142,
+                  226.6861982749599,
+                  24.278215223097114
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-0bed6b73a3bd",
+                "rm-400176-f91a4f2d9cb3"
+              ],
+              "evidence": "native-flight",
+              "nativeElementId": 1638837,
+              "accessible": "no",
+              "enabled": false
+            },
+            {
+              "id": "native-cell:14.435696:729:alias:arrival:rm-694-0bed6b73a3bd|stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "nativeCellId": "native-cell:14.435696:729",
+              "from": "arrival:rm-694-0bed6b73a3bd",
+              "to": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "kind": "walk",
+              "roomKeys": [
+                "rm-694-0bed6b73a3bd"
+              ],
+              "pointsFeet": [
+                [
+                  146.81505975575146,
+                  236.25467561569565,
+                  14.435695538057743
+                ],
+                [
+                  146.81505975575146,
+                  236.25467561569565,
+                  14.435695538057743
+                ]
+              ],
+              "lengthMetres": 0,
+              "enabled": true,
+              "accessible": "unknown",
+              "evidence": "Coincident source arrival and native connector identity on the same checked physical native cell; no walking segment or geometry movement."
+            }
+          ],
+          "issues": [
+            {
+              "id": "access-review:rm-694-0bed6b73a3bd:694",
+              "code": "access-review",
+              "severity": "review",
+              "message": "Public access has not been confirmed.",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "levelId": 694
+            }
+          ],
+          "cells": [
+            {
+              "id": "native-cell:14.435696:729",
+              "exactFaceId": "native-face:14.435696:3166",
+              "containsArrival": true,
+              "hasOwner": true,
+              "ownerRoomNumbers": [
+                "05-S204"
+              ],
+              "roomKeys": [
+                "rm-694-0bed6b73a3bd"
+              ],
+              "areaSquareFeet": 44.798823647293844,
+              "identityAreaSquareFeet": 6.4000000000000625,
+              "overlapSquareFeet": 3.6723821741685785,
+              "overlapAtLeastHalfOfIdentity": true,
+              "overlapAtLeastHalfOfCell": false,
+              "nativeFloorIds": [
+                503705
+              ],
+              "anchors": [],
+              "arrivalAdmittedByOwnerOrAnchor": true,
+              "floors": [
+                {
+                  "id": 503705,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "key": "rm-694-504b25e5319a",
+          "number": "03-S104",
+          "arrivalNodeId": "arrival:rm-694-504b25e5319a",
+          "point": [
+            116.10331869474172,
+            -110.83670670891547,
+            14.435695538057743
+          ],
+          "arrivalInIdentity": true,
+          "nodes": [
+            {
+              "id": "arrival:rm-694-504b25e5319a",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "arrival",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                116.10331869474172,
+                -110.83670670891547,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81297634443507,
+                53.89196611231953
+              ]
+            },
+            {
+              "id": "door:694:908922:0",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "portal",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                114.74448177496802,
+                -122.88462533961184,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81296676128514,
+                53.89193339901426
+              ]
+            },
+            {
+              "id": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                116.10331869474172,
+                -110.83670670891547,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81297634443507,
+                53.89196611231953
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "id": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+              "from": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "to": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:1",
+              "kind": "stairs",
+              "lengthMetres": 6.630655380468635,
+              "pointsFeet": [
+                [
+                  116.10331869474172,
+                  -110.83670670891547,
+                  14.435695538057743
+                ],
+                [
+                  116.70204651180781,
+                  -111.92513372372127,
+                  24.278215223097114
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-504b25e5319a",
+                "rm-400176-4ebbf37094e0"
+              ],
+              "evidence": "native-flight",
+              "nativeElementId": 2354630,
+              "accessible": "no",
+              "enabled": false
+            },
+            {
+              "id": "door:694:908922",
+              "from": "door:694:908922:0",
+              "to": "door:694:908922:1",
+              "kind": "door",
+              "lengthMetres": 0.3789595927302553,
+              "pointsFeet": [
+                [
+                  114.74448177496802,
+                  -122.88462533961184,
+                  14.435695538057743
+                ],
+                [
+                  113.61801617525913,
+                  -122.35842723840072,
+                  14.435695538057743
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-504b25e5319a",
+                "rm-694-ad5ba4e3b383"
+              ],
+              "evidence": "native-door",
+              "nativeElementId": 908922,
+              "accessible": "unknown",
+              "enabled": true
+            },
+            {
+              "id": "native-cell:14.435696:640:alias:arrival:rm-694-504b25e5319a|stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "nativeCellId": "native-cell:14.435696:640",
+              "from": "arrival:rm-694-504b25e5319a",
+              "to": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "kind": "walk",
+              "roomKeys": [
+                "rm-694-504b25e5319a"
+              ],
+              "pointsFeet": [
+                [
+                  116.10331869474172,
+                  -110.83670670891547,
+                  14.435695538057743
+                ],
+                [
+                  116.10331869474172,
+                  -110.83670670891547,
+                  14.435695538057743
+                ]
+              ],
+              "lengthMetres": 0,
+              "enabled": true,
+              "accessible": "unknown",
+              "evidence": "Coincident source arrival and native connector identity on the same checked physical native cell; no walking segment or geometry movement."
+            },
+            {
+              "id": "native-cell:14.435696:640:walk:arrival:rm-694-504b25e5319a|door:694:908922:0",
+              "nativeCellId": "native-cell:14.435696:640",
+              "from": "arrival:rm-694-504b25e5319a",
+              "to": "door:694:908922:0",
+              "kind": "walk",
+              "roomKeys": [
+                "rm-694-474583e52c63",
+                "rm-694-50479be53197",
+                "rm-694-504b25e5319a",
+                "rm-694-504e2be5319c",
+                "rm-694-5051ade5319f",
+                "rm-694-50f1ace53228",
+                "rm-694-50f834e5322d",
+                "rm-694-50fb9ce53230",
+                "rm-694-50ff23e53233",
+                "rm-694-5102a5e53236",
+                "rm-694-510935e5323b",
+                "rm-694-ad5824e3b380",
+                "rm-694-ad5ba4e3b383"
+              ],
+              "pointsFeet": [
+                [
+                  116.10331869474172,
+                  -110.83670670891547,
+                  14.435695538057743
+                ],
+                [
+                  115.80344231324797,
+                  -110.60125328880004,
+                  14.435695538057743
+                ],
+                [
+                  123.00344231324796,
+                  -110.60125328880005,
+                  14.435695538057743
+                ],
+                [
+                  123.00344231324794,
+                  -114.20125328880006,
+                  14.435695538057743
+                ],
+                [
+                  118.80344231324796,
+                  -114.20125328880005,
+                  14.435695538057743
+                ],
+                [
+                  118.80344231324794,
+                  -122.60125328880004,
+                  14.435695538057743
+                ],
+                [
+                  114.60344231324792,
+                  -122.60125328880004,
+                  14.435695538057743
+                ],
+                [
+                  114.74448177496802,
+                  -122.88462533961184,
+                  14.435695538057743
+                ]
+              ],
+              "lengthMetres": 8.625168671231021,
+              "enabled": true,
+              "accessible": "unknown",
+              "evidence": "Native floor-bound circulation cell native-cell:14.435696:640; slab profiles 400479,490040; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+            }
+          ],
+          "issues": [
+            {
+              "id": "access-review:rm-694-504b25e5319a:694",
+              "code": "access-review",
+              "severity": "review",
+              "message": "Public access has not been confirmed.",
+              "roomKey": "rm-694-504b25e5319a",
+              "levelId": 694
+            }
+          ],
+          "cells": [
+            {
+              "id": "native-cell:14.435696:640",
+              "exactFaceId": "native-face:14.435696:2881",
+              "containsArrival": true,
+              "hasOwner": true,
+              "ownerRoomNumbers": [
+                "03-1051E",
+                "03-1045",
+                "03-S104",
+                "03-1045A",
+                "03-1041",
+                "03-1051B",
+                "03-1051",
+                "03-1051A",
+                "03-1048",
+                "03-1049",
+                "03-1047",
+                "03-1042A",
+                "03-1050"
+              ],
+              "roomKeys": [
+                "rm-694-474583e52c63",
+                "rm-694-50479be53197",
+                "rm-694-504b25e5319a",
+                "rm-694-504e2be5319c",
+                "rm-694-5051ade5319f",
+                "rm-694-50f1ace53228",
+                "rm-694-50f834e5322d",
+                "rm-694-50fb9ce53230",
+                "rm-694-50ff23e53233",
+                "rm-694-5102a5e53236",
+                "rm-694-510935e5323b",
+                "rm-694-ad5824e3b380",
+                "rm-694-ad5ba4e3b383"
+              ],
+              "areaSquareFeet": 2535.3317552182457,
+              "identityAreaSquareFeet": 137.9200000000001,
+              "overlapSquareFeet": 110.4905706423749,
+              "overlapAtLeastHalfOfIdentity": true,
+              "overlapAtLeastHalfOfCell": false,
+              "nativeFloorIds": [
+                400479,
+                490040
+              ],
+              "anchors": [],
+              "arrivalAdmittedByOwnerOrAnchor": true,
+              "floors": [
+                {
+                  "id": 400479,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                },
+                {
+                  "id": 490040,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "prepared",
+      "file": "prepared-before-stair-finalization.bin",
+      "bytes": 151748935,
+      "sha256": "fd37be0d0a5a40b4772cdd5693106be0b3b1a85b0ea7eae2441543eb2db2e878",
+      "exactTopology": true,
+      "rows": [
+        {
+          "key": "rm-694-0bed6b73a3bd",
+          "number": "05-S204",
+          "point": [
+            146.81505975575146,
+            236.25467561569565,
+            14.435695538057743
+          ],
+          "arrivalInIdentity": false,
+          "nodes": [
+            {
+              "id": "arrival:rm-694-0bed6b73a3bd",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "kind": "arrival",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                146.81505975575146,
+                236.25467561569565,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81329006077993,
+                53.89290210284785
+              ]
+            },
+            {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                146.81505975575146,
+                236.25467561569565,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81329006077993,
+                53.89290210284785
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+              "from": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "to": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1",
+              "kind": "stairs",
+              "lengthMetres": 7.850328159875335,
+              "pointsFeet": [
+                [
+                  146.81505975575146,
+                  236.25467561569565,
+                  14.435695538057743
+                ],
+                [
+                  142.34337354598142,
+                  226.6861982749599,
+                  24.278215223097114
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-0bed6b73a3bd",
+                "rm-400176-f91a4f2d9cb3"
+              ],
+              "evidence": "native-flight",
+              "nativeElementId": 1638837,
+              "accessible": "no",
+              "enabled": false
+            }
+          ],
+          "issues": [
+            {
+              "id": "isolated-arrival:rm-694-0bed6b73a3bd:694",
+              "code": "isolated-arrival",
+              "severity": "review",
+              "message": "Area has no matched access to the routing graph.",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "levelId": 694
+            },
+            {
+              "id": "access-review:rm-694-0bed6b73a3bd:694",
+              "code": "access-review",
+              "severity": "review",
+              "message": "Public access has not been confirmed.",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "levelId": 694
+            }
+          ],
+          "cells": []
+        },
+        {
+          "key": "rm-694-504b25e5319a",
+          "number": "03-S104",
+          "point": [
+            116.10331869474172,
+            -110.83670670891547,
+            14.435695538057743
+          ],
+          "arrivalInIdentity": true,
+          "nodes": [
+            {
+              "id": "arrival:rm-694-504b25e5319a",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "arrival",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                116.10331869474172,
+                -110.83670670891547,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81297634443507,
+                53.89196611231953
+              ]
+            },
+            {
+              "id": "door:694:908922:0",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "portal",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                114.74448177496802,
+                -122.88462533961184,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81296676128514,
+                53.89193339901426
+              ]
+            },
+            {
+              "id": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "roomKey": "rm-694-504b25e5319a",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                116.10331869474172,
+                -110.83670670891547,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81297634443507,
+                53.89196611231953
+              ]
+            }
+          ],
+          "edges": [
+            {
+              "id": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+              "from": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:0",
+              "to": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0:1",
+              "kind": "stairs",
+              "lengthMetres": 6.630655380468635,
+              "pointsFeet": [
+                [
+                  116.10331869474172,
+                  -110.83670670891547,
+                  14.435695538057743
+                ],
+                [
+                  116.70204651180781,
+                  -111.92513372372127,
+                  24.278215223097114
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-504b25e5319a",
+                "rm-400176-4ebbf37094e0"
+              ],
+              "evidence": "native-flight",
+              "nativeElementId": 2354630,
+              "accessible": "no",
+              "enabled": false
+            },
+            {
+              "id": "door:694:908922",
+              "from": "door:694:908922:0",
+              "to": "door:694:908922:1",
+              "kind": "door",
+              "lengthMetres": 0.3789595927302553,
+              "pointsFeet": [
+                [
+                  114.74448177496802,
+                  -122.88462533961184,
+                  14.435695538057743
+                ],
+                [
+                  113.61801617525913,
+                  -122.35842723840072,
+                  14.435695538057743
+                ]
+              ],
+              "roomKeys": [
+                "rm-694-504b25e5319a",
+                "rm-694-ad5ba4e3b383"
+              ],
+              "evidence": "native-door",
+              "nativeElementId": 908922,
+              "accessible": "unknown",
+              "enabled": true
+            }
+          ],
+          "issues": [
+            {
+              "id": "isolated-arrival:rm-694-504b25e5319a:694",
+              "code": "isolated-arrival",
+              "severity": "review",
+              "message": "Area has no matched access to the routing graph.",
+              "roomKey": "rm-694-504b25e5319a",
+              "levelId": 694
+            },
+            {
+              "id": "access-review:rm-694-504b25e5319a:694",
+              "code": "access-review",
+              "severity": "review",
+              "message": "Public access has not been confirmed.",
+              "roomKey": "rm-694-504b25e5319a",
+              "levelId": 694
+            }
+          ],
+          "cells": [
+            {
+              "id": "native-cell:14.435696:623",
+              "exactFaceId": "native-face:14.435696:2868",
+              "containsArrival": false,
+              "hasOwner": true,
+              "ownerRoomNumbers": [
+                "03-1051E",
+                "03-1045",
+                "03-S104",
+                "03-1045A",
+                "03-1041",
+                "03-1051B",
+                "03-1051",
+                "03-1051A",
+                "03-1048",
+                "03-1049",
+                "03-1047",
+                "03-1042A",
+                "03-1050"
+              ],
+              "roomKeys": [
+                "rm-694-474583e52c63",
+                "rm-694-50479be53197",
+                "rm-694-504b25e5319a",
+                "rm-694-504e2be5319c",
+                "rm-694-5051ade5319f",
+                "rm-694-50f1ace53228",
+                "rm-694-50f834e5322d",
+                "rm-694-50fb9ce53230",
+                "rm-694-50ff23e53233",
+                "rm-694-5102a5e53236",
+                "rm-694-510935e5323b",
+                "rm-694-ad5824e3b380",
+                "rm-694-ad5ba4e3b383"
+              ],
+              "areaSquareFeet": 2497.5617235935247,
+              "identityAreaSquareFeet": 137.9200000000001,
+              "overlapSquareFeet": 73.11062653648695,
+              "overlapAtLeastHalfOfIdentity": true,
+              "overlapAtLeastHalfOfCell": false,
+              "nativeFloorIds": [
+                400479,
+                490040
+              ],
+              "anchors": [],
+              "arrivalAdmittedByOwnerOrAnchor": true,
+              "floors": [
+                {
+                  "id": 400479,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                },
+                {
+                  "id": 490040,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                }
+              ]
+            },
+            {
+              "id": "native-cell:14.435696:698",
+              "exactFaceId": "native-face:14.435696:3114",
+              "containsArrival": false,
+              "hasOwner": true,
+              "ownerRoomNumbers": [
+                "03-S104"
+              ],
+              "roomKeys": [
+                "rm-694-504b25e5319a"
+              ],
+              "areaSquareFeet": 0.24472363113043732,
+              "identityAreaSquareFeet": 137.9200000000001,
+              "overlapSquareFeet": 0.24472363113043732,
+              "overlapAtLeastHalfOfIdentity": false,
+              "overlapAtLeastHalfOfCell": true,
+              "nativeFloorIds": [
+                400479,
+                490040
+              ],
+              "anchors": [],
+              "arrivalAdmittedByOwnerOrAnchor": true,
+              "floors": [
+                {
+                  "id": 400479,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                },
+                {
+                  "id": 490040,
+                  "sourceFloors": 1,
+                  "arrivalOnNamedFloor": true
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

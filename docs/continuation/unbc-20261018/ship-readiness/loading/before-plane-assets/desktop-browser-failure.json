@@ -1,0 +1,231 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 300000ms exceeded.",
+  "elapsedMs": 327171,
+  "text": "Map and development downloads\nOffline map\nClear map\nLoaded map\nImport project ZIP\n\nLoaded 4 source areas · 1,864 mapped locations · 5,476 graph nodes · 2,586 review items.\n\n2D floor map\n3D rooms\n3D relative heights\nL1\nFloor 1\nCampus · All buildings\nLevel detail\nMain floor\nFloor 1.5\nMapLibre | OpenFreeMap © OpenMapTiles Data from OpenStreetMap\nPreparing Floor 1…\nStudy & Teaching\nFood & Coffee\nWashroom\nDepartments\nStairs & Entrances\nSee All\nGet directions",
+  "imports": [
+    {
+      "worker": "http://127.0.0.1:42181/openindoormaps/assets/published-project.worker-Bj2WjxZs.js",
+      "fileCount": 0,
+      "fileBytes": 0,
+      "records": 1864,
+      "edges": 7063,
+      "receipt": "unbc-visitor-09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+      "source": {
+        "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "import:checksums",
+      "realm": "main",
+      "at": 3383.6999999999534,
+      "heapUsed": 126954183,
+      "heapTotal": 131811963,
+      "heapLimit": 4395630592,
+      "elapsedMs": 0
+    },
+    {
+      "stage": "import:archive",
+      "realm": "main",
+      "at": 3554.29999999993,
+      "heapUsed": 127009808,
+      "heapTotal": 131812224,
+      "heapLimit": 4395630592,
+      "elapsedMs": 167
+    },
+    {
+      "stage": "import:decode",
+      "realm": "main",
+      "at": 8801.599999999977,
+      "heapUsed": 127262624,
+      "heapTotal": 131812224,
+      "heapLimit": 4395630592,
+      "elapsedMs": 5418.5
+    },
+    {
+      "stage": "import:identity",
+      "realm": "main",
+      "at": 13791.399999999907,
+      "heapUsed": 127538860,
+      "heapTotal": 131812224,
+      "heapLimit": 4395630592,
+      "elapsedMs": 10408.300000000047
+    },
+    {
+      "stage": "import:transfer",
+      "realm": "main",
+      "at": 17693.399999999907,
+      "heapUsed": 127727928,
+      "heapTotal": 131812224,
+      "heapLimit": 4395630592,
+      "elapsedMs": 14310.5
+    },
+    {
+      "stage": "package:import:result",
+      "realm": "main",
+      "at": 27070.899999999907,
+      "heapUsed": 521329831,
+      "heapTotal": 567021171,
+      "heapLimit": 4395630592,
+      "error": false
+    },
+    {
+      "stage": "route:warmup-deferred-until-intent",
+      "realm": "main",
+      "at": 27420.599999999977,
+      "heapUsed": 524999532,
+      "heapTotal": 568091292,
+      "heapLimit": 4395630592
+    },
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 32303.199999999953,
+      "heapUsed": 739063422,
+      "heapTotal": 770206122,
+      "heapLimit": 4395630592,
+      "levels": 3,
+      "freshDatasetClone": true,
+      "routeBusy": false,
+      "waitedMs": 0.2000000000698492
+    },
+    {
+      "stage": "floor-main:postMessage",
+      "realm": "main",
+      "at": 36693.19999999995,
+      "heapUsed": 743187472,
+      "heapTotal": 813341176,
+      "heapLimit": 4395630592,
+      "requestId": 1,
+      "datasetIncluded": true,
+      "levels": 3,
+      "preparedAssetOffered": false,
+      "ms": 4371.199999999953
+    },
+    {
+      "stage": "floor-worker:request",
+      "realm": "worker",
+      "at": 7965,
+      "requestId": 1,
+      "datasetIncluded": true,
+      "levels": 3,
+      "preparedAssetOffered": false,
+      "residentDisplayOffered": false,
+      "engineMatches": false,
+      "engine": "9ff27953"
+    },
+    {
+      "stage": "floor-worker:prepared-asset",
+      "realm": "worker",
+      "at": 7966.20000000007,
+      "requestId": 1,
+      "used": false,
+      "ms": 0.6000000000931323
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 46592.69999999995,
+      "heapUsed": 745135200,
+      "heapTotal": 815611492,
+      "heapLimit": 4395630592,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 46603.19999999995,
+      "heapUsed": 745135200,
+      "heapTotal": 815611492,
+      "heapLimit": 4395630592,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 46603.39999999991,
+      "heapUsed": 745135200,
+      "heapTotal": 815611492,
+      "heapLimit": 4395630592,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 46603.39999999991,
+      "heapUsed": 745135200,
+      "heapTotal": 815611492,
+      "heapLimit": 4395630592,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 46603.5,
+      "heapUsed": 745135200,
+      "heapTotal": 815611492,
+      "heapLimit": 4395630592,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    }
+  ],
+  "errors": [],
+  "failures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/project.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/677ba787e328abf8e51a78188686777a829affb61515e20984a361ef092f3022.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/eac4cbc938186d275c10616cd2918d71f7add640b6194f13e6e00bd77f6139d1.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/b15787ad49550579eb7f287ba4289b2f1d7e286251bc737a04acb374806f4fa4.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/manifest.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/43d96e7500d876a69bc9a8eeab20cb8725dea38ac7b5d1ef585add2ceac7683a.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/84b7b0ede215c38a8db4238480c288025427525f867e4690904d6be3bae63fe0.gz",
+      "status": 200
+    }
+  ]
+}

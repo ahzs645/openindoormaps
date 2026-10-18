@@ -1,0 +1,114 @@
+{
+  "text": "Map and development downloads\nOffline map\nClear map\nLoaded map\nImport project ZIP\n\nLoaded 4 source areas · 1,864 mapped locations · 5,476 graph nodes · 2,586 review items.\n\n2D floor map\n3D rooms\n3D relative heights\nL1\nFloor 1\nCampus · All buildings\nLevel detail\nMain floor\nFloor 1.5\nMapLibre | OpenFreeMap © OpenMapTiles Data from OpenStreetMap\nBack\nDirections\n\nFrom\n\nLibrary · Floor 1\n\nTo\n\nLibrary · Floor 1\n\nSelect From or To to change a location.\n\nRoute profile\nWalking\nRoute endpoints\nHallway outside door\nShow hallway paths\nAllow paths through other rooms\n\nOff keeps transit in hallways and reviewed connecting areas. Some destinations may have no hallway route.\n\nUse hallway centerlines\nExcluded stairs · 7\n\nPreparing directions…",
+  "zoom": 20,
+  "imports": [
+    {
+      "worker": "http://127.0.0.1:42181/openindoormaps/assets/published-project.worker-CirrLRJw.js",
+      "fileCount": 0,
+      "fileBytes": 0,
+      "records": 1864,
+      "edges": 7063,
+      "receipt": "unbc-visitor-09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+      "source": {
+        "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98415.5,
+      "heapUsed": 1072168557,
+      "heapTotal": 1114323741,
+      "heapLimit": 4395630592,
+      "id": "native-explore-material",
+      "features": 44183,
+      "vertices": 269021,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 4304336
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 200729.7999999998,
+      "heapUsed": 753038005,
+      "heapTotal": 759143701,
+      "heapLimit": 4395630592,
+      "id": "project-labels",
+      "features": 501,
+      "vertices": 501,
+      "propertyKeys": 12889,
+      "propertyBytes": 297395,
+      "estimatedBytes": 305411
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 200833.3999999999,
+      "heapUsed": 752681362,
+      "heapTotal": 759752054,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 15.200000000186265
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 200842.8999999999,
+      "heapUsed": 752681362,
+      "heapTotal": 759752054,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 125.70000000018626
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 220682,
+      "heapUsed": 788524759,
+      "heapTotal": 808785123,
+      "heapLimit": 4395630592,
+      "id": "project-labels",
+      "features": 501,
+      "vertices": 501,
+      "propertyKeys": 12889,
+      "propertyBytes": 297395,
+      "estimatedBytes": 305411
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 222993.5,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 15.399999999906868
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 223006.8999999999,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 2330.600000000093
+    },
+    {
+      "stage": "route:request",
+      "realm": "main",
+      "at": 223023.1000000001,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "destination": true
+    }
+  ]
+}

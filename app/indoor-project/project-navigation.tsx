@@ -103,6 +103,7 @@ export function ProjectNavigation({
   preparingRoutes = false,
   calculationError,
   routeDiagnostic,
+  routeLinkNotice,
   reachable,
   start,
   end,
@@ -156,6 +157,7 @@ export function ProjectNavigation({
   preparingRoutes?: boolean;
   calculationError?: string;
   routeDiagnostic?: ProjectRouteDiagnostic;
+  routeLinkNotice?: string;
   reachable?: Set<string>;
   start: string;
   end: string;
@@ -202,11 +204,14 @@ export function ProjectNavigation({
   onDrawBasemapArea: (shape: BasemapAreaShape) => void;
 }) {
   const { map, isLoaded } = useMap();
+  useEffect(() => {
+    if (start || end) setDirections(true);
+  }, [start, end]);
   useEffect(() => () => onPickTarget(null), [onPickTarget]);
   const [query, setQuery] = useState(""),
     [category, setCategory] = useState(""),
     [settings, setSettings] = useState(false),
-    [directions, setDirections] = useState(false),
+    [directions, setDirections] = useState(() => !!start || !!end),
     [following, setFollowing] = useState(false),
     [activeStep, setActiveStep] = useState(0),
     [focusVersion, setFocusVersion] = useState(0),
@@ -407,6 +412,7 @@ export function ProjectNavigation({
       className={`project-visitor-ui ${following ? "project-following" : ""} ${directions ? "project-directions" : ""}`}
       data-testid="project-navigation"
     >
+      {routeLinkNotice && <p role="status">{routeLinkNotice}</p>}
       {following && steps.length > 0 ? (
         <HospitalRoutePreview
           instructions={steps}

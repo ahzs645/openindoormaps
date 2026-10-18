@@ -8,6 +8,7 @@ import {
   sameRoutePlace,
   missingRouteEntrance,
   visitorRouteFailureMessage,
+  visitorEndpointUnavailableReason,
 } from "../../app/indoor-project/visitor-route-state";
 import { progressiveRoutingFixture } from "../fixtures/progressive-routing";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
@@ -15,6 +16,33 @@ import type {
   RouteRequest,
   RouteCalculation,
 } from "../../app/indoor-project/route-calculation";
+
+test("visitor endpoint choices refuse restricted, non-walkable and disconnected places without granting routes", () => {
+  const place = {
+    access: "public" as const,
+    walkable: true,
+    arrivalNodeId: "original-arrival",
+  };
+  assert.equal(visitorEndpointUnavailableReason(place), undefined);
+  // Unknown access is still disclosed by the normal route result, not silently
+  // promoted to public or hidden by this selection-only guard.
+  assert.equal(
+    visitorEndpointUnavailableReason({ ...place, access: "unknown" }),
+    undefined,
+  );
+  assert.match(
+    visitorEndpointUnavailableReason({ ...place, access: "staff" })!,
+    /staff/,
+  );
+  assert.match(
+    visitorEndpointUnavailableReason({ ...place, walkable: false })!,
+    /non-walkable/,
+  );
+  assert.match(
+    visitorEndpointUnavailableReason({ ...place, arrivalNodeId: undefined })!,
+    /no connected entrance/,
+  );
+});
 
 class ControlledWorker implements RouteWorker {
   onmessage: RouteWorker["onmessage"] = null;
@@ -115,5 +143,13 @@ test("visitor failure text preserves restricted/step-free availability without a
   assert.doesNotMatch(
     visitorRouteFailureMessage(diagnostic, "public"),
     /review/i,
+  );
+  assert.equal(
+    visitorRouteFailureMessage(
+      { ...diagnostic, constraint: "hallways" },
+      "public",
+      false,
+    ),
+    "No confirmed hallway route is available between these places.",
   );
 });

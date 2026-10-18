@@ -1,0 +1,122 @@
+{
+  "text": "Map and development downloads\nOffline map\nClear map\nLoaded map\nImport project ZIP\n\nLoaded 4 source areas · 1,864 mapped locations · 5,476 graph nodes · 2,586 review items.\n\n2D floor map\n3D rooms\n3D relative heights\nL1\nFloor 1\nCampus · All buildings\nLevel detail\nMain floor\nFloor 1.5\nMapLibre | OpenFreeMap © OpenMapTiles Data from OpenStreetMap\nPreparing Floor 1…\nStudy & Teaching\nFood & Coffee\nWashroom\nDepartments\nStairs & Entrances\nSee All\nGet directions",
+  "imports": [
+    {
+      "worker": "http://127.0.0.1:42179/app/indoor-project/published-project.worker.ts?worker_file&type=module",
+      "fileCount": 0,
+      "fileBytes": 0,
+      "records": 1864,
+      "edges": 7063,
+      "receipt": "unbc-visitor-09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+      "source": {
+        "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "floor-main:request",
+      "realm": "main",
+      "at": 56773.69999999995,
+      "heapUsed": 761704049,
+      "heapTotal": 832965837,
+      "heapLimit": 4395630592,
+      "levels": 3,
+      "freshDatasetClone": false,
+      "routeBusy": false,
+      "waitedMs": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 74303.59999999998,
+      "heapUsed": 521969321,
+      "heapTotal": 531845805,
+      "heapLimit": 4395630592,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 74304.19999999995,
+      "heapUsed": 521969321,
+      "heapTotal": 531845805,
+      "heapLimit": 4395630592,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 74304.3999999999,
+      "heapUsed": 521969321,
+      "heapTotal": 531845805,
+      "heapLimit": 4395630592,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 74304.59999999998,
+      "heapUsed": 521969321,
+      "heapTotal": 531845805,
+      "heapLimit": 4395630592,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 74304.79999999993,
+      "heapUsed": 521969321,
+      "heapTotal": 531845805,
+      "heapLimit": 4395630592,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "floor-worker:request",
+      "realm": "worker",
+      "at": 29048.400000000023,
+      "requestId": 1,
+      "datasetIncluded": true,
+      "levels": 3,
+      "preparedAssetOffered": false,
+      "residentDisplayOffered": false,
+      "engineMatches": false,
+      "engine": "9ff27953"
+    },
+    {
+      "stage": "floor-worker:prepared-asset",
+      "realm": "worker",
+      "at": 29049.300000000047,
+      "requestId": 1,
+      "used": false,
+      "ms": 0.40000000002328306
+    }
+  ]
+}

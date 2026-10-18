@@ -1,0 +1,83 @@
+{
+  "mathematicalDiagnosticOnly": true,
+  "physicalApproval": false,
+  "masterAccepted": false,
+  "standingBandFeet": [0.05, 6],
+  "inputs": {
+    "originalSha256": "31b3bc2d226fe006c404cfb4914ddac723e984c2d2f42cc91d6bdc095b1f2a27",
+    "preparedSha256": "fd37be0d0a5a40b4772cdd5693106be0b3b1a85b0ea7eae2441543eb2db2e878",
+    "node": "v24.19.0"
+  },
+  "rows": [
+    {
+      "key": "rm-694-0bed6b73a3bd",
+      "run": 1638854,
+      "sourceFloorsUnchanged": true,
+      "sourceTreadInventoryUnchanged": true,
+      "originalOutlineAndSeedUnchanged": true,
+      "currentFaces": [
+        {
+          "id": "native-face:14.435696:3151",
+          "cells": []
+        }
+      ],
+      "identityOverlapArea": 2.0086389048879116,
+      "memberByHalfIdentity": false,
+      "memberByHalfFace": false,
+      "oldFace": "native-face:14.435696:3166",
+      "newFace": "native-face:14.435696:3151",
+      "sourceMaskTreadCountBefore": 23,
+      "sourceMaskTreadCountAfter": 23,
+      "removedArea": 4.479477466480446,
+      "retainedSiblingArea": 0,
+      "coveredArea": 4.479477466480446,
+      "unattributedArea": 0,
+      "removedFullyAccountedByOwnRunTreads": true,
+      "seedInsideOwnRunHeadroomMask": false,
+      "doorways": []
+    },
+    {
+      "key": "rm-694-504b25e5319a",
+      "run": 2354663,
+      "sourceFloorsUnchanged": true,
+      "sourceTreadInventoryUnchanged": false,
+      "originalOutlineAndSeedUnchanged": true,
+      "currentFaces": [],
+      "identityOverlapArea": 73.11062653648695,
+      "memberByHalfIdentity": true,
+      "memberByHalfFace": false,
+      "oldFace": "native-face:14.435696:2881",
+      "newFace": "native-face:14.435696:2868",
+      "sourceMaskTreadCountBefore": 21,
+      "sourceMaskTreadCountAfter": 21,
+      "removedArea": 37.525307993590665,
+      "retainedSiblingArea": 0.24472363113043732,
+      "coveredArea": 37.525307993590665,
+      "unattributedArea": 0,
+      "removedFullyAccountedByOwnRunTreads": true,
+      "seedInsideOwnRunHeadroomMask": true,
+      "doorways": [
+        {
+          "id": "door:694:908922:0",
+          "point": [
+            114.74448177496802, -122.88462533961184, 14.435695538057743
+          ],
+          "onNamedSlab": true,
+          "exactFaces": [
+            {
+              "id": "native-face:14.435696:2868",
+              "cells": ["native-cell:14.435696:623"]
+            }
+          ],
+          "sourceIncidentEdges": [
+            {
+              "id": "door:694:908922",
+              "kind": "door",
+              "enabled": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

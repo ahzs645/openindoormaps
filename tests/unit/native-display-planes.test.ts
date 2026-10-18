@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { publishedDefaultScopeCoverage } from "../../scripts/indoor/published-default-scope-coverage";
+import { preparedDisplayOptions } from "../../app/indoor-project/prepared-display-registry";
+import type { ProgressiveManifest } from "../../app/indoor-project/progressive-delivery";
 import { fixture } from "../fixtures/native-area-project";
 import {
   nativePhysicalDisplayPlanes,
@@ -72,6 +75,56 @@ function physicalProject() {
   };
   return data;
 }
+
+test("publication coverage checks the real Main floor subset and each source plane", () => {
+  const data = physicalProject();
+  data.nativeIndoorEnvelopes = {} as NonNullable<
+    typeof data.nativeIndoorEnvelopes
+  >;
+  const options = preparedDisplayOptions(data, {
+    relativeHeights: false,
+    showPillars: true,
+    showPassThroughPlaces: false,
+    showVestibuleDoors: false,
+    showStructures: false,
+    showDoorwayRecesses: false,
+    review: false,
+    simplifyGeometry: false,
+  });
+  const scope = (id: string, levelIds: number[]) => ({
+    id,
+    building: "all",
+    levelIds,
+    display: { descriptor: { binding: { options, windowMode: "none" } } },
+  });
+  const manifest = {
+    provenance: { source: data.source },
+    scopes: [scope("combined", [1, 2, 3])],
+  } as unknown as ProgressiveManifest;
+  const before = publishedDefaultScopeCoverage(data, manifest);
+  assert.equal(
+    before.find((r) => r.planeId === "combined")?.scopeId,
+    "combined",
+  );
+  assert.equal(
+    before.find((r) => r.planeId === "main")?.scopeId,
+    undefined,
+    "a combined floor cannot certify a missing Main-plane artifact",
+  );
+  assert.equal(
+    before.find((r) => r.planeId === "native:3")?.scopeId,
+    undefined,
+  );
+  manifest.scopes.push(
+    scope("main", [1, 2]) as unknown as ProgressiveManifest["scopes"][number],
+  );
+  manifest.scopes.push(
+    scope("fractional", [
+      3,
+    ]) as unknown as ProgressiveManifest["scopes"][number],
+  );
+  assert(publishedDefaultScopeCoverage(data, manifest).every((r) => r.scopeId));
+});
 
 test("source-only fractional plane is explicit while existing planes stay in Main floor", () => {
   const data = physicalProject(),

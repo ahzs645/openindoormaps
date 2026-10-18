@@ -12,7 +12,10 @@ import {
   type ProgressiveRouteWorker,
   type ProgressiveRouteRequest,
 } from "../../app/indoor-project/progressive-route-client";
-import { sameRoutePlace } from "../../app/indoor-project/visitor-route-state";
+import {
+  sameRoutePlace,
+  visitorRouteFailureMessage,
+} from "../../app/indoor-project/visitor-route-state";
 
 /** Exercise the actual page handlers without importing its map/WebGL/loader.
  * The source AST is compiled unchanged; tests do not duplicate its branch logic.
@@ -116,6 +119,7 @@ function setup(start: string, end: string, mode = "public") {
     mapEpoch: { current: 0 },
     routeWaiting: { current: undefined },
     sameRoutePlace,
+    visitorRouteFailureMessage,
     AbortController,
     DOMException,
     Error,

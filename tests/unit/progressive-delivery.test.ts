@@ -3,7 +3,15 @@ import type { IndoorDataset } from "../../app/indoor-project/contract";
 import assert from "node:assert/strict";
 import { brotliDecompressSync } from "node:zlib";
 import { gunzipSync, unzipSync } from "fflate";
-import { mkdtemp, mkdir, writeFile, readFile, rm } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  writeFile,
+  readFile,
+  readdir,
+  symlink,
+  rm,
+} from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import {
@@ -28,10 +36,13 @@ import {
   writeProgressiveOfflineArchive,
   verifyProgressiveDeliveryDirectory,
   writeProgressiveRepresentation,
+  verifyProgressiveReuseBinding,
 } from "../../scripts/indoor/export-progressive-viewer";
+import type { PublishedProjectReceipt } from "../../app/indoor-project/published-project";
 import { readProgressiveRoutingParts } from "../../app/indoor-project/progressive-routing-parts";
 import { randomBytes } from "node:crypto";
 import { revisedOverviewManifest } from "../../scripts/indoor/reproject-progressive-overviews";
+import { copyDeclaredProgressiveAssets } from "../../scripts/indoor/copy-progressive-assets";
 
 const raw = (v: unknown) => new TextEncoder().encode(JSON.stringify(v));
 const fc = () => ({ type: "FeatureCollection", features: [] });
@@ -166,6 +177,119 @@ const resign = (m: ProgressiveManifest) => {
   m.revisionSha256 = progressiveManifestRevision(m);
   return m;
 };
+test("display reuse copies only declared carriers and routing parts, excluding unrelated files and symlinks", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "progressive-copy-"));
+  const sourceDirectory = path.join(root, "source"),
+    destination = path.join(root, "destination");
+  try {
+    const { manifest, logical } = fixture();
+    await mkdir(path.join(sourceDirectory, "assets"), { recursive: true });
+    for (const asset of Object.values(manifest.assets)) {
+      const representations = progressiveRepresentations(
+        logical.get(asset.id)!,
+        asset.mediaType,
+      );
+      for (let i = 0; i < representations.length; i++)
+        await writeFile(
+          path.join(sourceDirectory, asset.representations[i].path),
+          representations[i].bytes,
+        );
+    }
+    const route = manifest.assets[manifest.routeAssetId].representations.find(
+      (r) => r.encoding === "gzip",
+    )!;
+    const carrier = await readFile(path.join(sourceDirectory, route.path));
+    route.parts = [];
+    for (const bytes of [carrier.subarray(0, 8), carrier.subarray(8)]) {
+      const sha256 = progressiveSha256(bytes),
+        relative = `assets/${sha256}.part`;
+      route.parts.push({ path: relative, sha256, bytes: bytes.length });
+      await writeFile(path.join(sourceDirectory, relative), bytes);
+    }
+    resign(manifest);
+    await writeFile(
+      path.join(sourceDirectory, "assets/unlisted.bin"),
+      "not in the map",
+    );
+    await symlink(
+      path.join(sourceDirectory, "assets/unlisted.bin"),
+      path.join(sourceDirectory, "assets/unlisted-link"),
+    );
+    const copied = await copyDeclaredProgressiveAssets(
+      sourceDirectory,
+      destination,
+      manifest,
+    );
+    const names = await readdir(path.join(destination, "assets"));
+    assert.equal(names.length, copied.files);
+    assert(!names.includes("unlisted.bin"));
+    assert(!names.includes("unlisted-link"));
+    assert(
+      !names.includes(path.basename(route.path)),
+      "nominal unsplit route is not a declared stored file",
+    );
+    await verifyProgressiveDeliveryDirectory(destination, manifest);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+test("display reuse requires the compiled exact publication and rejects re-signed replacements", () => {
+  const { manifest } = fixture();
+  const receipt = {
+    packageSha256: manifest.provenance.packageSha256,
+    datasetSha256: manifest.provenance.datasetSha256,
+    validatorSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+    progressiveRevisionSha256: manifest.revisionSha256,
+  } as PublishedProjectReceipt;
+  const check = (
+    m = manifest,
+    r: PublishedProjectReceipt | undefined = receipt,
+  ) =>
+    verifyProgressiveReuseBinding(
+      m,
+      r,
+      receipt.packageSha256,
+      receipt.datasetSha256,
+      source,
+    );
+  assert.doesNotThrow(() => check());
+  assert.throws(
+    () =>
+      verifyProgressiveReuseBinding(
+        manifest,
+        undefined,
+        receipt.packageSha256,
+        receipt.datasetSha256,
+        source,
+      ),
+    /compiled checked/,
+  );
+  for (const change of [
+    { packageSha256: "0".repeat(64) },
+    { datasetSha256: "0".repeat(64) },
+    { validatorSha256: "0".repeat(64) },
+    { progressiveRevisionSha256: "0".repeat(64) },
+  ])
+    assert.throws(
+      () => check(manifest, { ...receipt, ...change }),
+      /compiled checked/,
+    );
+  const changed = structuredClone(manifest);
+  changed.scopes[0].label = "Remote replacement";
+  resign(changed);
+  assert.throws(() => check(changed), /compiled checked/);
+  assert.throws(
+    () =>
+      verifyProgressiveReuseBinding(
+        manifest,
+        receipt,
+        receipt.packageSha256,
+        receipt.datasetSha256,
+        { ...source, modelSha256: "0".repeat(64) },
+      ),
+    /compiled checked/,
+  );
+});
 test("auxiliary floor projection preserves exact prepared/routing/context roots and truthful partial coverage", async () => {
   const { manifest, logical } = fixture();
   manifest.unavailableScopes = [[999]];
@@ -754,54 +878,116 @@ test("routing parts refuse invalid paths, totals, counts and non-routing uses be
 });
 
 test("the complete offline ZIP contains every real routing part and reconstructs exact stored and logical bytes", async () => {
-  const directory = await mkdtemp(path.join(os.tmpdir(), "routing-parts-offline-"));
+  const directory = await mkdtemp(
+    path.join(os.tmpdir(), "routing-parts-offline-"),
+  );
   try {
     const { manifest, logical } = fixture(),
-      routeBytes = raw({ transportFixture: true, retained, payload: randomBytes(17 * 1024 * 1024).toString("base64") }),
-      logicalSha256 = progressiveSha256(routeBytes), id = `routing:${logicalSha256}`;
+      routeBytes = raw({
+        transportFixture: true,
+        retained,
+        payload: randomBytes(17 * 1024 * 1024).toString("base64"),
+      }),
+      logicalSha256 = progressiveSha256(routeBytes),
+      id = `routing:${logicalSha256}`;
     delete manifest.assets[manifest.routeAssetId];
     manifest.routeAssetId = id;
-    manifest.assets[id] = { id, kind: "routing", logicalSha256, logicalBytes: routeBytes.length,
-      mediaType: "application/json", dependencies: [], representations: [] };
+    manifest.assets[id] = {
+      id,
+      kind: "routing",
+      logicalSha256,
+      logicalBytes: routeBytes.length,
+      mediaType: "application/json",
+      dependencies: [],
+      representations: [],
+    };
     logical.set(id, routeBytes);
     await mkdir(path.join(directory, "assets"));
     for (const asset of Object.values(manifest.assets)) {
       asset.representations = [];
-      for (const representation of progressiveRepresentations(logical.get(asset.id)!, asset.mediaType, false, false))
-        asset.representations.push(await writeProgressiveRepresentation(directory, asset.kind, representation));
+      for (const representation of progressiveRepresentations(
+        logical.get(asset.id)!,
+        asset.mediaType,
+        false,
+        false,
+      ))
+        asset.representations.push(
+          await writeProgressiveRepresentation(
+            directory,
+            asset.kind,
+            representation,
+          ),
+        );
     }
     resign(manifest);
     validateProgressiveManifest(manifest);
     const routing = manifest.assets[id].representations[0]!;
     assert.equal(routing.encoding, "gzip");
     assert.equal(routing.parts!.length, 2);
-    await writeFile(path.join(directory, "manifest.json"), JSON.stringify(manifest));
-    assert.equal((await verifyProgressiveDeliveryDirectory(directory, manifest)).exactCodecRoundTrips, true);
+    await writeFile(
+      path.join(directory, "manifest.json"),
+      JSON.stringify(manifest),
+    );
+    assert.equal(
+      (await verifyProgressiveDeliveryDirectory(directory, manifest))
+        .exactCodecRoundTrips,
+      true,
+    );
     await writeProgressiveOfflineArchive(directory, manifest);
-    const archive = unzipSync(new Uint8Array(await readFile(path.join(directory, "complete-map.offline.zip")))),
-      inventory = JSON.parse(new TextDecoder().decode(archive["offline-inventory.json"])),
-      expectedFiles = new Set(["manifest.json", "offline-inventory.json",
-        ...Object.values(manifest.assets).flatMap(asset => {
-          const gzip = asset.representations.find(row => row.encoding === "gzip")!;
-          return gzip.parts ? gzip.parts.map(part => part.path) : [gzip.path];
-        })]);
+    const archive = unzipSync(
+        new Uint8Array(
+          await readFile(path.join(directory, "complete-map.offline.zip")),
+        ),
+      ),
+      inventory = JSON.parse(
+        new TextDecoder().decode(archive["offline-inventory.json"]),
+      ),
+      expectedFiles = new Set([
+        "manifest.json",
+        "offline-inventory.json",
+        ...Object.values(manifest.assets).flatMap((asset) => {
+          const gzip = asset.representations.find(
+            (row) => row.encoding === "gzip",
+          )!;
+          return gzip.parts ? gzip.parts.map((part) => part.path) : [gzip.path];
+        }),
+      ]);
     assert.deepEqual(new Set(Object.keys(archive)), expectedFiles);
-    assert.deepEqual(JSON.parse(new TextDecoder().decode(archive["manifest.json"])), manifest);
-    assert.equal(archive[routing.path], undefined, "The virtual unchunked routing path must not enter the ZIP");
-    assert.deepEqual(inventory.assets.find((asset: { id: string }) => asset.id === id).parts, routing.parts);
+    assert.deepEqual(
+      JSON.parse(new TextDecoder().decode(archive["manifest.json"])),
+      manifest,
+    );
+    assert.equal(
+      archive[routing.path],
+      undefined,
+      "The virtual unchunked routing path must not enter the ZIP",
+    );
+    assert.deepEqual(
+      inventory.assets.find((asset: { id: string }) => asset.id === id).parts,
+      routing.parts,
+    );
     for (const part of routing.parts!) {
       assert.equal(archive[part.path].length, part.bytes);
       assert.equal(progressiveSha256(archive[part.path]), part.sha256);
     }
-    const stored = await readProgressiveRoutingParts(routing, async part => archive[part.path]);
+    const stored = await readProgressiveRoutingParts(
+      routing,
+      async (part) => archive[part.path],
+    );
     assert.equal(progressiveSha256(stored), routing.sha256);
     assert.equal(stored.length, routing.bytes);
     const restored = gunzipSync(stored);
     assert.deepEqual(restored, routeBytes);
     assert.equal(progressiveSha256(restored), logicalSha256);
-    assert.deepEqual(JSON.parse(new TextDecoder().decode(restored)).retained, retained);
+    assert.deepEqual(
+      JSON.parse(new TextDecoder().decode(restored)).retained,
+      retained,
+    );
     await rm(path.join(directory, routing.parts![0]!.path));
-    await assert.rejects(verifyProgressiveDeliveryDirectory(directory, manifest), { code: "ENOENT" });
+    await assert.rejects(
+      verifyProgressiveDeliveryDirectory(directory, manifest),
+      { code: "ENOENT" },
+    );
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

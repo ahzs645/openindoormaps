@@ -1,0 +1,863 @@
+{
+  "mode": "desktop",
+  "productionBuild": true,
+  "physicalDevice": false,
+  "elapsedMs": 308267,
+  "painted": {
+    "layers": [
+      "project-room-fill",
+      "project-relative-floors"
+    ],
+    "renderedFeatures": 283,
+    "canvas": {
+      "width": 1440,
+      "height": 1000
+    },
+    "center": {
+      "lng": -122.81362278763288,
+      "lat": 53.89299532264917
+    },
+    "zoom": 20
+  },
+  "routeText": "62.6 m · 1 min\n\n0 floor changes · 11 turns\n\nPublic access is unknown for 60 areas.\n\nStep-free access is unconfirmed for 17 connections.\n\nPreview directions",
+  "imports": [
+    {
+      "worker": "http://127.0.0.1:42181/openindoormaps/assets/published-project.worker-CirrLRJw.js",
+      "fileCount": 0,
+      "fileBytes": 0,
+      "records": 1864,
+      "edges": 7063,
+      "receipt": "unbc-visitor-09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+      "source": {
+        "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+      }
+    }
+  ],
+  "diagnostics": [
+    {
+      "stage": "import:checksums",
+      "realm": "main",
+      "at": 2358.5,
+      "heapUsed": 147883969,
+      "heapTotal": 152516189,
+      "heapLimit": 4395630592,
+      "elapsedMs": 0
+    },
+    {
+      "stage": "import:archive",
+      "realm": "main",
+      "at": 2442.6999999997206,
+      "heapUsed": 147940123,
+      "heapTotal": 152516259,
+      "heapLimit": 4395630592,
+      "elapsedMs": 84.70000000018626
+    },
+    {
+      "stage": "import:decode",
+      "realm": "main",
+      "at": 5598.5,
+      "heapUsed": 148103007,
+      "heapTotal": 152516259,
+      "heapLimit": 4395630592,
+      "elapsedMs": 3237.399999999907
+    },
+    {
+      "stage": "import:identity",
+      "realm": "main",
+      "at": 8226.799999999814,
+      "heapUsed": 148246691,
+      "heapTotal": 152516259,
+      "heapLimit": 4395630592,
+      "elapsedMs": 5868.5
+    },
+    {
+      "stage": "import:transfer",
+      "realm": "main",
+      "at": 10966.600000000093,
+      "heapUsed": 148420675,
+      "heapTotal": 152516259,
+      "heapLimit": 4395630592,
+      "elapsedMs": 8608.399999999907
+    },
+    {
+      "stage": "package:import:result",
+      "realm": "main",
+      "at": 18035.399999999907,
+      "heapUsed": 521238514,
+      "heapTotal": 566876566,
+      "heapLimit": 4395630592,
+      "error": false
+    },
+    {
+      "stage": "route:warmup-deferred-until-intent",
+      "realm": "main",
+      "at": 18329.899999999907,
+      "heapUsed": 524835939,
+      "heapTotal": 568733119,
+      "heapLimit": 4395630592
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 30583.100000000093,
+      "heapUsed": 566687855,
+      "heapTotal": 612672239,
+      "heapLimit": 4395630592,
+      "windowOpacity": false,
+      "features": 25995,
+      "vertices": 121836,
+      "bytes": 2924064,
+      "ms": 1707.7000000001863
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 32851,
+      "heapUsed": 557260286,
+      "heapTotal": 613618550,
+      "heapLimit": 4395630592,
+      "id": "native-explore-fill",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 32852.19999999972,
+      "heapUsed": 557260286,
+      "heapTotal": 613618550,
+      "heapLimit": 4395630592,
+      "id": "native-explore-outline",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 32852.60000000009,
+      "heapUsed": 557260286,
+      "heapTotal": 613618550,
+      "heapLimit": 4395630592,
+      "id": "native-explore-partitions",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 32852.69999999972,
+      "heapUsed": 557260286,
+      "heapTotal": 613618550,
+      "heapLimit": 4395630592,
+      "id": "native-explore-overview",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 32852.799999999814,
+      "heapUsed": 557260286,
+      "heapTotal": 613618550,
+      "heapLimit": 4395630592,
+      "id": "native-explore-material",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 36708.5,
+      "heapUsed": 616711094,
+      "heapTotal": 664658966,
+      "heapLimit": 4395630592,
+      "id": "visitor-overview-precision",
+      "vertices": 121836,
+      "ms": 1340.3999999999069
+    },
+    {
+      "stage": "layers:stable-wall-geometry",
+      "realm": "main",
+      "at": 63301.5,
+      "heapUsed": 758952904,
+      "heapTotal": 770439860,
+      "heapLimit": 4395630592,
+      "features": 42563,
+      "ms": 244.10000000009313
+    },
+    {
+      "stage": "layers:prepared-mount",
+      "realm": "main",
+      "at": 63393.39999999991,
+      "heapUsed": 755223773,
+      "heapTotal": 777075413,
+      "heapLimit": 4395630592,
+      "roomThree": false
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63447.10000000009,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-areas",
+      "features": 1730,
+      "vertices": 166431,
+      "propertyKeys": 30364,
+      "propertyBytes": 691911,
+      "estimatedBytes": 3354807
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63453.39999999991,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63456.60000000009,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-network",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63460.10000000009,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-portals",
+      "features": 737,
+      "vertices": 737,
+      "propertyKeys": 4583,
+      "propertyBytes": 106101,
+      "estimatedBytes": 117893
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63463.89999999991,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-route",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63469.299999999814,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-doors",
+      "features": 593,
+      "vertices": 2965,
+      "propertyKeys": 5930,
+      "propertyBytes": 121209,
+      "estimatedBytes": 168649
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63471,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-lower-rooms",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63479,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-labels",
+      "features": 501,
+      "vertices": 501,
+      "propertyKeys": 12889,
+      "propertyBytes": 297395,
+      "estimatedBytes": 305411
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63485.89999999991,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-room-blocks",
+      "features": 398,
+      "vertices": 43787,
+      "propertyKeys": 7558,
+      "propertyBytes": 177595,
+      "estimatedBytes": 878187
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63488,
+      "heapUsed": 752174061,
+      "heapTotal": 787077845,
+      "heapLimit": 4395630592,
+      "id": "project-exposed-walls",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63519.60000000009,
+      "heapUsed": 756716001,
+      "heapTotal": 788204245,
+      "heapLimit": 4395630592,
+      "id": "project-native-stairs",
+      "features": 3962,
+      "vertices": 21397,
+      "propertyKeys": 71334,
+      "propertyBytes": 1547448,
+      "estimatedBytes": 1889800
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63537.19999999972,
+      "heapUsed": 756716001,
+      "heapTotal": 788204245,
+      "heapLimit": 4395630592,
+      "id": "project-selection-areas",
+      "features": 1714,
+      "vertices": 136849,
+      "propertyKeys": 30172,
+      "propertyBytes": 687719,
+      "estimatedBytes": 2877303
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63580.10000000009,
+      "heapUsed": 757045633,
+      "heapTotal": 789261013,
+      "heapLimit": 4395630592,
+      "id": "project-area-perimeters",
+      "features": 1730,
+      "vertices": 48647,
+      "propertyKeys": 32094,
+      "propertyBytes": 745541,
+      "estimatedBytes": 1523893
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63587.10000000009,
+      "heapUsed": 757045633,
+      "heapTotal": 789261013,
+      "heapLimit": 4395630592,
+      "id": "project-block-perimeters",
+      "features": 398,
+      "vertices": 11402,
+      "propertyKeys": 7956,
+      "propertyBytes": 189933,
+      "estimatedBytes": 372365
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63622.299999999814,
+      "heapUsed": 757045633,
+      "heapTotal": 789261013,
+      "heapLimit": 4395630592,
+      "id": "project-overview-ground",
+      "features": 13115,
+      "vertices": 97065,
+      "propertyKeys": 31460,
+      "propertyBytes": 720925,
+      "estimatedBytes": 2273965
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63629.89999999991,
+      "heapUsed": 757045633,
+      "heapTotal": 789261013,
+      "heapLimit": 4395630592,
+      "id": "project-overview-floor",
+      "features": 16,
+      "vertices": 29771,
+      "propertyKeys": 32,
+      "propertyBytes": 672,
+      "estimatedBytes": 477008
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 63630.799999999814,
+      "heapUsed": 768940329,
+      "heapTotal": 789666517,
+      "heapLimit": 4395630592,
+      "id": "project-network-connections",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 64237.19999999972,
+      "heapUsed": 786830516,
+      "heapTotal": 841776564,
+      "heapLimit": 4395630592,
+      "windowOpacity": false,
+      "features": 13115,
+      "vertices": 164901,
+      "bytes": 3957624,
+      "ms": 512.6999999997206
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 64251.299999999814,
+      "heapUsed": 786830516,
+      "heapTotal": 841776564,
+      "heapLimit": 4395630592,
+      "id": "project-native-windows",
+      "features": 0,
+      "vertices": 0,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 0
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 64278.299999999814,
+      "heapUsed": 786830516,
+      "heapTotal": 841776564,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 28.399999999906868
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 64307.5,
+      "heapUsed": 795234085,
+      "heapTotal": 842307101,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 17,
+      "ms": 906.2000000001863
+    },
+    {
+      "stage": "mesh:precision-walls:first-render",
+      "realm": "main",
+      "at": 69420.3999999999,
+      "heapUsed": 789079634,
+      "heapTotal": 831992014,
+      "heapLimit": 4395630592,
+      "id": "project-overview-ground-mesh",
+      "vertices": 164901,
+      "ms": 87.60000000009313
+    },
+    {
+      "stage": "mesh:precision-walls:build",
+      "realm": "main",
+      "at": 97516.79999999981,
+      "heapUsed": 1064558450,
+      "heapTotal": 1113193054,
+      "heapLimit": 4395630592,
+      "windowOpacity": false,
+      "features": 23446,
+      "vertices": 112173,
+      "bytes": 2692152,
+      "ms": 1851.8999999999069
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98061.69999999972,
+      "heapUsed": 1056002017,
+      "heapTotal": 1113963293,
+      "heapLimit": 4395630592,
+      "id": "native-explore-fill",
+      "features": 24090,
+      "vertices": 138586,
+      "propertyKeys": 96360,
+      "propertyBytes": 2431790,
+      "estimatedBytes": 4649166
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98086,
+      "heapUsed": 1056002017,
+      "heapTotal": 1113963293,
+      "heapLimit": 4395630592,
+      "id": "native-explore-outline",
+      "features": 2154,
+      "vertices": 39194,
+      "propertyKeys": 8616,
+      "propertyBytes": 218674,
+      "estimatedBytes": 845778
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98109.79999999981,
+      "heapUsed": 1056002017,
+      "heapTotal": 1113963293,
+      "heapLimit": 4395630592,
+      "id": "native-explore-partitions",
+      "features": 32,
+      "vertices": 74,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 1184
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98297.3999999999,
+      "heapUsed": 1065399261,
+      "heapTotal": 1113963293,
+      "heapLimit": 4395630592,
+      "id": "native-explore-overview",
+      "features": 23446,
+      "vertices": 137372,
+      "propertyKeys": 93784,
+      "propertyBytes": 2366124,
+      "estimatedBytes": 4564076
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 98415.5,
+      "heapUsed": 1072168557,
+      "heapTotal": 1114323741,
+      "heapLimit": 4395630592,
+      "id": "native-explore-material",
+      "features": 44183,
+      "vertices": 269021,
+      "propertyKeys": 0,
+      "propertyBytes": 0,
+      "estimatedBytes": 4304336
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 200729.7999999998,
+      "heapUsed": 753038005,
+      "heapTotal": 759143701,
+      "heapLimit": 4395630592,
+      "id": "project-labels",
+      "features": 501,
+      "vertices": 501,
+      "propertyKeys": 12889,
+      "propertyBytes": 297395,
+      "estimatedBytes": 305411
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 200833.3999999999,
+      "heapUsed": 752681362,
+      "heapTotal": 759752054,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 15.200000000186265
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 200842.8999999999,
+      "heapUsed": 752681362,
+      "heapTotal": 759752054,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 125.70000000018626
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 220682,
+      "heapUsed": 788524759,
+      "heapTotal": 808785123,
+      "heapLimit": 4395630592,
+      "id": "project-labels",
+      "features": 501,
+      "vertices": 501,
+      "propertyKeys": 12889,
+      "propertyBytes": 297395,
+      "estimatedBytes": 305411
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 222993.5,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 15.399999999906868
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 223006.8999999999,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 2330.600000000093
+    },
+    {
+      "stage": "route:request",
+      "realm": "main",
+      "at": 223023.1000000001,
+      "heapUsed": 791606770,
+      "heapTotal": 811752694,
+      "heapLimit": 4395630592,
+      "destination": true
+    },
+    {
+      "stage": "source:upload",
+      "realm": "main",
+      "at": 295129.8999999999,
+      "heapUsed": 818817051,
+      "heapTotal": 839367003,
+      "heapLimit": 4395630592,
+      "id": "project-route",
+      "features": 1,
+      "vertices": 53,
+      "propertyKeys": 2,
+      "propertyBytes": 33,
+      "estimatedBytes": 881
+    },
+    {
+      "stage": "layers:custom-3d",
+      "realm": "main",
+      "at": 295278.8999999999,
+      "heapUsed": 806535343,
+      "heapTotal": 841537819,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "ms": 13.700000000186265
+    },
+    {
+      "stage": "layers:effect",
+      "realm": "main",
+      "at": 295285.6999999997,
+      "heapUsed": 806535343,
+      "heapTotal": 841537819,
+      "heapLimit": 4395630592,
+      "roomThree": false,
+      "uploads": 1,
+      "ms": 155.79999999981374
+    }
+  ],
+  "memory": {
+    "usedJSHeapSize": 791740151,
+    "totalJSHeapSize": 849991195,
+    "jsHeapSizeLimit": 4395630592
+  },
+  "overflow": false,
+  "errors": [],
+  "failures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/project.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/677ba787e328abf8e51a78188686777a829affb61515e20984a361ef092f3022.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/eac4cbc938186d275c10616cd2918d71f7add640b6194f13e6e00bd77f6139d1.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-full/parts/b15787ad49550579eb7f287ba4289b2f1d7e286251bc737a04acb374806f4fa4.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/manifest.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/43d96e7500d876a69bc9a8eeab20cb8725dea38ac7b5d1ef585add2ceac7683a.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/a928e8af781186c41100c22825c0a1d01db58adccea47c77c4d3d0913d68b164.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/7ab38351d0e10139973c73878473745e5fc8a011f548c785acd47efbd720d402.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/51ca795888661c4645a8253eff4b5999f6468bd03dfceb15b885d50515001494.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/84569502d3c09c8c40d76d1687bb992e06b9f664d2092f850a227156b04a4ca7.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/22ff138b018a752992bf8c2ee4e7fcafc6f56584eca4a506ef9127b16fe1e24f.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/e2fd9836eba9039ee8dffb3cdbda79058c4d74ea33ad06140b642966e04ea494.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/fbd925b46d242be4dc317a93b65d87831f811c42142f2b0e4f974c93f5005c8a.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/c86af83fa3eee10f64a43b1f49d4523197b3fd9bd594fe22a726bf4ed7157e54.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/da34c20f849a9a86b55220e4ca1357046c621b15083ca932e9bce172300d5481.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/9ed31273697f001e166086247aa8465d89a4bf37c54656749bad87df52e4be04.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/62852867b5215365a55907e73c2d931cb573a5afdf4332dd8713ad18f1bf895f.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/26dafec0316b5af7e600d3bce4dbacfa12a1eca8091a80dc4298adaa1b83c91a.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/6e47f13b9b52875e2d9613061ff6410043a8a8f4d4d75ff15d5df542fd2b162f.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/7f308688f574c350805e843e060d7cd8d941581d88a84b664f0840c7d99c5522.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/5ac0251611f87fcaa1903b23a9edd9b291b673a30827c22a044b32d7ce05f1d4.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/35a8ebb0fa540e643a3471944ed58f9514de5161739762f396fc09f3b0846b13.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/b597650c52e774072fda66b39f051022d0f3bb29fed3a5a19ebcf91adba9e89f.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/8c90b82b1c07ed4d54d40b0f827054e2f9535700e5f3f35139fc50d81cfc2260.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/96381bedc972b0593fe82f4e5a5e1764da8385e14f2c690500e5d4f71e47048c.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/7ca175a81f2906de726582b56bc3b57038b7e35e9516d5cdff72b9a523f1d389.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/e4e241d208b09c5b8d0e31419f5200d309e0af1c2ab8a531ed94e85ec4ce9aa1.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/a6a40ce67e8dc841dd67f770af20cf08e8061b608bc04b60b18d5c24981dcbcd.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/ba37503d5a8449b654dcfad82ab2ee7c72f219b189e93516826f6bbb556f8a8e.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/6c6755dabd09f872de0dc8cdc839152af97f2570b87fbdabf73ece4e1b66fb07.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/ab4447af6bfedeb473b7ca3ed5b003e8f48e00c56eadf2fa1d99689b8fc12ef0.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/904cda59babd12debec2c7ed00b275663d06eca501668ede53f293b68222915c.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/f15eac0b3c6291587282351725bc9c822a10786b79623002fa441886214dc39d.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/d2f08df69e3598d361911cc1cfbc6c8aead89f5ae510b68cd0cd263c0f80517d.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc/assets/0792c67e8f824780b4312d2b2a21dd96b32d17e3eaaa054ec5905e6491c31f60.gz",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42181/data/unbc-routing/27ea7e9692a098fd76969d5872ac52259996c2ada56f50f24991097a6e4300b2.json.gz",
+      "status": 200
+    }
+  ]
+}

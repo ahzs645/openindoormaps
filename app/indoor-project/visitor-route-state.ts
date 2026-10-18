@@ -5,6 +5,21 @@ import type { IndoorDataset } from "./contract";
 export const sameRoutePlace = (start: string, end: string) =>
   !!start && start === end;
 
+/** Search may show places that cannot be visitor route endpoints. These checks
+ * only remove choices; an eligible endpoint still needs the normal calculator. */
+export function visitorEndpointUnavailableReason(place: {
+  access: "public" | "staff" | "unknown";
+  walkable: boolean;
+  arrivalNodeId?: string;
+}) {
+  if (place.access === "staff")
+    return "This place is restricted to staff. Visitor directions are unavailable.";
+  if (!place.walkable)
+    return "Visitor directions are unavailable for this non-walkable place.";
+  if (!place.arrivalNodeId)
+    return "Directions are unavailable because this place has no connected entrance in this map.";
+}
+
 /** A missing original arrival cannot be repaired by searching the graph. This
  * preflight only refuses work; it never supplies or authorizes a connection. */
 export function missingRouteEntrance(
@@ -30,13 +45,16 @@ export function missingRouteEntrance(
 export function visitorRouteFailureMessage(
   diagnostic: ProjectRouteDiagnostic | undefined,
   mode: "public" | "accessible",
+  canChangeHallwayPreference = true,
 ) {
   if (diagnostic?.kind === "missing-entrance")
     return "An entrance is unavailable for one of these places.";
   if (mode === "accessible")
     return "No confirmed step-free route is available between these places.";
   if (diagnostic?.constraint === "hallways")
-    return "No hallway-only route is available. You can allow paths through other rooms in Directions.";
+    return canChangeHallwayPreference
+      ? "No hallway-only route is available. You can allow paths through other rooms in Directions."
+      : "No confirmed hallway route is available between these places.";
   if (
     diagnostic?.blockers.some((b) =>
       ["staff", "non-walkable", "off-limits"].includes(b.kind),

@@ -245,6 +245,7 @@ test("actual native hallway routing ignores an untraversed ordinary cell owner w
   for (const edge of data.edges) edge.roomKeys.push("office");
   const geometry = data.circulationGeometry!;
   geometry.cells[0].roomKeys.push("office");
+  assert(geometry.preparedRoomKeys);
   geometry.preparedRoomKeys.push("office");
   const refresh = () => {
     geometry.sourceGeometryKey = nativeCirculationGeometryKey(data);

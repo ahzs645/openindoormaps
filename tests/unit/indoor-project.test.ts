@@ -1,4 +1,5 @@
 import { prepareRouting } from "../../app/indoor-project/prepare-routing";
+import { visitorRuntimeProject } from "../../app/indoor-project/visitor-project-runtime";
 import {
   encodeNativeExactTopology,
   nativeRationalPoint,
@@ -3374,4 +3375,26 @@ test("viewer exports carry authored envelopes while the dataset keeps compiler s
     JSON.stringify(viewer.dataset.nativeIndoorEnvelopes),
     JSON.stringify(prepared),
   );
+});
+
+test("visitor runtime without raw archive entries exports a valid identical viewer", async () => {
+  const master = await readIndoorProject(await archive());
+  const bytes = await exportCampusViewer(master);
+  const viewer = await readIndoorProject(bytes);
+  const runtime = visitorRuntimeProject(viewer);
+  assert.deepEqual(runtime.files, {});
+  const restoredBytes = await exportCampusViewer(runtime);
+  const restored = await readIndoorProject(restoredBytes);
+  assert.deepEqual(restored.dataset, viewer.dataset);
+  assert.deepEqual(restored.rooms, viewer.rooms);
+  assert.deepEqual(
+    findProjectRoute(restored.dataset, "a", "c"),
+    findProjectRoute(viewer.dataset, "a", "c"),
+  );
+  const originalFiles = unzipSync(bytes);
+  const restoredFiles = unzipSync(restoredBytes);
+  for (const path of Object.keys(originalFiles))
+    if (path !== "manifest.json")
+      assert.deepEqual(restoredFiles[path], originalFiles[path], path);
+  assert.deepEqual(viewer.files, originalFiles);
 });

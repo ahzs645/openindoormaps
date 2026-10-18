@@ -44,7 +44,10 @@ export const PUBLISHED_PROJECT_RECEIPTS: readonly PublishedProjectReceipt[] =
         },
       },
       progressiveRevisionSha256:
-        "cacc11ed6afa9e415fb0f31da1241f8bf527f8d8c53ff9b243725432854a2115",
+        // Same validated ZIP/dataset/engine; the delivery now includes all
+        // seven freshly checked physical display scopes. See ship-readiness/
+        // loading/plane-regeneration for retained and new asset readback.
+        "a0ec01eda9de2fc296d9f8094e2d667d9d309dbf82c9fefc1d16e7ca88661cf6",
       validationReportSha256:
         "55dc6923b5c0882f9489932aba02ccdf0e1935859796d13a71fb0c4a8bf57ad0",
       validationElapsedMs: 439_974,

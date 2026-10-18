@@ -5,6 +5,7 @@ import revitImports from "~/data/revit-imports";
 
 export default function WelcomePage() {
   const locationEntries = locationCatalog;
+  const hasLocations = locationEntries.length > 0;
   const revitImportEntries = Object.values(revitImports);
 
   return (
@@ -19,28 +20,32 @@ export default function WelcomePage() {
         <p className="text-muted-foreground">Select a workspace</p>
       </div>
 
-      <div className="grid w-full max-w-3xl gap-6 md:grid-cols-2">
-        <section>
-          <h2 className="mb-3 text-sm font-semibold text-muted-foreground">
-            Map Locations
-          </h2>
-          <div className="flex flex-col gap-3">
-            {locationEntries.map((location) => (
-              <Link
-                key={location.slug}
-                to={`/${location.slug}`}
-                className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-secondary"
-              >
-                <MapPin className="size-5 text-sky-600 dark:text-sky-300" />
-                <span className="font-medium">{location.name}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
+      <div
+        className={`grid w-full gap-6 ${hasLocations ? "max-w-3xl md:grid-cols-2" : "max-w-xl"}`}
+      >
+        {hasLocations && (
+          <section>
+            <h2 className="mb-3 text-sm font-semibold text-muted-foreground">
+              Map Locations
+            </h2>
+            <div className="flex flex-col gap-3">
+              {locationEntries.map((location) => (
+                <Link
+                  key={location.slug}
+                  to={`/${location.slug}`}
+                  className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-secondary"
+                >
+                  <MapPin className="size-5 text-sky-600 dark:text-sky-300" />
+                  <span className="font-medium">{location.name}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section>
           <h2 className="mb-3 text-sm font-semibold text-muted-foreground">
-            Revit Imports
+            {hasLocations ? "Revit Imports" : "Indoor projects"}
           </h2>
           <div className="flex flex-col gap-3">
             <Link

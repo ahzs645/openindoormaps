@@ -1,0 +1,86 @@
+{
+  "reviewDate": "2026-10-18",
+  "scope": "Mappedin lessons and UNBC visitor source review; no new live browser or physical route certification",
+  "demo": {
+    "url": "https://demos.mappedin.com/web/mappedin-web/bc-children-s-and-women-s-hospital-campus/bc-childrens-hospital.html#/directions?to=Emercgency%20Reception%20(Turtle%20Bay)&from=s_67ef97b0c52ee383c6df7006&textDirectionsVisible=true&instruction=2",
+    "webReader": "inaccessible",
+    "httpGet": "HTTP 403 Forbidden",
+    "interactiveBrowserTool": "not available in agent tool catalog",
+    "freshInteractionCompleted": false,
+    "staticSourceOriginLookup": {
+      "path": "app/data/bc-hospital/indoor-map.geojson",
+      "spaceId": "s_67ef97b0c52ee383c6df7006",
+      "localPolygonId": 2930,
+      "name": "Neonatal Intensive Care Unit (Dragonfly)",
+      "building": "Teck Acute Care Centre",
+      "levelId": 1,
+      "displayFloor": "Level 2"
+    },
+    "interactiveBrowser": "fresh isolated cloud system Chromium via installed Playwright",
+    "freshRoutePaintCompleted": true,
+    "cloudHttpStatus": 200,
+    "proof": "mappedin-live-cloud-attempt.json",
+    "screenshot": "mappedin-live-cloud-attempt.png"
+  },
+  "officialDocsRead": [
+    "https://developer.mappedin.com/docs/enterprise-apps/mappedin-web/deep-linking",
+    "https://developer.mappedin.com/web-sdk/wayfinding"
+  ],
+  "historicalEvidenceInspected": [
+    "docs/bc-hospital-reproduction-2026-10-01.txt",
+    "tests/e2e/bc-hospital.spec.ts",
+    "docs/screenshots/bc-hospital-reference-next-mobile.png"
+  ],
+  "historicalScreenshotSha256": "4a99a7438ad500fcfe1a6e3bce2953b9bf07c3ee879201de70009370cfb88780",
+  "verificationAttempts": [
+    {
+      "command": "node --import tsx scripts/verify-bc-hospital-routing.ts",
+      "exitCode": 1,
+      "status": "blocked before test execution",
+      "reason": "ERR_MODULE_NOT_FOUND: tsx"
+    },
+    {
+      "command": "node --import tsx scripts/verify-bc-hospital-step-follow.ts",
+      "exitCode": 1,
+      "status": "blocked before test execution",
+      "reason": "ERR_MODULE_NOT_FOUND: tsx"
+    },
+    {
+      "command": "node --import tsx scripts/verify-bc-hospital-routing.ts",
+      "exitCode": 0,
+      "status": "passed after central dependency installation",
+      "output": "PASS: 142 hospital route/connector cases; isolated source room stays unreachable."
+    },
+    {
+      "command": "node --import tsx scripts/verify-bc-hospital-step-follow.ts",
+      "exitCode": 0,
+      "status": "passed after central dependency installation",
+      "output": "PASS: 53 forward/reverse hospital instruction sections stay on the correct floor; connector arrival context, focus cleanup and mobile card clearance."
+    },
+    {
+      "command": "node --import tsx --test tests/unit/visitor-route-efficiency.test.ts",
+      "exitCode": 0,
+      "status": "passed",
+      "tests": 6
+    }
+  ],
+  "appCodeChangedByThisAgent": false,
+  "newVendorAssetsCopied": false,
+  "initialSourceCommitAtInspection": "5e856d6850515144d71c68f78b8ba15c173e9667",
+  "sourceCommitAtFreshRegression": "5391ea3cbf9878e418a17fa1f99ed5b1a27ff5e5",
+  "browserRetryAttempt": {
+    "waitStrategy": "networkidle with 60 second timeout",
+    "status": "timed out during mobile navigation; early desktop coordinate clicks occurred before painted controls and are not accepted interaction evidence",
+    "discardedLoadingScreenshots": true
+  },
+  "browserInteractionRetry": {
+    "status": "incomplete",
+    "closedShadowRoot": true,
+    "textRoleLocatorResults": "empty despite successful painted first screenshot",
+    "coordinateRetry": "early loading state; not accepted as control verification",
+    "paintReadyRetry": "screenshot timed out after 30000ms; next bounded retry timed out after 5000ms",
+    "evidence": "mappedin-observed-interactions.json",
+    "freshDesktopPaintProof": "mappedin-live-cloud-attempt.png",
+    "freshMobileOrAccessibleBehaviorVerified": false
+  }
+}

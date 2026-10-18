@@ -17,8 +17,27 @@
   border-bottom: 1px solid #d8e0e3;
 }
 .progressive-visitor h1 {
+  flex: 1;
   margin: 0;
   font-size: 20px;
+}
+.visitor-map-tools summary {
+  cursor: pointer;
+  padding: 8px 0;
+}
+.visitor-map-tools[open] {
+  flex-basis: 100%;
+}
+.visitor-map-tool-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+.progressive-visitor header > button,
+.visitor-map-tools > summary {
+  min-height: 44px;
 }
 .progressive-visitor header form {
   display: flex;
@@ -98,6 +117,24 @@
   text-align: left;
   margin-bottom: 4px;
 }
+.visitor-place-card {
+  border: 1px solid #d8e0e3;
+  border-radius: 7px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #f6fafb;
+}
+.visitor-place-card p {
+  margin: 0 0 8px;
+}
+.visitor-place-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.visitor-place-actions button {
+  min-height: 44px;
+}
 .visitor-map {
   min-height: 0;
   position: relative;
@@ -130,6 +167,9 @@
   .progressive-visitor header form {
     flex-basis: 100%;
     flex-wrap: wrap;
+  }
+  .progressive-visitor h1 {
+    flex-basis: 100%;
   }
   .progressive-visitor header label {
     flex-basis: 100%;

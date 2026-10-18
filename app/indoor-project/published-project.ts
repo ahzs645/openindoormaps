@@ -30,6 +30,10 @@ export const publishedSha256 = async (bytes: Uint8Array) =>
     ),
     (v) => v.toString(16).padStart(2, "0"),
   ).join("");
+const DEFAULT_PUBLICATION_POLICY = {
+  receipts: PUBLISHED_PROJECT_RECEIPTS,
+  validatorSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+};
 
 /** A receipt is trusted only when compiled into this app. The optional policy
  * is for publisher/CLI tests; the browser worker never accepts it in a message.
@@ -40,17 +44,15 @@ export async function tryReadPublishedProject(
   policy: {
     receipts: readonly PublishedProjectReceipt[];
     validatorSha256: string;
-  } = {
-    receipts: PUBLISHED_PROJECT_RECEIPTS,
-    validatorSha256: PREPARED_DISPLAY_ENGINE_SHA256,
-  },
+  } = DEFAULT_PUBLICATION_POLICY,
+  options: { retainArchiveFiles?: boolean } = {},
 ): Promise<PublishedProjectImport | undefined> {
   const candidates = policy.receipts.filter(
     (r) =>
       r.packageBytes === bytes.length &&
       r.validatorSha256 === policy.validatorSha256,
   );
-  if (!candidates.length) return;
+  if (candidates.length === 0) return;
   const progress = projectImportReporter(onProgress);
   progress("checksums");
   const hash = await publishedSha256(bytes);
@@ -86,8 +88,15 @@ export async function tryReadPublishedProject(
     )
       throw new Error("Published map file checksum mismatch.");
   progress("decode");
-  const parse = (path: string) =>
-    JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(files[path]));
+  // Check every original entry before releasing any bytes. Ordinary readers
+  // retain the full inventory; the visitor worker needs only decoded values.
+  const parse = (path: string) => {
+    const value = JSON.parse(
+      new TextDecoder("utf8", { fatal: true }).decode(files[path]),
+    );
+    if (options.retainArchiveFiles === false) delete files[path];
+    return value;
+  };
   const manifest = parse("manifest.json") as IndoorProject["manifest"];
   const dataset = parse("viewer/indoor.json") as IndoorProject["dataset"];
   if (
@@ -110,5 +119,13 @@ export async function tryReadPublishedProject(
     ),
   );
   progress("transfer");
-  return { project: { manifest, dataset, rooms, files }, receipt };
+  return {
+    project: {
+      manifest,
+      dataset,
+      rooms,
+      files: options.retainArchiveFiles === false ? {} : files,
+    },
+    receipt,
+  };
 }

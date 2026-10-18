@@ -6,6 +6,7 @@ import { mkdir, readFile, writeFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import { copyDeclaredProgressiveAssets } from "./copy-progressive-assets";
 import { brotliCompressSync, brotliDecompressSync, constants } from "node:zlib";
 import { gunzipSync, gzipSync, Zip, ZipPassThrough } from "fflate";
 import { readProgressiveRoutingParts } from "../../app/indoor-project/progressive-routing-parts";
@@ -14,6 +15,10 @@ import {
   exportCampusViewer,
 } from "../../app/indoor-project/package";
 import { editorVisitorDataset } from "../../app/indoor-project/map-edits";
+import {
+  tryReadPublishedProject,
+  type PublishedProjectReceipt,
+} from "../../app/indoor-project/published-project";
 import { routeWorkerDataset } from "../../app/indoor-project/route-worker-dataset";
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { deriveNativeExplore } from "../../app/indoor-project/native-explore";
@@ -284,6 +289,33 @@ export async function verifyProgressiveDeliveryDirectory(
     exactCodecRoundTrips: true,
   };
 }
+
+/** Reusing prepared display requires the exact already checked publication.
+ * Merely matching a model or level list cannot admit another artifact. */
+export function verifyProgressiveReuseBinding(
+  manifest: ProgressiveManifest,
+  receipt: PublishedProjectReceipt | undefined,
+  inputSha256: string,
+  datasetSha256: string,
+  source: IndoorDataset["source"],
+) {
+  validateProgressiveManifest(manifest);
+  if (
+    !receipt ||
+    receipt.packageSha256 !== inputSha256 ||
+    receipt.datasetSha256 !== datasetSha256 ||
+    receipt.validatorSha256 !== PREPARED_DISPLAY_ENGINE_SHA256 ||
+    receipt.progressiveRevisionSha256 !== manifest.revisionSha256 ||
+    manifest.provenance.packageSha256 !== inputSha256 ||
+    manifest.provenance.datasetSha256 !== datasetSha256 ||
+    manifest.provenance.enginePreparationSha256 !==
+      PREPARED_DISPLAY_ENGINE_SHA256 ||
+    JSON.stringify(manifest.provenance.source) !== JSON.stringify(source)
+  )
+    throw new Error(
+      "Prepared display reuse requires the exact compiled checked publication, dataset and engine.",
+    );
+}
 export async function writeProgressiveOfflineArchive(
   directory: string,
   manifest: ProgressiveManifest,
@@ -356,6 +388,7 @@ export async function exportProgressiveViewer(
     identity?: boolean;
     brotli?: boolean;
     priorityScopes?: number[][];
+    reuseDisplayDirectory?: string;
   } = {},
 ) {
   await mkdir(path.dirname(path.resolve(directory)), { recursive: true });
@@ -374,9 +407,19 @@ export async function exportProgressiveViewer(
   const inputBytes = new Uint8Array(await readFile(input));
   const inputSha256 = progressiveSha256(inputBytes);
   console.log(JSON.stringify({ stage: "read-source", inputSha256 }));
-  let project = await readIndoorProject(inputBytes, (event) =>
-    console.log(JSON.stringify({ phase: "source-import", ...event })),
-  );
+  const admitted = await tryReadPublishedProject(inputBytes);
+  let project =
+    admitted?.project ??
+    (await readIndoorProject(inputBytes, (event) =>
+      console.log(JSON.stringify({ phase: "source-import", ...event })),
+    ));
+  if (admitted)
+    console.log(
+      JSON.stringify({
+        stage: "compiled-source-admission",
+        id: admitted.receipt?.id,
+      }),
+    );
   let independentVisitor: Uint8Array | undefined;
   let authoringPackageSha256 =
     project.manifest.format === "reviter-project" ? inputSha256 : undefined;
@@ -398,6 +441,26 @@ export async function exportProgressiveViewer(
   const data = editorVisitorDataset(project);
   const datasetSha256 = preparedDisplayDatasetSha256(data);
   const inputSource = { ...data.source };
+  let reusedManifest: ProgressiveManifest | undefined;
+  if (options.reuseDisplayDirectory) {
+    reusedManifest = JSON.parse(
+      await readFile(
+        path.join(options.reuseDisplayDirectory, "manifest.json"),
+        "utf8",
+      ),
+    ) as ProgressiveManifest;
+    verifyProgressiveReuseBinding(
+      reusedManifest,
+      admitted?.receipt,
+      inputSha256,
+      datasetSha256,
+      data.source,
+    );
+    await verifyProgressiveDeliveryDirectory(
+      options.reuseDisplayDirectory,
+      reusedManifest,
+    );
+  }
   if (options.sourceReceipt) {
     const receipt = JSON.parse(await readFile(options.sourceReceipt, "utf8"));
     if (
@@ -457,7 +520,15 @@ export async function exportProgressiveViewer(
       : ("authoring-derived-candidate" as const);
   await mkdir(directory, { recursive: false });
   await mkdir(path.join(directory, "assets"));
-  const assets: Record<string, ProgressiveAsset> = {};
+  if (options.reuseDisplayDirectory && reusedManifest)
+    await copyDeclaredProgressiveAssets(
+      options.reuseDisplayDirectory,
+      directory,
+      reusedManifest,
+    );
+  const assets: Record<string, ProgressiveAsset> = {
+    ...reusedManifest?.assets,
+  };
   const add = async (
     kind: ProgressiveAsset["kind"],
     raw: Uint8Array,
@@ -529,6 +600,26 @@ export async function exportProgressiveViewer(
   console.log(JSON.stringify({ stage: "routing", asset: routeAsset }));
   const inventory = preparedDisplayScopes(data);
   const scopeKeys = new Set(inventory.scopes.map((ids) => JSON.stringify(ids)));
+  const expectedOptions = preparedDisplayOptions(
+    data,
+    visitorDisplayDefaultOptions,
+  );
+  if (
+    reusedManifest?.scopes.some(
+      (scope) =>
+        !scopeKeys.has(JSON.stringify(scope.levelIds)) ||
+        scope.building !== "all" ||
+        Object.keys(scope.display.descriptor.binding.options).length !==
+          Object.keys(expectedOptions).length ||
+        Object.entries(expectedOptions).some(
+          ([key, value]) =>
+            scope.display.descriptor.binding.options[key] !== value,
+        ),
+    )
+  )
+    throw new Error(
+      "A reused display scope is no longer a supported exact scope.",
+    );
   const priorityKeys = (options.priorityScopes ?? []).map((ids) =>
     JSON.stringify(ids),
   );
@@ -545,7 +636,7 @@ export async function exportProgressiveViewer(
       (ids) => !priorityKeys.includes(JSON.stringify(ids)),
     ),
   ];
-  const scopes: ProgressiveScope[] = [],
+  const scopes: ProgressiveScope[] = [...(reusedManifest?.scopes ?? [])],
     unavailableScopes = [...inventory.unavailableScopes];
   const makeManifest = (missing: number[][]): ProgressiveManifest => {
     const body: Omit<ProgressiveManifest, "revisionSha256"> = {
@@ -561,7 +652,10 @@ export async function exportProgressiveViewer(
       },
       shellAssetId: shellAsset.id,
       routeAssetId: routeAsset.id,
-      defaultScopeId: scopes[0].id,
+      defaultScopeId:
+        scopes.find(
+          (scope) => JSON.stringify(scope.levelIds) === priorityKeys[0],
+        )?.id ?? scopes[0].id,
       scopes,
       unavailableScopes: missing,
       assets,
@@ -573,6 +667,12 @@ export async function exportProgressiveViewer(
   };
   const timings: unknown[] = [];
   for (const levelIds of orderedScopes) {
+    if (
+      scopes.some(
+        (scope) => JSON.stringify(scope.levelIds) === JSON.stringify(levelIds),
+      )
+    )
+      continue;
     const started = performance.now();
     console.log(JSON.stringify({ stage: "scope-start", levelIds }));
     let descriptor = project.preparedDisplay?.descriptors.find(
@@ -830,7 +930,9 @@ export async function exportProgressiveViewer(
     const bytes = representationBytes(Object.keys(assets), encoding);
     return bytes === null ? null : manifestFileBytes.length + bytes;
   };
-  const firstScope = scopes[0];
+  const firstScope = scopes.find(
+    (scope) => scope.id === manifest.defaultScopeId,
+  )!;
   const firstView = [shellAsset, assets[firstScope.overviewAssetId]];
   const transferBytes = representationBytes;
   const report = {
@@ -848,6 +950,8 @@ export async function exportProgressiveViewer(
     publication,
     complete: unavailableScopes.length === 0,
     scopes: scopes.length,
+    compiledSourceAdmission: !!admitted,
+    reusedScopes: reusedManifest?.scopes.length ?? 0,
     unavailableScopes,
     manifestRevisionSha256: manifest.revisionSha256,
     manifestBytes: manifestFileBytes.length,
@@ -928,11 +1032,12 @@ if (
           "--gzip-only",
         ].includes(f) &&
         !f.startsWith("--source-receipt=") &&
+        !f.startsWith("--reuse-display=") &&
         !/^--priority-scope=\d+(?:,\d+)*$/.test(f),
     )
   )
     throw new Error(
-      "Usage: node --max-old-space-size=8192 --expose-gc --import tsx scripts/indoor/export-progressive-viewer.ts source.zip NEW_DIRECTORY [--visitor] [--prepare] [--no-offline] [--checkpoints] [--source-receipt=/absolute/path/receipt.json] [--identity] [--gzip-only] [--priority-scope=LEVEL_ID,...]",
+      "Usage: node --max-old-space-size=8192 --expose-gc --import tsx scripts/indoor/export-progressive-viewer.ts source.zip NEW_DIRECTORY [--visitor] [--prepare] [--no-offline] [--checkpoints] [--source-receipt=/absolute/path/receipt.json] [--reuse-display=/absolute/existing/directory] [--identity] [--gzip-only] [--priority-scope=LEVEL_ID,...]",
     );
   await initializeNativeExactGeosOverlay();
   await exportProgressiveViewer(input, directory, {
@@ -942,6 +1047,9 @@ if (
     checkpoints: flags.includes("--checkpoints"),
     identity: flags.includes("--identity"),
     brotli: !flags.includes("--gzip-only"),
+    reuseDisplayDirectory: flags
+      .find((flag) => flag.startsWith("--reuse-display="))
+      ?.slice("--reuse-display=".length),
     sourceReceipt: flags
       .find((flag) => flag.startsWith("--source-receipt="))
       ?.slice("--source-receipt=".length),

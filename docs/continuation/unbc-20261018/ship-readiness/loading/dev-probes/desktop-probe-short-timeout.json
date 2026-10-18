@@ -1,0 +1,64 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.",
+  "elapsedMs": 52559,
+  "text": "REPLICABLE INDOOR PIPELINE\nIndoor project workspace\nMap and development downloads\nOffline map\nClear map\nVenue maps\nImport project ZIP\nImport master folder\nExport reviewed project\n\nUNBC.hallway-guides.campus-viewer.zip · Checking room and connector identities… · 27s elapsed\n\nOne package, from source model to tested routes\n\nIn Reviter, load the model and room reviews, save GIS reference points, then choose Prepare OpenIndoorMaps project. Import that ZIP here. You can also select your finalized master Reviter ZIP. The package is processed in this browser; keep exported ZIPs as backups.\n\nCheck buildings and campus floors.\nSelect areas and door or stair markers to inspect source metadata.\nChoose start and destination; inspect each floor of the route.\nReview public access and step-free connections, then export the reviewed package.\n\nOriginal RVT bytes, floor boundaries, source identities and GIS references remain in the package.",
+  "imports": [],
+  "diagnostics": [
+    {
+      "stage": "import:checksums",
+      "realm": "main",
+      "at": 28542.5,
+      "heapUsed": 131191922,
+      "heapTotal": 137471914,
+      "heapLimit": 4395630592,
+      "elapsedMs": 0
+    },
+    {
+      "stage": "import:archive",
+      "realm": "main",
+      "at": 28735.400000000023,
+      "heapUsed": 131327358,
+      "heapTotal": 137471942,
+      "heapLimit": 4395630592,
+      "elapsedMs": 174.29999999998836
+    },
+    {
+      "stage": "import:decode",
+      "realm": "main",
+      "at": 41381.100000000035,
+      "heapUsed": 81952265,
+      "heapTotal": 83110237,
+      "heapLimit": 4395630592,
+      "elapsedMs": 12840.099999999977
+    },
+    {
+      "stage": "import:identity",
+      "realm": "main",
+      "at": 50212.40000000002,
+      "heapUsed": 82187376,
+      "heapTotal": 84572516,
+      "heapLimit": 4395630592,
+      "elapsedMs": 21661.70000000001
+    }
+  ],
+  "errors": [],
+  "failures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:42179/data/unbc-full/project.json",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42179/data/unbc-full/parts/677ba787e328abf8e51a78188686777a829affb61515e20984a361ef092f3022.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42179/data/unbc-full/parts/eac4cbc938186d275c10616cd2918d71f7add640b6194f13e6e00bd77f6139d1.bin",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:42179/data/unbc-full/parts/b15787ad49550579eb7f287ba4289b2f1d7e286251bc737a04acb374806f4fa4.bin",
+      "status": 200
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "fixture": false,
+  "scope": "Accepted UNBC overview/search/endpoint controls only; no physical route calculation",
+  "evidence": [
+    {
+      "mobile": false,
+      "elapsedMs": 51046,
+      "headerHeight": 65,
+      "to": "rm-311-ac6ce9426f1c",
+      "url": "http://127.0.0.1:42179/projects/visitor?manifest=http%3A%2F%2F127.0.0.1%3A42179%2Fdata%2Funbc%2Fmanifest.json&to=rm-311-ac6ce9426f1c&accessible=1",
+      "errors": [],
+      "requestCount": 276,
+      "screenshot": "desktop-actual-unbc.png"
+    },
+    {
+      "mobile": true,
+      "elapsedMs": 23068,
+      "headerHeight": 96,
+      "to": "rm-311-ac6ce9426f1c",
+      "url": "http://127.0.0.1:42179/projects/visitor?manifest=http%3A%2F%2F127.0.0.1%3A42179%2Fdata%2Funbc%2Fmanifest.json&to=rm-311-ac6ce9426f1c&accessible=1",
+      "errors": [],
+      "requestCount": 276,
+      "screenshot": "mobile-actual-unbc.png"
+    }
+  ],
+  "recordedAt": "2026-10-18T09:23:29.151Z",
+  "rendererReadinessAsserted": false,
+  "headerChecks": {
+    "configuredTechnicalControlsHidden": true,
+    "savedMapControlVisible": true,
+    "maximumHeightPixels": 120
+  },
+  "sourceFiles": {
+    "app/pages/progressive-visitor-page.tsx": "5cc75135c8c88a1c6ed6e3b60b8d5d5411b0c0f936a95f366802fe39569d4d16",
+    "app/pages/progressive-visitor.css": "2f75100eed06a2733c63ed85811a65086640645e9bc59cc807fbe2e4fbfc3a65",
+    "app/indoor-project/visitor-route-state.ts": "fed69e4cc1044f494b0dee0899936aefcddda88952741609d6d28d75befb8ced",
+    "app/indoor-project/route-link.ts": "d633689931664474fc32bef4b08dc358a654b868d4867d00f6744625cb58f180"
+  },
+  "acceptedManifestSha256": "20064bb32afabd6102ca1c86c483a0642af8c69250a8e2db2c2bcdcdbd5a098f"
+}

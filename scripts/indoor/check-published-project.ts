@@ -13,6 +13,7 @@ import {
   type ProgressiveManifest,
 } from "../../app/indoor-project/progressive-delivery";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import { publishedDefaultScopeCoverage } from "./published-default-scope-coverage";
 const [root, output] = process.argv.slice(2);
 assert(
   root && output,
@@ -87,6 +88,13 @@ const scopes = manifest.scopes.map((scope) => {
   );
   return { label: scope.label, levelIds: scope.levelIds, ready: true };
 });
+const pageScopes = publishedDefaultScopeCoverage(data, manifest);
+assert(pageScopes.length > 0, "No visitor floor choices were checked");
+for (const request of pageScopes)
+  assert(
+    request.scopeId,
+    `Actual visitor floor choice would repeat native preparation: ${request.label} [${request.levelIds.join(", ")}]`,
+  );
 assert(
   !stages.some((stage) =>
     ["geometry", "materials", "routes", "mapping"].includes(stage),
@@ -102,6 +110,7 @@ const report = {
   fullNormalImportRepeated: false,
   allDefaultPreparedScopesMatched: true,
   scopes,
+  pageScopes,
   stages,
   elapsedMs: performance.now() - started,
   routeAuthorityChanged: false,

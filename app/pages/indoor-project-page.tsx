@@ -172,6 +172,10 @@ import {
   BasemapAreaDrawing,
 } from "~/indoor-project/basemap-building-layer";
 import { routeSearch } from "~/utils/deep-link";
+import {
+  projectRouteLinkUrl,
+  readProjectRouteLink,
+} from "~/indoor-project/route-link";
 import { hallwayPathUrl } from "../indoor-project/hallway-path-url";
 import { HallwayPathLegend } from "../indoor-project/hallway-path-legend";
 import "./indoor-project.css";
@@ -303,6 +307,7 @@ export default function IndoorProjectPage() {
   const [basemapAreaShape, setBasemapAreaShape] =
     useState<BasemapAreaShape>("rectangle");
   const [arrivalMode, setArrivalMode] = useState(loadArrivalMode);
+  const [routeLinkNotice, setRouteLinkNotice] = useState("");
   const [allowOtherRoomTransit, setAllowOtherRoomTransit] = useState(false);
   useEffect(() => saveArrivalMode(arrivalMode), [arrivalMode]);
   const [keepBuildingOverview, setKeepBuildingOverview] =
@@ -658,9 +663,12 @@ export default function IndoorProjectPage() {
       setBuilding("all");
       setSelected("");
       setEdgeId("");
-      setStart("");
+      const linkedRoute = readProjectRouteLink(routeSearch(), p.dataset);
+      setStart(linkedRoute.start);
       setRoutePickTarget(null);
-      setEnd("");
+      setEnd(linkedRoute.end);
+      setMode(linkedRoute.mode);
+      setRouteLinkNotice(linkedRoute.notice);
       fitSelection.current = true;
       fitted.current = false;
       setMessage(
@@ -669,6 +677,11 @@ export default function IndoorProjectPage() {
     },
     [],
   );
+  useEffect(() => {
+    if (!project) return;
+    const next = projectRouteLinkUrl({ start, end, mode }, location.href);
+    if (next !== location.href) history.replaceState(history.state, "", next);
+  }, [project, start, end, mode]);
   useEffect(() => {
     return () => {
       if (download) URL.revokeObjectURL(download.url);
@@ -1586,6 +1599,7 @@ export default function IndoorProjectPage() {
       if (!review && !editing && target) {
         const room = data?.records.find((r) => r.key === id);
         if (!room || !isProjectDestination(room)) return false;
+        setRouteLinkNotice("");
         if (target === "start") {
           setStart(id);
           setRoutePickTarget(end ? null : "end");
@@ -3406,6 +3420,7 @@ export default function IndoorProjectPage() {
                     reachable={routeCalculation.reachable}
                     calculationError={routeCalculation.error}
                     routeDiagnostic={routeCalculation.diagnostic}
+                    routeLinkNotice={routeLinkNotice}
                     start={start}
                     end={end}
                     mode={mode}
@@ -3464,8 +3479,14 @@ export default function IndoorProjectPage() {
                       </>
                     }
                     selected={selected}
-                    onStart={setStart}
-                    onEnd={setEnd}
+                    onStart={(key) => {
+                      setRouteLinkNotice("");
+                      setStart(key);
+                    }}
+                    onEnd={(key) => {
+                      setRouteLinkNotice("");
+                      setEnd(key);
+                    }}
                     pickTarget={routePickTarget}
                     onPickTarget={setRoutePickTarget}
                     onMode={setMode}

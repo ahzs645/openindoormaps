@@ -2,7 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 import { existsSync } from "node:fs";
 export default defineConfig({
   testDir: "./tests/e2e",
-  testMatch: "progressive-visitor.spec.ts",
+  testMatch: [
+    "progressive-visitor.spec.ts",
+    "progressive-visitor-flow.spec.ts",
+  ],
   workers: 1,
   reporter: "list",
   use: {

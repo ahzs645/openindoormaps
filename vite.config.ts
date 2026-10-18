@@ -53,12 +53,18 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     tsconfigPaths: true,
     alias:
-      process.env.SITE_DEMOS === "hospital"
+      process.env.SITE_DEMOS === "hospital" ||
+      process.env.SITE_DEMOS === "indoor"
         ? [
             {
-            find: /^(?:~|\.\.)\/data\/locations$/,
+              find: /^(?:~|\.\.)\/data\/locations$/,
               replacement: fileURLToPath(
-                new URL("./app/data/hospital-locations.ts", import.meta.url),
+                new URL(
+                  process.env.SITE_DEMOS === "indoor"
+                    ? "./app/data/indoor-locations.ts"
+                    : "./app/data/hospital-locations.ts",
+                  import.meta.url,
+                ),
               ),
             },
           ]

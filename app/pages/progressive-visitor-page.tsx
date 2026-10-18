@@ -30,7 +30,13 @@ import {
   routeRequestReady,
 } from "~/indoor-project/heavy-worker-schedule";
 import { ProgressiveRouteClient } from "~/indoor-project/progressive-route-client";
-import { sameRoutePlace } from "~/indoor-project/visitor-route-state";
+import { projectRouteLinkUrl } from "~/indoor-project/route-link";
+import { routeSearch } from "~/utils/deep-link";
+import {
+  sameRoutePlace,
+  visitorEndpointUnavailableReason,
+  visitorRouteFailureMessage,
+} from "~/indoor-project/visitor-route-state";
 import { PreparedProjectMapLayers } from "~/indoor-project/map-layers";
 import { nativeRampLayer } from "~/indoor-project/ramp-layer";
 import { NativeExploreLayer } from "~/indoor-project/native-explore-layer";
@@ -343,6 +349,7 @@ function DetailedLayers({
 
 export default function ProgressiveVisitorPage() {
   const [params] = useSearchParams();
+  const configuredMap = !!params.get("manifest");
   const [url, setUrl] = useState(params.get("manifest") ?? "");
   const [client, setClient] = useState<ProgressiveVisitorClient>();
   const [current, setCurrent] = useState<VisitorScopeView>();
@@ -366,6 +373,9 @@ export default function ProgressiveVisitorPage() {
   const [focus, setFocus] = useState<[number, number]>();
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
+  const directionsRef = useRef<HTMLDetailsElement>(null);
+  const startRef = useRef<HTMLSelectElement>(null);
+  const endRef = useRef<HTMLSelectElement>(null);
   const [profile, setProfile] = useState<"public" | "accessible">("public");
   const [calculating, setCalculating] = useState(false);
   const [route, setRoute] = useState<ProjectRoute | null>(null);
@@ -459,8 +469,28 @@ export default function ProgressiveVisitorPage() {
         setScopeId(scope.id);
         setCurrent({ scope, overview: next.initialOverview });
         setZoom(17);
-        setStart("");
-        setEnd("");
+        const link = new URLSearchParams(routeSearch());
+        const endpoint = (name: string) => {
+          const key = link.get(name) ?? "";
+          const place = next.shell.records.find((record) => record.key === key);
+          return place && !visitorEndpointUnavailableReason(place) ? key : "";
+        };
+        const linkedStart = endpoint("from");
+        const linkedEnd = endpoint("to");
+        setStart(linkedStart);
+        setEnd(linkedEnd);
+        setProfile(
+          link.get("profile") === "accessible" || link.get("accessible") === "1"
+            ? "accessible"
+            : "public",
+        );
+        if (
+          (link.get("from") && !linkedStart) ||
+          (link.get("to") && !linkedEnd)
+        )
+          setRouteMessage(
+            "A place in this directions link is unavailable. Choose a start and destination on this map.",
+          );
         setSelected("");
         setFocus(undefined);
       } catch (error) {
@@ -475,6 +505,25 @@ export default function ProgressiveVisitorPage() {
     const initial = params.get("manifest");
     if (initial) void load(initial);
   }, [params, load]);
+  useEffect(() => {
+    if (!client) return;
+    const link = new URLSearchParams(routeSearch());
+    if ((link.has("from") || link.has("to")) && directionsRef.current)
+      directionsRef.current.open = true;
+  }, [client]);
+  useEffect(() => {
+    if (!client) return;
+    const next = new URL(
+      projectRouteLinkUrl({ start, end, mode: profile }, location.href),
+    );
+    const search = new URLSearchParams(routeSearch(next.href));
+    search.set("manifest", client.manifestUrl);
+    if (next.hash.startsWith("#/"))
+      next.hash = `${next.hash.split("?")[0]}?${search}`;
+    else next.search = search.toString();
+    if (next.href !== location.href)
+      history.replaceState(history.state, "", next.href);
+  }, [client, start, end, profile]);
   useEffect(
     () => () => {
       client?.close();
@@ -569,6 +618,27 @@ export default function ProgressiveVisitorPage() {
           .includes(search.toLowerCase()),
       )
       .slice(0, 12) ?? [];
+  const selectedPlace = client?.shell.records.find(
+    (record) => record.key === selected,
+  );
+  const selectedUnavailable = selectedPlace
+    ? visitorEndpointUnavailableReason(selectedPlace)
+    : undefined;
+  const endpointPlaces = useMemo(
+    () =>
+      client?.shell.records.filter(
+        (record) => !visitorEndpointUnavailableReason(record),
+      ) ?? [],
+    [client],
+  );
+  const selectEndpoint = (target: "start" | "end") => {
+    if (!selectedPlace || selectedUnavailable) return;
+    resetDirections();
+    if (target === "start") setStart(selectedPlace.key);
+    else setEnd(selectedPlace.key);
+    if (directionsRef.current) directionsRef.current.open = true;
+    (target === "start" ? endRef : startRef).current?.focus();
+  };
   const locate = (key: string) => {
     const record = client?.shell.records.find((entry) => entry.key === key);
     if (!record || !client) return;
@@ -646,8 +716,7 @@ export default function ProgressiveVisitorPage() {
       setRouteMessage(
         result.value.route
           ? `${Math.round(result.value.route.distanceMetres)} m`
-          : (result.value.diagnostic?.message ??
-              "No verified route is available."),
+          : visitorRouteFailureMessage(result.value.diagnostic, profile, false),
       );
       if (result.value.route) locate(start);
     } catch (error) {
@@ -718,45 +787,72 @@ export default function ProgressiveVisitorPage() {
   return (
     <main className="progressive-visitor">
       <header>
-        <Link to="/projects/indoor">Indoor maps</Link>
         <h1>UNBC campus map</h1>
-        <a
-          className="visitor-binary-preview"
-          href={`${import.meta.env.BASE_URL}index.html#/projects/indoor?package=%2Fdata%2Funbc-full%2Fproject.json&manifest=%2Fdata%2Funbc%2Fmanifest.json&preview=%2Fbinary%2F&view=2d`}
-        >
-          Full OpenIndoorMaps
-        </a>
-        <a className="visitor-binary-preview" href="/binary/">
-          Binary preview · 9.73 MB
-        </a>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            void load(url);
-          }}
-        >
-          <label>
-            Map manifest URL
-            <input
-              aria-label="Map manifest URL"
-              type="url"
-              required
-              value={url}
-              onChange={(event) => setUrl(event.target.value)}
-              placeholder="https://…/manifest.json"
-            />
-          </label>
-          <button type="submit">Open map</button>
+        {configuredMap && (
           <button
-            type="button"
             onClick={() => void load(url, true)}
-            disabled={!url}
+            disabled={!url || loading}
           >
             Open saved map
           </button>
-        </form>
+        )}
+        <details
+          className="visitor-map-tools"
+          open={configuredMap ? undefined : true}
+        >
+          <summary>Map tools</summary>
+          <div className="visitor-map-tool-content">
+            <Link to="/projects/indoor">Indoor maps</Link>
+            <a
+              className="visitor-binary-preview"
+              href={`${import.meta.env.BASE_URL}index.html#/projects/indoor?package=%2Fdata%2Funbc-full%2Fproject.json&manifest=%2Fdata%2Funbc%2Fmanifest.json&preview=%2Fbinary%2F&view=2d`}
+            >
+              Full OpenIndoorMaps
+            </a>
+            <a className="visitor-binary-preview" href="/binary/">
+              Binary preview · 9.73 MB
+            </a>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+                void load(url);
+              }}
+            >
+              <label>
+                Map manifest URL
+                <input
+                  aria-label="Map manifest URL"
+                  type="url"
+                  required
+                  value={url}
+                  onChange={(event) => setUrl(event.target.value)}
+                  placeholder="https://…/manifest.json"
+                />
+              </label>
+              <button type="submit">Open map</button>
+              {!configuredMap && (
+                <button
+                  type="button"
+                  onClick={() => void load(url, true)}
+                  disabled={!url}
+                >
+                  Open saved map
+                </button>
+              )}
+            </form>
+          </div>
+        </details>
       </header>
-      {error && <p role="alert">{error}</p>}
+      {error && (
+        <div role="alert">
+          <p>{error}</p>
+          {!client && (
+            <button onClick={() => void load(url)} disabled={loading || !url}>
+              Retry loading map
+            </button>
+          )}
+        </div>
+      )}
       {storageError && (
         <p role="status">Offline storage is unavailable: {storageError}</p>
       )}
@@ -829,6 +925,7 @@ export default function ProgressiveVisitorPage() {
             </label>
             {search && (
               <ul className="visitor-search">
+                {matches.length === 0 && <li>No matching places.</li>}
                 {matches.map((record) => (
                   <li key={record.key}>
                     <button onClick={() => locate(record.key)}>
@@ -838,20 +935,37 @@ export default function ProgressiveVisitorPage() {
                 ))}
               </ul>
             )}
-            {selected && (
-              <p data-testid="selected-place">
-                {
-                  shell?.records.find((record) => record.key === selected)
-                    ?.number
-                }{" "}
-                {shell?.records.find((record) => record.key === selected)?.name}
-              </p>
+            {selectedPlace && (
+              <section
+                className="visitor-place-card"
+                aria-label="Selected place"
+              >
+                <p data-testid="selected-place">
+                  <strong>
+                    {selectedPlace.number} {selectedPlace.name}
+                  </strong>
+                </p>
+                {selectedUnavailable ? (
+                  <p>{selectedUnavailable}</p>
+                ) : (
+                  <div className="visitor-place-actions">
+                    <button onClick={() => selectEndpoint("start")}>
+                      Start here
+                    </button>
+                    <button onClick={() => selectEndpoint("end")}>
+                      Directions to here
+                    </button>
+                  </div>
+                )}
+              </section>
             )}
-            <details>
+            <details ref={directionsRef}>
               <summary>Directions</summary>
+              <p>Choose the room or entrance you are starting from.</p>
               <label>
                 From
                 <select
+                  ref={startRef}
                   aria-label="From"
                   value={start}
                   onChange={(event) => {
@@ -860,18 +974,17 @@ export default function ProgressiveVisitorPage() {
                   }}
                 >
                   {<option value="">Choose starting place</option>}
-                  {shell?.records
-                    .filter((record) => record.arrivalNodeId && record.walkable)
-                    .map((record) => (
-                      <option key={record.key} value={record.key}>
-                        {record.number} {record.name}
-                      </option>
-                    ))}
+                  {endpointPlaces.map((record) => (
+                    <option key={record.key} value={record.key}>
+                      {record.number} {record.name}
+                    </option>
+                  ))}
                 </select>
               </label>
               <label>
                 To
                 <select
+                  ref={endRef}
                   aria-label="To"
                   value={end}
                   onChange={(event) => {
@@ -880,15 +993,29 @@ export default function ProgressiveVisitorPage() {
                   }}
                 >
                   <option value="">Choose destination</option>
-                  {shell?.records
-                    .filter((record) => record.arrivalNodeId && record.walkable)
-                    .map((record) => (
-                      <option key={record.key} value={record.key}>
-                        {record.number} {record.name}
-                      </option>
-                    ))}
+                  {endpointPlaces.map((record) => (
+                    <option key={record.key} value={record.key}>
+                      {record.number} {record.name}
+                    </option>
+                  ))}
                 </select>
               </label>
+              {profile === "accessible" && (
+                <p>
+                  Uses confirmed step-free connections. Some places may have no
+                  available route.
+                </p>
+              )}
+              <button
+                disabled={!start && !end}
+                onClick={() => {
+                  resetDirections();
+                  setStart(end);
+                  setEnd(start);
+                }}
+              >
+                Swap places
+              </button>
               <label>
                 Route preference
                 <select
@@ -919,7 +1046,7 @@ export default function ProgressiveVisitorPage() {
                   Cancel directions
                 </button>
               )}
-              <p role="status" data-testid="route-status">
+              <p role="status" aria-live="polite" data-testid="route-status">
                 {routeMessage}
               </p>
               {route && route.unknownAccessAreas.length > 0 && (
