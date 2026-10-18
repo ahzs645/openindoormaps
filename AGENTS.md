@@ -32,3 +32,12 @@ restore and the final paired archive, and retain the missing-native-input list.
 See [portable development procedure](docs/continuation/unbc-20261017/pathway-repairs/PORTABLE-DEVELOPMENT.md).
 The development snapshot supports application edits; it is not a complete native
 backup until actual authoring inputs have been recovered and included.
+
+For UNBC directions-cache publications, run
+`scripts/indoor/check-published-directions-cache.ts` against the final complete
+visitor JSON, its expected checksum and the actual publication root after the
+final build. A current compiled receipt and exact served carrier must match;
+stale/missing caches must not silently pass publication by falling back to long
+physical preparation. Pair the root `/data/unbc-routing/` asset, progressive/
+offline companions and development download, then verify normal live URLs and
+desktop/mobile directions. See the [October 18 startup findings](docs/continuation/unbc-20261018/directions-and-threshold-blockers/README.md).
