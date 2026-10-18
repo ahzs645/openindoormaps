@@ -1735,6 +1735,13 @@ export function PreparedProjectMapLayers({
       });
     // Unclassified source-network lines remain available in review mode.
     map.setFilter(ids[3], ["!=", ["get", "role"], "approach"]);
+    map.setPaintProperty(ids[3], "line-color", [
+      "case",
+      ["==", ["get", "role"], "fallback"],
+      "#687a85",
+      "#338d83",
+    ]);
+    map.setPaintProperty(ids[3], "line-opacity", 1);
     map.setLayoutProperty(ids[3], "visibility", network ? "visible" : "none");
     map.setLayoutProperty(
       "project-network-approach-line",
@@ -1744,13 +1751,15 @@ export function PreparedProjectMapLayers({
     if (network) {
       map.moveLayer(ids[3]);
       map.moveLayer("project-network-approach-line");
-      for (const role of ["passage", "transition", "held"]) {
+      for (const role of ["passage", "transition", "held", "gap"]) {
         const color =
           role === "passage"
             ? "#338d83"
-            : role === "held"
-              ? "#8b6d48"
-              : "#7054a1";
+            : role === "gap"
+              ? "#b44b47"
+              : role === "held"
+                ? "#8b6d48"
+                : "#7054a1";
         const line = `project-network-${role}-connection`;
         if (!map.getLayer(line))
           map.addLayer({
@@ -1780,7 +1789,12 @@ export function PreparedProjectMapLayers({
               ["==", ["geometry-type"], "Point"],
             ],
             paint: {
-              "circle-color": color,
+              "circle-color": [
+                "case",
+                ["==", ["get", "approachStatus"], "missing-walking-approach"],
+                "#b44b47",
+                color,
+              ],
               "circle-radius": 5,
               "circle-stroke-color": "#fff",
               "circle-stroke-width": 1.5,
@@ -1821,7 +1835,7 @@ export function PreparedProjectMapLayers({
       }
       map.moveLayer(ids[4]);
     } else
-      for (const role of ["passage", "transition", "held"])
+      for (const role of ["passage", "transition", "held", "gap"])
         for (const suffix of ["connection", "stop", "label"]) {
           const id = `project-network-${role}-${suffix}`;
           if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "none");

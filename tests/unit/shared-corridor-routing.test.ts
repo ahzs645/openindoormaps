@@ -37,6 +37,7 @@ import { centerHallwayRouteEndpoints } from "../../app/indoor-project/hallway-ce
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
 import { centeredRoutePaths } from "../../app/indoor-project/viewer-centered-route";
+import { projectRoutingGraph } from "../../app/indoor-project/routing-graph";
 
 async function fixture(
   compact = false,
@@ -221,6 +222,79 @@ async function fixture(
   );
   return d;
 }
+
+test("actual native hallway routing ignores an untraversed ordinary cell owner while keeping source access vetoes", async () => {
+  const data = await fixture();
+  data.records.push({
+    ...data.records[0],
+    key: "office",
+    number: "office",
+    name: "Office",
+    circulation: false,
+    arrivalNodeId: undefined,
+    ringsFeet: [
+      [
+        [12, 8],
+        [25, 8],
+        [25, 10],
+        [12, 10],
+      ],
+    ],
+    properties: {},
+  });
+  for (const edge of data.edges) edge.roomKeys.push("office");
+  const geometry = data.circulationGeometry!;
+  geometry.cells[0].roomKeys.push("office");
+  geometry.preparedRoomKeys.push("office");
+  const refresh = () => {
+    geometry.sourceGeometryKey = nativeCirculationGeometryKey(data);
+    geometry.exactTopology = encodeNativeExactTopology(
+      {
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: geometry.sourceGeometryKey,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      },
+      [
+        {
+          id: "hall-face",
+          parts: nativeRationalOverlay("union", [geometry.cells[0].ringsFeet]),
+        },
+      ],
+    );
+  };
+  refresh();
+  const before = JSON.stringify(data);
+  const route = findProjectRoute(data, "A", "B", "public", {
+    allowOtherRoomTransit: false,
+  });
+  assert.ok(
+    route,
+    "the unchanged native hallway branch remains available without ordinary-room transit",
+  );
+  assert.equal(
+    projectRoutingGraph(data)
+      .adjacency.get("A")!
+      .find((l) => l.edge.id === "AB")!
+      .requiredRooms.includes("office"),
+    false,
+  );
+  assert.equal(JSON.stringify(data), before);
+  // Staff is an explicit source veto, including an associated source owner.
+  data.records.find((r) => r.key === "office")!.access = "staff";
+  refresh();
+  assert.equal(
+    findProjectRoute(data, "A", "B", "public", {
+      allowOtherRoomTransit: false,
+    }),
+    null,
+  );
+  assert.ok(
+    projectRoutingGraph(data)
+      .allAdjacency.get("A")!
+      .find((l) => l.edge.id === "AB")!
+      .blockers.some((b) => b.kind === "staff"),
+  );
+});
 
 test("shared preparation preserves the graph; actual routes use a common centre in both directions", async () => {
   const d = await fixture(),
@@ -545,9 +619,11 @@ test("path view uses bound shared guides on the selected floor, drops repeated s
   assert.equal(hallwayPathView(data, [1], "absent").features.length, 0);
   data.edges[0].enabled = false;
   assert.equal(
-    hallwayPathView(data, [1], "all").features.length,
+    hallwayPathView(data, [1], "all").features.filter(
+      (f) => f.properties?.source === "shared-guide",
+    ).length,
     0,
-    "an edited source invalidates the saved guide binding",
+    "an edited source invalidates shared guide authority; remaining saved paths are explicitly fallback",
   );
 });
 

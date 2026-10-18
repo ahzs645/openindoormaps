@@ -1,4 +1,5 @@
 import { createTwoFootCorridorSupport } from "./corridor-guide-support";
+import { createNativeTransitRefinementPolicy } from "./native-walk-transit-owners";
 import * as DMath from "./deterministic-math";
 import { nativeRationalOverlay } from "./native-rational-overlay";
 import {
@@ -1032,6 +1033,11 @@ function refine(
     const mandatoryDoors = edges
       .filter((edge) => edge.kind === "door")
       .map((edge) => edge.id);
+    const transitAllowed = createNativeTransitRefinementPolicy(
+      data,
+      edges,
+      path.pointsFeet,
+    );
     const policyAllowed = (points: XY[]) => {
       const crossings = passageQuery(
         levelId,
@@ -1041,6 +1047,9 @@ function refine(
       // and retain the selected doorway only as a fictitious graph dependency.
       // Preserve every saved native threshold, including its travel direction.
       return (
+        transitAllowed(
+          points.map((p) => [p[0], p[1], path.pointsFeet[0][2]]),
+        ) &&
         mandatoryDoors.every((id) => crossings.some((p) => p.edge.id === id)) &&
         originalPassages.every((saved) =>
           crossings.some(

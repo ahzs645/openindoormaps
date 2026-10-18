@@ -198,10 +198,21 @@ export function prepareFloor(
     physicalHeights,
     data,
   );
+  const hallwayPaths = hallwayPathView(data, levelIds, building);
+  const displayedWalkingEdges = new Set<string>(
+    hallwayPaths.features.flatMap(
+      (f) => f.properties?.edgeIds ?? [f.properties?.edgeId],
+    ),
+  );
   return {
     presentation: withRaisedLabels,
-    hallwayPaths: hallwayPathView(data, levelIds, building),
-    pathConnections: pathConnections(data, levelIds, building),
+    hallwayPaths,
+    pathConnections: pathConnections(
+      data,
+      levelIds,
+      building,
+      displayedWalkingEdges,
+    ),
     assumedRoomBlocks,
     nativeStairKeys,
     stairSurroundKeys,

@@ -1,5 +1,17 @@
 # UNBC pathway and loading repairs · October 17
 
+[October 18 systemic four-floor work](../../unbc-20261018/systemic-pathways/README.md)
+adds common hallway/door/stair/ramp approach handling and source-bound transit
+checks, with 13 actual calculator requests. This remains a local candidate:
+21 lateral gaps and 28 held full stairs remain. The native rebuild has finished
+and failed preservation of 05-S204 and 03-S104; all nine checkpoints and its final
+failed state are privately backed up. No newer master or publication was made.
+
+[October 18 Building 08–10 inspection](../../unbc-20261018/hallway-display-links/README.md)
+identifies a missing Floor 1 entrance walking branch, Floor 2 guide/ordinary-room
+ownership requirements and 30 visually overlapping segment pairs. Its new
+figures are analytical diagnostics; no visitor routes or publication changed.
+
 [Later source recovery](../source-recovery/README.md) restores the original RVT,
 accepted master, canonical rooms/GIS and 890 companions; freshly reviews all
 28 held stair sources; and reconstructs the failed input indoor JSON exactly.

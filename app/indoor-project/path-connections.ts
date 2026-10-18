@@ -2,6 +2,7 @@ import type { FeatureCollection, LineString, Point } from "geojson";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 import { isDisplayPassage } from "./display-passages";
 import { geographicPoint } from "./routing";
+import { pathNetworkCoverage } from "./path-network-coverage";
 
 /** Original saved connection geometry for inspection, not new route authority.
  * Held stairs stay held; no endpoints are joined by XY proximity. */
@@ -9,6 +10,7 @@ export function pathConnections(
   data: IndoorDataset,
   levels: number[],
   building: string,
+  displayedWalkingEdges: ReadonlySet<string> = new Set(),
 ): FeatureCollection<LineString | Point> {
   const result: FeatureCollection<LineString | Point> = {
     type: "FeatureCollection",
@@ -49,6 +51,7 @@ export function pathConnections(
     levels.includes(n.levelId) &&
     (building === "all" || n.building === building);
   for (const edge of data.edges) {
+    if (edge.kind === "walk" && displayedWalkingEdges.has(edge.id)) continue;
     const a = nodes.get(edge.from),
       b = nodes.get(edge.to);
     if (!a || !b || ![a, b].some(inScope)) continue;
@@ -130,5 +133,41 @@ export function pathConnections(
         coordinates: geographicPoint(data, marker.point.pointFeet),
       },
     });
+  const coverage = pathNetworkCoverage(data, levels, building);
+  const stops = new Map(
+    coverage.stops.map((s) => [`${s.held ? "held" : "active"}:${s.nodeId}`, s]),
+  );
+  const marked = new Set<string>();
+  for (const feature of result.features) {
+    if (feature.geometry.type !== "Point") continue;
+    const stop = stops.get(
+      `${feature.properties?.role === "held" ? "held" : "active"}:${feature.properties?.nodeId}`,
+    );
+    if (!stop) continue;
+    feature.properties = { ...feature.properties, approachStatus: stop.status };
+    marked.add(stop.nodeId);
+  }
+  for (const stop of coverage.stops) {
+    if (
+      stop.held ||
+      stop.status !== "missing-walking-approach" ||
+      marked.has(stop.nodeId)
+    )
+      continue;
+    result.features.push({
+      type: "Feature",
+      properties: {
+        role: "gap",
+        nodeId: stop.nodeId,
+        edgeIds: stop.edgeIds,
+        approachStatus: stop.status,
+        label: `Missing path${stop.roomNumber ? ` · ${stop.roomNumber}` : ""}`,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: geographicPoint(data, stop.pointFeet),
+      },
+    });
+  }
   return result;
 }

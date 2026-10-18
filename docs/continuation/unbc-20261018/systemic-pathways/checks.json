@@ -1,0 +1,40 @@
+{
+  "scope": "Focused local candidate verification; not browser/publication or all-pair/source acceptance",
+  "createdAt": "2026-10-18T04:49:19.753481+00:00",
+  "openindoormaps": {
+    "tests": 48,
+    "failures": 0,
+    "command": "node --import tsx --test tests/unit/native-walk-transit-owners.test.ts tests/unit/shared-corridor-routing.test.ts tests/unit/hallway-routing.test.ts tests/unit/path-network-systemic.test.ts tests/unit/path-connections.test.ts",
+    "typecheck": "npx tsc -p .task-paths-tsconfig.json --noEmit (config preserved as scoped-typecheck-config.json; temporary root file removed)",
+    "lintErrors": 0,
+    "lintWarnings": 5,
+    "pagesBuildPassed": true,
+    "pagesBuildSeconds": 15.96
+  },
+  "reviter": {
+    "tests": 39,
+    "failures": 0,
+    "command": "node --experimental-strip-types --import ./scripts/register-test-typescript.mjs --test tests/native-terminal-visibility.test.ts tests/native-terminal-refinement.test.ts tests/native-circulation-geometry.test.ts tests/native-arrival-owner.test.ts",
+    "typecheck": "npx tsc -p tsconfig.indoor-pipeline.json --noEmit",
+    "lintErrors": 0
+  },
+  "normalCalculator": {
+    "requests": 13,
+    "routes": 10,
+    "refusals": 3,
+    "predeclaredExpectedRefusals": 1,
+    "checkFailures": 0,
+    "sourceFrozen": true,
+    "laterChanges": "Three display-only files listed in frozen-vs-current.json; routing code unchanged"
+  },
+  "desktopMobileBrowser": "Not performed; browser-control tools unavailable",
+  "published": false,
+  "acceptedNewMaster": false,
+  "remaining": {
+    "missingLateralApproaches": 21,
+    "heldFullStairLinks": 28,
+    "lostPreservedArrivals": ["05-S204", "03-S104"],
+    "turnAroundInstructionsInTestedRoutes": 2,
+    "roundoffOverlapCandidatePairs": 9
+  }
+}
