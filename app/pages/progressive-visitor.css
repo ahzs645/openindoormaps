@@ -153,6 +153,10 @@
   z-index: 3;
   pointer-events: none;
 }
+.visitor-loading[role="alert"] {
+  z-index: 30;
+  pointer-events: auto;
+}
 .visitor-camera-tools {
   position: absolute;
   top: 12px;
@@ -189,4 +193,12 @@
     border-top: 1px solid #d8e0e3;
     border-right: 0;
   }
+}
+.visitor-map-choices ul {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-left: 18px;
+}
+.visitor-map-choices li {
+  margin-block: 5px;
 }

@@ -20,6 +20,13 @@ import {
   type VisitorScopeView,
 } from "~/indoor-project/progressive-visitor-client";
 import { VisitorRenderStatus } from "~/indoor-project/visitor-render-status";
+import {
+  loadPublishedVisitorPlan,
+  publishedVisitorPlanReceipt,
+  type PublishedVisitorPlan,
+} from "~/indoor-project/published-visitor-plan";
+import { isVisitorHallway } from "~/indoor-project/place-discovery";
+import { PublishedVisitorPlanLayer } from "~/indoor-project/published-visitor-plan-layer";
 import { emptyPreparedFloorSources } from "~/indoor-project/prepared-layer-lifetime";
 import { prepareVisitorOfflineShell } from "~/indoor-project/visitor-offline-shell-client";
 import {
@@ -52,6 +59,7 @@ import type { IndoorDataset } from "~/indoor-project/contract";
 import type {
   ProgressiveOverview,
   ProgressiveShell,
+  ProgressiveScope,
 } from "~/indoor-project/progressive-delivery";
 import type { ProgressiveRouteSummary } from "~/indoor-project/progressive-route-summary";
 import type { ProjectStep } from "~/indoor-project/navigation-steps";
@@ -76,6 +84,12 @@ const streetStyles = {
   dark: "https://tiles.openfreemap.org/styles/bright",
 };
 const noop = () => {};
+type PlanState = {
+  scopeKey: string;
+  status: "loading" | "ready" | "missing" | "error";
+  plan?: PublishedVisitorPlan;
+  error?: string;
+};
 const isAbort = (error: unknown) =>
   error instanceof DOMException && error.name === "AbortError";
 const message = (error: unknown) =>
@@ -359,6 +373,9 @@ export default function ProgressiveVisitorPage() {
   const [requestedDetailScope, setRequestedDetailScope] = useState("");
   const [locked, setLocked] = useState(loadBuildingOverview);
   const [mode, setMode] = useState("2d");
+  const [planState, setPlanState] = useState<PlanState>();
+  const [planRetry, setPlanRetry] = useState(0);
+  const [mapChoices, setMapChoices] = useState<string[]>([]);
   const [street, setStreet] = useState(false);
   const [error, setError] = useState("");
   const [storageError, setStorageError] = useState("");
@@ -430,6 +447,8 @@ export default function ProgressiveVisitorPage() {
       setLoading(true);
       setError("");
       setCurrent(undefined);
+      setPlanState(undefined);
+      setMapChoices([]);
       setRoute(null);
       setSteps([]);
       setRouteSummary({ transitPlaces: [] });
@@ -543,20 +562,74 @@ export default function ProgressiveVisitorPage() {
   );
   const detail = !locked && zoom >= ROOM_DETAIL_START;
   const scopeKey = `${client?.manifest.revisionSha256 ?? ""}:${scopeId}`;
+  useEffect(() => setMapChoices([]), [scopeKey, mode, locked]);
+  const selectedScope = client?.manifest.scopes.find(
+    (scope) => scope.id === scopeId,
+  );
+  const planWanted =
+    !locked &&
+    mode === "2d" &&
+    !!client &&
+    !!selectedScope &&
+    !!publishedVisitorPlanReceipt(client.manifest, selectedScope);
+  const currentPlan = planState?.scopeKey === scopeKey ? planState : undefined;
+  const visiblePlan =
+    planWanted && currentPlan?.status === "ready"
+      ? currentPlan.plan
+      : undefined;
+  const loadingPlan =
+    planWanted && (!currentPlan || currentPlan.status === "loading");
+  const showLegacyDetail =
+    !visiblePlan &&
+    !locked &&
+    !!current?.display &&
+    !!current.context &&
+    (!planWanted || currentPlan?.status === "missing");
+  useEffect(() => {
+    if (!client || !selectedScope || !planWanted) return;
+    const controller = new AbortController();
+    setPlanState({ scopeKey, status: "loading" });
+    void loadPublishedVisitorPlan(client.manifest, selectedScope, {
+      manifestUrl: client.manifestUrl,
+      signal: controller.signal,
+      offline: client.offlineOnly,
+    })
+      .then((plan) => {
+        if (controller.signal.aborted) return;
+        setPlanState({ scopeKey, status: plan ? "ready" : "missing", plan });
+      })
+      .catch((error: unknown) => {
+        if (!controller.signal.aborted && !isAbort(error))
+          setPlanState({ scopeKey, status: "error", error: message(error) });
+      });
+    return () => controller.abort();
+  }, [client, selectedScope, planWanted, scopeKey, planRetry]);
+  useEffect(() => {
+    if (!visiblePlan) return;
+    // An explicit visit to 3D may have decoded the large floor. Returning to
+    // its checked 2D drawing releases that UI reference, retaining the route.
+    setCurrent((old) =>
+      old?.scope.id === visiblePlan.scopeId && old.display
+        ? { scope: old.scope, overview: old.overview }
+        : old,
+    );
+  }, [visiblePlan]);
   // Zooming out changes presentation, not the lifetime of an active floor.
   // Large floors cannot fit the bounded LRU; keep only the currently selected
   // floor in current, and do not restart its worker on threshold crossings.
   const requestDetail =
-    !locked && (detail || requestedDetailScope === scopeKey);
+    !locked &&
+    (detail || requestedDetailScope === scopeKey) &&
+    (!planWanted || currentPlan?.status === "missing");
   useEffect(() => {
     if (detail) setRequestedDetailScope(scopeKey);
   }, [detail, scopeKey]);
   const shownCurrent = useMemo(
     () =>
-      current && locked && current.display
+      current && !showLegacyDetail && current.display
         ? { scope: current.scope, overview: current.overview }
         : current,
-    [current, locked],
+    [current, showLegacyDetail],
   );
   useEffect(() => {
     if (!client || !scopeId) return;
@@ -597,7 +670,8 @@ export default function ProgressiveVisitorPage() {
     };
     run()
       .then((next) => {
-        if (sequence === scopeSequence.current) setCurrent(next);
+        if (!controller.signal.aborted && sequence === scopeSequence.current)
+          setCurrent(next);
       })
       .catch((error) => {
         if (!isAbort(error)) setError(message(error));
@@ -621,6 +695,23 @@ export default function ProgressiveVisitorPage() {
   const selectedPlace = client?.shell.records.find(
     (record) => record.key === selected,
   );
+  const mapChoicePlaces = (client?.shell.records ?? []).filter((record) =>
+    mapChoices.includes(record.key),
+  );
+  const pickPlanPlaces = useCallback(
+    (keys: string[]) => {
+      const places = keys.filter((key) =>
+        client?.shell.records.some(
+          (record) => record.key === key && !isVisitorHallway(record),
+        ),
+      );
+      if (places.length === 1) {
+        setSelected(places[0]);
+        setMapChoices([]);
+      } else setMapChoices(places);
+    },
+    [client],
+  );
   const selectedUnavailable = selectedPlace
     ? visitorEndpointUnavailableReason(selectedPlace)
     : undefined;
@@ -639,23 +730,28 @@ export default function ProgressiveVisitorPage() {
     if (directionsRef.current) directionsRef.current.open = true;
     (target === "start" ? endRef : startRef).current?.focus();
   };
+  const scopeForPlace = (levelId: number, building: string) => {
+    const scopes = client?.manifest.scopes ?? [];
+    const contains = (scope: ProgressiveScope) =>
+      scope.levelIds.includes(levelId) &&
+      (scope.building === "all" || scope.building === building);
+    return (
+      scopes.find((scope) => scope.id === scopeId && contains(scope)) ??
+      scopes.find((scope) => scope.building === "all" && contains(scope)) ??
+      scopes.find((scope) => contains(scope))
+    );
+  };
   const locate = (key: string) => {
     const record = client?.shell.records.find((entry) => entry.key === key);
     if (!record || !client) return;
-    const scope =
-      client.manifest.scopes.find(
-        (entry) =>
-          entry.levelIds.includes(record.levelId) && entry.building === "all",
-      ) ??
-      client.manifest.scopes.find((entry) =>
-        entry.levelIds.includes(record.levelId),
-      );
+    const scope = scopeForPlace(record.levelId, record.building);
     if (!scope) {
       setError("This floor is not available in this map publication.");
       return;
     }
     setScopeId(scope.id);
     setSelected(key);
+    setMapChoices([]);
     setFocus(
       record.geographic
         ? [record.geographic[0], record.geographic[1]]
@@ -747,10 +843,39 @@ export default function ProgressiveVisitorPage() {
         if (requestedMap === mapEpoch.current)
           setOffline({ ...progress, complete: false });
       }, controller.signal);
+      for (const scope of client.manifest.scopes) {
+        if (!publishedVisitorPlanReceipt(client.manifest, scope)) continue;
+        const plan = await loadPublishedVisitorPlan(client.manifest, scope, {
+          manifestUrl: client.manifestUrl,
+          signal: controller.signal,
+        });
+        if (!plan)
+          throw new Error(
+            "A floor could not be saved. Retry the map download.",
+          );
+        const saved = await loadPublishedVisitorPlan(client.manifest, scope, {
+          manifestUrl: client.manifestUrl,
+          signal: controller.signal,
+          offline: true,
+        });
+        if (!saved)
+          throw new Error("A floor could not be verified in offline storage.");
+      }
       const app = await prepareVisitorOfflineShell({
         signal: controller.signal,
       });
       await client.verifyOfflineInventory(controller.signal);
+      // Confirm coexistence after all other assets have consumed storage.
+      for (const scope of client.manifest.scopes) {
+        if (!publishedVisitorPlanReceipt(client.manifest, scope)) continue;
+        const saved = await loadPublishedVisitorPlan(client.manifest, scope, {
+          manifestUrl: client.manifestUrl,
+          signal: controller.signal,
+          offline: true,
+        });
+        if (!saved)
+          throw new Error("A floor could not be verified in offline storage.");
+      }
       if (requestedMap === mapEpoch.current) {
         setAppOfflineBytes(app.bytes);
         setOffline(completeMap);
@@ -784,6 +909,10 @@ export default function ProgressiveVisitorPage() {
         : undefined,
     [shell],
   );
+  const legacyLoadingMessage = current
+    ? "Preparing interactive room details… You can keep zooming."
+    : "Loading map…";
+
   return (
     <main className="progressive-visitor">
       <header>
@@ -804,13 +933,9 @@ export default function ProgressiveVisitorPage() {
           <div className="visitor-map-tool-content">
             <Link to="/projects/indoor">Indoor maps</Link>
             <a
-              className="visitor-binary-preview"
-              href={`${import.meta.env.BASE_URL}index.html#/projects/indoor?package=%2Fdata%2Funbc-full%2Fproject.json&manifest=%2Fdata%2Funbc%2Fmanifest.json&preview=%2Fbinary%2F&view=2d`}
+              href={`${import.meta.env.BASE_URL}index.html#/projects/indoor?package=%2Fdata%2Funbc-full%2Fproject.json&manifest=%2Fdata%2Funbc%2Fmanifest.json&view=2d`}
             >
               Full OpenIndoorMaps
-            </a>
-            <a className="visitor-binary-preview" href="/binary/">
-              Binary preview · 9.73 MB
             </a>
             <form
               onSubmit={(event) => {
@@ -873,6 +998,7 @@ export default function ProgressiveVisitorPage() {
                 onChange={(event) => {
                   setScopeId(event.target.value);
                   setSelected("");
+                  setMapChoices([]);
                   setFocus(undefined);
                 }}
               >
@@ -888,7 +1014,11 @@ export default function ProgressiveVisitorPage() {
               <select
                 aria-label="Map view"
                 value={mode}
-                onChange={(event) => setMode(event.target.value)}
+                onChange={(event) => {
+                  setMode(event.target.value);
+                  if (event.target.value !== "2d")
+                    setRequestedDetailScope(scopeKey);
+                }}
               >
                 <option value="2d">2D</option>
                 <option value="3d">3D</option>
@@ -957,6 +1087,24 @@ export default function ProgressiveVisitorPage() {
                     </button>
                   </div>
                 )}
+              </section>
+            )}
+            {mapChoicePlaces.length > 1 && (
+              <section
+                className="visitor-map-choices"
+                aria-label="Choose a place"
+              >
+                <p>Choose the place you mean:</p>
+                <ul>
+                  {mapChoicePlaces.map((record) => (
+                    <li key={record.key}>
+                      <button onClick={() => locate(record.key)}>
+                        {record.number} {record.name}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <button onClick={() => setMapChoices([])}>Close choices</button>
               </section>
             )}
             <details ref={directionsRef}>
@@ -1088,8 +1236,9 @@ export default function ProgressiveVisitorPage() {
                   <li key={index}>
                     <button
                       onClick={() => {
-                        const scope = client.manifest.scopes.find((scope) =>
-                          scope.levelIds.includes(step.levelId),
+                        const scope = scopeForPlace(
+                          step.levelId,
+                          step.building,
                         );
                         if (scope) setScopeId(scope.id);
                         setFocus(
@@ -1134,7 +1283,8 @@ export default function ProgressiveVisitorPage() {
           <section
             className="visitor-map"
             aria-label="Campus map"
-            data-floor-detail={String(!!shownCurrent?.display)}
+            data-floor-detail={String(!!visiblePlan || !!shownCurrent?.display)}
+            data-floor-plan={String(!!visiblePlan)}
             data-zoom={zoom.toFixed(2)}
             data-detail-requested={String(requestDetail)}
           >
@@ -1150,7 +1300,14 @@ export default function ProgressiveVisitorPage() {
                 styles={street ? streetStyles : blankStyles}
               >
                 <MapCanvas>
-                  {!locked && current.display && current.context ? (
+                  {visiblePlan && (
+                    <PublishedVisitorPlanLayer
+                      plan={visiblePlan}
+                      selected={selected}
+                      onPick={pickPlanPlaces}
+                    />
+                  )}
+                  {showLegacyDetail && (
                     <DetailedLayers
                       shell={shell!}
                       current={current}
@@ -1159,7 +1316,8 @@ export default function ProgressiveVisitorPage() {
                       selected={selected}
                       onPick={setSelected}
                     />
-                  ) : (
+                  )}
+                  {!visiblePlan && !showLegacyDetail && (
                     <OverviewLayers
                       overview={current.overview}
                       origin={shell!.alignment.originGeographic}
@@ -1198,8 +1356,9 @@ export default function ProgressiveVisitorPage() {
                   />
                   <VisitorRenderStatus
                     current={shownCurrent!}
+                    plan={visiblePlan}
                     mode={mode}
-                    assetLoading={loading}
+                    assetLoading={loading || loadingPlan}
                   />
                   <MapControls position="top-right" />
                   <div className="visitor-camera-tools">
@@ -1213,11 +1372,17 @@ export default function ProgressiveVisitorPage() {
                 </MapCanvas>
               </MapProvider>
             )}
-            {loading && (
+            {(loading || loadingPlan) && (
               <div role="status" className="visitor-loading">
-                {current
-                  ? "Preparing interactive room details… You can keep zooming."
-                  : "Loading map…"}
+                {loadingPlan ? "Loading floor…" : legacyLoadingMessage}
+              </div>
+            )}
+            {planWanted && currentPlan?.status === "error" && (
+              <div role="alert" className="visitor-loading">
+                <p>The floor could not be loaded: {currentPlan.error}</p>
+                <button onClick={() => setPlanRetry((value) => value + 1)}>
+                  Retry floor
+                </button>
               </div>
             )}
             {!current && !loading && <p>Choose a published map to begin.</p>}

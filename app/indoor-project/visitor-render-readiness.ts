@@ -17,7 +17,7 @@ export interface VisitorRenderMap {
 
 type ReadinessLayer = { whenReady?: PromiseLike<void> };
 const ownedSource = (id: string) =>
-  /^(?:project-|native-explore-|visitor-overview-)/.test(id);
+  /^(?:project-|native-explore-|visitor-overview-|visitor-plan-)/.test(id);
 
 /** Wait for this view's actual uploads and a later painted frame. A camera can
  * continue moving: source-ready render, rather than global idle, is the gate.

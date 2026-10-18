@@ -60,6 +60,34 @@ function fixture() {
   };
 }
 
+test("a compact plan waits for all its source indexing and a later painted frame", async () => {
+  const f = fixture();
+  let ready = false;
+  f.setSource("visitor-plan-native-fills", 3, true);
+  f.setSource("visitor-plan-labels", 2, false);
+  watchVisitorRender({
+    map: f.map,
+    sourceFeatureCounts: {
+      "visitor-plan-native-fills": 3,
+      "visitor-plan-labels": 2,
+    },
+    onReady: () => {
+      ready = true;
+    },
+    onError: (error) => {
+      throw error;
+    },
+  });
+  await Promise.resolve();
+  f.emit("render");
+  assert.equal(ready, false);
+  f.sources.get("visitor-plan-labels")!.loaded = true;
+  f.emit("sourcedata");
+  assert.equal(ready, false);
+  f.emit("render");
+  assert.equal(ready, true);
+});
+
 test("decoded native geometry waits through initial empty source and indexing before its painted frame", async () => {
   const f = fixture(),
     ready: boolean[] = [];

@@ -2,7 +2,7 @@ import booleanPointInPolygon from "@turf/boolean-point-in-polygon";
 import polygonClipping from "polygon-clipping";
 import type { IndoorDataset, IndoorRecord } from "./contract";
 
-export const isVestibule = (room: IndoorRecord) =>
+export const isVestibule = (room: Pick<IndoorRecord, "name">) =>
   /\bvestibule\b/i.test(room.name);
 export const HALLWAY_COLOR = "#bdd5c9";
 export const OVERVIEW_SOLID_COLOR = "#8d9395";
@@ -19,7 +19,9 @@ export const RESTRICTED_AREA_COLOR = "#dfb6bd";
 export const isRestrictedArea = (room: IndoorRecord) => room.access === "staff";
 /** Source access restrictions remain authoritative even when a corridor's
  * circulation flag is missing. This classification affects presentation only. */
-export const isHallway = (room: IndoorRecord) =>
+export const isHallway = (
+  room: Pick<IndoorRecord, "name" | "circulation" | "stair">,
+) =>
   !room.stair &&
   (room.circulation || /\b(?:corridor|hallway)\b/i.test(room.name));
 /** Visitor presentation only. Preserve the source room classification and graph. */
@@ -42,8 +44,9 @@ export const isDisplayPassage = (room: IndoorRecord) => {
 /** Flat presentation does not change source access, room type, or routing. */
 export const isFlatArea = (room: IndoorRecord) =>
   isRestrictedArea(room) || isDisplayPassage(room);
-export const isPassThroughPlace = (room: IndoorRecord) =>
-  !room.stair && (isVestibule(room) || /^rotunda$/i.test(room.name.trim()));
+export const isPassThroughPlace = (
+  room: Pick<IndoorRecord, "name" | "stair">,
+) => !room.stair && (isVestibule(room) || /^rotunda$/i.test(room.name.trim()));
 
 export function vestibuleDoorIds(data: IndoorDataset): Set<string> {
   const rooms = data.records.filter(isVestibule);

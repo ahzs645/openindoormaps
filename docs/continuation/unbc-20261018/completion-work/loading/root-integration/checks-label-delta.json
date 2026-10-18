@@ -1,0 +1,38 @@
+{
+  "status": "current source checks; isolated baseline browser results remain separately bound",
+  "checkedAt": "2026-10-18T16:01:54.173398+00:00",
+  "globalTypecheck": {
+    "passed": true,
+    "command": "npx tsc --noEmit"
+  },
+  "focusedTests": {
+    "passed": 23,
+    "failed": 0,
+    "command": "node --import tsx --test tests/unit/published-visitor-plan.test.ts tests/unit/published-visitor-plan-labels.test.ts tests/unit/place-discovery.test.ts tests/unit/visitor-render-readiness.test.ts"
+  },
+  "ownedLint": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "sourceFiles": {
+    "app/pages/progressive-visitor-page.tsx": "319def22ff2c96868d2106ec33105c1d1922c5c4224dddc43912607d3707a650",
+    "app/pages/progressive-visitor.css": "4a85571c28b00875b0e1aa31742d5381dfe71cda1562c781b5e8777a37d66d71",
+    "app/indoor-project/visitor-render-status.tsx": "2c4162016c65ddaf86c3a5fd4cf2eee34f97104589661dc005e4ee0492df2915",
+    "app/indoor-project/visitor-render-readiness.ts": "31007ef0f2f40f5888d562fc3339925dc381d8a1a92af63c975ea60a2e5a4220",
+    "app/indoor-project/published-visitor-plan-delta.ts": "eeb6f6727a209f14d45c5ea4793de9bd479cfce77bf0ba27335ce2a337b75752",
+    "app/indoor-project/published-visitor-plan.ts": "4aa99fd3c7b24b9e6a44b7de5f485b5b2e94b4f91db207bcf93568e20ac538c5",
+    "app/indoor-project/published-visitor-plan-labels.ts": "30dd834d249a4fb781a975a5e61a09c006a3b4f05f02c7885e75e57017838a3b",
+    "app/indoor-project/published-visitor-plan-layer.tsx": "4a02ea59b11859b0645b09f6d1bd8a0e50cd3ff5a2210847e150b6cf91ed561a",
+    "app/indoor-project/published-visitor-plan-projection.ts": "d76e33ae698d0aa816c8a20e8ee8d28a7a48fc638e386b8813a8e0646dd26fb3",
+    "scripts/indoor/export-published-visitor-plans.ts": "5fd51346412d68b497f8bfec729f453c7535e588e2c0695d3ac30c2a5c43880d",
+    "scripts/indoor/optimize-published-visitor-plan-carriers.ts": "469410f37ea700139025abd3e1e8da02fa4cfd61fa490f4f9f10df5180716852",
+    "scripts/indoor/admit-published-visitor-plans.ts": "9c22504d22dd01c3c36b6afc3bb153d0c6fd8fcd0655973df677d3babb9eeee2"
+  },
+  "isolatedBaselinePlanRuntimeSha256": "f0672367c676a32639a04edb02c4a6cabe437fc32e7a3e3ed1a667e06abaf0f8",
+  "isolatedBaselinePlanStoredBytes": 12065651,
+  "isolatedBaselineIndependentScopeReplays": 7,
+  "isolatedBaselineBrowserNonRouteCasesPassed": 5,
+  "physicalPhoneAcceptance": false,
+  "finalEngineBrowserAcceptance": false,
+  "releaseApproved": false
+}

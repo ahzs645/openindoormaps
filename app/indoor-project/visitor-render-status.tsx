@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useMap } from "~/components/map/map";
 import { mapReady } from "~/components/map/map-ready";
 import type { VisitorScopeView } from "~/indoor-project/progressive-visitor-client";
+import type { PublishedVisitorPlan } from "./published-visitor-plan-types";
+import { visitorPlanSourceFeatureCounts } from "./published-visitor-plan-layer";
 import {
   watchVisitorRender,
   type VisitorRenderMap,
@@ -10,10 +12,12 @@ import {
 /** Decode completion and MapLibre's displayed-floor readiness are distinct. */
 export function VisitorRenderStatus({
   current,
+  plan,
   mode,
   assetLoading,
 }: {
   current: VisitorScopeView;
+  plan?: PublishedVisitorPlan;
   mode: string;
   assetLoading: boolean;
 }) {
@@ -22,11 +26,12 @@ export function VisitorRenderStatus({
     () => ({
       scope: current.scope.id,
       detail: !!current.display,
+      plan,
       mode,
       hasMap: !!map,
       isLoaded,
     }),
-    [current, mode, map, isLoaded],
+    [current, mode, map, isLoaded, plan],
   );
   const [state, setState] = useState<{ generation: object; error?: string }>();
   useEffect(() => {
@@ -34,7 +39,9 @@ export function VisitorRenderStatus({
     const counts: Record<string, number> = {};
     const required: string[] = [];
     const custom: string[] = [];
-    if (current.display) {
+    if (plan) {
+      Object.assign(counts, visitorPlanSourceFeatureCounts(plan));
+    } else if (current.display) {
       counts["project-overview"] =
         current.display.preparedFloor.presentation.overviewGeometry.features.length;
       required.push("project-areas", "project-room-blocks", "project-labels");
@@ -65,7 +72,7 @@ export function VisitorRenderStatus({
       onReady: () => setState({ generation }),
       onError: (error) => setState({ generation, error: error.message }),
     });
-  }, [map, isLoaded, current, mode, generation]);
+  }, [map, isLoaded, current, mode, generation, plan]);
   const error =
     !assetLoading && state?.generation === generation ? state.error : undefined;
   const ready = !assetLoading && state?.generation === generation && !error;

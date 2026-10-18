@@ -3,7 +3,9 @@ import { isHallway, isPassThroughPlace } from "./display-passages";
 import { isProjectDestination } from "./route-policy";
 
 /** An open destination keeps its identity when its floor becomes circulation. */
-export const isNamedOpenPlace = (room: IndoorRecord) =>
+export const isNamedOpenPlace = (
+  room: Pick<IndoorRecord, "name" | "circulation" | "stair">,
+) =>
   room.circulation &&
   !room.stair &&
   !/^(?:unnamed area|circulation|corridor|hallway|vestibule|native connection landing|recovered circulation)\b/i.test(
@@ -12,7 +14,9 @@ export const isNamedOpenPlace = (room: IndoorRecord) =>
 
 /** Hallway infrastructure remains routable and editable in authoring views.
  * Named open destinations such as a reception desk keep their identity. */
-export const isVisitorHallway = (room: IndoorRecord) =>
+export const isVisitorHallway = (
+  room: Pick<IndoorRecord, "name" | "circulation" | "stair">,
+) =>
   (isHallway(room) ||
     /^(?:corridor|hallway|circulation)\b/i.test(room.name.trim())) &&
   !isNamedOpenPlace(room) &&

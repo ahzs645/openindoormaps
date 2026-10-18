@@ -19,6 +19,11 @@ const generated = "app/indoor-project/prepared-display-engine-binding.ts";
 export function preparedDisplayEngineBinding(
   projectRoot: string,
   entryPoints = roots,
+  options: {
+    exclude?: string[];
+    namespace?: string;
+    aliases?: Record<string, string>;
+  } = {},
 ) {
   const visited = new Set<string>();
   const dependencies = new Map<string, string>();
@@ -38,7 +43,7 @@ export function preparedDisplayEngineBinding(
     if (visited.has(path)) return;
     visited.add(path);
     const name = nodePath.relative(projectRoot, path).replaceAll("\\", "/");
-    if (name === generated) return;
+    if (name === generated || options.exclude?.includes(name)) return;
     const bytes = readFileSync(path);
     dependencies.set(name, hash(bytes));
     if (!/\.(?:ts|tsx|js|mjs)$/.test(path)) return;
@@ -52,14 +57,26 @@ export function preparedDisplayEngineBinding(
       value: ts.Node | undefined,
       directoryAllowed = false,
     ) => {
+      if (!value || !ts.isStringLiteralLike(value)) return;
+      const alias = Object.entries(options.aliases ?? {}).find(([prefix]) =>
+        value.text.startsWith(prefix),
+      );
       if (
-        !value ||
-        !ts.isStringLiteralLike(value) ||
-        (!value.text.startsWith(".") &&
-          (!directoryAllowed || /^[a-z][a-z\d+.-]*:/i.test(value.text)))
+        !value.text.startsWith(".") &&
+        !alias &&
+        (!directoryAllowed || /^[a-z][a-z\d+.-]*:/i.test(value.text))
       )
         return;
-      const target = resolveImport(path, value.text);
+      const specifier = alias
+        ? nodePath.relative(
+            nodePath.dirname(path),
+            nodePath.resolve(
+              projectRoot,
+              alias[1] + value.text.slice(alias[0].length),
+            ),
+          )
+        : value.text;
+      const target = resolveImport(path, specifier);
       if (
         !target &&
         directoryAllowed &&
@@ -104,7 +121,10 @@ export function preparedDisplayEngineBinding(
   return {
     version: 1,
     sha256: hash(
-      JSON.stringify(["prepared-native-display-engine-v1", modules]),
+      JSON.stringify([
+        options.namespace ?? "prepared-native-display-engine-v1",
+        modules,
+      ]),
     ),
     modules,
   };
