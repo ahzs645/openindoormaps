@@ -41,3 +41,12 @@ stale/missing caches must not silently pass publication by falling back to long
 physical preparation. Pair the root `/data/unbc-routing/` asset, progressive/
 offline companions and development download, then verify normal live URLs and
 desktop/mobile directions. See the [October 18 startup findings](docs/continuation/unbc-20261018/directions-and-threshold-blockers/README.md).
+
+Also run `scripts/indoor/check-published-project.ts PUBLIC_ROOT NEW_REPORT.json`
+for a UNBC publication. Its compiled map receipt must match the exact visitor,
+current validator and selected progressive-manifest revision. It checks actual
+ZIP entry hashes, normal metadata hydration and all default prepared floor scopes;
+unlisted or changed packages must retain full normal import. Generate a receipt
+only from a successful normal import under the unchanged current engine, retain
+the validation evidence, and never relabel a stale cache. This catches repeated
+startup validation separately from the directions-cell gate.

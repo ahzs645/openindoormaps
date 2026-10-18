@@ -13,7 +13,7 @@ This is the current entry point. Exact deployed application commits, visitor dig
 
 ## Loading measurements and limits
 
-Local production-worker measurements: cold uncached public graph preparation 315.3 seconds; matching cache first reply 36.7–37.2 seconds; later available requests 0.69–2.72 seconds; exact completed-request reuse was immediate. These are Node measurements, not visitor desktop/mobile timing. Route centering and exact geometry/topology remain major first-request costs. Native floor selection/render preparation is a separate process. Browser-control tooling was unavailable for this publication; new desktop/mobile interaction and screenshots are not certified by HTTP or worker tests.
+Local production-worker measurements: cold uncached public graph preparation 315.3 seconds; matching cache first reply 36.7–37.2 seconds; later available requests 0.69–2.72 seconds; exact completed-request reuse was immediate. These are Node measurements, not visitor desktop/mobile timing. Route centering and exact geometry/topology remain major first-request costs. Native floor selection/render preparation is a separate process. This publication also refreshes the exact compiled map-import receipt and its selected four-floor manifest binding, after the successful full normal import. The current startup gate verifies the actual pinned ZIP and default prepared floor scopes; other archives retain full validation. Read `normal-import-validation.json` and the final startup-check report for the measured admitted path. Browser-control tooling was unavailable for this publication; new desktop/mobile interaction and screenshots are not certified by HTTP or worker tests.
 
 ## Downloads and restore order
 
@@ -39,3 +39,24 @@ Read `docs/indoor-local-iteration.md`. Choose one connector, test the actual cha
 For the tested loading release, run `scripts/indoor/check-published-directions-cache.ts` against the complete visitor JSON, expected SHA and final Site root after build. Publish the matching root `/data/unbc-routing/` asset, current progressive/offline companion and exact paired source download. Verify normal live URLs (not just cache-busted URLs), manifest/source hashes and actual directions where browser tools are available. Preserve Site audience.
 
 Detailed evidence: `../directions-and-threshold-blockers/README.md`, `../door-threshold-workflow/README.md`, `../../unbc-20261017/source-recovery/README.md`, `../../unbc-20261017/regeneration-recovery/README.md` and `../../unbc-20261017/pathway-repairs/PORTABLE-DEVELOPMENT.md`.
+
+After every successful publication, refresh the exact paired source download,
+private Drive publication backup and current START-HERE pointer; retain immutable
+native base/stages once instead of duplicating them. The Drive index records the
+actual saved Site version, normal-URL verification and backup checksums. A current
+source document alone is not proof of deployment.
+
+Current startup check: the actual compiled receipt admitted the complete 45.52 MB
+ZIP, retained its exact dataset SHA and matched all four default prepared floor
+scopes in **16.45 seconds** locally, including source/manifest checking and full
+dataset hashing. It did not rerun geometry/material/route/mapping stages. This is
+not a browser page-load measurement. The underlying normal import completed in
+439,974 ms before this receipt was issued; its stages and entry hashes are retained.
+
+Memory remains a concrete next task: that Node check peaked at about **2.31 GB
+RSS**, including verification/transient buffers. `published-project.ts` retains
+the 230 MB raw indoor JSON alongside the decoded dataset, and the import worker
+then transfers files and clones the dataset to the UI. Review archive retention,
+transfer lifetime and demand-loaded physical data with editor/export compatibility
+checks. Do not remove navigation obstacles or treat this measurement as proof of
+mobile stability. The matching directions worker has its separate memory cost.
