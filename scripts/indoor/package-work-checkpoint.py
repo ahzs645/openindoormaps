@@ -161,6 +161,9 @@ def main():
         "payloads": {},
     }
     payloads = {}
+    # Immutable Git commits can be inspected before the live capture window.
+    # Keep the window short while other workers continue long source replays.
+    baselines = {name: baseline_inventory(root, commits[name]) for name, root in roots.items()}
     before = {name: working_inventory(root) for name, root in roots.items()}
     for name, root in roots.items():
         patch_name = f"patches/{name}.patch"
@@ -178,7 +181,7 @@ def main():
             "headAtCapture": git(root, "rev-parse", "HEAD").decode().strip(),
             "patch": patch_name,
             "untracked": untracked,
-            "baselineInventory": baseline_inventory(root, commits[name]),
+            "baselineInventory": baselines[name],
             "targetInventory": before[name],
         }
     after = {name: working_inventory(root) for name, root in roots.items()}
@@ -190,7 +193,7 @@ def main():
     payloads["RESTORE-CHECKPOINT.py"] = RESTORE.encode()
     payloads["README.md"] = (
         "# In-progress work checkpoint\n\nRestore the exact baseline development ZIP first in a fresh folder "
-        "with Python 3.12+, then extract this checkpoint beside its own manifest and run "
+        "with Python 3.12+ and Git installed, then extract this checkpoint beside its own manifest and run "
         "`python3 RESTORE-CHECKPOINT.py /absolute/path/to/baseline/workspace`. "
         "The restore checks both clean baseline trees and every payload before applying, "
         "then compares every target source file. Keep original native inputs separately. "

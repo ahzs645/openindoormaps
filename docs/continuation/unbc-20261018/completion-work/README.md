@@ -17,7 +17,7 @@ In-progress source changes can be saved with
 `scripts/indoor/package-work-checkpoint.py`. It records both complete file
 inventories, binary tracked changes, untracked source and exact baseline
 identities. It refuses a changing working tree during capture. Restoration first
-requires the exact clean baseline from the development ZIP, checks all payloads
+requires Python 3.12+, Git and the exact clean baseline from the development ZIP, checks all payloads
 before changing either repository, then compares the entire restored source.
 It is separate from the clean committed paired-release procedure, which remains
 mandatory before publication.
