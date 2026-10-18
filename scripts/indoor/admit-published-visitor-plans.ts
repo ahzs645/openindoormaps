@@ -13,8 +13,13 @@ import {
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
 import type { PublishedVisitorPlanReceipt } from "../../app/indoor-project/published-visitor-plan-types";
-const [sourceDirectory, expectedManifestSha, candidateDirectory, outputReport] =
-  process.argv.slice(2);
+const [
+  sourceDirectory,
+  expectedManifestSha,
+  candidateDirectory,
+  outputReport,
+  ...flags
+] = process.argv.slice(2);
 if (
   !sourceDirectory ||
   !expectedManifestSha ||
@@ -22,8 +27,23 @@ if (
   !outputReport
 )
   throw new Error(
-    "Usage: admit-published-visitor-plans.ts VERIFIED-SOURCE-DIRECTORY EXPECTED-MANIFEST-SHA256 CANDIDATE-DIRECTORY NEW-REPORT.json",
+    "Usage: admit-published-visitor-plans.ts VERIFIED-SOURCE-DIRECTORY EXPECTED-MANIFEST-SHA256 CANDIDATE-DIRECTORY NEW-REPORT.json [--verifier-heap-mib=512..8192]",
   );
+assert(
+  flags.length <= 1 &&
+    flags.every((flag) => /^--verifier-heap-mib=\d+$/.test(flag)),
+  "Unknown or duplicate independent verifier option",
+);
+const verifierHeapMiB =
+  flags.length > 0
+    ? Number(flags[0]!.slice("--verifier-heap-mib=".length))
+    : 8192;
+assert(
+  Number.isSafeInteger(verifierHeapMiB) &&
+    verifierHeapMiB >= 512 &&
+    verifierHeapMiB <= 8192,
+  "Independent verifier heap must be an integer from 512 to 8192 MiB",
+);
 const root = path.resolve(import.meta.dirname, "../.."),
   candidate = path.resolve(candidateDirectory),
   sha = (v: Uint8Array | string) =>
@@ -55,7 +75,7 @@ try {
   const child = spawn(
     process.execPath,
     [
-      "--max-old-space-size=8192",
+      `--max-old-space-size=${verifierHeapMiB}`,
       "--expose-gc",
       "--import",
       "tsx",
@@ -129,6 +149,7 @@ await fs.writeFile(
       candidateProofFileSha256: sha(proofBytes),
       candidateDescriptionFileSha256: sha(descriptionBytes),
       allScopesReproducedIndependently: receipts.length,
+      independentVerifierHeapMiB: verifierHeapMiB,
       compressedBytes: receipts.reduce((n, r) => n + r.compressedBytes, 0),
       receiptsFileSha256: sha(source),
       compiledTrustRootChanged: true,
