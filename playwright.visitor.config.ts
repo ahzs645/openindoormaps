@@ -5,6 +5,7 @@ export default defineConfig({
   testMatch: [
     "progressive-visitor.spec.ts",
     "progressive-visitor-flow.spec.ts",
+    "published-visitor-plan.spec.ts",
   ],
   workers: 1,
   reporter: "list",

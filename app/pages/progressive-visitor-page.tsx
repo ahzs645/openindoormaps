@@ -376,6 +376,7 @@ export default function ProgressiveVisitorPage() {
   const [planState, setPlanState] = useState<PlanState>();
   const [planRetry, setPlanRetry] = useState(0);
   const [mapChoices, setMapChoices] = useState<string[]>([]);
+  const [mapNotice, setMapNotice] = useState("");
   const [street, setStreet] = useState(false);
   const [error, setError] = useState("");
   const [storageError, setStorageError] = useState("");
@@ -562,7 +563,10 @@ export default function ProgressiveVisitorPage() {
   );
   const detail = !locked && zoom >= ROOM_DETAIL_START;
   const scopeKey = `${client?.manifest.revisionSha256 ?? ""}:${scopeId}`;
-  useEffect(() => setMapChoices([]), [scopeKey, mode, locked]);
+  useEffect(() => {
+    setMapChoices([]);
+    setMapNotice("");
+  }, [scopeKey, mode, locked]);
   const selectedScope = client?.manifest.scopes.find(
     (scope) => scope.id === scopeId,
   );
@@ -593,6 +597,7 @@ export default function ProgressiveVisitorPage() {
       manifestUrl: client.manifestUrl,
       signal: controller.signal,
       offline: client.offlineOnly,
+      deferCacheWrite: true,
     })
       .then((plan) => {
         if (controller.signal.aborted) return;
@@ -700,6 +705,7 @@ export default function ProgressiveVisitorPage() {
   );
   const pickPlanPlaces = useCallback(
     (keys: string[]) => {
+      setMapNotice("");
       const places = keys.filter((key) =>
         client?.shell.records.some(
           (record) => record.key === key && !isVisitorHallway(record),
@@ -750,6 +756,7 @@ export default function ProgressiveVisitorPage() {
       return;
     }
     setScopeId(scope.id);
+    setMapNotice("");
     setSelected(key);
     setMapChoices([]);
     setFocus(
@@ -1305,6 +1312,7 @@ export default function ProgressiveVisitorPage() {
                       plan={visiblePlan}
                       selected={selected}
                       onPick={pickPlanPlaces}
+                      onUnavailableConnector={setMapNotice}
                     />
                   )}
                   {showLegacyDetail && (
@@ -1383,6 +1391,12 @@ export default function ProgressiveVisitorPage() {
                 <button onClick={() => setPlanRetry((value) => value + 1)}>
                   Retry floor
                 </button>
+              </div>
+            )}
+            {mapNotice && (
+              <div role="status" className="visitor-loading visitor-map-notice">
+                <p>{mapNotice}</p>
+                <button onClick={() => setMapNotice("")}>Close notice</button>
               </div>
             )}
             {!current && !loading && <p>Choose a published map to begin.</p>}

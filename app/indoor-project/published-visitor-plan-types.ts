@@ -22,6 +22,7 @@ export type PublishedVisitorPlan = {
     | "stairs"
     | "windows"
     | "labels"
+    | "connectors"
     | "portals"
     | "selection",
     FeatureCollection

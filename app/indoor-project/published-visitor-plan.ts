@@ -34,6 +34,7 @@ const layerKeys = [
   "labels",
   "portals",
   "selection",
+  "connectors",
 ];
 const sha = async (bytes: Uint8Array) =>
   Array.from(
@@ -74,6 +75,9 @@ export async function loadPublishedVisitorPlan(
     manifestUrl: string;
     signal?: AbortSignal;
     offline?: boolean;
+    /** Ordinary viewing may paint before best-effort persistence finishes.
+     * Explicit complete-save leaves this false and verifies offline readback. */
+    deferCacheWrite?: boolean;
     cache?: Pick<VisitorDeliveryCache, "getAsset" | "putAsset">;
     fetch?: typeof fetch;
   },
@@ -126,9 +130,13 @@ export async function loadPublishedVisitorPlan(
   };
   let selected: { logical: Uint8Array; compressed: boolean } | undefined,
     stored: Uint8Array | undefined,
-    corruptSaved = false;
+    corruptSaved = false,
+    savedReadFailed = false,
+    receivedFromNetwork = false;
   for (const digest of [receipt.compressedSha256, wireLogicalSha256]) {
-    const saved = await cache?.getAsset(digest).catch(() => {});
+    const saved = await cache?.getAsset(digest).catch(() => {
+      savedReadFailed = true;
+    });
     if (!saved) continue;
     try {
       selected = await checked(saved);
@@ -155,12 +163,17 @@ export async function loadPublishedVisitorPlan(
       );
       // A present invalid network carrier always refuses; it is never paint.
       selected = await checked(stored);
+      receivedFromNetwork = true;
     }
   }
   if (!selected) {
     if (corruptSaved)
       throw new Error(
         "The saved published plan failed its checksum and could not be recovered.",
+      );
+    if (savedReadFailed)
+      throw new Error(
+        "The saved floor could not be read. Reopen the map online or enable browser storage.",
       );
     return;
   }
@@ -245,11 +258,17 @@ export async function loadPublishedVisitorPlan(
   )
     throw new Error("The published plan differs from its checked floor.");
   options.signal?.throwIfAborted();
-  await cache
-    ?.putAsset(
-      compressed ? receipt.compressedSha256 : wireLogicalSha256,
-      stored!,
-    )
-    .catch(() => {});
+  // Cached bytes have already been checked. Recompressing and rewriting them
+  // delays offline paint and adds no verification. Only persist new network
+  // bytes, after the complete drawing (including a delta's base) is checked.
+  if (receivedFromNetwork) {
+    const saved = cache
+      ?.putAsset(
+        compressed ? receipt.compressedSha256 : wireLogicalSha256,
+        stored!,
+      )
+      .catch(() => {});
+    if (!options.deferCacheWrite) await saved;
+  }
   return plan;
 }

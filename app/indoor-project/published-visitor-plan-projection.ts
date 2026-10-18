@@ -82,6 +82,7 @@ export function projectPublishedVisitorPlan(
       presentation.overviewLabels,
       presentation.display.labels,
     ),
+    connectors: context.connectorMarkers,
     portals: context.portals,
     selection: visibleGeneric(floor.selectionAreas),
   };

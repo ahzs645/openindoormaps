@@ -151,10 +151,16 @@ for (const scope of manifest.scopes) {
         ).features,
       ],
     },
+    connectors: context.connectorMarkers,
     portals: context.portals,
     selection: p.selectionAreas,
   };
   const rawExpected = { ...expected };
+  assert.deepEqual(
+    plan.layers.connectors,
+    context.connectorMarkers,
+    "Every original connector anchor, identity and review property must remain unchanged",
+  );
   const rawCounts = Object.fromEntries(
     Object.entries(expected).map(([key, value]) => [
       key,

@@ -3,7 +3,10 @@ import { useMap } from "~/components/map/map";
 import { mapReady } from "~/components/map/map-ready";
 import type { VisitorScopeView } from "~/indoor-project/progressive-visitor-client";
 import type { PublishedVisitorPlan } from "./published-visitor-plan-types";
-import { visitorPlanSourceFeatureCounts } from "./published-visitor-plan-layer";
+import {
+  visitorPlanSourceFeatureCounts,
+  VISITOR_PLAN_CONNECTORS_LAYER_ID,
+} from "./published-visitor-plan-layer";
 import {
   watchVisitorRender,
   type VisitorRenderMap,
@@ -41,6 +44,8 @@ export function VisitorRenderStatus({
     const custom: string[] = [];
     if (plan) {
       Object.assign(counts, visitorPlanSourceFeatureCounts(plan));
+      if (plan.layers.connectors.features.length > 0)
+        custom.push(VISITOR_PLAN_CONNECTORS_LAYER_ID);
     } else if (current.display) {
       counts["project-overview"] =
         current.display.preparedFloor.presentation.overviewGeometry.features.length;

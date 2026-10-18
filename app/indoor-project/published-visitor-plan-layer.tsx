@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef } from "react";
 import type {
   ExpressionSpecification,
+  CustomLayerInterface,
   LayerSpecification,
   MapMouseEvent,
 } from "maplibre-gl";
-import type { FeatureCollection, MultiPolygon } from "geojson";
+import type { FeatureCollection, MultiPolygon, Point } from "geojson";
 import { useMap } from "~/components/map/map";
 import { mapReady } from "~/components/map/map-ready";
 import type { PublishedVisitorPlan } from "./published-visitor-plan-types";
@@ -24,6 +25,9 @@ import { publishedVisitorPlanLabelStyle } from "./published-visitor-plan-labels"
 import { DEFAULT_LABEL_SETTINGS } from "./label-settings";
 import { precisionWallLayer } from "./precision-wall-layer";
 import { nativeStairZoomStyle } from "./native-stair-style";
+import { connectorMarkerLayer } from "./connector-marker-layer";
+
+export const VISITOR_PLAN_CONNECTORS_LAYER_ID = "project-connector-markers";
 
 const nativeKeys = [
   "fills",
@@ -35,12 +39,12 @@ const nativeKeys = [
 const sourceCollections = (
   plan: PublishedVisitorPlan,
 ): [string, FeatureCollection][] => [
-  ...Object.entries(plan.layers).map(
-    ([key, value]): [string, FeatureCollection] => [
+  ...Object.entries(plan.layers)
+    .filter(([key]) => key !== "connectors")
+    .map(([key, value]): [string, FeatureCollection] => [
       `visitor-plan-${key}`,
       value,
-    ],
-  ),
+    ]),
   ...(plan.native
     ? nativeKeys.map((key): [string, FeatureCollection] => [
         `visitor-plan-native-${key}`,
@@ -88,16 +92,20 @@ export function PublishedVisitorPlanLayer({
   plan,
   selected,
   onPick,
+  onUnavailableConnector,
 }: {
   plan: PublishedVisitorPlan;
   selected: string;
   onPick: (keys: string[]) => void;
+  onUnavailableConnector?: (message: string) => void;
 }) {
   const { map, isLoaded } = useMap();
   const pick = useRef(onPick);
+  const unavailableConnector = useRef(onUnavailableConnector);
   useEffect(() => {
     pick.current = onPick;
-  }, [onPick]);
+    unavailableConnector.current = onUnavailableConnector;
+  }, [onPick, onUnavailableConnector]);
   const regions = useMemo(
     () =>
       new Map(plan.native?.regions.map((region) => [region.id, region]) ?? []),
@@ -123,7 +131,7 @@ export function PublishedVisitorPlanLayer({
       .layers?.find((layer) =>
         /(?:visitor|project).*(?:route|directions)/.test(layer.id),
       )?.id;
-    const add = (layer: LayerSpecification) => {
+    const add = (layer: LayerSpecification | CustomLayerInterface) => {
       map.addLayer(layer, before);
       ids.push(layer.id);
     };
@@ -372,6 +380,46 @@ export function PublishedVisitorPlanLayer({
         "text-opacity": publishedVisitorPlanLabelStyle("").textOpacity,
       },
     });
+    // Preserve the ordinary viewer's source markers and review state. These
+    // display anchors never become arrivals or permissions to traverse.
+    const connectors = connectorMarkerLayer(
+      plan.layers.connectors as FeatureCollection<Point>,
+      false,
+      (kind, key) => {
+        if (kind === "area") pick.current([key]);
+        else
+          unavailableConnector.current?.(
+            "Directions are unavailable for this connection. Choose a nearby room or entrance.",
+          );
+      },
+    );
+    let connectorPainted!: () => void;
+    let connectorFailed!: (error: unknown) => void;
+    const whenReady = new Promise<void>((resolve, reject) => {
+      connectorPainted = resolve;
+      connectorFailed = reject;
+    });
+    // Map removal can precede the render-status subscription. Actual drawing
+    // errors remain observable through whenReady without unhandled rejection.
+    void whenReady.catch(() => {});
+    const connectorLayer: CustomLayerInterface & { whenReady: Promise<void> } =
+      {
+        ...connectors,
+        whenReady,
+        render(gl, args) {
+          try {
+            connectors.render(gl, args);
+            connectorPainted();
+          } catch (error) {
+            connectorFailed(error);
+          }
+        },
+        onRemove(map, gl) {
+          connectorPainted();
+          connectors.onRemove?.(map, gl);
+        },
+      };
+    add(connectorLayer);
     const clickable = [
       "visitor-plan-labels-symbol",
       "visitor-plan-stairs-fill",

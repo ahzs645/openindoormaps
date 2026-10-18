@@ -51,6 +51,7 @@ async function fixture() {
   });
   const context = {
     visitorLabels: empty(),
+    connectorMarkers: empty(),
     portals: empty(),
   } as ProgressivePresentationContext;
   const plan = projectPublishedVisitorPlan(
@@ -87,6 +88,109 @@ async function fixture() {
   return { ...f, scope, display, context, plan, pack, ...pack() };
 }
 const manifestUrl = "https://maps.example.test/data/unbc/manifest.json";
+test(
+  "viewing can finish while persistence is stalled; a verified offline hit never rewrites",
+  { timeout: 3000 },
+  async () => {
+    const f = await fixture(),
+      memory = new MemoryVisitorDeliveryCache();
+    let release!: () => void,
+      writes = 0;
+    const pendingWrite = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const cache = {
+      getAsset: (key: string) => memory.getAsset(key),
+      putAsset: async (key: string, bytes: Uint8Array) => {
+        writes++;
+        await pendingWrite;
+        await memory.putAsset(key, bytes);
+      },
+    };
+    try {
+      const actual = await loadPublishedVisitorPlan(
+        f.manifest,
+        f.scope,
+        {
+          manifestUrl,
+          cache,
+          deferCacheWrite: true,
+          fetch: async () => new Response(f.stored),
+        },
+        [f.receipt],
+      );
+      assert.deepEqual(actual, f.plan);
+      assert.equal(writes, 1);
+      assert.equal(
+        await memory.getAsset(f.receipt.compressedSha256),
+        undefined,
+      );
+    } finally {
+      release();
+    }
+    await pendingWrite;
+    assert.deepEqual(
+      await loadPublishedVisitorPlan(
+        f.manifest,
+        f.scope,
+        {
+          manifestUrl,
+          cache,
+          offline: true,
+          fetch: async () => assert.fail("offline fetch"),
+        },
+        [f.receipt],
+      ),
+      f.plan,
+    );
+    assert.equal(writes, 1, "Verified cache read must not recompress/rewrite");
+  },
+);
+test(
+  "explicit-save default waits for persistence before returning",
+  { timeout: 3000 },
+  async () => {
+    const f = await fixture(),
+      memory = new MemoryVisitorDeliveryCache();
+    let release!: () => void,
+      entered!: () => void,
+      returned = false;
+    const pendingWrite = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const writeStarted = new Promise<void>((resolve) => {
+      entered = resolve;
+    });
+    const result = loadPublishedVisitorPlan(
+      f.manifest,
+      f.scope,
+      {
+        manifestUrl,
+        cache: {
+          getAsset: (key: string) => memory.getAsset(key),
+          putAsset: async (key: string, bytes: Uint8Array) => {
+            entered();
+            await pendingWrite;
+            await memory.putAsset(key, bytes);
+          },
+        },
+        fetch: async () => new Response(f.stored),
+      },
+      [f.receipt],
+    ).then((plan) => {
+      returned = true;
+      return plan;
+    });
+    try {
+      await writeStarted;
+      assert.equal(returned, false);
+    } finally {
+      release();
+    }
+    assert.deepEqual(await result, f.plan);
+    assert(await memory.getAsset(f.receipt.compressedSha256));
+  },
+);
 test("unlisted or stale engine/runtime/scope/whole-source plans never request a carrier", async () => {
   const f = await fixture(),
     options = {
@@ -197,6 +301,59 @@ test("missing optional plans preserve fallback; corrupt saved bytes require a ve
     ),
     /checksum/,
   );
+});
+
+test("unreadable saved carriers refuse offline, recover through checked network bytes, and never save corrupt replacements", async () => {
+  const f = await fixture();
+  const writes: Uint8Array[] = [];
+  const cache = {
+    getAsset: async () => {
+      throw new Error("Damaged offline map record.");
+    },
+    putAsset: async (_: string, bytes: Uint8Array) => {
+      writes.push(bytes);
+    },
+  };
+  await assert.rejects(
+    loadPublishedVisitorPlan(
+      f.manifest,
+      f.scope,
+      {
+        manifestUrl,
+        cache,
+        offline: true,
+        fetch: async () => assert.fail("offline fetch"),
+      },
+      [f.receipt],
+    ),
+    /saved floor could not be read/,
+  );
+  assert.equal(writes.length, 0);
+  assert.deepEqual(
+    await loadPublishedVisitorPlan(
+      f.manifest,
+      f.scope,
+      { manifestUrl, cache, fetch: async () => new Response(f.stored) },
+      [f.receipt],
+    ),
+    f.plan,
+  );
+  assert.deepEqual(writes, [f.stored]);
+  writes.length = 0;
+  await assert.rejects(
+    loadPublishedVisitorPlan(
+      f.manifest,
+      f.scope,
+      {
+        manifestUrl,
+        cache,
+        fetch: async () => new Response(new Uint8Array([1, 2, 3])),
+      },
+      [f.receipt],
+    ),
+    /checksum/,
+  );
+  assert.equal(writes.length, 0);
 });
 test("rehashed wrong-floor headers, incomplete layers and malformed native owner inventory refuse", async () => {
   const f = await fixture();
@@ -337,6 +494,64 @@ test("native plan preserves every active ring/hole/owner; only currently transpa
   assert.equal(JSON.stringify(f.display), before);
 });
 
+test("plan projection preserves named and unresolved connector display anchors without creating route data", async () => {
+  const f = await fixture();
+  const markers: FeatureCollection = {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [-122.803_412, 53.890_123] },
+        properties: {
+          key: "original-lift-room",
+          kind: "elevator",
+          name: "Elevator · original lift",
+          heightMetres: 0.64,
+          elevationFeet: 14.435_695_538_057_743,
+          review: false,
+          enabled: true,
+        },
+      },
+      {
+        type: "Feature",
+        geometry: { type: "Point", coordinates: [-122.803_899, 53.890_987] },
+        properties: {
+          id: "original-source-stair",
+          kind: "stairs",
+          name: "Staircase · source #1270216",
+          stairElementId: 1_270_216,
+          heightMetres: 0.04,
+          review: true,
+          enabled: false,
+        },
+      },
+    ],
+  };
+  f.context.connectorMarkers = markers as typeof f.context.connectorMarkers;
+  const before = JSON.stringify({ display: f.display, context: f.context });
+  const plan = projectPublishedVisitorPlan(
+    f.manifest,
+    f.scope,
+    f.display,
+    f.context,
+    f.plan.display,
+  );
+  assert.deepEqual(plan.layers.connectors, markers);
+  for (const [i, marker] of markers.features.entries()) {
+    assert.equal(plan.layers.connectors.features[i].geometry, marker.geometry);
+    assert.equal(
+      plan.layers.connectors.features[i].properties,
+      marker.properties,
+    );
+  }
+  assert.equal(
+    JSON.stringify({ display: f.display, context: f.context }),
+    before,
+  );
+  assert.equal(Object.hasOwn(plan, "nodes"), false);
+  assert.equal(Object.hasOwn(plan, "edges"), false);
+});
+
 async function deltaFixture() {
   const f = await fixture(),
     baseScope = structuredClone(f.scope);
@@ -374,6 +589,18 @@ async function deltaFixture() {
   const plan = structuredClone(f.plan);
   plan.revisionSha256 = f.manifest.revisionSha256;
   plan.layers.doors.features = [shape, { ...shape, id: "different" }];
+  plan.layers.connectors.features = [
+    {
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [-122.803_412, 53.890_123] },
+      properties: {
+        key: "lift",
+        kind: "elevator",
+        name: "Elevator",
+        review: true,
+      },
+    },
+  ];
   const base = structuredClone(plan);
   base.scopeId = baseScope.id;
   base.bindingSha256 = baseScope.display.descriptor.bindingSha256;
@@ -422,6 +649,7 @@ test("ordered feature sharing retains exact JSON bytes, holes and source owners;
     { ref: 1 },
     { ref: 0 },
   ]);
+  assert.deepEqual(f.wire.value.layers.connectors.features, [{ ref: 0 }]);
   const restored = restorePublishedVisitorPlanDelta(
     f.wire,
     f.base,

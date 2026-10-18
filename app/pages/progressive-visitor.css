@@ -65,7 +65,7 @@
 .progressive-visitor input[type="checkbox"] {
   margin-right: 5px;
 }
-.progressive-visitor button {
+.progressive-visitor button:not(.project-connector-marker) {
   padding: 6px 10px;
   border: 1px solid #a6bac2;
   border-radius: 5px;
@@ -156,6 +156,16 @@
 .visitor-loading[role="alert"] {
   z-index: 30;
   pointer-events: auto;
+}
+.visitor-map-notice {
+  z-index: 25;
+  pointer-events: auto;
+}
+.visitor-map-notice p {
+  margin: 0 0 8px;
+}
+.visitor-map-notice button {
+  min-height: 44px;
 }
 .visitor-camera-tools {
   position: absolute;
