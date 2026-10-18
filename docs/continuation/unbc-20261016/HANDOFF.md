@@ -1,3 +1,5 @@
+> Current publication and restoration entry: [October 18 START-HERE](../unbc-20261018/live-publication/START-HERE.md). Exact live results are external publication receipts; older missing-input wording below is historical. Original native inputs and functional regenerated checkpoints are now in the linked private Drive backups.
+
 # UNBC: start here for the next AI
 
 > **Directions startup / exact threshold blockers:** [Fresh cache and original-body follow-up](../unbc-20261018/directions-and-threshold-blockers/README.md) recover all 15 placed records and eight shared definitions. The four sill definitions contain complete six-face filled representations that the available strict prism diagnostic does not support. No doorway is enabled. A freshly validated 2.59 MB cache is compiled into the next build: eight production-worker requests retain exact route geometry; first reply 36.7 s, later available queries 0.69–2.72 s. A compiled-receipt profile and fast publication gate pass. This is local Node/build evidence; browser/offline/Site publication remain pending, with live version 13 unchanged.
