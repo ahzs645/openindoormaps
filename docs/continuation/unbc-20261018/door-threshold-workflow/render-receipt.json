@@ -1,0 +1,69 @@
+{
+  "format": "source-scene-render-v1",
+  "complete": true,
+  "sourceSceneSha256": "ef718b75f2d87c2ad139a3b8a21a69d9d26007d54003d832dc37ea129f835d36",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "modelCacheSha256": "d3f445e6b1cee72f023cf4af0cbb3179ddcc259a2b05c8fc63928641586b9876",
+  "renderConfigSha256": "194e23943a3c222e61487fe6a635cf1d12bce9a3248baa8cebbe028d3f554a49",
+  "rendererScriptSha256": "0909533799981332c3742fdecf5f9cb7c18679c443d48d80daff18c26be6fe64",
+  "renderer": "Blender 4.3.2 Cycles CPU",
+  "fullSceneMeshCount": 30,
+  "triangles": 898257,
+  "geometryOrSourceMaterialsEdited": false,
+  "inspectionLightsAdded": true,
+  "resolution": [
+    1100,
+    825
+  ],
+  "samples": 64,
+  "configuredViewCount": 4,
+  "selectedViewIds": [
+    "link-side",
+    "threshold-detail"
+  ],
+  "denoising": false,
+  "cameraClipFeet": [
+    0.014999999664723873,
+    5000.0
+  ],
+  "browserScreenshots": false,
+  "routeOrClearanceAuthorityGranted": false,
+  "views": [
+    {
+      "id": "link-side",
+      "label": "08-360 toward Building 08",
+      "kind": "eye-level",
+      "eyeFeet": [
+        17,
+        528.5495338272797,
+        29.778215223097114
+      ],
+      "targetFeet": [
+        35,
+        528.5495338272797,
+        27.278215223097114
+      ],
+      "referenceElevationFeet": 24.278215223097114,
+      "image": "frames/link-side.png",
+      "sha256": "26b7e90345a12bd3d1b16858e7de6754cc5f7a78cdcd8b22e726b46b893f0974"
+    },
+    {
+      "id": "threshold-detail",
+      "label": "Original bottom sill, low close-up",
+      "kind": "low-detail",
+      "eyeFeet": [
+        25.5,
+        528.5495338272797,
+        25.528215223097114
+      ],
+      "targetFeet": [
+        31.8,
+        528.5495338272797,
+        24.578215223097114
+      ],
+      "referenceElevationFeet": 24.278215223097114,
+      "image": "frames/threshold-detail.png",
+      "sha256": "b9992c0f3a85cac09810477c82993d9607aa8bfe3f55978978f382952fef2bb2"
+    }
+  ]
+}

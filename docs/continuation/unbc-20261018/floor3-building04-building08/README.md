@@ -1,5 +1,7 @@
 # Floor 3 · Building 04–08 connection
 
+> Follow-up: the [reusable 3D workflow and four-floor threshold survey](../door-threshold-workflow/README.md) now produce source-bound owner and stepped-envelope proposals for this doorway and four others. The same pattern affects the corresponding Floor 2 link. Complete body/clearance/admission remain unresolved; the route is still not enabled.
+
 October 18, 2026. **The connection is still broken.** The previous systemic
 candidate repaired common display/transit handling but did not repair this
 missing source doorway. Neither the published visitor nor the failed fresh

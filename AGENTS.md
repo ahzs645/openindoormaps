@@ -1,5 +1,12 @@
 # Indoor project work
 
+For native first-person/source-model inspection, use the sibling Reviter
+[source inspection workflow](../reviter/docs/source-model-inspection/README.md).
+It defines verified scene export, reusable camera recipes, complete-source
+renders and receipts. Inspect both sides and the original threshold/landing;
+preserve physical geometry and distinguish renders from actual viewer/browser
+proof or route qualification. Reuse the scene and render only affected views.
+
 For indoor room boundaries, missing/low room blocks, doors, circulation, stair/ramp/lift geometry, access review or the UNBC master pipeline, read [.agents/skills/indoor-enclosure-review/SKILL.md](.agents/skills/indoor-enclosure-review/SKILL.md) and the relevant parts of [docs/indoor-enclosure-review.md](docs/indoor-enclosure-review.md).
 
 - Review **actual visitor geometry** in ordinary and native-height modes. A source outline, prepared boundary label or selection mask alone does not certify a complete raised room.
