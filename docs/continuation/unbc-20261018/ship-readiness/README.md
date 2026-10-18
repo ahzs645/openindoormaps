@@ -15,6 +15,14 @@ campus-wide accessible coverage. A release needs a defined coverage promise
 and evidence for every journey in that promise. Do not describe a passing
 sample route or source-body diagnostic as complete campus acceptance.
 
+The original authoring model/master, verified native cache and seven staged
+review/checkpoint archives were also recovered from Drive. All 109 declared stage
+members passed checksum checks. This made the source investigations reproducible;
+it did not produce a newer accepted master. See
+[native recovery](native-base-restoration.json),
+[threshold/connector findings](routing.md) and the
+[exact arrival-loss diagnosis](arrival-loss/README.md).
+
 ## The concept in one sentence
 
 Open a link or scan a sign, choose where you are going, and follow verified
@@ -109,8 +117,10 @@ Actual accepted-campus desktop evidence shows 283 rendered Main-floor room
 features and the 62.6 m route from 05-136 to 05-173. It also exposes a material
 performance blocker: the grey overview appears around 37 seconds, Main-floor
 features around 200 seconds and the first route around 308 seconds in this
-cold cloud-browser run. These are observed timings, not a supported-phone
-promise. See [loading evidence](loading/README.md) for final browser outcomes.
+cold cloud-browser run. The result retains warnings for 60 areas with unknown
+public access and 17 connections with unconfirmed step-free access; the observed
+Walking result does not certify those properties. These are observed timings,
+not a supported-phone promise. See [loading evidence](loading/README.md) for final browser outcomes.
 A functioning route does not pass a visitor launch performance gate.
 
 ## Simplify delivery as well as the interface
@@ -127,6 +137,13 @@ review and full compilation in the publishing workflow. A future compact
 graph format must carry sufficient source/policy bindings and invalidate on
 changes; it cannot remove physical checks merely to load faster. Reuse the
 existing checked cache until that format has complete parity tests.
+
+For the smallest viable pilot, an explicit list of reviewed entrance-to-destination
+journeys can be calculated at publication time and served as checked instructions,
+floor changes and polylines with exact source/profile bindings. Reversal needs
+its own checked result. The visitor must advertise that finite coverage and refuse
+unlisted requests. This is a smaller first milestone than building a new arbitrary
+route engine. Do not infer that coverage from the current sampled test journeys.
 
 Before calling the pilot shippable, measure a cold start and first route with
 a floor visible on actual supported phones, including failure/retry, reversed
