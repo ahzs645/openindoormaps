@@ -96,6 +96,10 @@ This optional dedicated visitor profile omits unrelated venue-demo code; the
 default and hospital profiles remain available. It reduces the staged application
 from 37,117,999 to 22,567,376 bytes, making room for the actual physical-floor
 presentation. The candidate remains local and has not changed the private live Site.
+The full viewer's Fit route control is also positioned below the floating tools;
+the earlier actual-campus screenshot exposed that overlap. A focused desktop/mobile
+CSS layout probe verifies the control no longer intersects the header; it is
+separate from the earlier physical route result.
 
 A release-gate defect was fixed: the old checker accepted its manifest's four
 combined floors while missing three subsets selected by the actual page.

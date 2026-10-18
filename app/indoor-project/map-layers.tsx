@@ -2495,7 +2495,7 @@ export function ProjectRouteFocus({
   if (!route || !map || !isLoaded) return null;
   return (
     <button
-      style={{ position: "absolute", top: 12, left: 12, zIndex: 2 }}
+      className="project-route-focus"
       onClick={() => {
         const bounds = new LngLatBounds();
         for (const path of route.paths)

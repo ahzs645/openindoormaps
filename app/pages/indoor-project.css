@@ -669,6 +669,15 @@
   height: 100%;
   border-radius: 0;
 }
+.project-route-focus {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+}
+.project-explore .project-route-focus {
+  top: 76px;
+}
 .project-explore > header {
   position: absolute;
   top: 16px;
@@ -968,6 +977,9 @@
   .project-explore .project-map {
     min-height: 0;
     height: 100%;
+  }
+  .project-explore .project-route-focus {
+    top: 164px;
   }
   .project-explore > header {
     top: 116px;
