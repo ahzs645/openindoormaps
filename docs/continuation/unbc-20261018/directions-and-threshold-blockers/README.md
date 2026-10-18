@@ -181,3 +181,10 @@ From Reviter, use the [source inspection workflow](../../../../../reviter/docs/s
 and `inspect-native-element-bodies.ts` with the saved requests. Source hashes,
 full preparation implementation bindings, actual worker reports and CPU
 profile are retained here and covered by `SHA256SUMS`.
+
+The [verified private 3.42 MB continuation increment](https://drive.google.com/file/d/11mNt4D-03QLXvEIMbIinA8arQfqAGKq9/view)
+contains OpenIndoorMaps `6fae647` and Reviter `c2f6dab`, including the matching
+directions asset. Fresh Git restoration checked all **3,978 tracked files**;
+complete Drive readback matched the archive SHA-256 and every entry. See
+`portable-backup.json`. This receipt-only follow-up is outside those bundled
+commits; large native inputs remain separate dependencies linked by its manifest.
