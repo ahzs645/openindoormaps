@@ -144,6 +144,10 @@ for (const mobile of [false, true]) {
       .click();
     await upload(page, newBytes);
     await revision(page, newRevision);
+    // Each accepted import returns to Explore map; reopen review controls.
+    await page
+      .getByRole("button", { name: "Review project", exact: true })
+      .click();
     await expect(
       page.getByLabel("Route destination", { exact: true }),
     ).toContainText("Updated imported studio");
@@ -379,6 +383,10 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     )
     .toBe(true);
   await revision(page, newRevision);
+  // The winning import resets review mode, which contains Venue maps.
+  await page
+    .getByRole("button", { name: "Review project", exact: true })
+    .click();
   await page.getByRole("link", { name: "Venue maps", exact: true }).click();
   await page.getByRole("link", { name: /Prepared indoor projects/ }).click();
   await expect(page.getByTestId("project-package")).toHaveCount(0);
