@@ -27,6 +27,7 @@ export type HallwayEdgeKind =
   | "spine"
   | "gate"
   | "join"
+  | "hop"
   | "walk"
   | "door"
   | "opening"
@@ -69,6 +70,12 @@ export type HallwayNetworkReport = {
   spineMetres: number;
   /** Replaced hallway edges kept because the spine did not join their ends. */
   restoredEdges: number;
+  /** Direct links between nearby doors (see `SpineResult.hops`). */
+  hops: number;
+  /** Breaks inside one surface's spine closed by a bridge, and pieces left
+   * separate (see `SpineResult.stats`). */
+  spineBridges: number;
+  looseSpineRuns: number;
 };
 const CROSSING_NAME = /vestibule|lobby|entr|link|bridge|crosswalk|airlock/i;
 const STEPPED = new Set(["stairs", "local-steps", "escalator"]);
@@ -88,6 +95,8 @@ const dist = (a: XY, b: XY) => {
 /** A replaced hallway walk stays when the spine between its ends is longer
  * than this. */
 const DETOUR = { factor: 1.5, metres: 3 };
+/** An opening longer than this is a walk across a hallway, not a threshold. */
+const OPENING_WALK_METRES = 2;
 /** A binary min-heap of [distance, node] pairs. */
 function heapPush(heap: [number, number][], item: [number, number]) {
   heap.push(item);
@@ -251,7 +260,14 @@ export function hallwayParts(
   return whole;
 }
 
-export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
+export type HallwayNetworkOptions = {
+  /** Called with each replaced edge the spine could not carry. */
+  onRestore?: (edgeId: string) => void;
+};
+export function buildHallwayNetwork(
+  data: IndoorDataset,
+  options: HallwayNetworkOptions = {},
+): HallwayNetwork {
   const records = new Map(data.records.map((r) => [r.key, r]));
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const isCorridor = (key: string) => {
@@ -296,6 +312,9 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
     spokeAreas: 0,
     spineMetres: 0,
     restoredEdges: 0,
+    hops: 0,
+    spineBridges: 0,
+    looseSpineRuns: 0,
   };
   const metres = (pts: XY[]) => {
     let total = 0;
@@ -371,17 +390,33 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
     // walks along a hallway join its spine: a door portal it never walks to
     // there (a closed-off room, a door into a wall gap) stays unconnected.
     const onHallway = new Map<string, number>();
+    // A long "opening" lying wholly on a hallway part (for example from a ramp
+    // landing across a hall) is a hallway walk too, not a threshold crossing.
+    const hallwayWalk = (e: (typeof kept)[number]) =>
+      e.kind === "walk" ||
+      (e.kind === "opening" && e.lengthMetres > OPENING_WALK_METRES);
+    const cellOf = (e: (typeof kept)[number]) =>
+      e.nativeCellId ??
+      onLevel.find((c) =>
+        e.pointsFeet.every((p) =>
+          surfaces.some(
+            (s, i) =>
+              s.cell === c.id &&
+              (indexes[i].inside([p[0], p[1]]) ||
+                indexes[i].distanceToEdge([p[0], p[1]]) <= 0.5),
+          ),
+        ),
+      )?.id;
     for (const e of kept) {
+      const cell = hallwayWalk(e) ? cellOf(e) : undefined;
       if (
-        e.kind !== "walk" ||
-        !e.nativeCellId ||
-        !corridorCellIds.has(e.nativeCellId) ||
+        !cell ||
+        !corridorCellIds.has(cell) ||
         !onPlane(nodes.get(e.from)!) ||
         !onPlane(nodes.get(e.to)!)
       )
         continue;
-      const plan = e.pointsFeet.map((p) => [p[0], p[1]] as XY),
-        cell = e.nativeCellId;
+      const plan = e.pointsFeet.map((p) => [p[0], p[1]] as XY);
       // The whole walk must stay on one hallway part.
       const part = surfaceAt(plan[0], cell);
       let along = part >= 0;
@@ -407,7 +442,8 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
 
     const gates: SpineGate[] = [],
       doorways: SpineDoorway[] = [],
-      seenGate = new Set<string>();
+      gateAt = new Map<string, string>(),
+      gatePortals: [string, string, string][] = [];
     const anchor = (id: string, p: XY, s: number) => {
       if (anchoredNodes.has(id)) return;
       anchoredNodes.add(id);
@@ -415,7 +451,11 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
     };
     const doorEnds = new Set<string>();
     for (const e of kept) {
-      if (e.kind !== "door" && e.kind !== "opening") continue;
+      if (
+        (e.kind !== "door" && e.kind !== "opening") ||
+        replacedEdges.has(e.id)
+      )
+        continue;
       const a = nodes.get(e.from)!,
         b = nodes.get(e.to)!;
       if (!onPlane(a) || !onPlane(b)) continue;
@@ -442,8 +482,11 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
           ),
         );
         const key = `${Math.round(c[0] * 10)},${Math.round(c[1] * 10)}`;
-        if (!seenGate.has(key)) {
-          seenGate.add(key);
+        // The door's own portals stay reachable through the gate's centre:
+        // other compiled links (rooms, lifts) may still end at them.
+        gatePortals.push([gateAt.get(key) ?? e.id, e.from, e.to]);
+        if (!gateAt.has(key)) {
+          gateAt.set(key, e.id);
           gates.push({
             id: e.id,
             center: c,
@@ -491,6 +534,8 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
     report.gates += gates.length;
     report.straightCrossings += result.stats.straightCrossings;
     report.spokeAreas += result.stats.spokeAreas;
+    report.spineBridges += result.stats.bridges;
+    report.looseSpineRuns += result.stats.looseRuns;
     for (const u of result.unconnected)
       report.unconnected.push({ ...u, levelId });
     for (const i of result.unreached)
@@ -550,6 +595,39 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
         pts.slice(1, -1).flat(),
       ]);
     }
+    // Nearby doors whose way through the spine would be an out-and-back.
+    const linkNode = (l: (typeof result.links)[number]) =>
+      l.kind === "gate"
+        ? nodeAt(levelId, l.points[0], `gate:${plane}:${l.id}`)
+        : compiledNode(l.id);
+    for (const hop of result.hops) {
+      const a = result.links[hop.a],
+        b = result.links[hop.b];
+      report.hops++;
+      edges.push([
+        linkNode(a),
+        linkNode(b),
+        metres(hop.points),
+        "hop",
+        surfaces[a.surface].staff ? EDGE_STAFF : 0,
+        hop.points.slice(1, -1).flat(),
+      ]);
+    }
+    for (const [gate, ...portals] of gatePortals) {
+      const centre = nodeAt(levelId, [0, 0], `gate:${plane}:${gate}`),
+        side = gates.find((g) => g.id === gate)!,
+        staff = side.sides.some((i) => surfaces[i].staff) ? EDGE_STAFF : 0;
+      for (const id of portals) {
+        const n = nodes.get(id)!;
+        edges.push([
+          compiledNode(id),
+          centre,
+          metres([[n.pointFeet[0], n.pointFeet[1]], side.center]),
+          "gate",
+          staff,
+        ]);
+      }
+    }
   }
 
   // Compiled edges outside the hallway surfaces: room interiors, door crossings,
@@ -598,6 +676,7 @@ export function buildHallwayNetwork(data: IndoorDataset): HallwayNetwork {
       if (withinDistance(adjacency, edges, from, to, budget)) continue;
       replacedEdges.delete(e.id);
       report.restoredEdges++;
+      options.onRestore?.(e.id);
       emit(e);
       link(edges.length - 1);
     }
@@ -669,4 +748,75 @@ export function createHallwayRouter(network: HallwayNetwork) {
     }
     return { metres: best[end], nodes: path.reverse(), edges: used.reverse() };
   };
+}
+
+/** A route's drawing: one plan polyline per run on a level, in order, with
+ * the level changes between them. */
+export type HallwayRouteDrawing = {
+  runs: { levelId: number; points: XY[] }[];
+  changes: { kind: HallwayEdgeKind; from: number; to: number }[];
+};
+/** Turns sharper than this, on a leg shorter than `SPIKE_FEET`, are drawn
+ * as a straight line: a doorway join meeting the spine right beside the next
+ * one, or a hop arriving at a door whose own join doubles back. Display only;
+ * the route's length and links are unchanged. */
+const SPIKE_DEGREES = 35;
+const SPIKE_FEET = 8;
+
+/** Draw a route from the network's points and edge polylines. */
+export function drawHallwayRoute(
+  network: HallwayNetwork,
+  route: HallwayRoute,
+): HallwayRouteDrawing {
+  const runs: HallwayRouteDrawing["runs"] = [],
+    changes: HallwayRouteDrawing["changes"] = [];
+  let at = route.nodes[0];
+  const point = (i: number): XY => [network.nodes[i][1], network.nodes[i][2]];
+  let run = { levelId: network.nodes[at][0], points: [point(at)] };
+  for (const i of route.edges) {
+    const e = network.edges[i],
+      next = e[0] === at ? e[1] : e[0];
+    if (network.nodes[next][0] === run.levelId) {
+      const mid: XY[] = [];
+      for (let k = 0; k < (e[5]?.length ?? 0); k += 2)
+        mid.push([e[5]![k], e[5]![k + 1]]);
+      if (e[0] !== at) mid.reverse();
+      run.points.push(...mid, point(next));
+    } else {
+      runs.push(run);
+      changes.push({
+        kind: e[3],
+        from: run.levelId,
+        to: network.nodes[next][0],
+      });
+      run = { levelId: network.nodes[next][0], points: [point(next)] };
+    }
+    at = next;
+  }
+  runs.push(run);
+  for (const r of runs) r.points = smoothRun(r.points);
+  return { runs, changes };
+}
+function smoothRun(input: XY[]) {
+  const points = input.filter(
+    (p, k) => k === 0 || dist(p, input[k - 1]) > 1e-6,
+  );
+  const cosLimit = Math.cos((SPIKE_DEGREES * Math.PI) / 180);
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (let k = 1; k < points.length - 1; k++) {
+      const [p, q, n] = [points[k - 1], points[k], points[k + 1]];
+      const lu = dist(p, q),
+        lv = dist(q, n);
+      const cos =
+        ((p[0] - q[0]) * (n[0] - q[0]) + (p[1] - q[1]) * (n[1] - q[1])) /
+        (lu * lv);
+      if (cos > cosLimit && Math.min(lu, lv) < SPIKE_FEET) {
+        points.splice(k, 1);
+        changed = true;
+        break;
+      }
+    }
+  }
+  return points;
 }

@@ -214,3 +214,78 @@ test("corridors of any length and width get an exact centreline", () => {
       );
   }
 });
+
+test("nearby doors on one wall hop straight across instead of out and back", () => {
+  // A 16 ft wide hall: the centreline is 8 ft from either wall.
+  const hall: Rings = [rect(0, 0, 60, 16)];
+  const r = hallwaySpines(
+    [{ rings: hall, crossing: false }],
+    [],
+    [
+      { id: "a", point: [20, 15.6], surface: 0 },
+      { id: "b", point: [25, 15.6], surface: 0 },
+      { id: "far", point: [50, 0.4], surface: 0 },
+    ],
+  );
+  assert.equal(r.hops.length, 1);
+  const hop = r.hops[0];
+  assert.deepEqual([r.links[hop.a].id, r.links[hop.b].id].sort(), ["a", "b"]);
+  // It stays by the wall, well short of the 16 ft trip via the centreline.
+  const length = hop.points
+    .slice(1)
+    .reduce(
+      (t, p, i) =>
+        t + Math.hypot(p[0] - hop.points[i][0], p[1] - hop.points[i][1]),
+      0,
+    );
+  assert.ok(length < 8, `${length} ft`);
+  assertInside(
+    [hall],
+    hop.points.slice(1).map((p, i) => ({ surface: 0, a: hop.points[i], b: p })),
+  );
+});
+
+test("doors facing each other across a corridor keep their centreline joins", () => {
+  const r = hallwaySpines(
+    [{ rings: [rect(0, 0, 60, 6)], crossing: false }],
+    [],
+    [
+      { id: "n", point: [20, 5.9], surface: 0 },
+      { id: "s", point: [21, 0.1], surface: 0 },
+    ],
+  );
+  assert.equal(r.hops.length, 0);
+});
+
+test("a doorway in a recess joins the spine with one bend", () => {
+  // A corridor along y 0–6 with a recess at x 30–33 reaching up to y 9. The
+  // doorway sits in the recess's corner, where a pier at x 33–36, y 6–9
+  // blocks no straight view but the recess wall at x 30 does for a shallow
+  // angle; whatever the line, it must stay inside and reach the spine.
+  const corridor: Rings = [
+    [
+      [0, 0],
+      [60, 0],
+      [60, 6],
+      [33, 6],
+      [33, 12],
+      [30, 12],
+      [30, 6],
+      [0, 6],
+    ],
+  ];
+  const r = hallwaySpines(
+    [{ rings: corridor, crossing: false }],
+    [],
+    [
+      { id: "deep", point: [32.6, 11.6], surface: 0 },
+      { id: "w", point: [5, 5.9], surface: 0 },
+    ],
+  );
+  assert.equal(r.unconnected.length, 0);
+  const deep = r.links.find((l) => l.id === "deep")!;
+  const line = deep.points
+    .slice(1)
+    .map((p, i) => ({ surface: 0, a: deep.points[i], b: p }));
+  assertInside([corridor], line);
+});

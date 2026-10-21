@@ -1,22 +1,23 @@
 {
   "format": "hallway-network-audit-v1",
   "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
-  "buildMs": 7171,
+  "buildMs": 7401,
   "network": {
-    "nodes": 10702,
-    "edges": 11262,
+    "nodes": 10367,
+    "edges": 11257,
     "arrivals": 1740,
-    "jsonBytes": 1267423,
+    "jsonBytes": 1227879,
     "edgeKinds": {
-      "door": 1561,
+      "door": 1476,
       "elevator": 43,
-      "gate": 169,
-      "join": 1782,
+      "gate": 338,
+      "hop": 349,
+      "join": 1788,
       "local-steps": 1,
-      "opening": 200,
+      "opening": 184,
       "ramp": 4,
-      "spine": 5011,
-      "walk": 2491
+      "spine": 4821,
+      "walk": 2253
     }
   },
   "report": {
@@ -24,48 +25,12 @@
     "surfaces": 144,
     "staffSurfaces": 0,
     "gates": 85,
-    "joins": 1710,
+    "joins": 1716,
     "unconnected": [
       {
-        "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-8e1b19ddd9ef:2:59:0",
-        "surface": 1,
-        "levelId": 311
-      },
-      {
-        "kind": "doorway",
-        "id": "door:311:863899:1",
-        "surface": 1,
-        "levelId": 311
-      },
-      {
-        "kind": "doorway",
-        "id": "opening:recovered-front:rm-694-bd3586e3bc13:rm-694-634bc404f221:1:10:1",
-        "surface": 26,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-694-54c346297935:rm-694-54c64c297937:5:10:0",
-        "surface": 29,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-694-54c64c297937:rm-694-642e2117d7e1:5:3:1",
-        "surface": 29,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-5dfe73297e98:16:2:1",
-        "surface": 29,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64209917d7d6:3:2:1",
-        "surface": 29,
+        "kind": "gate",
+        "id": "door:694:2200187",
+        "surface": 27,
         "levelId": 694
       },
       {
@@ -76,145 +41,151 @@
       },
       {
         "kind": "doorway",
-        "id": "door:694:1513790:0",
-        "surface": 21,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:725888:0",
-        "surface": 25,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:1369072:0",
-        "surface": 0,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:1499590:0",
-        "surface": 36,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:1499598:1",
-        "surface": 36,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:1108589:1",
-        "surface": 9,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "door:694:1513789:0",
-        "surface": 21,
-        "levelId": 694
-      },
-      {
-        "kind": "doorway",
-        "id": "arrival:rm-694-54d0ce297940",
+        "id": "door:694:1882860:1",
         "surface": 29,
         "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "opening:recovered-circulation-seam:rm-400176-4c55011c215d:rm-400176-b9e71c7b63cd:30:3:1",
-        "surface": 13,
-        "levelId": 400176
+        "id": "door:694:1881887:1",
+        "surface": 29,
+        "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "door:400176:2215437:1",
-        "surface": 19,
-        "levelId": 400176
+        "id": "arrival:rm-694-1a939d8c895c",
+        "surface": 29,
+        "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "door:400176:2215404:0",
-        "surface": 19,
-        "levelId": 400176
+        "id": "arrival:rm-694-50479be53197",
+        "surface": 23,
+        "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "door:400176:2215429:0",
-        "surface": 19,
-        "levelId": 400176
+        "id": "arrival:rm-694-50f1ace53228",
+        "surface": 23,
+        "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "door:400176:1924141:1",
-        "surface": 13,
-        "levelId": 400176
+        "id": "arrival:rm-694-5102a5e53236",
+        "surface": 23,
+        "levelId": 694
       },
       {
         "kind": "doorway",
-        "id": "door:1487353:1779494:0",
-        "surface": 2,
-        "levelId": 1487353
+        "id": "arrival:rm-694-5d2f75297de9",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-5d35f1297dee",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-5d3977297df1",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-ad5824e3b380",
+        "surface": 23,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-ae61739d8fb0",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-b5ecf69d93a4",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-b5f0dc9d93a8",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-b78b969d9505",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-d30c735a3d7e",
+        "surface": 27,
+        "levelId": 694
       },
       {
         "kind": "gate",
-        "id": "door:402367:1126909",
-        "surface": 12,
-        "levelId": 402367
+        "id": "door:400176:2255535",
+        "surface": 11,
+        "levelId": 400176
       },
       {
         "kind": "doorway",
-        "id": "door:402367:1066108:0",
-        "surface": 4,
-        "levelId": 402367
-      },
-      {
-        "kind": "doorway",
-        "id": "door:402367:1074014:1",
-        "surface": 4,
-        "levelId": 402367
-      },
-      {
-        "kind": "doorway",
-        "id": "door:402367:2227675:1",
-        "surface": 16,
-        "levelId": 402367
-      },
-      {
-        "kind": "doorway",
-        "id": "door:402367:2410487:1",
-        "surface": 4,
-        "levelId": 402367
-      },
-      {
-        "kind": "doorway",
-        "id": "door:402367:1929847:0",
-        "surface": 12,
-        "levelId": 402367
-      },
-      {
-        "kind": "doorway",
-        "id": "door:402367:2282718:1",
+        "id": "arrival:rm-400176-44814c708ea3",
         "surface": 6,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-400176-45914c708f8a",
+        "surface": 6,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-400176-45bd5a708faf",
+        "surface": 6,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-400176-c46d447227c4",
+        "surface": 11,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-402367-08555688f0d6",
+        "surface": 4,
         "levelId": 402367
       },
       {
         "kind": "doorway",
-        "id": "door:402367:2227667:1",
-        "surface": 16,
+        "id": "arrival:rm-402367-1a173e806e36",
+        "surface": 4,
         "levelId": 402367
       },
       {
         "kind": "doorway",
-        "id": "door:402367:2144171:1",
-        "surface": 0,
+        "id": "arrival:rm-402367-321b0c890810",
+        "surface": 4,
         "levelId": 402367
       },
       {
         "kind": "doorway",
-        "id": "arrival:rm-402367-7220610d03a7",
+        "id": "arrival:rm-402367-321dee890812",
+        "surface": 4,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-402367-6b37460d003c",
         "surface": 5,
         "levelId": 402367
       }
@@ -268,8 +239,11 @@
     ],
     "straightCrossings": 13,
     "spokeAreas": 36,
-    "spineMetres": 5869,
-    "restoredEdges": 460
+    "spineMetres": 5855,
+    "restoredEdges": 138,
+    "hops": 349,
+    "spineBridges": 18,
+    "looseSpineRuns": 113
   },
   "profiles": {
     "walking": {
@@ -280,15 +254,15 @@
       "lengthRatio": {
         "samples": 259,
         "p05": 0.811,
-        "median": 0.866,
-        "p95": 0.959,
+        "median": 0.862,
+        "p95": 0.966,
         "min": 0.777,
-        "max": 1.056
+        "max": 1.121
       },
       "routeMs": {
-        "median": 2.05,
-        "p95": 4.51,
-        "max": 8.41
+        "median": 1.71,
+        "p95": 3.76,
+        "max": 18.13
       },
       "largestDifferences": [
         {
@@ -298,14 +272,14 @@
           "pair": "06-264 H,C Washroom -> 06-213 Lecture Theatre"
         },
         {
-          "ratio": 0.788,
-          "network": 193.1,
+          "ratio": 0.782,
+          "network": 191.7,
           "compiled": 245,
           "pair": "07-148 Reception -> 03-2021 Office"
         },
         {
           "ratio": 0.792,
-          "network": 157.9,
+          "network": 157.8,
           "compiled": 199.3,
           "pair": "06-356 Library -> Central circulation"
         },
@@ -335,7 +309,7 @@
         },
         {
           "ratio": 0.806,
-          "network": 242.4,
+          "network": 242.3,
           "compiled": 300.8,
           "pair": "Native ramp lower approach -> 03-008 Observation Room"
         }
@@ -349,15 +323,15 @@
       "lengthRatio": {
         "samples": 259,
         "p05": 0.811,
-        "median": 0.866,
-        "p95": 0.959,
+        "median": 0.863,
+        "p95": 0.97,
         "min": 0.777,
-        "max": 1.056
+        "max": 1.121
       },
       "routeMs": {
-        "median": 1.89,
-        "p95": 3.83,
-        "max": 8.18
+        "median": 1.99,
+        "p95": 4.12,
+        "max": 7.2
       },
       "largestDifferences": [
         {
@@ -367,14 +341,14 @@
           "pair": "06-264 H,C Washroom -> 06-213 Lecture Theatre"
         },
         {
-          "ratio": 0.788,
-          "network": 193.1,
+          "ratio": 0.782,
+          "network": 191.7,
           "compiled": 245,
           "pair": "07-148 Reception -> 03-2021 Office"
         },
         {
           "ratio": 0.792,
-          "network": 157.9,
+          "network": 157.8,
           "compiled": 199.3,
           "pair": "06-356 Library -> Central circulation"
         },
@@ -404,7 +378,7 @@
         },
         {
           "ratio": 0.806,
-          "network": 242.4,
+          "network": 242.3,
           "compiled": 300.8,
           "pair": "Native ramp lower approach -> 03-008 Observation Room"
         }
@@ -412,9 +386,9 @@
     }
   },
   "geometry": {
-    "spineSamples": 45099,
-    "offWalkableCell": 1227,
-    "maxOffFeet": 1.27,
-    "offWithinHalfFoot": 1223
+    "spineSamples": 47628,
+    "offWalkableCell": 1164,
+    "maxOffFeet": 1.28,
+    "offWithinHalfFoot": 1153
   }
 }

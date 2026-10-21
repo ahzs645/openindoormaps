@@ -43,6 +43,10 @@ export type SpineLink = {
 export type SpineResult = {
   segments: SpineSegment[];
   links: SpineLink[];
+  /** Direct links between nearby doors on one surface whose way through the
+   * spine would be an out-and-back: from link `a`'s door to link `b`'s,
+   * stepping out from each door just far enough to clear the walls. */
+  hops: { a: number; b: number; points: XY[] }[];
   unconnected: { kind: "gate" | "doorway"; id: string; surface: number }[];
   /** Surfaces of at least `minReportArea` that no gate or doorway reaches. */
   unreached: number[];
@@ -50,6 +54,10 @@ export type SpineResult = {
     straightCrossings: number;
     spokeAreas: number;
     straightRuns: number;
+    /** Breaks between spine pieces of one surface joined by a bridge. */
+    bridges: number;
+    /** Spine pieces still separate from their surface's largest piece. */
+    looseRuns: number;
   };
 };
 export const HALLWAY_SPINE_DEFAULTS = {
@@ -63,6 +71,23 @@ export const HALLWAY_SPINE_DEFAULTS = {
   crossingClearance: 0.3,
   compactAxisFactor: 3,
   minReportArea: 40,
+  /** A hop joins two doors at most this far apart... */
+  hopMax: 15,
+  /** ...when even the shortest way through the spine is longer than this
+   * factor of the hop plus `hopSlack`. Each end steps out along its own
+   * link by one of `hopSteps` until the crossing keeps `hopClearance`. */
+  hopFactor: 1.4,
+  hopSlack: 2,
+  hopClearance: 0.25,
+  hopSteps: [0, 0.75, 1.5, 2.25, 3],
+  /** Separate spine pieces of one surface are bridged up to this far apart,
+   * keeping this far from the walls (breaks sit at pinches by columns). */
+  bridgeMax: 12,
+  bridgeClearance: 0.1,
+  /** An unbridged spine piece shorter than this is dropped. */
+  minLooseRun: 3,
+  /** A doorway with no straight clear join first steps out this far. */
+  bendSteps: [0.75, 1.5, 2.5, 3.5],
 };
 export type HallwaySpineOptions = typeof HALLWAY_SPINE_DEFAULTS;
 
@@ -452,6 +477,90 @@ function straighten(
   return kept.map((k) => points[k]);
 }
 
+/** Join separate pieces of one surface's spine. The sampled axis can still
+ * break where a wall stub or column pinches it; join the closest pair of
+ * pieces by a clear straight bridge, splitting the segment it meets so the
+ * pieces share a point, until one piece remains or no bridge is clear. */
+function joinPieces(
+  segs: [XY, XY][],
+  surface: SurfaceIndex,
+  options: HallwaySpineOptions,
+) {
+  const key = (p: XY) => `${p[0]},${p[1]}`;
+  const pieces = () => {
+    const parent = new Map<string, string>();
+    const root = (k: string): string => {
+      while (parent.get(k) !== k) k = parent.get(k)!;
+      return k;
+    };
+    for (const [a, b] of segs)
+      for (const p of [a, b])
+        if (!parent.has(key(p))) parent.set(key(p), key(p));
+    for (const [a, b] of segs) parent.set(root(key(a)), root(key(b)));
+    return segs.map(([a]) => root(key(a)));
+  };
+  let bridges = 0;
+  for (;;) {
+    const label = pieces(),
+      distinct = [...new Set(label)];
+    if (distinct.length < 2) return { bridges, loose: 0 };
+    // Candidate bridges: from each segment end to the nearest point of every
+    // segment in another piece.
+    const candidates: { d: number; from: XY; to: XY; segment: number }[] = [];
+    for (const [i, [a, b]] of segs.entries())
+      for (const from of [a, b])
+        for (const [j, [c, e]] of segs.entries()) {
+          if (label[i] === label[j]) continue;
+          const { q } = project(from, c, e),
+            d = dist(from, q);
+          if (d <= options.bridgeMax)
+            candidates.push({ d, from, to: q, segment: j });
+        }
+    candidates.sort(
+      (x, y) =>
+        x.d - y.d ||
+        x.from[0] - y.from[0] ||
+        x.from[1] - y.from[1] ||
+        x.segment - y.segment,
+    );
+    const bridge = candidates.find(
+      (c) =>
+        c.d < 1e-9 ||
+        clearSegment(surface, c.from, c.to, options.bridgeClearance),
+    );
+    if (!bridge) {
+      // A short piece no bridge can reach is a scrap of axis in a recess or
+      // pocket; drop it so doorways there join the real spine instead.
+      const length = new Map<string, number>();
+      for (const [i, [a, b]] of segs.entries())
+        length.set(label[i], (length.get(label[i]) ?? 0) + dist(a, b));
+      const longest = Math.max(...length.values());
+      let loose = 0;
+      for (let i = segs.length - 1; i >= 0; i--)
+        if (
+          length.get(label[i])! < options.minLooseRun &&
+          length.get(label[i])! < longest
+        )
+          segs.splice(i, 1);
+      for (const l of length.values())
+        if (l >= options.minLooseRun && l < longest) loose++;
+      return { bridges, loose };
+    }
+    const [c, e] = segs[bridge.segment];
+    if (dist(bridge.to, c) > 1e-9 && dist(bridge.to, e) > 1e-9)
+      segs.splice(bridge.segment, 1, [c, bridge.to], [bridge.to, e]);
+    if (bridge.d > 1e-9) segs.push([bridge.from, bridge.to]);
+    else {
+      // Touching without a shared point: make the touch a shared point.
+      const to = segs.find(
+        ([a, b]) => key(a) === key(bridge.to) || key(b) === key(bridge.to),
+      );
+      if (!to) segs.push([bridge.from, bridge.to]);
+    }
+    bridges++;
+  }
+}
+
 /** Two entrances: one straight line. More: straight spokes from their centre. */
 function straightCrossing(
   entrances: XY[],
@@ -497,7 +606,13 @@ export function hallwaySpines(
   const options = { ...HALLWAY_SPINE_DEFAULTS, ...overrides };
   const index = surfaces.map((s) => indexSurface(s.rings));
   const perSurface: [XY, XY][][] = surfaces.map(() => []);
-  const stats = { straightCrossings: 0, spokeAreas: 0, straightRuns: 0 };
+  const stats = {
+    straightCrossings: 0,
+    spokeAreas: 0,
+    straightRuns: 0,
+    bridges: 0,
+    looseRuns: 0,
+  };
   const unreached: number[] = [];
   const entrancesOf = surfaces.map(() => [] as XY[]);
   for (const g of gates) for (const s of g.sides) entrancesOf[s].push(g.center);
@@ -563,6 +678,9 @@ export function hallwaySpines(
         stats.straightRuns++;
       }
     }
+    const { bridges, loose } = joinPieces(perSurface[i], index[i], options);
+    stats.bridges += bridges;
+    stats.looseRuns += loose;
   });
 
   const links: SpineLink[] = [],
@@ -573,7 +691,7 @@ export function hallwaySpines(
       .map(([a, b], segment) => ({ segment, ...project(from, a, b) }))
       .map((c) => ({ ...c, d: dist(from, c.q) }))
       .sort((m, n) => m.d - n.d)
-      .slice(0, 8);
+      .slice(0, 12);
     for (const c of candidates)
       if (
         c.d < 1e-9 ||
@@ -585,6 +703,44 @@ export function hallwaySpines(
           perpendicular: c.t > 0.001 && c.t < 0.999,
         };
     return null;
+  };
+  // A doorway set in a recess or behind a column may not see the spine in a
+  // straight line: step out to the nearest clear point first, then join.
+  const bentAttach = (surface: number, from: XY) => {
+    let best: {
+      points: XY[];
+      hit: NonNullable<ReturnType<typeof attach>>;
+    } | null = null;
+    let bestLength = Infinity;
+    for (const step of options.bendSteps)
+      for (let k = 0; k < 16; k++) {
+        const angle = (k * Math.PI) / 8,
+          entry: XY = [
+            from[0] + Math.cos(angle) * step,
+            from[1] + Math.sin(angle) * step,
+          ];
+        if (
+          !index[surface].inside(entry) ||
+          !index[surface].clear(entry, options.linkClearance) ||
+          !clearSegment(
+            index[surface],
+            from,
+            entry,
+            options.linkClearance,
+            1.2,
+            0,
+          )
+        )
+          continue;
+        const hit = attach(surface, entry, 0);
+        if (!hit) continue;
+        const length = step + dist(entry, hit.q);
+        if (length < bestLength) {
+          bestLength = length;
+          best = { points: [from, entry, hit.q], hit };
+        }
+      }
+    return best;
   };
   for (const g of gates)
     g.sides.forEach((surface, side) => {
@@ -674,20 +830,37 @@ export function hallwaySpines(
           return;
         }
       }
+      // No straight entry along the normal: step out where it is clear.
+      const bentJoin = segs.length > 0 ? bentAttach(surface, g.center) : null;
+      if (bentJoin) {
+        links.push({
+          kind: "gate",
+          id: g.id,
+          surface,
+          points: bentJoin.points,
+          spinePoint: bentJoin.hit.q,
+          segment: bentJoin.hit.segment,
+          perpendicular: bentJoin.hit.perpendicular,
+        });
+        return;
+      }
       unconnected.push({ kind: "gate", id: g.id, surface });
     });
   for (const d of doorways) {
-    const hit =
-      perSurface[d.surface].length > 0 ? attach(d.surface, d.point, 1.2) : null;
-    if (hit)
+    const segs = perSurface[d.surface];
+    const hit = segs.length > 0 ? attach(d.surface, d.point, 1.2) : null;
+    const bent =
+      !hit && segs.length > 0 ? bentAttach(d.surface, d.point) : null;
+    const join = hit ? { points: [d.point, hit.q], hit } : bent;
+    if (join)
       links.push({
         kind: "doorway",
         id: d.id,
         surface: d.surface,
-        points: [d.point, hit.q],
-        spinePoint: hit.q,
-        segment: hit.segment,
-        perpendicular: hit.perpendicular,
+        points: join.points,
+        spinePoint: join.hit.q,
+        segment: join.hit.segment,
+        perpendicular: join.hit.perpendicular,
       });
     else unconnected.push({ kind: "doorway", id: d.id, surface: d.surface });
   }
@@ -702,5 +875,102 @@ export function hallwaySpines(
   const segments = perSurface.flatMap((segs, surface) =>
     segs.map(([a, b]) => ({ surface, a, b })),
   );
-  return { segments, links, unconnected, unreached, stats };
+  // A spine route between two links is at least: out to the spine, straight
+  // between the two spine points, and back. Where even that is an
+  // out-and-back, hop across instead: step out from each door along its own
+  // link only as far as the crossing needs to clear the walls.
+  const hops: SpineResult["hops"] = [];
+  const pathLength = (pts: XY[]) =>
+    pts.slice(1).reduce((t, p, i) => t + dist(pts[i], p), 0);
+  /** The point `t` along a polyline (its end if shorter). */
+  const along = (pts: XY[], t: number): XY => {
+    for (let i = 1; i < pts.length; i++) {
+      const l = dist(pts[i - 1], pts[i]);
+      if (t <= l)
+        return [
+          pts[i - 1][0] + ((pts[i][0] - pts[i - 1][0]) * t) / Math.max(l, 1e-9),
+          pts[i - 1][1] + ((pts[i][1] - pts[i - 1][1]) * t) / Math.max(l, 1e-9),
+        ];
+      t -= l;
+    }
+    return pts.at(-1)!;
+  };
+  const candidates: (SpineResult["hops"][number] & { length: number })[] = [];
+  const bySurface = new Map<number, number[]>();
+  for (const [i, l] of links.entries())
+    bySurface.set(l.surface, [...(bySurface.get(l.surface) ?? []), i]);
+  for (const [surface, ids] of bySurface)
+    for (let x = 0; x < ids.length; x++)
+      for (let y = x + 1; y < ids.length; y++) {
+        const a = links[ids[x]],
+          b = links[ids[y]];
+        if (dist(a.points[0], b.points[0]) > options.hopMax) continue;
+        const pa = [...a.points, a.spinePoint],
+          pb = [...b.points, b.spinePoint];
+        const shortestViaSpine =
+          pathLength(pa) + dist(a.spinePoint, b.spinePoint) + pathLength(pb);
+        for (const step of options.hopSteps) {
+          const sa = along(pa, step),
+            sb = along(pb, step);
+          const points = [a.points[0], sa, sb, b.points[0]].filter(
+            (p, k, all) => k === 0 || dist(p, all[k - 1]) > 1e-6,
+          );
+          const length = pathLength(points);
+          if (
+            length < 1e-6 ||
+            shortestViaSpine <= options.hopFactor * length + options.hopSlack
+          )
+            break;
+          // At no step the doors themselves govern; past one, the steps
+          // along each link are already clear and only the crossing counts.
+          const free = step > 0 ? 0 : Math.min(1, length / 3);
+          if (
+            clearSegment(
+              index[surface],
+              sa,
+              sb,
+              options.hopClearance,
+              free,
+              free,
+            )
+          ) {
+            candidates.push({ a: ids[x], b: ids[y], points, length });
+            break;
+          }
+        }
+      }
+  // Keep a sparse chain, not a clique: shortest first, and only where the
+  // hops already kept don't join the pair nearly as directly.
+  candidates.sort((x, y) => x.length - y.length || x.a - y.a || x.b - y.b);
+  const hopAdjacency = new Map<number, [number, number][]>();
+  const hopDistance = (from: number, to: number, budget: number) => {
+    const best = new Map([[from, 0]]),
+      queue: [number, number][] = [[0, from]];
+    while (queue.length > 0) {
+      queue.sort((x, y) => x[0] - y[0]);
+      const [d, v] = queue.shift()!;
+      if (v === to) return d;
+      if (d > (best.get(v) ?? Infinity)) continue;
+      for (const [w, c] of hopAdjacency.get(v) ?? [])
+        if (d + c <= budget && d + c < (best.get(w) ?? Infinity)) {
+          best.set(w, d + c);
+          queue.push([d + c, w]);
+        }
+    }
+    return Infinity;
+  };
+  for (const { length, ...hop } of candidates) {
+    if (
+      hopDistance(hop.a, hop.b, options.hopFactor * length) <=
+      options.hopFactor * length
+    )
+      continue;
+    hops.push(hop);
+    for (const [u, v] of [
+      [hop.a, hop.b],
+      [hop.b, hop.a],
+    ])
+      hopAdjacency.set(u, [...(hopAdjacency.get(u) ?? []), [v, length]]);
+  }
+  return { segments, links, hops, unconnected, unreached, stats };
 }

@@ -387,3 +387,85 @@ test("a walkable cell's hallway part leaves out the rooms that open onto it", ()
   // A cell without a usable hallway outline stays whole.
   assert.deepEqual(hallwayParts([cell], []), [[cell]]);
 });
+
+test("a route's drawing drops out-and-back spikes but keeps its length", async () => {
+  const { drawHallwayRoute } = await import(
+    "../../app/indoor-project/hallway-network"
+  );
+  // Door A joins the spine at P; door B joins at the same point. The route
+  // A -> P -> B is a V; its drawing is the straight line A -> B.
+  const network: HallwayNetwork = {
+    version: 1,
+    sourceModelSha256: "",
+    nodes: [
+      [1, 0, 0],
+      [1, 1, 5],
+      [1, 2, 0],
+    ],
+    edges: [
+      [0, 1, 1, "join", 0],
+      [1, 2, 1, "join", 0],
+    ],
+    arrivals: { A: 0, B: 2 },
+    report: {} as HallwayNetwork["report"],
+  };
+  const route = createHallwayRouter(network)("A", "B", "walking")!;
+  assert.equal(route.metres, 2);
+  const drawing = drawHallwayRoute(network, route);
+  assert.deepEqual(drawing.runs, [
+    {
+      levelId: 1,
+      points: [
+        [0, 0],
+        [2, 0],
+      ],
+    },
+  ]);
+});
+
+test("the exported indoorRoutes file routes the same in the app's own engine", async () => {
+  const { hallwayNetworkToIndoorRoutes } = await import(
+    "../../app/indoor-project/hallway-network-routes"
+  );
+  const IndoorDirections = (
+    await import("../../app/indoor-directions/directions/main")
+  ).default;
+  const Pathfinder = (
+    await import("../../app/indoor-directions/pathfinding/pathfinder")
+  ).default;
+  const data = campus({ gate: true });
+  (data as { floors: object[] }).floors = [
+    { levelIds: [1] },
+    { levelIds: [2] },
+  ];
+  const net = buildHallwayNetwork(data);
+  const routes = hallwayNetworkToIndoorRoutes(net, data);
+  // Staff-only links and the staff room's destination are left out.
+  assert.ok(routes.features.every((f) => f.properties?.space_id !== "S"));
+  const coordinates = routes.features
+    .filter((f) => f.geometry.type === "LineString")
+    .flatMap((f) => (f.geometry as GeoJSON.LineString).coordinates);
+  assert.ok(coordinates.length > 0);
+  const engine = Object.create(IndoorDirections.prototype) as {
+    pathFinder: InstanceType<typeof Pathfinder>;
+    loadMapData(g: GeoJSON.FeatureCollection): void;
+  };
+  engine.pathFinder = new Pathfinder();
+  engine.loadMapData(routes);
+  const at = (key: string) =>
+    (
+      routes.features.find((f) => f.properties?.space_id === key)!
+        .geometry as GeoJSON.Point
+    ).coordinates;
+  assert.ok(engine.pathFinder.dijkstra(at("A"), at("D")).length > 1);
+  // Step-free: the lift, not the stairs; the engine agrees it is reachable.
+  assert.ok(
+    engine.pathFinder.dijkstra(at("A"), at("D"), { accessibleOnly: true })
+      .length > 1,
+  );
+  // Each network point keeps its own coordinate, so floors never merge.
+  const nodeCoordinates = new Set(coordinates.map((c) => JSON.stringify(c)));
+  assert.ok(
+    nodeCoordinates.size >= new Set(net.nodes.map((n) => `${n[0]}`)).size,
+  );
+});

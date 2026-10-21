@@ -218,7 +218,7 @@ for (const profile of ["walking", "step-free"] as const) {
   };
 }
 
-// Every spine edge lies on a walkable cell of its plane; a gate's line also
+// Every spine and hop lies on a walkable cell of its plane; a gate's line also
 // crosses the door threshold between two cells, so report how far off it is.
 const planeOf = (z: number) => Math.round(z * 100);
 const levelPlanes = new Map<number, Set<number>>();
@@ -240,17 +240,24 @@ for (const c of data.circulationGeometry?.cells ?? []) {
 }
 let samples = 0;
 const offCell: number[] = [];
-for (const [a, b, , kind] of network.edges) {
-  if (kind !== "spine") continue;
-  const [level, xa, ya] = network.nodes[a],
-    [, xb, yb] = network.nodes[b];
+for (const [a, b, , kind, , mid = []] of network.edges) {
+  if (kind !== "spine" && kind !== "hop") continue;
+  const level = network.nodes[a][0],
+    line: XY[] = [[network.nodes[a][1], network.nodes[a][2]]];
+  for (let k = 0; k < mid.length; k += 2) line.push([mid[k], mid[k + 1]]);
+  line.push([network.nodes[b][1], network.nodes[b][2]]);
   const cells = cellsOfLevel.get(level) ?? [];
-  for (let i = 1; i < 10; i++) {
-    const p: XY = [xa + ((xb - xa) * i) / 10, ya + ((yb - ya) * i) / 10];
-    samples++;
-    if (!cells.some((c) => c.inside(p) || c.distanceToEdge(p) < 0.02))
-      offCell.push(Math.min(...cells.map((c) => c.distanceToEdge(p))));
-  }
+  for (let k = 1; k < line.length; k++)
+    for (let i = 1; i < 10; i++) {
+      const [p0, p1] = [line[k - 1], line[k]],
+        p: XY = [
+          p0[0] + ((p1[0] - p0[0]) * i) / 10,
+          p0[1] + ((p1[1] - p0[1]) * i) / 10,
+        ];
+      samples++;
+      if (!cells.some((c) => c.inside(p) || c.distanceToEdge(p) < 0.02))
+        offCell.push(Math.min(...cells.map((c) => c.distanceToEdge(p))));
+    }
 }
 offCell.sort((x, y) => x - y);
 
