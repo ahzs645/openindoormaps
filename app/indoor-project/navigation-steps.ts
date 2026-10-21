@@ -1,4 +1,5 @@
 import type { RouteInstruction } from "../indoor-directions/types";
+import * as DMath from "./deterministic-math";
 import type { IndoorDataset } from "./contract";
 import { geographicPoint } from "./routing";
 import type { ProjectRoute } from "./viewer-routing";
@@ -84,10 +85,10 @@ export function projectNavigationSteps(
         b = path.pointsFeet[i],
         dx = b[0] - a[0],
         dy = b[1] - a[1],
-        metres = Math.hypot(dx, dy) * data.alignment.horizontalMetresPerFoot;
+        metres = DMath.hypot(dx, dy) * data.alignment.horizontalMetresPerFoot;
       if (metres < 1e-6) continue;
       const turn = previous
-        ? (Math.atan2(
+        ? (DMath.atan2(
             previous[0] * dy - previous[1] * dx,
             previous[0] * dx + previous[1] * dy,
           ) *

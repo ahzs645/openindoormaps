@@ -23,6 +23,7 @@ import {
 import { replayPortableSteppedStairV2Wire } from "../../app/indoor-project/native-stepped-stair-v2-lazy-wire";
 import { nativeRationalScalarToIEEE } from "../../app/indoor-project/native-rational-overlay";
 import { nativeCirculationGeometryKey } from "../../app/indoor-project/native-circulation";
+import * as DMath from "../../app/indoor-project/deterministic-math";
 import { withRoutingCalculation } from "../../app/indoor-project/routing-cache";
 import { validateIndoorDataset } from "../../app/indoor-project/routing";
 import {
@@ -236,7 +237,7 @@ export async function finalizeSourceSteppedStairV2Dataset(
     const a = physicalPoints[i]!;
     return (
       sum +
-      Math.hypot(
+      DMath.hypot(
         (p[0]! - a[0]!) * horizontal,
         (p[1]! - a[1]!) * horizontal,
         (p[2]! - a[2]!) * vertical,

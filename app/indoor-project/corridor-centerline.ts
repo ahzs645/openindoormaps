@@ -307,15 +307,15 @@ export function createCorridorCenterline(
               ),
             )
           : 0;
-      const error =
-        (points[i][0] - a[0] - t * dx) ** 2 +
-        (points[i][1] - a[1] - t * dy) ** 2;
+      const ex = points[i][0] - a[0] - t * dx,
+        ey = points[i][1] - a[1] - t * dy,
+        error = ex * ex + ey * ey;
       if (error > maximum) {
         maximum = error;
         split = i;
       }
     }
-    if (maximum <= 0.15 ** 2 && supported([a, b])) return [a, b];
+    if (maximum <= 0.15 * 0.15 && supported([a, b])) return [a, b];
     if (points.length <= 2) return null;
     const left = fit(points.slice(0, split + 1)),
       right = fit(points.slice(split));

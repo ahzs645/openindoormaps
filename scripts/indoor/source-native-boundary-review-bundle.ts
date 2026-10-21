@@ -2,6 +2,7 @@
  * receipt, serialized approval, old proxy footprint or assumed owner union can
  * admit these changes. The complete final recipe set is replayed before return. */
 import assert from "node:assert/strict";
+import * as DMath from "../../app/indoor-project/deterministic-math";
 import {
   nativeBoundaryMemberDigest as sha,
   checkNoNewMaterialBeyondFirstNativeSurface,
@@ -28,8 +29,6 @@ import { validateIndoorExclusions } from "../../../reviter/lib/reviter/indoor-ex
 import {
   reviewedBoundaryWalls,
   validateNativeBoundaryPatches,
-  validateCurrentBoundaryContacts,
-  boundaryPatchMaterialParts,
   validNativeContinuation,
   type NativeBoundaryPatch,
   type BoundaryWall,
@@ -301,7 +300,7 @@ export function checkBoundaryExistingWalkingFloorSupport(
 ) {
   const original = records.flatMap((f) => nativeFloorPolygons(f, true)),
     unsupported = overlay("difference", [patch.ringsFeet], original);
-  if (!unsupported.length) {
+  if (unsupported.length === 0) {
     assert.equal(
       review,
       undefined,
@@ -322,7 +321,7 @@ export function checkBoundaryExistingWalkingFloorSupport(
     "Existing walking join authority changed",
   );
   assert(
-    envelope.length && digest(envelopeSha256),
+    envelope.length > 0 && digest(envelopeSha256),
     "Bound original indoor envelope required",
   );
   assert.equal(
@@ -413,12 +412,9 @@ export function checkRegisteredBodyNativeShadow(
     r = proof.registeredRingsFeet[0]!,
     target = patch.wallEvidence.find(
       (w) => w.nativeElementId !== sourceWallId,
-    )!,
-    source = patch.wallEvidence.find(
-      (w) => w.nativeElementId === sourceWallId,
     )!;
   const lengths = r.map((p, i) =>
-      Math.hypot(p[0] - r[(i + 1) % 4]![0], p[1] - r[(i + 1) % 4]![1]),
+      DMath.hypot(p[0] - r[(i + 1) % 4]![0], p[1] - r[(i + 1) % 4]![1]),
     ),
     minimum = Math.min(...lengths),
     tc = target.ringsFeet[0]!.reduce(
@@ -460,8 +456,8 @@ export function checkRegisteredBodyNativeShadow(
     const ring = w.ringsFeet[0]!;
     if (
       !convexCapOverlap(chosen.a, chosen.b, ring) ||
-      !overlay("intersection", [proof.registeredRingsFeet], [w.ringsFeet])
-        .length
+      overlay("intersection", [proof.registeredRingsFeet], [w.ringsFeet])
+        .length === 0
     )
       return false;
     const sides = new Set(
@@ -811,7 +807,7 @@ export async function roomsWithCheckedNativeBoundaryReviewBundle<
           "A column review cannot replace its owner",
         );
         assert(
-          [-2000100, -2000133].includes(body.categoryId ?? 0),
+          [-2_000_100, -2_000_133].includes(body.categoryId ?? 0),
           "Original native column body required",
         );
       }
@@ -969,7 +965,7 @@ export async function roomsWithCheckedNativeBoundaryReviewBundle<
               "Original native source body changed",
             );
             assert(
-              sourceBody.categoryId === -2000011 &&
+              sourceBody.categoryId === -2_000_011 &&
                 sourceBody.renderGeometryProvenance === "native" &&
                 sourceBody.solid,
               "Original straight native wall body required",
@@ -1113,7 +1109,7 @@ export async function roomsWithCheckedNativeBoundaryReviewBundle<
               d.footprintFeet &&
               d.footprintFeet.length >= 3 &&
               overlay("intersection", [patch.ringsFeet], [[d.footprintFeet]])
-                .length,
+                .length > 0,
           ).length,
           0,
           "Replacement fills an original measured doorway",
@@ -1123,7 +1119,7 @@ export async function roomsWithCheckedNativeBoundaryReviewBundle<
             (p) =>
               p.levelId === patch.levelId &&
               overlay("intersection", [patch.ringsFeet], [[p.apertureFeet]])
-                .length,
+                .length > 0,
           ).length,
           0,
           "Replacement fills a reviewed doorway aperture",
@@ -1132,7 +1128,8 @@ export async function roomsWithCheckedNativeBoundaryReviewBundle<
           (rooms.indoorExclusions?.areas ?? []).filter(
             (a) =>
               a.levelId === patch.levelId &&
-              overlay("intersection", [patch.ringsFeet], a.partsFeet).length,
+              overlay("intersection", [patch.ringsFeet], a.partsFeet).length >
+                0,
           ).length,
           0,
           "Replacement intrudes into a preserved exclusion/void",

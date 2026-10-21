@@ -94,7 +94,7 @@ export function proposeStraightCorridorAxis(rings: CorridorXY[][]) {
   const meanY = samples.reduce((sum, p) => sum + p[1], 0) / count;
   const slope =
     samples.reduce((sum, p) => sum + (p[0] - meanX) * (p[1] - meanY), 0) /
-    samples.reduce((sum, p) => sum + (p[0] - meanX) ** 2, 0);
+    samples.reduce((sum, p) => sum + (p[0] - meanX) * (p[0] - meanX), 0);
   if (
     samples.some((p) => Math.abs(p[1] - meanY - slope * (p[0] - meanX)) > 0.75)
   )
