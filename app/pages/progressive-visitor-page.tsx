@@ -43,8 +43,12 @@ import {
   trackedHeavyWorker,
   floorPreparationReady,
   routeRequestReady,
+  scheduleRouteWarmup,
 } from "~/indoor-project/heavy-worker-schedule";
-import { ProgressiveRouteClient } from "~/indoor-project/progressive-route-client";
+import {
+  ProgressiveRouteClient,
+  preparationTakenOver,
+} from "~/indoor-project/progressive-route-client";
 import { projectRouteLinkUrl } from "~/indoor-project/route-link";
 import { routeSearch } from "~/utils/deep-link";
 import {
@@ -722,6 +726,44 @@ export default function ProgressiveVisitorPage() {
     // Current is the result of this effect, not a trigger for a second request.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, scopeId, requestDetail, calculating, routes, scopeRetry]);
+  // Loading and checking campus routing takes many seconds on a cold start.
+  // Once a visitor picks a start or destination (or opens a directions link),
+  // prepare it in the background so Calculate mostly waits for the route
+  // itself. The warmup yields to floor preparation and never runs twice.
+  const routeIntent = !!(start || end);
+  useEffect(() => {
+    if (!client || !routeIntent) return;
+    const warmup = scheduleRouteWarmup(
+      heavyWorkerSchedule,
+      () => {
+        const preparation = routes.prepare(
+          client.manifestUrl,
+          client.manifest,
+          {
+            preferHttpBrotli: client.httpBrotliEnabled,
+            offline: client.offlineOnly,
+          },
+        );
+        return {
+          // A request taking over finishes the warmup. A worker released for
+          // floor work stays pending: the schedule abandons it and restarts.
+          promise: preparation.promise.catch((error: unknown) =>
+            isAbort(error) && !preparationTakenOver(error)
+              ? new Promise<never>(() => {})
+              : Promise.reject(error),
+          ),
+          abandon: preparation.cancel,
+        };
+      },
+      {
+        onReady: () => {},
+        // Calculate repeats the same checked load and reports its own error.
+        onError: () => {},
+        releaseIdle: () => routes.releaseIdle(),
+      },
+    );
+    return () => warmup.dispose();
+  }, [client, routeIntent, routes]);
   const matches = client
     ? progressivePlaceSearchMatches(client.shell.records, client.shell, search)
     : [];

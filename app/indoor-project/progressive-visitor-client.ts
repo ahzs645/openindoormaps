@@ -572,11 +572,11 @@ export class ProgressiveVisitorClient {
       let retainedGzip: Uint8Array | undefined;
       // HTTP Content-Encoding has already been decoded by fetch. Verify the
       // logical bytes directly; compressed Content-Length is not a decoded limit.
-      if (
+      // That synchronous check is the logical verification: no second hash.
+      const decodedByHttp =
         bytes.byteLength === asset.logicalBytes &&
-        progressiveSha256(bytes) === asset.logicalSha256
-      )
-        logical = bytes;
+        progressiveSha256(bytes) === asset.logicalSha256;
+      if (decodedByHttp) logical = bytes;
       else {
         if (
           bytes.byteLength !== representation.bytes ||
@@ -604,7 +604,7 @@ export class ProgressiveVisitorClient {
         );
         retainedGzip = bytes;
       }
-      verifyProgressiveAssetBytes(asset, logical);
+      if (!decodedByHttp) verifyProgressiveAssetBytes(asset, logical);
       aborted(signal);
       if (retainedGzip)
         this.#retainedGzip.set(logical, {
