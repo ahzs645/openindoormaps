@@ -40,3 +40,7 @@ Floor 3 still needs a room outline on the Building 8 side. The walkable cell con
 ## Not confirmed
 
 Whether these doors are normally open and public has not been checked on site. Room access stays as recorded, and unknown stays unknown.
+
+## Recompiling
+
+The full native recompile with this review runs outside the cloud container. Steps, the input manifest and a Colab notebook are in [`../recompile/`](../recompile/README.md).
