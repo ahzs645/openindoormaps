@@ -22,6 +22,28 @@ import {
   trackedHeavyWorker,
 } from "./heavy-worker-schedule";
 
+/** Visitors need only an already-here notice. Authoring requests the normal
+ * calculator, whose endpoint, source-review and policy checks still apply. */
+export const samePlaceRouteNotice = (
+  start: string,
+  end: string,
+  mode: "notice" | "calculate" = "notice",
+) => mode === "notice" && sameRoutePlace(start, end);
+
+/** Match the authoring Route test panel, excluding visitor and other editors. */
+export const authoringRouteTestActive = (state: {
+  review: boolean;
+  editing: boolean;
+  roomReview: boolean;
+  nativeAreas: boolean;
+  pinReview: boolean;
+}) =>
+  state.review &&
+  !state.editing &&
+  !state.roomReview &&
+  !state.nativeAreas &&
+  !state.pinReview;
+
 export function useProjectRoute(
   data: IndoorDataset | undefined,
   start: string,
@@ -30,6 +52,8 @@ export function useProjectRoute(
   /** Retained call compatibility; large maps now wait for both endpoints. */
   _intent = false,
   options: RouteRequest["options"] = {},
+  /** Authoring can opt into the normal calculator; visitors keep no-work notices. */
+  samePlaceMode: "notice" | "calculate" = "notice",
 ) {
   const optionsKey = projectRoutingOptionsKey(options);
   const requestOptions = useMemo(() => {
@@ -48,7 +72,7 @@ export function useProjectRoute(
       allowOtherRoomTransit,
     };
   }, [optionsKey]);
-  const samePlace = sameRoutePlace(start, end);
+  const samePlace = samePlaceRouteNotice(start, end, samePlaceMode);
   const entranceIssue = useMemo(
     () => missingRouteEntrance(data, start, end),
     [data, start, end],

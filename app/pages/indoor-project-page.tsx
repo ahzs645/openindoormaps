@@ -98,7 +98,10 @@ import { CampusFloorEditor } from "~/indoor-project/campus-floor-editor";
 import { VisitorMetadataEditor } from "~/indoor-project/visitor-metadata-editor";
 import { ProjectModelLayer } from "~/indoor-project/model-layer";
 import { geographicPoint } from "~/indoor-project/routing";
-import { useProjectRoute } from "~/indoor-project/use-project-route";
+import {
+  useProjectRoute,
+  authoringRouteTestActive,
+} from "~/indoor-project/use-project-route";
 import {
   readIndoorProject,
   readProjectFolder,
@@ -1532,6 +1535,13 @@ export default function IndoorProjectPage() {
       allowOtherRoomTransit,
     ],
   );
+  const routeTestActive = authoringRouteTestActive({
+    review,
+    editing,
+    roomReview,
+    nativeAreas,
+    pinReview,
+  });
   const routeCalculation = useProjectRoute(
     data,
     start,
@@ -1539,6 +1549,7 @@ export default function IndoorProjectPage() {
     mode,
     routePickTarget !== null || !!start || !!end,
     routingOptions,
+    routeTestActive ? "calculate" : "notice",
   );
   const baseRoute = routeCalculation.route;
   const arrivalResult = useMemo(
@@ -2090,7 +2101,11 @@ export default function IndoorProjectPage() {
         )}
       </header>
       <p
-        className={`project-status${importNotice ? "project-import-notice" : ""}`}
+        className={
+          importNotice
+            ? "project-status project-import-notice"
+            : "project-status"
+        }
         role="status"
       >
         {dirty && <strong>Unsaved edits · </strong>}
@@ -2472,7 +2487,7 @@ export default function IndoorProjectPage() {
               />
             </aside>
           )}
-          {review && !editing && !roomReview && !nativeAreas && !pinReview && (
+          {routeTestActive && (
             <aside className="project-sidebar">
               <ReviewPinControls
                 data={data}

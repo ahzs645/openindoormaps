@@ -39,9 +39,12 @@ for (const mobile of [false, true]) {
       );
     }
     await page.locator('input[type="file"]').setInputFiles(zipPath);
-    await expect(page.getByRole("status")).toContainText("Loaded", {
-      timeout: 60_000,
-    });
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
+      "Loaded",
+      {
+        timeout: 60_000,
+      },
+    );
     await page
       .getByRole("button", { name: "Review project", exact: true })
       .click();
@@ -80,7 +83,7 @@ for (const mobile of [false, true]) {
     await page
       .getByRole("button", { name: "Export campus viewer", exact: true })
       .click();
-    await expect(page.getByRole("status")).toContainText(
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
       "Campus viewer ready",
       { timeout: 60_000 },
     );
@@ -95,9 +98,12 @@ for (const mobile of [false, true]) {
     );
     expect(viewer.manifest.format).toBe("openindoormaps-viewer");
     await page.reload();
-    await expect(page.getByRole("status")).toContainText("Loaded", {
-      timeout: 60_000,
-    });
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
+      "Loaded",
+      {
+        timeout: 60_000,
+      },
+    );
     expect(page.url()).toContain("#/projects/indoor");
     expect(errors).toEqual([]);
   });

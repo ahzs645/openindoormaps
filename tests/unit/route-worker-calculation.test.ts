@@ -13,6 +13,7 @@ import {
 } from "../../app/indoor-project/routing-graph";
 import { resolveRouteArrival } from "../../app/indoor-project/route-arrival";
 import { findProjectRoute } from "../../app/indoor-project/viewer-routing";
+import { progressiveRoutingFixture } from "../fixtures/progressive-routing";
 const fixture = () =>
   JSON.parse(
     readFileSync(
@@ -23,6 +24,43 @@ const fixture = () =>
       "utf8",
     ),
   ) as { data: IndoorDataset; startKey: string; endKey: string };
+
+test("normal authoring same-place calculations retain zero-distance and endpoint/source-policy guards", () => {
+  const data = progressiveRoutingFixture();
+  data.edges = [];
+  const key = data.records[0].key;
+  const before = JSON.stringify(data);
+  const run = createWorkerRouteCalculator(structuredClone(data));
+  for (const mode of ["public", "accessible"] as const) {
+    const result = run(key, key, mode, { endpointMode: "inside" });
+    assert.ok(result.route);
+    assert.equal(result.route.distanceMetres, 0);
+    assert.deepEqual(result.route.edges, []);
+    assert.deepEqual(result.route.nodeIds, [data.records[0].arrivalNodeId]);
+    assert.equal(result.diagnostic, undefined);
+    assert.equal(run(key, data.records[1].key, mode).route, null);
+  }
+  for (const defect of [
+    "staff",
+    "non-walkable",
+    "missing-arrival",
+    "pending-boundary",
+  ] as const) {
+    const changed = structuredClone(data);
+    if (defect === "staff") changed.records[0].access = "staff";
+    if (defect === "non-walkable") changed.records[0].walkable = false;
+    if (defect === "missing-arrival") delete changed.records[0].arrivalNodeId;
+    if (defect === "pending-boundary")
+      changed.boundaryPatchState = {
+        patchIds: ["synthetic-pending"],
+        regenerated: false,
+      };
+    const reject = createWorkerRouteCalculator(changed);
+    for (const mode of ["public", "accessible"] as const)
+      assert.equal(reject(key, key, mode).route, null, `${defect}/${mode}`);
+  }
+  assert.equal(JSON.stringify(data), before);
+});
 
 test("worker snapshot retains exact routing and step-free policy while excluding rendering payloads", () => {
   const { data, startKey, endKey } = fixture();

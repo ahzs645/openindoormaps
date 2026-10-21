@@ -10,6 +10,10 @@ import {
   visitorRouteFailureMessage,
   visitorEndpointUnavailableReason,
 } from "../../app/indoor-project/visitor-route-state";
+import {
+  samePlaceRouteNotice,
+  authoringRouteTestActive,
+} from "../../app/indoor-project/use-project-route";
 import { progressiveRoutingFixture } from "../fixtures/progressive-routing";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import type {
@@ -88,6 +92,46 @@ test("identical selected identities need no route; similarly named distinct iden
   assert.equal(sameRoutePlace("Agora", "Agora"), true);
   assert.equal(sameRoutePlace("", ""), false);
   assert.equal(sameRoutePlace("agora-on-level-a", "agora-on-level-b"), false);
+});
+test("same-place authoring requests calculation while visitor notices retain no-work behavior", () => {
+  assert.equal(samePlaceRouteNotice("original-room", "original-room"), true);
+  assert.equal(
+    samePlaceRouteNotice("original-room", "original-room", "calculate"),
+    false,
+    "authoring must run the normal calculator rather than fabricate a route",
+  );
+  for (const mode of ["notice", "calculate"] as const) {
+    assert.equal(samePlaceRouteNotice("", "", mode), false);
+    assert.equal(samePlaceRouteNotice("room-a", "room-b", mode), false);
+  }
+});
+test("same-place calculation is enabled only with the visible authoring Route test panel", () => {
+  const authoring = {
+    review: true,
+    editing: false,
+    roomReview: false,
+    nativeAreas: false,
+    pinReview: false,
+  };
+  assert.equal(authoringRouteTestActive(authoring), true);
+  for (const state of [
+    { ...authoring, review: false },
+    { ...authoring, editing: true },
+    { ...authoring, roomReview: true },
+    { ...authoring, nativeAreas: true },
+    { ...authoring, pinReview: true },
+  ]) {
+    assert.equal(authoringRouteTestActive(state), false);
+    assert.equal(
+      samePlaceRouteNotice(
+        "original-room",
+        "original-room",
+        authoringRouteTestActive(state) ? "calculate" : "notice",
+      ),
+      true,
+      "visitor and other review modes retain no-work same-place notices",
+    );
+  }
 });
 test("completed results survive worker release without allocation and isolate returned mutations", async () => {
   const { client, workers, data } = setup();

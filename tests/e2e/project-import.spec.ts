@@ -68,9 +68,12 @@ async function upload(page: Page, buffer: Buffer) {
   await page
     .locator('input[type="file"]')
     .setInputFiles({ name: fileName, mimeType: "application/zip", buffer });
-  await expect(page.getByRole("status")).toContainText("Loaded", {
-    timeout: 60_000,
-  });
+  await expect(page.locator('p.project-status[role="status"]')).toContainText(
+    "Loaded",
+    {
+      timeout: 60_000,
+    },
+  );
   await expect(
     page.getByRole("button", { name: "Clear map", exact: true }),
   ).toBeEnabled();
@@ -162,10 +165,14 @@ for (const mobile of [false, true]) {
     ).toContainText("Updated upper studio");
     await page.getByRole("link", { name: "Venue maps", exact: true }).click();
     await page.getByRole("link", { name: /Prepared indoor projects/ }).click();
-    await expect(page.getByRole("status")).toContainText("Loaded");
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
+      "Loaded",
+    );
     await revision(page, newRevision, true);
     await page.reload();
-    await expect(page.getByRole("status")).toContainText("Loaded");
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
+      "Loaded",
+    );
     await revision(page, newRevision, true);
     await page.getByTestId("project-package").locator("summary").click();
     await page.screenshot({
@@ -178,16 +185,18 @@ for (const mobile of [false, true]) {
       mimeType: "application/zip",
       buffer: Buffer.from("invalid ZIP"),
     });
-    await expect(page.getByRole("status")).toContainText(
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
       "Previous map remains loaded.",
     );
-    await expect(page.getByRole("status")).toBeVisible();
+    await expect(page.locator('p.project-status[role="status"]')).toBeVisible();
     await revision(page, newRevision, true);
     await page.getByRole("button", { name: "Clear map", exact: true }).click();
-    await expect(page.getByRole("status")).toContainText("Map cleared");
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
+      "Map cleared",
+    );
     await expect(page.getByTestId("project-package")).toHaveCount(0);
     await page.reload();
-    await expect(page.getByRole("status")).toContainText(
+    await expect(page.locator('p.project-status[role="status"]')).toContainText(
       "Import a prepared Reviter project ZIP to begin.",
     );
     await expect(page.getByTestId("project-package")).toHaveCount(0);
@@ -255,7 +264,9 @@ test("a delayed saved ZIP cannot overwrite a fresh import or reappear after Clea
     )
     .toBe(true);
   await page.getByRole("button", { name: "Clear map", exact: true }).click();
-  await expect(page.getByRole("status")).toContainText("Map cleared");
+  await expect(page.locator('p.project-status[role="status"]')).toContainText(
+    "Map cleared",
+  );
   await page.evaluate(() =>
     (globalThis as unknown as { importProbe: ImportProbe }).importProbe
       .releaseRestore!(),
@@ -271,7 +282,7 @@ test("a delayed saved ZIP cannot overwrite a fresh import or reappear after Clea
     .toBe(true);
   await expect(page.getByTestId("project-package")).toHaveCount(0);
   await page.reload();
-  await expect(page.getByRole("status")).toContainText(
+  await expect(page.locator('p.project-status[role="status"]')).toContainText(
     "Import a prepared Reviter project ZIP to begin.",
   );
 });
@@ -341,7 +352,9 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     mimeType: "application/zip",
     buffer: newBytes,
   });
-  await expect(page.getByRole("status")).toContainText("Loaded");
+  await expect(page.locator('p.project-status[role="status"]')).toContainText(
+    "Loaded",
+  );
   await revision(page, newRevision);
   await expect
     .poll(() =>
@@ -373,6 +386,8 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     (globalThis as unknown as { importProbe: ImportProbe }).importProbe
       .releaseWrite!(),
   );
-  await expect(page.getByRole("status")).toContainText("Loaded");
+  await expect(page.locator('p.project-status[role="status"]')).toContainText(
+    "Loaded",
+  );
   await revision(page, newRevision, true);
 });
