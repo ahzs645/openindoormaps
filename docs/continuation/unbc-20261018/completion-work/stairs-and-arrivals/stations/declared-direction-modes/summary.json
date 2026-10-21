@@ -1,0 +1,1298 @@
+{
+  "format": "actual-three-source-cap-backed-turn-diagnostic-compact-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "completeSourcePages": 3666,
+  "actualSourceReceipt": "/workspace/scratch/stair-declared-direction-modes-20261018/actual-three-direction-modes.json",
+  "actualSourceReceiptSha256": "a69db7c71f05b4316f9297decf7d08256740d00e1ad8f82aacb6f7126ef2a52a",
+  "allActualSourceModulesUnchanged": true,
+  "rawCapOnlyMathSearch": "/workspace/scratch/stair-declared-direction-modes-20261018/cap-only-two-foot-search.json",
+  "rawCapOnlyMathSearchSha256": "41f04206796f47c6fbff69477e009f09414d5833ad140f5bc44da448319cf01a",
+  "capOnlyMathModulesUnchanged": true,
+  "originalPhysicalFaces": 815,
+  "originalPhysicalEdges": 1635,
+  "originalTypedTreads": 66,
+  "zeroDirectionRows": 4,
+  "allThreeHaveCapOnlyLocalTwoFootChains": true,
+  "productionHelperModules": {
+    "reviter/lib/reviter/native-stair-cap-backed-turn.ts": "0f8fd3742611a6a4ef65c5a169e886f25e34f12c526594600d759a9c2c752ee2",
+    "openindoormaps/app/indoor-project/native-stepped-stair-v2-cap-backed-turn.ts": "8b00ce1ed93d53953e1e60bb397777e50635a57a7d8900fba14578fcf0484ae4"
+  },
+  "validation": {
+    "actualFourCapNativeBrowserTestsPassed": 4,
+    "totalFocusedTestsPassed": 7,
+    "sourceAndBrowserScopedLintPassed": true,
+    "fullReviterTypecheckPassed": true
+  },
+  "rows": [
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1294068,
+      "nativeDefinitionId": 1294069,
+      "sourceFrameSha256s": {
+        "1294068:4102": "4aa78703ad0d9b7c7cbc104056d14e3a41f603e671739e9df2b2d865f881e766",
+        "1294069:4133": "32365264fcb0f573b4134716f549971cf44cdfd5381d37bae6a9ff1a0eb07fe3",
+        "1294068:2246": "8b4b26787210fcb774d7f0127f5d8a203760dd49bb774734c875b9a3b0c14a40",
+        "1294069:2246": "8d5b1ccdde435b270aaea60d6870a1742eb23667bc73af5eef73ad7ee69f08cd"
+      },
+      "originalFaceCount": 310,
+      "originalEdgeCount": 624,
+      "originalTypedTreadCount": 25,
+      "completeOriginalFaceCensus": true,
+      "completeOriginalTreadHistoryBinding": true,
+      "unsupportedPhysicalFaceTokens": [],
+      "unsupportedPhysicalTreadEdgeTokens": [],
+      "originalCarrierReaderCounts": {
+        "Revit2027GFilter": 1,
+        "Revit2027GLine": 18,
+        "Revit2027GGroup": 1,
+        "Revit2027GInstance": 1,
+        "Revit2027Geometry": 1,
+        "Revit2027GPoint": 2,
+        "Revit2027GConditionInt": 2,
+        "Revit2027InstanceInfo": 1
+      },
+      "modeCounts": [
+        {
+          "originalTreadType": 2,
+          "originalRunType": 0,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 1
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 0,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 23
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 2,
+          "cannotOrientByDeclaredDirection": true,
+          "count": 1
+        }
+      ],
+      "blockedTreads": [
+        {
+          "typedIndex": 14,
+          "originalTypedSourceSpan": [
+            23496,
+            23797
+          ],
+          "originalTreadType": 3,
+          "originalRunType": 2,
+          "originalRiserDir": [
+            0,
+            0,
+            0
+          ],
+          "originalRunDirProj": [
+            0,
+            0,
+            0
+          ],
+          "originalNormal": [
+            0,
+            0,
+            0
+          ],
+          "originalOrigin": [
+            -90.91803959173346,
+            177.1842254468089,
+            9.473425196850393
+          ],
+          "originalActDepth": 2.313250273782168,
+          "originalSlope": 1.6200726352434678,
+          "originalZeroHeight": 7.379736537833334,
+          "originalFlipped": 0,
+          "originalStartLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              4.450260106196354
+            ],
+            "m_origin": [
+              -90.86977393583653,
+              177.35305667834868,
+              0
+            ],
+            "m_dirVec": [
+              0.2748693966158752,
+              0.961481572784432,
+              0
+            ]
+          },
+          "originalEndLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              4.429133858267676
+            ],
+            "m_origin": [
+              -90.91803959173343,
+              187.7062736904802,
+              0
+            ],
+            "m_dirVec": [
+              -3.208495197921193e-15,
+              -1,
+              0
+            ]
+          },
+          "uniqueStrictConvexEndpointPairing": 1,
+          "originalRunInfo": [
+            {
+              "sourceSpan": [
+                27329,
+                27590
+              ],
+              "value": {
+                "m_bndBox": {
+                  "m_corners": [
+                    [
+                      0.1755948697496479,
+                      1.2923424625973112
+                    ],
+                    [
+                      10.522048243671293,
+                      1.570796326794894
+                    ]
+                  ]
+                },
+                "m_origin": [
+                  -90.91803959173346,
+                  177.1842254468089,
+                  9.473425196850393
+                ],
+                "m_slope": 1.6200726352434678,
+                "m_cutElev": 8.810695538057741,
+                "m_norm": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_runDirProj": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_riserDir": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_zeroHeight": 7.379736537833334,
+                "m_startLineEnds": [
+                  [
+                    -90.86977393583653,
+                    177.35305667834868,
+                    0
+                  ],
+                  [
+                    -89.64653362566264,
+                    181.63189976455416,
+                    0
+                  ]
+                ],
+                "m_endLineEnds": [
+                  [
+                    -90.91803959173343,
+                    187.7062736904802,
+                    0
+                  ],
+                  [
+                    -90.91803959173345,
+                    183.27713983221253,
+                    0
+                  ]
+                ],
+                "m_runType": 2,
+                "m_firstRiser": 14,
+                "m_lastRiser": 15,
+                "m_flipped": 0
+              }
+            }
+          ],
+          "originalPhysicalFaceToken": 178,
+          "originalPhysicalFaceTag": 1546,
+          "originalPhysicalCapCoedgeCount": 8,
+          "originalPhysicalCapHistory": [
+            {
+              "id": 1546,
+              "keys": [
+                5,
+                1471,
+                14
+              ]
+            },
+            {
+              "id": 1471,
+              "keys": [
+                53,
+                14,
+                -1
+              ]
+            }
+          ],
+          "physicalHeightExactlyMatchesTyped": true,
+          "originalUVCoedgeContinuity": false,
+          "exactEndpointHullAreaSquareFeet": {
+            "numerator": "641675185439604197099155420461155925563712893717451477167",
+            "denominator": "98079714615416886934934209737619787751599303819750539264"
+          },
+          "exactEndpointHullOutsideReferenceCapAreaSquareFeet": {
+            "numerator": "25709662366691873632643736720784110047968799860676330887879665195577547344517381728260528590684924147050904731781544571659065078168210540724457638699610804454541735504510653493801353811087103901274468159590006807866593303156277416979446280466072392111779963381567586316930706717823346258007690301865410832749509214161065969877527292272849619591436851104983423451385759132543698090908101508184226039414233",
+            "denominator": "7094282903265966993380779229587002797964333893268876697773721793993618949447757594562108734413595352680405246604217498689600353688511696928423320352642627867963560748149899752683129551674978194881885108311170012465897241489791285276103791715855117546561001559762717093868644558409191608698497277875489908124981604863592502437342830897177630589316302060295709815340820704346782825959894033941019563655168"
+          },
+          "endpointHullOutsideReferenceCapAreaSquareFeetForDisplay": 3.6239973394430067,
+          "exactRetainedUncertaintyIntersectionAreaSquareFeet": {
+            "numerator": "276814421678314483968058485811079378066496375816746005215282344128602483285826149548590540835543786588681572874904585314188838366815034497356428555625036794163131376716516714781577911462563790304195631953992325649443064780891862358995869685655997813761876863483076257662481015379176222851976763216193518092141076393080847157863982752941693947674893796952664193117811243230937747493590111535904063210373947633767966731698191020619429074225804260479121956374589832438666130252314183131788191500502311963",
+            "denominator": "9978873487847659733783282096476720554070846185083062036931629353691631329155947265522048844500774149226992292812244181174566338003887231787656979430028126276744228997996663932130470492906181083362831803311567859306368743723691155209620146254006152174117230243080430736892541657432463167390409631199994993266188385750898108187330968720447994263479090075925063245739609500513349066182691115607158950185485227619381260447609373776180849952392891927560230976078515225761451579134615223471160053795186168338086121963520"
+          },
+          "sourceFieldSpans": [
+            {
+              "path": "StairsTreadInfo.m_slope",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451611,
+              "start": 23696,
+              "end": 23704
+            },
+            {
+              "path": "StairsTreadInfo.m_zeroHeight",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451690,
+              "start": 23776,
+              "end": 23784
+            },
+            {
+              "path": "StairsTreadInfo.m_treadType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451710,
+              "start": 23784,
+              "end": 23788
+            },
+            {
+              "path": "StairsTreadInfo.m_runType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451745,
+              "start": 23792,
+              "end": 23796
+            }
+          ],
+          "hullApprovedAsSupport": false
+        }
+      ],
+      "foundCapOnlyTwoFootLocalChain": true,
+      "localChainTypedIndices": [
+        13,
+        14,
+        14,
+        15
+      ],
+      "fullTwoFootSourceLateralRequestCandidates": [
+        {
+          "typedIndex": 13,
+          "pointFeet": [
+            -89.86771463994253,
+            179.38085905569034
+          ],
+          "lateralDirectionFeet": [
+            0.27486939661585746,
+            0.961481572784437
+          ],
+          "sourcePhysicalFaceToken": 166
+        },
+        {
+          "typedIndex": 14,
+          "pointFeet": [
+            -92.06385500033389,
+            179.23726998871004
+          ],
+          "lateralDirectionFeet": [
+            0.2748693966158752,
+            0.961481572784432
+          ],
+          "sourcePhysicalFaceToken": 178
+        },
+        {
+          "typedIndex": 14,
+          "pointFeet": [
+            -94.0895181569128,
+            184.71313363472922
+          ],
+          "lateralDirectionFeet": [
+            0.2748693966158752,
+            0.961481572784432
+          ],
+          "sourcePhysicalFaceToken": 178
+        },
+        {
+          "typedIndex": 15,
+          "pointFeet": [
+            -90.45872135762126,
+            185.49170676134636
+          ],
+          "lateralDirectionFeet": [
+            -3.208495197921193e-15,
+            -1
+          ],
+          "sourcePhysicalFaceToken": 194
+        }
+      ],
+      "sameCapTransfers": [
+        {
+          "fromNodeId": 18,
+          "toNodeId": 43,
+          "typedIndex": 14,
+          "fullTwoFootStripSupportedBySameOriginalCap": true
+        }
+      ],
+      "properFiniteRiserTransfers": [
+        {
+          "fromNodeId": 0,
+          "toNodeId": 18,
+          "originalSharedOrderedRiserIndex": 14,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        },
+        {
+          "fromNodeId": 43,
+          "toNodeId": 79,
+          "originalSharedOrderedRiserIndex": 15,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        }
+      ],
+      "fullRunForeignBodyHeadroomTerminalOrRouteApproval": false
+    },
+    {
+      "nativeStairId": 1689936,
+      "nativeRunId": 1689940,
+      "nativeDefinitionId": 1689941,
+      "sourceFrameSha256s": {
+        "1689940:4102": "b87d0f8f2a39384180eeb1cede966a78e2541894683d06c17f2f213d771149ee",
+        "1689941:4133": "2bf3750b3a04ca528eafe51c2f426e61e2d8f14b1c5117daa0d64e527505b869",
+        "1689940:2246": "9ee98fd52a7f66f35bc984dff7ffe6899e34f216c9231b923e68a02de5c21fdb",
+        "1689941:2246": "1bd3302968030523503e5fac437ac4b5e90f37097f86fa0bbc1b08db54576b35"
+      },
+      "originalFaceCount": 151,
+      "originalEdgeCount": 303,
+      "originalTypedTreadCount": 12,
+      "completeOriginalFaceCensus": true,
+      "completeOriginalTreadHistoryBinding": true,
+      "unsupportedPhysicalFaceTokens": [],
+      "unsupportedPhysicalTreadEdgeTokens": [],
+      "originalCarrierReaderCounts": {
+        "Revit2027GFilter": 1,
+        "Revit2027GLine": 10,
+        "Revit2027GGroup": 1,
+        "Revit2027GInstance": 1,
+        "Revit2027Geometry": 1,
+        "Revit2027GPoint": 2,
+        "Revit2027GConditionInt": 2,
+        "Revit2027InstanceInfo": 1
+      },
+      "modeCounts": [
+        {
+          "originalTreadType": 3,
+          "originalRunType": 1,
+          "cannotOrientByDeclaredDirection": true,
+          "count": 1
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 0,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 10
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 1,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 1
+        }
+      ],
+      "blockedTreads": [
+        {
+          "typedIndex": 0,
+          "originalTypedSourceSpan": [
+            13150,
+            13451
+          ],
+          "originalTreadType": 3,
+          "originalRunType": 1,
+          "originalRiserDir": [
+            0,
+            0,
+            0
+          ],
+          "originalRunDirProj": [
+            0,
+            0,
+            0
+          ],
+          "originalNormal": [
+            0,
+            0,
+            0
+          ],
+          "originalOrigin": [
+            -8.94799664863691,
+            -325.0234720814318,
+            15.192812436906925
+          ],
+          "originalActDepth": 10.786985109981888,
+          "originalSlope": 0.48199558780101515,
+          "originalZeroHeight": 16.707046234605286,
+          "originalFlipped": 1,
+          "originalStartLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              3.552713678800501e-15,
+              4.879838078063713
+            ],
+            "m_origin": [
+              -13.827834726700626,
+              -325.0234720814318,
+              14.435695538057743
+            ],
+            "m_dirVec": [
+              1,
+              0,
+              0
+            ]
+          },
+          "originalEndLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              3.9370078740154213
+            ],
+            "m_origin": [
+              -8.947996648636897,
+              -316.18776013917494,
+              14.435695538057743
+            ],
+            "m_dirVec": [
+              -1.3535839116231033e-15,
+              -1,
+              0
+            ]
+          },
+          "uniqueStrictConvexEndpointPairing": 0,
+          "originalRunInfo": [
+            {
+              "sourceSpan": [
+                16762,
+                17023
+              ],
+              "value": {
+                "m_bndBox": {
+                  "m_corners": [
+                    [
+                      3.552713678800501e-15,
+                      1.5707963267948952
+                    ],
+                    [
+                      8.835711942256864,
+                      3.141592653589793
+                    ]
+                  ]
+                },
+                "m_origin": [
+                  -8.94799664863691,
+                  -325.0234720814318,
+                  15.192812436906925
+                ],
+                "m_slope": 0.48199558780101515,
+                "m_cutElev": 14.530082778114274,
+                "m_norm": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_runDirProj": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_riserDir": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_zeroHeight": 16.707046234605286,
+                "m_startLineEnds": [
+                  [
+                    -13.827834726700623,
+                    -325.0234720814318,
+                    14.435695538057743
+                  ],
+                  [
+                    -8.947996648636913,
+                    -325.0234720814318,
+                    14.435695538057743
+                  ]
+                ],
+                "m_endLineEnds": [
+                  [
+                    -8.947996648636897,
+                    -316.18776013917494,
+                    14.435695538057743
+                  ],
+                  [
+                    -8.947996648636902,
+                    -320.12476801319036,
+                    14.435695538057743
+                  ]
+                ],
+                "m_runType": 1,
+                "m_firstRiser": 0,
+                "m_lastRiser": 1,
+                "m_flipped": 1
+              }
+            }
+          ],
+          "originalPhysicalFaceToken": 10,
+          "originalPhysicalFaceTag": 63,
+          "originalPhysicalCapCoedgeCount": 5,
+          "originalPhysicalCapHistory": [
+            {
+              "id": 63,
+              "keys": [
+                5,
+                4,
+                0
+              ]
+            },
+            {
+              "id": 4,
+              "keys": [
+                53,
+                0,
+                -1
+              ]
+            }
+          ],
+          "physicalHeightExactlyMatchesTyped": true,
+          "originalUVCoedgeContinuity": true,
+          "exactEndpointHullAreaSquareFeet": {
+            "numerator": "16915550854806626206756893352459308445292388558978233197035",
+            "denominator": "784637716923335095479473677900958302012794430558004314112"
+          },
+          "exactEndpointHullOutsideReferenceCapAreaSquareFeet": {
+            "numerator": "3251100771744937593722621267388521657599022247422890877788241017785504643720059837016543679914001909423277845332782767468871404926340630143644799005663452871581861567033443001252560942217738580537753957042915698985198603788550353999196025036671869633935765591231220205441416205976108773671120210979656904767941816329308400984070398388020998355980905440993951497413060736326786822799",
+            "denominator": "3441474732137664565711400838778109691371546182943867943884119819796350916963005370783172575342175139832857329385654993459282804639520417634369808657766821424792019804279614839491011009043631747153215755153893328333562895899494686446013638383586437144701435135586921392487466166592125094713331541613639922741495759849997758344088956643092508586476231618327151999526169799366444119688802642272714752"
+          },
+          "endpointHullOutsideReferenceCapAreaSquareFeetForDisplay": 9.4468244714542e-16,
+          "exactRetainedUncertaintyIntersectionAreaSquareFeet": {
+            "numerator": "6814071204214330740733409592212644131703036208687638816544417993613939723242316630216939077460643851982173236676313115432273279611606704543381430533785522445944423977959433501946056408193289580181263161456875909308252979100214788239613808330395144989984633550642520336919657745550740735587566103359690526248297924642534161364312677147027495178560999998535512895673445963550466326892550714360403655335356580338166753501574249547560699",
+            "denominator": "4192035539802275106045631145492459339173707632118672392617806248922146257990523055598503200554137585608343399639420672435401539185058631049328985179678927430610316178278089926737160274680039151436950803166131872435156795481353493853076213060324174125577347525245801886567296867307656216035972424444162185419698788134939059689756774073273102384056161299102265093339983563252974632491755088376654141526606381496329939187798529572612983737617955684352"
+          },
+          "sourceFieldSpans": [
+            {
+              "path": "StairsTreadInfo.m_slope",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451611,
+              "start": 13350,
+              "end": 13358
+            },
+            {
+              "path": "StairsTreadInfo.m_zeroHeight",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451690,
+              "start": 13430,
+              "end": 13438
+            },
+            {
+              "path": "StairsTreadInfo.m_treadType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451710,
+              "start": 13438,
+              "end": 13442
+            },
+            {
+              "path": "StairsTreadInfo.m_runType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451745,
+              "start": 13446,
+              "end": 13450
+            }
+          ],
+          "hullApprovedAsSupport": false
+        }
+      ],
+      "foundCapOnlyTwoFootLocalChain": true,
+      "localChainTypedIndices": [
+        0,
+        1
+      ],
+      "fullTwoFootSourceLateralRequestCandidates": [
+        {
+          "typedIndex": 0,
+          "pointFeet": [
+            -9.252986528515883,
+            -319.0146650768388
+          ],
+          "lateralDirectionFeet": [
+            -1.3535839116231033e-15,
+            -1
+          ],
+          "sourcePhysicalFaceToken": 10
+        },
+        {
+          "typedIndex": 1,
+          "pointFeet": [
+            -8.338416596143453,
+            -318.81243205518524
+          ],
+          "lateralDirectionFeet": [
+            -1.3535839116231033e-15,
+            -1
+          ],
+          "sourcePhysicalFaceToken": 22
+        }
+      ],
+      "sameCapTransfers": [],
+      "properFiniteRiserTransfers": [
+        {
+          "fromNodeId": 6,
+          "toNodeId": 30,
+          "originalSharedOrderedRiserIndex": 1,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        }
+      ],
+      "fullRunForeignBodyHeadroomTerminalOrRouteApproval": false
+    },
+    {
+      "nativeStairId": 1779620,
+      "nativeRunId": 1779623,
+      "nativeDefinitionId": 1779624,
+      "sourceFrameSha256s": {
+        "1779623:4102": "20e03439451b1e13c8103677ecc9b9167f312730e3fe91c0f2b81dd4e4b20d37",
+        "1779624:4133": "4f86615d4d4b927136eb0ebade5f5b856adfc5daf0af613bcb12a628d11fc901",
+        "1779623:2246": "59246a79bd4c6ea083670586d1e5a323abfcd3a55ad35f0d5c6cb15c310fa71b",
+        "1779624:2246": "2bb20e0c3c5cb4fbe970b4cb2307ee8846087f519348c4ccbddff56e02016834"
+      },
+      "originalFaceCount": 354,
+      "originalEdgeCount": 708,
+      "originalTypedTreadCount": 29,
+      "completeOriginalFaceCensus": true,
+      "completeOriginalTreadHistoryBinding": true,
+      "unsupportedPhysicalFaceTokens": [],
+      "unsupportedPhysicalTreadEdgeTokens": [],
+      "originalCarrierReaderCounts": {
+        "Revit2027GFilter": 1,
+        "Revit2027GLine": 6,
+        "Revit2027GGroup": 1,
+        "Revit2027GInstance": 1,
+        "Revit2027Geometry": 1,
+        "Revit2027GPoint": 2,
+        "Revit2027GConditionInt": 2,
+        "Revit2027InstanceInfo": 1
+      },
+      "modeCounts": [
+        {
+          "originalTreadType": 3,
+          "originalRunType": 0,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 26
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 2,
+          "cannotOrientByDeclaredDirection": true,
+          "count": 2
+        },
+        {
+          "originalTreadType": 3,
+          "originalRunType": 1,
+          "cannotOrientByDeclaredDirection": false,
+          "count": 1
+        }
+      ],
+      "blockedTreads": [
+        {
+          "typedIndex": 9,
+          "originalTypedSourceSpan": [
+            22617,
+            22918
+          ],
+          "originalTreadType": 3,
+          "originalRunType": 2,
+          "originalRiserDir": [
+            0,
+            0,
+            0
+          ],
+          "originalRunDirProj": [
+            0,
+            0,
+            0
+          ],
+          "originalNormal": [
+            0,
+            0,
+            0
+          ],
+          "originalOrigin": [
+            -241.3427744133507,
+            -12.193850763616862,
+            19.57567804024497
+          ],
+          "originalActDepth": 0.9866678583793169,
+          "originalSlope": 29.4499304146244,
+          "originalZeroHeight": -43.132108486401634,
+          "originalFlipped": 1,
+          "originalStartLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              7.461356624472322
+            ],
+            "m_origin": [
+              -273.2725150794377,
+              -63.292117254882044,
+              29.855643044619423
+            ],
+            "m_dirVec": [
+              0.5299192642332051,
+              0.8480480961564258,
+              0
+            ]
+          },
+          "originalEndLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              7.462493198331799
+            ],
+            "m_origin": [
+              -274.16443863876265,
+              -62.734781558414,
+              29.855643044619423
+            ],
+            "m_dirVec": [
+              0.5446390350150363,
+              0.838670567945418,
+              0
+            ]
+          },
+          "uniqueStrictConvexEndpointPairing": 0,
+          "originalRunInfo": [
+            {
+              "sourceSpan": [
+                28898,
+                29159
+              ],
+              "value": {
+                "m_bndBox": {
+                  "m_corners": [
+                    [
+                      52.79261567126869,
+                      -2.1467549799530365
+                    ],
+                    [
+                      60.263150665478484,
+                      -2.129301687433083
+                    ]
+                  ]
+                },
+                "m_origin": [
+                  -241.3427744133507,
+                  -12.193850763616862,
+                  19.57567804024497
+                ],
+                "m_slope": 29.4499304146244,
+                "m_cutElev": 18.912948381452317,
+                "m_norm": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_runDirProj": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_riserDir": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_zeroHeight": -43.132108486401634,
+                "m_startLineEnds": [
+                  [
+                    -273.2725150794377,
+                    -63.292117254882044,
+                    29.855643044619423
+                  ],
+                  [
+                    -269.3185984668158,
+                    -56.964527974754155,
+                    29.855643044619423
+                  ]
+                ],
+                "m_endLineEnds": [
+                  [
+                    -274.16443863876265,
+                    -62.734781558414,
+                    29.855643044619423
+                  ],
+                  [
+                    -270.10007354441694,
+                    -56.47620814948025,
+                    29.855643044619423
+                  ]
+                ],
+                "m_runType": 2,
+                "m_firstRiser": 9,
+                "m_lastRiser": 10,
+                "m_flipped": 1
+              }
+            }
+          ],
+          "originalPhysicalFaceToken": 124,
+          "originalPhysicalFaceTag": 1338,
+          "originalPhysicalCapCoedgeCount": 4,
+          "originalPhysicalCapHistory": [
+            {
+              "id": 1338,
+              "keys": [
+                5,
+                1279,
+                9
+              ]
+            },
+            {
+              "id": 1279,
+              "keys": [
+                53,
+                9,
+                -1
+              ]
+            }
+          ],
+          "physicalHeightExactlyMatchesTyped": false,
+          "originalUVCoedgeContinuity": false,
+          "exactEndpointHullAreaSquareFeet": {
+            "numerator": "1478685709167763533698956330816701491793523163246376100858167",
+            "denominator": "200867255532373784442745261542645325315275374222849104412672"
+          },
+          "exactEndpointHullOutsideReferenceCapAreaSquareFeet": {
+            "numerator": "1330147743177834370817447898448398895897794069639336505389753878000771820434761976114257749985917675187521110846702207049462213278390886530588098120384534283075394731185521661129614105416472496866885181999553720717705134137973440367542418829151764075042400379574897085589",
+            "denominator": "125759773434409452102570735677255865204156444179044078235325465833713280997558462178479143711802872479864824708225505679551065815358719235202321637811708800276963209942444933299255537293663672866791394767772092514058637407648565069313996371459026273158890976778987874679248351605555200"
+          },
+          "endpointHullOutsideReferenceCapAreaSquareFeetForDisplay": 1.0576893603196404e-14,
+          "exactRetainedUncertaintyIntersectionAreaSquareFeet": {
+            "numerator": "1562551028879661146972940336690809309732246639264093791486512216531907388171215243612321797683002528190129333202755776317798827784744019507640677386517408985749702821388540760240013568511420136348029682938804612073632470159020228496142661522259336064647970444128936118516660443746940732131163360975901442708566193491382236755898238029201600957366597789",
+            "denominator": "26462931121229698227344436262407174019918484568198095247387958295821997091397758849300704453397627552495755670622989901866803288461611439396635859901444621567893884733081087649189246635555469159501673667540434950937147584463561307360178620961697046518275255795749351594508160468479044609980914807320577914823693564820292279378930216307894015828168628966850874572800"
+          },
+          "sourceFieldSpans": [
+            {
+              "path": "StairsTreadInfo.m_slope",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451611,
+              "start": 22817,
+              "end": 22825
+            },
+            {
+              "path": "StairsTreadInfo.m_zeroHeight",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451690,
+              "start": 22897,
+              "end": 22905
+            },
+            {
+              "path": "StairsTreadInfo.m_treadType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451710,
+              "start": 22905,
+              "end": 22909
+            },
+            {
+              "path": "StairsTreadInfo.m_runType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451745,
+              "start": 22913,
+              "end": 22917
+            }
+          ],
+          "hullApprovedAsSupport": false
+        },
+        {
+          "typedIndex": 10,
+          "originalTypedSourceSpan": [
+            22918,
+            23219
+          ],
+          "originalTreadType": 3,
+          "originalRunType": 2,
+          "originalRiserDir": [
+            0,
+            0,
+            0
+          ],
+          "originalRunDirProj": [
+            0,
+            0,
+            0
+          ],
+          "originalNormal": [
+            0,
+            0,
+            0
+          ],
+          "originalOrigin": [
+            -298.6786581089243,
+            -100.48336923577578,
+            20.089676290463693
+          ],
+          "originalActDepth": 0.8505661984829124,
+          "originalSlope": 29.44993041460492,
+          "originalZeroHeight": -9.20822397196607,
+          "originalFlipped": 0,
+          "originalStartLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              7.462493198331799
+            ],
+            "m_origin": [
+              -274.16443863876265,
+              -62.734781558414,
+              29.855643044619423
+            ],
+            "m_dirVec": [
+              0.5446390350150363,
+              0.838670567945418,
+              0
+            ]
+          },
+          "originalEndLine": {
+            "m_GInfo": {
+              "m_categoryId": {
+                "m_id": {
+                  "m_id64": -1
+                }
+              },
+              "m_tag": -1,
+              "m_controlCommand": 0,
+              "m_flags": 17301508
+            },
+            "m_endParams": [
+              0,
+              7.461356624472316
+            ],
+            "m_origin": [
+              -274.83060869442323,
+              -62.31851230747197,
+              29.855643044619423
+            ],
+            "m_dirVec": [
+              0.5299192642332056,
+              0.8480480961564255,
+              0
+            ]
+          },
+          "uniqueStrictConvexEndpointPairing": 0,
+          "originalRunInfo": [
+            {
+              "sourceSpan": [
+                29159,
+                29420
+              ],
+              "value": {
+                "m_bndBox": {
+                  "m_corners": [
+                    [
+                      45.00317505725995,
+                      0.9948376736367512
+                    ],
+                    [
+                      52.47252350121788,
+                      1.0122909661567165
+                    ]
+                  ]
+                },
+                "m_origin": [
+                  -298.6786581089243,
+                  -100.48336923577578,
+                  20.089676290463693
+                ],
+                "m_slope": 29.44993041460492,
+                "m_cutElev": 19.426946631671044,
+                "m_norm": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_runDirProj": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_riserDir": [
+                  0,
+                  0,
+                  0
+                ],
+                "m_zeroHeight": -9.20822397196607,
+                "m_startLineEnds": [
+                  [
+                    -274.16443863876265,
+                    -62.734781558414,
+                    29.855643044619423
+                  ],
+                  [
+                    -270.10007354441694,
+                    -56.47620814948025,
+                    29.855643044619423
+                  ]
+                ],
+                "m_endLineEnds": [
+                  [
+                    -274.83060869442323,
+                    -62.31851230747197,
+                    29.855643044619423
+                  ],
+                  [
+                    -270.8766920818013,
+                    -55.99092302734409,
+                    29.855643044619423
+                  ]
+                ],
+                "m_runType": 2,
+                "m_firstRiser": 10,
+                "m_lastRiser": 11,
+                "m_flipped": 0
+              }
+            }
+          ],
+          "originalPhysicalFaceToken": 136,
+          "originalPhysicalFaceTag": 1415,
+          "originalPhysicalCapCoedgeCount": 4,
+          "originalPhysicalCapHistory": [
+            {
+              "id": 1415,
+              "keys": [
+                5,
+                1356,
+                10
+              ]
+            },
+            {
+              "id": 1356,
+              "keys": [
+                53,
+                10,
+                -1
+              ]
+            }
+          ],
+          "physicalHeightExactlyMatchesTyped": true,
+          "originalUVCoedgeContinuity": false,
+          "exactEndpointHullAreaSquareFeet": {
+            "numerator": "39840904215985343468866958416861979102767514904480675117303",
+            "denominator": "6277101735386680763835789423207666416102355444464034512896"
+          },
+          "exactEndpointHullOutsideReferenceCapAreaSquareFeet": {
+            "numerator": "40692766560856502535727742684415531879086174638919252969909063174168958832100956486759237678039548742961815268989469021942919564286012294163909481760085245",
+            "denominator": "1500491343749599878276242942237180805271306304891245502889523541805430943747615880237083239999227482564795058214348818395935094810900042083404859806052304473697533558784"
+          },
+          "endpointHullOutsideReferenceCapAreaSquareFeetForDisplay": 2.7119627667540387e-14,
+          "exactRetainedUncertaintyIntersectionAreaSquareFeet": {
+            "numerator": "138172627553350626376942924110397007609286893907993657424209479306368592786441491167811997581540160525881530511044683466461530782480499824944521538601729548129916055370863601",
+            "denominator": "2075561809908084469420107061444826428889589855040542730653334865901197533528720503356550512751682095514036616669534297935992575673970455454972517452691571833915127535275280723128059166720"
+          },
+          "sourceFieldSpans": [
+            {
+              "path": "StairsTreadInfo.m_slope",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451611,
+              "start": 23118,
+              "end": 23126
+            },
+            {
+              "path": "StairsTreadInfo.m_zeroHeight",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451690,
+              "start": 23198,
+              "end": 23206
+            },
+            {
+              "path": "StairsTreadInfo.m_treadType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451710,
+              "start": 23206,
+              "end": 23210
+            },
+            {
+              "path": "StairsTreadInfo.m_runType",
+              "sourceClassName": "StairsTreadInfo",
+              "schemaFieldOffset": 451745,
+              "start": 23214,
+              "end": 23218
+            }
+          ],
+          "hullApprovedAsSupport": false
+        }
+      ],
+      "foundCapOnlyTwoFootLocalChain": true,
+      "localChainTypedIndices": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "fullTwoFootSourceLateralRequestCandidates": [
+        {
+          "typedIndex": 8,
+          "pointFeet": [
+            -270.9060333693805,
+            -60.37172385167059
+          ],
+          "lateralDirectionFeet": [
+            0.5299192642332047,
+            0.8480480961564261
+          ],
+          "sourcePhysicalFaceToken": 106
+        },
+        {
+          "typedIndex": 9,
+          "pointFeet": [
+            -271.71390643235827,
+            -59.86690873438261
+          ],
+          "lateralDirectionFeet": [
+            0.5299192642332051,
+            0.8480480961564258
+          ],
+          "sourcePhysicalFaceToken": 124
+        },
+        {
+          "typedIndex": 10,
+          "pointFeet": [
+            -272.49295323985103,
+            -59.38010626067757
+          ],
+          "lateralDirectionFeet": [
+            0.5446390350150363,
+            0.838670567945418
+          ],
+          "sourcePhysicalFaceToken": 136
+        },
+        {
+          "typedIndex": 11,
+          "pointFeet": [
+            -273.2431737918587,
+            -58.911316430555516
+          ],
+          "lateralDirectionFeet": [
+            0.5299192642332056,
+            0.8480480961564255
+          ],
+          "sourcePhysicalFaceToken": 148
+        }
+      ],
+      "sameCapTransfers": [],
+      "properFiniteRiserTransfers": [
+        {
+          "fromNodeId": 0,
+          "toNodeId": 13,
+          "originalSharedOrderedRiserIndex": 9,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        },
+        {
+          "fromNodeId": 13,
+          "toNodeId": 26,
+          "originalSharedOrderedRiserIndex": 10,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        },
+        {
+          "fromNodeId": 26,
+          "toNodeId": 40,
+          "originalSharedOrderedRiserIndex": 11,
+          "properCrossingForFullTwoFootStrip": true,
+          "withinActualCapAndUncertaintyCorridor": true,
+          "positiveFlatSupportAcrossRiserClaimed": false
+        }
+      ],
+      "fullRunForeignBodyHeadroomTerminalOrRouteApproval": false
+    }
+  ],
+  "sourceParameterInterpretation": "Original RunType1/2 source records use finite domain ranges consistent with radius/angle and zero normals/directions. This is a retained diagnostic clue; production helper does not reinterpret angular units, slope, zeroHeight or enum meanings.",
+  "scope": "Distinct explicit cap-backed turning pattern only. Positive support comes only from actual original guaranteed cap interiors. Original cap reference/holes/uncertainty/history/coedges remain complete. Endpoint hull is never support. Complete actual source packet binding plus all width/ownbody/foreign/headroom/terminal/outergraph guards remain mandatory.",
+  "routeApproved": false
+}

@@ -1,0 +1,160 @@
+{
+  "createdAt": "2026-10-19T05:28:13.931447+00:00",
+  "status": "Current4732 paired-source preparation checks passed; no finalnative/normal/import/build/browser/phone/venue/release acceptance",
+  "independentDeliveryBranch": "codex/final-native-delivery-20261019",
+  "sourceCodeChangesComparedAgainstFrozen014": [
+    {
+      "repo": "openindoormaps",
+      "path": "app/pages/progressive-instruction-preview.ts",
+      "beforeFrozenSha256": "5b27fa9bdc572922e79eb241981b908633bb2f4ab4380ff625bc300a681ee1a1",
+      "sha256": "796570e2e8c812d7173a0b25f91a2aa2966a09609a5550bec33df2763f8ef77a",
+      "bytes": 4133
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "app/pages/progressive-visitor-page.tsx",
+      "beforeFrozenSha256": "9205e6fb48b07df257d2603f2972fb3cc64ba747122feff96d0118936d76fd4d",
+      "sha256": "551f05e405228f3cf2229b9d39cfa7823b242ea9ceba6c0f60d87a4be38ef55b",
+      "bytes": 57569
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "app/pages/welcome-page.tsx",
+      "beforeFrozenSha256": "4d078a0fdc714c7e0e1b915a1648606a68422b707ff448266d33c91d67117199",
+      "sha256": "8741374c5313f2070a13f3efcda7efadbad8a7bd28edeb64e0817ef63c3f1de4",
+      "bytes": 4274
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "scripts/indoor/audit-pathway-candidate.ts",
+      "beforeFrozenSha256": "0db94f2632062843934ba2830ace0bfd329b38c948cee136f0bb86c822b67bdf",
+      "sha256": "080123ac25d4955e46ca7e4e5e8ddb2903115f83d385bb9cb4efb01e7946a149",
+      "bytes": 33103
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "scripts/indoor/benchmark-progressive-route-hydration.ts",
+      "beforeFrozenSha256": "bbdb20820bd86e00aa95a8634afe2538b544c12a5b533a039ca6912d2b2dda77",
+      "sha256": "9227f4223d4f94314782ebe5f875afc47169b14365c4e1dd3d9bc7b755305cd9",
+      "bytes": 10038
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "scripts/indoor/benchmark-published-route-hydration.ts",
+      "beforeFrozenSha256": "d901abfd54c341573d21a6201cde21552cfd3a588a356bb76f6e92e359acd87c",
+      "sha256": "53556929ddab64cfc36d4fd79673e5399cd76b77d326b70c7b5dd8683532a4f0",
+      "bytes": 11462
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "scripts/indoor/export-published-route-hydration.ts",
+      "beforeFrozenSha256": "4e92b6e526db90166ebc25c3b5de99807cc06e4e15096aef695742e77bd850a7",
+      "sha256": "ee6a261d057ee8a3919911860a3bb5e1980b97550c236fa066b98b3f6c47d48c",
+      "bytes": 16600
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "scripts/indoor/pathway-route-case-identity.ts",
+      "beforeFrozenSha256": null,
+      "sha256": "4599c4c27325dd5c33181363ffa3008082fc3c2bacbe2942a95c7faf39fda2d9",
+      "bytes": 459
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "tests/e2e/published-visitor-plan.spec.ts",
+      "beforeFrozenSha256": "868e9fcbcec8e8f0c57619c302300e82c196eee0d68d3613c68c0433e7996017",
+      "sha256": "a545af343d63ab0e284feac4312c129ff44b5a09b30965a1a14b2980eb5b9a1f",
+      "bytes": 82593
+    },
+    {
+      "repo": "openindoormaps",
+      "path": "tests/unit/pathway-candidate-audit.test.ts",
+      "beforeFrozenSha256": "2d764db9175f17e701d566fa09cd866257baa1b8d7155e43681033fad43f33a0",
+      "sha256": "21a97132781d61fc8067321a07a7253c740ebb8d623559207317fcc8e76c32fe",
+      "bytes": 23566
+    }
+  ],
+  "existingSourceSummaryUpdatedNotAdded": true,
+  "expectedSourceFiles": {
+    "openindoormaps": 3144,
+    "reviter": 1588
+  },
+  "nativeResolved1008FilesIndependentlyRehashedUnchanged": true,
+  "nativeWhole4730SourcePostflightStillPending": true,
+  "sharedAuditHelperSha256": "d9388e585aa785d920552eebbac8830a03076e8e09b5f0b1e39f58a9c5ca69c8",
+  "fullOpenIndoorMapsTypecheck": {
+    "utc": "2026-10-19T05:25:42.887131+00:00",
+    "argv": [
+      "node",
+      "--max-old-space-size=1536",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--incremental",
+      "false"
+    ],
+    "cwd": "/workspace/scratch/final-native-delivery-pair-20261019/openindoormaps",
+    "pid": 110873,
+    "startTicks": 7309933,
+    "exitCode": 0,
+    "resourceCanceled": false,
+    "seconds": 60.38282249199983,
+    "peakObservedCgroupBytes": 13415968768,
+    "concurrentNativePid": 103847,
+    "nativeSignalsSent": false,
+    "allOtherHeavyJobsStillDeferred": true,
+    "nativeSourcesModified": false,
+    "performanceAcceptance": false
+  },
+  "scopedLint": {
+    "heapMiB": 512,
+    "files": [
+      "scripts/indoor/audit-pathway-candidate.ts",
+      "tests/unit/pathway-candidate-audit.test.ts",
+      "tests/e2e/published-visitor-plan.spec.ts",
+      "scripts/indoor/pathway-route-case-identity.ts",
+      "app/pages/welcome-page.tsx"
+    ],
+    "exitCode": 0,
+    "log": "/workspace/scratch/delivery-source-lint-cleanup-20261019/scoped-eslint-final.log",
+    "logBytes": 0
+  },
+  "auditUnitChecks": {
+    "exitCode": 0,
+    "tests": 15,
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "heapMiB": 256,
+    "logSha256": "ae10c4c29af21db9c70d719ff470a44e153864857f707be9e613907441ef01f0",
+    "log": "/workspace/scratch/delivery-source-final-integration-20261019/pathway-audit-unit.log",
+    "fullRelevantSuite": true
+  },
+  "actualConsumerBindings": {
+    "display": {
+      "sha256": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+      "modules": 208
+    },
+    "route": {
+      "sha256": "724407062202c85a9acd079e656f327947f79e8564da80f9eaedac8e2266ae06",
+      "modules": 238
+    },
+    "plan": {
+      "sha256": "93cd166c0863ce606fee6b2e528826a51b2ef7085efa9394feb2fb9698ac334c",
+      "modules": 233
+    }
+  },
+  "all679ActualEntriesChecked": true,
+  "lintSemanticReview": {
+    "path": "/workspace/scratch/delivery-source-lint-cleanup-20261019/LOADING-INDEPENDENT-SEMANTIC-REVIEW.json",
+    "sha256": "a58ec1c4abf614c5cdae65474fbd7ae5c52aa58b0610320df8c2f8228fb61122",
+    "original3BrowserBodiesTimersAndAssertionsPreserved": true
+  },
+  "checkpoint015HistoricalChecksPreserved": {
+    "sourceCheckpointDriveId": "1n7EOC7yWSaFaMUkmSvoTLSzViJbjHLYJ",
+    "note": "Earlier10preview/offlineunits+10searchcases remain attached to015 unchanged code; not rerun or relabelled bythiscurrent15auditunitcheck."
+  },
+  "noNativeSourceOriginalSharedRepoGuardDependencyOrAuthorityChanges": true,
+  "currentNativeStillRunning": true,
+  "sourceWindowBasis": "Plane worker released~2.5GB; separatecheckingwindowmemory11.3GB,1536MiB checker selfcancels14.7GB/nativeguardunchanged15.5GB. Exactreviewed5newchangedpaths outsideactualnative1008. Otherheavyphysicalimport/build/browser remainsdeferred.",
+  "releaseReady": false
+}

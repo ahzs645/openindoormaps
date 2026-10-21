@@ -1,0 +1,4855 @@
+{
+  "format": "original-ten-single-run-successor-request-input-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "originalDatasetSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+  "sourceRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+  "nativeCacheSha256": "bfc1f2611d233c593b0749e0d48ff357ab2d105cf1a7878ea847a96cece446fb",
+  "inputs": [
+    {
+      "key": "inventory",
+      "path": "/workspace/openindoormaps/docs/continuation/unbc-20261017/source-recovery/all-connections-review.json",
+      "bytes": 117121,
+      "sha256": "5e6aa79869619b320f334f23561f2787f8aeaf576e6b619a7a1bc24fe1862dee"
+    },
+    {
+      "key": "graph",
+      "path": "/workspace/scratch/source-producer-inputs-20261018/indoor.json",
+      "bytes": 176425121,
+      "sha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d"
+    },
+    {
+      "key": "rooms",
+      "path": "/workspace/scratch/source-producer-inputs-20261018/rooms.json",
+      "bytes": 82049198,
+      "sha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+    },
+    {
+      "key": "original-case-locators",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/case-inputs-v2/case-locators.json",
+      "bytes": 87547,
+      "sha256": "27a68342cb5d8f6b069e574d88c9cab7f4f74c8dc13d1ac7dfeda14c0d371b51"
+    },
+    {
+      "key": "historical-v3-receipt",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/receipt.json",
+      "bytes": 473597,
+      "sha256": "5ddcb3781920442f5f41d806c122233241cb1790576965f67eeb461060103b64"
+    },
+    {
+      "key": "seven-detour-request-evidence",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/post-v3-diagnostics-20261018/bounded-floor-detour-requests-all-seven.json",
+      "bytes": 11044,
+      "sha256": "f3fb6ad0f62a93b6a2f46517777ad51f8da7c10430337160eff3aa62b7682fb3"
+    },
+    {
+      "key": "three-terminal-gap-evidence",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/post-v3-diagnostics-20261018/terminal-transfer-floor-gaps.json",
+      "bytes": 34321,
+      "sha256": "2329dfa28b3131090968e84edf929cac98c97ed8140d15e0ee9b54a2c84be7cd"
+    },
+    {
+      "key": "known-169-source-vectors",
+      "path": "/workspace/scratch/completion-stairs-20261018/checked-stepped-stair-review-source-vectors.json",
+      "bytes": 11073,
+      "sha256": "c7ae8b27708207da366f201b209a05361d7fbcfaa49348754f1ff5e7ff026ae7"
+    },
+    {
+      "key": "original-stepped-source-dependencies",
+      "path": "/workspace/scratch/native-stages/stage02/stage-02-boundary-reviews/reviews/stepped-source-dependencies.json",
+      "bytes": 27232,
+      "sha256": "5e662d90e0c903e9c0782fb298f189c1504a04e5856238eec3aaa9c04465a49a"
+    },
+    {
+      "key": "unreached-original-named-floor-cap-locators",
+      "path": "/workspace/scratch/single-run-successor-ten-20261018/unreached-floor-cap-request-locators.json",
+      "bytes": 34127,
+      "sha256": "8824bcf98892328a9c31a8f663bd32e26c749cd53b69ff08ae9f79d27d89701d"
+    },
+    {
+      "key": "complete-original-inventory-ids",
+      "path": "/workspace/openindoormaps/docs/continuation/unbc-20261017/source-recovery/all-connections-review.json",
+      "bytes": 117121,
+      "sha256": "5e6aa79869619b320f334f23561f2787f8aeaf576e6b619a7a1bc24fe1862dee"
+    },
+    {
+      "key": "historical-v3-result-1696006",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1696006-result.json",
+      "bytes": 6231,
+      "sha256": "6b15ba44576d18ba7d69ba31d435abb07d2ae13d3ae4a756f43d99da27ab1e25"
+    },
+    {
+      "key": "historical-v3-proposal-1696006",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1696006-requested-source-path.json",
+      "bytes": 3560,
+      "sha256": "1ca276c8a2d4b2f4fe5111a70088c51b42dad8d3da67ae08a7b56562f8396fb2"
+    },
+    {
+      "key": "historical-v3-result-1903824",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1903824-result.json",
+      "bytes": 35361,
+      "sha256": "cf5eb74c0d37ba36e1af1471f84385c37db4163349f9c5ac1c39094a87052e64"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-1903824",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1903824-source-local-partition.json",
+      "bytes": 59317,
+      "sha256": "f888aac97c30a281b5e174e95df0be72d0c6c9ce096179a323ab45f6eb51923d"
+    },
+    {
+      "key": "historical-v3-result-1982431",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1982431-result.json",
+      "bytes": 34051,
+      "sha256": "564c29bf8a43a920fc3d6ef089182ea8287c074f0aaace660b11ce075f1b230c"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-1982431",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1982431-source-local-partition.json",
+      "bytes": 63096,
+      "sha256": "ad98810e0aaca96f3ef41a97e52b1feaa6c35c31743dce24395268bbedca1e5f"
+    },
+    {
+      "key": "historical-v3-result-1988738",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1988738-result.json",
+      "bytes": 23558,
+      "sha256": "b584a23cf7166c5fef2ec815babd8a49679666e59e980eff4141c473fc707111"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-1988738",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1988738-source-local-partition.json",
+      "bytes": 63341,
+      "sha256": "6abd6c7053b74332404e88e2ad9690d74b70345eba0052c0e1a8fdc4ead0374a"
+    },
+    {
+      "key": "historical-v3-result-2160665",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2160665-result.json",
+      "bytes": 21256,
+      "sha256": "ce8641726382bb50994af1b62ea582035a159c8dbbff14e6565d6cadfa871caf"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-2160665",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2160665-source-local-partition.json",
+      "bytes": 58171,
+      "sha256": "f28e1e09f0785a79385ab1c961416e84818ec2742c7c4681e98ac5c77ad5f5a3"
+    },
+    {
+      "key": "historical-native-cap-plane-locator-2160665-1",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/floor-437656-all-cap-plane-and-parser-diagnostics.json",
+      "bytes": 15480,
+      "sha256": "47a6bdcd8256ab01090b6fd6fd11e0749b5ecb59096b72e81b15c969278542bf"
+    },
+    {
+      "key": "historical-v3-result-2161350",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2161350-result.json",
+      "bytes": 21848,
+      "sha256": "539592e08d37b120f4a2a27508da5a31c87a2dccedf4497e7eb68efb73edf818"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-2161350",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2161350-source-local-partition.json",
+      "bytes": 58146,
+      "sha256": "f24fdccf46922e033fc5f9504c6d5b5b8aaa92a7a056773839b3ac33e9786462"
+    },
+    {
+      "key": "historical-v3-result-2349441",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2349441-result.json",
+      "bytes": 29202,
+      "sha256": "ee48d37cdc8001ea4e50825956c0cdcfa54938ce3b994e6e6c12bced7a21c911"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-2349441",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2349441-source-local-partition.json",
+      "bytes": 37788,
+      "sha256": "9af3ecc1349a87f1fc08086861e728b6a7d04d0d38088b4369432258a2380d55"
+    },
+    {
+      "key": "historical-v3-result-2439748",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2439748-result.json",
+      "bytes": 30237,
+      "sha256": "cc1871954cbbf21365cb3e7e547793aa897fd831dc962354d7efa215a71f13ba"
+    },
+    {
+      "key": "historical-v3-source-local-request-locators-2439748",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2439748-source-local-partition.json",
+      "bytes": 36570,
+      "sha256": "b6a23bbe044f80e716818561d5132bce19b3c908356970207e2ac40e5daaed0d"
+    },
+    {
+      "key": "historical-v3-result-1638837",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1638837-result.json",
+      "bytes": 35457,
+      "sha256": "5c67ec813dd18ce4cd7b4e6993d74a89db79d1f88e9da89a4c6d51f0b3782d14"
+    },
+    {
+      "key": "historical-v3-proposal-1638837",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/1638837-requested-source-path.json",
+      "bytes": 37705,
+      "sha256": "b3cad9bae8879e68f9c3a08ebda89e83a210e5ef9d4fc24ca22a261b96ab9dfc"
+    },
+    {
+      "key": "historical-v3-result-2156084",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2156084-result.json",
+      "bytes": 33471,
+      "sha256": "a56144e71385000589aed7b2668dcdd636084ae6a2515c28eae9768956f4d60e"
+    },
+    {
+      "key": "historical-v3-proposal-2156084",
+      "path": "/workspace/scratch/single-run-source-consumers-20261018/actual-batch-v3-scoped/2156084-requested-source-path.json",
+      "bytes": 35333,
+      "sha256": "3e865b7a8ab52e42fa32f520f2f8a8b233d9ce2f7bfe255d281b2512aa1c1ba5"
+    },
+    {
+      "key": "original-rvt",
+      "path": "/workspace/scratch/native-source-restored/derived/UNBC.original.rvt",
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+    },
+    {
+      "key": "original-drawing-review",
+      "path": "/workspace/scratch/native-stages/stage02/stage-02-boundary-reviews/reviews/reviewed-drawing-references.json",
+      "sha256": "ee97659f456a03fee79c9743e9190c9a07bf0a9f5fd425505eb02396e41d3d1a"
+    }
+  ],
+  "historicalV3SourceCensusSha256": "50c9dd53de55bb9f553f0f694670a8e4b9f9feb4b92e827056da765926b0b6c6",
+  "allOriginalPhysicalRequestsAsLocators": [
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1293981,
+      "nativeDefinitionId": 1293982
+    },
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1294068,
+      "nativeDefinitionId": 1294069
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunId": 1296000,
+      "nativeDefinitionId": 1296001
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunId": 1296189,
+      "nativeDefinitionId": 1296190
+    },
+    {
+      "nativeStairId": 1298202,
+      "nativeRunId": 1298203,
+      "nativeDefinitionId": 1298204
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunId": 1305306,
+      "nativeDefinitionId": 1305307
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunId": 1305425,
+      "nativeDefinitionId": 1305426
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunId": 1496323,
+      "nativeDefinitionId": 1496324
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunId": 1496326,
+      "nativeDefinitionId": 1496327
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunId": 1498361,
+      "nativeDefinitionId": 1498362
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunId": 1498364,
+      "nativeDefinitionId": 1498365
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498458,
+      "nativeDefinitionId": 1498459
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498461,
+      "nativeDefinitionId": 1498462
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunId": 1500192,
+      "nativeDefinitionId": 1500193
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunId": 1500195,
+      "nativeDefinitionId": 1500196
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500289,
+      "nativeDefinitionId": 1500290
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500292,
+      "nativeDefinitionId": 1500293
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514127,
+      "nativeDefinitionId": 1514128
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514130,
+      "nativeDefinitionId": 1514131
+    },
+    {
+      "nativeStairId": 1638837,
+      "nativeRunId": 1638854,
+      "nativeDefinitionId": 1638855
+    },
+    {
+      "nativeStairId": 1689936,
+      "nativeRunId": 1689940,
+      "nativeDefinitionId": 1689941
+    },
+    {
+      "nativeStairId": 1693246,
+      "nativeRunId": 1693335,
+      "nativeDefinitionId": 1693336
+    },
+    {
+      "nativeStairId": 1696006,
+      "nativeRunId": 1696012,
+      "nativeDefinitionId": 1696013
+    },
+    {
+      "nativeStairId": 1779403,
+      "nativeRunId": 1779406,
+      "nativeDefinitionId": 1779407
+    },
+    {
+      "nativeStairId": 1779495,
+      "nativeRunId": 1779498,
+      "nativeDefinitionId": 1779499
+    },
+    {
+      "nativeStairId": 1779620,
+      "nativeRunId": 1779623,
+      "nativeDefinitionId": 1779624
+    },
+    {
+      "nativeStairId": 1903824,
+      "nativeRunId": 1903837,
+      "nativeDefinitionId": 1903838
+    },
+    {
+      "nativeStairId": 1972504,
+      "nativeRunId": 1972518,
+      "nativeDefinitionId": 1972519
+    },
+    {
+      "nativeStairId": 1982431,
+      "nativeRunId": 1984014,
+      "nativeDefinitionId": 1984015
+    },
+    {
+      "nativeStairId": 1988738,
+      "nativeRunId": 1988746,
+      "nativeDefinitionId": 1988747
+    },
+    {
+      "nativeStairId": 2156084,
+      "nativeRunId": 2156103,
+      "nativeDefinitionId": 2156104
+    },
+    {
+      "nativeStairId": 2160665,
+      "nativeRunId": 2160668,
+      "nativeDefinitionId": 2160669
+    },
+    {
+      "nativeStairId": 2161350,
+      "nativeRunId": 2161353,
+      "nativeDefinitionId": 2161354
+    },
+    {
+      "nativeStairId": 2349441,
+      "nativeRunId": 2349454,
+      "nativeDefinitionId": 2349455
+    },
+    {
+      "nativeStairId": 2354630,
+      "nativeRunId": 2354663,
+      "nativeDefinitionId": 2354664
+    },
+    {
+      "nativeStairId": 2439748,
+      "nativeRunId": 2439788,
+      "nativeDefinitionId": 2439789
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474569,
+      "nativeDefinitionId": 2474570
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474572,
+      "nativeDefinitionId": 2474573
+    }
+  ],
+  "completeOriginalInventoryParentIds": [
+    1293690,
+    1295966,
+    1298202,
+    1305141,
+    1496322,
+    1498360,
+    1498457,
+    1500191,
+    1500288,
+    1514126,
+    1638837,
+    1689936,
+    1693246,
+    1696006,
+    1779403,
+    1779495,
+    1779620,
+    1903824,
+    1972504,
+    1982431,
+    1988738,
+    2156084,
+    2160665,
+    2161350,
+    2349441,
+    2354630,
+    2439748,
+    2474568
+  ],
+  "foreignScopeBoundsFeet": {
+    "min": {
+      "x": -10000,
+      "y": -10000,
+      "z": -10000
+    },
+    "max": {
+      "x": 10000,
+      "y": 10000,
+      "z": 10000
+    }
+  },
+  "retainedOriginalElementIds": [
+    1293690,
+    1293981,
+    1293982,
+    1294068,
+    1294069,
+    1295966,
+    1296000,
+    1296001,
+    1296189,
+    1296190,
+    1298202,
+    1298203,
+    1298204,
+    1305141,
+    1305306,
+    1305307,
+    1305425,
+    1305426,
+    1496322,
+    1496323,
+    1496324,
+    1496326,
+    1496327,
+    1498360,
+    1498361,
+    1498362,
+    1498364,
+    1498365,
+    1498457,
+    1498458,
+    1498459,
+    1498461,
+    1498462,
+    1500191,
+    1500192,
+    1500193,
+    1500195,
+    1500196,
+    1500288,
+    1500289,
+    1500290,
+    1500292,
+    1500293,
+    1514126,
+    1514127,
+    1514128,
+    1514130,
+    1514131,
+    1638837,
+    1638854,
+    1638855,
+    1689936,
+    1689940,
+    1689941,
+    1693246,
+    1693335,
+    1693336,
+    1696006,
+    1696012,
+    1696013,
+    1779403,
+    1779406,
+    1779407,
+    1779495,
+    1779498,
+    1779499,
+    1779620,
+    1779623,
+    1779624,
+    1903824,
+    1903837,
+    1903838,
+    1972504,
+    1972518,
+    1972519,
+    1982431,
+    1984014,
+    1984015,
+    1988738,
+    1988746,
+    1988747,
+    2156084,
+    2156103,
+    2156104,
+    2160665,
+    2160668,
+    2160669,
+    2161350,
+    2161353,
+    2161354,
+    2349441,
+    2349454,
+    2349455,
+    2354630,
+    2354663,
+    2354664,
+    2439748,
+    2439788,
+    2439789,
+    2474568,
+    2474569,
+    2474570,
+    2474572,
+    2474573,
+    427511,
+    490040,
+    437656,
+    503705,
+    511340,
+    400479,
+    402395,
+    444577,
+    405772,
+    1327372,
+    1779842,
+    1521516,
+    1521608,
+    1514723,
+    1513098,
+    1505065,
+    1593239,
+    501699,
+    447970,
+    400238,
+    307337,
+    307341,
+    307346,
+    307725,
+    325646,
+    325653,
+    325659,
+    325661,
+    325664,
+    325667,
+    325668,
+    327839,
+    1070517,
+    1070518,
+    1070521,
+    1070524,
+    1070525,
+    1070530,
+    1071724,
+    1071725,
+    1071726,
+    1071727,
+    1213432,
+    1213438,
+    1213444,
+    1213484,
+    1213490,
+    1213496,
+    1213536,
+    1213542,
+    1213548,
+    1378054,
+    1378058,
+    1378064,
+    1378067,
+    1382101,
+    1514621,
+    1514624,
+    1521295,
+    1521296,
+    1521300,
+    1521303,
+    1521304,
+    1521409,
+    1521417,
+    1529167,
+    1529168,
+    1530770,
+    1532158,
+    1646688,
+    1838757,
+    1838760,
+    1838766,
+    1838768,
+    1838771,
+    1838774,
+    1838775,
+    1849135,
+    1849239,
+    1849240,
+    1850388,
+    1850408,
+    1850409,
+    1948670,
+    1948685,
+    1948791,
+    1948796,
+    1976048,
+    1976049,
+    1976176,
+    1976180,
+    2018178,
+    2018179,
+    2018184,
+    2018189,
+    2018190,
+    2018196,
+    2018441,
+    2018442,
+    2018444,
+    2021202,
+    2021205,
+    2021360,
+    2021363,
+    2021486,
+    2021489,
+    2118766,
+    2118768,
+    2118770,
+    2118782,
+    2118784,
+    2118786,
+    2118798,
+    2118800,
+    2118802,
+    2320976,
+    2320983,
+    2320985,
+    2322273,
+    2322280,
+    2322282,
+    2322922,
+    2322929,
+    2322931,
+    2323140,
+    2323147,
+    2323149,
+    2371893,
+    2371896,
+    2371898,
+    2465236,
+    2465315
+  ],
+  "globalPlacedTrimRequests": [
+    {
+      "nativeElementId": 1074348,
+      "nativeDefinitionId": 775553
+    }
+  ],
+  "cases": [
+    {
+      "nativeStairId": 1696006,
+      "originalEdgeId": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+      "sourceRequest": {
+        "nativeStairId": 1696006,
+        "nativeRunId": 1696012,
+        "nativeDefinitionId": 1696013
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 402395
+        },
+        {
+          "kind": "planar-slab",
+          "nativeFloorElementId": 405772
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 1696012,
+        "terminals": [
+          {
+            "nativeFloorElementId": 402395,
+            "originalCapFaceToken": 249,
+            "approachXYFeet": [
+              [
+                2.327728994970098,
+                -320.89781591346036
+              ],
+              [
+                2.327728994970098,
+                -323.3025630530456
+              ],
+              [
+                1.6,
+                -323.3025630530456
+              ],
+              [
+                0.5148043399884723,
+                -323.3025630530456
+              ]
+            ],
+            "lateralDirectionFeet": [
+              1.6135629029181627e-15,
+              1
+            ]
+          },
+          {
+            "nativeFloorElementId": 405772,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                1.578773765958708,
+                -320.9697773842104
+              ],
+              [
+                1.578773765958708,
+                -318.12343176841307
+              ],
+              [
+                -0.9831061180773955,
+                -318.12343176841307
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              0.03829515363675812,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.6135629029181627e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              -0.7983190195915968,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.6135629029181627e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              -1.618528993344878,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.6369478725256722e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              -2.438738967098159,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.5901779333106531e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              -3.25894894085144,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.5901779333106531e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              -4.0791589146047205,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.5901779333106531e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              -4.899368888358002,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806147e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              -5.719578862111283,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806147e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              -6.539788835864564,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806147e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              -7.359998809617845,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806325e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              -8.180208783371127,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806325e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              -9.000418757124407,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806325e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              -11.089601315686476,
+              -323.3025630530456
+            ],
+            "lateralDirectionFeet": [
+              -1.8291674481391645e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              -11.089601315686476,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              1.4966380548806325e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              -8.989142863484215,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.8291674481391645e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              -8.168932889730936,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.8291674481391645e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              -7.348722915977657,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              -6.528512942224378,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              -5.708302968471095,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              -4.888092994717816,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              -4.067883020964526,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              -3.247673047211199,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              -2.4274630734578766,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              -1.5252321023293158,
+              -318.12343176841307
+            ],
+            "lateralDirectionFeet": [
+              -1.600521517121769e-15,
+              -1
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "03f1a4060832e8b19f795f52bd711b80a1dc5089843db209e0b69658f599febe",
+      "requestChange": "unchanged-exact-known-source-vector-control",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+          "from": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0",
+          "to": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1",
+          "kind": "stairs",
+          "lengthMetres": 7.2349289583835885,
+          "pointsFeet": [
+            [
+              2.327728994970098,
+              -320.89781591346036,
+              24.278215223097114
+            ],
+            [
+              1.578773765958708,
+              -320.9697773842104,
+              34.120734908136484
+            ]
+          ],
+          "roomKeys": [
+            "rm-400176-561f2a7098b2",
+            "rm-402367-1fc9594ffaa7"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 1696006,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0",
+              "roomKey": "rm-400176-561f2a7098b2",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "03",
+              "surfaceId": "03:400176:24.278",
+              "pointFeet": [
+                2.327728994970098,
+                -320.89781591346036,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81321115413637,
+                53.89132680598268
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-561f2a7098b2",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "03"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1",
+              "roomKey": "rm-402367-1fc9594ffaa7",
+              "kind": "stair",
+              "levelId": 402367,
+              "building": "03",
+              "surfaceId": "03:402367:34.121",
+              "pointFeet": [
+                1.578773765958708,
+                -320.9697773842104,
+                34.120734908136484
+              ],
+              "geographic": [
+                -122.81321440205365,
+                53.891326043677346
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-402367-1fc9594ffaa7",
+              "levelId": 402367,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "03"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "both-directions-source-proof-issued",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 1903824,
+      "originalEdgeId": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+      "sourceRequest": {
+        "nativeStairId": 1903824,
+        "nativeRunId": 1903837,
+        "nativeDefinitionId": 1903838
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 503705
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 511340
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 1903837,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 503705,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                134.74058316948708,
+                178.58575173450856
+              ],
+              [
+                134.10470769633073,
+                176.42022676003094
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961566985,
+              0.5299192642327689
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 511340,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                137.01497471093603,
+                179.42472757763005
+              ],
+              [
+                139.51497471093603,
+                174.92472757763005
+              ],
+              [
+                138.76507699115538,
+                173.50810481911935
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.848048096156699,
+              -0.529919264232768
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              133.6572781642625,
+              175.70418983054864
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961566985,
+              0.5299192642327689
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              133.1183182826611,
+              174.84167372225303
+            ],
+            "lateralDirectionFeet": [
+              -0.848048096156707,
+              0.5299192642327554
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              132.62282290764014,
+              174.04871536462585
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567075,
+              0.5299192642327543
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              132.12732753261938,
+              173.25575700699895
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567092,
+              0.5299192642327517
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              131.63183215759878,
+              172.46279864937242
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567056,
+              0.5299192642327575
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              131.1363367825778,
+              171.6698402917452
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567056,
+              0.5299192642327575
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              130.64084140755708,
+              170.87688193411833
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567063,
+              0.5299192642327564
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              130.14534603253628,
+              170.08392357649143
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567036,
+              0.5299192642327606
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              129.64985065751551,
+              169.29096521886459
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567011,
+              0.5299192642327647
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              129.15435528249478,
+              168.49800686123774
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567044,
+              0.5299192642327596
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              128.6390131008161,
+              167.6732869736254
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567051,
+              0.5299192642327583
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              129.78234266259295,
+              164.24654292862
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961566973,
+              0.5299192642327707
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              133.37264120576324,
+              164.75955103870965
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564242,
+              -0.5299192642332077
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              133.8631333199832,
+              165.55563578067128
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567058,
+              -0.529919264232757
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              134.35362543420285,
+              166.3517205226324
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567068,
+              -0.5299192642327553
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              134.8441175484221,
+              167.14780526459293
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567107,
+              -0.5299192642327494
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              135.33460966264172,
+              167.94389000655403
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564216,
+              -0.5299192642332119
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              135.8251017768618,
+              168.73997474851586
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567033,
+              -0.529919264232761
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              136.31559389108142,
+              169.53605949047693
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567088,
+              -0.5299192642327525
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              136.80608600530093,
+              170.33214423243786
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567055,
+              -0.5299192642327575
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              137.29657811952063,
+              171.12822897439912
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567083,
+              -0.529919264232753
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              137.78707023374025,
+              171.92431371636022
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567051,
+              -0.5299192642327581
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              138.3205879720141,
+              172.79023045322998
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567088,
+              -0.529919264232752
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "fae924e9b592d147d96d1b4e2ae1581fe729bcf79d88652221ffc7f5a4fd9b50",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+          "from": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:0",
+          "to": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:1",
+          "kind": "stairs",
+          "lengthMetres": 8.01882065049758,
+          "pointsFeet": [
+            [
+              134.74058316948708,
+              178.58575173450856,
+              14.435695538057743
+            ],
+            [
+              137.01497471093603,
+              179.42472757763005,
+              24.278215223097114
+            ]
+          ],
+          "roomKeys": [
+            "rm-694-ecfa1a619eb2",
+            "rm-400176-4671ea1dd0fd"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 1903824,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:0",
+              "roomKey": "rm-694-ecfa1a619eb2",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                134.74058316948708,
+                178.58575173450856,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81326904063727,
+                53.89274125387815
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-ecfa1a619eb2",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:1",
+              "roomKey": "rm-400176-4671ea1dd0fd",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "05",
+              "surfaceId": "05:400176:24.278",
+              "pointFeet": [
+                137.01497471093603,
+                179.42472757763005,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.8132599832288,
+                53.89274519993958
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-4671ea1dd0fd",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 1982431,
+      "originalEdgeId": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+      "sourceRequest": {
+        "nativeStairId": 1982431,
+        "nativeRunId": 1984014,
+        "nativeDefinitionId": 1984015
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 1514723
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 1513098
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 1984014,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 1514723,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                75.79281467251485,
+                474.6886443360271
+              ],
+              [
+                67.48443016384236,
+                467.3819573206206
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 1513098,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                66.76443083000004,
+                473.11336491373413
+              ],
+              [
+                69.26443083000004,
+                473.61336491373413
+              ],
+              [
+                70.69331332321376,
+                473.1040760784612
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379481,
+              0.8658738606253538
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              68.0963273572004,
+              467.02867831131897
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              68.85602110315477,
+              466.59006892259055
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              69.65170470605518,
+              466.13068078026623
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              70.447297811247,
+              465.67134488681825
+            ],
+            "lateralDirectionFeet": [
+              -0.500000000000003,
+              -0.8660254037844368
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              71.2428004187309,
+              465.21206124224636
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              72.03848402163115,
+              464.75267309992216
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              72.83407712682295,
+              464.2933372064743
+            ],
+            "lateralDirectionFeet": [
+              -0.500000000000003,
+              -0.8660254037844368
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              73.62957973430684,
+              463.8340535619024
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              74.42517283949832,
+              463.3747176684546
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              75.22085644239894,
+              462.9153295261302
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              76.01644954759114,
+              462.45599363268207
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              76.81166573650698,
+              461.9968753519476
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000048,
+              -0.8660254037844358
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              80.55448078502475,
+              463.6220339346094
+            ],
+            "lateralDirectionFeet": [
+              -0.5000000000000054,
+              -0.8660254037844355
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              80.0916531306338,
+              467.6759928729575
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379478,
+              0.8658738606253541
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              79.29642045069505,
+              468.13528132945055
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379475,
+              0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              78.50089697297349,
+              468.5947377368693
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379473,
+              0.8658738606253542
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              77.70528300546404,
+              469.05424640687244
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379481,
+              0.8658738606253537
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              76.90975952774274,
+              469.5137028142911
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379477,
+              0.865873860625354
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              76.11413086561937,
+              469.9732199712021
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379484,
+              0.8658738606253535
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              75.31860738789823,
+              470.43267637862067
+            ],
+            "lateralDirectionFeet": [
+              0.500262388637947,
+              0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              74.52318909457874,
+              470.892072036547
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379486,
+              0.8658738606253534
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              73.72775610664546,
+              471.35147618138126
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379469,
+              0.8658738606253544
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              72.9322326289243,
+              471.8109325887998
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379487,
+              0.8658738606253534
+            ]
+          },
+          {
+            "typedIndex": 23,
+            "pointFeet": [
+              72.13661866141457,
+              472.27044125880303
+            ],
+            "lateralDirectionFeet": [
+              0.500262388637949,
+              0.8658738606253533
+            ]
+          },
+          {
+            "typedIndex": 24,
+            "pointFeet": [
+              71.34108512288367,
+              472.72990347686533
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379491,
+              0.8658738606253532
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "c27c6be77d3afa666790aaa3a66f3f1443640f30ca0e215b1ddfb340b63e8d24",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+          "from": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:0",
+          "to": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:1",
+          "kind": "stairs",
+          "lengthMetres": 8.822690107682803,
+          "pointsFeet": [
+            [
+              75.79281467251485,
+              474.6886443360271,
+              3.2808398950131235
+            ],
+            [
+              66.76443083000004,
+              473.11336491373413,
+              14.435695538057743
+            ]
+          ],
+          "roomKeys": [
+            "rm-1487816-1a09473066a2",
+            "rm-694-43cb29fdc35f"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 1982431,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:0",
+              "roomKey": "rm-1487816-1a09473066a2",
+              "kind": "stair",
+              "levelId": 1487816,
+              "building": "08",
+              "surfaceId": "08:1487816:3.281",
+              "pointFeet": [
+                75.79281467251485,
+                474.6886443360271,
+                3.2808398950131235
+              ],
+              "geographic": [
+                -122.81391654759166,
+                53.89347458777893
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-1487816-1a09473066a2",
+              "levelId": 1487816,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": true,
+              "stair": true,
+              "building": "08"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:1",
+              "roomKey": "rm-694-43cb29fdc35f",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "08",
+              "surfaceId": "08:694:14.436",
+              "pointFeet": [
+                66.76443083000004,
+                473.11336491373413,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.8139547808954,
+                53.89346353766095
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-43cb29fdc35f",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "08"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 1988738,
+      "originalEdgeId": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69",
+      "sourceRequest": {
+        "nativeStairId": 1988738,
+        "nativeRunId": 1988746,
+        "nativeDefinitionId": 1988747
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 1513098
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 1505065
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 1988746,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 1513098,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                66.76443083000004,
+                473.11336491373413
+              ],
+              [
+                66.26443083000004,
+                468.11336491373413
+              ],
+              [
+                67.48539923895069,
+                467.38192755892516
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -0.500262388637943,
+              -0.8658738606253567
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 1505065,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                66.21663123170902,
+                472.3167184773886
+              ],
+              [
+                70.76505299932114,
+                473.062530364803
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379436,
+              0.8658738606253564
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              68.09731911135552,
+              467.02838819142056
+            ],
+            "lateralDirectionFeet": [
+              -0.500262388637943,
+              -0.8658738606253567
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              68.85696594966997,
+              466.5894989269011
+            ],
+            "lateralDirectionFeet": [
+              -0.500262388637943,
+              -0.8658738606253567
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              69.6524198814886,
+              466.1299219583856
+            ],
+            "lateralDirectionFeet": [
+              -0.500262388637943,
+              -0.8658738606253567
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              70.44787381330899,
+              465.670344989869
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              71.24332774512816,
+              465.2107680213531
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379437,
+              -0.8658738606253564
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              72.03878167694613,
+              464.75119105283795
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              72.83423560876516,
+              464.29161408432213
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              73.62968954058569,
+              463.83203711580546
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379437,
+              -0.8658738606253564
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              74.4251434724036,
+              463.3724601472903
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              75.2205974042226,
+              462.9128831787745
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              76.01605133604245,
+              462.4533062102582
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379473,
+              -0.8658738606253543
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              76.81092028090919,
+              461.9940672204987
+            ],
+            "lateralDirectionFeet": [
+              -0.5002623886379437,
+              -0.8658738606253564
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              80.55376041258899,
+              463.6202969910479
+            ],
+            "lateralDirectionFeet": [
+              -0.49996933165461155,
+              -0.8660431094378854
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              80.09269405436498,
+              467.6752793857332
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379446,
+              0.8658738606253558
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              79.29818386761572,
+              468.13415056462907
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379431,
+              0.8658738606253567
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              78.50266030831848,
+              468.59360701916205
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379446,
+              0.8658738606253559
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              77.70713674902223,
+              469.05306347369446
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379465,
+              0.8658738606253547
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              76.9116131897252,
+              469.5125199282274
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379444,
+              0.8658738606253561
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              76.13304957023465,
+              469.96218113066305
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379439,
+              0.8658738606253562
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              75.33752601093836,
+              470.42163758519547
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379441,
+              0.8658738606253561
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              74.52504251183498,
+              470.8908892918255
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379436,
+              0.8658738606253563
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              73.7295189525374,
+              471.3503457463587
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379431,
+              0.8658738606253567
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              72.9339953932401,
+              471.80980220089174
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379446,
+              0.8658738606253558
+            ]
+          },
+          {
+            "typedIndex": 23,
+            "pointFeet": [
+              72.13847183394337,
+              472.26925865542444
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379424,
+              0.8658738606253571
+            ]
+          },
+          {
+            "typedIndex": 24,
+            "pointFeet": [
+              71.37788152680801,
+              472.70853933012535
+            ],
+            "lateralDirectionFeet": [
+              0.5002623886379444,
+              0.8658738606253559
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "fb451cb47230ed71947c91632bd3a4a53cb1e02efcfee85e1b817bb1e191ce9e",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69",
+          "from": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:0",
+          "to": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:1",
+          "kind": "stairs",
+          "lengthMetres": 8.671670856783939,
+          "pointsFeet": [
+            [
+              66.76443083000004,
+              473.11336491373413,
+              14.435695538057743
+            ],
+            [
+              66.21663123170902,
+              472.3167184773886,
+              24.278215223097114
+            ]
+          ],
+          "roomKeys": [
+            "rm-694-43cb29fdc35f",
+            "rm-400176-fd57d2070a69"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 1988738,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:0",
+              "roomKey": "rm-694-43cb29fdc35f",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "08",
+              "surfaceId": "08:694:14.436",
+              "pointFeet": [
+                66.76443083000004,
+                473.11336491373413,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.8139547808954,
+                53.89346353766095
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-43cb29fdc35f",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "08"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:1",
+              "roomKey": "rm-400176-fd57d2070a69",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "08",
+              "surfaceId": "08:400176:24.278",
+              "pointFeet": [
+                66.21663123170902,
+                472.3167184773886,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81395619030725,
+                53.89346102411843
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-fd57d2070a69",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "08"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 2160665,
+      "originalEdgeId": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+      "sourceRequest": {
+        "nativeStairId": 2160665,
+        "nativeRunId": 2160668,
+        "nativeDefinitionId": 2160669
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 427511
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 437656
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 2160668,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 427511,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -80.16822592868226,
+                501.6560634684862
+              ],
+              [
+                -77.66822592868226,
+                500.1560634684862
+              ],
+              [
+                -74.66822592868226,
+                500.1560634684862
+              ],
+              [
+                -74.51383881904971,
+                501.11832654231534
+              ]
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 437656,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -80.27704023901612,
+                502.3220358610997
+              ],
+              [
+                -80.091266640572,
+                507.54877273654114
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              -74.51383881904971,
+              501.8276441276172
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              -74.51383881904971,
+              502.7462792982209
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              -74.51383881904971,
+              503.6649144688246
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              -74.51383881904971,
+              504.58354963942816
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              -74.51383881904971,
+              505.50218481003185
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              -74.51383881904971,
+              506.42081998063554
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              -74.51383881904971,
+              507.33945515123924
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              -74.51383881904971,
+              508.25809032184293
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              -74.51383881904971,
+              509.1767254924466
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              -74.51383881904971,
+              510.0953606630503
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              -74.51383881904971,
+              511.013995833654
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              -74.51383881904971,
+              511.9326310042578
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              -74.51383881904971,
+              512.8512661748615
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              -74.51383881904971,
+              513.7699013454651
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              -74.51383881904971,
+              514.6885365160688
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              -77.30255272981086,
+              517.0589433402156
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              -80.091266640572,
+              515.607171686672
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              -80.091266640572,
+              514.6885365160683
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              -80.091266640572,
+              513.7699013454646
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              -80.091266640572,
+              512.8512661748609
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              -80.091266640572,
+              511.93263100425776
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              -80.091266640572,
+              511.0139958336541
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              -80.091266640572,
+              510.0953606630504
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 23,
+            "pointFeet": [
+              -80.091266640572,
+              509.17672549244674
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 24,
+            "pointFeet": [
+              -80.091266640572,
+              508.25809032184316
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "96f6763deb15084e9e268835480aeb004ffed3fbc83a8a19a002bd03177b33a0",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+          "from": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:0",
+          "to": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1",
+          "kind": "stairs",
+          "lengthMetres": 8.422669720495469,
+          "pointsFeet": [
+            [
+              -80.16822592868226,
+              501.6560634684862,
+              14.435695538057743
+            ],
+            [
+              -80.27704023901612,
+              502.3220358610997,
+              24.278215223097114
+            ]
+          ],
+          "roomKeys": [
+            "rm-694-339d4df6e0a4",
+            "rm-400176-408e02ec17d8"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 2160665,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:0",
+              "roomKey": "rm-694-339d4df6e0a4",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "04",
+              "surfaceId": "04:694:14.436",
+              "pointFeet": [
+                -80.16822592868226,
+                501.6560634684862,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81464736739039,
+                53.89342613825257
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-339d4df6e0a4",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1",
+              "roomKey": "rm-400176-408e02ec17d8",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "04",
+              "surfaceId": "04:400176:24.278",
+              "pointFeet": [
+                -80.27704023901612,
+                502.3220358610997,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81464871768289,
+                53.89342780579898
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-408e02ec17d8",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 2161350,
+      "originalEdgeId": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+      "sourceRequest": {
+        "nativeStairId": 2161350,
+        "nativeRunId": 2161353,
+        "nativeDefinitionId": 2161354
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 437656
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 501699
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 2161353,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 437656,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -80.27704023901612,
+                502.3220358610997
+              ],
+              [
+                -78.27704023901612,
+                500.3220358610997
+              ],
+              [
+                -74.77704023901612,
+                499.8220358610997
+              ],
+              [
+                -74.5138388190497,
+                501.12124681731115
+              ]
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 501699,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -77.91496803126898,
+                501.2417305435581
+              ],
+              [
+                -80.091266640572,
+                507.55169301153694
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              -74.5138388190497,
+              501.830564402613
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              -74.5138388190497,
+              502.7491995732167
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              -74.5138388190497,
+              503.6678347438204
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              -74.5138388190497,
+              504.5864699144241
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              -74.5138388190497,
+              505.50510508502776
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              -74.5138388190497,
+              506.42374025563146
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              -74.5138388190497,
+              507.34237542623515
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              -74.5138388190497,
+              508.26101059683884
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              -74.5138388190497,
+              509.17964576744254
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              -74.5138388190497,
+              510.09828093804623
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              -74.5138388190497,
+              511.0169161086499
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              -74.5138388190497,
+              511.93555127925384
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              -74.5138388190497,
+              512.8541864498575
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              -74.5138388190497,
+              513.772821620461
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              -74.5138388190497,
+              514.6914567910646
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              -77.30255272981084,
+              517.0618636152115
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              -80.091266640572,
+              515.6100919616679
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              -80.091266640572,
+              514.6914567910642
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              -80.091266640572,
+              513.7728216204605
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              -80.091266640572,
+              512.8541864498568
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              -80.091266640572,
+              511.9355512792535
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              -80.091266640572,
+              511.01691610864987
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              -80.091266640572,
+              510.0982809380462
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 23,
+            "pointFeet": [
+              -80.091266640572,
+              509.1796457674425
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 24,
+            "pointFeet": [
+              -80.091266640572,
+              508.2610105968389
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "f2ade72f975e2dd2063e5b06be60520e4aa962b3b8dce935612df3a7b3f2da44",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+          "from": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+          "to": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1",
+          "kind": "stairs",
+          "lengthMetres": 8.422669720495469,
+          "pointsFeet": [
+            [
+              -80.27704023901612,
+              502.3220358610997,
+              24.278215223097114
+            ],
+            [
+              -77.91496803126898,
+              501.2417305435581,
+              34.120734908136484
+            ]
+          ],
+          "roomKeys": [
+            "rm-400176-408e02ec17d8",
+            "rm-402367-136decba6590"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 2161350,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+              "roomKey": "rm-400176-408e02ec17d8",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "04",
+              "surfaceId": "04:400176:24.278",
+              "pointFeet": [
+                -80.27704023901612,
+                502.3220358610997,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81464871768289,
+                53.89342780579898
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-408e02ec17d8",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1",
+              "roomKey": "rm-402367-136decba6590",
+              "kind": "stair",
+              "levelId": 402367,
+              "building": "04",
+              "surfaceId": "04:402367:34.121",
+              "pointFeet": [
+                -77.91496803126898,
+                501.2417305435581,
+                34.120734908136484
+              ],
+              "geographic": [
+                -122.81463677672046,
+                53.893426773244485
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-402367-136decba6590",
+              "levelId": 402367,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 2349441,
+      "originalEdgeId": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd",
+      "sourceRequest": {
+        "nativeStairId": 2349441,
+        "nativeRunId": 2349454,
+        "nativeDefinitionId": 2349455
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 400479
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 402395
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 2349454,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 400479,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                11.745819086868707,
+                -164.34896098621698
+              ],
+              [
+                18.759423762560804,
+                -167.6420245452964
+              ]
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 402395,
+            "originalCapFaceToken": 249,
+            "approachXYFeet": [
+              [
+                58,
+                -164.8
+              ],
+              [
+                54.5,
+                -170.3
+              ],
+              [
+                26,
+                -170.3
+              ],
+              [
+                21,
+                -162.8
+              ],
+              [
+                20.07175972056601,
+                -162.9340192959524
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              18.18133977305949,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              17.525171794056867,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              16.869003815054242,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              16.212835836051617,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              15.556667857048993,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              14.900499878046368,
+              -167.6420245452964
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              12.234802636384323,
+              -167.64202454529638
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              12.23480263638433,
+              -163.42614528020454
+            ],
+            "lateralDirectionFeet": [
+              2.089429178441378e-15,
+              1
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              14.900499878046327,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918852e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              15.556667857048952,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              16.212835836051575,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              16.869003815054196,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              17.52517179405682,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              18.18133977305944,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              18.837507752062066,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              19.493675731064688,
+              -162.93401929595237
+            ],
+            "lateralDirectionFeet": [
+              -1.7557913582918977e-15,
+              -1
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "e54ad2539b354ce614b2189c148d0b43f0dffbfd0789c107fdac64098bb06f1a",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd",
+          "from": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:0",
+          "to": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1",
+          "kind": "stairs",
+          "lengthMetres": 4.7863696723070275,
+          "pointsFeet": [
+            [
+              11.745819086868707,
+              -164.34896098621698,
+              14.435695538057743
+            ],
+            [
+              58,
+              -164.8,
+              24.278215223097114
+            ]
+          ],
+          "roomKeys": [
+            "rm-694-484c1bec97cd",
+            "rm-400176-4eb8857094dd"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 2349441,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:0",
+              "roomKey": "rm-694-484c1bec97cd",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "03",
+              "surfaceId": "03:694:14.436",
+              "pointFeet": [
+                11.745819086868707,
+                -164.34896098621698,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81337243085709,
+                53.89174557350353
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-484c1bec97cd",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "03"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1",
+              "roomKey": "rm-400176-4eb8857094dd",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "03",
+              "surfaceId": "03:400176:24.278",
+              "pointFeet": [
+                58,
+                -164.8,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81316548812077,
+                53.89177978273851
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-4eb8857094dd",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "03"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 2439748,
+      "originalEdgeId": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2",
+      "sourceRequest": {
+        "nativeStairId": 2439748,
+        "nativeRunId": 2439788,
+        "nativeDefinitionId": 2439789
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 447970
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 503705
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 2439788,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 447970,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                130.07512626443213,
+                171.06355416033898
+              ],
+              [
+                131.27230742899098,
+                161.6912547079304
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564242,
+              -0.5299192642332077
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 503705,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                134.74058316948708,
+                178.58575173450856
+              ],
+              [
+                139.24058316948708,
+                174.58575173450856
+              ],
+              [
+                138.72958098975744,
+                173.45315140337996
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567,
+              -0.5299192642327667
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              131.69216793259184,
+              162.35681650625517
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564242,
+              -0.5299192642332077
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              132.21945426383883,
+              163.1879401029047
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564242,
+              -0.5299192642332077
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              132.73355843680497,
+              163.9982856096385
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564243,
+              -0.5299192642332078
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              133.23448045148993,
+              164.78785302645605
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567056,
+              -0.5299192642327575
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              133.7354024661746,
+              165.5774204432731
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567085,
+              -0.529919264232753
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              134.2363244808589,
+              166.36698786008964
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567112,
+              -0.5299192642327485
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              134.73724649554356,
+              167.1565552769067
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961564207,
+              -0.5299192642332134
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              135.23816851022866,
+              167.94612269372442
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567022,
+              -0.529919264232763
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              135.73909052491328,
+              168.73569011054144
+            ],
+            "lateralDirectionFeet": [
+              0.848048096156711,
+              -0.529919264232749
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              136.2400125395978,
+              169.52525752735832
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567058,
+              -0.5299192642327571
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              136.74093455428257,
+              170.31482494417554
+            ],
+            "lateralDirectionFeet": [
+              0.848048096156707,
+              -0.5299192642327551
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              137.2418565689672,
+              171.10439236099256
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567046,
+              -0.5299192642327591
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              137.76919744842135,
+              171.9356019380657
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567091,
+              -0.5299192642327518
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              138.3097204861568,
+              172.78758960505522
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961566997,
+              -0.5299192642327668
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "f25ad6b3241ffcbfe4434ece83b2607c3699d585b3c54572800b4f3c21213eff",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2",
+          "from": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:0",
+          "to": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1",
+          "kind": "stairs",
+          "lengthMetres": 5.359351014155087,
+          "pointsFeet": [
+            [
+              130.07512626443213,
+              171.06355416033898,
+              0
+            ],
+            [
+              134.74058316948708,
+              178.58575173450856,
+              14.435695538057743
+            ]
+          ],
+          "roomKeys": [
+            "rm-311-0bdc6d73a3ae",
+            "rm-694-ecfa1a619eb2"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 2439748,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:0",
+              "roomKey": "rm-311-0bdc6d73a3ae",
+              "kind": "stair",
+              "levelId": 311,
+              "building": "05",
+              "surfaceId": "05:311:0.000",
+              "pointFeet": [
+                130.07512626443213,
+                171.06355416033898,
+                0
+              ],
+              "geographic": [
+                -122.81328008664296,
+                53.89271790818989
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-311-0bdc6d73a3ae",
+              "levelId": 311,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1",
+              "roomKey": "rm-694-ecfa1a619eb2",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                134.74058316948708,
+                178.58575173450856,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81326904063727,
+                53.89274125387815
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-ecfa1a619eb2",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "terminal-source",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 1638837,
+      "originalEdgeId": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+      "sourceRequest": {
+        "nativeStairId": 1638837,
+        "nativeRunId": 1638854,
+        "nativeDefinitionId": 1638855
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 503705
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 511340
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 1638854,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 503705,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                146.81505975575146,
+                236.25467561569565
+              ],
+              [
+                149.70128899329558,
+                228.41991642178905
+              ]
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567198,
+              -0.5299192642327348
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 511340,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                142.34337354598142,
+                226.6861982749599
+              ],
+              [
+                143.77320039858444,
+                229.75268692843622
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567246,
+              0.529919264232727
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              150.09656111746693,
+              229.05248405046868
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567198,
+              -0.5299192642327348
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              150.57467068985534,
+              229.81761930782787
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              151.0527802622438,
+              230.5827545651871
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              151.53088983463226,
+              231.34788982254634
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              152.00943405208696,
+              232.11372065741298
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              152.48754362447528,
+              232.87885591477206
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              152.96521855179722,
+              233.64329559462345
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              153.44332812418568,
+              234.40843085198276
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              153.92143769657412,
+              235.173566109342
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567198,
+              -0.5299192642327348
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              154.3995472689624,
+              235.938701366701
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567198,
+              -0.5299192642327348
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              153.3562993496888,
+              239.58942213337698
+            ],
+            "lateralDirectionFeet": [
+              0.8480480961567223,
+              -0.529919264232731
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              149.61553222795817,
+              238.928085744894
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567212,
+              0.5299192642327327
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              149.13074491277155,
+              238.16712320434945
+            ],
+            "lateralDirectionFeet": [
+              -0.848048096156721,
+              0.5299192642327325
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              148.64595759758484,
+              237.40616066380474
+            ],
+            "lateralDirectionFeet": [
+              -0.848048096156719,
+              0.5299192642327363
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              148.16117028239825,
+              236.6451981232602
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567204,
+              0.5299192642327336
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              147.67638296721174,
+              235.88423558271583
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567205,
+              0.5299192642327335
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              147.19159565202514,
+              235.12327304217132
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567222,
+              0.5299192642327311
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              146.70680833683846,
+              234.36231050162667
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567222,
+              0.5299192642327308
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              146.22202102165176,
+              233.60134796108198
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567214,
+              0.5299192642327321
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              145.7372337064651,
+              232.84038542053736
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567216,
+              0.5299192642327321
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              145.25244639127845,
+              232.07942287999273
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567232,
+              0.5299192642327295
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              144.72799465939465,
+              231.25619976794894
+            ],
+            "lateralDirectionFeet": [
+              -0.8480480961567246,
+              0.529919264232727
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              144.1876771608329,
+              230.40807242730688
+            ],
+            "lateralDirectionFeet": [
+              -0.848048096156725,
+              0.5299192642327262
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "1b70b805927d94313c61052b2d53e90aa592d1440bed3b246126fc23bc59b970",
+      "requestChange": "unchanged-v3-proposal-current-explicit-scoped-transfer-semantics",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+          "from": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+          "to": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1",
+          "kind": "stairs",
+          "lengthMetres": 7.850328159875335,
+          "pointsFeet": [
+            [
+              146.81505975575146,
+              236.25467561569565,
+              14.435695538057743
+            ],
+            [
+              142.34337354598142,
+              226.6861982749599,
+              24.278215223097114
+            ]
+          ],
+          "roomKeys": [
+            "rm-694-0bed6b73a3bd",
+            "rm-400176-f91a4f2d9cb3"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 1638837,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:0",
+              "roomKey": "rm-694-0bed6b73a3bd",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "05",
+              "surfaceId": "05:694:14.436",
+              "pointFeet": [
+                146.81505975575146,
+                236.25467561569565,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81329006077993,
+                53.89290210284785
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-0bed6b73a3bd",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1",
+              "roomKey": "rm-400176-f91a4f2d9cb3",
+              "kind": "stair",
+              "levelId": 400176,
+              "building": "05",
+              "surfaceId": "05:400176:24.278",
+              "pointFeet": [
+                142.34337354598142,
+                226.6861982749599,
+                24.278215223097114
+              ],
+              "geographic": [
+                -122.81329758500445,
+                53.89287352585259
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-400176-f91a4f2d9cb3",
+              "levelId": 400176,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "05"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "full-source-profile",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    },
+    {
+      "nativeStairId": 2156084,
+      "originalEdgeId": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+      "sourceRequest": {
+        "nativeStairId": 2156084,
+        "nativeRunId": 2156103,
+        "nativeDefinitionId": 2156104
+      },
+      "riserInterpretation": "complete-original-parent-local",
+      "treadInterpretation": "original-cap-backed-turn",
+      "terminalMaterials": [
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 1593239
+        },
+        {
+          "kind": "floor-domains",
+          "nativeFloorElementId": 427511
+        }
+      ],
+      "proposal": {
+        "nativeRunId": 2156103,
+        "terminals": [
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 1593239,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -77.80229557866829,
+                510.60089634652815
+              ],
+              [
+                -74.51383881904978,
+                501.1431154963475
+              ]
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "supportScope": "connected-demand",
+            "nativeFloorElementId": 427511,
+            "originalCapFaceToken": 5,
+            "approachXYFeet": [
+              [
+                -80.16822592868226,
+                501.6560634684862
+              ],
+              [
+                -80.09126664057206,
+                507.57356169057323
+              ]
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          }
+        ],
+        "stations": [
+          {
+            "typedIndex": 0,
+            "pointFeet": [
+              -74.51383881904978,
+              501.85243308164934
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 1,
+            "pointFeet": [
+              -74.51383881904978,
+              502.77106825225303
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.2375624334838372e-14
+            ]
+          },
+          {
+            "typedIndex": 2,
+            "pointFeet": [
+              -74.51383881904978,
+              503.6897034228567
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.237562433483841e-14
+            ]
+          },
+          {
+            "typedIndex": 3,
+            "pointFeet": [
+              -74.51383881904978,
+              504.6083385934604
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.237562433483841e-14
+            ]
+          },
+          {
+            "typedIndex": 4,
+            "pointFeet": [
+              -74.51383881904977,
+              505.5269737640641
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.2375624334838447e-14
+            ]
+          },
+          {
+            "typedIndex": 5,
+            "pointFeet": [
+              -74.51383881904977,
+              506.4456089346679
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.2375624334838487e-14
+            ]
+          },
+          {
+            "typedIndex": 6,
+            "pointFeet": [
+              -74.51383881904977,
+              507.3642441052716
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 7,
+            "pointFeet": [
+              -74.51383881904977,
+              508.2828792758753
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 8,
+            "pointFeet": [
+              -74.51383881904977,
+              509.201514446479
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.2375624334838563e-14
+            ]
+          },
+          {
+            "typedIndex": 9,
+            "pointFeet": [
+              -74.51383881904977,
+              510.1201496170827
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.2375624334838563e-14
+            ]
+          },
+          {
+            "typedIndex": 10,
+            "pointFeet": [
+              -74.51383881904977,
+              511.0387847876864
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.23756243348386e-14
+            ]
+          },
+          {
+            "typedIndex": 11,
+            "pointFeet": [
+              -74.51383881904977,
+              511.9574199582902
+            ],
+            "lateralDirectionFeet": [
+              1,
+              1.23756243348386e-14
+            ]
+          },
+          {
+            "typedIndex": 12,
+            "pointFeet": [
+              -74.51383881904975,
+              512.8760551288939
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 13,
+            "pointFeet": [
+              -74.51383881904975,
+              513.7946902994975
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 14,
+            "pointFeet": [
+              -74.51383881904975,
+              514.7133254701012
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 15,
+            "pointFeet": [
+              -77.30255272981097,
+              517.0820918743002
+            ],
+            "lateralDirectionFeet": [
+              1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 16,
+            "pointFeet": [
+              -80.09126664057209,
+              515.6319606407043
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 17,
+            "pointFeet": [
+              -80.09126664057209,
+              514.7133254701006
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 18,
+            "pointFeet": [
+              -80.09126664057209,
+              513.7946902994969
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 19,
+            "pointFeet": [
+              -80.09126664057209,
+              512.8760551288932
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 20,
+            "pointFeet": [
+              -80.0912666405721,
+              511.9574199582899
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              0
+            ]
+          },
+          {
+            "typedIndex": 21,
+            "pointFeet": [
+              -80.0912666405721,
+              511.03878478768627
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              -1.2375624334838753e-14
+            ]
+          },
+          {
+            "typedIndex": 22,
+            "pointFeet": [
+              -80.0912666405721,
+              510.1201496170826
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              -1.2375624334838753e-14
+            ]
+          },
+          {
+            "typedIndex": 23,
+            "pointFeet": [
+              -80.0912666405721,
+              509.2015144464789
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              -1.2375624334838793e-14
+            ]
+          },
+          {
+            "typedIndex": 24,
+            "pointFeet": [
+              -80.0912666405721,
+              508.28287927587525
+            ],
+            "lateralDirectionFeet": [
+              -1,
+              -1.2375624334838793e-14
+            ]
+          }
+        ]
+      },
+      "proposalSha256": "eb4d9902214a9c458d213c31082b8923bcc00630e80ff8d2172250805fd028bb",
+      "requestChange": "unchanged-v3-proposal-current-explicit-scoped-transfer-semantics",
+      "originalGraphIdentityLocator": {
+        "edge": {
+          "id": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+          "from": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:0",
+          "to": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:1",
+          "kind": "stairs",
+          "lengthMetres": 8.975174277540978,
+          "pointsFeet": [
+            [
+              -77.80229557866829,
+              510.60089634652815,
+              0
+            ],
+            [
+              -80.16822592868226,
+              501.6560634684862,
+              14.435695538057743
+            ]
+          ],
+          "roomKeys": [
+            "rm-311-dd313b6f08d8",
+            "rm-694-339d4df6e0a4"
+          ],
+          "evidence": "native-flight",
+          "nativeElementId": 2156084,
+          "accessible": "no",
+          "enabled": false
+        },
+        "terminals": [
+          {
+            "node": {
+              "id": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:0",
+              "roomKey": "rm-311-dd313b6f08d8",
+              "kind": "stair",
+              "levelId": 311,
+              "building": "04",
+              "surfaceId": "04:311:0.000",
+              "pointFeet": [
+                -77.80229557866829,
+                510.60089634652815,
+                0
+              ],
+              "geographic": [
+                -122.81464842785743,
+                53.89345146432854
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-311-dd313b6f08d8",
+              "levelId": 311,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          },
+          {
+            "node": {
+              "id": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:1",
+              "roomKey": "rm-694-339d4df6e0a4",
+              "kind": "stair",
+              "levelId": 694,
+              "building": "04",
+              "surfaceId": "04:694:14.436",
+              "pointFeet": [
+                -80.16822592868226,
+                501.6560634684862,
+                14.435695538057743
+              ],
+              "geographic": [
+                -122.81464736739039,
+                53.89342613825257
+              ]
+            },
+            "roomIdentity": {
+              "key": "rm-694-339d4df6e0a4",
+              "levelId": 694,
+              "access": "unknown",
+              "walkable": true,
+              "circulation": false,
+              "stair": true,
+              "building": "04"
+            }
+          }
+        ]
+      },
+      "historicalV3Category": "full-source-profile",
+      "originalGraphAndPolicyUnchanged": true,
+      "requestOnlyNoSourceAuthority": true
+    }
+  ],
+  "untouchedHistoricalCases": [
+    {
+      "nativeStairId": 1298202,
+      "originalEdgeId": "stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8",
+      "historicalV3Category": "own-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1689936,
+      "originalEdgeId": "stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1693246,
+      "originalEdgeId": "stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779403,
+      "originalEdgeId": "stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779495,
+      "originalEdgeId": "stair:1779495:rm-694-b17d80e3d57c:rm-1487353-b7dc671f702f",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779620,
+      "originalEdgeId": "stair:1779620:rm-694-607258e63bb3:rm-1487353-6e5cbce7fec2",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1972504,
+      "originalEdgeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 2354630,
+      "originalEdgeId": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    }
+  ],
+  "notANewAll18OrAll28Proof": true,
+  "actualSourceRunAuthorized": false,
+  "sourceAuthorityGranted": false,
+  "routeApproved": false
+}

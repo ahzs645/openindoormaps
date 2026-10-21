@@ -13,6 +13,10 @@ const compare = (a: Rational, b: Rational): number => {
   return delta < 0n ? -1 : delta > 0n ? 1 : 0;
 };
 const TILE_FEET = 32n;
+export type NativeSupportTileProvider = (
+  tile: NativeRationalParts,
+  boundsFeet: readonly [bigint, bigint, bigint, bigint],
+) => NativeRationalParts | undefined;
 // BigInt division truncates toward zero. Negative physical coordinates need
 // mathematical floor, and every generated rational bit must affect the cell.
 const cell = (q: Rational): bigint => {
@@ -48,6 +52,7 @@ function snapshot(input: NativeRationalOverlayInput): NativeRationalParts {
 export function createNativeRationalSupportTileQuery(
   floors: NativeRationalOverlayInput,
   envelopes?: NativeRationalOverlayInput,
+  prepared?: NativeSupportTileProvider,
 ) {
   const floorSource = snapshot(floors),
     envelopeSource = envelopes === undefined ? undefined : snapshot(envelopes),
@@ -103,11 +108,15 @@ export function createNativeRationalSupportTileQuery(
             ],
           ],
         ];
-        support = nativeRationalOverlay(
-          "intersection",
-          tile,
-          nativeRationalIntersectionOperand(tile, floorSource),
-        );
+        // A publisher may supply this exact intermediate geometry. Missing
+        // entries retain the ordinary kernel; [] is a present empty result.
+        support =
+          (envelopeSource ? undefined : prepared?.(tile, [x0, y0, x1, y1])) ??
+          nativeRationalOverlay(
+            "intersection",
+            tile,
+            nativeRationalIntersectionOperand(tile, floorSource),
+          );
         support = freezeNativeRationalParts(
           envelopeSource
             ? nativeRationalOverlay(

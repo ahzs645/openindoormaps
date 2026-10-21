@@ -1,0 +1,164 @@
+{
+  "format": "mappedin-actual-mobile-controls-evidence-v1",
+  "checkedAt": "2026-10-18T20:30:22.343Z",
+  "requestedUrl": "https://demos.mappedin.com/web/mappedin-web/bc-children-s-and-women-s-hospital-campus/bc-childrens-hospital.html#/directions?to=Emercgency%20Reception%20(Turtle%20Bay)&from=s_67ef97b0c52ee383c6df7006&textDirectionsVisible=true&instruction=2",
+  "browser": "fresh isolated cloud system Chromium",
+  "physicalDevice": false,
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "isMobile": true,
+    "hasTouch": true
+  },
+  "interactionMethod": "CDP accessibility tree observed live button identities; DOM box centers; real mouse input; no forced/DOM-programmatic clicks",
+  "passed": {
+    "directInstruction2Paint": {
+      "message": "Take elevator down to Level 1",
+      "screenshot": "mobile-observed.png",
+      "bothManualControlsVisible": true,
+      "total": "3 minutes total"
+    },
+    "next": {
+      "actualButtonBackendId": 262,
+      "actualClick": {
+        "utc": "2026-10-18T20:29:04.377Z",
+        "device": "mobile-390x844",
+        "action": "actual-click",
+        "backendNodeId": 262,
+        "x": 282,
+        "y": 802
+      },
+      "instructionUrl": "https://demos.mappedin.com/web/mappedin-web/bc-children-s-and-women-s-hospital-campus/bc-childrens-hospital.html#/directions?to=Emercgency%20Reception%20(Turtle%20Bay)&from=s_67ef97b0c52ee383c6df7006&textDirectionsVisible=true&instruction=3",
+      "message": "Exit elevator and head left",
+      "building": "Teck Acute Care Centre",
+      "floor": "Level 1",
+      "screenshot": "mobile-next.png"
+    },
+    "previous": {
+      "actualButtonBackendId": 261,
+      "actualClick": {
+        "utc": "2026-10-18T20:29:17.556Z",
+        "device": "mobile-390x844",
+        "action": "actual-click",
+        "backendNodeId": 261,
+        "x": 108,
+        "y": 802
+      },
+      "instructionUrl": "https://demos.mappedin.com/web/mappedin-web/bc-children-s-and-women-s-hospital-campus/bc-childrens-hospital.html#/directions?to=Emercgency%20Reception%20(Turtle%20Bay)&from=s_67ef97b0c52ee383c6df7006&textDirectionsVisible=true&instruction=2",
+      "message": "Take elevator down to Level 1",
+      "screenshot": "mobile-previous.png"
+    },
+    "journeyEntry": {
+      "origin": "Neonatal Intensive Care Unit (Dragonfly)",
+      "destination": "Emergency (Turtle Bay) Reception",
+      "screenshot": "mobile-route-options.png"
+    },
+    "additionalOptions": [
+      "Share",
+      "QR Code",
+      "Steps"
+    ]
+  },
+  "accessibleControlObserved": {
+    "actualAX": {
+      "role": "switch",
+      "name": "Toggle accessible route (avoid stairs and escalators)",
+      "backendNodeId": 505,
+      "properties": [
+        {
+          "name": "disabled",
+          "value": {
+            "type": "boolean",
+            "value": true
+          }
+        },
+        {
+          "name": "checked",
+          "value": {
+            "type": "tristate",
+            "value": "true"
+          }
+        }
+      ]
+    },
+    "label": "Use Elevators",
+    "checked": true,
+    "disabled": true,
+    "toggleChangedVerified": false,
+    "forcedClickAttempted": false,
+    "accessibleGeometryOrGraphParityVerified": false
+  },
+  "unknownOrFailed": {
+    "desktopInitial": "Capture timed out after map controls appeared; no new desktop directions-control acceptance",
+    "desktopAfterResize": "Capture timed out; queued Done/Start interactions were not accepted as navigation-flow proof",
+    "accessibleToggle": "Disabled for supplied journey; no change or route comparison verified",
+    "optionsModalPaint": "PNG captured during animation; AX contents observed but final settled modal layout not accepted"
+  },
+  "publicDataRequestsObserved": [
+    "https://api-gateway.mappedin.com/public/1/map/bc-childrens-hospital",
+    "https://api-gateway.mappedin.com/public/1/polygon/bc-childrens-hospital",
+    "https://api-gateway.mappedin.com/public/1/location/bc-childrens-hospital",
+    "https://api-gateway.mappedin.com/exports/mvf2/1/bundle"
+  ],
+  "requestLogging": "origin and path only, all credential/query values stripped;200 request cap",
+  "sourceOrPermissionAuthorityGranted": false,
+  "appCodeChanged": false,
+  "browserClosed": true,
+  "browserElapsedMs": 199586,
+  "maxChromeProcessTreeRssBytes": 1465466880,
+  "maxAggregateCgroupBytes": 13185077248,
+  "resourceGuard": {
+    "chromeRssLimitBytes": 1500000000,
+    "aggregateLimitBytes": 15500000000,
+    "triggered": false
+  },
+  "rawEvidenceDirectory": "/workspace/scratch/mappedin-actual-controls-20261018-bounded",
+  "rawFiles": [
+    {
+      "name": "bootstrap-closed-stdin.json",
+      "bytes": 1294,
+      "sha256": "2a6bad79c2f3a1e7ea0b6396ab18cf9386cf38afdd7d557a8c8127da612a8c97"
+    },
+    {
+      "name": "events.json",
+      "bytes": 64702,
+      "sha256": "5dad784fcba5ad3684ddf5af7324c56b8ca93150624e7d548ec1fc33173d684c"
+    },
+    {
+      "name": "mobile-next.png",
+      "bytes": 147676,
+      "sha256": "15ab0679be8393e1e05c1e8ba627e3d2b7ea33fa7d63172e9e88caef39b7755a"
+    },
+    {
+      "name": "mobile-observed.png",
+      "bytes": 145559,
+      "sha256": "0838e5adc38504549ffce1a5b83e27bd252ea72a6564171021c76e27c388abae"
+    },
+    {
+      "name": "mobile-options-open.png",
+      "bytes": 154090,
+      "sha256": "b1367986c148ff550f4628073d8d3a6fe1c52404b1cab98ca9f7237456fd5899"
+    },
+    {
+      "name": "mobile-previous.png",
+      "bytes": 139901,
+      "sha256": "8fa9d125b28d02f7d516119d812491db197de28b19b060bc2625ceae5811231d"
+    },
+    {
+      "name": "mobile-route-options.png",
+      "bytes": 145404,
+      "sha256": "ee7bdc769c1425a7acd77b25e477961f13bedc3829e8450789ebcb8248f1918d"
+    },
+    {
+      "name": "run.mjs",
+      "bytes": 5610,
+      "sha256": "fce2023bf5fa8ad344f96718eefa8ce519163dcd0a2dc04900e7cb9b1472b5ae"
+    }
+  ],
+  "driveEvidenceArchive": {
+    "url": "https://drive.google.com/file/d/1Q7ayfUoEs3PJxstzSasne0yIukhUJOKQ/view?usp=drivesdk",
+    "bytes": 741774,
+    "sha256": "8c5aa57ed615afc86d662f8ae2f0de49d9b722cf1def8dba86017e2ad06c7078",
+    "remoteAll11MembersVerified": true
+  }
+}

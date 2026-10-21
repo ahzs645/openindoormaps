@@ -1,0 +1,271 @@
+{
+  "format": "fresh-published-routing-hydration-proof-v1",
+  "passed": true,
+  "inputSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+  "runtimeSha256": "ea8f5cf48ce5742f55cd15515cba6ebcf1c29cf5ea24d95e56dc272188fdfb54",
+  "engineSha256": "4e561d6e06a32816196c692b07cc4e0e32ef29f22fe00f94c49683dbd8c558e2",
+  "receipt": {
+    "id": "fresh-candidate-native-routing-0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+    "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+    "engineSha256": "4e561d6e06a32816196c692b07cc4e0e32ef29f22fe00f94c49683dbd8c558e2",
+    "source": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+    },
+    "logicalSha256": "0fec9a5b4ca35f23ca62c45e6ef6322d15722a3479521a324a4d3f7976c3ed89",
+    "logicalBytes": 34647360,
+    "compressedSha256": "e92f9acb2849469510c5f208fd82662dc423dc02db1104bf0cd13b0b0883d503",
+    "compressedBytes": 8107991,
+    "url": "/data/candidate-routing/e92f9acb2849469510c5f208fd82662dc423dc02db1104bf0cd13b0b0883d503.json.gz",
+    "runtimeSha256": "ea8f5cf48ce5742f55cd15515cba6ebcf1c29cf5ea24d95e56dc272188fdfb54"
+  },
+  "sourceDatasetUnchanged": true,
+  "normalPhysicalValidationRepeated": true,
+  "originalFacesChecked": 5393,
+  "materialCutsChecked": 8,
+  "freshNormalRouteCases": 10,
+  "actualRouteParityCases": 0,
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "phases": [
+    {
+      "name": "loaded",
+      "seconds": 13.957500660999997,
+      "value": {
+        "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+      }
+    },
+    {
+      "name": "normal-validation",
+      "seconds": 117.470469572
+    },
+    {
+      "name": "complete-normal-physical-graphs-and-supported-cells",
+      "seconds": 616.473874103
+    },
+    {
+      "name": "all-original-exact-faces-parity",
+      "seconds": 617.623525744,
+      "value": 5393
+    },
+    {
+      "name": "all-native-level-material-cuts-parity",
+      "seconds": 622.859860255,
+      "value": 8
+    },
+    {
+      "name": "normal-route",
+      "seconds": 649.879189852,
+      "value": {
+        "name": "main-forward",
+        "seconds": 27.016559332999982,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 673.978496019,
+      "value": {
+        "name": "main-reverse",
+        "seconds": 24.098376908999985,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 676.086875557,
+      "value": {
+        "name": "floor1",
+        "seconds": 2.1079982300000264,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 676.82723154,
+      "value": {
+        "name": "floor3",
+        "seconds": 0.7401894799999427,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 685.683388069,
+      "value": {
+        "name": "unavailable",
+        "seconds": 8.855888870000024,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 691.7558083389999,
+      "value": {
+        "name": "lift-up",
+        "seconds": 6.071937688000035,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 698.791654524,
+      "value": {
+        "name": "lift-down",
+        "seconds": 7.0355032299999145,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 699.51502192,
+      "value": {
+        "name": "ramp-forward",
+        "seconds": 0.722676395000075,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 700.051400302,
+      "value": {
+        "name": "ramp-reverse",
+        "seconds": 0.5360653269999893,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 700.1345223159999,
+      "value": {
+        "name": "stepfree-refusal",
+        "seconds": 0.0829242479999084,
+        "available": false
+      }
+    },
+    {
+      "name": "normal-derived-source-checksums",
+      "seconds": 700.135703279,
+      "value": {
+        "preparedRoutingKey": "9ff7d377a7857a9d1a0cbaa2f86b35a2e41e8a90e0a9ff82a01d02d93db1d6e5",
+        "resolvedRouteGeometryKey": "native-circulation-sha256-v1:eb1495caa55b0dbd650736c12b0625e3c9eedb43df5ffabb8a41c140d923f56c"
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1005.047206231,
+      "value": {
+        "completed": 100,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1006.972690105,
+      "value": {
+        "completed": 200,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1010.9873189159999,
+      "value": {
+        "completed": 300,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1015.073123335,
+      "value": {
+        "completed": 400,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1022.162257075,
+      "value": {
+        "completed": 500,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1045.734849751,
+      "value": {
+        "completed": 600,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1073.685632917,
+      "value": {
+        "completed": 700,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1078.3067037760002,
+      "value": {
+        "completed": 800,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1088.541680042,
+      "value": {
+        "completed": 900,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1107.309196917,
+      "value": {
+        "completed": 1000,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1117.3808489920002,
+      "value": {
+        "completed": 1100,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1122.6508662770002,
+      "value": {
+        "completed": 1200,
+        "total": 1285
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 1132.8534872150003,
+      "value": {
+        "completed": 1285,
+        "total": 1285
+      }
+    },
+    {
+      "name": "all-source-cell-support-tiles-parity",
+      "seconds": 1138.102291414,
+      "value": {
+        "parents": 1285,
+        "nonempty": 3591,
+        "empty": 700,
+        "coordinates": 68916
+      }
+    }
+  ]
+}

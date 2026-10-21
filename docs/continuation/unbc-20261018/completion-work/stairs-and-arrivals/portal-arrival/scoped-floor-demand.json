@@ -1,0 +1,1617 @@
+{
+  "implementationStart": [
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-cap-demand.ts",
+      "sha256": "ec4d5351ff41f51b2c00e2114106633e1c810b267194c46f081b592198cc8278"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-local-support.ts",
+      "sha256": "018f59797002e92527b039a25305b1497a3fe3e90abf55e1c0070e37d878c215"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-element-level-prefix.ts",
+      "sha256": "a31462e3007a86013493169088d524eab9ad3d72a254750ffecab8b1770e2d3f"
+    }
+  ],
+  "originalFrameCopies": [
+    {
+      "path": "/workspace/scratch/source-portal-arrival-20261018/scoped-floor-demand.json.original-frames/400479-2153.bin",
+      "sourceKey": "400479:2153",
+      "sha256": "05f04940cf215b165b7bb65b21c429762cb92143affdfa63ce867f34d385c206",
+      "bytes": 62077
+    },
+    {
+      "path": "/workspace/scratch/source-portal-arrival-20261018/scoped-floor-demand.json.original-frames/490040-2153.bin",
+      "sourceKey": "490040:2153",
+      "sha256": "e14666bb3c233a68e21e8105d508a603cc12f5a982c46cac2c3701883da530b6",
+      "bytes": 310900
+    },
+    {
+      "path": "/workspace/scratch/source-portal-arrival-20261018/scoped-floor-demand.json.original-frames/400479-2246.bin",
+      "sourceKey": "400479:2246",
+      "sha256": "4427a68924dbb226040d4b97efc4a89e9d4af76b3a8fe8a47d8bfba921dedee2",
+      "bytes": 55036
+    },
+    {
+      "path": "/workspace/scratch/source-portal-arrival-20261018/scoped-floor-demand.json.original-frames/490040-2246.bin",
+      "sourceKey": "490040:2246",
+      "sha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+      "bytes": 254887
+    }
+  ],
+  "kind": "original-source-scoped-floor-demand-detail",
+  "modelInput": {
+    "path": "/workspace/scratch/native-source-restored/derived/UNBC.original.rvt",
+    "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+  },
+  "previousActualCensusReceipt": {
+    "path": "/workspace/scratch/source-portal-arrival-20261018/final-v3.json",
+    "sha256": "e1b0671c262d625bc3d3ab57e28ca5ce4ece3d812089aeb15126dba6e918b13d"
+  },
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "completeSourcePages": 3666,
+  "standingPoint": [
+    114.74448177496802,
+    -122.88462533961184,
+    14.435695538057743
+  ],
+  "widthFeet": 2,
+  "headroomFeet": 6,
+  "results": [
+    {
+      "id": 400479,
+      "originalFloorSemanticPrefix": {
+        "nativeElementId": 400479,
+        "sourceClassName": "Floor",
+        "sourceClassSlot": 2153,
+        "nativeAssociatedLevelId": 694,
+        "originalNamedStaticPrefixEnd": 80,
+        "originalNamedStaticPrefixFields": [
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetDouble",
+            "sourceSchemaFieldOffset": 27179,
+            "start": 18,
+            "end": 24
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetInt",
+            "sourceSchemaFieldOffset": 27209,
+            "start": 24,
+            "end": 30
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetAString",
+            "sourceSchemaFieldOffset": 27236,
+            "start": 30,
+            "end": 34
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetElementId",
+            "sourceSchemaFieldOffset": 27267,
+            "start": 34,
+            "end": 38
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_geomSteps",
+            "sourceSchemaFieldOffset": 27300,
+            "start": 38,
+            "end": 44
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pGeomTable",
+            "sourceSchemaFieldOffset": 27319,
+            "start": 44,
+            "end": 50
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_cellList",
+            "sourceSchemaFieldOffset": 27359,
+            "start": 54,
+            "end": 60
+          },
+          {
+            "sourceClassName": "ControlledDocAccess",
+            "fieldPath": "Floor.m_docAccess.m_pDoc",
+            "sourceSchemaFieldOffset": 27431,
+            "start": 60,
+            "end": 64
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_docAccess",
+            "sourceSchemaFieldOffset": 27377,
+            "start": 60,
+            "end": 64
+          },
+          {
+            "sourceClassName": "Identifier",
+            "fieldPath": "Floor.m_id.m_id.m_id64",
+            "sourceSchemaFieldOffset": 372,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "ElementId",
+            "fieldPath": "Floor.m_id.m_id",
+            "sourceSchemaFieldOffset": 334,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_id",
+            "sourceSchemaFieldOffset": 27449,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "Identifier",
+            "fieldPath": "Floor.m_assocLevelId.m_id.m_id64",
+            "sourceSchemaFieldOffset": 372,
+            "start": 72,
+            "end": 80
+          },
+          {
+            "sourceClassName": "ElementId",
+            "fieldPath": "Floor.m_assocLevelId.m_id",
+            "sourceSchemaFieldOffset": 334,
+            "start": 72,
+            "end": 80
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_assocLevelId",
+            "sourceSchemaFieldOffset": 27463,
+            "start": 72,
+            "end": 80
+          }
+        ],
+        "retainedDynamicDescriptors": [
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetDouble",
+            "token": -1,
+            "sourceClassSlot": 3219,
+            "start": 18,
+            "end": 24
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetInt",
+            "token": -1,
+            "sourceClassSlot": 3221,
+            "start": 24,
+            "end": 30
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetAString",
+            "token": 0,
+            "sourceClassSlot": null,
+            "start": 30,
+            "end": 34
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetElementId",
+            "token": 0,
+            "sourceClassSlot": null,
+            "start": 34,
+            "end": 38
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_geomSteps",
+            "token": -1,
+            "sourceClassSlot": 2337,
+            "start": 38,
+            "end": 44
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pGeomTable",
+            "token": -1,
+            "sourceClassSlot": 2338,
+            "start": 44,
+            "end": 50
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_cellList",
+            "token": -1,
+            "sourceClassSlot": 784,
+            "start": 54,
+            "end": 60
+          }
+        ],
+        "originalRootByteLength": 62077,
+        "unreadOriginalRootSuffixBytes": 61993,
+        "completeNamedStaticPrefixDecoded": true,
+        "completeSemanticRootDecoded": false,
+        "originalSourceAuthorityGranted": false,
+        "routeApproved": false
+      },
+      "originalGElementFrameSha256": "4427a68924dbb226040d4b97efc4a89e9d4af76b3a8fe8a47d8bfba921dedee2",
+      "originalFloorFrameSha256": "05f04940cf215b165b7bb65b21c429762cb92143affdfa63ce867f34d385c206",
+      "originalCensusRows": [
+        {
+          "nativeElementId": 400479,
+          "sourceFrameSha256": "4427a68924dbb226040d4b97efc4a89e9d4af76b3a8fe8a47d8bfba921dedee2",
+          "boundsFeet": {
+            "min": {
+              "x": -26.309889261454387,
+              "y": -327.0571588005841,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 125.10719279143217,
+              "y": -98.85836381371581,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        }
+      ],
+      "completeDeclaredFaceCount": 72,
+      "attempts": [
+        {
+          "token": 4,
+          "faceFlags": 516,
+          "originalPlane": {
+            "kind": "plane",
+            "sourceClassSlot": 634,
+            "byteOffset": 34511,
+            "endOffset": 34616,
+            "surface": {
+              "envelope": {
+                "firstCorner": [
+                  -54.002624670885496,
+                  -11.417648113753572
+                ],
+                "secondCorner": [
+                  174.19617031598278,
+                  140.00130048401206
+                ]
+              },
+              "orientFlag": true
+            },
+            "origin": [
+              -14.894107692579901,
+              -273.0545341296986,
+              13.779527559055119
+            ],
+            "xVector": [
+              0,
+              1,
+              0
+            ],
+            "yVector": [
+              1,
+              0,
+              0
+            ],
+            "queuedProperties": []
+          },
+          "localDemand": {
+            "ok": false,
+            "blocker": "Error: Named original face is not a complete upward trimmed physical cap"
+          },
+          "ok": false,
+          "blocker": "Error: Named original face is not a complete upward trimmed physical cap"
+        },
+        {
+          "token": 5,
+          "faceFlags": 516,
+          "originalPlane": {
+            "kind": "plane",
+            "sourceClassSlot": 634,
+            "byteOffset": 34937,
+            "endOffset": 35042,
+            "surface": {
+              "envelope": {
+                "firstCorner": [
+                  -174.19617031598278,
+                  -11.417648113753572
+                ],
+                "secondCorner": [
+                  54.002624670885496,
+                  140.00130048401206
+                ]
+              },
+              "orientFlag": true
+            },
+            "origin": [
+              -14.894107692579901,
+              -273.0545341296986,
+              14.435695538057743
+            ],
+            "xVector": [
+              0,
+              -1,
+              0
+            ],
+            "yVector": [
+              1,
+              0,
+              0
+            ],
+            "queuedProperties": []
+          },
+          "localDemand": {
+            "ok": true,
+            "report": {
+              "nativeFloorElementId": 400479,
+              "originalCapFaceToken": 5,
+              "originalPhysicalTopElevationFeet": {
+                "numerator": "1015821766344231",
+                "denominator": "70368744177664"
+              },
+              "originalCapLoopTokens": [
+                289,
+                500,
+                502,
+                504
+              ],
+              "originalCapEdgeTokens": [
+                135,
+                132,
+                129,
+                126,
+                123,
+                120,
+                117,
+                114,
+                111,
+                108,
+                106,
+                176,
+                173,
+                170,
+                167,
+                164,
+                161,
+                158,
+                155,
+                152,
+                149,
+                146,
+                144,
+                206,
+                192,
+                142,
+                139,
+                103,
+                100,
+                97,
+                94,
+                91,
+                88,
+                85,
+                82,
+                79,
+                77,
+                188,
+                185,
+                182,
+                180,
+                212,
+                210,
+                242,
+                238,
+                235,
+                232,
+                229,
+                226,
+                223,
+                221,
+                257,
+                219,
+                270,
+                267,
+                264,
+                261,
+                216,
+                203,
+                200,
+                197,
+                195,
+                253,
+                250,
+                248,
+                283,
+                280,
+                277,
+                274,
+                246
+              ],
+              "originalChainEnvelopeLoops": [
+                {
+                  "originalLoopToken": 289,
+                  "originalChainStartEdgeTokens": [
+                    135,
+                    173,
+                    192,
+                    77
+                  ],
+                  "originalChainEnvelopesUv": [
+                    {
+                      "minimum": [
+                        -123.76966112963146,
+                        0
+                      ],
+                      "maximum": [
+                        54.002624670885496,
+                        140.00130048401206
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -174.19617031598278,
+                        46.74426515426178
+                      ],
+                      "maximum": [
+                        -123.76966112963146,
+                        140.00130048401206
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -151.25325693015648,
+                        -11.417648113753572
+                      ],
+                      "maximum": [
+                        0,
+                        46.74426515426178
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        0,
+                        0
+                      ],
+                      "maximum": [
+                        43.45800524831179,
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "originalLoopToken": 502,
+                  "originalChainStartEdgeTokens": [
+                    212,
+                    270
+                  ],
+                  "originalChainEnvelopesUv": [
+                    {
+                      "minimum": [
+                        -159.67581004032613,
+                        36.159436966951624
+                      ],
+                      "maximum": [
+                        -130.70899652066652,
+                        55.341382026825215
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -149.36677399052357,
+                        20.85431885671531
+                      ],
+                      "maximum": [
+                        -130.70899652066652,
+                        45.032345977022715
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "retainedOriginalHoleCount": 3,
+              "sourceLoopWindings": [
+                1,
+                0,
+                0,
+                0
+              ],
+              "completeBoundaryUncertaintyContact": true,
+              "scopedDemandFeet": [
+                [
+                  [
+                    [
+                      {
+                        "numerator": "4002028169821845",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8717605508068897",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4072396913999509",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8717605508068897",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4072396913999509",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8576868019713569",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4002028169821845",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8576868019713569",
+                        "denominator": "70368744177664"
+                      }
+                    ]
+                  ]
+                ]
+              ],
+              "completeConnectedDemandSupported": false,
+              "coordinatesChanged": false,
+              "originalLoopsOrHolesChanged": false,
+              "globalReferenceWindingApproved": false,
+              "wholeFloorSolidApproved": false,
+              "originalSourceAuthorityGranted": false,
+              "routeApproved": false
+            }
+          },
+          "ok": false,
+          "blocker": "Error: Self-intersecting exact native rings 0:72/0:70."
+        }
+      ]
+    },
+    {
+      "id": 490040,
+      "originalFloorSemanticPrefix": {
+        "nativeElementId": 490040,
+        "sourceClassName": "Floor",
+        "sourceClassSlot": 2153,
+        "nativeAssociatedLevelId": 694,
+        "originalNamedStaticPrefixEnd": 80,
+        "originalNamedStaticPrefixFields": [
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetDouble",
+            "sourceSchemaFieldOffset": 27179,
+            "start": 18,
+            "end": 24
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetInt",
+            "sourceSchemaFieldOffset": 27209,
+            "start": 24,
+            "end": 30
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetAString",
+            "sourceSchemaFieldOffset": 27236,
+            "start": 30,
+            "end": 34
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetElementId",
+            "sourceSchemaFieldOffset": 27267,
+            "start": 34,
+            "end": 38
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_geomSteps",
+            "sourceSchemaFieldOffset": 27300,
+            "start": 38,
+            "end": 44
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pGeomTable",
+            "sourceSchemaFieldOffset": 27319,
+            "start": 44,
+            "end": 50
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_cellList",
+            "sourceSchemaFieldOffset": 27359,
+            "start": 54,
+            "end": 60
+          },
+          {
+            "sourceClassName": "ControlledDocAccess",
+            "fieldPath": "Floor.m_docAccess.m_pDoc",
+            "sourceSchemaFieldOffset": 27431,
+            "start": 60,
+            "end": 64
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_docAccess",
+            "sourceSchemaFieldOffset": 27377,
+            "start": 60,
+            "end": 64
+          },
+          {
+            "sourceClassName": "Identifier",
+            "fieldPath": "Floor.m_id.m_id.m_id64",
+            "sourceSchemaFieldOffset": 372,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "ElementId",
+            "fieldPath": "Floor.m_id.m_id",
+            "sourceSchemaFieldOffset": 334,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_id",
+            "sourceSchemaFieldOffset": 27449,
+            "start": 64,
+            "end": 72
+          },
+          {
+            "sourceClassName": "Identifier",
+            "fieldPath": "Floor.m_assocLevelId.m_id.m_id64",
+            "sourceSchemaFieldOffset": 372,
+            "start": 72,
+            "end": 80
+          },
+          {
+            "sourceClassName": "ElementId",
+            "fieldPath": "Floor.m_assocLevelId.m_id",
+            "sourceSchemaFieldOffset": 334,
+            "start": 72,
+            "end": 80
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_assocLevelId",
+            "sourceSchemaFieldOffset": 27463,
+            "start": 72,
+            "end": 80
+          }
+        ],
+        "retainedDynamicDescriptors": [
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetDouble",
+            "token": -1,
+            "sourceClassSlot": 3219,
+            "start": 18,
+            "end": 24
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetInt",
+            "token": -1,
+            "sourceClassSlot": 3221,
+            "start": 24,
+            "end": 30
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetAString",
+            "token": 0,
+            "sourceClassSlot": null,
+            "start": 30,
+            "end": 34
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pParamValueSetElementId",
+            "token": 0,
+            "sourceClassSlot": null,
+            "start": 34,
+            "end": 38
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_geomSteps",
+            "token": -1,
+            "sourceClassSlot": 2337,
+            "start": 38,
+            "end": 44
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_pGeomTable",
+            "token": -1,
+            "sourceClassSlot": 2338,
+            "start": 44,
+            "end": 50
+          },
+          {
+            "sourceClassName": "Element",
+            "fieldPath": "Floor.m_cellList",
+            "token": -1,
+            "sourceClassSlot": 784,
+            "start": 54,
+            "end": 60
+          }
+        ],
+        "originalRootByteLength": 310900,
+        "unreadOriginalRootSuffixBytes": 310816,
+        "completeNamedStaticPrefixDecoded": true,
+        "completeSemanticRootDecoded": false,
+        "originalSourceAuthorityGranted": false,
+        "routeApproved": false
+      },
+      "originalGElementFrameSha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+      "originalFloorFrameSha256": "e14666bb3c233a68e21e8105d508a603cc12f5a982c46cac2c3701883da530b6",
+      "originalCensusRows": [
+        {
+          "nativeElementId": 490040,
+          "sourceFrameSha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+          "boundsFeet": {
+            "min": {
+              "x": -198.6602006317529,
+              "y": -205.65141613446514,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 172.36935095055748,
+              "y": 480.2439245580816,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        }
+      ],
+      "completeDeclaredFaceCount": 341,
+      "attempts": [
+        {
+          "token": 4,
+          "faceFlags": 516,
+          "originalPlane": {
+            "kind": "plane",
+            "sourceClassSlot": 634,
+            "byteOffset": 158708,
+            "endOffset": 158813,
+            "surface": {
+              "envelope": {
+                "firstCorner": [
+                  -77.4868822142351,
+                  -56.35016284561641
+                ],
+                "secondCorner": [
+                  293.5426693680753,
+                  629.5451778469303
+                ]
+              },
+              "orientFlag": true
+            },
+            "origin": [
+              94.88246873632238,
+              -149.30125328884873,
+              13.779527559055119
+            ],
+            "xVector": [
+              -1,
+              0,
+              0
+            ],
+            "yVector": [
+              0,
+              1,
+              0
+            ],
+            "queuedProperties": []
+          },
+          "localDemand": {
+            "ok": false,
+            "blocker": "Error: Named original face is not a complete upward trimmed physical cap"
+          },
+          "ok": false,
+          "blocker": "Error: Named original face is not a complete upward trimmed physical cap"
+        },
+        {
+          "token": 5,
+          "faceFlags": 516,
+          "originalPlane": {
+            "kind": "plane",
+            "sourceClassSlot": 634,
+            "byteOffset": 159854,
+            "endOffset": 159959,
+            "surface": {
+              "envelope": {
+                "firstCorner": [
+                  -293.5426693680753,
+                  -56.35016284561641
+                ],
+                "secondCorner": [
+                  77.4868822142351,
+                  629.5451778469303
+                ]
+              },
+              "orientFlag": true
+            },
+            "origin": [
+              94.88246873632238,
+              -149.30125328884873,
+              14.435695538057743
+            ],
+            "xVector": [
+              1,
+              0,
+              0
+            ],
+            "yVector": [
+              0,
+              1,
+              0
+            ],
+            "queuedProperties": []
+          },
+          "localDemand": {
+            "ok": true,
+            "report": {
+              "nativeFloorElementId": 490040,
+              "originalCapFaceToken": 5,
+              "originalPhysicalTopElevationFeet": {
+                "numerator": "1015821766344231",
+                "denominator": "70368744177664"
+              },
+              "originalCapLoopTokens": [
+                1365,
+                2377,
+                2379,
+                2381,
+                2383,
+                2385,
+                2387
+              ],
+              "originalCapEdgeTokens": [
+                555,
+                552,
+                549,
+                546,
+                543,
+                540,
+                537,
+                534,
+                531,
+                528,
+                525,
+                522,
+                519,
+                516,
+                513,
+                511,
+                1124,
+                1121,
+                1118,
+                1115,
+                1112,
+                1109,
+                508,
+                505,
+                502,
+                499,
+                496,
+                493,
+                490,
+                487,
+                484,
+                481,
+                478,
+                475,
+                472,
+                470,
+                1105,
+                1103,
+                1198,
+                1195,
+                1192,
+                1189,
+                1186,
+                1183,
+                1180,
+                1177,
+                1174,
+                1171,
+                1168,
+                1165,
+                1162,
+                955,
+                1131,
+                1128,
+                953,
+                1158,
+                1155,
+                1152,
+                1149,
+                1146,
+                1143,
+                1140,
+                1137,
+                1134,
+                1302,
+                1299,
+                1296,
+                1293,
+                1290,
+                467,
+                464,
+                461,
+                458,
+                455,
+                452,
+                449,
+                446,
+                443,
+                440,
+                437,
+                434,
+                431,
+                428,
+                425,
+                422,
+                419,
+                416,
+                413,
+                410,
+                407,
+                404,
+                401,
+                398,
+                395,
+                392,
+                389,
+                386,
+                383,
+                380,
+                377,
+                375,
+                633,
+                630,
+                627,
+                624,
+                621,
+                618,
+                615,
+                612,
+                610,
+                949,
+                946,
+                943,
+                940,
+                937,
+                934,
+                931,
+                928,
+                925,
+                922,
+                919,
+                916,
+                913,
+                910,
+                907,
+                904,
+                901,
+                898,
+                895,
+                892,
+                889,
+                886,
+                883,
+                880,
+                877,
+                874,
+                871,
+                868,
+                865,
+                862,
+                859,
+                856,
+                853,
+                850,
+                847,
+                844,
+                841,
+                838,
+                835,
+                832,
+                829,
+                826,
+                823,
+                820,
+                817,
+                814,
+                811,
+                808,
+                805,
+                802,
+                799,
+                796,
+                793,
+                790,
+                787,
+                784,
+                781,
+                778,
+                775,
+                772,
+                769,
+                766,
+                763,
+                760,
+                757,
+                754,
+                751,
+                748,
+                745,
+                742,
+                739,
+                736,
+                733,
+                730,
+                727,
+                724,
+                721,
+                718,
+                715,
+                712,
+                709,
+                706,
+                703,
+                700,
+                697,
+                694,
+                691,
+                688,
+                685,
+                682,
+                679,
+                676,
+                673,
+                670,
+                667,
+                664,
+                661,
+                658,
+                655,
+                652,
+                649,
+                646,
+                643,
+                640,
+                637,
+                563,
+                561,
+                606,
+                603,
+                372,
+                369,
+                366,
+                363,
+                360,
+                357,
+                354,
+                351,
+                348,
+                346,
+                583,
+                580,
+                577,
+                574,
+                571,
+                568,
+                566,
+                1099,
+                1096,
+                1093,
+                1090,
+                1087,
+                1084,
+                1081,
+                1078,
+                1075,
+                1072,
+                1069,
+                1066,
+                1063,
+                1060,
+                1057,
+                1054,
+                1051,
+                1048,
+                1045,
+                1042,
+                1039,
+                1036,
+                1033,
+                1030,
+                1027,
+                1024,
+                1021,
+                1018,
+                1015,
+                1012,
+                1009,
+                1006,
+                1003,
+                1000,
+                997,
+                994,
+                991,
+                988,
+                985,
+                601,
+                957,
+                598,
+                595,
+                593,
+                1359,
+                1356,
+                590,
+                587,
+                558,
+                969,
+                966,
+                963,
+                961,
+                981,
+                978,
+                975,
+                973,
+                1237,
+                1234,
+                1231,
+                1228,
+                1225,
+                1222,
+                1219,
+                1216,
+                1213,
+                1210,
+                1208,
+                1269,
+                1266,
+                1263,
+                1260,
+                1257,
+                1254,
+                1251,
+                1206,
+                1204,
+                1321,
+                1318,
+                1275,
+                1202,
+                1328,
+                1325,
+                1287,
+                1284,
+                1281,
+                1278,
+                1248,
+                1245,
+                1242,
+                1240,
+                1314,
+                1311,
+                1308,
+                1306,
+                1340,
+                1337,
+                1334,
+                1332,
+                1352,
+                1349,
+                1346,
+                1344
+              ],
+              "originalChainEnvelopeLoops": [
+                {
+                  "originalLoopToken": 1365,
+                  "originalChainStartEdgeTokens": [
+                    555,
+                    519,
+                    502,
+                    1105,
+                    1168,
+                    1143,
+                    458,
+                    422,
+                    386,
+                    612,
+                    919,
+                    883,
+                    847,
+                    811,
+                    775,
+                    739,
+                    703,
+                    667,
+                    561,
+                    346,
+                    1087,
+                    1051,
+                    1015,
+                    957
+                  ],
+                  "originalChainEnvelopesUv": [
+                    {
+                      "minimum": [
+                        29.52755930009903,
+                        0
+                      ],
+                      "maximum": [
+                        77.4868822142351,
+                        118.05446088296111
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -36.13188418995523,
+                        118.05446088296111
+                      ],
+                      "maximum": [
+                        67.64436252917815,
+                        152.7289685165522
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -72.88496899560033,
+                        137.52952755870308
+                      ],
+                      "maximum": [
+                        -36.13188418995523,
+                        140.37787105397908
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -126.9094612594877,
+                        128.86955818848648
+                      ],
+                      "maximum": [
+                        -72.88496899560033,
+                        187.76902887105234
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -126.95209416371765,
+                        187.76902887105234
+                      ],
+                      "maximum": [
+                        -124.24212041045439,
+                        269.7900262463804
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -126.95209416371765,
+                        269.7900262463804
+                      ],
+                      "maximum": [
+                        -67.5262411453129,
+                        302.96916010463485
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -67.5262411453129,
+                        300.0389133529764
+                      ],
+                      "maximum": [
+                        -19.370990812824473,
+                        302.96916010463474
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -19.370990812824473,
+                        277.6436542101997
+                      ],
+                      "maximum": [
+                        15.51936607440608,
+                        302.24570247781503
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -22.162446635066402,
+                        277.6436542101997
+                      ],
+                      "maximum": [
+                        32.9637270341,
+                        379.00540595770815
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -24.61095363104866,
+                        379.00540595770815
+                      ],
+                      "maximum": [
+                        59.56167736474629,
+                        546.0590749569919
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -4.677459477710329,
+                        487.5876046728424
+                      ],
+                      "maximum": [
+                        20.254927509233028,
+                        528.9762980883529
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -34.26470011574891,
+                        468.6639970542048
+                      ],
+                      "maximum": [
+                        -4.677459477710329,
+                        507.82595000368394
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -68.18372146030532,
+                        456.1089238841642
+                      ],
+                      "maximum": [
+                        -28.883769470418983,
+                        502.7339238841625
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -68.18372146030532,
+                        502.7339238841625
+                      ],
+                      "maximum": [
+                        -67.49540125033064,
+                        551.9455380573908
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -68.18175295636797,
+                        551.9455380573908
+                      ],
+                      "maximum": [
+                        -67.49540125033052,
+                        592.1466535429552
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -68.02066371752255,
+                        591.3264435692017
+                      ],
+                      "maximum": [
+                        -27.928800200462163,
+                        592.1466535429552
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -27.928800200462163,
+                        591.3264435692017
+                      ],
+                      "maximum": [
+                        4.88369979953778,
+                        612.396653542955
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -93.7729603054492,
+                        322.28346456657704
+                      ],
+                      "maximum": [
+                        -7.353380734411871,
+                        629.5451778469303
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -242.06692356004314,
+                        134.01922607546746
+                      ],
+                      "maximum": [
+                        -93.7729603054492,
+                        330.95665446647297
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -231.1791448199085,
+                        25.866033062034717
+                      ],
+                      "maximum": [
+                        -150.4574273553391,
+                        134.01922607546746
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -269.24924863038996,
+                        18.892058959220435
+                      ],
+                      "maximum": [
+                        -231.1791448199085,
+                        34.65276884870076
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -293.5426693680753,
+                        -56.35016284561641
+                      ],
+                      "maximum": [
+                        -118.37014326745734,
+                        29.200259108308956
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -118.37014326745694,
+                        -44.44247081509829
+                      ],
+                      "maximum": [
+                        -62.85772360147762,
+                        27.500000000075545
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -62.85772360147762,
+                        -1.8962870616372811
+                      ],
+                      "maximum": [
+                        30.183727034121006,
+                        45.94813148559686
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "originalLoopToken": 2381,
+                  "originalChainStartEdgeTokens": [
+                    1237,
+                    1266,
+                    1328
+                  ],
+                  "originalChainEnvelopesUv": [
+                    {
+                      "minimum": [
+                        -219.09989541741555,
+                        173.25103021323093
+                      ],
+                      "maximum": [
+                        -207.77965519001933,
+                        287.371460352787
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -208.02801744341946,
+                        176.89963869762454
+                      ],
+                      "maximum": [
+                        -147.9070044495228,
+                        303.50065616762765
+                      ]
+                    },
+                    {
+                      "minimum": [
+                        -207.7796551900194,
+                        140.27887139072402
+                      ],
+                      "maximum": [
+                        -147.90700444952296,
+                        184.40608092379313
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "retainedOriginalHoleCount": 6,
+              "sourceLoopWindings": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "completeBoundaryUncertaintyContact": true,
+              "scopedDemandFeet": [
+                [
+                  [
+                    [
+                      {
+                        "numerator": "4002028169821845",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8717605508068897",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4072396913999509",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8717605508068897",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4072396913999509",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8576868019713569",
+                        "denominator": "70368744177664"
+                      }
+                    ],
+                    [
+                      {
+                        "numerator": "4002028169821845",
+                        "denominator": "35184372088832"
+                      },
+                      {
+                        "numerator": "-8576868019713569",
+                        "denominator": "70368744177664"
+                      }
+                    ]
+                  ]
+                ]
+              ],
+              "completeConnectedDemandSupported": false,
+              "coordinatesChanged": false,
+              "originalLoopsOrHolesChanged": false,
+              "globalReferenceWindingApproved": false,
+              "wholeFloorSolidApproved": false,
+              "originalSourceAuthorityGranted": false,
+              "routeApproved": false
+            }
+          },
+          "ok": false,
+          "blocker": "Error: Self-intersecting exact native rings 0:411/0:409."
+        }
+      ]
+    }
+  ],
+  "opaqueAuthorityGranted": false,
+  "arrivalPointerModified": false,
+  "routeApproved": false
+}

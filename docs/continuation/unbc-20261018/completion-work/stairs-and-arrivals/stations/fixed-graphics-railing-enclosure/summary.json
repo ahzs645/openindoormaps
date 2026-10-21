@@ -1,0 +1,100 @@
+{
+  "format": "original-fixed-graphics-retained-frame-math-only-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "actualSourceCaptureSha256": "2b9bacd0156c769b9dbb1678d653d75df9eb2ccbdd44ae5c74cfcfb3d8318a91",
+  "retainedOriginalFixtureFrames": 43,
+  "component": {
+    "nativeSymbolId": 1640585,
+    "originalDefinitionsRetained": 40,
+    "actualFixedChildOccurrences": 87,
+    "closedObstructionOperands": 1480,
+    "planarComponentEnclosures": 87,
+    "finiteLinesRetained": 1392,
+    "annotationControlOrigins": 1,
+    "fullLiteralOperandLedgerRetained": true,
+    "canonicalMathFileSha256": "b7c95c0bec8c131d44ae4cb657d51f18bf37455f1468153e91325dc75a9e3872"
+  },
+  "completeOriginalRoots": {
+    "nativeElementIds": [
+      1640584,
+      1640600
+    ],
+    "enclosureQualified": false,
+    "blockers": [
+      "Unqualified original Geometry controlCommand 151982225"
+    ],
+    "forbiddenTarget53246Preserved": true,
+    "selectorMeaningEstablished": false,
+    "command151982225MeaningEstablished": false
+  },
+  "contracts": {
+    "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+    "gBiFlipControl": {
+      "sourceClassSlot": 2219,
+      "originalClassName": "GBiFlipControl",
+      "originalAncestorNames": [
+        "GControl",
+        "GNode"
+      ],
+      "originalDerivedFieldNames": [
+        "m_origin",
+        "m_base",
+        "m_length"
+      ],
+      "originalBodyBytes": 76,
+      "role": "non-solid-annotation-control-no-child-or-material-operands",
+      "decoderSourceSha256": "3372e4e66b33f92a588d73aa56e21d55b3701bfaae53e8ad626f00ece64d35af"
+    }
+  },
+  "dependencyModuleCount": 126,
+  "modulesUnchanged": true,
+  "actualRvtConstructorExecutedInThisReplay": false,
+  "sourceAuthorityRestoredFromFixtures": false,
+  "walkingSupportApproved": false,
+  "foreignHumanClearanceApproved": false,
+  "indoorCellApproved": false,
+  "routeApproved": false,
+  "ownedProductionAndTestFiles": {
+    "lib/reviter/native-source-fixed-graphics-tree-enclosure.ts": "994137c5c896508f9d8b2013adee5286775b16fbc65a15aa4abea8ca1c5a1949",
+    "lib/reviter/native-source-fixed-graphics-tree-context.ts": "9b21e184760cc7cd2e476413ceae56eeb7e41aed5d573faffc31f68d1cc66dbd",
+    "tests/native-source-fixed-graphics-tree-enclosure.test.ts": "44c637f878e2a81bdf55e8cfc7135f02efbb213f3ca9ec64cb5b49fe98d624e5",
+    "tests/fixtures/native-original-fixed-graphics/manifest.json": "ba9ddfd4d61a1dd39507b3253fcd5ea590a8dbcb46aee03153aa6deb082943f4"
+  },
+  "retainedOriginalBinaryFixtureDirectory": "reviter/tests/fixtures/native-original-fixed-graphics",
+  "boundedFixtureTotalFiles": 44,
+  "boundedFixtureTotalBytes": 286457,
+  "rawRetainedMathDirectory": "/workspace/scratch/standing-05-fixed-graphics-math-only-20261018T1854",
+  "rawRetainedMathSummarySha256": "42e602e48c84b8d29646cf589535e3d24efc0d0e4076f1a66f44835c77965c69",
+  "verification": {
+    "tests": {
+      "passed": 9,
+      "failed": 0,
+      "log": "/workspace/scratch/fixed-graphics-new-helper-tests-final.log",
+      "sha256": "acfe13e3888b91731eabee246925c829efee77f351c635410df0f7d66a7ab6a2"
+    },
+    "eslint": {
+      "exitCode": 0,
+      "log": "/workspace/scratch/fixed-graphics-new-helper-lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "scopedTypecheck": {
+      "exitCode": 0,
+      "elapsedSeconds": 7.585399150848389,
+      "maximumRssKiB": 465260,
+      "rootFiles": 3,
+      "globalProjectTypecheck": false,
+      "nodeHeapLimitMiB": 768,
+      "log": "/workspace/scratch/fixed-graphics-new-helper-typecheck-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "upstreamReference": {
+    "repository": "https://github.com/DrunkOnJava/rvt-rs",
+    "commit": "1c3d337dbd2a6810e9dfad68fe99857843d67387",
+    "archiveSha256": "1f2bd3304b4498e4d0c3ec260ebfdd8aab2e1831ed6204bbf429dc86a2416491",
+    "traversalFileSha256": "5c64d61a5ea87a7eb9da54aad1a2df3aa0956b16ca1735c9097b1fab19c04254",
+    "controlImplementationFound": false,
+    "nonzeroTargetRestrictionsExplicitlyUnsupported": true
+  }
+}

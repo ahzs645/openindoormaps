@@ -1,0 +1,137 @@
+{
+  "format": "unbc-evidence-020-normalized-input-lineage-drive-readback-v1",
+  "evidence": "EVIDENCE-020",
+  "status": "EXACT-ACTUAL-INPUT-RECOVERED-AND-IDENTITY-PREFLIGHT-PASSED",
+  "driveFolderId": "1EUFgNbO9Hxcc6cDhZLrFt6BoQAFOfhA8",
+  "archive": {
+    "bytes": 115422828,
+    "sha256": "5d8bec8071968ac03bd6077bb86335f30157fcdf7cc176f730163790e5064a3c"
+  },
+  "parts": [
+    {
+      "ordinal": 1,
+      "name": "EVIDENCE-020-normalized-input-lineage-20261018.tar.gz.part001",
+      "bytes": 25165824,
+      "sha256": "dfcd4b37495426cb736a84fcea487f33715261f777e1cbe00369645d2af581a3",
+      "driveFileId": "1TJa3ZsSDYsSxiLrJ77Q4M042S4CG9IgL",
+      "url": "https://drive.google.com/file/d/1TJa3ZsSDYsSxiLrJ77Q4M042S4CG9IgL/view",
+      "freshDownloadExact": true
+    },
+    {
+      "ordinal": 2,
+      "name": "EVIDENCE-020-normalized-input-lineage-20261018.tar.gz.part002",
+      "bytes": 25165824,
+      "sha256": "84a80b09069bddba6a106f3af697acda3c2a7127eb337fc381be99158ad593d0",
+      "driveFileId": "1JHrr0rwcXOjxIY_0kb3x10X2455doKJO",
+      "url": "https://drive.google.com/file/d/1JHrr0rwcXOjxIY_0kb3x10X2455doKJO/view",
+      "freshDownloadExact": true
+    },
+    {
+      "ordinal": 3,
+      "name": "EVIDENCE-020-normalized-input-lineage-20261018.tar.gz.part003",
+      "bytes": 25165824,
+      "sha256": "ad0fcb44313ba6e0075d1a9605d2ce8b45dd2241c23c1352800f2201556a692b",
+      "driveFileId": "1P9DVMQcOaqh37WdR-tak4O8IJLcAvQGf",
+      "url": "https://drive.google.com/file/d/1P9DVMQcOaqh37WdR-tak4O8IJLcAvQGf/view",
+      "freshDownloadExact": true
+    },
+    {
+      "ordinal": 4,
+      "name": "EVIDENCE-020-normalized-input-lineage-20261018.tar.gz.part004",
+      "bytes": 25165824,
+      "sha256": "d0093e9c5c32de7f51ac11a48dd8b1747c793c68711a83bf14a790844e420788",
+      "driveFileId": "1PlFuPgXSr19R7gzthxYwzgktocsD3IPe",
+      "url": "https://drive.google.com/file/d/1PlFuPgXSr19R7gzthxYwzgktocsD3IPe/view",
+      "freshDownloadExact": true
+    },
+    {
+      "ordinal": 5,
+      "name": "EVIDENCE-020-normalized-input-lineage-20261018.tar.gz.part005",
+      "bytes": 14759532,
+      "sha256": "3e1369a92bfefeb5ca16860cd41e98b69ddc3905c60a8ecd3b0b772e4502823c",
+      "driveFileId": "1eHciOAQ1Dg8rNK3Qse1EnQqAk-4fOFw1",
+      "url": "https://drive.google.com/file/d/1eHciOAQ1Dg8rNK3Qse1EnQqAk-4fOFw1/view",
+      "freshDownloadExact": true
+    }
+  ],
+  "reassembly": "Concatenate part001 through part005 in ordinal order; verify whole archive SHA before extraction.",
+  "allPartsFreshDownloadedExact": true,
+  "allPartsMetadataParentAndSizeVerified": true,
+  "wholeFreshDownloadExact": true,
+  "everyRemoteMemberVerified": true,
+  "memberCount": 219,
+  "memberManifestSha256": "0172ea63d3d8663960852cfd97b2701cacc9958ea20150da96a4a42c95a98c78",
+  "actualNormalizedInput": {
+    "member": "rooms.normalized-original-reviewed.e7b61bf8.json",
+    "bytes": 230207057,
+    "sha256": "e7b61bf85dd25a51d9c50ddf9f4ef5f51bb3e29971fa8cec1aeb01bebee670ea"
+  },
+  "originalRawInput": {
+    "path": "/workspace/scratch/source-producer-inputs-20261018/rooms.json",
+    "bytes": 82049198,
+    "sha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "wholeActualInputTransformationStates": [
+    {
+      "stage": "original-material-and-review-companion-hydration",
+      "bytes": 229925329,
+      "sha256": "c14543ae1daca1e50b8678f0a2a4b20be6d964968830bfe9f2598ad3c08954bd"
+    },
+    {
+      "stage": "owner-reviewed-drawing-reference-overlay",
+      "bytes": 229932787,
+      "sha256": "0d379b43a7df6db4b9e7778a6d54710dabb311abad53d5fe17c6208e3da342a7"
+    },
+    {
+      "stage": "recorded-original-floor-binding-refresh",
+      "bytes": 229932712,
+      "sha256": "62ee2990ca41a440f809c05a0cfcb3181d63938223a14d9f3ea981637a26a728"
+    },
+    {
+      "stage": "recorded-native-boundary-member-review",
+      "bytes": 230156456,
+      "sha256": "f550db575864223c68f197885b7f8a1634bbbe8a00f82bad8854789e73f9774b"
+    },
+    {
+      "stage": "recorded-original-door-closure-review",
+      "bytes": 230207057,
+      "sha256": "e7b61bf85dd25a51d9c50ddf9f4ef5f51bb3e29971fa8cec1aeb01bebee670ea"
+    }
+  ],
+  "sourceClosure": {
+    "sha256": "776e578527bff7bf2386cfa6f30b4de0ba1cc03af9192625484a831def3800ab",
+    "moduleCount": 174,
+    "liveBeforeAfterCopiedExact": true,
+    "copiedAfterFrozenPreflightExact": true
+  },
+  "selectedIntentPreflight": {
+    "selection": {
+      "lowerRoomKey": "rm-694-0bed6b73a3bd",
+      "upperRoomKey": "rm-400176-f91a4f2d9cb3",
+      "nativeStairId": 1638837,
+      "nativeRunId": 1638854
+    },
+    "selectedFullOriginalHeaderAnnotationsAndMetadataPreserved": true,
+    "wholeActualNormalizedInputHashed": true,
+    "jsonParsingScope": "exact-actual-top-level-byte-spans-for-every-comparator-read-field",
+    "wholeCarrierJSONParsed": false,
+    "fourMutationControlsRefused": true,
+    "peakMemoryBytes": 621899776,
+    "boundedWholeParse704MiBHeapOOMLogRetained": true
+  },
+  "localEvidenceRoot": "/workspace/scratch/rooms-lineage-20261018",
+  "localReadbackReport": "/workspace/scratch/EVIDENCE-020-normalized-input-lineage-20261018.DRIVE-VERIFICATION.json",
+  "originalModelLocator": {
+    "path": "/workspace/scratch/native-source-restored/derived/UNBC.original.rvt",
+    "bytes": 70336512,
+    "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+  },
+  "compilerRegistrationIssued": false,
+  "historicalFd37RegisteredAsCurrentCompiler": false,
+  "sourceCapabilityRestored": false,
+  "sourceOrPhysicalValidationReplayed": false,
+  "nativeOwnershipOrAccessApproved": false,
+  "routeApproved": false,
+  "releaseAdmissionGranted": false,
+  "notes": "Historical literal source transformations and actual byte recovery only. Fresh production compilation/private issuer and all normal source/material/owner/access/physical checks remain required. Original native census role1296000 remains separately unresolved. No signed download URLs retained."
+}

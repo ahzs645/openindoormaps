@@ -1,0 +1,56 @@
+{
+  "format": "retained-gzip-actual-binding-delta-v1",
+  "sourceCodeStable": true,
+  "normalOrBrowserValidationRepeated": false,
+  "compiledReceiptAllowlistsChanged": false,
+  "groups": {
+    "display": {
+      "before": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+      "after": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+      "modules": 208,
+      "changed": [],
+      "removed": []
+    },
+    "runtime": {
+      "before": "3fa380e54213c9dcfe08f9e9c8d9d3dfe6a1249468b001f57e1868bbc4d1b018",
+      "after": "724407062202c85a9acd079e656f327947f79e8564da80f9eaedac8e2266ae06",
+      "modules": 238,
+      "changed": [
+        {
+          "path": "app/indoor-project/progressive-visitor-client.ts",
+          "before": "6996d6b1044b53cf19f3808963ead3e3fd382a992c2f1797a5cd1734f35259d6",
+          "after": "1c29ab094907cd0db9b64631212b86d52e5556ac2ba5ff06fe80c1d51c2c7f70"
+        },
+        {
+          "path": "app/indoor-project/visitor-delivery-cache.ts",
+          "before": "bc02c4c8ef3587e15f2e4946e1dff16a52fc249f0a1b4cbfc079d422cee52ec4",
+          "after": "14f326dcae57a9fa268cd14ba3196adfef52fc54a24fada277cb6ff8c1429114"
+        }
+      ],
+      "removed": []
+    },
+    "plan": {
+      "before": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c",
+      "after": "93cd166c0863ce606fee6b2e528826a51b2ef7085efa9394feb2fb9698ac334c",
+      "modules": 233,
+      "changed": [
+        {
+          "path": "app/indoor-project/visitor-delivery-cache.ts",
+          "before": "bc02c4c8ef3587e15f2e4946e1dff16a52fc249f0a1b4cbfc079d422cee52ec4",
+          "after": "14f326dcae57a9fa268cd14ba3196adfef52fc54a24fada277cb6ff8c1429114"
+        }
+      ],
+      "removed": []
+    }
+  },
+  "actualDisplayRoutePlanEntryCount": 679,
+  "nativeStaticSourceAudit": {
+    "modules": 568,
+    "cacheOrClientIncluded": false,
+    "note": "Additional static paired-native audit, not an esbuild runtime/source freeze or a native launch."
+  },
+  "generatedLiterals": {
+    "app/indoor-project/published-route-runtime-binding.ts": "069fe60c90cee782aefb0624d4082ec727678ec119b048cf9e5c60bfb17e741e",
+    "app/indoor-project/published-visitor-plan-runtime-binding.ts": "abb2eb9f518005f7ed960e55a0eefb34baafd2c130e790fa037f45539410a6fd"
+  }
+}

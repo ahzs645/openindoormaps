@@ -1,0 +1,86 @@
+{
+  "format": "original-floor503705-finite-cylinder-angle-refusal-v1",
+  "nativeFloorElementId": 503705,
+  "originalCapFaceToken": 5,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "originalGElementFrameSha256": "f62a7d90ffaf540708cea9c0d7954d03e240878be156b885dc2d844ecf0bb9cc",
+  "readerFunction": "originalCylinderTrigEnclosure",
+  "readerFile": "lib/reviter/native-source-floor-local-support.ts",
+  "readerSourceSha256": "7eb8e73ea6914bbef62b4beac0f3e107c20514db5487341c0700f4fde2b93528",
+  "literalCurrentPredicate": "!Number.isFinite(angle) || Math.abs(angle) > 8",
+  "literalRefusal": "Unsupported finite original cylinder angle",
+  "sourceParameterInterpretation": "Original CylSurf source U parameter, preserved literally; units/range/wrapping not reinterpreted by this diagnostic.",
+  "rows": [
+    {
+      "sourceParentFace": 166,
+      "originalSurfaceSourceSpan": [
+        127782,
+        127919
+      ],
+      "originalUInterval": [
+        4.403432260699509,
+        7.599645196049384
+      ],
+      "originalVInterval": [
+        -0.6561679790026247,
+        0
+      ],
+      "originalRadiusFeet": 0.6666666666666541,
+      "exceedsCurrentFiniteAngleBound": false
+    },
+    {
+      "sourceParentFace": 167,
+      "originalSurfaceSourceSpan": [
+        128090,
+        128227
+      ],
+      "originalUInterval": [
+        3.795970519600748,
+        8.115471558799745
+      ],
+      "originalVInterval": [
+        -0.6561679790026247,
+        0
+      ],
+      "originalRadiusFeet": 0.6697366446220344,
+      "exceedsCurrentFiniteAngleBound": true
+    },
+    {
+      "sourceParentFace": 172,
+      "originalSurfaceSourceSpan": [
+        129502,
+        129639
+      ],
+      "originalUInterval": [
+        6.0425126770962,
+        10.819998297638094
+      ],
+      "originalVInterval": [
+        -0.6561679790026247,
+        0
+      ],
+      "originalRadiusFeet": 0.679431399605178,
+      "exceedsCurrentFiniteAngleBound": true
+    },
+    {
+      "sourceParentFace": 174,
+      "originalSurfaceSourceSpan": [
+        130086,
+        130223
+      ],
+      "originalUInterval": [
+        0.6675907738325675,
+        4.04479820655207
+      ],
+      "originalVInterval": [
+        -0.6561679790026247,
+        0
+      ],
+      "originalRadiusFeet": 0.6759966657950476,
+      "exceedsCurrentFiniteAngleBound": false
+    }
+  ],
+  "sourceAngleGuardChanged": false,
+  "routeApproved": false
+}

@@ -55,7 +55,13 @@ scope.onmessage = ({ data: request }) => {
       }
       if (!data || !calculator || request.revisionSha256 !== revision)
         throw new Error("Directions are missing their checked map revision.");
-      const value = calculator(request.start, request.end, request.mode);
+      // This interface displays the inside arrival only. Request that selected
+      // mode explicitly instead of also solving the unused legacy hallway
+      // alternative. The returned route and its physical/policy checks stay
+      // identical; the full source-viewer calculator still supports all modes.
+      const value = calculator(request.start, request.end, request.mode, {
+        endpointMode: "inside",
+      });
       const name = (key: string) => {
         const room = data!.records.find((entry) => entry.key === key);
         return room

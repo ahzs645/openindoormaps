@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import {createOriginalNativeStairPhysicalContext,inspectOriginalNativeStairPhysicalInventory,readOriginalNativeStairPhysicalSource} from '/workspace/reviter/lib/reviter/native-source-stair-physical-inventory.ts';
+import {inspectOriginalNativeStairSteppedStations,inspectOriginalStairTypedRiserSequence} from '/workspace/reviter/lib/reviter/native-source-stair-stepped-stations.ts';
+import {inspectOriginalNativeStairSupportEnvelopes} from '/workspace/reviter/lib/reviter/native-source-stair-support-envelopes.ts';
+import {nativeRationalScalarToIEEE} from '/workspace/reviter/lib/reviter/native-rational-overlay.ts';
+const implementationPath='/workspace/reviter/lib/reviter/native-source-stair-stepped-stations.ts';
+const sourceImplementationSha256=createHash('sha256').update(readFileSync(implementationPath)).digest('hex');
+const inventory=JSON.parse(readFileSync('/workspace/openindoormaps/docs/continuation/unbc-20261017/source-recovery/all-connections-review.json','utf8'));
+const targets=inventory.stairs.filter(s=>s.recordedRepairGroup==='current-axis-only-station-contract-insufficient');
+const requests=targets.flatMap(s=>s.originalRuns.map(r=>({nativeStairId:s.nativeStairId,nativeRunId:r.nativeRunId,nativeDefinitionId:r.nativeDefinitionId})));
+const bytes=readFileSync(process.env.UNBC_ORIGINAL_RVT ?? '/workspace/scratch/native-source-restored/derived/UNBC.original.rvt');
+const sha=createHash('sha256').update(bytes).digest('hex');
+const start=Date.now();
+console.log('Verified original RVT',sha);
+const context=createOriginalNativeStairPhysicalContext(bytes,sha,requests);
+console.log('Complete original source context',context.completeSourcePages);
+assert.throws(()=>readOriginalNativeStairPhysicalSource(context,999999),/not in this original source context/);
+assert.throws(()=>createOriginalNativeStairPhysicalContext(bytes,'0'.repeat(64),requests),/checksum mismatch/);
+const baseline=JSON.parse(readFileSync('/workspace/openindoormaps/docs/continuation/unbc-20261018/completion-work/stairs-and-arrivals/stations/before.json','utf8'));
+const rows=[];
+for(const request of requests){
+ const {nativeRunId}=request, roles=inspectOriginalNativeStairPhysicalInventory(context,nativeRunId),caps=inspectOriginalNativeStairSupportEnvelopes(context,nativeRunId),source=readOriginalNativeStairPhysicalSource(context,nativeRunId);
+ const seq=inspectOriginalStairTypedRiserSequence(source.run,roles.sourceTypedTreadCount);
+ const proposals=roles.treads.map(role=>{
+  const cap=caps.caps.find(c=>c.physicalFaceToken===role.physicalFaceToken)!;
+  const xy=cap.guaranteedInnerPlanSupport.flat(2).map(p=>p.map(nativeRationalScalarToIEEE));
+  const pointFeet:[number,number]=[(Math.min(...xy.map(p=>p[0]!))+Math.max(...xy.map(p=>p[0]!)))/2,(Math.min(...xy.map(p=>p[1]!))+Math.max(...xy.map(p=>p[1]!)))/2];
+  const relation=seq.treadRelations[role.typedIndex];
+  const dir=relation?.originalFiniteStartLine.m_dirVec as number[]|undefined;
+  return {typedIndex:role.typedIndex,pointFeet,lateralDirectionFeet:dir?.slice(0,2)};
+ });
+ const summarize=(r:any)=>({unsupportedTypedIndices:r.stations.filter(s=>!s.fullTwoFootLateralInnerSupport).map(s=>s.typedIndex),supported:r.stations.filter(s=>s.fullTwoFootLateralInnerSupport).length,total:r.stations.length,complete:r.completeOriginalSteppedSupportProposal,blockers:[...new Set(r.blockers)],routeApproved:r.routeApproved});
+ const old=baseline.rows.find(r=>r.nativeRunId===nativeRunId);
+ assert.deepEqual(proposals,old.proposals,'Original proposed station centers/directions changed');
+ const axisX=old.axisX,axisY=old.axisY;
+ let rotated:any;
+ const shifted=proposals.map(p=>({...p,pointFeet:[p.pointFeet[0]+100,p.pointFeet[1]+100]}));
+ const perpendicular=proposals.map(p=>({...p,lateralDirectionFeet:p.lateralDirectionFeet && [-p.lateralDirectionFeet[1],p.lateralDirectionFeet[0]]}));
+ try {rotated=summarize(inspectOriginalNativeStairSteppedStations(context,nativeRunId,proposals as any))}catch(e){rotated={error:String(e)}}
+ console.log('Replayed original run', nativeRunId, rotated);
+ const refusal=(proposal:any)=>{try{return summarize(inspectOriginalNativeStairSteppedStations(context,nativeRunId,proposal))}catch(e){return {error:String(e)}}};
+ rows.push({...request,physicalTreads:roles.sourceTypedTreadCount,completeStraightCaps:caps.completeOriginalStraightPlanarSourceCensus,completeNamedSequence:seq.completeNamedSourceRiserSequence,sequenceBlockers:seq.blockers,sourceFrameSha256s:source.sourceFrameSha256s,axisEvidence:'unchanged-proposal baseline before.json',axisX,axisY,rotated,shifted:nativeRunId===requests[0]!.nativeRunId?refusal(shifted):undefined,perpendicular:nativeRunId===requests[0]!.nativeRunId?refusal(perpendicular):undefined,proposals});
+}
+assert.throws(()=>readOriginalNativeStairPhysicalSource(context,999999),/not in this original source context/);
+assert.throws(()=>createOriginalNativeStairPhysicalContext(bytes,'0'.repeat(64),requests),/checksum mismatch/);
+assert.equal(createHash('sha256').update(readFileSync(implementationPath)).digest('hex'),sourceImplementationSha256,'Implementation changed during replay');
+writeFileSync(process.argv[2]!,JSON.stringify({format:'original-rotated-station-replay-v1',sourceImplementationSha256,foreignRunRefused:true,staleModelHashRefused:true,sourceModelSha256:sha,completePages:context.completeSourcePages,missingOriginalRecords:context.missingOriginalRecords,elapsedMs:Date.now()-start,rows},null,2));
+console.log(JSON.stringify({elapsedMs:Date.now()-start,rows:rows.map(({proposals,...r})=>r)}));

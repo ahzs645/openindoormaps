@@ -1,0 +1,156 @@
+{
+  "format": "unbc-original-marker-deferred-cache-browser-evidence-v1",
+  "recordedAt": "2026-10-18T16:49:26.651324+00:00",
+  "publication": "Immutable baseline9ff marker + deferred-persistence production build; source admission passed for all seven scopes",
+  "appUrl": "http://127.0.0.1:42185/openindoormaps/index.html",
+  "manifestUrl": "http://127.0.0.1:42185/data/unbc/manifest.json",
+  "manifestSha256": "55125fc83df5cc0126747d2c70c66080776f0cdff28c80819735fbac52b0c13b",
+  "revisionSha256": "a0ec01eda9de2fc296d9f8094e2d667d9d309dbf82c9fefc1d16e7ca88661cf6",
+  "sourceEngineSha256": "9ff279531839658e175655b3796bf95fdc2f9d676e7c37076cb9da97ed1dd32b",
+  "datasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "planRuntimeSha256": "c2174116ea44153e91d9e2e3c6224bdf173121b6a75cbe97185145fa4b8d2431",
+  "compiledRegistry": {
+    "path": "/workspace/scratch/unbc-plan-markers-deferred-receipts-9ff.json",
+    "sha256": "60bf27e2055a00587cf32cb92be5f0b5704b29853ce4181efd8c11e2b2e09028",
+    "scopeCount": 7
+  },
+  "independentAdmission": {
+    "path": "/workspace/scratch/baseline-markers-deferred-plan-admission.json",
+    "sha256": "6d6f49d724af4974fdee6afbb13b1e7b5842ba0c9083f8e5c7945db68fabb6a1"
+  },
+  "appIndexHtmlSha256": "b1d4a9e75b2771a16c2600d54d80fc8c769d509e16d63396bc0604187fdcf7a9",
+  "executedTestFileSha256": "3246bc974c547748142f61935593818f00da47985f86ac95b5b1c5af50b468ff",
+  "stats": {
+    "startTime": "2026-10-18T16:39:04.664Z",
+    "duration": 547578.512,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "actual original connector markers preserve icons and honest picks without duplicate overlays",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 104346,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "actual complete map download reopens the app, glyphs and full/shared floors with all network offline",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 437950,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "actualProofAttachments": {
+    "original-marker-source-and-click-proof": {
+      "scopeId": "scope-42b2c71a7e7f07adce66dce2eae156cc0fe0697b2709d02bff5c3ce89a5120af",
+      "markerCount": 48,
+      "namedPlaceKey": "rm-1487816-07d2fdafc4ca",
+      "notices": [
+        {
+          "id": "source-stair:1270216",
+          "selectedPlaceBefore": "03-027 Corridor",
+          "selectedPlaceAfter": "03-027 Corridor"
+        },
+        {
+          "id": "connector:unbc-04-lift:0:1",
+          "selectedPlaceBefore": "04-111 Comm Room",
+          "selectedPlaceAfter": "04-111 Comm Room"
+        }
+      ],
+      "physicalDevice": false,
+      "geometryOrAccessApproval": false
+    },
+    "complete-map-all-network-offline": {
+      "completionText": "Complete map and app saved for offline use (9.0 MB of app files). Checked directions cache saved; routes are verified when opened.",
+      "navigatorOnline": false,
+      "navigationFromServiceWorker": true,
+      "fullScopeId": "scope-e680033f456ba1f82eb717fe454c422a6fb1b536362190709fc5dda0df78d773",
+      "sharedScopeId": "scope-42b2c71a7e7f07adce66dce2eae156cc0fe0697b2709d02bff5c3ce89a5120af",
+      "sharedBaseScopeId": "scope-30d853ef4991134fc01a695acfa0b82ea8fab1f37d017af3f367ddfb87f6f40b",
+      "offlineGlyphs": [
+        {
+          "url": "http://127.0.0.1:42185/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+          "status": 200,
+          "fromServiceWorker": true
+        },
+        {
+          "url": "http://127.0.0.1:42185/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+          "status": 200,
+          "fromServiceWorker": true
+        },
+        {
+          "url": "http://127.0.0.1:42185/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+          "status": 200,
+          "fromServiceWorker": true
+        }
+      ],
+      "offlineMarkerCount": 48,
+      "visibleOfflineNamedMarker": "Stairs \u00b7 10-S102",
+      "physicalDevice": false,
+      "geometryOrAccessApproval": false
+    }
+  },
+  "functionalEvidence": {
+    "all48OriginalMainMarkersMatchSourceIdentityReviewFlagsAndCanonicalSvg": true,
+    "namedStairOrdinaryClickSelectsCorrectRoom": true,
+    "sourceOnlyAndEdgeOnlyClicksShowDismissibleNotice": true,
+    "unavailableMarkerClickDoesNotInventSelectionOrRoute": true,
+    "customReadinessSettled": true,
+    "floorAnd3DSwitchDoesNotDuplicateOverlays": true,
+    "realCompleteDownloadAwaitedPersistence": true,
+    "allNetworkOfflineColdAppReloadViaServiceWorker": true,
+    "fullAndSharedMainFloorsPaint": true,
+    "offlineGlyphsServedByServiceWorker": true,
+    "all48MarkersPresentOfflineAndNamedStairIconVisible": true
+  },
+  "knownVisualDefectInThisFrozenBuild": {
+    "originalMarkerStyleParity": false,
+    "finding": "General .progressive-visitor button selector overrides original connector-marker blue circle, padding and color; genuine screenshot revealed small pale square icons despite correct SVG paths.",
+    "rootFix": "Separate42186 production build excludes .project-connector-marker from generic button selector; style acceptance is a separate capture.",
+    "separateStyleReceipt": "actual-original-marker-style-browser-baseline9ff.json"
+  },
+  "timingNote": "Functional test durations include full map/app download, verification, source decoding and concurrent host work; no first-paint or physical-device latency claim.",
+  "authority": {
+    "physicalDevice": false,
+    "geometry": false,
+    "publicAccess": false,
+    "stepFreeAccess": false,
+    "finalChangedEngineRelease": false
+  },
+  "rawEvidenceDirectory": "/workspace/scratch/visitor-plan-markers-deferred-browser-20261018",
+  "rawEvidenceFiles": [
+    {
+      "path": ".last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "published-visitor-plan-act-09a05-rs-with-all-network-offline/complete-map-all-network-offline.png",
+      "bytes": 120540,
+      "sha256": "1b40e78b6bcc790053784d128da29b19cf73d7ef2ad1ec8dbc389aaa9269658f"
+    },
+    {
+      "path": "published-visitor-plan-act-36440--without-duplicate-overlays/original-named-stair-picked.png",
+      "bytes": 144812,
+      "sha256": "d463b97540c3ad4705f4840c198e47c7095566c6c4836920ed0cf0f2135b37d9"
+    },
+    {
+      "path": "results.json",
+      "bytes": 10142,
+      "sha256": "3c92e1fe50e5607fcea5afff9f2d88d617c338b8cd3590b25c35c9363a68f8aa"
+    }
+  ],
+  "archiveInstruction": "Archive raw results/PNGs in project Drive evidence; keep this small exact receipt in source."
+}

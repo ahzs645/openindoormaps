@@ -1,0 +1,378 @@
+{
+  "format": "assembly-request-proposals-evidence-summary-v1",
+  "proposalOnly": true,
+  "sourceAuthorityGranted": false,
+  "runtimeIntegrationApproved": false,
+  "routeApproved": false,
+  "originalSourceScansPerformed": 0,
+  "fullProfileKernelReplayed": false,
+  "foreignBodyMathReplayed": false,
+  "immutable150SnapshotSha256": "706835f56f3210765afaf80cbb0c186e53df775612e23f3b078c4294ae7cf177",
+  "originalFull10ReceiptSha256": "e3e8e3a4c07e5bdd1044f5b3a419a88cf0a7aea160c73a56a1cda7b7a083fb0b",
+  "allTenSnapshotHashChecksPassed": true,
+  "allFiveCommonLandingStartsPreserved": true,
+  "allOriginalOuterRequestsUnchanged": true,
+  "checks": [
+    {
+      "check": "tests",
+      "exitCode": 0,
+      "elapsedSeconds": 0.9192017929963185,
+      "maximumRssKiB": 29316,
+      "heapMiB": 384,
+      "log": "/workspace/scratch/two-run-five-profile-math-20261018/final-tests.log"
+    },
+    {
+      "check": "lint",
+      "exitCode": 0,
+      "elapsedSeconds": 7.24506809200102,
+      "maximumRssKiB": 508500,
+      "heapMiB": 384,
+      "log": "/workspace/scratch/two-run-five-profile-math-20261018/final-lint.log"
+    },
+    {
+      "check": "typecheck",
+      "exitCode": 0,
+      "elapsedSeconds": 6.340846871004032,
+      "maximumRssKiB": 401340,
+      "heapMiB": 384,
+      "log": "/workspace/scratch/two-run-five-profile-math-20261018/final-typecheck.log"
+    }
+  ],
+  "ownedFiles": [
+    {
+      "path": "scripts/indoor/proposals/stepped-stair-v2-assembly-request-proposals.mjs",
+      "bytes": 20784,
+      "sha256": "6c30044c09ec5833335cbfbc8603924a43db4e6092c79a43b569d363e1c9cf14"
+    },
+    {
+      "path": "tests/unit/stepped-stair-v2-assembly-request-proposals.test.ts",
+      "bytes": 8938,
+      "sha256": "369eb2397705afd5607f11eb34567c83b570f95b0681ac52848abc4de785a6d6"
+    }
+  ],
+  "externalEvidence": [
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/five-parent-request-delta.json",
+      "bytes": 144843,
+      "sha256": "7b5584cdc08d7d4d79da214272225276ad442013b43f9be7fff62d88c483bbd6"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/resource-receipt.json",
+      "bytes": 1567,
+      "sha256": "127c0f9476e0d78e756d1fd6528a344dfb638715f2b082ad3fb98dc600ebbb48"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-request-replay.mts",
+      "bytes": 3021,
+      "sha256": "a9b6c31a192af9b0dbcabb9a3775ba41c7da1de2fdc5b89a2c5de10a57c7d87d"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/run-generic-request-batch.py",
+      "bytes": 1584,
+      "sha256": "f0e2c71acfb9caf4e27c099e2aa942e99ca8c2735548d0226eed8bb8c3c1293e"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/run-final-checks.py",
+      "bytes": 1375,
+      "sha256": "f73e40670c5a77aa3cbddf2f4ea6eb5b76cb03083cd954ba5d9937b82f483dfc"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/final-checks.json",
+      "bytes": 677,
+      "sha256": "5f4f10dea88e7b626814af4da424faa7a086fa84685e06c92c511da55216fc4b"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/final-tests.log",
+      "bytes": 794,
+      "sha256": "a39eb331b4e264bac974a07c32ea9923219bf779551a8da6b1de7a8e71c61cc7"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/final-lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/final-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1293690-piece0.json",
+      "bytes": 21987,
+      "sha256": "c4b17c67dec62845a9c5b56ef8301516c4e874b34439ea22f123cb9ed7d5755c"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1293690-piece1.json",
+      "bytes": 30995,
+      "sha256": "91fe026754d7562fd62797e617265ac8bd4a993cbfb909627cbdc890ff43d56b"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1498457-piece0.json",
+      "bytes": 24124,
+      "sha256": "7152415a848e995bbd499095a1f8b40b28dae343ef8411d9b89f4efb756f8b02"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1498457-piece1.json",
+      "bytes": 23235,
+      "sha256": "0325b5595a010fc7d72f7248ede5a1e8919a43737fcf0dddea468c4b5063f058"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1500288-piece0.json",
+      "bytes": 24124,
+      "sha256": "2ee18ba0501c5ddcaeae2cc1b3bb3be220d82f4f1cec1cbb9697cfc8d101c3cb"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1500288-piece1.json",
+      "bytes": 23235,
+      "sha256": "b89768e33d7a4f8f5c7013c807d244604bcb9ec148d63daf8845b6477bc5411f"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1514126-piece0.json",
+      "bytes": 24499,
+      "sha256": "2f1b55088256f3ca91b8d5d2951e1c147337b9222c78fd616f8ae64d8ce048c0"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/1514126-piece1.json",
+      "bytes": 22919,
+      "sha256": "5b4c55b267efb52cb3907ca54f8d65176658d42b6e2312ce65f1ae17b59a3691"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/2474568-piece0.json",
+      "bytes": 24831,
+      "sha256": "a403ebbc619513ad7cc69a20861f9c5d58da8638426b61a8ae385b7c8d134ed5"
+    },
+    {
+      "path": "/workspace/scratch/two-run-five-profile-math-20261018/generic-results-v2/2474568-piece1.json",
+      "bytes": 22324,
+      "sha256": "092649c1b0f1bf4368c519e5dd2d1f16d21ce31acab8cb9cd429cb8d81e22d07"
+    }
+  ],
+  "matrix": [
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1293981,
+      "piece": 0,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": null,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "transitionBudgetChecks": 102,
+      "originalIndexSha256": "3c692858c99c627b784bc12a5060b2f07ba2b82a5892d59ae0c2d61e7bb1860f",
+      "originalReceiptSha256": "91608e6dcc6c56a2e4d2abc13a9caf0b885054f6220591f0a58b4a1ea21d63ff",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1294068,
+      "piece": 1,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": 2,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        25
+      ],
+      "transitionBudgetChecks": 1183,
+      "originalIndexSha256": "df36af09ef460b47d644cef9d07ea39ca599f70e0b0a2f4eb5483120ea14c5cf",
+      "originalReceiptSha256": "55529cc10b4d57a2f5366ae1148431dbc4d12806d38af03f9b302ac903df27ac",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498458,
+      "piece": 0,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": null,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "transitionBudgetChecks": 198,
+      "originalIndexSha256": "49aa5c1dcb7b26e5e95d2f589e2fc263649b83822259289b315dc3ed8d2fe1ae",
+      "originalReceiptSha256": "1544e094408021843c99e1f277117af4adcdf37ee21a453a5eb45f4c1848c8db",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498461,
+      "piece": 1,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": null,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "transitionBudgetChecks": 258,
+      "originalIndexSha256": "2dcc6fb61fce205a7708202aa80cdd7c1c0b9a3a5e28b36108096ed00b9869a2",
+      "originalReceiptSha256": "55ea52ebf978a4a496eeb2575acc65f24ae32d9f99c22e5798b1d43c43370571",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500289,
+      "piece": 0,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": null,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "transitionBudgetChecks": 198,
+      "originalIndexSha256": "18b08e0b868c1e50b30033949a080881dfa24d117ac8654127fd7c381ee4cdfc",
+      "originalReceiptSha256": "f0e7d7bfde8dd5f6321165d9757c8526da8c5b817839c907def85266e859ff41",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500292,
+      "piece": 1,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": null,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "transitionBudgetChecks": 258,
+      "originalIndexSha256": "d0796ca6a494cd039e0cea92dc2ca97705b451ef7db31b0ce399735c90c533d0",
+      "originalReceiptSha256": "9ebbab4a78550485d49348d702476be944ad50ac3aea3ac4704ff1b6e75b52b3",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514127,
+      "piece": 0,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": 3,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "transitionBudgetChecks": 356,
+      "originalIndexSha256": "46c2e9d7b9d6ef1aadea25af6094b8082c9298df80946fd8f57ea2907f95ef4c",
+      "originalReceiptSha256": "22502e72dd62d63967cccb03aa850a983ed31e7784cf6e7315f061fb4d5c7c2a",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514130,
+      "piece": 1,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": 3,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "transitionBudgetChecks": 238,
+      "originalIndexSha256": "9c5e36a42f4e878b7a2fa63866eaf9638728c161d245af29c9878b80ecdc0174",
+      "originalReceiptSha256": "17893a322d94ec3536185ae83c832574fbdebddd483ead8f349c91b223c4161c",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474569,
+      "piece": 0,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": 0,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "transitionBudgetChecks": 446,
+      "originalIndexSha256": "05f757e14b22918c78739f61cbecc9948fe50d614bae5f8fae2b046b509f0d57",
+      "originalReceiptSha256": "4e833f5636c742e473c0712e539364fdd1427056fcf48d0fb86fb5ebbd2ff77c",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474572,
+      "piece": 1,
+      "requestFound": true,
+      "firstUnsupportedOriginalTypedIndex": 0,
+      "changedStationOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "transitionBudgetChecks": 247,
+      "originalIndexSha256": "f2081a683fae3ccee20717445d63a643e0fa65301e6978bdc8c36c51431b8a2f",
+      "originalReceiptSha256": "aef90770b427588d56593054c384e1ed121125c65b20aef3f6e2a448cc1b0fa7",
+      "mathOnlyLiveClosureSha256": "e41ce59e9a571b1dd12ace2dfd062f077ccc9b40fc78c83ff91a5d1533d0c4c3"
+    }
+  ]
+}

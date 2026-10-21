@@ -3,6 +3,8 @@ import { defineConfig, type Plugin } from "vite";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { writePreparedDisplayEngineBinding } from "./scripts/indoor/prepared-display-engine-binding";
+import { writePublishedRouteRuntimeBinding } from "./scripts/indoor/published-route-runtime-binding";
+import { writePublishedVisitorPlanRuntimeBinding } from "./scripts/indoor/published-visitor-plan-runtime-binding";
 import { visitorOfflineShellPlugin } from "./scripts/indoor/visitor-offline-shell-build";
 
 function preparedDisplayBindingPlugin(): Plugin {
@@ -10,7 +12,13 @@ function preparedDisplayBindingPlugin(): Plugin {
   let dependencies = new Set<string>();
   const refresh = () => {
     const result = writePreparedDisplayEngineBinding(root);
-    dependencies = new Set(result.modules.map(([path]) => `${root}/${path}`));
+    const routing = writePublishedRouteRuntimeBinding(root);
+    const plans = writePublishedVisitorPlanRuntimeBinding(root);
+    dependencies = new Set(
+      [...result.modules, ...routing.modules, ...plans.modules].map(
+        ([path]) => `${root}/${path}`,
+      ),
+    );
   };
   return {
     name: "prepared-native-display-engine-binding",

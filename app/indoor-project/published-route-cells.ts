@@ -17,6 +17,21 @@ import {
 } from "./routing-cache";
 import { createWorkerRouteCalculator } from "./route-calculation";
 import { PUBLISHED_ROUTE_CELL_RECEIPTS } from "./published-route-cell-receipts";
+import { PUBLISHED_ROUTE_RUNTIME_SHA256 } from "./published-route-runtime-binding";
+import {
+  verifiedRoutingDatasetSha256,
+  isPrivateImmutableRoutingDataset,
+} from "./verified-routing-dataset";
+import {
+  hydratePublishedMaterials,
+  hydratePublishedAccessZones,
+  hydratePublishedTopology,
+  type PublishedRoutingHydration,
+} from "./published-routing-hydration";
+import {
+  restorePublishedSupportTiles,
+  type PublishedSupportTileFactory,
+} from "./published-support-tiles";
 
 export type PublishedRouteCellReceipt = {
   id: string;
@@ -28,6 +43,7 @@ export type PublishedRouteCellReceipt = {
   compressedSha256: string;
   compressedBytes: number;
   url: string;
+  runtimeSha256?: string;
 };
 type LinkResult = {
   blockers: {
@@ -66,6 +82,20 @@ const approvedPolicies = new WeakMap<
   ReadonlyMap<string, NativeRationalParts>,
   PublishedPolicies
 >();
+const admittedRuntime = new WeakMap<IndoorDataset, PublishedRouteCellReceipt>();
+const approvedHydration = new WeakMap<
+  ReadonlyMap<string, NativeRationalParts>,
+  {
+    data: IndoorDataset;
+    hydration: Omit<
+      PublishedRoutingHydration,
+      "materials" | "supportTiles" | "accessZones"
+    >;
+    materials: ReturnType<typeof hydratePublishedMaterials>;
+    supportTiles?: PublishedSupportTileFactory;
+    accessZones?: ReturnType<typeof hydratePublishedAccessZones>;
+  }
+>();
 export type PublishedRouteCells = {
   format: "openindoormaps-published-route-cells-v1";
   version: 1;
@@ -77,11 +107,22 @@ export type PublishedRouteCells = {
   topology: NativeExactPlanarTopology;
   policies?: PublishedPolicies;
   guards?: PublishedGuards;
+  hydration?: PublishedRoutingHydration;
 };
 const sameSource = (a: IndoorDataset["source"], b: IndoorDataset["source"]) =>
   a.modelSha256 === b.modelSha256 &&
   a.roomsSha256 === b.roomsSha256 &&
   a.modelFileName === b.modelFileName;
+// The exported compiled metadata must not become a mutable capability. These
+// are checked build literals; custom policy objects never grant hydration.
+for (const receipt of PUBLISHED_ROUTE_CELL_RECEIPTS) {
+  Object.freeze(receipt.source);
+  Object.freeze(receipt);
+}
+const DEFAULT_ROUTE_POLICY = Object.freeze({
+  receipts: PUBLISHED_ROUTE_CELL_RECEIPTS,
+  engineSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+});
 
 /** Only an exact privately cloned, publisher-pinned routing snapshot can reuse
  * the precomputed physical intersections and original link-policy results.
@@ -92,19 +133,35 @@ export function publishedRouteCellReceipt(
   policy: {
     receipts: readonly PublishedRouteCellReceipt[];
     engineSha256: string;
-  } = {
-    receipts: PUBLISHED_ROUTE_CELL_RECEIPTS,
-    engineSha256: PREPARED_DISPLAY_ENGINE_SHA256,
-  },
+  } = DEFAULT_ROUTE_POLICY,
 ) {
+  admittedRuntime.delete(data);
   const candidates = policy.receipts.filter(
     (r) =>
       r.engineSha256 === policy.engineSha256 &&
+      (!r.runtimeSha256 ||
+        r.runtimeSha256 === PUBLISHED_ROUTE_RUNTIME_SHA256) &&
+      (!r.runtimeSha256 ||
+        policy !== DEFAULT_ROUTE_POLICY ||
+        isPrivateImmutableRoutingDataset(data)) &&
       sameSource(r.source, data.source),
   );
-  if (!candidates.length) return;
-  const digest = preparedDisplayDatasetSha256(data);
-  return candidates.find((r) => r.datasetSha256 === digest);
+  if (candidates.length === 0) return;
+  const digest =
+    (policy === DEFAULT_ROUTE_POLICY
+      ? verifiedRoutingDatasetSha256(data)
+      : undefined) ?? preparedDisplayDatasetSha256(data);
+  const receipt = candidates.find((r) => r.datasetSha256 === digest);
+  if (
+    receipt?.runtimeSha256 &&
+    policy === DEFAULT_ROUTE_POLICY &&
+    policy.receipts === PUBLISHED_ROUTE_CELL_RECEIPTS &&
+    policy.engineSha256 === PREPARED_DISPLAY_ENGINE_SHA256 &&
+    PUBLISHED_ROUTE_CELL_RECEIPTS.includes(receipt) &&
+    isPrivateImmutableRoutingDataset(data)
+  )
+    admittedRuntime.set(data, receipt);
+  return receipt;
 }
 
 export function decodePublishedRouteCells(
@@ -112,20 +169,18 @@ export function decodePublishedRouteCells(
   receipt: PublishedRouteCellReceipt,
   stored: Uint8Array,
 ) {
-  let bytes: Uint8Array;
-  if (
+  const bytes: Uint8Array =
     stored.length === receipt.compressedBytes &&
     progressiveSha256(stored) === receipt.compressedSha256
-  )
-    bytes = gunzipSync(stored);
-  else bytes = stored; // HTTP Content-Encoding can have already inflated it.
+      ? gunzipSync(stored)
+      : stored; // HTTP Content-Encoding can have already inflated it.
   if (
     bytes.length !== receipt.logicalBytes ||
     progressiveSha256(bytes) !== receipt.logicalSha256
   )
     throw new Error("Prepared directions checksum mismatch.");
   const value = JSON.parse(
-    new TextDecoder("utf-8", { fatal: true }).decode(bytes),
+    new TextDecoder("utf8", { fatal: true }).decode(bytes),
   ) as PublishedRouteCells;
   if (
     value.format !== "openindoormaps-published-route-cells-v1" ||
@@ -139,11 +194,50 @@ export function decodePublishedRouteCells(
     value.inventory.length > (data.circulationGeometry?.cells.length ?? 0)
   )
     throw new Error("Prepared directions do not match this source snapshot.");
-  const index = createNativeExactTopologyIndex(value.topology, {
-    sourceModelSha256: data.source.modelSha256,
-    sourceGeometryKey: receipt.datasetSha256,
-    kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
-  });
+  const hydration = value.hydration;
+  if (
+    (receipt.runtimeSha256 || hydration) &&
+    (!hydration ||
+      admittedRuntime.get(data) !== receipt ||
+      receipt.runtimeSha256 !== PUBLISHED_ROUTE_RUNTIME_SHA256 ||
+      hydration.runtimeSha256 !== receipt.runtimeSha256 ||
+      hydration.version !== 1 ||
+      !/^native-circulation-sha256-v1:[a-f0-9]{64}$/.test(
+        hydration.policySnapshot,
+      ) ||
+      (hydration.preparedRoutingKey !== undefined &&
+        (typeof hydration.preparedRoutingKey !== "string" ||
+          !/^[a-f0-9]{64}$/.test(hydration.preparedRoutingKey))) ||
+      (hydration.resolvedRouteGeometryKey !== undefined &&
+        (typeof hydration.resolvedRouteGeometryKey !== "string" ||
+          !/^native-circulation-sha256-v1:[a-f0-9]{64}$/.test(
+            hydration.resolvedRouteGeometryKey,
+          ))) ||
+      (hydration.supportTiles !== undefined &&
+        (hydration.supportTiles.topology.sourceModelSha256 !==
+          value.topology.sourceModelSha256 ||
+          hydration.supportTiles.topology.sourceGeometryKey !==
+            value.topology.sourceGeometryKey ||
+          hydration.supportTiles.topology.kernelVersion !==
+            value.topology.kernelVersion)) ||
+      !Array.isArray(hydration.materials) ||
+      hydration.materials.length > 32 ||
+      value.topology.sourceModelSha256 !== data.source.modelSha256 ||
+      value.topology.sourceGeometryKey !== receipt.datasetSha256 ||
+      value.topology.kernelVersion !== NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION ||
+      data.circulationGeometry?.exactTopology?.sourceGeometryKey !==
+        value.guards?.circulationBinding)
+  )
+    throw new Error(
+      "Published routing hydration lacks exact runtime admission.",
+    );
+  const index = hydration
+    ? hydratePublishedTopology(value.topology)
+    : createNativeExactTopologyIndex(value.topology, {
+        sourceModelSha256: data.source.modelSha256,
+        sourceGeometryKey: receipt.datasetSha256,
+        kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+      });
   const cells = new Map(data.circulationGeometry!.cells.map((c) => [c.id, c]));
   const entries = new Map<string, NativeRationalParts>();
   const indexed = new Set(index.ids());
@@ -165,7 +259,7 @@ export function decodePublishedRouteCells(
     );
     indexed.delete(item.id);
   }
-  if (indexed.size)
+  if (indexed.size > 0)
     throw new Error("Prepared directions contain an unlisted face.");
   if (value.policies) {
     const edgeIds = new Set(data.edges.map((e) => e.id));
@@ -261,6 +355,44 @@ export function decodePublishedRouteCells(
     }
     approvedGuards.set(entries, guards);
   }
+  if (hydration) {
+    // Validate the derived wire representation while still inside admission.
+    const materials = hydratePublishedMaterials(data, hydration.materials);
+    const supportTiles = hydration.supportTiles
+      ? restorePublishedSupportTiles(
+          hydration.supportTiles,
+          hydratePublishedTopology(hydration.supportTiles.topology),
+          value.topology.geometrySha256,
+          [...entries].map(([id, parts]) => ({
+            id,
+            parts,
+            z: cells.get(id)!.elevationFeet,
+          })),
+        )
+      : undefined;
+    const accessZones = hydration.accessZones
+      ? hydratePublishedAccessZones(data, hydration.accessZones, {
+          sourceModelSha256: value.topology.sourceModelSha256,
+          sourceGeometryKey: value.topology.sourceGeometryKey,
+          kernelVersion: value.topology.kernelVersion,
+        })
+      : undefined;
+    // Retain only decoded query operands. Keeping the full wire here also kept
+    // every rational tile string/index alive beside its decoded geometry.
+    approvedHydration.set(entries, {
+      data,
+      hydration: {
+        version: hydration.version,
+        runtimeSha256: hydration.runtimeSha256,
+        policySnapshot: hydration.policySnapshot,
+        preparedRoutingKey: hydration.preparedRoutingKey,
+        resolvedRouteGeometryKey: hydration.resolvedRouteGeometryKey,
+      },
+      materials,
+      supportTiles,
+      accessZones,
+    });
+  }
   return entries;
 }
 
@@ -272,6 +404,51 @@ export function createPublishedRouteCalculator(
 ) {
   const run = createImmutableRoutingSession(data);
   run(() => {
+    const approved = approvedHydration.get(entries);
+    if (approved && approved.data !== data)
+      throw new Error(
+        "Published routing hydration belongs to another private snapshot.",
+      );
+    const hydration = approved?.hydration;
+    if (approved && hydration) {
+      routingCalculationValue(
+        data,
+        "policy-snapshot",
+        () => hydration.policySnapshot,
+      );
+      routingCalculationValue(data, "native-exact-circulation-topology", () =>
+        hydratePublishedTopology(data.circulationGeometry!.exactTopology!),
+      );
+      routingCalculationValue(
+        data,
+        "native-route-material-query",
+        () => approved.materials,
+      );
+      if (hydration.preparedRoutingKey !== undefined)
+        routingCalculationValue(
+          data,
+          "prepared-routing-binding",
+          () => hydration.preparedRoutingKey,
+        );
+      if (hydration.resolvedRouteGeometryKey !== undefined)
+        routingCalculationValue(
+          data,
+          "resolved-route-geometry",
+          () => hydration.resolvedRouteGeometryKey,
+        );
+      if (approved.supportTiles)
+        routingCalculationValue(
+          data,
+          "native-published-support-tiles",
+          () => approved.supportTiles,
+        );
+      if (approved.accessZones)
+        routingCalculationValue(
+          data,
+          "native-route-access-zone-binding",
+          () => approved.accessZones,
+        );
+    }
     for (const [id, parts] of entries)
       routingCalculationValue(
         data,

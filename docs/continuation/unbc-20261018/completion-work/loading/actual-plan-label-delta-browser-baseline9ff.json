@@ -1,0 +1,175 @@
+{
+  "format": "unbc-published-plan-browser-functional-evidence-v1",
+  "recordedAt": "2026-10-18T16:02:19.231935+00:00",
+  "publication": "isolated immutable baseline9ff with corrected labels and source-admitted shared carriers",
+  "appUrl": "http://127.0.0.1:42184/openindoormaps/index.html",
+  "manifestUrl": "http://127.0.0.1:42184/data/unbc/manifest.json",
+  "manifestBytesSha256": "55125fc83df5cc0126747d2c70c66080776f0cdff28c80819735fbac52b0c13b",
+  "revisionSha256": "a0ec01eda9de2fc296d9f8094e2d667d9d309dbf82c9fefc1d16e7ca88661cf6",
+  "engineSha256": "9ff279531839658e175655b3796bf95fdc2f9d676e7c37076cb9da97ed1dd32b",
+  "datasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "planRuntimeSha256": "f0672367c676a32639a04edb02c4a6cabe437fc32e7a3e3ed1a667e06abaf0f8",
+  "compiledRegistry": {
+    "path": "/workspace/scratch/unbc-plan-label-delta-receipts-9ff.json",
+    "sha256": "555035e329a22edaff5bacc877ba1cb00304fa6396f61082432e53e3732b21a5",
+    "admittedScopeCount": 7
+  },
+  "appIndexHtmlSha256": "767ff859dada66daa429d1d6a428ae860b36b9a3affb1a6ced8b17e7cb022388",
+  "executedTestFile": "tests/e2e/published-visitor-plan.spec.ts",
+  "executedTestFileSha256": "3d7ff1cde6c021340829b7276b6bdd740a7cf4f8be1a23c9f0cb62796295db14",
+  "browser": {
+    "kind": "cloud Chromium",
+    "executable": "/usr/bin/chromium",
+    "softwareRasterizer": true,
+    "physicalDevice": false
+  },
+  "stats": {
+    "startTime": "2026-10-18T15:46:43.056Z",
+    "duration": 812637.8910000001,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "actual compact plan paints, switches floors and reopens cached map on desktop",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 376457,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "actual compact plan paints, switches floors and reopens cached map on mobile viewport",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 151964,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "actual compact plan rejects a corrupt carrier and retries the checked floor",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 33918,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "actual compact neighboring room can be picked from the genuine plan",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 77958,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "actual compact explicit 3D round trip returns to the checked 2D floor",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 164633,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "functionalEvidence": {
+    "genuineBuildingLabelsVisuallyInspected": true,
+    "localNotoGlyphHttp200": true,
+    "desktopAndMobileViewport": true,
+    "actualFullAndSharedDeltaSwitch": true,
+    "offlineMode": "map manifest/assets plus every admitted plan/delta URL blocked; app and glyph network still available",
+    "blockedCarrierCachedReopenHasNoMapDataRequests": true,
+    "noHeavyFloorContextOrRoutingDownloadsIn2D": true,
+    "corruptHttp200CarrierRefused": true,
+    "ordinaryUnforcedRetryRecovers": true,
+    "actualNeighborRoomPick": true,
+    "smallFloor3DTo2DAndMainReturn": true
+  },
+  "notIncluded": [
+    "full offline app-shell download/reload (now passed in separate actual-plan-complete-offline-browser-baseline9ff.json receipt)",
+    "route-overlay test",
+    "physical phone test",
+    "final changed-source engine release acceptance",
+    "geometry/access/hours qualification",
+    "latency acceptance"
+  ],
+  "timingNote": "Cumulative functional test duration includes concurrent host CPU load and software rasterization; no loading-speed claim.",
+  "authority": {
+    "geometry": false,
+    "publicAccess": false,
+    "stepFreeAccess": false,
+    "operatingHours": false,
+    "physicalDevice": false,
+    "finalChangedEngineRelease": false
+  },
+  "rawEvidenceDirectory": "/workspace/scratch/visitor-plan-labels-browser-20261018",
+  "rawEvidenceFiles": [
+    {
+      "path": ".last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "published-visitor-plan-act-2b06d-rns-to-the-checked-2D-floor/compact-after-3d.png",
+      "bytes": 135458,
+      "sha256": "f6328c5d4286922537a7c7e7e81886134a3f54c6cab0ac55148ba3669113b155"
+    },
+    {
+      "path": "published-visitor-plan-act-49e1d-opens-cached-map-on-desktop/compact-cached-floor.png",
+      "bytes": 138127,
+      "sha256": "a9f07aaaf49e743afb67d82e3588e4b3129adcb232a813308e6a1a824ec89cd5"
+    },
+    {
+      "path": "published-visitor-plan-act-49e1d-opens-cached-map-on-desktop/compact-cold-painted.png",
+      "bytes": 135458,
+      "sha256": "f6328c5d4286922537a7c7e7e81886134a3f54c6cab0ac55148ba3669113b155"
+    },
+    {
+      "path": "published-visitor-plan-act-a4f93-icked-from-the-genuine-plan/compact-real-room-pick.png",
+      "bytes": 316493,
+      "sha256": "f811321a56134f30a5451b61f3c844cef11094b9201684bc9ca116433e0939de"
+    },
+    {
+      "path": "published-visitor-plan-act-f9404-ched-map-on-mobile-viewport/compact-cached-floor.png",
+      "bytes": 57825,
+      "sha256": "3bffa2524df3e8d7b1bee97fa27ac7e2c72f5a926518f442da7c7f2a79108ec5"
+    },
+    {
+      "path": "published-visitor-plan-act-f9404-ched-map-on-mobile-viewport/compact-cold-painted.png",
+      "bytes": 57825,
+      "sha256": "3bffa2524df3e8d7b1bee97fa27ac7e2c72f5a926518f442da7c7f2a79108ec5"
+    },
+    {
+      "path": "results.json",
+      "bytes": 17409,
+      "sha256": "5b88367e2c5dca50cceb283218d46eb9efa7d9d8c9c1d4ffb260d08e05f0d2dd"
+    }
+  ],
+  "priorInvocationError": {
+    "path": "/workspace/scratch/visitor-plan-labels-browser-20261018-manifest-path-error",
+    "reason": "Harness manifest path incorrectly included /openindoormaps; all five checks refused at pre-browser source HTTP404. Corrected invocation uses actual /data/unbc/manifest.json. Not an app failure."
+  },
+  "archiveInstruction": "Preserve raw results and PNGs in the project Drive evidence archive; this small source receipt hashes the originals.",
+  "relatedCompleteOfflineReceipt": "actual-plan-complete-offline-browser-baseline9ff.json"
+}

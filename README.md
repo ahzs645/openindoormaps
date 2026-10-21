@@ -14,6 +14,10 @@
 **OpenIndoorMaps** is an open-source project focused on providing a minimalist, self-hostable indoor navigation solution. The goal is to help users navigate complex indoor spaces such as shopping malls, airports, hospitals, and universities, using web-based mapping technologies.
 ![Demo of OpenIndoorMaps](https://github.com/user-attachments/assets/343bd636-05e9-4c8c-a6ad-64a53374cbf7)
 
+## UNBC development checkpoint
+
+The latest [paired source handoff](docs/continuation/unbc-20261020/HANDOFF.md) documents source 019, verified recovery files, the running native rebuild, and the remaining route, browser and performance checks. This source checkpoint is not a completed UNBC release.
+
 ## Release Status
 
 **Current Version: Pre-Alpha (Map Viewer Demo Only)**

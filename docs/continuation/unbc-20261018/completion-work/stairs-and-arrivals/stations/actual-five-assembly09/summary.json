@@ -1,0 +1,172 @@
+{
+  "format": "actual-source-five-profile-request-successor-v9-expanded-outer-floor-demand",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "originalDatasetSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+  "completeSourcePages": 3666,
+  "sourceCensusSha256": "50c9dd53de55bb9f553f0f694670a8e4b9f9feb4b92e827056da765926b0b6c6",
+  "implementationSha256": "8dc03b925968a830ca492674336d580f64a8f50b3d64dfe62a28cd928585eb44",
+  "allSourceBindingsStable": true,
+  "allInputFileBindingsStable": true,
+  "requestDeltaSha256": "7b5584cdc08d7d4d79da214272225276ad442013b43f9be7fff62d88c483bbd6",
+  "receiptSha256": "ef04d8d3237e0a1d794530754079fd66ed7a61031dc4b4b90cead0ff182a94e3",
+  "receiptBytes": 535989,
+  "cases": 5,
+  "positiveAssemblies": 0,
+  "notANewAll10OrAll28Proof": true,
+  "routeApproved": false,
+  "rows": [
+    {
+      "nativeStairId": 1293690,
+      "passed": false,
+      "physicalJoinContinuous": true,
+      "originalOuterRequestsUnchanged": true,
+      "actualGraphAndPhysicalPlaneBindingsMatched": true,
+      "pieces": [
+        {
+          "forward": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Closed six-foot material contacts: 77"
+            ],
+            "checkedMovements": 18,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 77
+          },
+          "reverse": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Closed six-foot material contacts: 77"
+            ],
+            "checkedMovements": 18,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 77
+          }
+        },
+        {
+          "forward": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Closed six-foot material contacts: 501"
+            ],
+            "checkedMovements": 61,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 501
+          },
+          "reverse": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Closed six-foot material contacts: 501"
+            ],
+            "checkedMovements": 61,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 501
+          }
+        }
+      ]
+    },
+    {
+      "nativeStairId": 1498457,
+      "passed": false,
+      "error": "Error: Original expanded assembly outer floor demand is not fully qualified",
+      "originalScopedFloorQualification": {
+        "nativeFloorElementId": 1496653,
+        "originalCapFaceToken": 5,
+        "originalGraphNodeId": "stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:0",
+        "originalNativeServedLevelId": 400176,
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 2,
+          "completeBoundaryUncertaintyContact": true,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0
+          ],
+          "completeConnectedDemandSupported": false
+        }
+      }
+    },
+    {
+      "nativeStairId": 1500288,
+      "passed": false,
+      "error": "Error: Original expanded assembly outer floor demand is not fully qualified",
+      "originalScopedFloorQualification": {
+        "nativeFloorElementId": 1496653,
+        "originalCapFaceToken": 5,
+        "originalGraphNodeId": "stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:0",
+        "originalNativeServedLevelId": 400176,
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 2,
+          "completeBoundaryUncertaintyContact": true,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0
+          ],
+          "completeConnectedDemandSupported": false
+        }
+      }
+    },
+    {
+      "nativeStairId": 1514126,
+      "passed": false,
+      "physicalJoinContinuous": false,
+      "originalOuterRequestsUnchanged": true,
+      "actualGraphAndPhysicalPlaneBindingsMatched": true,
+      "pieces": [
+        {
+          "forward": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Riser transfer leaves actual source body/cap/intent corridor"
+            ],
+            "checkedMovements": 10,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 0
+          },
+          "reverse": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Riser transfer leaves actual source body/cap/intent corridor"
+            ],
+            "checkedMovements": 10,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 0
+          }
+        },
+        {
+          "forward": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Riser transfer leaves actual source body/cap/intent corridor"
+            ],
+            "checkedMovements": 10,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 0
+          },
+          "reverse": {
+            "mathematicalReplayPassed": false,
+            "issues": [
+              "Riser transfer leaves actual source body/cap/intent corridor"
+            ],
+            "checkedMovements": 10,
+            "unknownPhysicalBodyKeys": [],
+            "closedMaterialContactCount": 0
+          }
+        }
+      ]
+    },
+    {
+      "nativeStairId": 2474568,
+      "passed": false,
+      "error": "Error: Scoped original cap demand must be one connected simple hole-free footprint"
+    }
+  ]
+}

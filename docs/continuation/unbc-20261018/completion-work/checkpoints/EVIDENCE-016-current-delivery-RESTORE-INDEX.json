@@ -1,0 +1,82 @@
+{
+  "format": "unbc-current-delivery-drive-restore-index-v1",
+  "archiveName": "EVIDENCE-016-current-delivery-20261018.tar.gz",
+  "archiveBytes": 130995698,
+  "archiveSha256": "55f864bba4e405bb89fd0b28e014a8c8e535fb3c33779f83eb9c5671b57450e2",
+  "memberCount": 2803,
+  "allPartsWholeArchiveAndFreshRestoredMembersVerified": true,
+  "sourceEngineSha256": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+  "routingRuntimeSha256": "a84471d00460a44e5678bd69d9f30a6fa06b3471133790054ecd1c8878411a51",
+  "normalSevenScopes": 7,
+  "independentlyReproducedCompactPlans": 7,
+  "actualProgressiveWorkerCases": 10,
+  "partsInOrder": [
+    {
+      "part": 1,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-001",
+      "bytes": 25165824,
+      "sha256": "ef97481ccfc539ea007f2a6a49b44d7f57264f3b6339c778e32702f0f47b57ff",
+      "driveFileId": "1k9H0zPYtOPEPSKvDUkhvhkst099ROxQX",
+      "driveUrl": "https://drive.google.com/file/d/1k9H0zPYtOPEPSKvDUkhvhkst099ROxQX/view"
+    },
+    {
+      "part": 2,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-002",
+      "bytes": 25165824,
+      "sha256": "db1dd4ad3a83abc1d2d04e293ff3653153eebc46f77b045d5af766d2872f9526",
+      "driveFileId": "1twsX7Pg0ryJR2nfKsNGj-6ZPhXAOI9CH",
+      "driveUrl": "https://drive.google.com/file/d/1twsX7Pg0ryJR2nfKsNGj-6ZPhXAOI9CH/view"
+    },
+    {
+      "part": 3,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-003",
+      "bytes": 25165824,
+      "sha256": "4ff0f12938326bfce3341b2e1be7b79340635fabef713192c3528cdbae6afd0c",
+      "driveFileId": "1Eg5A_amPeCNQwU8rNMse2anzjzJ5_3nj",
+      "driveUrl": "https://drive.google.com/file/d/1Eg5A_amPeCNQwU8rNMse2anzjzJ5_3nj/view"
+    },
+    {
+      "part": 4,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-004",
+      "bytes": 25165824,
+      "sha256": "abe7fcfae3d38be71dc56f159a8727f2e2da8253506812eebad46c06c62b1d8b",
+      "driveFileId": "11e8_QHddtPN3tpWO16rB-KEp0wxFuKXw",
+      "driveUrl": "https://drive.google.com/file/d/11e8_QHddtPN3tpWO16rB-KEp0wxFuKXw/view"
+    },
+    {
+      "part": 5,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-005",
+      "bytes": 25165824,
+      "sha256": "ba0d77fc87e837901edd76e232c361e74552dfc139c69fbaddb3c5c48d22605a",
+      "driveFileId": "1KjxfGInzqKOG2IjvcqgWoJj0y9Xnrs-C",
+      "driveUrl": "https://drive.google.com/file/d/1KjxfGInzqKOG2IjvcqgWoJj0y9Xnrs-C/view"
+    },
+    {
+      "part": 6,
+      "fileName": "EVIDENCE-016-current-delivery-20261018.tar.gz.part-006",
+      "bytes": 5166578,
+      "sha256": "a432c67930c46952572c6f5cd1b5866f7577c37ea9bf0202151e76e8b86949d5",
+      "driveFileId": "1x-6L_ywoZbyCFl0KmDRQXQaJgDKkWRon",
+      "driveUrl": "https://drive.google.com/file/d/1x-6L_ywoZbyCFl0KmDRQXQaJgDKkWRon/view"
+    }
+  ],
+  "restore": [
+    "Download all six named parts as their original complete bytes.",
+    "Verify every part length and SHA-256 against this index.",
+    "Concatenate part-001 through part-006 in numeric order.",
+    "Verify the joined archive length and SHA-256 before extracting.",
+    "Extract into a new empty directory and check every regular file against manifest.json.",
+    "The source/ directories preserve the exact tested application consumer snapshot. Node modules, original model/GIS authoring inputs and the accepted source ZIP are not embedded. Install dependencies from the included locks; the external ZIP is checksum-pinned in publication-audit/."
+  ],
+  "acceptedSourceZipSha256": "09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
+  "limits": [
+    "Intermediate accepted-data performance/parity experiment, not a new native master or release approval.",
+    "Actual worker delivery uses exact local files with browser IndexedDB deliberately unavailable; browser evidence is separate.",
+    "Unknown access and physical-device qualification are unchanged."
+  ],
+  "completeNativeBackup": false,
+  "browserAcceptance": false,
+  "physicalDeviceAcceptance": false,
+  "published": false,
+  "releaseApproval": false
+}

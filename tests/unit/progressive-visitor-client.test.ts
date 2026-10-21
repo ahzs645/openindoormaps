@@ -255,6 +255,197 @@ function gzipOnlyPartsFixture() {
   return { ...f, representation, resign };
 }
 
+class TransportCache extends MemoryVisitorDeliveryCache {
+  gzipWrites: { hash: string; gzip: Uint8Array; logicalBytes: number }[] = [];
+  logicalWrites: string[] = [];
+  override async putAsset(hash: string, bytes: Uint8Array) {
+    this.logicalWrites.push(hash);
+    await super.putAsset(hash, bytes);
+  }
+  async putGzipAsset(hash: string, gzip: Uint8Array, logicalBytes: number) {
+    const owned = new Uint8Array(gzip);
+    this.gzipWrites.push({ hash, gzip: owned, logicalBytes });
+    // An untrusted/custom cache must not mutate the client's private binding.
+    gzip.fill(0);
+    await Promise.resolve();
+    const logical = gunzipSync(owned);
+    assert.equal(logical.length, logicalBytes);
+    await super.putAsset(hash, logical);
+  }
+}
+
+test("checked multipart gzip is saved unchanged without logical recompression and reopens offline", async () => {
+  const f = gzipOnlyPartsFixture(),
+    cache = new TransportCache();
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: f.fetcher,
+  });
+  const route = await client.loadRouting();
+  const asset = f.manifest.assets[f.manifest.routeAssetId];
+  assert.equal(cache.logicalWrites.length, 0);
+  assert.equal(cache.gzipWrites.length, 1);
+  assert.equal(
+    progressiveSha256(cache.gzipWrites[0].gzip),
+    f.representation.sha256,
+  );
+  assert.equal(cache.gzipWrites[0].logicalBytes, asset.logicalBytes);
+  f.files.clear();
+  const offline = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    offline: true,
+    fetch: f.fetcher,
+  });
+  assert.deepEqual(await offline.loadRouting(), route);
+});
+
+test("transport bindings stay private across custom-cache mutation and explicit offline readback", async () => {
+  const f = gzipOnlyPartsFixture(),
+    cache = new TransportCache();
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: f.fetcher,
+  });
+  const result = await client.downloadOffline();
+  assert.equal(result.complete, true);
+  const hash = f.manifest.assets[f.manifest.routeAssetId].logicalSha256;
+  const writes = cache.gzipWrites.filter((entry) => entry.hash === hash);
+  assert.equal(writes.length, 2);
+  assert.deepEqual(writes[0].gzip, writes[1].gzip);
+});
+
+test("auto-decoded HTTP gzip retains logical storage fallback instead of treating JSON as gzip", async () => {
+  const f = gzipOnlyPartsFixture(),
+    cache = new TransportCache();
+  const asset = f.manifest.assets[f.manifest.routeAssetId];
+  delete f.representation.parts;
+  f.resign();
+  const logical = raw({
+    format: "reviter-indoor",
+    version: 1,
+    source: f.manifest.provenance.source,
+    originalExact: [Number.MIN_VALUE, 0.1, "123456789123456789/97"],
+  });
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: (async () =>
+      new Response(logical.slice().buffer, {
+        headers: { "Content-Encoding": "gzip" },
+      })) as typeof fetch,
+  });
+  await client.loadRouting();
+  assert.equal(cache.gzipWrites.length, 0);
+  assert.deepEqual(cache.logicalWrites, [asset.logicalSha256]);
+});
+
+test("failed logical checksum, corrupt or truncated gzip and cancellation cannot seed retained transport", async () => {
+  for (const mode of ["logical", "gzip", "truncated", "abort"] as const) {
+    const f = gzipOnlyPartsFixture(),
+      cache = new TransportCache();
+    const controller = new AbortController();
+    const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+      cache,
+      fetch: (async (input, init) => {
+        if (mode === "abort") controller.abort();
+        return f.fetcher(input, init);
+      }) as typeof fetch,
+    });
+    if (mode === "logical")
+      f.manifest.assets[f.manifest.routeAssetId].logicalSha256 = "f".repeat(64);
+    if (mode === "gzip" || mode === "truncated") {
+      const joined = new Uint8Array(f.representation.bytes);
+      let offset = 0;
+      for (const part of f.representation.parts!) {
+        const bytes = f.files.get(new URL(part.path, url).href)!;
+        joined.set(bytes, offset);
+        offset += bytes.length;
+      }
+      const broken = mode === "gzip" ? joined.fill(7) : joined.slice(0, -8);
+      delete f.representation.parts;
+      f.representation.sha256 = progressiveSha256(broken);
+      f.representation.bytes = broken.length;
+      f.files.set(new URL(f.representation.path, url).href, broken);
+    }
+    await assert.rejects(client.loadRouting(controller.signal));
+    assert.equal(cache.gzipWrites.length, 0);
+    let complete = false;
+    await assert.rejects(
+      client.downloadOffline((progress) => {
+        complete ||= progress.complete;
+      }, controller.signal),
+    );
+    assert.equal(complete, false);
+  }
+});
+
+test("mutated returned logical bytes cannot change a privately retained original gzip during explicit save", async () => {
+  const f = gzipOnlyPartsFixture(),
+    cache = new TransportCache();
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: f.fetcher,
+  });
+  const routeId = f.manifest.routeAssetId;
+  const returned = await client.readAsset(routeId);
+  const original = returned.slice();
+  returned.fill(0);
+  const readAsset = client.readAsset.bind(client);
+  client.readAsset = async (id, signal) =>
+    id === routeId ? returned : readAsset(id, signal);
+  const progress = await client.downloadOffline();
+  assert.equal(progress.complete, true);
+  const hash = f.manifest.assets[routeId].logicalSha256;
+  assert.deepEqual(await cache.getAsset(hash), original);
+  for (const saved of cache.gzipWrites.filter((entry) => entry.hash === hash))
+    assert.deepEqual(gunzipSync(saved.gzip), original);
+});
+
+test("metadata mutation during fetch cannot relabel retained gzip or bypass the private source parser", async () => {
+  const f = gzipOnlyPartsFixture(),
+    cache = new TransportCache();
+  const asset = f.manifest.assets[f.manifest.routeAssetId];
+  const original = asset.logicalSha256;
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: (async (input, init) => {
+      asset.logicalSha256 = "f".repeat(64);
+      return f.fetcher(input, init);
+    }) as typeof fetch,
+  });
+  await assert.rejects(client.loadRouting(), /source checksum/);
+  assert.deepEqual(
+    cache.gzipWrites.map((entry) => entry.hash),
+    [original],
+  );
+  assert.equal(await cache.getAsset("f".repeat(64)), undefined);
+});
+
+test("raw gzip storage failure remains visible and explicit offline download cannot claim completion", async () => {
+  const f = gzipOnlyPartsFixture();
+  class FullCache extends TransportCache {
+    override async putGzipAsset() {
+      throw new DOMException("Storage full", "QuotaExceededError");
+    }
+  }
+  const cache = new FullCache(),
+    errors: unknown[] = [];
+  const client = ProgressiveVisitorClient.fromManifest(url, f.manifest, {
+    cache,
+    fetch: f.fetcher,
+    onStorageError: (error) => errors.push(error),
+  });
+  assert.equal((await client.loadRouting()).format, "reviter-indoor");
+  assert.equal(errors.length, 1);
+  let complete = false;
+  await assert.rejects(
+    client.downloadOffline((progress) => {
+      complete ||= progress.complete;
+    }),
+    /Storage full/,
+  );
+  assert.equal(complete, false);
+});
+
 test("gzip-only startup stays small and checked routing parts remain lazy and available offline", async () => {
   const f = gzipOnlyPartsFixture();
   const client = await ProgressiveVisitorClient.open(url, {

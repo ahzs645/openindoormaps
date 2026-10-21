@@ -1,0 +1,40 @@
+{
+  "createdAt": "2026-10-18T23:29:06.599081+00:00",
+  "allPassed": true,
+  "checks": [
+    {
+      "repository": "openindoormaps",
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--max-old-space-size=1536",
+        "/workspace/openindoormaps/node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--incremental",
+        "false"
+      ],
+      "exitCode": 0,
+      "seconds": 49.94301017399994,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "repository": "reviter",
+      "argv": [
+        "node",
+        "--max-old-space-size=1536",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit",
+        "--incremental",
+        "false"
+      ],
+      "exitCode": 0,
+      "logBytes": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "toolSession": 63308,
+      "fix": "Type-only legacy drawing-test inference annotation; no production changes after v2 OIM pass."
+    }
+  ],
+  "native165Closure": "d6a27f269f5d20b1181e0bc5d66fc8140293414ee245c77e88fbe0d3b31fa471",
+  "priorFailurePreserved": true,
+  "geometryOrBrowserAuthorityGranted": false
+}

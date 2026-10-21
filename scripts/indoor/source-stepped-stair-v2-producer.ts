@@ -10,6 +10,14 @@ import {
   originalNativeForeignEnvelopeFacts,
 } from "../../../reviter/lib/reviter/native-source-foreign-envelope-census.ts";
 import { createOriginalNativeStairPhysicalContext } from "../../../reviter/lib/reviter/native-source-stair-physical-inventory.ts";
+import {
+  createOriginalNativeStairAssemblyContext,
+  bindOriginalNativeStairAssembly,
+} from "../../../reviter/lib/reviter/native-source-stair-assembly.ts";
+import {
+  bindOriginalNativeStairRiserPartition,
+  originalNativeStairRiserPartitionFacts,
+} from "../../../reviter/lib/reviter/native-source-stair-riser-partition.ts";
 import { certifyOriginalNativePlacedStairEnvelope } from "../../../reviter/lib/reviter/native-source-stair-placed-envelope.ts";
 import { certifyOriginalNativePlanarSlabEnvelope } from "../../../reviter/lib/reviter/native-source-planar-slab-envelope.ts";
 import { certifyOriginalNativeFloorObstacleDomains } from "../../../reviter/lib/reviter/native-source-floor-obstacle-domains.ts";
@@ -110,10 +118,21 @@ function implementationBindings() {
   const paths = [
     "./source-stepped-stair-v2-producer.ts",
     "./proposals/stepped-stair-v2-source-adapter.ts",
+    "./proposals/stepped-stair-v2-scoped-terminal.ts",
     "./proposals/stepped-stair-v2-kernel.ts",
     "./proposals/original-stepped-stair-graph-demand.ts",
     "../../../reviter/lib/reviter/native-source-foreign-envelope-census.ts",
     "../../../reviter/lib/reviter/native-source-stair-physical-inventory.ts",
+    "../../../reviter/lib/reviter/native-source-stair-riser-partition.ts",
+    "../../../reviter/lib/reviter/native-stair-riser-local-partition.ts",
+    "../../../reviter/lib/reviter/native-stair-cap-backed-turn.ts",
+    "../../../reviter/lib/reviter/native-source-stair-reference-plane.ts",
+    "../../../reviter/lib/reviter/native-source-stair-floor-attachment.ts",
+    "../../../reviter/lib/reviter/native-source-stair-scoped-floor-attachment.ts",
+    "../../../reviter/lib/reviter/native-source-floor-cap-demand.ts",
+    "../../../reviter/lib/reviter/native-source-floor-local-support.ts",
+    "../../../reviter/lib/reviter/native-source-cylinder-domain-enclosure.ts",
+    "../../../reviter/lib/reviter/native-source-cylinder-extended-trig.ts",
     "../../../reviter/lib/reviter/native-source-stair-placed-envelope.ts",
     "../../../reviter/lib/reviter/native-source-planar-slab-envelope.ts",
     "../../../reviter/lib/reviter/native-source-floor-obstacle-domains.ts",
@@ -254,6 +273,8 @@ export type OriginalSteppedStairV2SourceInputs = {
   reviewedDrawingReferences?: Review;
   foreignScopeBoundsFeet: Scope;
   sourceRequest: StairRequest;
+  riserInterpretation?: "complete-original-parent-local";
+  treadInterpretation?: "original-cap-backed-turn";
   terminalMaterials: [TerminalRecipe, TerminalRecipe];
   placedTrimRequests?: readonly TrimRequest[];
   /** Retention locators only; every requested frame/role is independently read
@@ -294,6 +315,42 @@ export function createOriginalSteppedStairV2SourceProof(
       "Source request/proposal/original stair graph demand disagree",
     );
   checkedOriginalSourceReview({ ...options, originalEdgeId: demand.edgeId });
+  if (
+    options.riserInterpretation !== undefined &&
+    options.riserInterpretation !== "complete-original-parent-local"
+  )
+    throw new Error("Unsupported explicit original riser interpretation");
+  if (
+    options.treadInterpretation !== undefined &&
+    (options.treadInterpretation !== "original-cap-backed-turn" ||
+      options.riserInterpretation !== "complete-original-parent-local")
+  )
+    throw new Error(
+      "Unsupported explicit original tread interpretation or missing parent partition",
+    );
+  // This single-run producer may qualify only the complete original parent.
+  // Multi-run parents require the separate full assembly consumer.
+  const riserPartition =
+    options.riserInterpretation === "complete-original-parent-local"
+      ? bindOriginalNativeStairRiserPartition(
+          bindOriginalNativeStairAssembly(
+            createOriginalNativeStairAssemblyContext(
+              options.originalRVTBytes,
+              options.expectedSourceModelSha256,
+              [request.nativeStairId],
+            ),
+            request.nativeStairId,
+          ),
+        )
+      : undefined;
+  if (
+    riserPartition &&
+    originalNativeStairRiserPartitionFacts(riserPartition).originalOwnedRunIds
+      .length !== 1
+  )
+    throw new Error(
+      "A complete multi-run parent requires original assembly composition",
+    );
   const bytes = Uint8Array.from(options.originalRVTBytes),
     sha = options.expectedSourceModelSha256,
     ids = [
@@ -415,6 +472,8 @@ export function createOriginalSteppedStairV2SourceProof(
   }
   const proof = createOriginalSteppedStairV2SourceProofFromSources({
     sources: {
+      riserPartition,
+      treadInterpretation: options.treadInterpretation,
       stair,
       foreign: census,
       own: ownResult.certificate,

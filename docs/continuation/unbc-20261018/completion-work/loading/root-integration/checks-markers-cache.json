@@ -1,0 +1,45 @@
+{
+  "format": "compact-floor-integration-checks-v1",
+  "checkedAt": "2026-10-18T16:44:16.148794+00:00",
+  "focusedTransportAndLabelTests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "globalTypecheck": {
+    "passed": true,
+    "log": "compact-plan-markers-root-typecheck.log"
+  },
+  "scopedLint": {
+    "passed": true,
+    "log": "compact-plan-markers-root-lint.log"
+  },
+  "isolatedBaselineAllScopeOnlineAndOfflineGate": {
+    "scopesPassed": 7,
+    "storedBytes": 12075688,
+    "runtimeSha256": "c2174116ea44153e91d9e2e3c6224bdf173121b6a75cbe97185145fa4b8d2431"
+  },
+  "isolatedBaselineNegativePublicationControls": {
+    "corruptCarrierRefused": true,
+    "missingCarrierRefused": true
+  },
+  "sourceFiles": {
+    "app/indoor-project/published-visitor-plan.ts": "004a9d087f2d15c2a78bfb42d9dd0d11f03a29d604f5774d1c2e4eb510ecb69d",
+    "app/indoor-project/published-visitor-plan-layer.tsx": "2e3ee0cd10411c10db1df59eae7cfc5f2ddbdeb8952d988a669c81ffef8f03f8",
+    "app/indoor-project/published-visitor-plan-projection.ts": "0352f1ae4e36a2d20e16203217f638ba800bc0484c912f439b391770638bccd2",
+    "app/indoor-project/published-visitor-plan-types.ts": "71f8c9d59a5742dcb62a1e20d8c00c1975c533db36840a10e4b6648ab6b9ba98",
+    "app/indoor-project/visitor-render-status.tsx": "47e5151b62db288054ce27d67e01c4ddc552a5b460e4b23faaab2cb8212864ac",
+    "app/pages/progressive-visitor-page.tsx": "9135c3ba137fa889ee68792e91ff14e1a2f22fbfacf67c8a689ad21257c78b8d",
+    "app/pages/progressive-visitor.css": "ae7b651dc44f5611716e1f62e83515a777c0a6468d75b918cc25ab40c8facbc8",
+    "scripts/indoor/check-published-visitor-plans.ts": "cdb8bcaed9b79715c66c6c41c0f187faebce3c7a7616274e74df107509f44fd2",
+    "scripts/indoor/export-published-visitor-plans.ts": "8503026ad1ab19cf66c22f3e111c6308cc4512f8fb57f22336e86de2cc2306f5",
+    "tests/unit/published-visitor-plan.test.ts": "4c1133916f6ad6dea96278adf69bac0de0d143c9fb0f71ed5f019e80a1de5648"
+  },
+  "notes": [
+    "Global TypeScript ran after source marker custom readiness and unreadable-cache integration.",
+    "Connector button selector CSS-only repair followed screenshot review; separate build and browser style check pending.",
+    "Current source has intentionally empty compact plan registry; isolated baseline admission is not final source admission."
+  ],
+  "physicalPhoneAcceptance": false,
+  "finalChangedEngineAcceptance": false,
+  "releaseApproved": false
+}

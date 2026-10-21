@@ -32,6 +32,7 @@ import {
   progressivePlaceContext,
   progressivePlaceLabel,
   progressivePlaceScope,
+  progressivePlaceSearchMatches,
 } from "./progressive-instruction-preview";
 import { PublishedVisitorPlanLayer } from "~/indoor-project/published-visitor-plan-layer";
 import { emptyPreparedFloorSources } from "~/indoor-project/prepared-layer-lifetime";
@@ -395,7 +396,6 @@ export default function ProgressiveVisitorPage() {
   const [loading, setLoading] = useState(false);
   const [offline, setOffline] = useState<VisitorOfflineProgress>();
   const [downloading, setDownloading] = useState(false);
-  const [appOfflineBytes, setAppOfflineBytes] = useState(0);
   const offlineController = useRef<AbortController>();
   const openController = useRef<AbortController>();
   const [search, setSearch] = useState("");
@@ -459,7 +459,6 @@ export default function ProgressiveVisitorPage() {
       resetDirections();
       offlineController.current?.abort();
       setDownloading(false);
-      setAppOfflineBytes(0);
       setClient(undefined);
       openController.current?.abort();
       const controller = new AbortController();
@@ -723,14 +722,9 @@ export default function ProgressiveVisitorPage() {
     // Current is the result of this effect, not a trigger for a second request.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [client, scopeId, requestDetail, calculating, routes, scopeRetry]);
-  const matches =
-    client?.shell.records
-      .filter((record) =>
-        `${record.number} ${record.name} ${record.building}`
-          .toLowerCase()
-          .includes(search.toLowerCase()),
-      )
-      .slice(0, 12) ?? [];
+  const matches = client
+    ? progressivePlaceSearchMatches(client.shell.records, client.shell, search)
+    : [];
   const selectedPlace = client?.shell.records.find(
     (record) => record.key === selected,
   );
@@ -738,6 +732,33 @@ export default function ProgressiveVisitorPage() {
     (record) => record.key === start,
   );
   const endPlace = client?.shell.records.find((record) => record.key === end);
+  const unknownAccessEndpointRoles = [
+    ...(startPlace?.access === "unknown" ? ["starting place"] : []),
+    ...(endPlace?.access === "unknown" ? ["destination"] : []),
+  ];
+  let offlineDownloadLabel = "Download complete map for offline use";
+  let offlineStatusText = "";
+  if (downloading) {
+    if (offline && offline.completedAssets >= offline.totalAssets) {
+      offlineDownloadLabel = "Finishing offline setup…";
+      offlineStatusText =
+        "Finishing offline setup. Keep this page open until the map and app are saved.";
+    } else {
+      offlineDownloadLabel = "Downloading map…";
+      offlineStatusText = "Downloading map…";
+      if (offline)
+        offlineStatusText = `Downloading map: ${offline.completedAssets} / ${offline.totalAssets} map files saved.`;
+    }
+  } else if (offline?.complete) {
+    let directionsStatus =
+      "You can request directions offline; the first route may take longer to prepare.";
+    if (offline.directionsCache === "saved")
+      directionsStatus = "Directions are saved for offline use.";
+    offlineStatusText = `Complete map and app saved for offline use. ${directionsStatus}`;
+  } else if (offline) {
+    offlineDownloadLabel = "Resume map download";
+    offlineStatusText = `Download paused. ${offline.completedAssets} / ${offline.totalAssets} map files saved. Resume to finish offline setup.`;
+  }
   const mapChoicePlaces = (client?.shell.records ?? []).filter((record) =>
     mapChoices.includes(record.key),
   );
@@ -933,7 +954,7 @@ export default function ProgressiveVisitorPage() {
         if (!saved)
           throw new Error("A floor could not be verified in offline storage.");
       }
-      const app = await prepareVisitorOfflineShell({
+      await prepareVisitorOfflineShell({
         signal: controller.signal,
       });
       await client.verifyOfflineInventory(controller.signal);
@@ -949,7 +970,6 @@ export default function ProgressiveVisitorPage() {
           throw new Error("A floor could not be verified in offline storage.");
       }
       if (requestedMap === mapEpoch.current) {
-        setAppOfflineBytes(app.bytes);
         setOffline(completeMap);
       }
     } catch (error) {
@@ -1158,10 +1178,10 @@ export default function ProgressiveVisitorPage() {
                 aria-label="Find a place"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                placeholder="Room number or name"
+                placeholder="Room, name, building or floor"
               />
             </label>
-            {search && (
+            {search.trim() && (
               <ul className="visitor-search">
                 {matches.length === 0 && <li>No matching places.</li>}
                 {matches.map((record) => (
@@ -1319,7 +1339,15 @@ export default function ProgressiveVisitorPage() {
               )}
               <details ref={journeyRef} open data-testid="visitor-journey">
                 <summary>{route ? "Change journey" : "Choose journey"}</summary>
-                <p>Choose the room or entrance you are starting from.</p>
+                <p>
+                  Choose a room or entrance you can identify as your starting
+                  place. Your position is not tracked; you advance the
+                  directions yourself.
+                </p>
+                <p>
+                  Use Find a place above, then choose Start here or Directions
+                  to here.
+                </p>
                 <label>
                   From
                   <select
@@ -1372,6 +1400,17 @@ export default function ProgressiveVisitorPage() {
                 >
                   Show destination on map
                 </button>
+                {unknownAccessEndpointRoles.length > 0 && (
+                  <p
+                    className="project-access-note"
+                    role="status"
+                    data-testid="journey-unknown-endpoint-access"
+                  >
+                    Public access has not been confirmed for your{" "}
+                    {unknownAccessEndpointRoles.join(" and ")}. Check with the
+                    venue before following these directions.
+                  </p>
+                )}
                 {profile === "accessible" && (
                   <p>
                     Uses confirmed step-free connections. Some places may have
@@ -1463,22 +1502,16 @@ export default function ProgressiveVisitorPage() {
                 downloading || client.manifest.unavailableScopes.length > 0
               }
             >
-              Download complete map for offline use
+              {offlineDownloadLabel}
             </button>
             {downloading && (
               <button onClick={() => offlineController.current?.abort()}>
                 Pause download
               </button>
             )}
-            {offline && (
+            {(downloading || offline) && (
               <p role="status" data-testid="offline-status">
-                {offline.complete
-                  ? `Complete map and app saved for offline use (${(appOfflineBytes / 1e6).toFixed(1)} MB of app files). ${
-                      offline.directionsCache === "saved"
-                        ? "Checked directions cache saved; routes are verified when opened."
-                        : "The first directions request still needs full validation."
-                    }`
-                  : `${offline.completedAssets} / ${offline.totalAssets} map files saved; download can resume.`}
+                {offlineStatusText}
               </p>
             )}
             {client.fromCachedManifest && <p>Using the saved map revision.</p>}

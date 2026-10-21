@@ -1,0 +1,197 @@
+--- established-tile/app/indoor-project/native-rational-intersection-broadphase.ts
++++ rejected-direct-experiment/app/indoor-project/native-rational-intersection-broadphase.ts
+@@ -14,7 +14,7 @@
+   return delta < 0n ? -1 : delta > 0n ? 1 : 0;
+ };
+ function bounds(ring: Ring): Box | undefined {
+-  if (!ring.length) return;
++  if (ring.length === 0) return;
+   const saved = frozenBounds.get(ring);
+   if (saved) return saved;
+   let minX = rational(ring[0]![0]),
+@@ -64,7 +64,7 @@
+ ): NativeRationalOverlayInput {
+   const shells = subject.map((part) => (part[0] ? bounds(part[0]) : undefined));
+   // Unknown/empty shells cannot prove disjointness; defer them to the kernel.
+-  if (!shells.length || shells.some((box) => !box)) return operand;
++  if (shells.length === 0 || shells.some((box) => !box)) return operand;
+   const outside = (ring: Ring): boolean => {
+     const box = bounds(ring);
+     return !!box && shells.every((shell) => disjoint(box, shell!));
+@@ -82,3 +82,15 @@
+   }
+   return selected;
+ }
++
++/** Localize only a subtraction operand. The subject itself stays complete;
++ * a strictly disjoint component or hole cannot change subject minus operand.
++ * Touching rings remain in the same exact overlay, including excluded holes.
++ * Never use this localization as a union/xor operand or support authority.
++ */
++export function nativeRationalDifferenceOperand(
++  subject: NativeRationalOverlayInput,
++  operand: NativeRationalOverlayInput,
++): NativeRationalOverlayInput {
++  return nativeRationalIntersectionOperand(subject, operand);
++}
+--- established-tile/app/indoor-project/native-rational-support-tiles.ts
++++ rejected-direct-experiment/app/indoor-project/native-rational-support-tiles.ts
+@@ -6,7 +6,10 @@
+   type NativeRationalParts,
+ } from "./native-rational-overlay";
+ import { freezeNativeRationalParts } from "./native-exact-planar-topology";
+-import { nativeRationalIntersectionOperand } from "./native-rational-intersection-broadphase";
++import {
++  nativeRationalDifferenceOperand,
++  nativeRationalIntersectionOperand,
++} from "./native-rational-intersection-broadphase";
+ 
+ const compare = (a: Rational, b: Rational): number => {
+   const delta = a.n * b.d - b.n * a.d;
+@@ -134,3 +137,28 @@
+     return direct();
+   };
+ }
++
++/** Boolean whole-area containment under the original exact kernel. Unlike the
++ * geometry-returning tile query, no clipped support polygon is needed here.
++ * Its tile is constructively a closed rectangle containing every subject shell
++ * coordinate (and thus every point of a valid subject polygon):
++ * H \ ((T intersection F) intersection H) = H \ F when H subset T.
++ * Removing own extensions is the same ordered difference in both forms.
++ * The complete subject, holes and exact rational coordinates are unchanged.
++ * Unknown/empty support subtracts nothing and therefore refuses positive area.
++ */
++export function createNativeRationalAreaSupportQuery(
++  floors: NativeRationalOverlayInput,
++) {
++  const source = snapshot(floors);
++  return (
++    subject: NativeRationalOverlayInput,
++    extensions: NativeRationalOverlayInput = [],
++  ): boolean =>
++    nativeRationalOverlay(
++      "difference",
++      subject,
++      nativeRationalDifferenceOperand(subject, source),
++      extensions,
++    ).length === 0;
++}
+--- established-tile/app/indoor-project/corridor-guide-support.ts
++++ rejected-direct-experiment/app/indoor-project/corridor-guide-support.ts
+@@ -4,12 +4,8 @@
+   createNativeRationalPathUnionQuery,
+   freezeNativeRationalParts,
+ } from "./native-exact-planar-topology";
+-import {
+-  nativeRationalOverlay,
+-  rational,
+-  type NativeRationalParts,
+-} from "./native-rational-overlay";
+-import { createNativeRationalSupportTileQuery } from "./native-rational-support-tiles";
++import { rational, type NativeRationalParts } from "./native-rational-overlay";
++import { createNativeRationalAreaSupportQuery } from "./native-rational-support-tiles";
+ import { projectStatedTwoFootWalkingVolume } from "./native-stepped-stair-v2-walking-volume";
+ import type { CorridorXY } from "./corridor-centerline";
+ 
+@@ -21,7 +17,7 @@
+   base: NativeRationalParts,
+   elevationFeet: number,
+ ) {
+-  const tiled = createNativeRationalSupportTileQuery(base);
++  const supportsArea = createNativeRationalAreaSupportQuery(base);
+   const unionPath = createNativeRationalPathUnionQuery();
+   return (path: CorridorXY[], extra: NativeRationalParts = []) => {
+     if (!unionPath(path, base, extra)) return false;
+@@ -38,12 +34,7 @@
+           6,
+         );
+       const footprint = [[strip]];
+-      const covered = tiled(footprint);
+-      if (
+-        nativeRationalOverlay("difference", footprint, covered, extra).length >
+-        0
+-      )
+-        return false;
++      if (!supportsArea(footprint, extra)) return false;
+     }
+     return true;
+   };
+--- established-tile/tests/unit/native-rational-support-tiles.test.ts
++++ rejected-direct-experiment/tests/unit/native-rational-support-tiles.test.ts
+@@ -1,6 +1,9 @@
+ import assert from "node:assert/strict";
+ import test from "node:test";
+-import { createNativeRationalSupportTileQuery } from "../../app/indoor-project/native-rational-support-tiles";
++import {
++  createNativeRationalSupportTileQuery,
++  createNativeRationalAreaSupportQuery,
++} from "../../app/indoor-project/native-rational-support-tiles";
+ import {
+   Rational,
+   rational,
+@@ -279,3 +282,64 @@
+   equivalent([[], rect(0, 0, 1, 1)], [], envelope);
+   equivalent([rect(0, 0, 1, 1)], floors, []);
+ });
++
++test("whole-area boolean support preserves the exact tile/intersection/difference result", () => {
++  const tiny = new Rational(1n, 10n ** 30n);
++  const sources: Parts[] = [
++    [],
++    rect(-64, -64, 64, 64),
++    [[rect(-64, -64, 64, 64)[0]![0]!, rect(-1, -1, 1, 1)[0]![0]!]],
++    [...rect(-64, -64, 0, 64), ...rect(tiny, -64, 64, 64)],
++    [...rect(-64, -64, 64, 64), ...rect(128, 128, 130, 130)],
++  ];
++  const demands = [
++    rect(-1, -1, 1, 1),
++    rect(-33, -2, -31, 2),
++    rect(31, -2, 33, 2),
++    rect(-100, -100, 100, 100),
++    rect(64, 0, 65, 1),
++    rect(63, 0, 64, 1),
++    rect(0, 0, tiny, 1),
++  ];
++  for (const source of sources) {
++    const supports = createNativeRationalAreaSupportQuery(source);
++    const clipped = createNativeRationalSupportTileQuery(source);
++    for (const demand of demands)
++      for (const extra of [
++        [],
++        rect(-2, -2, 2, 2),
++        [[rect(-2, -2, 2, 2)[0]![0]!, rect(-0.5, -0.5, 0.5, 0.5)[0]![0]!]],
++      ] as Parts[]) {
++        const before = [encoded(source), encoded(demand), encoded(extra)];
++        const old =
++          overlay("difference", demand, clipped(demand), extra).length === 0;
++        const direct =
++          overlay("difference", demand, source, extra).length === 0;
++        assert.equal(supports(demand, extra), old);
++        assert.equal(supports(demand, extra), direct);
++        assert.deepEqual(
++          [encoded(source), encoded(demand), encoded(extra)],
++          before,
++        );
++      }
++  }
++});
++
++test("whole-area source snapshot never accepts a positive sub-ULP gap or fills an extension hole", () => {
++  const gap = new Rational(1n, 10n ** 30n);
++  const source = [...rect(-10, -10, 0, 10), ...rect(gap, -10, 10, 10)];
++  const demand = rect(-1, -1, 1, 1);
++  const query = createNativeRationalAreaSupportQuery(source);
++  assert.equal(query(demand), false);
++  assert.equal(query(demand, rect(-1, -1, 1, 1)), true);
++  const holed: Parts = [
++    [rect(-1, -1, 1, 1)[0]![0]!, rect(0, -0.5, gap, 0.5)[0]![0]!],
++  ];
++  assert.equal(query(demand, holed), false);
++  source.push(...rect(-10, -10, 10, 10));
++  assert.equal(
++    query(demand),
++    false,
++    "a later caller edit cannot change this immutable source snapshot",
++  );
++});

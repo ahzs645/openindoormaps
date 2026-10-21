@@ -1,0 +1,149 @@
+{
+  "format": "fresh-published-routing-hydration-proof-v1",
+  "passed": true,
+  "inputSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+  "runtimeSha256": "3ed4bf5fbcd05559bed6b687af4e5077c7ea94b869204e2f83c466bfd6a536e6",
+  "engineSha256": "35ff11f8ed4b19278ccb0200eca0932b2caa6f0d81fc66e425e31e01737cd925",
+  "receipt": {
+    "id": "fresh-candidate-native-routing-0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+    "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
+    "engineSha256": "35ff11f8ed4b19278ccb0200eca0932b2caa6f0d81fc66e425e31e01737cd925",
+    "source": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+    },
+    "logicalSha256": "50c9a86779a3e8e7ff8aef2a543d9dce9c0de5369c5403f4a930303d5c5b5c4b",
+    "logicalBytes": 26384002,
+    "compressedSha256": "675e1add91fed7198a11e0796f20bb00cfc732c956eb596483ae53c9bd72a1eb",
+    "compressedBytes": 5710070,
+    "url": "/data/candidate-routing/675e1add91fed7198a11e0796f20bb00cfc732c956eb596483ae53c9bd72a1eb.json.gz",
+    "runtimeSha256": "3ed4bf5fbcd05559bed6b687af4e5077c7ea94b869204e2f83c466bfd6a536e6"
+  },
+  "sourceDatasetUnchanged": true,
+  "normalPhysicalValidationRepeated": true,
+  "originalFacesChecked": 5393,
+  "materialCutsChecked": 8,
+  "freshNormalRouteCases": 10,
+  "actualRouteParityCases": 0,
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "phases": [
+    {
+      "name": "loaded",
+      "seconds": 24.340782604,
+      "value": {
+        "datasetSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+      }
+    },
+    {
+      "name": "normal-validation",
+      "seconds": 247.15116741699998
+    },
+    {
+      "name": "complete-normal-physical-graphs-and-supported-cells",
+      "seconds": 812.536743961
+    },
+    {
+      "name": "all-original-exact-faces-parity",
+      "seconds": 813.413834862,
+      "value": 5393
+    },
+    {
+      "name": "all-native-level-material-cuts-parity",
+      "seconds": 813.595974319,
+      "value": 8
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1010.038697547,
+      "value": {
+        "name": "main-forward",
+        "seconds": 196.43873800700007,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1102.588316275,
+      "value": {
+        "name": "main-reverse",
+        "seconds": 92.54883644300001,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1109.3450922929999,
+      "value": {
+        "name": "floor1",
+        "seconds": 6.755189302999992,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1112.6671706559998,
+      "value": {
+        "name": "floor3",
+        "seconds": 3.3216175079999957,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1141.383468536,
+      "value": {
+        "name": "unavailable",
+        "seconds": 28.7158211579998,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1151.289810173,
+      "value": {
+        "name": "lift-up",
+        "seconds": 9.905436555000023,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1157.469306906,
+      "value": {
+        "name": "lift-down",
+        "seconds": 6.1790172810000366,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1158.482055247,
+      "value": {
+        "name": "ramp-forward",
+        "seconds": 1.012197148000123,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1159.4464947769998,
+      "value": {
+        "name": "ramp-reverse",
+        "seconds": 0.9641939540000167,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 1159.529674276,
+      "value": {
+        "name": "stepfree-refusal",
+        "seconds": 0.08301247199997305,
+        "available": false
+      }
+    }
+  ]
+}

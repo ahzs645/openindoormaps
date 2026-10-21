@@ -1,0 +1,11 @@
+# Assembly request proposals (mathematical requests only)
+
+All ten saved run pieces for parents 1293690, 1498457, 1500288, 1514126 and 2474568 now have bounded candidate requests that pass complete cap/holes/uncertainty and named intent station-line mathematics, finite full-width proper riser crossings, and landing strip/start/turn support mathematics. Every original outer request, graph identity/XYZ and literal physical support plane remains retained. Both pieces preserve the same original common landing start for each parent.
+
+The original request generator placed many stations exactly on leading riser boundaries. Such a station can be cap-supported while its transfer reaches the source riser only at go parameter 1. The new generic request helper chooses actual-cap interior requests where complete finite crossings require them, retains original stations when they participate in a complete valid candidate chain, and proposes finite source-oriented landing paths. It never uses a hull as positive support, invents source geometry or changes source guards. The final landing boundary requires its full lateral; start and turn points still require complete squares.
+
+The new helper is not imported by the source adapter, kernel or runtime. Saved operands and candidate numbers convey no source authority. Fresh normal original-source assembly replay must still check all original own/foreign material, physical floors and holes, named ports, every full stepped transfer, and headroom. No routes were enabled. The actual full 10 receipt remains 0 complete positives until a fresh guarded replay proves otherwise.
+
+Six scoped tests, scoped lint and scoped typecheck pass on the pinned files in summary.json. Sequential saved-operand probes used 384 MiB Node heaps and at most 360576 KiB RSS; no source scan ran. All 150 immutable snapshot hashes and the live mathematical helper closure matched before and after every piece. Earlier harness failures and their logs remain preserved in scratch.
+
+The exact five-parent delta (including original and proposed requests), per-piece results, replay scripts and resource/check logs remain external raw evidence; summary.json records exact paths, sizes and hashes. The delta is 144843 bytes, SHA256 7b5584cdc08d7d4d79da214272225276ad442013b43f9be7fff62d88c483bbd6.

@@ -1,0 +1,31 @@
+{
+  "format": "rotated-station-verification-v1",
+  "baselineReviterCommit": "cc46ace780f9258724edc2d94ff87a112e36eb7b",
+  "sourceFiles": {
+    "/workspace/reviter/lib/reviter/native-source-stair-stepped-stations.ts": "76df49fbb0b8e925357185a22057057cb06facb326d703ea68d4d7182777d146",
+    "/workspace/reviter/tests/native-source-stair-stepped-stations.test.ts": "031b596f0a48a394ac34a4b2e5b47f766322d289d64a9bc7a13f18157fbe6618"
+  },
+  "checks": [
+    {
+      "command": "node --experimental-strip-types --import ./scripts/register-test-typescript.mjs --test tests/native-source-stair-stepped-stations.test.ts tests/native-source-stair-riser-crossing.test.ts tests/native-source-stair-width.test.ts tests/native-source-stair-physical-inventory.test.ts",
+      "exitCode": 0,
+      "passed": 19,
+      "skipped": 1,
+      "failed": 0
+    },
+    {
+      "command": "npx tsc --noEmit --incremental false",
+      "exitCode": 0,
+      "diagnostics": 0
+    },
+    {
+      "command": "npx eslint lib/reviter/native-source-stair-stepped-stations.ts tests/native-source-stair-stepped-stations.test.ts",
+      "exitCode": 0,
+      "diagnostics": 0
+    }
+  ],
+  "physicalBodyApproved": false,
+  "servedFloorApproachesApproved": false,
+  "clearanceApproved": false,
+  "routeApproved": false
+}

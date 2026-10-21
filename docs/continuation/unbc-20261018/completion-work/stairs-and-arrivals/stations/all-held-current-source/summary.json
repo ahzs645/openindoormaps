@@ -1,0 +1,58 @@
+{
+  "completed": true,
+  "stairs": 28,
+  "runs": 38,
+  "faces": 7537,
+  "typedTreads": 605,
+  "sourceCensusComplete": 38,
+  "treadHistoryComplete": 38,
+  "namedRiserSequenceComplete": 21,
+  "placedEnvelopeAvailable": 35,
+  "localizedMaterialAvailable": 35,
+  "nonidenticalUVCoedges": 276,
+  "typedHeightDiscrepancies": 144,
+  "elapsedMs": 329712,
+  "priorSourceInventoryDifferences": [],
+  "riserBlockerCounts": {
+    "Unsupported original begin/end/ordered-riser layout": 7,
+    "Original finite boundary cannot be oriented by the declared riser direction": 3,
+    "Original tread does not bind consecutive named riser indices": 7
+  },
+  "placedBlockers": [
+    {
+      "nativeStairId": 1298202,
+      "nativeRunId": 1298203,
+      "placedEnvelope": {
+        "ok": false,
+        "blockers": [
+          "Unsupported original carrier owner, branch or primitive"
+        ]
+      }
+    },
+    {
+      "nativeStairId": 1693246,
+      "nativeRunId": 1693335,
+      "placedEnvelope": {
+        "ok": false,
+        "blockers": [
+          "Complete original physical definition/uncertainty census unavailable",
+          "Unsupported original face/plane/hole semantics"
+        ]
+      }
+    },
+    {
+      "nativeStairId": 2349441,
+      "nativeRunId": 2349454,
+      "placedEnvelope": {
+        "ok": false,
+        "blockers": [
+          "Complete original physical definition/uncertainty census unavailable",
+          "Unsupported original face/plane/hole semantics"
+        ]
+      }
+    }
+  ],
+  "implementationFilesystemDifferences": [
+    "native-source-stair-stepped-stations.ts"
+  ]
+}

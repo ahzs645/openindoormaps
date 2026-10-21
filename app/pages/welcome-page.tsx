@@ -48,6 +48,21 @@ export default function WelcomePage() {
             {hasLocations ? "Revit Imports" : "Indoor projects"}
           </h2>
           <div className="flex flex-col gap-3">
+            {!hasLocations && (
+              <Link
+                aria-label="Find a place"
+                to="/projects/visitor?manifest=%2Fdata%2Funbc%2Fmanifest.json"
+                className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-secondary"
+              >
+                <MapPin className="size-5 text-sky-600 dark:text-sky-300" />
+                <span className="min-w-0">
+                  <span className="block font-medium">Find a place</span>
+                  <span className="block text-sm text-muted-foreground">
+                    Choose your start and destination · manual directions
+                  </span>
+                </span>
+              </Link>
+            )}
             <Link
               to="/projects/indoor"
               className="flex items-center gap-3 rounded-lg border border-border bg-card p-4 transition-colors hover:bg-secondary"

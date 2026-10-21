@@ -12,6 +12,8 @@ type RequestKeys =
   | "originalEdgeId"
   | "foreignScopeBoundsFeet"
   | "sourceRequest"
+  | "riserInterpretation"
+  | "treadInterpretation"
   | "terminalMaterials"
   | "placedTrimRequests"
   | "retainedOriginalElementIds"
@@ -107,6 +109,8 @@ export function initializeReviewedSourceSteppedStairV2Proofs(options: {
       reviewedDrawingReferences: options.reviewedDrawingReferences,
       foreignScopeBoundsFeet: request.foreignScopeBoundsFeet,
       sourceRequest: request.sourceRequest,
+      riserInterpretation: request.riserInterpretation,
+      treadInterpretation: request.treadInterpretation,
       terminalMaterials: request.terminalMaterials,
       placedTrimRequests: request.placedTrimRequests,
       retainedOriginalElementIds: request.retainedOriginalElementIds,

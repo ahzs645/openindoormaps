@@ -1,0 +1,348 @@
+{
+  "format": "retained-verified-gzip-delivery-evidence-v1",
+  "implementation": "Exact verified raw gzip transport persisted under its existing logical checksum/length; no source/route authority added.",
+  "comparison": {
+    "kind": "single-pair-real-source-delivery-only-comparison-v1",
+    "newSeconds": 8.031735889,
+    "referenceSeconds": 10.844785458999999,
+    "secondsSaved": 2.8130495699999987,
+    "newCompressionStreams": 0,
+    "referenceCompressionStreams": 1,
+    "newProcessMaxRssBytes": 966365184,
+    "referenceProcessMaxRssBytes": 1056854016,
+    "newFinalMemory": {
+      "rss": 966295552,
+      "heapTotal": 349921280,
+      "heapUsed": 325833280,
+      "external": 383391477,
+      "arrayBuffers": 167236954,
+      "heapLimit": 855638016
+    },
+    "referenceFinalMemory": {
+      "rss": 1056714752,
+      "heapTotal": 351035392,
+      "heapUsed": 324633040,
+      "external": 359165707,
+      "arrayBuffers": 261007207,
+      "heapLimit": 855638016
+    },
+    "actualHeapLimitBytes": 855638016,
+    "bothVerifyExactOriginalSourceGraph": true,
+    "sameRealMultipartGzipAndLogicalBytes": true,
+    "oneSampleEachNoLatencyAcceptance": true,
+    "persistentDatabaseUnavailableBoth": true,
+    "routeCalculatorOrBrowserMeasured": false,
+    "published": false
+  },
+  "conditions": {
+    "singlePair": true,
+    "sameExactInputAndHeap": true,
+    "cacheDatabaseIntentionallyUnavailable": true,
+    "nativeOrRouteCalculatorNotRun": true,
+    "noOtherSourceConstructors": true,
+    "quietCpuNotProven": true,
+    "possibleBounded512MiBFloorPrototypeTestOverlapReportedAfterRun": true,
+    "oneSampleConditionalTimingNotLatencyAcceptance": true,
+    "sourceUnchangedBoth": true,
+    "wholeRouteBrowserOrPhysicalPhoneImprovementNotClaimed": true,
+    "rssOnlyPerProfileProcessNotSteadyState": true,
+    "retainedGzipBytesWhileLogicalKeyLive": 24255568,
+    "note": "Visitor parent corrected quiet scope after the pair completed; no repeat scheduled because final native source work has priority."
+  },
+  "phases": {
+    "retained-gzip": {
+      "events": [
+        {
+          "stage": "loadRouting-begin",
+          "seconds": 0.05628438,
+          "argumentBytes": null
+        },
+        {
+          "stage": "getAsset-begin",
+          "seconds": 0.05714053300000001,
+          "argumentBytes": null
+        },
+        {
+          "stage": "getAsset-failed",
+          "seconds": 0.057641034999999986,
+          "argumentBytes": null
+        },
+        {
+          "stage": "storage-error",
+          "seconds": 0.05773692399999999,
+          "argumentBytes": null
+        },
+        {
+          "stage": "fetch",
+          "seconds": 0.175434318,
+          "argumentBytes": null
+        },
+        {
+          "stage": "fetch",
+          "seconds": 0.483719553,
+          "argumentBytes": null
+        },
+        {
+          "stage": "putGzipAsset-begin",
+          "seconds": 4.174436507999999,
+          "argumentBytes": 24255568
+        },
+        {
+          "stage": "putGzipAsset-failed",
+          "seconds": 4.232265534,
+          "argumentBytes": null
+        },
+        {
+          "stage": "storage-error",
+          "seconds": 4.232479577,
+          "argumentBytes": null
+        },
+        {
+          "stage": "loadRouting-end",
+          "seconds": 8.088020269,
+          "argumentBytes": null
+        }
+      ],
+      "sourceLoadSeconds": 8.031735889,
+      "exclusiveCpuTop": [
+        [
+          "process",
+          2.256338999999999
+        ],
+        [
+          "(idle)",
+          1.1390270000000005
+        ],
+        [
+          "(garbage collector)",
+          0.9702749999999997
+        ],
+        [
+          "freezeOwnedJsonTree",
+          0.8064719999999995
+        ],
+        [
+          "parseVerifiedRoutingDataset",
+          0.7603319999999998
+        ],
+        [
+          "decodeUTF8",
+          0.6444669999999997
+        ],
+        [
+          "readBounded",
+          0.3581789999999999
+        ],
+        [
+          "onData",
+          0.19979499999999992
+        ],
+        [
+          "processCallback",
+          0.13415000000000002
+        ],
+        [
+          "(program)",
+          0.09286499999999996
+        ],
+        [
+          "putAsset",
+          0.08930199999999999
+        ],
+        [
+          "logicalBytes",
+          0.08305000000000003
+        ]
+      ]
+    },
+    "closed-3fa-reference": {
+      "events": [
+        {
+          "stage": "loadRouting-begin",
+          "seconds": 0.057767212000000026,
+          "argumentBytes": null
+        },
+        {
+          "stage": "getAsset-begin",
+          "seconds": 0.058236807,
+          "argumentBytes": null
+        },
+        {
+          "stage": "getAsset-failed",
+          "seconds": 0.05858068300000002,
+          "argumentBytes": null
+        },
+        {
+          "stage": "storage-error",
+          "seconds": 0.058655766000000026,
+          "argumentBytes": null
+        },
+        {
+          "stage": "fetch",
+          "seconds": 0.11773157000000004,
+          "argumentBytes": null
+        },
+        {
+          "stage": "fetch",
+          "seconds": 0.39856399100000006,
+          "argumentBytes": null
+        },
+        {
+          "stage": "putAsset-begin",
+          "seconds": 3.1434378350000003,
+          "argumentBytes": 117995935
+        },
+        {
+          "stage": "compression-stream-created",
+          "seconds": 3.4159245600000006,
+          "argumentBytes": null
+        },
+        {
+          "stage": "putAsset-failed",
+          "seconds": 7.401691543999999,
+          "argumentBytes": null
+        },
+        {
+          "stage": "storage-error",
+          "seconds": 7.402353417,
+          "argumentBytes": null
+        },
+        {
+          "stage": "loadRouting-end",
+          "seconds": 10.902552670999999,
+          "argumentBytes": null
+        }
+      ],
+      "sourceLoadSeconds": 10.844785458999999,
+      "exclusiveCpuTop": [
+        [
+          "(idle)",
+          4.276886999999997
+        ],
+        [
+          "process",
+          2.176499999999995
+        ],
+        [
+          "(garbage collector)",
+          0.9091449999999998
+        ],
+        [
+          "freezeOwnedJsonTree",
+          0.8838629999999981
+        ],
+        [
+          "parseVerifiedRoutingDataset",
+          0.8285299999999994
+        ],
+        [
+          "readNext",
+          0.30691699999999994
+        ],
+        [
+          "decodeUTF8",
+          0.2740809999999999
+        ],
+        [
+          "readBounded",
+          0.18478300000000006
+        ],
+        [
+          "getSource",
+          0.161859
+        ],
+        [
+          "processCallback",
+          0.13272799999999996
+        ],
+        [
+          "putAsset",
+          0.13102999999999995
+        ],
+        [
+          "onData",
+          0.110611
+        ]
+      ]
+    }
+  },
+  "bindingImpact": {
+    "format": "retained-gzip-actual-binding-delta-v1",
+    "sourceCodeStable": true,
+    "normalOrBrowserValidationRepeated": false,
+    "compiledReceiptAllowlistsChanged": false,
+    "groups": {
+      "display": {
+        "before": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+        "after": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+        "modules": 208,
+        "changed": [],
+        "removed": []
+      },
+      "runtime": {
+        "before": "3fa380e54213c9dcfe08f9e9c8d9d3dfe6a1249468b001f57e1868bbc4d1b018",
+        "after": "724407062202c85a9acd079e656f327947f79e8564da80f9eaedac8e2266ae06",
+        "modules": 238,
+        "changed": [
+          {
+            "path": "app/indoor-project/progressive-visitor-client.ts",
+            "before": "6996d6b1044b53cf19f3808963ead3e3fd382a992c2f1797a5cd1734f35259d6",
+            "after": "1c29ab094907cd0db9b64631212b86d52e5556ac2ba5ff06fe80c1d51c2c7f70"
+          },
+          {
+            "path": "app/indoor-project/visitor-delivery-cache.ts",
+            "before": "bc02c4c8ef3587e15f2e4946e1dff16a52fc249f0a1b4cbfc079d422cee52ec4",
+            "after": "14f326dcae57a9fa268cd14ba3196adfef52fc54a24fada277cb6ff8c1429114"
+          }
+        ],
+        "removed": []
+      },
+      "plan": {
+        "before": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c",
+        "after": "93cd166c0863ce606fee6b2e528826a51b2ef7085efa9394feb2fb9698ac334c",
+        "modules": 233,
+        "changed": [
+          {
+            "path": "app/indoor-project/visitor-delivery-cache.ts",
+            "before": "bc02c4c8ef3587e15f2e4946e1dff16a52fc249f0a1b4cbfc079d422cee52ec4",
+            "after": "14f326dcae57a9fa268cd14ba3196adfef52fc54a24fada277cb6ff8c1429114"
+          }
+        ],
+        "removed": []
+      }
+    },
+    "actualDisplayRoutePlanEntryCount": 679,
+    "nativeStaticSourceAudit": {
+      "modules": 568,
+      "cacheOrClientIncluded": false,
+      "note": "Additional static paired-native audit, not an esbuild runtime/source freeze or a native launch."
+    },
+    "generatedLiterals": {
+      "app/indoor-project/published-route-runtime-binding.ts": "069fe60c90cee782aefb0624d4082ec727678ec119b048cf9e5c60bfb17e741e",
+      "app/indoor-project/published-visitor-plan-runtime-binding.ts": "abb2eb9f518005f7ed960e55a0eefb34baafd2c130e790fa037f45539410a6fd"
+    }
+  },
+  "checks": {
+    "focusedTestsPassed": 29,
+    "independentReviewerTestsPassed": 29,
+    "scopedTypeScriptHeapMiB": 1024,
+    "scopedTypeScriptExitCode": 0,
+    "scopedEslintExitCode": 0,
+    "focusedTestsAfterGeneratedLiteralRefreshPassed": 29
+  },
+  "firstAttemptRefusal": "Shared generated display literal35ff was stale; it was regenerated from actual unchanged208-module1fc source closure before any117MB delivery. Failed attempt retained separately, not included in timing comparison.",
+  "rawEvidenceDirectory": "/workspace/scratch/retained-gzip-delivery-pair-20261018-attempt02",
+  "published": false,
+  "releaseApproval": false,
+  "normalOrBrowserValidationRepeated": false,
+  "oldClosed3faWorkspaceChanged": false,
+  "sourcePins": {
+    "app/indoor-project/progressive-visitor-client.ts": "1c29ab094907cd0db9b64631212b86d52e5556ac2ba5ff06fe80c1d51c2c7f70",
+    "app/indoor-project/visitor-delivery-cache.ts": "14f326dcae57a9fa268cd14ba3196adfef52fc54a24fada277cb6ff8c1429114",
+    "tests/unit/progressive-visitor-client.test.ts": "fb927d5e7d19913313e307d8cd8f79cd848429ebe747e9e2b61a593b579791c8",
+    "tests/unit/visitor-delivery-cache.test.ts": "0eb45804cc683baf144bf76295547c7eac3a9b9cb6dcf9916c7b31dda6cac03b",
+    "app/indoor-project/prepared-display-engine-binding.ts": "c0195d49b35a3c2165065a7f1176919c920d2b5fa040eedd3e172cc38624485b",
+    "app/indoor-project/published-route-runtime-binding.ts": "069fe60c90cee782aefb0624d4082ec727678ec119b048cf9e5c60bfb17e741e",
+    "app/indoor-project/published-visitor-plan-runtime-binding.ts": "abb2eb9f518005f7ed960e55a0eefb34baafd2c130e790fa037f45539410a6fd"
+  }
+}

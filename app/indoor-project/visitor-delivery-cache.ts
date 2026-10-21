@@ -4,6 +4,12 @@
 export interface VisitorDeliveryCache {
   getAsset(sha256: string): Promise<Uint8Array | undefined>;
   putAsset(sha256: string, bytes: Uint8Array): Promise<void>;
+  /** Storage transport only. Readers still decode and verify logical hashes. */
+  putGzipAsset?(
+    sha256: string,
+    gzip: Uint8Array,
+    logicalBytes: number,
+  ): Promise<void>;
   deleteAsset(sha256: string): Promise<void>;
   getManifest(url: string): Promise<Uint8Array | undefined>;
   putManifest(url: string, bytes: Uint8Array): Promise<void>;
@@ -212,6 +218,40 @@ export class IndexedDbVisitorDeliveryCache implements VisitorDeliveryCache {
         .stream()
         .pipeThrough(new DecompressionStream("gzip")),
       record.logicalBytes,
+    );
+  }
+  async putGzipAsset(hash: string, gzip: Uint8Array, logicalBytes: number) {
+    if (
+      !Number.isSafeInteger(logicalBytes) ||
+      logicalBytes < 1 ||
+      logicalBytes > 256 * 1024 * 1024
+    )
+      throw new Error("Invalid offline gzip logical byte limit.");
+    // Own ordinary unshared bytes before the asynchronous database operation.
+    // Intrinsic access ignores subclass getters and a forged slice method.
+    const prototype = Object.getPrototypeOf(Uint8Array.prototype);
+    const buffer = Object.getOwnPropertyDescriptor(
+      prototype,
+      "buffer",
+    )!.get!.call(gzip);
+    if (!(buffer instanceof ArrayBuffer))
+      throw new Error("Offline gzip storage requires unshared bytes.");
+    const offset = Object.getOwnPropertyDescriptor(
+      prototype,
+      "byteOffset",
+    )!.get!.call(gzip);
+    const length = Object.getOwnPropertyDescriptor(
+      prototype,
+      "byteLength",
+    )!.get!.call(gzip);
+    const stored = new Uint8Array(new Uint8Array(buffer, offset, length));
+    if (stored.length === 0 || stored.length > 256 * 1024 * 1024)
+      throw new Error("Invalid offline gzip stored byte limit.");
+    await this.write(
+      "assets",
+      hash,
+      { encoding: "gzip", logicalBytes, bytes: stored.buffer },
+      stored.length,
     );
   }
   async putAsset(hash: string, bytes: Uint8Array) {

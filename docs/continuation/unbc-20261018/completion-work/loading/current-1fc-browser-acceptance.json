@@ -1,0 +1,329 @@
+{
+  "format": "current-accepted-data-browser-acceptance-v1",
+  "bindings": {
+    "enginePreparationSha256": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+    "routingRuntimeSha256": "a84471d00460a44e5678bd69d9f30a6fa06b3471133790054ecd1c8878411a51",
+    "planRuntimeSha256": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c",
+    "manifestFileSha256": "c626d43905a9bbd819b453345d68c3afda09b3c3086fb9e6e29642831ca2bdbb",
+    "progressiveRevisionSha256": "171af2a065b9fee0f9c462db71e445e687677613b3aa56d2804be9d759f6aeb5",
+    "acceptedDatasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+    "originalRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "uniqueActualPassedCases": 12,
+  "flakyCases": 0,
+  "runs": [
+    {
+      "run": "cold-route",
+      "sha256": "66b85c243dd04bc9b59ea047348631501a3d05ac687c43e5964b733b890927e0",
+      "stats": {
+        "startTime": "2026-10-18T20:18:41.721Z",
+        "duration": 64387.55299999999,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "functional",
+      "sha256": "570abbc56cb87932713e6b06ce4458e842411d5a16dc920b9ef83a747c7cff27",
+      "stats": {
+        "startTime": "2026-10-18T20:20:52.650Z",
+        "duration": 839967.539,
+        "expected": 7,
+        "skipped": 3,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "markers-offline-v2",
+      "sha256": "d3767a3edcfbd5ca0ef9db5e8446f6b4fba46477d7176a2c58fcd492ed205307",
+      "stats": {
+        "startTime": "2026-10-18T20:34:58.570Z",
+        "duration": 582525.7749999999,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    {
+      "run": "stepfree",
+      "sha256": "8276b4e095b7cf23cc13660099579c4f90c2862980270bb58184056abcf5e7f7",
+      "stats": {
+        "startTime": "2026-10-18T20:47:13.600Z",
+        "duration": 62513.616,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "cases": [
+    {
+      "run": "cold-route",
+      "title": "actual compact walking route remains visibly above the checked plan",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 58121
+    },
+    {
+      "run": "functional",
+      "title": "actual compact plan paints, switches floors and reopens cached map on desktop",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 149063
+    },
+    {
+      "run": "functional",
+      "title": "actual compact plan paints, switches floors and reopens cached map on mobile viewport",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 81651
+    },
+    {
+      "run": "functional",
+      "title": "actual compact plan rejects a corrupt carrier and retries the checked floor",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 23662
+    },
+    {
+      "run": "functional",
+      "title": "actual selected-floor 3D retry retains the chosen journey",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 32413
+    },
+    {
+      "run": "functional",
+      "title": "actual same-floor duplicate endpoints can be compared on the map without changing the journey",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 20695
+    },
+    {
+      "run": "functional",
+      "title": "actual compact neighboring room can be picked from the genuine plan",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 34310
+    },
+    {
+      "run": "functional",
+      "title": "actual compact explicit 3D round trip returns to the checked 2D floor",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 108245
+    },
+    {
+      "run": "functional",
+      "title": "actual original connector markers preserve icons and honest picks without duplicate overlays",
+      "declaredStatus": "skipped",
+      "resultStatuses": [
+        "interrupted"
+      ],
+      "passed": false,
+      "durationMs": null
+    },
+    {
+      "run": "functional",
+      "title": "actual original connector styling keeps readable blue circular icons and a normal pick",
+      "declaredStatus": "skipped",
+      "resultStatuses": [],
+      "passed": false,
+      "durationMs": null
+    },
+    {
+      "run": "functional",
+      "title": "actual complete map download reopens the app, glyphs and full/shared floors with all network offline",
+      "declaredStatus": "skipped",
+      "resultStatuses": [],
+      "passed": false,
+      "durationMs": null
+    },
+    {
+      "run": "markers-offline-v2",
+      "title": "actual original connector markers preserve icons and honest picks without duplicate overlays",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 93641
+    },
+    {
+      "run": "markers-offline-v2",
+      "title": "actual original connector styling keeps readable blue circular icons and a normal pick",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 37696
+    },
+    {
+      "run": "markers-offline-v2",
+      "title": "actual complete map download reopens the app, glyphs and full/shared floors with all network offline",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 445286
+    },
+    {
+      "run": "stepfree",
+      "title": "actual step-free preference refuses an unconfirmed ramp and clears the walking preview",
+      "declaredStatus": "expected",
+      "resultStatuses": [
+        "passed"
+      ],
+      "passed": true,
+      "durationMs": 57986
+    }
+  ],
+  "functionalTenCaseSuiteCompleted": false,
+  "functionalRunInterruption": "Seven passed; explicitly SIGINT interrupted stale room-only accessible-name helper. INCOMPLETE.json and trace retained. Three affected tests reran with actual original building/native-floor label context. Product runtime unchanged.",
+  "testVersions": {
+    "originalPreMarkerFixSha256": "505b45ce6c159197376aa57b58142ceb5b00ba027d146fee67958d56e16b1fb7",
+    "exactMarkerFixedBeforeStepfreeSha256": "19bd37401edd72e3d950455260afcf73c9b4289ecb441345f884472faba33bb2",
+    "finalOnlyStepfreeAddedSha256": "868e9fcbcec8e8f0c57619c302300e82c196eee0d68d3613c68c0433e7996017",
+    "threeTestOnlyDeltaReceipts": "publication-audit/current-*-test-*.json"
+  },
+  "actualFirstRoute": {
+    "revisionSha256": "171af2a065b9fee0f9c462db71e445e687677613b3aa56d2804be9d759f6aeb5",
+    "start": "rm-311-ac6ce9426f1c",
+    "end": "rm-311-4030ea304744",
+    "elapsedMs": 25844,
+    "freshBrowserContext": true,
+    "actualIndexedDbBackend": true,
+    "localHttpDelivery": true,
+    "cloudSoftwareRendering": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "actualAllNetworkOffline": {
+    "completionText": "Complete map and app saved for offline use (9.2 MB of app files). Checked directions cache saved; routes are verified when opened.",
+    "storedRouting": {
+      "declaredLogicalBytes": 117995935,
+      "actualLogicalBytes": 117995935,
+      "storedBytes": 23517569,
+      "actualLogicalSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+    },
+    "navigatorOnline": false,
+    "navigationFromServiceWorker": true,
+    "fullScopeId": "scope-b6a88eb64f97d56cd0dddbe942681adf05d0705493080350ae08de5ebb6188cc",
+    "sharedScopeId": "scope-dfafd1ba312bffb05720e527d5e102f1fe58cee71b09d76e0b3134e33994cf26",
+    "sharedBaseScopeId": "scope-be0f1c9d0094548553d81c783697d025278ab4a40d041497cc500944e2c1d731",
+    "offlineGlyphs": [
+      {
+        "url": "http://127.0.0.1:42188/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42188/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42188/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      }
+    ],
+    "offlineMarkerCount": 48,
+    "visibleOfflineNamedMarker": "Stairs \u00b7 10-S102",
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "actualOfflineDirections": {
+    "storedRouting": {
+      "declaredLogicalBytes": 117995935,
+      "actualLogicalBytes": 117995935,
+      "storedBytes": 23517569,
+      "actualLogicalSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+    },
+    "route": "70 m",
+    "elapsedMs": 24524,
+    "navigatorOnline": false,
+    "appReloadedBeforeDirections": true,
+    "browserNetworkDisabled": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "actualStepfreeRefusal": {
+    "startKey": "rm-311-86e02816d8fe",
+    "endKey": "rm-1487816-1a09473066a2",
+    "walkingPreviewAvailable": true,
+    "selectedProfile": "accessible",
+    "confirmedStepFreeRouteAvailable": false,
+    "previousWalkingInstructionsCleared": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "builtAppFiles": 106,
+  "publicDataFilesRehashed": 130,
+  "eightUiFilesPreserved": 8,
+  "sourceAndCompilerInventoriesUnchangedDuringPackaging": true,
+  "dataDependency": "EVIDENCE-016 restore index included; carrier/source archive not duplicated",
+  "physicalDevice": false,
+  "WANAcceptance": false,
+  "venuePolicyApproval": false,
+  "newNativeMasterApproval": false,
+  "releaseApproval": false,
+  "published": false,
+  "new3faParserIncluded": false,
+  "driveEvidence": {
+    "readbackReceipt": "../checkpoints/EVIDENCE-017-current-browser-DRIVE-READBACK.json",
+    "archiveSha256": "45dbd2029c27531622df23cf0802415f1292ee95ec2da5ecc86d52f41e37cef7",
+    "partsInOrder": [
+      {
+        "part": 1,
+        "fileName": "EVIDENCE-017-current-browser-20261018.tar.gz.part-001",
+        "bytes": 25165824,
+        "sha256": "573df26f09ee2f4e44d960a0752574f3300aaae7e2018d34f614c8604267994c",
+        "driveFileId": "1fcBxQBuuUf5nzGvrUT5z-UWEqyUzLJlK",
+        "driveUrl": "https://drive.google.com/file/d/1fcBxQBuuUf5nzGvrUT5z-UWEqyUzLJlK/view?usp=drivesdk"
+      },
+      {
+        "part": 2,
+        "fileName": "EVIDENCE-017-current-browser-20261018.tar.gz.part-002",
+        "bytes": 11981105,
+        "sha256": "241d69b8283237eef8c445bff9bd64c3ad09842288c0ecdf0026db78624dd729",
+        "driveFileId": "1DacKOwBHxxmVRTF1_EthPBXSd2A06MHT",
+        "driveUrl": "https://drive.google.com/file/d/1DacKOwBHxxmVRTF1_EthPBXSd2A06MHT/view?usp=drivesdk"
+      }
+    ],
+    "all240MembersFreshlyRestoredAndVerified": true,
+    "restoreIndexUrl": "https://drive.google.com/file/d/1ykYb8EN8xid6nlWMHHRHc1aHFh_-G_Ml/view?usp=drivesdk",
+    "restoreIndexRemoteReadbackSha256": "3188806f2ae97579d616b3121e82b5f7325c703a48b0e79ce7656af070667e15"
+  }
+}

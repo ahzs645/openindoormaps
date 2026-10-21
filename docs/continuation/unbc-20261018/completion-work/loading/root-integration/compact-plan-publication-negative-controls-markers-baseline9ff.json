@@ -1,0 +1,22 @@
+{
+  "format": "published-visitor-plan-publication-negative-controls-v1",
+  "engine": "isolated baseline9ff",
+  "runtimeSha256": "c2174116ea44153e91d9e2e3c6224bdf173121b6a75cbe97185145fa4b8d2431",
+  "controls": [
+    {
+      "control": "corrupt",
+      "refused": true,
+      "reportNotProduced": true,
+      "expectedDiagnosticObserved": "checksum"
+    },
+    {
+      "control": "missing",
+      "refused": true,
+      "reportNotProduced": true,
+      "expectedDiagnosticObserved": "Checked drawing missing"
+    }
+  ],
+  "originalCarrierRestoredExactly": true,
+  "productionFilesChanged": false,
+  "releaseApproved": false
+}

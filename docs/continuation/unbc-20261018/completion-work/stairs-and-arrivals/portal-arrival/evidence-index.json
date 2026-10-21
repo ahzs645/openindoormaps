@@ -1,0 +1,164 @@
+{
+  "completeEvidenceArchive": {
+    "path": "/workspace/scratch/source-portal-arrival-20261018/portal-arrival-complete-evidence-v2.tar.gz",
+    "sha256": "ee122bda061c93010eca2da43312cb982778fe5e0484d5d8086e9f3ee8796055",
+    "bytes": 14259036
+  },
+  "preservesAllPriorScratchAndRepositoryEvidence": true,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "currentSourceHelperSha256": "4c05ce4b335adf394769414d3c352ed55cfc420908379dbbc14ca6ef711c30ca",
+  "completedFloorReplay": {
+    "path": "/workspace/scratch/source-portal-arrival-20261018/localized-floor-domain-fast.json",
+    "sha256": "9f39a66a71735ec5ae3f8b08c446722699dee40c04bd6f945bd081a6ebe2f963"
+  },
+  "floorOutcomes": [
+    {
+      "nativeFloorElementId": 400479,
+      "beforeSupported": false,
+      "afterSupported": true,
+      "retainedBoundaryCells": 70,
+      "retainedOriginalHoleCount": 3,
+      "sourceLoopWindings": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "completeBoundaryUncertaintyContactAfter": false,
+      "holeBoundaryControlCount": 3,
+      "allHoleControlsRefuse": true,
+      "analyticSourceDomainsRetained": 3,
+      "sourceCoordinatesChanged": false
+    },
+    {
+      "nativeFloorElementId": 490040,
+      "beforeSupported": false,
+      "afterSupported": true,
+      "retainedBoundaryCells": 339,
+      "retainedOriginalHoleCount": 6,
+      "sourceLoopWindings": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "completeBoundaryUncertaintyContactAfter": false,
+      "holeBoundaryControlCount": 6,
+      "allHoleControlsRefuse": true,
+      "analyticSourceDomainsRetained": 9,
+      "sourceCoordinatesChanged": false
+    }
+  ],
+  "publicationApproved": false,
+  "priorCompleteEvidenceArchive": {
+    "path": "/workspace/scratch/source-portal-arrival-20261018/portal-arrival-complete-evidence.tar.gz",
+    "sha256": "3a86c2cc6202d47bf59b0b56a452bad07cd2b999e0476488d58e2998a50223a5",
+    "bytes": 13826122
+  },
+  "integratedProductionCapParserReplay": {
+    "path": "/workspace/scratch/source-portal-arrival-20261018/production-floor-domain-v2.json",
+    "sha256": "48d1d63b9b9087ccba2febb3232fa517078fd4904a73eba86a1abd4632517874",
+    "unchangedIntegratedProductionCap": true,
+    "implementationStart": [
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-cylinder-domain-enclosure.ts",
+        "sha256": "4c05ce4b335adf394769414d3c352ed55cfc420908379dbbc14ca6ef711c30ca"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-floor-local-support.ts",
+        "sha256": "7eb8e73ea6914bbef62b4beac0f3e107c20514db5487341c0700f4fde2b93528"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-floor-cap-demand.ts",
+        "sha256": "ec4d5351ff41f51b2c00e2114106633e1c810b267194c46f081b592198cc8278"
+      },
+      {
+        "path": "/workspace/reviter/lib/reviter/native-source-element-level-prefix.ts",
+        "sha256": "3b25a97575b7f22583b7bb8cb1b9b0f1ac12f183caa471e480f68ac34d75952d"
+      }
+    ],
+    "implementationChanged": [],
+    "standingPoint": [
+      114.74448177496802,
+      -122.88462533961184,
+      14.435695538057743
+    ],
+    "widthFeet": 2,
+    "floorOutcomes": [
+      {
+        "nativeFloorElementId": 400479,
+        "sourceFrames": [
+          {
+            "marker": 2246,
+            "sha256": "4427a68924dbb226040d4b97efc4a89e9d4af76b3a8fe8a47d8bfba921dedee2",
+            "bytes": 55036
+          },
+          {
+            "marker": 2153,
+            "sha256": "05f04940cf215b165b7bb65b21c429762cb92143affdfa63ce867f34d385c206",
+            "bytes": 62077
+          }
+        ],
+        "nativeAssociatedLevelId": 694,
+        "originalCapFaceToken": 5,
+        "completeConnectedDemandSupported": true,
+        "completeBoundaryUncertaintyContact": false,
+        "retainedOriginalBoundaryCells": 70,
+        "retainedOriginalHoleCount": 3,
+        "sourceLoopWindings": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "allOriginalLoopsAndEdgesUnchanged": true,
+        "physicalTopEqualsOriginalNominalPortalExactly": true,
+        "globalReferenceRefusal": "Error: Self-intersecting exact native rings 0:72/0:70.",
+        "holeBoundaryControlCount": 3,
+        "allHoleBoundaryControlsRefuse": true
+      },
+      {
+        "nativeFloorElementId": 490040,
+        "sourceFrames": [
+          {
+            "marker": 2246,
+            "sha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+            "bytes": 254887
+          },
+          {
+            "marker": 2153,
+            "sha256": "e14666bb3c233a68e21e8105d508a603cc12f5a982c46cac2c3701883da530b6",
+            "bytes": 310900
+          }
+        ],
+        "nativeAssociatedLevelId": 694,
+        "originalCapFaceToken": 5,
+        "completeConnectedDemandSupported": true,
+        "completeBoundaryUncertaintyContact": false,
+        "retainedOriginalBoundaryCells": 339,
+        "retainedOriginalHoleCount": 6,
+        "sourceLoopWindings": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "allOriginalLoopsAndEdgesUnchanged": true,
+        "physicalTopEqualsOriginalNominalPortalExactly": true,
+        "globalReferenceRefusal": "Error: Self-intersecting exact native rings 0:411/0:409.",
+        "holeBoundaryControlCount": 6,
+        "allHoleBoundaryControlsRefuse": true
+      }
+    ],
+    "opaqueSourceAuthorityRestored": false,
+    "arrivalPointerChanged": false,
+    "routeApproved": false
+  },
+  "newLargeEvidenceKeptOutsideRepository": true
+}

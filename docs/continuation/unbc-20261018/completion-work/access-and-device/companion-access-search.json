@@ -1,0 +1,384 @@
+{
+  "archiveEntrySha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+  "expandedSha256": "6746d67473c6227cf47f75bfc1265c54a113f1ea436ff2d088a45d30181355e3",
+  "verifiedCompanions": 890,
+  "matches": [
+    {
+      "path": "review-recommendations/enclosure-solutions.md",
+      "bytes": 85658,
+      "sha256": "d80e71c5369290831f1c8eb119581823ad0ea73c318e1d4d02060e4e26240482",
+      "snippets": [
+        " Resolve dividing wall termination/door 1752916. One service cell with two identities is a candidate onlyif no full physical divider; do not treat as public back hallway. | [Ledger](06-07/solutions-ledger.json) |\n| 07-411 \u00b7 Mech | 311 | high-veto | Review level/registration/annotation ownership or omission. Do not raise or make the area walkable until native floor and actual enclosure evidence exist. | [Ledger](0",
+        " and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Preserve staff-only surrounding corridor. | [Ledger](06-07/solutions-ledger.json) |\n| 07-728 \u00b7 Office | 311 | medium | Recover genuine office cells and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Pr",
+        " and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Preserve staff-only surrounding corridor. | [Ledger](06-07/solutions-ledger.json) |\n| 07-S204 \u00b7 Unnamed area | 311 | high-identity/medium-geometry | Review annotation as native stair identity/selection marker, not missing room block. Bind validated flight geometry/landing ownership only af",
+        "precise support at its nominal elevation; recover raked/split-level theatre floor coverage and partition joins. Do not make both lecture theatres one public hallway. Native barrier material intersects label rays to 08-164, 08-165, 08-167; these shared-cell labels cannot be indiscriminately merged. | [Ledger](04-08-09-10/solutions-ledger.json) |\n| 08-167 \u00b7 Classroom Support | 1487816 | medium | Recover missin"
+      ]
+    },
+    {
+      "path": "review-recommendations/enclosure-solutions.json",
+      "bytes": 4242340,
+      "sha256": "b093e4102aa3834b5c262954290d9133ebba1a9e90484f4c42cf3b249d20498d",
+      "snippets": [
+        "\"Resolve dividing wall termination/door 1752916. One service cell with two identities is a candidate onlyif no full physical divider; do not treat as public back hallway.\",\n      \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Reviewall 401/406/407 related service keys without altering staff boundary.\"\n      ],\n      \"status\": \"evidence-reviewed-proposal-not-applied\",\n      \"sourceLedger\": \"06-07/soluti",
+        "\"Resolve dividing wall termination/door 1752916. One service cell with two identities is a candidate onlyif no full physical divider; do not treat as public back hallway.\",\n        \"confidence\": \"medium\",\n        \"automationPrerequisites\": [\n          \"Reviewall 401/406/407 related service keys without altering staff boundary.\"\n        ],\n        \"solutionClass\": \"utility-divider-review\",\n        \"validationTests",
+        " and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Preserve staff-only surrounding corridor.\",\n      \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Check retained staff regions 702/704/750/751/752;office unknown status does not reopen staff corridor.\"\n      ],\n      \"status\": \"evidence-reviewed-proposal-not-applied\",\n      \"sour",
+        "     \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Check retained staff regions 702/704/750/751/752;office unknown status does not reopen staff corridor.\"\n      ],\n      \"status\": \"evidence-reviewed-proposal-not-applied\",\n      \"sourceLedger\": \"06-07/solutions-ledger.json\",\n      \"details\": {\n        \"key\": \"rm-311-cea234d8a6e6\",\n        \"number\": \"07-712\",\n        \"name\": \"Office\",\n        \"buildin"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-area-unit-tests.txt",
+      "bytes": 2204,
+      "sha256": "c08c08fea8beed76b884fdbe067e6d637f1f78fedefe670aac421c2ab4aa76d0",
+      "snippets": [
+        "34ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (10.5795ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (3.722459ms)\n\u2714 a new proposal keeps prior applied access and its application record (4.308167ms)\n\u2714 unsupported native levels never fall back to drawing contours (1.947625ms)\n\u2139 tests 21\n\u2139 suites 0\n\u2139 pass 21\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-selection-unit-tests.txt",
+      "bytes": 2396,
+      "sha256": "2a8be269111105cda56d5f60a88e9ec59d0d031ac85253323b9c985269ed7f4a",
+      "snippets": [
+        "5ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (7.207083ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (2.380958ms)\n\u2714 a new proposal keeps prior applied access and its application record (2.536958ms)\n\u2714 unsupported native levels never fall back to drawing contours (1.165083ms)\n\u2139 tests 23\n\u2139 suites 0\n\u2139 pass 23\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-gap-unit-tests.txt",
+      "bytes": 2722,
+      "sha256": "a980773857cb6a4ba50025342356d51c3c98b98c03ca543fd345c86db1250930",
+      "snippets": [
+        "1ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (3.070916ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (1.262166ms)\n\u2714 a new proposal keeps prior applied access and its application record (1.0825ms)\n\u2714 unsupported native levels never fall back to drawing contours (0.56925ms)\n\u2139 tests 25\n\u2139 suites 0\n\u2139 pass 25\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 to"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-floor-enclosure-unit-tests.log",
+      "bytes": 2358,
+      "sha256": "11c6c50edb40182e9c549accdce48197347fff5b5c294e0b446f1436f0c820f4",
+      "snippets": [
+        "2ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (5.192542ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (1.385542ms)\n\u2714 a new proposal keeps prior applied access and its application record (2.225458ms)\n\u2714 unsupported native levels never fall back to drawing contours (0.816833ms)\n\u2714 open slab connection is flagged while an inset enclosure is not (0"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-area-workflow.md",
+      "bytes": 15712,
+      "sha256": "c7cae91d4a25ff1a92d7f69b4897abea3d0905496bffc99e9edd17dd89a040fb",
+      "snippets": [
+        "not exclude an entire connected indoor component from an ambiguous screenshot.\n\n## Choosing a decision\n\nEnter a label and evidence notes, then select Hallway/open circulation, Staff only walking area, Enclosed room, Off limits, or Needs investigation.\n\n- **Save proposal** stores the native outlines, source model/geometry binding, existing place keys, floor/door evidence IDs, label and notes. It does not change display, access o",
+        " overlay.\n- **Apply classification to map** changes the checked existing places using their source annotations and the existing access-review system. Hallway permits public through-navigation; staff excludes public navigation; off limits disables walking. Names, identities, source polygons and actual door/graph connections are retained. The new area label is a map annotation. Enclosed room preserves its current access instead of assuming it is "
+      ]
+    },
+    {
+      "path": "review-recommendations/indoor-outdoor-unit-tests.log",
+      "bytes": 13340,
+      "sha256": "3b7e00cc5891288dbd8601b73d1fc9181760b82189ca59c78a11042fd06759e9",
+      "snippets": [
+        "n (10.304083ms)\n\u2714 failed local footprint clipping never authorizes aperture movement or disables supported walking runs (5.879584ms)\n\u2714 a compiled-out staff corridor is explained by native entrance inventory without inventing a route (1.047625ms)\n\u2714 rotated corridors resolve to two centred straight legs and one right turn, ignoring an unused side doorway (1.380208ms)\n\u2714 centreline resolution cannot cut through a n",
+        "8458ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (5.831ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (1.577208ms)\n\u2714 a new proposal keeps prior applied access and its application record (2.200667ms)\n\u2714 unsupported native levels never fall back to drawing contours (1.648875ms)\n\u2139 tests 127\n\u2139 suites 0\n\u2139 pass 127\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-manual-unit-tests.txt",
+      "bytes": 3033,
+      "sha256": "c0ada9cf2c598d2828a2c6d12f717ba48cc7e3248a364c0f38c431330de96a5b",
+      "snippets": [
+        "5ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (3.712167ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (1.281083ms)\n\u2714 a new proposal keeps prior applied access and its application record (1.788541ms)\n\u2714 unsupported native levels never fall back to drawing contours (0.8145ms)\n\u2714 a user-drawn native wall repair previews, applies and survives ZIP r"
+      ]
+    },
+    {
+      "path": "review-recommendations/geometry-patch-workflow.md",
+      "bytes": 18411,
+      "sha256": "8072620963609302cfd7e0a0094e35922d7552bbca9a76d6603a1b5351dbe81f",
+      "snippets": [
+        "not exclude an entire connected indoor component from an ambiguous screenshot.\n\n## Choosing a decision\n\nEnter a label and evidence notes, then select Hallway/open circulation, Staff only walking area, Enclosed room, Off limits, or Needs investigation.\n\n- **Save proposal** stores the native outlines, source model/geometry binding, existing place keys, floor/door evidence IDs, label and notes. It does not change display, access o",
+        " overlay.\n- **Apply classification to map** changes the checked existing places using their source annotations and the existing access-review system. Hallway permits public through-navigation; staff excludes public navigation; off limits disables walking. Names, identities, source polygons and actual door/graph connections are retained. The new area label is a map annotation. Enclosed room preserves its current access instead of assuming it is "
+      ]
+    },
+    {
+      "path": "review-recommendations/doorway-mask-review/shared-east/ledger.json",
+      "bytes": 3043369,
+      "sha256": "b893d31e10861e128d61be5cc9f2faabe9cbfb9b7384e94401a08c3836cd2a06",
+      "snippets": [
+        " 764.4294173745454\n          ],\n          \"spaceUse\": {\n            \"kind\": \"hallway\",\n            \"evidence\": \"user-reported\",\n            \"notes\": \"Public connecting vestibule and adjoining hallways; keep native floor, walls and explicit door thresholds as the geometric and routing evidence.\"\n          }\n        },\n        {\n          \"key\": \"rm-1487816-9316635b541c\",\n          \"number\": \"10-1082\",\n          \"name\": \"Fire Protect , Mech\",\n ",
+        " 762.5664161645932\n          ],\n          \"spaceUse\": {\n            \"kind\": \"hallway\",\n            \"evidence\": \"user-reported\",\n            \"notes\": \"Public connecting vestibule and adjoining hallways; keep native floor, walls and explicit door thresholds as the geometric and routing evidence.\"\n          }\n        },\n        {\n          \"key\": \"landing:local:07:311:08:1487816:1620957:1\",\n          \"number\": \"\",\n          \"name\": \"Native conne",
+        " 789.0562299316163\n          ],\n          \"spaceUse\": {\n            \"kind\": \"hallway\",\n            \"evidence\": \"user-reported\",\n            \"notes\": \"Public connecting vestibule and adjoining hallways; keep native floor, walls and explicit door thresholds as the geometric and routing evidence.\"\n          }\n        },\n        {\n          \"key\": \"rm-1487816-1950d841e16a\",\n          \"number\": \"10-1013\",\n          \"name\": \"Corridor\",\n          \"b"
+      ]
+    },
+    {
+      "path": "review-recommendations/doorway-mask-review/shared-west/scan.json",
+      "bytes": 4400951,
+      "sha256": "132244ade59f1cf36846ae4dad7b080c0b4bbdd1fbcab96491add2042fba9c18",
+      "snippets": [
+        "\"buildings\": [\n    \"03\",\n    \"04\",\n    \"05\",\n    \"06\",\n    \"07\"\n  ],\n  \"filter\": \"Named non-stair labels not intentionally-flat by visitor semantics; staff-only and hallway/vestibule/atrium regions remain separately classified, not room defects\",\n  \"summaries\": [\n    {\n      \"nativeLevelId\": 2295121,\n      \"name\": \"Floor 0\",\n      \"elevationFeet\": -7.217847769028872,\n      \"geometrySha256\": \"e30c25778cc21c46b3c1d6b9"
+      ]
+    },
+    {
+      "path": "review-recommendations/building03-floor3-review-20261004/historical-proposals-before-review.json",
+      "bytes": 201852,
+      "sha256": "cd463946ace8eda29854f5f45b165316c12078a64fc1e869b9a72bf007f3c3bb",
+      "snippets": [
+        "\"Resolve dividing wall termination/door 1752916. One service cell with two identities is a candidate onlyif no full physical divider; do not treat as public back hallway.\",\n      \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Reviewall 401/406/407 related service keys without altering staff boundary.\"\n      ],\n      \"relatedKeys\": []\n    },\n    {\n      \"key\": \"rm-311-f78cb8ff6316\",\n      \"cause\": \"49.9",
+        " and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Preserve staff-only surrounding corridor.\",\n      \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Check retained staff regions 702/704/750/751/752;office unknown status does not reopen staff corridor.\"\n      ],\n      \"relatedKeys\": [\n        \"rm-311-34878cca0af4\"\n      ]\n    },\n ",
+        "     \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Check retained staff regions 702/704/750/751/752;office unknown status does not reopen staff corridor.\"\n      ],\n      \"relatedKeys\": [\n        \"rm-311-34878cca0af4\"\n      ]\n    },\n    {\n      \"key\": \"rm-311-34878cca0af4\",\n      \"cause\": \"211 sq ft cell contains Offices 712/728 butclear separating native wall return is visible; both adjoin explicit ",
+        " and door/framejambs 749908/749727. Shared geometry maybe if 3 Dshowsdividerpartial,but existing return is sufficient to veto blanket merge. Preserve staff-only surrounding corridor.\",\n      \"confidence\": \"medium\",\n      \"prerequisites\": [\n        \"Check retained staff regions 702/704/750/751/752;office unknown status does not reopen staff corridor.\"\n      ],\n      \"relatedKeys\": [\n        \"rm-311-cea234d8a6e6\"\n      ]\n    },\n "
+      ]
+    },
+    {
+      "path": "pin-review/building04-floor4-20261005/review-report.json",
+      "bytes": 37125,
+      "sha256": "178b924672099c3ae0cf54a3caa1ba5872517144aac1491718af354c49ce2378",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-floor4-20261005/enclosure-proposals.json",
+      "bytes": 140755,
+      "sha256": "cf59ba1d6cc5f045ca0f694a7a1f409898388512ba5f81349d8fb645c3cac784",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-floor4-20261005/review-report-markdown.json",
+      "bytes": 17592,
+      "sha256": "a4a446b66e98dfcd846d3c2d553fb02205a7fe23378daae709df69c6db0b283a",
+      "snippets": [
+        " place identities unchecked.\\n\\nChecks needed: Resolve each connected office/lab/washroom independently; Do not classify the full shared component as hallway or public.\\n\\n## 04-430\\n\\nCorridor selection includes unrelated room labels because incomplete native boundaries connect to it.\\n\\nRepair the individually evidenced room boundaries before applying a hallway classification. Continue to keep unresolved place i",
+        " place identities unchecked.\\n\\nChecks needed: Resolve each connected office/lab/washroom independently; Do not classify the full shared component as hallway or public.\\n\\n## 04-423\\n\\nCorridor selection includes unrelated room labels because incomplete native boundaries connect to it.\\n\\nRepair the individually evidenced room boundaries before applying a hallway classification. Continue to keep unresolved place i",
+        " place identities unchecked.\\n\\nChecks needed: Resolve each connected office/lab/washroom independently; Do not classify the full shared component as hallway or public.\\n\\n## 04-418A\\n\\nMultiple labels occupy one door-closed native region. This may be an open equipment/work area or missing partition; labels alone do not distinguish them.\\n\\nCompare the full source enclosure and registered partitions. Offer a revie"
+      ]
+    },
+    {
+      "path": "pin-review/building04-floor3-20261005/historical-proposals.json",
+      "bytes": 140755,
+      "sha256": "cf59ba1d6cc5f045ca0f694a7a1f409898388512ba5f81349d8fb645c3cac784",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-floor3-20261005/enclosure-proposals.json",
+      "bytes": 145860,
+      "sha256": "7c832c54c6b85e1dd41a682aaa96469805f146282a9f80f7a8f117b4a7563cb1",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-washrooms-apply-20261005/historical-proposals.json",
+      "bytes": 148132,
+      "sha256": "294c7d4c84a0928c756fc8aa1539c84c3ab8049cd454848bc203d5c0868e3c89",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-327-apply-20261005/historical-proposals.json",
+      "bytes": 148670,
+      "sha256": "f8a5be762082fe8cb13f47c8052220ecfd6d485464b4b54684ca3c210df2bde3",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/building04-323-328-20261005/historical-proposals.json",
+      "bytes": 148235,
+      "sha256": "37926a6799624be1ca5a8778f0e4c0469412b8bb05806ac0cd711124921f4603",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/pin-reconciliation-04-323-20261005/historical-proposals.json",
+      "bytes": 149132,
+      "sha256": "07b77be88298afc845705d37ec9fb357eb2f7d78628c25ceb9db1f141ca567ee",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/pin-reconciliation-04-323-20261005/pin-inventory.json",
+      "bytes": 537193,
+      "sha256": "3a2a1d0c287b7cff6967cb0732a51c043751286aaa5dee8941285406eed1e77c",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402"
+      ]
+    },
+    {
+      "path": "pin-review/pins47-50-review-20261005/historical-proposals.json",
+      "bytes": 149322,
+      "sha256": "ddecba4178e6ac1ebaf48a5d8aef70d6f5ef85065da33b25646d579498dc703c",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-049e5e889a79\",\"rm-402367-0f6445c1a3ec\",\"rm-402367-0f7545c1a3fb\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\"],\"confidence\":\"Implemented and independently checked\",\"relatedKeys\":[\"rm-400176-0f6e59c1a3f5\",\"rm-400176-409ef8ec17e6\",\"rm-400176-79f90add7829\",\"rm-400176-79fc94dd782c\",\""
+      ]
+    },
+    {
+      "path": "pin-review/pins47-50-lower-floor-20261006/historical-proposals.json",
+      "bytes": 148230,
+      "sha256": "e4baece4fc16f79b10ed1f388d90e845e80db982ba1204e1557e84f67c799f30",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\"],\"confidence\":\"Implemented and independently checked\",\"relatedKeys\":[\"rm-400176-0f6e59c1a3f5\",\"rm-400176-409ef8ec17e6\",\"rm-400176-79f90add7829\",\"rm-400176-79fc94dd782c\",\""
+      ]
+    },
+    {
+      "path": "pin-review/pins47-48-apply-20261006/historical-proposals.json",
+      "bytes": 150649,
+      "sha256": "a60f779ce367f69b6324ccae5abd21ce248f9747063c22e401cb1a905161bb09",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\"],\"confidence\":\"Implemented and independently checked\",\"relatedKeys\":[\"rm-400176-0f6e59c1a3f5\",\"rm-400176-409ef8ec17e6\",\"rm-400176-79f90add7829\",\"rm-400176-79fc94dd782c\",\""
+      ]
+    },
+    {
+      "path": "pin-review/flagged-room-batch-20261006/historical-review.json",
+      "bytes": 193918,
+      "sha256": "f61d3f52b1f43c9717c8877823f0dfbc4e5325eb10e5b14e48ebddaebbbbbd56",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\"],\"confidence\":\"Implemented and independently checked\",\"relatedKeys\":[\"rm-400176-0f6e59c1a3f5\",\"rm-400176-409ef8ec17e6\",\"rm-400176-79f90add7829\",\"rm-400176-79fc94dd782c\",\""
+      ]
+    },
+    {
+      "path": "pin-review/flagged-room-batch-20261006/final-review-data.json",
+      "bytes": 465940,
+      "sha256": "afcbfa3659b3f999f7cf35c8ad871036ea02071c10f95d45578d834222094661",
+      "snippets": [
+        "istered source drawing and full Source model. Retain distinct room identities and actual door metadata; do not close an unverified passage or infer a hallway/public classification from the label. Save a separately checked correction only after the remaining bypass is measured.\",\"confidence\":\"Native boundary investigation remains unresolved\",\"prerequisites\":[\"Compare exact native faces, measured thresholds, regi",
+        "f a missing divider is confirmed, save a measured reconstruction; otherwise keep it intentionally flat. Do not raise the source rectangle or create a public hallway from its name.\",\"confidence\":\"Native boundary investigation; source corrections not applied\",\"prerequisites\":[\"Compare the room-specific native evidence plan and original Source model\",\"Preserve physical entrances, measured slab holes and current",
+        "istered source drawing and full Source model. Retain distinct room identities and actual door metadata; do not close an unverified passage or infer a hallway/public classification from the label. Save a separately checked correction only after the remaining bypass is measured.\",\"confidence\":\"Native boundary investigation remains unresolved\",\"prerequisites\":[\"Compare exact native faces, measured thresholds, regi",
+        "istered source drawing and full Source model. Retain distinct room identities and actual door metadata; do not close an unverified passage or infer a hallway/public classification from the label. Save a separately checked correction only after the remaining bypass is measured.\",\"confidence\":\"Native boundary investigation remains unresolved\",\"prerequisites\":[\"Compare exact native faces, measured thresholds, regi"
+      ]
+    },
+    {
+      "path": "pin-review/flagged-room-batch-20261006/rooms05-07/enclosure-proposal-records.json",
+      "bytes": 51872,
+      "sha256": "080cab62407c3deda1b1da9157bbfd90143aee098216bb66eaf064ba94389e3b",
+      "snippets": [
+        "f a missing divider is confirmed, save a measured reconstruction; otherwise keep it intentionally flat. Do not raise the source rectangle or create a public hallway from its name.\",\"confidence\":\"Native boundary investigation; source corrections not applied\",\"prerequisites\":[\"Compare the room-specific native evidence plan and original Source model\",\"Preserve physical entrances, measured slab holes and current"
+      ]
+    },
+    {
+      "path": "pin-review/pin50-glazing-edge-20261006/historical-review.json",
+      "bytes": 326702,
+      "sha256": "6c6356e0f508c133193de31d38c25b7c2925e644a2cf5e69ba2934558bc334d3",
+      "snippets": [
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba6565\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "ysical repair not approved\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-1363bcba6587\",\"rm-402367-136b08ba658e\",\"rm-402367-442aa2d548ef\",\"rm-402367-9777dc917a58\",\"rm-402367-977b4c917a5b\",\"rm-402367-97b14c917a88\",\"rm-402",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\"],\"confidence\":\"Implemented and independently checked\",\"relatedKeys\":[\"rm-400176-0f6e59c1a3f5\",\"rm-400176-409ef8ec17e6\",\"rm-400176-79f90add7829\",\"rm-400176-79fc94dd782c\",\""
+      ]
+    },
+    {
+      "path": "pin-review/pin50-glazing-edge-20261006/browser-proof.json",
+      "bytes": 563780,
+      "sha256": "ece163ef04c4bcd7f89dc8ae19d515d20b6897e0ff04b41f5b412030d957e4f0",
+      "snippets": [
+        "proposal\\nApply to existing places \u00b7 0\\n\\nChoose the existing places to change. None are selected automatically.\\n\\nChanges the entire listed places: hallway allows public passage, staff only excludes public routes, off limits disables walking. Existing walls, doors, identities and graph connections remain. New connections and merged boundaries require regeneration in Reviter.\\n\\n08-316 \u00b7 Corridor\\n08-310 \u00b7 Corridor\\nApply classific",
+        "proposal\\nApply to existing places \u00b7 0\\n\\nChoose the existing places to change. None are selected automatically.\\n\\nChanges the entire listed places: hallway allows public passage, staff only excludes public routes, off limits disables walking. Existing walls, doors, identities and graph connections remain. New connections and merged boundaries require regeneration in Reviter.\\n\\n08-316 \u00b7 Corridor\\n08-310 \u00b7 Corridor\\nApply classific"
+      ]
+    },
+    {
+      "path": "unresolved-room-input-review-20261006/room-input-ledger.json",
+      "bytes": 334011,
+      "sha256": "827f848c70377099899a3214c32b43a9febbe8013ce04f0b5a355adc8e9bc9d8",
+      "snippets": [
+        "on\":\"Is 07-507 intentionally an open food-service/back-working area on its north/east sides? Should its back-working portion remain separate from the public hall, and is there a missing divider visible in the real layout?\",\"intentType\":\"open-space layout and access boundary\",\"neededToImplement\":\"Confirm the intended open/partitioned layout. If a divider is missing from every saved drawing/model, a marked pla",
+        "on\":\"Is 07-507 intentionally an open food-service/back-working area on its north/east sides? Should its back-working portion remain separate from the public hall, and is there a missing divider visible in the real layout?\",\"askWhen\":\"Before any open-zone classification or north/east partition reconstruction; current native and registered wall evidence lacks a closed cell.\",\"intentType\":\"open-space layout and"
+      ]
+    },
+    {
+      "path": "unresolved-room-input-review-20261006/room-input-review.md",
+      "bytes": 136758,
+      "sha256": "414664a9e23de070b4508a5a7e3b0b29b4b20ddef81705ada6f4e5871179fa9d",
+      "snippets": [
+        "07 | Is 07-507 intentionally an open food-service/back-working area on its north/east sides? Should its back-working portion remain separate from the public hall, and is there a missing divider visible in the real layout? | Before any open-zone classification or north/east partition reconstruction; current native and registered wall evidence lacks a closed cell. |\n| 07-207, 07-208 | Between 07-207 and 07-208",
+        "put: Is 07-507 intentionally an open food-service/back-working area on its north/east sides? Should its back-working portion remain separate from the public hall, and is there a missing divider visible in the real layout?\nWhen needed: Before any open-zone classification or north/east partition reconstruction; current native and registered wall evidence lacks a closed cell.\n\nTechnical work before application:"
+      ]
+    },
+    {
+      "path": "review-recommendations/review-proposals.json",
+      "bytes": 411751,
+      "sha256": "1f73d925e4c6cf1aa166987915e72d12701acef58d2b2d3bdda752c406114199",
+      "snippets": [
+        "ssessed in this room batch\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\",\"This retained historical proposal was not revalidated by the next 72-room batch. Compare its source evidence with current geometry before further application.\"],\"relatedKeys\":[\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba65",
+        "ssessed in this room batch\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\",\"This retained historical proposal was not revalidated by the next 72-room batch. Compare its source evidence with current geometry before further application.\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-0f7849c1a3fd\",\"rm-402367-133b24ba65",
+        "ssessed in this room batch\",\"prerequisites\":[\"Resolve each connected office/lab/washroom independently\",\"Do not classify the full shared component as hallway or public\",\"This retained historical proposal was not revalidated by the next 72-room batch. Compare its source evidence with current geometry before further application.\"],\"relatedKeys\":[\"rm-402367-03844688998a\",\"rm-402367-039546889998\",\"rm-402367-0f7849c1a3",
+        "es\",\"Each member retains its original width and axis; coupled corner has positive-area contacts, not a point seam\",\"Physical door #2102266 preserved; public routing to adjacent corridors remains disconnected and needs separate entrance/circulation evidence review\",\"This retained historical proposal was not revalidated by the next 72-room batch. Compare its source evidence with current geometry before further application.\"],\"confide"
+      ]
+    },
+    {
+      "path": "review-recommendations/followup-rooms-pins86-93-20261007/runtime-guides/indoor-enclosure-review.md",
+      "bytes": 33601,
+      "sha256": "d89f1ae4269a47dbd0f0471e53a767f5b90c1bf384054b1dbea0764447140464",
+      "snippets": [
+        " appropriate when they occupy one supported open enclosure. Preserve their named places and source keys, distinguish internal back circulation from a public hallway, and retain existing access. Large cells spanning offices, washrooms and stairs are evidence of missing barriers, not permission to merge the entire cell.\n\nCheck rejected polygon topology separately from label containment. A `source-label-outside"
+      ]
+    },
+    {
+      "path": "review-recommendations/followup-rooms-pins86-93-20261007/runtime-guides/native-area-review.md",
+      "bytes": 54898,
+      "sha256": "36786dde84113b6922794727a9d44d5cc099eef8fcd325d46c332a09deb8821d",
+      "snippets": [
+        "not exclude an entire connected indoor component from an ambiguous screenshot.\n\n## Choosing a decision\n\nEnter a label and evidence notes, then select Hallway/open circulation, Staff only walking area, Enclosed room, Off limits, or Needs investigation.\n\n- **Save proposal** stores the native outlines, source model/geometry binding, existing place keys, floor/door evidence IDs, label and notes. It does not change display, access o",
+        " overlay.\n- **Apply classification to map** changes the checked existing places using their source annotations and the existing access-review system. Hallway permits public through-navigation; staff excludes public navigation; off limits disables walking. Names, identities, source polygons and actual door/graph connections are retained. The new area label is a map annotation. Enclosed room preserves its current access instead of assuming it is ",
+        "ty `passThroughDoorIds` permits a closed-door comparison. This authoring metadata is omitted from visitor exports. It does not classify a region as a public hallway, close navigation or remove physical door leaves.\n\nOverlapping source curtain containers can need a separate explicit aperture correction. The sibling compiler consumes `reviewedDoorApertures`: model SHA, exact original barrier parts, measured do"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-explore-gap-batch-20261006/rooms04_08/topology-tests.log",
+      "bytes": 2995,
+      "sha256": "c69b24148b309f7e15a8a1265ba6605a4981c43ae7077c5b3cf8a006335fb013",
+      "snippets": [
+        "3ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (4.033375ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (1.525709ms)\n\u2714 a new proposal keeps prior applied access and its application record (1.875917ms)\n\u2714 unsupported native levels never fall back to drawing contours (0.736666ms)\n\u2714 a user-drawn native wall repair previews, applies and survives ZIP"
+      ]
+    },
+    {
+      "path": "review-recommendations/native-explore-gap-batch-20261006/tests.log",
+      "bytes": 8184,
+      "sha256": "10bb3c74988aeeb019289f8be9ef096106bf4013ee4a82b1f54f9bc23a799a41",
+      "snippets": [
+        "2ms)\n\u2714 folder rejects changed master, changed report, missing companions and duplicate manifests (4.889625ms)\n\u2714 enclosed-room application overrides a hallway display name without assuming public access (2.221583ms)\n\u2714 a new proposal keeps prior applied access and its application record (1.803791ms)\n\u2714 unsupported native levels never fall back to drawing contours (0.708459ms)\n\u2714 a user-drawn native wall repair previews, applies and survives ZIP"
+      ]
+    },
+    {
+      "path": "floor1-reviewed-20261008/inventory.json",
+      "bytes": 6095657,
+      "sha256": "7b0228f11a1cbfc1c7db144cf16f443fac4d6bbf16aaaea1fe53128487e4a41e",
+      "snippets": [
+        "       },\n            \"spaceUse\": {\n              \"kind\": \"hallway\",\n              \"evidence\": \"user-reported\",\n              \"notes\": \"User confirms public walking corridor; derive boundary and navigation from native floors, wall faces and door thresholds.\"\n            },\n            \"access\": {\n              \"kind\": \"public\",\n              \"evidence\": \"user-reported\",\n              \"notes\": \"User confirms 07-113A is t",
+        "          \"access\": {\n              \"kind\": \"public\",\n              \"evidence\": \"user-reported\",\n              \"notes\": \"User confirms 07-113A is the public hallway beyond the doors at review pins 15/16. Adjoining 07-752 and 05-117 remain staff areas; access stops at their doors.\"\n            }\n          }\n        },\n        {\n          \"key\": \"rm-311-930f94094e0b\",\n          \"number\": \"07-224\",\n          \"n",
+        "19d5d57\"\n            },\n            \"spaceUse\": {\n              \"kind\": \"hallway\",\n              \"evidence\": \"user-reported\",\n              \"notes\": \"Public connecting vestibule and adjoining hallways; keep native floor, walls and explicit door thresholds as the geometric and routing evidence.\"\n            },\n            \"access\": {\n              \"kind\": \"public\",\n              \"evidence\": \"user-reported\",\n              \"notes\": \"User confirm",
+        "       \"evidence\": \"user-reported\",\n              \"notes\": \"User confirms the vestibule between Buildings 08 and 10 at review pins 18/19 connects the public hallways through native doors 1501580 and 1501582.\"\n            }\n          },\n          \"arrivalNodeId\": \"arrival:rm-1487816-1949cc41e164\"\n        },\n        {\n          \"key\": \"rm-1487816-194d4f41e167\",\n          \"number\": \"10-1034\",\n          \"name\": "
+      ]
+    }
+  ],
+  "masterArchiveSha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520",
+  "specificHallAQLegendFound": false,
+  "sourceOrPolicyChanged": false
+}

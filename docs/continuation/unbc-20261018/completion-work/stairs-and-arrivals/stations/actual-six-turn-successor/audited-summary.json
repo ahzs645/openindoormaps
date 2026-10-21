@@ -1,0 +1,938 @@
+{
+  "format": "actual-six-turn-successor-audited-summary-v1",
+  "allSixFullFreshOriginalSourceConsumersCompleted": true,
+  "changedFiveOriginalFloorGraphEndpointsOwnersAndAccessUnchanged": true,
+  "genericTwoStationTurnRequestHelperOnly": {
+    "module": "/workspace/openindoormaps/scripts/indoor/proposals/stepped-stair-v2-turn-request-proposals.mjs",
+    "moduleSha256": "64055aeee08df486d8fe88e788aca658773799141bf2a5d3307ce28b7c4676a7",
+    "meaningfulTestsPassed": 8,
+    "scopedLintAndStrictTypecheckPassed": true
+  },
+  "normalPhysicalSourceProducerClosure": {
+    "modules": 164,
+    "before": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+    "after": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+    "liveBefore": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+    "liveAfter": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+    "allStable": true
+  },
+  "originalAll28ParentAll38RunSourceReconstructed": true,
+  "completeForeignRows": 39739,
+  "originalSourceCurtainRefinements": 68,
+  "rows": [
+    {
+      "nativeStairId": 1696006,
+      "originalEdgeId": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+      "nativeRunId": 1696012,
+      "proposalSha256": "03f1a4060832e8b19f795f52bd711b80a1dc5089843db209e0b69658f599febe",
+      "terminalNativeFloors": [
+        402395,
+        405772
+      ],
+      "forwardPassed": true,
+      "reversePassed": true,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 105.974,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/1696006-result.json",
+      "actualResultSha256": "9093a548574742fead0f10340a2586c9e05b9ceb1e93e4c3cd9519910112c23f",
+      "classification": "unchanged-original-vector-control-actual-BOTH-pass"
+    },
+    {
+      "nativeStairId": 1903824,
+      "originalEdgeId": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+      "nativeRunId": 1903837,
+      "proposalSha256": "6eb0ac8f5da4a5ed86420d33ab2b64071326edf0404d97196e5560e06f11a209",
+      "terminalNativeFloors": [
+        503705,
+        511340
+      ],
+      "forwardPassed": false,
+      "reversePassed": false,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 244.032,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/1903824-result.json",
+      "actualResultSha256": "017ddd6d0fb10e739386d84472c7821958ad30536b3cfaf2f3558f72416354b7",
+      "classification": "original-finite-crossing-and-turn-demand-progresses-to-closed-six-foot-material-refusal",
+      "actualMaterialContactsPerDirection": 635,
+      "actualForwardIssues": [
+        "Closed six-foot material contacts: 635"
+      ],
+      "actualReverseIssues": [
+        "Closed six-foot material contacts: 635"
+      ],
+      "unknownPhysicalBodyKeys": [],
+      "contactDetailsTruncated": true,
+      "retainedContactDetailCountEachDirection": [
+        128,
+        128
+      ],
+      "firstRetainedContactMovement": "lower-standing:0",
+      "firstRetainedContactOwners": [
+        24930,
+        490040,
+        508561,
+        509212
+      ],
+      "firstRetainedContactOriginalCensusRows": [
+        {
+          "nativeElementId": 24930,
+          "sourceFrameSha256": "0f88252f46625a13370c7b7eef40268219cc4cfbeccc4125200cebdf217ecad3",
+          "boundsFeet": {
+            "min": {
+              "x": -434.52654885972765,
+              "y": -356.83845169739925,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 379.22678239159563,
+              "y": 950.9929979321246,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000055
+        },
+        {
+          "nativeElementId": 490040,
+          "sourceFrameSha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+          "boundsFeet": {
+            "min": {
+              "x": -198.6602006317529,
+              "y": -205.65141613446514,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 172.36935095055748,
+              "y": 480.2439245580816,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        },
+        {
+          "nativeElementId": 508561,
+          "sourceFrameSha256": "127616a1bb52aade7c86a3277ddb0845c8d56b292185c3d10ab580a91d82911f",
+          "boundsFeet": {
+            "min": {
+              "x": 133.24202484355013,
+              "y": 159.56162792921626,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 148.19430695066052,
+              "y": 182.15449323131702,
+              "z": 43.30708661417323
+            }
+          },
+          "categoryId": -2000011
+        },
+        {
+          "nativeElementId": 509212,
+          "sourceFrameSha256": "260f9478ee453fde363e57231b801e2f6d7925f52e01c85cd22f9b816721d447",
+          "boundsFeet": {
+            "min": {
+              "x": 124.48669949546259,
+              "y": 166.47803696193589,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 138.33673545173852,
+              "y": 188.44024954747616,
+              "z": 43.30708661417323
+            }
+          },
+          "categoryId": -2000011
+        }
+      ],
+      "contactDetailCountsAreNotTotalProfileCounts": true,
+      "materialGeometryRefinementOrPhysicalClearanceStillUnproved": true,
+      "noCoarseEnvelopeOmittedToClaimClearance": true
+    },
+    {
+      "nativeStairId": 1982431,
+      "originalEdgeId": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+      "nativeRunId": 1984014,
+      "proposalSha256": "70690262c362cc62c82597019f13482d685d6fa08b0eb930d36ab393f43d835a",
+      "terminalNativeFloors": [
+        1514723,
+        1513098
+      ],
+      "forwardPassed": false,
+      "reversePassed": false,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 151.144,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/1982431-result.json",
+      "actualResultSha256": "25bec8b57f40acc93b829fcdcdbf0afc815647d5afa8e274a4dacb511c1822ed",
+      "classification": "original-finite-crossing-and-turn-demand-progresses-to-closed-six-foot-material-refusal",
+      "actualMaterialContactsPerDirection": 821,
+      "actualForwardIssues": [
+        "Closed six-foot material contacts: 821"
+      ],
+      "actualReverseIssues": [
+        "Closed six-foot material contacts: 821"
+      ],
+      "unknownPhysicalBodyKeys": [],
+      "contactDetailsTruncated": true,
+      "retainedContactDetailCountEachDirection": [
+        128,
+        128
+      ],
+      "firstRetainedContactMovement": "lower-standing:0",
+      "firstRetainedContactOwners": [
+        1514723,
+        1984014,
+        1986095,
+        1986103,
+        1986117
+      ],
+      "firstRetainedContactOriginalCensusRows": [
+        {
+          "nativeElementId": 1514723,
+          "sourceFrameSha256": "723efeefe3e5e8759e6c9a26c201ffd870055da59e2a985b2be49c20305be76a",
+          "boundsFeet": {
+            "min": {
+              "x": 12.743694782579524,
+              "y": 456.5994740616063,
+              "z": 2.6246719160104988
+            },
+            "max": {
+              "x": 119.4169494319813,
+              "y": 768.4939493368336,
+              "z": 3.2808398950131235
+            }
+          },
+          "categoryId": -2000032
+        },
+        {
+          "nativeElementId": 1984014,
+          "sourceFrameSha256": "1cc45700a323b8290da9fcb94ba7d373fc8bb7dd4af947f7bcddb37e18b38082",
+          "boundsFeet": {
+            "min": {
+              "x": 66.25898973280827,
+              "y": 456.2586425586673,
+              "z": 3.2808398950131235
+            },
+            "max": {
+              "x": 87.08128909008865,
+              "y": 475.53691070849584,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000919
+        },
+        {
+          "nativeElementId": 1986095,
+          "sourceFrameSha256": "1f31655fcc471f74491b613221603dcf3b84fad6fe3fd7e7a9737e399d7257e0",
+          "boundsFeet": {
+            "min": {
+              "x": 72.42049091896648,
+              "y": 467.04605479568846,
+              "z": 3.2808398950131235
+            },
+            "max": {
+              "x": 85.5152128784847,
+              "y": 475.65843437376253,
+              "z": 14.728751879391368
+            }
+          },
+          "categoryId": -2000123
+        },
+        {
+          "nativeElementId": 1986103,
+          "sourceFrameSha256": "ee5f37965015ad623e3ab7ae2c4180db7768b235c1eaf07b0c62df87f190ab09",
+          "boundsFeet": {
+            "min": {
+              "x": 66.25964590078729,
+              "y": 456.2604350441308,
+              "z": 3.709872804360993
+            },
+            "max": {
+              "x": 87.07949626036554,
+              "y": 475.51525838106096,
+              "z": 18.04461942257216
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 1986117,
+          "sourceFrameSha256": "48ddeeee6729ff4675c734230d3a18f5a6220990b86db090ac69fe612dc6b392",
+          "boundsFeet": {
+            "min": {
+              "x": 66.25964590078729,
+              "y": 456.2604350441308,
+              "z": 7.137498961949594
+            },
+            "max": {
+              "x": 87.07949626036554,
+              "y": 475.51525838106096,
+              "z": 18.04461942257216
+            }
+          },
+          "categoryId": -2000946
+        }
+      ],
+      "contactDetailCountsAreNotTotalProfileCounts": true,
+      "materialGeometryRefinementOrPhysicalClearanceStillUnproved": true,
+      "noCoarseEnvelopeOmittedToClaimClearance": true
+    },
+    {
+      "nativeStairId": 2160665,
+      "originalEdgeId": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+      "nativeRunId": 2160668,
+      "proposalSha256": "d4fed11f0eb47b1d8a26e9e3c2bb05f0c00aa1151c90eeeb8cafb5c48362edab",
+      "terminalNativeFloors": [
+        427511,
+        437656
+      ],
+      "forwardPassed": false,
+      "reversePassed": false,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 193.744,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/2160665-result.json",
+      "actualResultSha256": "e1ac8f3788b5e763d3d41eb7e240be486cf7c48b4149970c44ca9990a5ff048c",
+      "classification": "original-finite-crossing-and-turn-demand-progresses-to-closed-six-foot-material-refusal",
+      "actualMaterialContactsPerDirection": 377,
+      "actualForwardIssues": [
+        "Closed six-foot material contacts: 377"
+      ],
+      "actualReverseIssues": [
+        "Closed six-foot material contacts: 377"
+      ],
+      "unknownPhysicalBodyKeys": [],
+      "contactDetailsTruncated": true,
+      "retainedContactDetailCountEachDirection": [
+        128,
+        128
+      ],
+      "firstRetainedContactMovement": "lower-standing:0",
+      "firstRetainedContactOwners": [
+        24930,
+        1513098,
+        2156103,
+        2157367,
+        2157383,
+        2160741,
+        2160755
+      ],
+      "firstRetainedContactOriginalCensusRows": [
+        {
+          "nativeElementId": 24930,
+          "sourceFrameSha256": "0f88252f46625a13370c7b7eef40268219cc4cfbeccc4125200cebdf217ecad3",
+          "boundsFeet": {
+            "min": {
+              "x": -434.52654885972765,
+              "y": -356.83845169739925,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 379.22678239159563,
+              "y": 950.9929979321246,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000055
+        },
+        {
+          "nativeElementId": 1513098,
+          "sourceFrameSha256": "5fbada5fd464f6c840dc2091a7e1ea63f9538a86f8dccc336fc73dae97b69cdc",
+          "boundsFeet": {
+            "min": {
+              "x": -105.36654143789313,
+              "y": 452.9249352823524,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 119.26931163670571,
+              "y": 769.2869076944601,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        },
+        {
+          "nativeElementId": 2156103,
+          "sourceFrameSha256": "9f0145a059509fdf7b298e2f0717ac6b35caeceee4e28db0538bea3301e278f0",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38785456708132,
+              "y": 501.3931154963475,
+              "z": 0
+            },
+            "max": {
+              "x": -72.21725089254049,
+              "y": 520.8156876748252,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000919
+        },
+        {
+          "nativeElementId": 2157367,
+          "sourceFrameSha256": "e1c691a250bafa7d70e5b83e2a47b05f1a7f8c03e7b643e87ccd709aef094995",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112333,
+              "y": 501.3931154963475,
+              "z": 0.5552190591560653
+            },
+            "max": {
+              "x": -72.21856322849851,
+              "y": 520.8143753388672,
+              "z": 18.044619422572207
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 2157383,
+          "sourceFrameSha256": "b18762b0f77337610a7028f68b6a5738ae8991aab5e7e8a4bb2479e1bc808e40",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112333,
+              "y": 501.3931154963475,
+              "z": 3.9724667661587074
+            },
+            "max": {
+              "x": -72.21856322849851,
+              "y": 520.8143753388672,
+              "z": 18.044619422572207
+            }
+          },
+          "categoryId": -2000946
+        },
+        {
+          "nativeElementId": 2160741,
+          "sourceFrameSha256": "3e5094cf63257d5f131a5a1567f1b95be47174c2b39cc0a32edc55ff61005134",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112326,
+              "y": 501.36832654231534,
+              "z": 14.814253987482333
+            },
+            "max": {
+              "x": -72.21856322849841,
+              "y": 520.789586384835,
+              "z": 27.887139107611667
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 2160755,
+          "sourceFrameSha256": "661c3cfc1a0f21b49a2dcff09f834a170e8277e91826054a9509bddd15272759",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112326,
+              "y": 501.36832654231534,
+              "z": 18.24575324403742
+            },
+            "max": {
+              "x": -72.21856322849841,
+              "y": 520.789586384835,
+              "z": 27.887139107611667
+            }
+          },
+          "categoryId": -2000946
+        }
+      ],
+      "contactDetailCountsAreNotTotalProfileCounts": true,
+      "materialGeometryRefinementOrPhysicalClearanceStillUnproved": true,
+      "noCoarseEnvelopeOmittedToClaimClearance": true
+    },
+    {
+      "nativeStairId": 1638837,
+      "originalEdgeId": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+      "nativeRunId": 1638854,
+      "proposalSha256": "569fed74924851d2885a4ba8a3de9464607104e00c74c0f71f6ffd29418277bf",
+      "terminalNativeFloors": [
+        503705,
+        511340
+      ],
+      "forwardPassed": false,
+      "reversePassed": false,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 250.881,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/1638837-result.json",
+      "actualResultSha256": "e18e73b2d4e20a757e66bb7538ceedc47a7185b6268f50508ff67fd8f1a1002b",
+      "classification": "original-finite-crossing-and-turn-demand-progresses-to-closed-six-foot-material-refusal",
+      "actualMaterialContactsPerDirection": 734,
+      "actualForwardIssues": [
+        "Closed six-foot material contacts: 734"
+      ],
+      "actualReverseIssues": [
+        "Closed six-foot material contacts: 734"
+      ],
+      "unknownPhysicalBodyKeys": [],
+      "contactDetailsTruncated": true,
+      "retainedContactDetailCountEachDirection": [
+        128,
+        128
+      ],
+      "firstRetainedContactMovement": "lower-standing:0",
+      "firstRetainedContactOwners": [
+        24930,
+        490040,
+        503705,
+        511277,
+        1638854,
+        1640571,
+        1640573,
+        1640578,
+        1640584,
+        1640588,
+        1640600,
+        1640617,
+        1933795,
+        1934160
+      ],
+      "firstRetainedContactOriginalCensusRows": [
+        {
+          "nativeElementId": 24930,
+          "sourceFrameSha256": "0f88252f46625a13370c7b7eef40268219cc4cfbeccc4125200cebdf217ecad3",
+          "boundsFeet": {
+            "min": {
+              "x": -434.52654885972765,
+              "y": -356.83845169739925,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 379.22678239159563,
+              "y": 950.9929979321246,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000055
+        },
+        {
+          "nativeElementId": 490040,
+          "sourceFrameSha256": "f7735f8ae7cca73009b2ee51f53de9f07cc33c65af6057a5738c9fc4af695ebd",
+          "boundsFeet": {
+            "min": {
+              "x": -198.6602006317529,
+              "y": -205.65141613446514,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 172.36935095055748,
+              "y": 480.2439245580816,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        },
+        {
+          "nativeElementId": 503705,
+          "sourceFrameSha256": "f62a7d90ffaf540708cea9c0d7954d03e240878be156b885dc2d844ecf0bb9cc",
+          "boundsFeet": {
+            "min": {
+              "x": 70.27151510527358,
+              "y": 141.83419739498845,
+              "z": 13.779527559055119
+            },
+            "max": {
+              "x": 344.8079104054266,
+              "y": 405.2410999776233,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000032
+        },
+        {
+          "nativeElementId": 511277,
+          "sourceFrameSha256": "351b555e68900848e2e0b70431f3f35a2b61a310eb151606ffe4b14eaa4dc2d5",
+          "boundsFeet": {
+            "min": {
+              "x": 74.66104587103871,
+              "y": 207.14382683333073,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 183.29995480456313,
+              "y": 380.1882100340668,
+              "z": 23.62204724409449
+            }
+          },
+          "categoryId": -2000011
+        },
+        {
+          "nativeElementId": 1638854,
+          "sourceFrameSha256": "364705358a6fb287bb5a0827144c1be0aa2c3580f39531df6fe2b48cad647928",
+          "boundsFeet": {
+            "min": {
+              "x": 141.58283228655353,
+              "y": 227.29213502768548,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 158.49516444368325,
+              "y": 244.339620586101,
+              "z": 24.278215223097114
+            }
+          },
+          "categoryId": -2000919
+        },
+        {
+          "nativeElementId": 1640571,
+          "sourceFrameSha256": "8176692cfaae0e30643439d4dd0f910c27721d6d43d918f98bcbb2c29bb3b10c",
+          "boundsFeet": {
+            "min": {
+              "x": 147.51347969147767,
+              "y": 230.04769781589263,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 152.87007456277314,
+              "y": 238.48433921936683,
+              "z": 24.278215223097114
+            }
+          },
+          "categoryId": -2000123
+        },
+        {
+          "nativeElementId": 1640573,
+          "sourceFrameSha256": "bcb0172502f847303856ed342f4618683e839c61ddcd236474390377bd47fe25",
+          "boundsFeet": {
+            "min": {
+              "x": 146.2536638657521,
+              "y": 228.4634077428515,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 152.7629374515678,
+              "y": 238.74472069406542,
+              "z": 24.604858014082893
+            }
+          },
+          "categoryId": -2000123
+        },
+        {
+          "nativeElementId": 1640578,
+          "sourceFrameSha256": "af3d057ed4f540560a07c5515bcc0a8ccef548157857e14d6de587d30da4f71e",
+          "boundsFeet": {
+            "min": {
+              "x": 141.46759441446662,
+              "y": 231.45503710085944,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 149.45685176257513,
+              "y": 243.54556427893647,
+              "z": 24.60483794293365
+            }
+          },
+          "categoryId": -2000123
+        },
+        {
+          "nativeElementId": 1640584,
+          "sourceFrameSha256": "ba1c08bf470a006082862e41375cb86f80fec64dc9833fb281fa46c0cb841eb2",
+          "boundsFeet": {
+            "min": {
+              "x": 141.60627222491428,
+              "y": 227.29283045979076,
+              "z": 14.845800524934383
+            },
+            "max": {
+              "x": 158.49377054686371,
+              "y": 244.3382255983824,
+              "z": 27.887139107611564
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 1640588,
+          "sourceFrameSha256": "01da1b83e167575a937f0ca672decc48abdebb6695643946d51d2c36538c7c5f",
+          "boundsFeet": {
+            "min": {
+              "x": 146.11343544040332,
+              "y": 228.5510321881183,
+              "z": 14.845800524934383
+            },
+            "max": {
+              "x": 153.18485644655036,
+              "y": 238.97257356468114,
+              "z": 27.887139107611603
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 1640600,
+          "sourceFrameSha256": "2263ae38b567fce626f51f8d5034d61f2c7df2d091bc6aedbc50f6ac2c4e0c10",
+          "boundsFeet": {
+            "min": {
+              "x": 141.60627222491428,
+              "y": 227.29283045979076,
+              "z": 18.274531049069513
+            },
+            "max": {
+              "x": 158.49377054686371,
+              "y": 244.3382255983824,
+              "z": 27.887139107611564
+            }
+          },
+          "categoryId": -2000946
+        },
+        {
+          "nativeElementId": 1640617,
+          "sourceFrameSha256": "705b1129d6d277e99f4157979d27c7d33923654d3b0c1b3267dd0039553eccca",
+          "boundsFeet": {
+            "min": {
+              "x": 146.11343544040332,
+              "y": 228.5510321881183,
+              "z": 18.274531049069502
+            },
+            "max": {
+              "x": 153.18485644655036,
+              "y": 238.97257356468114,
+              "z": 27.887139107611603
+            }
+          },
+          "categoryId": -2000946
+        },
+        {
+          "nativeElementId": 1933795,
+          "sourceFrameSha256": "ce1597f4b93b901f38645161530f91c1761f6fcdad071a2a674757b70daf668d",
+          "boundsFeet": {
+            "min": {
+              "x": 141.46759441446648,
+              "y": 231.37049626480632,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 148.97482077813862,
+              "y": 242.68079502907906,
+              "z": 24.278215223097114
+            }
+          },
+          "categoryId": -2000011
+        },
+        {
+          "nativeElementId": 1934160,
+          "sourceFrameSha256": "8328bf4da1600b6ca939f637b40384ec265f3586d701a56610369a2319bf48c1",
+          "boundsFeet": {
+            "min": {
+              "x": 146.1731580720513,
+              "y": 228.6235950126344,
+              "z": 14.435695538057743
+            },
+            "max": {
+              "x": 152.79720703551942,
+              "y": 238.9528846366349,
+              "z": 24.278215223097114
+            }
+          },
+          "categoryId": -2000011
+        }
+      ],
+      "contactDetailCountsAreNotTotalProfileCounts": true,
+      "materialGeometryRefinementOrPhysicalClearanceStillUnproved": true,
+      "noCoarseEnvelopeOmittedToClaimClearance": true
+    },
+    {
+      "nativeStairId": 2156084,
+      "originalEdgeId": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+      "nativeRunId": 2156103,
+      "proposalSha256": "d9c80a9b0182144648d815e8e9e7fef4832ac7d8a15227c97d960b4259033149",
+      "terminalNativeFloors": [
+        1593239,
+        427511
+      ],
+      "forwardPassed": false,
+      "reversePassed": false,
+      "bothKernelDirectionsConfirmed": true,
+      "elapsedSeconds": 106.924,
+      "actualResultPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/2156084-result.json",
+      "actualResultSha256": "426092b8c8919583e424eccc4a1888f1230b95fd0ff21c5bf342cff58fa1d7d8",
+      "classification": "original-finite-crossing-and-turn-demand-progresses-to-closed-six-foot-material-refusal",
+      "actualMaterialContactsPerDirection": 433,
+      "actualForwardIssues": [
+        "Closed six-foot material contacts: 433"
+      ],
+      "actualReverseIssues": [
+        "Closed six-foot material contacts: 433"
+      ],
+      "unknownPhysicalBodyKeys": [],
+      "contactDetailsTruncated": true,
+      "retainedContactDetailCountEachDirection": [
+        128,
+        128
+      ],
+      "firstRetainedContactMovement": "lower-standing:0",
+      "firstRetainedContactOwners": [
+        2156103,
+        2157367,
+        2157371,
+        2157383,
+        2157400,
+        2159995,
+        2159997
+      ],
+      "firstRetainedContactOriginalCensusRows": [
+        {
+          "nativeElementId": 2156103,
+          "sourceFrameSha256": "9f0145a059509fdf7b298e2f0717ac6b35caeceee4e28db0538bea3301e278f0",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38785456708132,
+              "y": 501.3931154963475,
+              "z": 0
+            },
+            "max": {
+              "x": -72.21725089254049,
+              "y": 520.8156876748252,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000919
+        },
+        {
+          "nativeElementId": 2157367,
+          "sourceFrameSha256": "e1c691a250bafa7d70e5b83e2a47b05f1a7f8c03e7b643e87ccd709aef094995",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112333,
+              "y": 501.3931154963475,
+              "z": 0.5552190591560653
+            },
+            "max": {
+              "x": -72.21856322849851,
+              "y": 520.8143753388672,
+              "z": 18.044619422572207
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 2157371,
+          "sourceFrameSha256": "1bdd6e5cd3f550b15352b0dc9eed14dbfd9a4a2ff56d43b5a4ba6bce55cf6cdb",
+          "boundsFeet": {
+            "min": {
+              "x": -77.96003304477156,
+              "y": 501.3931154963475,
+              "z": 0.5552190591560653
+            },
+            "max": {
+              "x": -76.64507241485032,
+              "y": 516.4206745514657,
+              "z": 18.04461942257224
+            }
+          },
+          "categoryId": -2000126
+        },
+        {
+          "nativeElementId": 2157383,
+          "sourceFrameSha256": "b18762b0f77337610a7028f68b6a5738ae8991aab5e7e8a4bb2479e1bc808e40",
+          "boundsFeet": {
+            "min": {
+              "x": -82.38654223112333,
+              "y": 501.3931154963475,
+              "z": 3.9724667661587074
+            },
+            "max": {
+              "x": -72.21856322849851,
+              "y": 520.8143753388672,
+              "z": 18.044619422572207
+            }
+          },
+          "categoryId": -2000946
+        },
+        {
+          "nativeElementId": 2157400,
+          "sourceFrameSha256": "1d2e420c56789f62360c70931de693e5e86a9fceab7c128a4e3faf62dfa5c3a4",
+          "boundsFeet": {
+            "min": {
+              "x": -77.96003304477156,
+              "y": 501.3931154963475,
+              "z": 3.9724667661587416
+            },
+            "max": {
+              "x": -76.64507241485032,
+              "y": 516.4206745514657,
+              "z": 18.04461942257224
+            }
+          },
+          "categoryId": -2000946
+        },
+        {
+          "nativeElementId": 2159995,
+          "sourceFrameSha256": "e3b385aca3f27c67bac830f6240f9f194046a1ea3957d2fa7cc6153c20414d38",
+          "boundsFeet": {
+            "min": {
+              "x": -76.9744687403097,
+              "y": 501.3931154963475,
+              "z": -7.771561172376096e-16
+            },
+            "max": {
+              "x": -76.81042674555901,
+              "y": 516.0912782260064,
+              "z": 14.435695538057743
+            }
+          },
+          "categoryId": -2000123
+        },
+        {
+          "nativeElementId": 2159997,
+          "sourceFrameSha256": "60b1b328092b90c01b679b57cb5f47f51e15a8d22820c05c67bdb7c47c5f5612",
+          "boundsFeet": {
+            "min": {
+              "x": -77.79467871406288,
+              "y": 507.82356169057323,
+              "z": 0
+            },
+            "max": {
+              "x": -77.63063671931221,
+              "y": 516.255320220757,
+              "z": 14.65002880656884
+            }
+          },
+          "categoryId": -2000123
+        }
+      ],
+      "contactDetailCountsAreNotTotalProfileCounts": true,
+      "materialGeometryRefinementOrPhysicalClearanceStillUnproved": true,
+      "noCoarseEnvelopeOmittedToClaimClearance": true
+    }
+  ],
+  "actualBothPositiveParentIds": [
+    1696006
+  ],
+  "newPositiveParents": [],
+  "fiveTurnRequestsProgressedToMaterialPredicate": [
+    1903824,
+    1982431,
+    2160665,
+    1638837,
+    2156084
+  ],
+  "positiveOnlyNormalReview": {
+    "path": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/positive-source-review.json",
+    "sha256": "d58d8bdac3eeca68947c8a7fb66bfacdcf8fe9d3a3ac4b67fb2f602785f6f7e1",
+    "bytes": 6400,
+    "freshOpaqueReconstructionRequiredForReuse": true
+  },
+  "receipt": {
+    "path": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/receipt.json",
+    "sha256": "b485668c7bb21753e98beb0b68d9a9fe729408a6a06d488c65d9e4c701f4762c"
+  },
+  "allExternalInputAfterGuard": {
+    "path": "/workspace/scratch/single-run-turn-successor-six-20261018/run-control-v1/input-after-guard.json",
+    "sha256": "dbbe4b5e176520d88eb2e6599d2ac02801c01004cf2fa2217146602a9215826f",
+    "allInputBytesAndHashesMatch": true
+  },
+  "resourceControl": {
+    "pid": 95907,
+    "startTicks": 4508414,
+    "exitCode": 0,
+    "elapsedSeconds": 1190.2429096870037,
+    "maximumObservedCgroupBytes": 14097838080,
+    "maximumObservedChildRssBytes": 4778061824,
+    "memoryGuardPauses": 0,
+    "receiptPath": "/workspace/scratch/single-run-turn-successor-six-20261018/actual-six-turn-successor-v1/receipt.json",
+    "receiptExists": true,
+    "routeApproved": false
+  },
+  "onlyChangedSubsetAndKnownControlReplayedNotAll18": true,
+  "runtimeIntegrationApproved": false,
+  "routeApproved": false
+}

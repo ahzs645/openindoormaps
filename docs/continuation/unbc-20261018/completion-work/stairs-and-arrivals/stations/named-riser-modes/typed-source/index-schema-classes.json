@@ -1,0 +1,1101 @@
+[
+  {
+    "index": 2516,
+    "name": "IntStairInfo",
+    "parent": {
+      "kind": "none"
+    },
+    "version": 2,
+    "propertyCount": 10,
+    "properties": [
+      {
+        "name": "m_leftParam",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294766
+      },
+      {
+        "name": "m_rightParam",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294785
+      },
+      {
+        "name": "m_leftAngle",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294805
+      },
+      {
+        "name": "m_rightAngle",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294824
+      },
+      {
+        "name": "m_curveId",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294844,
+        "staticType": {
+          "kind": "reference",
+          "index": 20,
+          "name": "ElementId"
+        }
+      },
+      {
+        "name": "m_leftInt",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294863
+      },
+      {
+        "name": "m_rightInt",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294880
+      },
+      {
+        "name": "m_specifiedIdx",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294898
+      },
+      {
+        "name": "m_pRiserCurve",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294920
+      },
+      {
+        "name": "m_pMultiSegRiser",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 294941
+      }
+    ],
+    "guids": [],
+    "unknownWord": 0,
+    "inline": false,
+    "offset": 294740,
+    "endOffset": 294969
+  },
+  {
+    "index": 4081,
+    "name": "StairsRunAndLanding",
+    "parent": {
+      "kind": "reference",
+      "index": 38,
+      "name": "Element"
+    },
+    "version": 5,
+    "propertyCount": 15,
+    "properties": [
+      {
+        "name": "m_compatibleCrvInfo",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445053,
+        "staticType": {
+          "kind": "inline",
+          "index": 4082,
+          "name": "StairsRunLayoutInfo",
+          "declaredIndex": 4082
+        }
+      },
+      {
+        "name": "m_leftBdry",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445257,
+        "staticType": {
+          "kind": "reference",
+          "index": 628,
+          "name": "BdryCurveInfo"
+        }
+      },
+      {
+        "name": "m_rightBdry",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445277,
+        "staticType": {
+          "kind": "reference",
+          "index": 628,
+          "name": "BdryCurveInfo"
+        }
+      },
+      {
+        "name": "m_stairsTreadInfoArr",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445298
+      },
+      {
+        "name": "m_stairsRunInfoArr",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445326
+      },
+      {
+        "name": "m_logicJoinInfo",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445352,
+        "staticType": {
+          "kind": "inline",
+          "index": 4083,
+          "name": "StairsLogicJoinInfo",
+          "declaredIndex": 4083
+        }
+      },
+      {
+        "name": "m_notchDrvCrv",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445593
+      },
+      {
+        "name": "m_stairsId",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445614,
+        "staticType": {
+          "kind": "reference",
+          "index": 20,
+          "name": "ElementId"
+        }
+      },
+      {
+        "name": "m_triserSymId",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445634,
+        "staticType": {
+          "kind": "reference",
+          "index": 20,
+          "name": "ElementId"
+        }
+      },
+      {
+        "name": "m_baseRiserIndex",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445657
+      },
+      {
+        "name": "m_isMirrored",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 445681
+      },
+      {
+        "name": "m_isComponentizing",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 2,
+        "offset": 445701
+      },
+      {
+        "name": "m_stringerArr",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445727,
+        "staticType": {
+          "kind": "reference",
+          "index": 20,
+          "name": "ElementId"
+        }
+      },
+      {
+        "name": "m_oSupportPathCurveLoops",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445750
+      },
+      {
+        "name": "m_supportExistenceStatusMap",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 445782,
+        "staticType": {
+          "kind": "reference",
+          "index": 210,
+          "name": "std::pair< int, int >"
+        }
+      }
+    ],
+    "guids": [],
+    "unknownWord": 0,
+    "inline": true,
+    "offset": 445020,
+    "endOffset": 445823
+  },
+  {
+    "index": 4102,
+    "name": "StairsRun",
+    "parent": {
+      "kind": "reference",
+      "index": 4081,
+      "name": "StairsRunAndLanding"
+    },
+    "version": 10,
+    "propertyCount": 24,
+    "properties": [
+      {
+        "name": "m_bottomElevation",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447776
+      },
+      {
+        "name": "m_topElevation",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447801
+      },
+      {
+        "name": "m_extendBelowBase",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447823
+      },
+      {
+        "name": "m_extendBelowTreadBase",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447848
+      },
+      {
+        "name": "m_actualRunWidth",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447878
+      },
+      {
+        "name": "m_leftStringerWidth",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447902
+      },
+      {
+        "name": "m_rightStringerWidth",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447929
+      },
+      {
+        "name": "m_topRiserIndex",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447957
+      },
+      {
+        "name": "m_centerMarkVisible",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 447980
+      },
+      {
+        "name": "m_beginWithRiser",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448007
+      },
+      {
+        "name": "m_endWithRiser",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448031
+      },
+      {
+        "name": "m_oIntermediateSupportPathCurveLoops",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448053
+      },
+      {
+        "name": "m_leftRefFaces",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448097
+      },
+      {
+        "name": "m_rightRefFaces",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448119
+      },
+      {
+        "name": "m_oRefFaceArr",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448142
+      },
+      {
+        "name": "m_oRefCurvesArr",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448163
+      },
+      {
+        "name": "m_orderedRisers",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448186
+      },
+      {
+        "name": "m_orderedNosingFront",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448209
+      },
+      {
+        "name": "m_oGeom4TreadFaces",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448237
+      },
+      {
+        "name": "m_oGeoms2CutFloor",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448263
+      },
+      {
+        "name": "m_oCurveForSnapping",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448288
+      },
+      {
+        "name": "m_oStartRiser",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448315
+      },
+      {
+        "name": "m_oEndRiser",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448336
+      },
+      {
+        "name": "m_oPoints",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 5,
+        "unknownWord": 0,
+        "offset": 448355
+      }
+    ],
+    "guids": [],
+    "unknownWord": 0,
+    "inline": false,
+    "offset": 447753,
+    "endOffset": 448376
+  },
+  {
+    "index": 4106,
+    "name": "StairsRunInfo",
+    "parent": {
+      "kind": "none"
+    },
+    "version": 1,
+    "propertyCount": 14,
+    "properties": [
+      {
+        "name": "m_bndBox",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448587,
+        "staticType": {
+          "kind": "reference",
+          "index": 636,
+          "name": "Envelope"
+        }
+      },
+      {
+        "name": "m_origin",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448605,
+        "size": 3
+      },
+      {
+        "name": "m_slope",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448625
+      },
+      {
+        "name": "m_cutElev",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448640
+      },
+      {
+        "name": "m_norm",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448657,
+        "size": 3
+      },
+      {
+        "name": "m_runDirProj",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448675,
+        "size": 3
+      },
+      {
+        "name": "m_riserDir",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448699,
+        "size": 3
+      },
+      {
+        "name": "m_zeroHeight",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448721
+      },
+      {
+        "name": "m_startLineEnds",
+        "fieldType": 13,
+        "variant": {
+          "kind": "tuple"
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448741,
+        "size": 2,
+        "element": {
+          "name": " ",
+          "fieldType": 7,
+          "variant": {
+            "kind": "double",
+            "byteLength": 8
+          },
+          "loadingMode": 0,
+          "itemMode": 1,
+          "unknownWord": 0,
+          "offset": 448768,
+          "size": 3
+        }
+      },
+      {
+        "name": "m_endLineEnds",
+        "fieldType": 13,
+        "variant": {
+          "kind": "tuple"
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 448781,
+        "size": 2,
+        "element": {
+          "name": " ",
+          "fieldType": 7,
+          "variant": {
+            "kind": "double",
+            "byteLength": 8
+          },
+          "loadingMode": 0,
+          "itemMode": 1,
+          "unknownWord": 0,
+          "offset": 448806,
+          "size": 3
+        }
+      },
+      {
+        "name": "m_runType",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448819
+      },
+      {
+        "name": "m_firstRiser",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448836
+      },
+      {
+        "name": "m_lastRiser",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448856
+      },
+      {
+        "name": "m_flipped",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 448875
+      }
+    ],
+    "guids": [],
+    "unknownWord": 0,
+    "inline": false,
+    "offset": 448560,
+    "endOffset": 448896
+  },
+  {
+    "index": 4132,
+    "name": "StairsTreadInfo",
+    "parent": {
+      "kind": "none"
+    },
+    "version": 1,
+    "propertyCount": 16,
+    "properties": [
+      {
+        "name": "m_startRiser",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451477,
+        "staticType": {
+          "kind": "reference",
+          "index": 2516,
+          "name": "IntStairInfo"
+        }
+      },
+      {
+        "name": "m_endRiser",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451499,
+        "staticType": {
+          "kind": "reference",
+          "index": 2516,
+          "name": "IntStairInfo"
+        }
+      },
+      {
+        "name": "m_startLine",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451519
+      },
+      {
+        "name": "m_endLine",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 1,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451538
+      },
+      {
+        "name": "m_bndBox",
+        "fieldType": 14,
+        "variant": {
+          "kind": "object"
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451555,
+        "staticType": {
+          "kind": "reference",
+          "index": 636,
+          "name": "Envelope"
+        }
+      },
+      {
+        "name": "m_actDepth",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451573
+      },
+      {
+        "name": "m_origin",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 451591,
+        "size": 3
+      },
+      {
+        "name": "m_slope",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451611
+      },
+      {
+        "name": "m_norm",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 451626,
+        "size": 3
+      },
+      {
+        "name": "m_runDirProj",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 451644,
+        "size": 3
+      },
+      {
+        "name": "m_riserDir",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 1,
+        "unknownWord": 0,
+        "offset": 451668,
+        "size": 3
+      },
+      {
+        "name": "m_zeroHeight",
+        "fieldType": 7,
+        "variant": {
+          "kind": "double",
+          "byteLength": 8
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451690
+      },
+      {
+        "name": "m_treadType",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451710
+      },
+      {
+        "name": "m_runNum",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451729
+      },
+      {
+        "name": "m_runType",
+        "fieldType": 4,
+        "variant": {
+          "kind": "int32",
+          "byteLength": 4
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451745
+      },
+      {
+        "name": "m_flipped",
+        "fieldType": 1,
+        "variant": {
+          "kind": "bool",
+          "byteLength": 1
+        },
+        "loadingMode": 0,
+        "itemMode": 0,
+        "unknownWord": 0,
+        "offset": 451762
+      }
+    ],
+    "guids": [],
+    "unknownWord": 0,
+    "inline": false,
+    "offset": 451448,
+    "endOffset": 451783
+  }
+]

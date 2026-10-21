@@ -20,7 +20,9 @@
     "freshRoutePaintCompleted": true,
     "cloudHttpStatus": 200,
     "proof": "mappedin-live-cloud-attempt.json",
-    "screenshot": "mappedin-live-cloud-attempt.png"
+    "screenshot": "mappedin-live-cloud-attempt.png",
+    "freshMobileControlBehaviorVerified": true,
+    "freshAccessibleToggleBehaviorVerified": false
   },
   "officialDocsRead": [
     "https://developer.mappedin.com/docs/enterprise-apps/mappedin-web/deep-linking",
@@ -81,6 +83,25 @@
     "paintReadyRetry": "screenshot timed out after 30000ms; next bounded retry timed out after 5000ms",
     "evidence": "mappedin-observed-interactions.json",
     "freshDesktopPaintProof": "mappedin-live-cloud-attempt.png",
-    "freshMobileOrAccessibleBehaviorVerified": false
-  }
+    "freshMobileOrAccessibleBehaviorVerified": false,
+    "subsequentMobileAcceptance": "mappedin-mobile-controls-20261018.json; this historical retry itself remains incomplete"
+  },
+  "subsequentBoundedMobileControls": {
+    "evidence": "mappedin-mobile-controls-20261018.json",
+    "rawEvidenceDirectory": "/workspace/scratch/mappedin-actual-controls-20261018-bounded",
+    "actualDirectInstruction2Paint": true,
+    "actualNext2To3AndPrevious3To2Verified": true,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "physicalDevice": false,
+    "accessibleControlObserved": "checked and disabled; no forced click or toggle change",
+    "accessibleToggleChangeVerified": false,
+    "freshDesktopControlsVerified": false,
+    "browserClosed": true,
+    "sourceOrPermissionAuthorityGranted": false
+  },
+  "newVendorAssetsCopiedIntoApp": false,
+  "newPublicVendorResearchResponsesOutsideGit": true
 }

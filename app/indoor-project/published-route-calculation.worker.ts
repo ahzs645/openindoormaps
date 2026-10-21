@@ -13,6 +13,7 @@ import {
 } from "./published-route-cells";
 import { IndexedDbVisitorDeliveryCache } from "./visitor-delivery-cache";
 import { progressiveSha256 } from "./progressive-delivery";
+import { createImmutableRoutingWorkerDataset } from "./verified-routing-dataset";
 const scope = globalThis as unknown as {
   onmessage: (event: MessageEvent<RouteRequest>) => void;
   postMessage: (message: RouteResponse) => void;
@@ -27,15 +28,16 @@ async function handle(request: RouteRequest) {
   try {
     if (request.data) {
       calculate = undefined;
-      const data = request.data;
+      const data = createImmutableRoutingWorkerDataset(request.data);
       // Do not retain the message envelope's extra dataset reference.
-      request.data = undefined;
+      delete request.data;
       if (data.nativeIndoorEnvelopes) await initializeNativeExactGeosOverlay();
       const receipt = publishedRouteCellReceipt(data);
       if (receipt) {
         const cache = new IndexedDbVisitorDeliveryCache();
         let bytes = await cache
           .getAsset(receipt.compressedSha256)
+          // eslint-disable-next-line unicorn/no-useless-undefined
           .catch(() => undefined);
         if (
           bytes &&

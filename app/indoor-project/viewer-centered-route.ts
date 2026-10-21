@@ -1,4 +1,5 @@
 import { createTwoFootCorridorSupport } from "./corridor-guide-support";
+import type { PublishedSupportTileFactory } from "./published-support-tiles";
 import { createNativeTransitRefinementPolicy } from "./native-walk-transit-owners";
 import * as DMath from "./deterministic-math";
 import { nativeRationalOverlay } from "./native-rational-overlay";
@@ -642,7 +643,20 @@ function nativeCellConnection(data: IndoorDataset, edge: IndoorEdge): boolean {
           b: XY = [p[0], p[1]];
         if (data.nativeIndoorEnvelopes) {
           const exact = nativeCirculationExactCellParts(data, cell);
-          return !!exact && nativeRationalPathSupported([a, b], exact);
+          if (!exact) return false;
+          const prepared = routingCalculationValue<
+            PublishedSupportTileFactory | undefined
+          >(
+            data,
+            "native-published-support-tiles",
+            // eslint-disable-next-line unicorn/no-useless-undefined
+            () => undefined,
+          )?.(
+            [{ id: cell.id, z: cell.elevationFeet, parts: exact }],
+            [],
+            cell.elevationFeet,
+          );
+          return nativeRationalPathSupported([a, b], exact, prepared);
         }
         const ts = breaks(a, b, [cell.ringsFeet]);
         return (
@@ -867,11 +881,18 @@ function refine(
             )
           : aperturePoint(point),
       nearbyWalls = geometryIndex(walls, (w) => box(w.ringsFeet));
-    const selectedExactFaces = data.nativeIndoorEnvelopes
+    const selectedExactParents = data.nativeIndoorEnvelopes
       ? nativeSurfaces.cells
           .filter((c) => edges.some((e) => e.nativeCellId === c.id))
-          .flatMap((c) => nativeCirculationExactCellParts(data, c) ?? [])
+          .map((c) => ({
+            id: c.id,
+            z: c.elevationFeet,
+            parts: nativeCirculationExactCellParts(data, c),
+          }))
       : [];
+    const selectedExactFaces = selectedExactParents.flatMap(
+      (p) => p.parts ?? [],
+    );
     const selectedExactHalves = data.nativeIndoorEnvelopes
       ? edges
           .filter((e) => e.kind === "walk")
@@ -1087,6 +1108,35 @@ function refine(
         })
       );
     };
+    // All shared proposals and their hook cleanup use this same immutable
+    // physical face and elevation. Keep one exact support query so alternative
+    // proposals retain its bounded tile cache; every physical check still runs.
+    let sharedSupport:
+      | ReturnType<typeof createTwoFootCorridorSupport>
+      | undefined;
+    const supportsShared = (points: XY[]) => {
+      if (!exactParts) return false;
+      sharedSupport ??= createTwoFootCorridorSupport(
+        exactParts,
+        path.pointsFeet[0][2],
+        selectedExactParents.every((p) => p.parts !== undefined)
+          ? routingCalculationValue<PublishedSupportTileFactory | undefined>(
+              data,
+              "native-published-support-tiles",
+              // The absent optimization is an undefined value, never a void reader.
+              // eslint-disable-next-line unicorn/no-useless-undefined
+              () => undefined,
+            )?.(
+              selectedExactParents.flatMap((p) =>
+                p.parts ? [{ ...p, parts: p.parts }] : [],
+              ),
+              selectedExactHalves,
+              path.pointsFeet[0][2],
+            )
+          : undefined,
+      );
+      return sharedSupport(points);
+    };
     const candidates: XY[][] = [];
     let sourceGuide = false;
     let preparedCandidate = false;
@@ -1142,7 +1192,7 @@ function refine(
       const line = compactPoints.map<XY>((p) => [p[0], p[1]]);
       if (
         line.slice(1).every((p, i) => validSegment(line[i], p, free)) &&
-        createTwoFootCorridorSupport(exactParts, path.pointsFeet[0][2])(line) &&
+        supportsShared(line) &&
         policyAllowed(line)
       )
         return {
@@ -1187,21 +1237,14 @@ function refine(
       if (
         preferSharedGuide &&
         exactParts &&
-        createTwoFootCorridorSupport(
-          exactParts,
-          path.pointsFeet[0][2],
-        )(shared) &&
+        supportsShared(shared) &&
         policyAllowed(shared)
       ) {
-        const supported = createTwoFootCorridorSupport(
-          exactParts,
-          path.pointsFeet[0][2],
-        );
         const cleaned = simplifyCheckedSharedGuide(
           guide,
           (a, b) =>
             validSegment([a[0], a[1]], [b[0], b[1]], free) &&
-            supported([
+            supportsShared([
               [a[0], a[1]],
               [b[0], b[1]],
             ]),
@@ -1757,39 +1800,47 @@ export function centeredRoutePaths(
       ];
     const group = groups[i];
     const { preparedGuide, preferSharedGuide } = guideFor(group.edges);
-    const resolved = refine(
-      data,
-      path,
-      group.edges,
-      group.first,
-      group.last,
-      passageQuery,
-      edges.filter(
+    // These source conditions alone decide whether a shared guide is split at
+    // its checked doors/openings. The whole-group result is never used in that
+    // case; only the independently checked walking runs below are returned.
+    const canSplit =
+      group.edges.some((e) => ["door", "opening"].includes(e.kind)) &&
+      !!data.doors &&
+      group.edges.every(
         (e) =>
-          validatedSourceDoorProof(data, e) &&
-          [e.from, e.to].some((id) => id === group.first || id === group.last),
-      ),
-      false,
-      false,
-      preparedGuide,
-      false,
-      preferSharedGuide,
-      sharedStops,
-    );
-    if (
-      (resolved.centered &&
-        !preferSharedGuide &&
-        !group.edges.some(
-          (e) => e.kind === "opening" && !nativeCellConnection(data, e),
-        )) ||
-      !group.edges.some((e) => ["door", "opening"].includes(e.kind)) ||
-      !data.doors ||
-      group.edges.some(
-        (e) =>
-          !["walk", "opening"].includes(e.kind) &&
-          !data.doors!.some(
+          ["walk", "opening"].includes(e.kind) ||
+          data.doors!.some(
             (d) => d.id === e.id && d.state === "connected" && d.footprintFeet,
           ),
+      );
+    const whole = () =>
+      refine(
+        data,
+        path,
+        group.edges,
+        group.first,
+        group.last,
+        passageQuery,
+        edges.filter(
+          (e) =>
+            validatedSourceDoorProof(data, e) &&
+            [e.from, e.to].some(
+              (id) => id === group.first || id === group.last,
+            ),
+        ),
+        false,
+        false,
+        preparedGuide,
+        false,
+        preferSharedGuide,
+        sharedStops,
+      );
+    if (!canSplit) return [whole()];
+    const resolved = preferSharedGuide ? undefined : whole();
+    if (
+      resolved?.centered &&
+      !group.edges.some(
+        (e) => e.kind === "opening" && !nativeCellConnection(data, e),
       )
     )
       return [resolved];
@@ -1860,7 +1911,7 @@ export function centeredRoutePaths(
       runLast = to;
     }
     flush();
-    if (resolved.centered && !preferSharedGuide) {
+    if (resolved?.centered) {
       const quality = (paths: RoutePath[]) => {
         const points = paths.flatMap((p, i) =>
           i ? p.pointsFeet.slice(1) : p.pointsFeet,

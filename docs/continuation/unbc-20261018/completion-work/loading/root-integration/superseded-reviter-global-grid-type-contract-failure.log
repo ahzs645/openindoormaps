@@ -1,0 +1,51 @@
+tests/native-source-stair-riser-partition.test.ts(79,44): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-riser-local-partition").PortableOriginalRiserPartition' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-riser-partition").PortableOriginalRiserPartition'.
+  Types of property 'ownedRuns' are incompatible.
+    Type '{ originalRunFrameSha256: string; run: import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo; }[]' is not assignable to type '{ originalRunFrameSha256: string; run: import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo; }[]'.
+      Type '{ originalRunFrameSha256: string; run: import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo; }' is not assignable to type '{ originalRunFrameSha256: string; run: import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo; }'.
+        The types of 'run.rootClassName' are incompatible between these types.
+          Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+            Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-cap-backed-turn.test.ts(131,11): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-cap-backed-turn.test.ts(313,39): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/reviter/lib/reviter/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/reviter/lib/reviter/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-cap-backed-turn.test.ts(319,11): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(24,28): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(25,30): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(35,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(37,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(39,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(41,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(43,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.
+tests/native-stair-riser-partition-stations.test.ts(45,26): error TS2345: Argument of type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeStairTypedFifo' is not assignable to parameter of type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeStairTypedFifo'.
+  Types of property 'rootClassName' are incompatible.
+    Type 'import("/workspace/reviter/lib/reviter/native-stair-typed-fifo").NativeTypedRootClassName' is not assignable to type 'import("/workspace/openindoormaps/app/indoor-project/native-stepped-stair-v2-source-types").NativeTypedRootClassName'.
+      Type '"SketchGrid"' is not assignable to type 'NativeTypedRootClassName'.

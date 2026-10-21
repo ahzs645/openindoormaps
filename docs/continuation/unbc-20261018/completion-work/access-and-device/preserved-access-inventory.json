@@ -1,0 +1,881 @@
+{
+  "format": "unbc-preserved-access-inventory-v1",
+  "datasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "preservedMasterPath": "/workspace/scratch/native-source-restored/data/UNBC.master.20261014.reviter.zip",
+  "preservedMasterSha256": "13571ab92f7527f779b1b09e7f1792f0ae7ec4369be13554e881e5eda315c520",
+  "preservedRoomEntry": "floors/rooms.json",
+  "preservedRoomEntrySha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+  "records": 1864,
+  "recordAccessCounts": {
+    "unknown": 1852,
+    "public": 4,
+    "staff": 8
+  },
+  "edges": 7063,
+  "edgeAccessibilityCounts": {
+    "unknown": 7030,
+    "no": 29,
+    "yes": 4
+  },
+  "byBuilding": {
+    "07": {
+      "unknown": 190,
+      "staff": 6,
+      "public": 1
+    },
+    "09": {
+      "unknown": 126
+    },
+    "06": {
+      "unknown": 95
+    },
+    "10": {
+      "unknown": 420,
+      "public": 2
+    },
+    "08": {
+      "unknown": 235,
+      "staff": 1,
+      "public": 1
+    },
+    "05": {
+      "unknown": 260,
+      "staff": 1
+    },
+    "04": {
+      "unknown": 217
+    },
+    "03": {
+      "unknown": 309
+    }
+  },
+  "explicitAccessDecisions": [
+    {
+      "key": "rm-1487816-1949cc41e164",
+      "number": "10-1060",
+      "name": "Corridor",
+      "building": "10",
+      "levelId": 1487816,
+      "elevationFeet": 3.2808398950131235,
+      "access": "public",
+      "walkable": true,
+      "arrivalNodeId": "arrival:rm-1487816-1949cc41e164",
+      "identityRingsSha256": "55bf5ba1efd416aafbfdb57d742490ab0d3c1a85b0441404f807798544d248dd",
+      "sourceAnnotationAccess": {
+        "kind": "public",
+        "evidence": "user-reported",
+        "notes": "User confirms the vestibule between Buildings 08 and 10 at review pins 18/19 connects the public hallways through native doors 1501580 and 1501582."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-1487816-45278af41574",
+      "number": "08-162",
+      "name": "AV Support Storage",
+      "building": "08",
+      "levelId": 1487816,
+      "elevationFeet": -3.2808398950131235,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "8fc7a7418e33ab7da829217bd11be03b3c307d530c7216012e2aa21343a2da97",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "Owner decision Q3.8 (2026-10-10): No directions to 08-162 for now (left unrouted). Raw answer: Leave it without directions (AV staff access only)."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-1487816-93135f5b541a",
+      "number": "10-1080",
+      "name": "Vestibule",
+      "building": "10",
+      "levelId": 1487816,
+      "elevationFeet": 3.2808398950131235,
+      "access": "public",
+      "walkable": true,
+      "arrivalNodeId": "arrival:rm-1487816-93135f5b541a",
+      "identityRingsSha256": "9fbe671d707786f4995663b5586401e151678275994b780f85501ea8cf2212dc",
+      "sourceAnnotationAccess": {
+        "kind": "public",
+        "evidence": "user-reported",
+        "notes": "User confirms the vestibule between Buildings 08 and 10 at review pins 18/19 connects the public hallways through native doors 1501580 and 1501582."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-1487816-959fe1d830e0",
+      "number": "08-159",
+      "name": "Alcove",
+      "building": "08",
+      "levelId": 1487816,
+      "elevationFeet": 3.2808398950131235,
+      "access": "public",
+      "walkable": true,
+      "arrivalNodeId": "arrival:rm-1487816-959fe1d830e0",
+      "identityRingsSha256": "f8213ba858567f1118ebd35ef35209e06a1fcb579d5c8483f5175594b86bdc00",
+      "sourceAnnotationAccess": {
+        "kind": "public",
+        "evidence": "user-reported",
+        "notes": "User confirms the vestibule between Buildings 08 and 10 at review pins 18/19 connects the public hallways through native doors 1501580 and 1501582."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-3eb0dbca1122",
+      "number": "07-750",
+      "name": "Circulation",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "592061aa28e54acee85b35cd179daaf9817cfa2d418149aa57e2e521db26054c",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "Staff-only access requested by the user, matching adjacent 07-751. Physical floor and native boundary retained; excluded from public and step-free routing."
+      },
+      "preservedIndoorReview": {
+        "access": "staff",
+        "notes": "Staff-only access requested by the user, matching adjacent 07-751. Physical floor and native boundary retained; excluded from public and step-free routing."
+      },
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-3eb4c3ca1126",
+      "number": "07-751",
+      "name": "Circulation",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "c5fb33a11d6013739c527cedbfd24b8bb9f52c42f4949ae71997e86c198f1359",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "Access reviewed by the user; source name and physical boundary retained."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-3ee7adca1151",
+      "number": "07-752",
+      "name": "Circulation",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "add8fe50aef0ed24cd5f43c0dc9ec943ebaa2b985b944dc630b2bdfca60cdb44",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-77d61839c457",
+      "number": "05-117",
+      "name": "Circulation",
+      "building": "05",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "f4d0a617068d913dc2de052cdd3ec256e8d4954ccf03a2988c4a37d94abcd02d",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-8e1b19ddd9ef",
+      "number": "07-113A",
+      "name": "Corridor",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "public",
+      "walkable": true,
+      "arrivalNodeId": "arrival:rm-311-8e1b19ddd9ef",
+      "identityRingsSha256": "e78eb0cbc478160b5f21b4ccba6e156ad1d6580c79d0dfeae7f3767dd5c97111",
+      "sourceAnnotationAccess": {
+        "kind": "public",
+        "evidence": "user-reported",
+        "notes": "User confirms 07-113A is the public hallway beyond the doors at review pins 15/16. Adjoining 07-752 and 05-117 remain staff areas; access stops at their doors."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-cd8828d8a5f6",
+      "number": "07-706",
+      "name": "Circulation",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "072488a3dfa10d413deeab32a21a3b274b80d17fa17996924a3b7fc7899d12cd",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "Staff-only access requested by the user, matching adjacent 07-751. Physical floor and native boundary retained; excluded from public and step-free routing."
+      },
+      "preservedIndoorReview": {
+        "access": "staff",
+        "notes": "Staff-only access requested by the user, matching adjacent 07-751. Physical floor and native boundary retained; excluded from public and step-free routing."
+      },
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-cdb834d8a61f",
+      "number": "07-704",
+      "name": "Circulation",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "58e5936962a047b6758c90560605ad61ca7b26100472602cc591e2f5ad8e849a",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "User identifies 07-704 Circulation as part of the staff-only area. Exclude from public directions and show the shared restricted-area colour."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    },
+    {
+      "key": "rm-311-d5a30ed8aa65",
+      "number": "07-702",
+      "name": "ESR",
+      "building": "07",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "walkable": true,
+      "arrivalNodeId": null,
+      "identityRingsSha256": "0639d8939aaf66ab1e613fc029c3b84140e9c0a59d0c0798dd4c909dd1dd4c91",
+      "sourceAnnotationAccess": {
+        "kind": "staff",
+        "evidence": "user-reported",
+        "notes": "User identifies this area and its associated access as internal to staff. Retain the physical floor and source boundary; exclude public circulation and routes."
+      },
+      "preservedIndoorReview": null,
+      "annotationMatchesAcceptedAccess": true
+    }
+  ],
+  "nonUnknownEdgeAccessibility": [
+    {
+      "id": "stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae",
+      "kind": "stairs",
+      "nativeElementId": 1293690,
+      "roomKeys": [
+        "rm-311-dd343f6f08db",
+        "rm-694-33a7fdf6e0ae"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "cb9eec2d2620d27db4ad0b926faec05949a0dfdd98d9c1efda3c081f8b7193c7",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e",
+      "kind": "stairs",
+      "nativeElementId": 1295966,
+      "roomKeys": [
+        "rm-400176-40a604ec17ed",
+        "rm-402367-136b08ba658e"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "3cfed90d47adad69789204c2e193bb6adc85c02d310ae84243dca98cd8ae6509",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8",
+      "kind": "stairs",
+      "nativeElementId": 1298202,
+      "roomKeys": [
+        "rm-694-bf1328011ec6",
+        "rm-400176-858c5daba8e8"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "a3c7b65bf2054e2df0add36486ad73066debb72f47c5c031d4a973142fffb918",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae",
+      "kind": "stairs",
+      "nativeElementId": 1305141,
+      "roomKeys": [
+        "rm-311-0bd5e173a3a9",
+        "rm-694-ecf634619eae"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "6141d239e7442a7cd349f6c4cd2d0fe2607945176f340e1c03080a897ab9989d",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+      "kind": "stairs",
+      "nativeElementId": 1496322,
+      "roomKeys": [
+        "rm-400176-07c585afc4bf",
+        "rm-402367-07d989afc4d0"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "2d47cd387c62cc2e4e3472a42770f5509e64a16e837103fff4c7c5b774a2215f",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0",
+      "kind": "stairs",
+      "nativeElementId": 1498360,
+      "roomKeys": [
+        "rm-400176-07c585afc4bf",
+        "rm-402367-07d989afc4d0"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "2d47cd387c62cc2e4e3472a42770f5509e64a16e837103fff4c7c5b774a2215f",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448",
+      "kind": "stairs",
+      "nativeElementId": 1498457,
+      "roomKeys": [
+        "rm-400176-072589afc437",
+        "rm-402367-073a0dafc448"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "16fd239e5ccf222c47e9a1e08d05c7b135978598df6f2725d970cfa26bd6bf12",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf",
+      "kind": "stairs",
+      "nativeElementId": 1500191,
+      "roomKeys": [
+        "rm-694-07cc11afc4c4",
+        "rm-400176-07c585afc4bf"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "80b2f22aced08c00d5131f3083ca7c4e6da092e07af190d6d2df15d8a1b1da5c",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448",
+      "kind": "stairs",
+      "nativeElementId": 1500288,
+      "roomKeys": [
+        "rm-400176-072589afc437",
+        "rm-402367-073a0dafc448"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "16fd239e5ccf222c47e9a1e08d05c7b135978598df6f2725d970cfa26bd6bf12",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4",
+      "kind": "stairs",
+      "nativeElementId": 1514126,
+      "roomKeys": [
+        "rm-400176-dd5ab817804b",
+        "rm-402367-721ce30d03a4"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "b8803f3866dbe40921b90effc5fa8229c818d52361e9412c593063cfe9de9d86",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+      "kind": "stairs",
+      "nativeElementId": 1638837,
+      "roomKeys": [
+        "rm-694-0bed6b73a3bd",
+        "rm-400176-f91a4f2d9cb3"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "acd65807ca1dda125edc72160286fd5140d189eca8ebf3cee4426f81b05efb1e",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2",
+      "kind": "stairs",
+      "nativeElementId": 1689936,
+      "roomKeys": [
+        "rm-694-ba908ff5f5b4",
+        "rm-400176-561f2a7098b2"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "19f0ab2c2cefa565ded7033e5de62e8351c41e8474881ab1c1214e860116fd2f",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4",
+      "kind": "stairs",
+      "nativeElementId": 1693246,
+      "roomKeys": [
+        "rm-311-8f4edaf5dd38",
+        "rm-694-ba908ff5f5b4"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "4a0ce415a78388224e62a2afcda5141e6f3f81e90b1c163188daae4bad6ab296",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+      "kind": "stairs",
+      "nativeElementId": 1696006,
+      "roomKeys": [
+        "rm-400176-561f2a7098b2",
+        "rm-402367-1fc9594ffaa7"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "45ec3b23bf31360a4e0fa1aa2ac33bfde256118348c779c84957733339275486",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3",
+      "kind": "stairs",
+      "nativeElementId": 1779403,
+      "roomKeys": [
+        "rm-694-b17d7fe3d57c",
+        "rm-1487353-594ba11f3ad3"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "386ff45713ada0ce1dbd39533209f56764a669000a4f91775cd8169faf6e7201",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1779495:rm-694-b17d80e3d57c:rm-1487353-b7dc671f702f",
+      "kind": "stairs",
+      "nativeElementId": 1779495,
+      "roomKeys": [
+        "rm-694-b17d80e3d57c",
+        "rm-1487353-b7dc671f702f"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "ef2e7d40b407b132ce53a6f0bb4e5eea63f50e953e470bf78fbdd5fff6caff01",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1779620:rm-694-607258e63bb3:rm-1487353-6e5cbce7fec2",
+      "kind": "stairs",
+      "nativeElementId": 1779620,
+      "roomKeys": [
+        "rm-694-607258e63bb3",
+        "rm-1487353-6e5cbce7fec2"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "217927f0c1417875e777cbd627a27862a8c4873dfde04bf0d92c29357f6da9b0",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+      "kind": "stairs",
+      "nativeElementId": 1903824,
+      "roomKeys": [
+        "rm-694-ecfa1a619eb2",
+        "rm-400176-4671ea1dd0fd"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "5573d9c2d2546a4dc04adcf561fa82f83bbca548cdcccd33225f31b9923ea72b",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276",
+      "kind": "stairs",
+      "nativeElementId": 1972504,
+      "roomKeys": [
+        "rm-1450417-dbd81729f08f",
+        "rm-694-e4108d414276"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "523f2a2f64430d3399ca3b42e1b7fc834e6c085a1e2bc2856015611aece8a15c",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+      "kind": "stairs",
+      "nativeElementId": 1982431,
+      "roomKeys": [
+        "rm-1487816-1a09473066a2",
+        "rm-694-43cb29fdc35f"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "886a6a8eac02b9ab9daad624504f41772db3d94ac138f5b5ee0714f9319e0d3f",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69",
+      "kind": "stairs",
+      "nativeElementId": 1988738,
+      "roomKeys": [
+        "rm-694-43cb29fdc35f",
+        "rm-400176-fd57d2070a69"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "543e26623d0d3ed2fe47d49c432a631358116a06d02d94eadcbc6dded53376dd",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+      "kind": "stairs",
+      "nativeElementId": 2156084,
+      "roomKeys": [
+        "rm-311-dd313b6f08d8",
+        "rm-694-339d4df6e0a4"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "b4ca7faaacc8b537c874918e2b6281b50c2910b6c3ccd659321adbc168b4cec0",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+      "kind": "stairs",
+      "nativeElementId": 2160665,
+      "roomKeys": [
+        "rm-694-339d4df6e0a4",
+        "rm-400176-408e02ec17d8"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "e991c6e5aac1241bbfb092069cb1a0dccdcbbf996adbf23be1a886bea30dbc82",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+      "kind": "stairs",
+      "nativeElementId": 2161350,
+      "roomKeys": [
+        "rm-400176-408e02ec17d8",
+        "rm-402367-136decba6590"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "c55dba6689854e79dc33ced500e8e841f6bddac065f2f5fc4c4a37c83cdf383e",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd",
+      "kind": "stairs",
+      "nativeElementId": 2349441,
+      "roomKeys": [
+        "rm-694-484c1bec97cd",
+        "rm-400176-4eb8857094dd"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "55c682c208f384fb1b784958625f1171756903ca85894a8c5c19cb6663abae0a",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+      "kind": "stairs",
+      "nativeElementId": 2354630,
+      "roomKeys": [
+        "rm-694-504b25e5319a",
+        "rm-400176-4ebbf37094e0"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "288f5384dd2239b401deaf7e9f13c12bf3664896b19aca88a929ed472f8fb8d7",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2",
+      "kind": "stairs",
+      "nativeElementId": 2439748,
+      "roomKeys": [
+        "rm-311-0bdc6d73a3ae",
+        "rm-694-ecfa1a619eb2"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "9c73ae1880f5482c6b5dd68ad490dafe93b902e3fe413fb64e0b755babc95f4f",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4",
+      "kind": "stairs",
+      "nativeElementId": 2474568,
+      "roomKeys": [
+        "rm-1487816-004a60afc0d8",
+        "rm-694-07cc11afc4c4"
+      ],
+      "accessible": "no",
+      "enabled": false,
+      "evidence": "native-flight",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "ba37a270eb89c06239f4817120dab6437f6c998c0dea2e34b439327d674fd1c5",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "ramp:1622190",
+      "kind": "ramp",
+      "nativeElementId": 1622190,
+      "roomKeys": [
+        "landing:ramp:1622190:lower",
+        "landing:ramp:1622190:upper"
+      ],
+      "accessible": "yes",
+      "enabled": true,
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "notes": "User identifies the separate ramp as the wheelchair alternative. Source category Ramps #1622190; two continuous native BRep slopes and turning landing, supported approaches, no stair treads or wall crossing. This specific review does not certify building-code compliance or other campus routes.",
+      "direction": null,
+      "pointsFeetSha256": "fe9ebd4888ebe09e00c34b3494e78f719c0c5dfa77ed300089af7156cfefeebd",
+      "preservedIndoorReview": {
+        "accessible": "yes",
+        "notes": "User identifies the separate ramp as the wheelchair alternative. Source category Ramps #1622190; two continuous native BRep slopes and turning landing, supported approaches, no stair treads or wall crossing. This specific review does not certify building-code compliance or other campus routes.",
+        "geometryKey": "[\"8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178\",\"ramp:1622190:lower\",\"ramp:1622190:upper\",[\"landing:ramp:1622190:lower\",\"landing:local:07:311:08:1487816:1620957:1\"],[[48.21799,461.5,0],[33.49686488409321,461.5,1.4009800507953472],[31,461.5,1.4009800507953472],[31,466.5,1.4009800507953472],[33.49686488409321,466.5,1.4009800507953472],[53.24993,466.5,3.2808398950131235],[55.5,466.5,3.2808398950131235]]]"
+      }
+    },
+    {
+      "id": "walk:ramp:1622190:lower",
+      "kind": "opening",
+      "nativeElementId": 1622190,
+      "roomKeys": [
+        "rm-311-86e02816d8fe",
+        "landing:ramp:1622190:lower"
+      ],
+      "accessible": "yes",
+      "enabled": true,
+      "evidence": "same-model geometry-bound reviewed native ramp approach; complete2ft exact slab, wall, column, door, stair and sourcevoid proof; endpoint registration at most one gridcell",
+      "notes": "User identifies the separate ramp as the wheelchair alternative. Source category Ramps #1622190; two continuous native BRep slopes and turning landing, supported approaches, no stair treads or wall crossing. This specific review does not certify building-code compliance or other campus routes.",
+      "direction": null,
+      "pointsFeetSha256": "b861cb0a57d932fec93187a950aa640275bcaf7a2b9dc25ab7fb76b68f5e2ba1",
+      "preservedIndoorReview": {
+        "accessible": "yes",
+        "notes": "User identifies the separate ramp as the wheelchair alternative. Source category Ramps #1622190; two continuous native BRep slopes and turning landing, supported approaches, no stair treads or wall crossing. This specific review does not certify building-code compliance or other campus routes.",
+        "geometryKey": "[\"8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178\",\"arrival:rm-311-86e02816d8fe\",\"ramp:1622190:lower\",[\"rm-311-86e02816d8fe\",\"landing:ramp:1622190:lower\"],[[14.1677408050216,400.21195369722454,0],[16.2,451,0],[50,451,0],[50,461.5,0],[48.21799,461.5,0]]]"
+      }
+    },
+    {
+      "id": "ramp:1586431",
+      "kind": "ramp",
+      "nativeElementId": 1586431,
+      "roomKeys": [
+        "landing:ramp:1586431:lower",
+        "landing:ramp:1586431:upper"
+      ],
+      "accessible": "yes",
+      "enabled": true,
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "notes": "2026-10-07: checked finite native surfaces and preserved slab holes/obstacles. This source-derived connector does not certify wheelchair accessibility.\nOwner decision Q4.2 (2026-10-10): Treat both B4 ramps (#1586431 in 04-123 at 1:9.8 and #1587605 in 04-126 at about 1:13) as wheelchair-accessible. Slope 1:9.8 (10.2%), steeper than 1:12, no intermediate landing.",
+      "direction": null,
+      "pointsFeetSha256": "6257680eff7439b5ecb5289fc0d6c1a8821340e836d826891e53b719f900e475",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "ramp:1587605",
+      "kind": "ramp",
+      "nativeElementId": 1587605,
+      "roomKeys": [
+        "landing:ramp:1587605:lower",
+        "landing:ramp:1586431:upper"
+      ],
+      "accessible": "yes",
+      "enabled": true,
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "notes": "2026-10-07: source-supported curved ramp; preserve native stair treads, original floor holes, physical barriers and access. No flat outline path or numerical plane tolerance enlargement.\nOwner decision Q4.2 (2026-10-10): Treat both B4 ramps (#1586431 in 04-123 at 1:9.8 and #1587605 in 04-126 at about 1:13) as wheelchair-accessible. Slope about 1:13 (7.5%).",
+      "direction": null,
+      "pointsFeetSha256": "176437718a7125a17db52977ab533e2cbc46c6a1f923823fed50918a209bfa54",
+      "preservedIndoorReview": null
+    },
+    {
+      "id": "local:local:07:311:09:1450417:1644499",
+      "kind": "local-steps",
+      "nativeElementId": 1644499,
+      "roomKeys": [
+        "rm-1450417-f65fe5d929e4",
+        "rm-311-86e02816d8fe"
+      ],
+      "accessible": "no",
+      "enabled": true,
+      "evidence": "Reviewed local steps local:07:311:09:1450417:1644499 qualified from native stair #1644499: original tread inventory, terminal caps on slabs 1521516/400238, complete foreign-material census and walking body; not step-free.",
+      "notes": null,
+      "direction": null,
+      "pointsFeetSha256": "805143454c5729cd45485a0e71ab4fa2d6e749487ca277f35d0d6e948d67e98c",
+      "preservedIndoorReview": null
+    }
+  ],
+  "sourceAccessZones": [
+    {
+      "id": "access-zone:311:b7-staff-halls",
+      "levelId": 311,
+      "elevationFeet": 0,
+      "access": "staff",
+      "memberRoomKeys": [
+        "rm-311-3eb0dbca1122",
+        "rm-311-3eb4c3ca1126",
+        "rm-311-77d61839c457",
+        "rm-311-cd8828d8a5f6",
+        "rm-311-cd9254d8a5ff",
+        "rm-311-cdb834d8a61f",
+        "rm-311-d5a30ed8aa65"
+      ],
+      "staffCirculationRoomKeys": [
+        "rm-311-3eb0dbca1122",
+        "rm-311-3eb4c3ca1126",
+        "rm-311-77d61839c457",
+        "rm-311-cd8828d8a5f6",
+        "rm-311-cdb834d8a61f",
+        "rm-311-d5a30ed8aa65"
+      ],
+      "decision": {
+        "source": "user-decisions/2026-10-10-round3.json",
+        "id": "Q3.4 r3-b7-halls-staff",
+        "summary": "Halls A-Q public; 07-702 ESR, 07-751, 05-117, 07-706, 07-704, 07-750 are staff-only halls merged into one staff area (native-region:311:307) carved out of face 293. Round 2 f1-7: 07-750/07-751/07-706/07-704 and 07-702 ESR are one staff circulation area (metadata only, access unchanged)."
+      },
+      "evidence": "Zone geometry is native selection region native-region:311:307 (exact native floor/wall/door region, original-native-selection-zone of routing-followup/b78/face293-partition-ieee.json sha256 ef0a92abb322a4cb71b2402c92a88481e7da68a642ff05501d996cdf08981cb9); it lies inside compiler face native-face:0.000000:293 of compiled 2fad94. Members: every identity with half or more of its area inside the zone (six staff halls and 07-720 Office, access unknown, reached only through them).",
+      "notes": "Reversible reviewed access carve-out. The remainder of the shared face keeps its own majority classification; the zone is staff-only circulation. No wall, door or floor is created."
+    }
+  ],
+  "unboundAccessReviewLocations": [
+    {
+      "building": "07",
+      "levelId": 311,
+      "point": [
+        25.86,
+        236.37
+      ],
+      "kind": "staff",
+      "evidence": "user-reported",
+      "notes": "User reports a staff-only location outside the current source outlines. Registered/native floor association is missing here; boundary extent needs review. No public area or walking route is inferred."
+    }
+  ],
+  "historicalRoutePrioritySource": "docs/continuation/unbc-20261018/directions-and-threshold-blockers/actual-routes.json",
+  "historicalRoutePrioritySourceSha256": "87c0f696cb3407e8c2d7c0a72aa24c132b11672fac1c956783ea27541f908bbb",
+  "historicalPriorityIsCurrentRouteAuthority": false,
+  "sourceOrPolicyChanged": false,
+  "geometryAuthority": false
+}

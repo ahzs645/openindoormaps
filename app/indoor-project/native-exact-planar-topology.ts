@@ -9,7 +9,9 @@ import {
   type NativeRationalParts,
   type NativeRationalPoint,
 } from "./native-rational-overlay";
+import { nativeRationalBandIndex } from "./native-rational-band-index";
 import { nativeRationalIntersectionOperand } from "./native-rational-intersection-broadphase";
+import type { NativeSupportTileProvider } from "./native-rational-support-tiles";
 
 export const NATIVE_EXACT_PLANAR_TOPOLOGY_VERSION =
   "native-exact-planar-topology-v1";
@@ -302,12 +304,8 @@ function ringEdgesAt(
       ),
       max = ring.reduce((v, p) => (cmp(v, p[1]) > 0 ? v : p[1]), ring[0][1]);
     if (cmp(min, max) === 0) return ring.map((_, i) => i);
-    const bands: number[][] = Array.from({ length: 64 }, () => []),
-      range = sub(max, min);
-    const band = (y: Rational) => {
-      const t = div(mul(sub(y, min), new Rational(64n)), range);
-      return Math.min(63, Math.max(0, Number(t.n / t.d)));
-    };
+    const bands: number[][] = Array.from({ length: 64 }, () => []);
+    const band = (y: Rational) => nativeRationalBandIndex(y, min, max);
     for (let i = 0; i < ring.length; i++) {
       const a = ring[i][1],
         b = ring[(i + 1) % ring.length][1],
@@ -319,11 +317,7 @@ function ringEdgesAt(
     ringBands.set(ring, index);
   }
   if (cmp(point[1], index.min) < 0 || cmp(point[1], index.max) > 0) return [];
-  const t = div(
-    mul(sub(point[1], index.min), new Rational(64n)),
-    sub(index.max, index.min),
-  );
-  return index.bands[Math.min(63, Math.max(0, Number(t.n / t.d)))];
+  return index.bands[nativeRationalBandIndex(point[1], index.min, index.max)];
 }
 const ringBounds = new WeakMap<
   NativeRationalPoint[],
@@ -428,6 +422,7 @@ const localTileLifetime: {
 function localExactParts(
   parts: NativeRationalParts,
   points: NativeRationalPoint[],
+  prepared?: NativeSupportTileProvider,
 ): NativeRationalParts {
   if (!Object.isFrozen(parts) || points.length === 0) return parts;
   let count = localPartCounts.get(parts);
@@ -472,12 +467,19 @@ function localExactParts(
   // The complete exact tile remains unchanged. Strictly disjoint shell and
   // hole bounds may be omitted before the same exact intersection; tangent
   // bounds and every positive overlap remain in the original rational kernel.
+  let published: NativeRationalParts | undefined;
+  try {
+    published = prepared?.(tile, [x0, y0, x1, y1]);
+  } catch {
+    // A failed optimization repeats the original exact tile operation below.
+  }
   const clipped = freezeNativeRationalParts(
-    nativeRationalOverlay(
-      "intersection",
-      nativeRationalIntersectionOperand(tile, parts),
-      tile,
-    ),
+    published ??
+      nativeRationalOverlay(
+        "intersection",
+        nativeRationalIntersectionOperand(tile, parts),
+        tile,
+      ),
   );
   if (cache.size >= 32) cache.delete(cache.keys().next().value!);
   cache.set(key, clipped);
@@ -597,10 +599,11 @@ function pathUnionSupported(
 export function nativeRationalPathSupported(
   points: readonly (readonly (number | Rational)[])[],
   parts: NativeRationalParts,
+  prepared?: NativeSupportTileProvider,
 ): boolean {
   if (points.length === 0 || parts.length === 0) return false;
   const path = points.map(nativeRationalPoint);
-  return exactPathSupported(path, localExactParts(parts, path));
+  return exactPathSupported(path, localExactParts(parts, path, prepared));
 }
 function exactPathSupported(
   path: NativeRationalPoint[],

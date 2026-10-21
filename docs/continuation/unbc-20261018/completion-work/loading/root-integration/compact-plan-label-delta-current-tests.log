@@ -1,0 +1,31 @@
+✔ functional destinations remain discoverable on native circulation floors (1.769328ms)
+✔ ordinary hallways are not visitor destinations even for an explicit query (0.293011ms)
+✔ walking classification never exposes staff or nonwalkable places (0.144866ms)
+✔ vestibule discovery continues to respect the pass-through preference (0.1169ms)
+✔ neutral published labels match the active viewer and retain every source anchor (17.591762ms)
+✔ selected label text, opacity and collision priority equal the full viewer at every zoom boundary (177.804756ms)
+✔ the actual plan projection includes processed room labels and building labels (63.336849ms)
+✔ unlisted or stale engine/runtime/scope/whole-source plans never request a carrier (60.369008ms)
+✔ checked gzip and HTTP-inflated logical carriers both survive a real offline cache readback (281.633763ms)
+✔ missing optional plans preserve fallback; corrupt saved bytes require a verified replacement (80.678633ms)
+✔ rehashed wrong-floor headers, incomplete layers and malformed native owner inventory refuse (93.739638ms)
+✔ native plan preserves every active ring/hole/owner; only currently transparent generic drawings are omitted (31.017457ms)
+✔ ordered feature sharing retains exact JSON bytes, holes and source owners; wrong references refuse (26.042955ms)
+✔ shared plans require both checked carriers, survive gzip/inflated offline reads, and reject rehashed wrong output (144.963999ms)
+✔ missing, cyclic, stale or corrupt shared bases cannot produce a floor (23.397275ms)
+✔ native feature sharing preserves header order, holes and the complete shared-owner inventory (14.607411ms)
+✔ a compact plan waits for all its source indexing and a later painted frame (2.25926ms)
+✔ decoded native geometry waits through initial empty source and indexing before its painted frame (0.614459ms)
+✔ custom floor union readiness requires a later paint and does not depend on idle camera (0.494782ms)
+✔ cancelled scope ignores pending union success and failure and removes listeners (1.222495ms)
+✔ replacement custom layer cannot reuse the removed layer's completed promise (0.372607ms)
+✔ indoor source failure is shown instead of claiming a drawn floor (0.328161ms)
+✔ a removed custom layer rejection cannot fail its replacement (0.792248ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3804.93808

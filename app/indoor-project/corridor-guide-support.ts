@@ -9,7 +9,10 @@ import {
   rational,
   type NativeRationalParts,
 } from "./native-rational-overlay";
-import { createNativeRationalSupportTileQuery } from "./native-rational-support-tiles";
+import {
+  createNativeRationalSupportTileQuery,
+  type NativeSupportTileProvider,
+} from "./native-rational-support-tiles";
 import { projectStatedTwoFootWalkingVolume } from "./native-stepped-stair-v2-walking-volume";
 import type { CorridorXY } from "./corridor-centerline";
 
@@ -20,8 +23,9 @@ import type { CorridorXY } from "./corridor-centerline";
 export function createTwoFootCorridorSupport(
   base: NativeRationalParts,
   elevationFeet: number,
+  prepared?: NativeSupportTileProvider,
 ) {
-  const tiled = createNativeRationalSupportTileQuery(base);
+  const tiled = createNativeRationalSupportTileQuery(base, undefined, prepared);
   const unionPath = createNativeRationalPathUnionQuery();
   return (path: CorridorXY[], extra: NativeRationalParts = []) => {
     if (!unionPath(path, base, extra)) return false;

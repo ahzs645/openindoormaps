@@ -1,0 +1,82 @@
+{
+  "format": "actual-original-511277-wall-standing-diagnostic-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "scope": {
+    "min": {
+      "x": 147.6688604971632,
+      "y": 225.76768545066045,
+      "z": 14.435695538057743
+    },
+    "max": {
+      "x": 149.6688604971632,
+      "y": 227.76768545066045,
+      "z": 20.435695538057743
+    }
+  },
+  "pointFeet": [
+    148.6688604971632,
+    226.76768545066045,
+    14.435695538057743
+  ],
+  "sourceCensusSha256": "2a4c22557475fe4afec402f2a2f9859d5c271524684c067e4807fa0d6aa304ca",
+  "originalSourceFrameSha256": "351b555e68900848e2e0b70431f3f35a2b61a310eb151606ffe4b14eaa4dc2d5",
+  "originalSourceFrameBytes": 134858,
+  "sourceModulesUnchanged": true,
+  "branchCensus": {
+    "Revit2027GGroup": 4,
+    "Revit2027Geometry": 5,
+    "Revit2027Face": 102,
+    "Revit2027GEdge": 898,
+    "Revit2027EdgeLoop": 94,
+    "Revit2027GFilling": 34,
+    "Revit2027AnalyticSurface:634": 102
+  },
+  "rows": [
+    {
+      "nativeElementId": 511277,
+      "sourceFrameSha256": "351b555e68900848e2e0b70431f3f35a2b61a310eb151606ffe4b14eaa4dc2d5",
+      "boundsFeet": {
+        "min": {
+          "x": 74.66104587103871,
+          "y": 207.14382683333073,
+          "z": 14.435695538057743
+        },
+        "max": {
+          "x": 183.29995480456313,
+          "y": 380.1882100340668,
+          "z": 23.62204724409449
+        }
+      },
+      "categoryId": -2000011
+    }
+  ],
+  "trimPlanarContact": false,
+  "elapsedMs": 69818,
+  "sourceBodyAuthorityGranted": false,
+  "routeApproved": false,
+  "exactSourceCensusCounts": {
+    "sourceFaceTokens": 102,
+    "auxiliaryNullLoopFaceTokens": 64,
+    "trimLoopTokens": 94,
+    "closedBodyEdgeTokens": 196,
+    "finiteOpenReferenceEdgeTokens": 16,
+    "unlinkedGraphicEdgeTokens": 686,
+    "hatchTokens": 34
+  },
+  "strictOriginalWallTrimReaderPassed": true,
+  "rawReceiptPath": "/workspace/scratch/standing-511277-original-source-20261018/actual-511277-standing-diagnostic.json",
+  "rawReceiptSha256": "a4852604ace804fa3e0380b0566de0d4e58cc417e7687027ca0dac3ec864a019",
+  "sourceModuleManifestSha256": "d05ed47a703521b5f59216ac6dd07e97bfacc970bc0b4b2e32fdab7509b1cebb",
+  "existingActualSourceRefinement": {
+    "module": "reviter/lib/reviter/native-source-placed-planar-obstacles.ts",
+    "constructor": "createOriginalPlacedPlanarObstacleContext",
+    "proof": "proveOriginalDirectWallTrimObstacleEnvelope",
+    "facts": "originalDirectWallTrimObstacleFacts",
+    "nativeMarkers": [
+      2246,
+      3899
+    ],
+    "categoryId": -2000011
+  }
+}

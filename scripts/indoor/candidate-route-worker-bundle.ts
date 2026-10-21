@@ -11,11 +11,17 @@ export async function buildCandidateProductionRouteBundle(
   root: string,
   out: string,
   receipt: PublishedRouteCellReceipt,
-  options: { useCompiledReceipt?: boolean; profileFirstRequest?: boolean } = {},
+  options: {
+    useCompiledReceipt?: boolean;
+    profileFirstRequest?: boolean;
+    workerKind?: "published" | "progressive";
+  } = {},
 ) {
   const workerEntry = path.join(
       root,
-      "app/indoor-project/published-route-calculation.worker.ts",
+      options.workerKind === "progressive"
+        ? "app/indoor-project/progressive-route.worker.ts"
+        : "app/indoor-project/published-route-calculation.worker.ts",
     ),
     workerSource = new Uint8Array(await fs.readFile(workerEntry));
   const wrapper = path.join(out, "production-route-wrapper.mjs"),
@@ -33,8 +39,10 @@ globalThis.indexedDB = { open() { throw Error("Persistent browser cache intentio
 const memory = () => ({ ...process.memoryUsage(), heapLimit: getHeapStatistics().heap_size_limit });
 globalThis.fetch = async input => {
  const url=String(input instanceof Request ? input.url : input);
- if(url !== new URL(workerData.receipt.url,globalThis.location.href).href) throw Error("Unexpected worker download: "+url);
- const bytes=await readFile(workerData.cachePath);
+ const cacheUrl=new URL(workerData.receipt.url,globalThis.location.href).href;
+ const sourcePath=url===cacheUrl ? workerData.cachePath : workerData.downloads?.[url];
+ if(!sourcePath) throw Error("Unexpected worker download: "+url);
+ const bytes=await readFile(sourcePath);
  parentPort.postMessage({ _qaFetch: { url, bytes:bytes.length, elapsedSeconds:(performance.now()-began)/1000, memory:memory() } });
  return new Response(bytes,{status:200,headers:{"content-length":String(bytes.length)}});
 };

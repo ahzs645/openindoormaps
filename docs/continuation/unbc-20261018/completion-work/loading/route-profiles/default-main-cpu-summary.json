@@ -1,0 +1,478 @@
+{
+  "format": "actual-main-production-worker-cpu-summary-v1",
+  "rawProfileSha256": "ff40d3857ff969b4451062c87c8bcc66bec3c57c367f7372ac6bf0c27fc866ee",
+  "rawProfileBytes": 3060062,
+  "totalProfileSeconds": 203.595122,
+  "insideSecondsInclusive": 70.91,
+  "unusedHallwayAlternativeSecondsInclusive": 99.82,
+  "timesIncludeConcurrentWorkload": true,
+  "defaultBenchmarkStoppedAfterFirstMainAndEightHistoricalCases": true,
+  "remainingFreshDefaultCasesNotCompleted": true,
+  "inclusiveUniqueFunctions": [
+    {
+      "function": "(root)",
+      "seconds": 203.594083
+    },
+    {
+      "function": "handle2",
+      "seconds": 177.323349
+    },
+    {
+      "function": "",
+      "seconds": 174.282229
+    },
+    {
+      "function": "processTicksAndRejections",
+      "seconds": 171.220402
+    },
+    {
+      "function": "runMicrotasks",
+      "seconds": 171.024693
+    },
+    {
+      "function": "withRoutingCalculation",
+      "seconds": 170.941351
+    },
+    {
+      "function": "findProjectRoute",
+      "seconds": 170.725464
+    },
+    {
+      "function": "resolveProjectRoute",
+      "seconds": 170.723223
+    },
+    {
+      "function": "centeredRoutePaths",
+      "seconds": 169.778393
+    },
+    {
+      "function": "refine",
+      "seconds": 161.779142
+    },
+    {
+      "function": "run",
+      "seconds": 126.688561
+    },
+    {
+      "function": "nativeRationalOverlay",
+      "seconds": 125.240243
+    },
+    {
+      "function": "intersection",
+      "seconds": 118.252227
+    },
+    {
+      "function": "flush",
+      "seconds": 84.639188
+    },
+    {
+      "function": "process",
+      "seconds": 81.164749
+    },
+    {
+      "function": "calculateRoute",
+      "seconds": 70.909194
+    },
+    {
+      "function": "compare",
+      "seconds": 70.11302
+    },
+    {
+      "function": "getIntersection",
+      "seconds": 51.855295
+    },
+    {
+      "function": "Rational",
+      "seconds": 46.485635
+    },
+    {
+      "function": "u",
+      "seconds": 46.455015
+    },
+    {
+      "function": "gcd",
+      "seconds": 45.494913
+    },
+    {
+      "function": "simplifyCheckedSharedGuide",
+      "seconds": 38.613774
+    },
+    {
+      "function": "intersection$1",
+      "seconds": 38.600246
+    },
+    {
+      "function": "lt",
+      "seconds": 34.274236
+    },
+    {
+      "function": "center",
+      "seconds": 27.825018
+    },
+    {
+      "function": "multiTurn",
+      "seconds": 27.466212
+    },
+    {
+      "function": "pop",
+      "seconds": 27.438848
+    },
+    {
+      "function": "contains",
+      "seconds": 24.942381
+    },
+    {
+      "function": "(garbage collector)",
+      "seconds": 23.403736
+    },
+    {
+      "function": "_remove",
+      "seconds": 21.140046
+    },
+    {
+      "function": "add",
+      "seconds": 20.517238
+    },
+    {
+      "function": "nativeRationalPointInRing",
+      "seconds": 19.937688
+    },
+    {
+      "function": "nativeRationalPointInParts",
+      "seconds": 19.096059
+    },
+    {
+      "function": "gt",
+      "seconds": 17.771378
+    },
+    {
+      "function": "crossProduct",
+      "seconds": 16.488664
+    },
+    {
+      "function": "mul",
+      "seconds": 14.612156
+    },
+    {
+      "function": "comparePoints",
+      "seconds": 12.128825
+    },
+    {
+      "function": "sub",
+      "seconds": 11.787402
+    },
+    {
+      "function": "routingCalculationValue",
+      "seconds": 10.149553
+    },
+    {
+      "function": "find",
+      "seconds": 9.116071
+    },
+    {
+      "function": "MultiPolyIn",
+      "seconds": 9.066269
+    },
+    {
+      "function": "PolyIn",
+      "seconds": 8.890811
+    },
+    {
+      "function": "RingIn",
+      "seconds": 8.721871
+    },
+    {
+      "function": "ringEdgesAt",
+      "seconds": 8.195022
+    },
+    {
+      "function": "c",
+      "seconds": 8.033126
+    },
+    {
+      "function": "insert",
+      "seconds": 7.723161
+    },
+    {
+      "function": "remove",
+      "seconds": 7.430517
+    },
+    {
+      "function": "cmp2",
+      "seconds": 7.144625
+    },
+    {
+      "function": "round",
+      "seconds": 6.573294
+    },
+    {
+      "function": "union",
+      "seconds": 6.215556
+    },
+    {
+      "function": "breaks",
+      "seconds": 5.867279
+    },
+    {
+      "function": "div",
+      "seconds": 5.187873
+    },
+    {
+      "function": "nativeCellConnection",
+      "seconds": 4.843362
+    },
+    {
+      "function": "eq",
+      "seconds": 4.75158
+    },
+    {
+      "function": "nativeCellSeam",
+      "seconds": 4.592699
+    },
+    {
+      "function": "flatKind",
+      "seconds": 4.592699
+    },
+    {
+      "function": "vector",
+      "seconds": 4.276511
+    },
+    {
+      "function": "pathUnionSupported",
+      "seconds": 4.18664
+    },
+    {
+      "function": "jsonSummary",
+      "seconds": 4.131841
+    },
+    {
+      "function": "preparedDisplayDatasetSha256",
+      "seconds": 4.131841
+    },
+    {
+      "function": "publishedRouteCellReceipt",
+      "seconds": 4.131841
+    },
+    {
+      "function": "streamJson",
+      "seconds": 4.123795
+    },
+    {
+      "function": "comparePoint",
+      "seconds": 3.939797
+    },
+    {
+      "function": "div3",
+      "seconds": 3.87256
+    },
+    {
+      "function": "exactPathSupported",
+      "seconds": 3.794134
+    }
+  ],
+  "selfFunctions": [
+    {
+      "function": "compare",
+      "seconds": 64.269084
+    },
+    {
+      "function": "gcd",
+      "seconds": 45.494913
+    },
+    {
+      "function": "(garbage collector)",
+      "seconds": 23.403736
+    },
+    {
+      "function": "cmp2",
+      "seconds": 7.144625
+    },
+    {
+      "function": "",
+      "seconds": 5.657236
+    },
+    {
+      "function": "breaks",
+      "seconds": 4.553271
+    },
+    {
+      "function": "process",
+      "seconds": 4.283417
+    },
+    {
+      "function": "nativeRationalPointInRing",
+      "seconds": 3.307972
+    },
+    {
+      "function": "contains",
+      "seconds": 3.277058
+    },
+    {
+      "function": "integerOrientation",
+      "seconds": 2.909336
+    },
+    {
+      "function": "streamJson",
+      "seconds": 2.407849
+    },
+    {
+      "function": "lt",
+      "seconds": 2.349998
+    },
+    {
+      "function": "orient2d",
+      "seconds": 2.250984
+    },
+    {
+      "function": "add",
+      "seconds": 1.947981
+    },
+    {
+      "function": "nativeCirculationBinding",
+      "seconds": 1.876521
+    },
+    {
+      "function": "run",
+      "seconds": 1.70533
+    },
+    {
+      "function": "Rational",
+      "seconds": 1.371392
+    },
+    {
+      "function": "(idle)",
+      "seconds": 1.296648
+    },
+    {
+      "function": "rational",
+      "seconds": 1.258855
+    },
+    {
+      "function": "gt",
+      "seconds": 1.234197
+    },
+    {
+      "function": "(program)",
+      "seconds": 1.197536
+    },
+    {
+      "function": "exactPathSupported",
+      "seconds": 1.173122
+    },
+    {
+      "function": "u",
+      "seconds": 1.104619
+    },
+    {
+      "function": "intersection$1",
+      "seconds": 0.942615
+    },
+    {
+      "function": "getIntersection",
+      "seconds": 0.884553
+    },
+    {
+      "function": "pop",
+      "seconds": 0.840359
+    },
+    {
+      "function": "RingIn",
+      "seconds": 0.691771
+    },
+    {
+      "function": "div",
+      "seconds": 0.630132
+    },
+    {
+      "function": "afterState",
+      "seconds": 0.59989
+    },
+    {
+      "function": "comparePoint",
+      "seconds": 0.592867
+    },
+    {
+      "function": "boundsOfRing",
+      "seconds": 0.591175
+    },
+    {
+      "function": "eq",
+      "seconds": 0.5907
+    },
+    {
+      "function": "flush",
+      "seconds": 0.46612
+    },
+    {
+      "function": "pathUnionSupported",
+      "seconds": 0.413603
+    },
+    {
+      "function": "round",
+      "seconds": 0.380186
+    },
+    {
+      "function": "crossProduct",
+      "seconds": 0.361825
+    },
+    {
+      "function": "_remove",
+      "seconds": 0.34962
+    },
+    {
+      "function": "isInResult",
+      "seconds": 0.334089
+    },
+    {
+      "function": "sub",
+      "seconds": 0.326958
+    },
+    {
+      "function": "mul",
+      "seconds": 0.317513
+    },
+    {
+      "function": "encode",
+      "seconds": 0.316763
+    },
+    {
+      "function": "ringEdgesAt",
+      "seconds": 0.27349
+    },
+    {
+      "function": "find",
+      "seconds": 0.25756
+    },
+    {
+      "function": "u2",
+      "seconds": 0.255143
+    },
+    {
+      "function": "sub3",
+      "seconds": 0.253582
+    },
+    {
+      "function": "isR",
+      "seconds": 0.24465
+    },
+    {
+      "function": "scalar",
+      "seconds": 0.241796
+    },
+    {
+      "function": "getBboxOverlap",
+      "seconds": 0.231549
+    },
+    {
+      "function": "refine",
+      "seconds": 0.227121
+    },
+    {
+      "function": "decodePublishedRouteCells",
+      "seconds": 0.216938
+    }
+  ],
+  "browser": false,
+  "physicalDevice": false,
+  "published": false
+}

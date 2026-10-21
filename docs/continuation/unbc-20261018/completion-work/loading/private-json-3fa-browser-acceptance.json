@@ -1,0 +1,158 @@
+{
+  "format": "private-json-current-browser-acceptance-v1",
+  "bindings": {
+    "display": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+    "runtime": "3fa380e54213c9dcfe08f9e9c8d9d3dfe6a1249468b001f57e1868bbc4d1b018",
+    "plan": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c"
+  },
+  "manifestFileSha256": "c626d43905a9bbd819b453345d68c3afda09b3c3086fb9e6e29642831ca2bdbb",
+  "progressiveRevisionSha256": "171af2a065b9fee0f9c462db71e445e687677613b3aa56d2804be9d759f6aeb5",
+  "acceptedDatasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "originalRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+  "newActualBrowserCasesPassed": 3,
+  "flakyCases": 0,
+  "runs": [
+    {
+      "name": "route-stepfree",
+      "stats": {
+        "startTime": "2026-10-18T21:20:25.647Z",
+        "duration": 120960.615,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "2f638e05df9438bf82dcbe2aa401454c9e4eebf5cba656241dfa3db6eb5f2290"
+    },
+    {
+      "name": "offline",
+      "stats": {
+        "startTime": "2026-10-18T21:22:56.331Z",
+        "duration": 293778.523,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "reportSha256": "ea7051d28f04b0c448f2e02efe4bfda2992fd2fc3281e2c892867599562774a3"
+    }
+  ],
+  "cases": [
+    {
+      "run": "route-stepfree",
+      "title": "actual compact walking route remains visibly above the checked plan",
+      "passed": true,
+      "durationMs": 68416
+    },
+    {
+      "run": "route-stepfree",
+      "title": "actual step-free preference refuses an unconfirmed ramp and clears the walking preview",
+      "passed": true,
+      "durationMs": 44291
+    },
+    {
+      "run": "offline",
+      "title": "actual complete map download reopens the app, glyphs and full/shared floors with all network offline",
+      "passed": true,
+      "durationMs": 289567
+    }
+  ],
+  "firstActualBrowserDirections": {
+    "revisionSha256": "171af2a065b9fee0f9c462db71e445e687677613b3aa56d2804be9d759f6aeb5",
+    "start": "rm-311-ac6ce9426f1c",
+    "end": "rm-311-4030ea304744",
+    "elapsedMs": 33711,
+    "freshBrowserContext": true,
+    "actualIndexedDbBackend": true,
+    "localHttpDelivery": true,
+    "cloudSoftwareRendering": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "completeMapOffline": {
+    "completionText": "Complete map and app saved for offline use (9.2 MB of app files). Checked directions cache saved; routes are verified when opened.",
+    "storedRouting": {
+      "declaredLogicalBytes": 117995935,
+      "actualLogicalBytes": 117995935,
+      "storedBytes": 23517569,
+      "actualLogicalSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+    },
+    "navigatorOnline": false,
+    "navigationFromServiceWorker": true,
+    "fullScopeId": "scope-b6a88eb64f97d56cd0dddbe942681adf05d0705493080350ae08de5ebb6188cc",
+    "sharedScopeId": "scope-dfafd1ba312bffb05720e527d5e102f1fe58cee71b09d76e0b3134e33994cf26",
+    "sharedBaseScopeId": "scope-be0f1c9d0094548553d81c783697d025278ab4a40d041497cc500944e2c1d731",
+    "offlineGlyphs": [
+      {
+        "url": "http://127.0.0.1:42189/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42189/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42189/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      }
+    ],
+    "offlineMarkerCount": 48,
+    "visibleOfflineNamedMarker": "Stairs \u00b7 10-S102",
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "freshOfflineDirections": {
+    "storedRouting": {
+      "declaredLogicalBytes": 117995935,
+      "actualLogicalBytes": 117995935,
+      "storedBytes": 23517569,
+      "actualLogicalSha256": "0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628"
+    },
+    "route": "70 m",
+    "elapsedMs": 29344,
+    "navigatorOnline": false,
+    "appReloadedBeforeDirections": true,
+    "browserNetworkDisabled": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "stepfreeRefusal": {
+    "startKey": "rm-311-86e02816d8fe",
+    "endKey": "rm-1487816-1a09473066a2",
+    "walkingPreviewAvailable": true,
+    "selectedProfile": "accessible",
+    "confirmedStepFreeRouteAvailable": false,
+    "previousWalkingInstructionsCleared": true,
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "unchangedUiPreviousEvidence": "EVIDENCE-017 twelve unique cases on1fc/a844/61f; not relabelled as new3fa runs",
+  "old25844msRelabelled": false,
+  "browserTimingSavingsClaimed": false,
+  "physicalDevice": false,
+  "WANAcceptance": false,
+  "venuePolicyApproval": false,
+  "newNativeMasterApproval": false,
+  "releaseApproval": false,
+  "published": false,
+  "builtAppFiles": 106,
+  "builtAppBytes": 25299266,
+  "publicDataFilesVerified": 130,
+  "publicDataBytesVerified": 155714101,
+  "boundModuleEntriesChecked": 679,
+  "dependencyEvidence": [
+    "EVIDENCE-016 original floor/plan/data/source archive",
+    "EVIDENCE-024 exact privateJSON3fa source deltas and normal/proper-worker proof"
+  ],
+  "driveEvidence": {
+    "archiveUrl": "https://drive.google.com/file/d/1xHicjRGX00DdCIblJOThEDFCZ_G9jM4X/view?usp=drivesdk",
+    "archiveBytes": 13863965,
+    "archiveSha256": "2647a1ac8723370a78fd4c3150e2a9ae2d8ce3b68cc2fdc4b7ea75b03f6a75bd",
+    "all206MembersFreshlyRestoredAndVerified": true,
+    "readbackReceipt": "../checkpoints/EVIDENCE-026-private-json-browser-DRIVE-READBACK.json",
+    "restoreIndexUrl": "https://drive.google.com/file/d/1UC2mIX1985HZL58Mw3WOcN8-WQ95RybY/view?usp=drivesdk"
+  }
+}

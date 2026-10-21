@@ -1,0 +1,574 @@
+{
+  "format": "actual-all28-schema-closed-native-child-census-compact-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "completeSourcePages": 3666,
+  "rawSourceReceipt": "/workspace/scratch/assembly-all28-global-child-census-20261018/actual-all28-global-child-census.json",
+  "rawSourceReceiptSha256": "f9cb5ab41c46f7572869fc1083d87c79f27d4d36c0852a4fcce13703216e1555",
+  "assemblyImplementationSha256": "785a96ad4c1e92dce9f87bf36c6c363950e3bf411e5ee64f22689ac93d08a110",
+  "transitiveSourceModuleCount": 116,
+  "sourceModulesUnchanged": true,
+  "schemaChildUnion": {
+    "originalRunClasses": [
+      {
+        "sourceClassName": "StairsRun",
+        "sourceClassSlot": 4102
+      }
+    ],
+    "originalLandingClasses": [
+      {
+        "sourceClassName": "StairsLanding",
+        "sourceClassSlot": 4080
+      }
+    ],
+    "originalRunAndLandingClasses": [
+      {
+        "sourceClassName": "StairsLanding",
+        "sourceClassSlot": 4080
+      },
+      {
+        "sourceClassName": "StairsRunAndLanding",
+        "sourceClassSlot": 4081
+      },
+      {
+        "sourceClassName": "StairsRun",
+        "sourceClassSlot": 4102
+      }
+    ],
+    "originalParentClasses": [
+      {
+        "sourceClassName": "StairsElement",
+        "sourceClassSlot": 4075
+      }
+    ],
+    "nativeStairsOwnerDeclarations": [
+      {
+        "sourceClassName": "BaseRailing",
+        "sourceClassSlot": 598,
+        "sourceSchemaFieldOffset": 86147
+      },
+      {
+        "sourceClassName": "StairsSym",
+        "sourceClassSlot": 3463,
+        "sourceSchemaFieldOffset": 377118
+      },
+      {
+        "sourceClassName": "StairsRunAndLanding",
+        "sourceClassSlot": 4081,
+        "sourceSchemaFieldOffset": 445614
+      },
+      {
+        "sourceClassName": "StairsLockControl",
+        "sourceClassSlot": 4092,
+        "sourceSchemaFieldOffset": 446739
+      }
+    ],
+    "alternativeForeignFamilies": [
+      {
+        "sourceFamilyClassName": "BaseRailing",
+        "sourceFamilyClassSlot": 598,
+        "descendants": [
+          {
+            "sourceClassName": "BaseRailing",
+            "sourceClassSlot": 598
+          },
+          {
+            "sourceClassName": "FloorRailing",
+            "sourceClassSlot": 2160
+          },
+          {
+            "sourceClassName": "StairsRailing",
+            "sourceClassSlot": 4098
+          }
+        ]
+      },
+      {
+        "sourceFamilyClassName": "StairsSym",
+        "sourceFamilyClassSlot": 3463,
+        "descendants": [
+          {
+            "sourceClassName": "RampSym",
+            "sourceClassSlot": 3462
+          },
+          {
+            "sourceClassName": "StairsSym",
+            "sourceClassSlot": 3463
+          }
+        ]
+      },
+      {
+        "sourceFamilyClassName": "StairsLockControl",
+        "sourceFamilyClassSlot": 4092,
+        "descendants": [
+          {
+            "sourceClassName": "StairsLockControl",
+            "sourceClassSlot": 4092
+          }
+        ]
+      }
+    ],
+    "schemaChildUnionClosed": true,
+    "baseOnlyClassMustBeCensused": 4081,
+    "sourceAuthorityGranted": false,
+    "routeApproved": false
+  },
+  "globalOriginalRunOccurrences": 108,
+  "globalOriginalLandingOccurrences": 26,
+  "allGlobalRunsAndLandingsMoribundZeroDummyZero": true,
+  "persistedBaseOnly4081OccurrenceCount": 0,
+  "alternativeForeignClassCensus": [
+    {
+      "sourceFamilyClassName": "BaseRailing",
+      "sourceClassName": "BaseRailing",
+      "sourceClassSlot": 598,
+      "actualOccurrenceCount": 215,
+      "approvedAsJoin": false
+    },
+    {
+      "sourceFamilyClassName": "BaseRailing",
+      "sourceClassName": "FloorRailing",
+      "sourceClassSlot": 2160,
+      "actualOccurrenceCount": 0,
+      "approvedAsJoin": false
+    },
+    {
+      "sourceFamilyClassName": "BaseRailing",
+      "sourceClassName": "StairsRailing",
+      "sourceClassSlot": 4098,
+      "actualOccurrenceCount": 0,
+      "approvedAsJoin": false
+    },
+    {
+      "sourceFamilyClassName": "StairsSym",
+      "sourceClassName": "RampSym",
+      "sourceClassSlot": 3462,
+      "actualOccurrenceCount": 12,
+      "approvedAsJoin": false
+    },
+    {
+      "sourceFamilyClassName": "StairsSym",
+      "sourceClassName": "StairsSym",
+      "sourceClassSlot": 3463,
+      "actualOccurrenceCount": 0,
+      "approvedAsJoin": false
+    },
+    {
+      "sourceFamilyClassName": "StairsLockControl",
+      "sourceClassName": "StairsLockControl",
+      "sourceClassSlot": 4092,
+      "actualOccurrenceCount": 0,
+      "approvedAsJoin": false
+    }
+  ],
+  "all28RecordedRunSetsMatchActualSource": true,
+  "recordedAndActualHeldRunTotal": 38,
+  "actualHeldLandingTotal": 10,
+  "rows": [
+    {
+      "nativeStairId": 1293690,
+      "recordedOriginalRunIds": [
+        1293981,
+        1294068
+      ],
+      "actualOriginalRunIds": [
+        1293981,
+        1294068
+      ],
+      "actualOriginalLandingIds": [
+        1294440
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1295966,
+      "recordedOriginalRunIds": [
+        1296000,
+        1296189
+      ],
+      "actualOriginalRunIds": [
+        1296000,
+        1296189
+      ],
+      "actualOriginalLandingIds": [
+        1296191
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1298202,
+      "recordedOriginalRunIds": [
+        1298203
+      ],
+      "actualOriginalRunIds": [
+        1298203
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1305141,
+      "recordedOriginalRunIds": [
+        1305306,
+        1305425
+      ],
+      "actualOriginalRunIds": [
+        1305306,
+        1305425
+      ],
+      "actualOriginalLandingIds": [
+        1305763
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1496322,
+      "recordedOriginalRunIds": [
+        1496323,
+        1496326
+      ],
+      "actualOriginalRunIds": [
+        1496323,
+        1496326
+      ],
+      "actualOriginalLandingIds": [
+        1496328
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1498360,
+      "recordedOriginalRunIds": [
+        1498361,
+        1498364
+      ],
+      "actualOriginalRunIds": [
+        1498361,
+        1498364
+      ],
+      "actualOriginalLandingIds": [
+        1498366
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1498457,
+      "recordedOriginalRunIds": [
+        1498458,
+        1498461
+      ],
+      "actualOriginalRunIds": [
+        1498458,
+        1498461
+      ],
+      "actualOriginalLandingIds": [
+        1498463
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1500191,
+      "recordedOriginalRunIds": [
+        1500192,
+        1500195
+      ],
+      "actualOriginalRunIds": [
+        1500192,
+        1500195
+      ],
+      "actualOriginalLandingIds": [
+        1500197
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1500288,
+      "recordedOriginalRunIds": [
+        1500289,
+        1500292
+      ],
+      "actualOriginalRunIds": [
+        1500289,
+        1500292
+      ],
+      "actualOriginalLandingIds": [
+        1500294
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1514126,
+      "recordedOriginalRunIds": [
+        1514127,
+        1514130
+      ],
+      "actualOriginalRunIds": [
+        1514127,
+        1514130
+      ],
+      "actualOriginalLandingIds": [
+        1514132
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1638837,
+      "recordedOriginalRunIds": [
+        1638854
+      ],
+      "actualOriginalRunIds": [
+        1638854
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1689936,
+      "recordedOriginalRunIds": [
+        1689940
+      ],
+      "actualOriginalRunIds": [
+        1689940
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1693246,
+      "recordedOriginalRunIds": [
+        1693335
+      ],
+      "actualOriginalRunIds": [
+        1693335
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1696006,
+      "recordedOriginalRunIds": [
+        1696012
+      ],
+      "actualOriginalRunIds": [
+        1696012
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1779403,
+      "recordedOriginalRunIds": [
+        1779406
+      ],
+      "actualOriginalRunIds": [
+        1779406
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1779495,
+      "recordedOriginalRunIds": [
+        1779498
+      ],
+      "actualOriginalRunIds": [
+        1779498
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1779620,
+      "recordedOriginalRunIds": [
+        1779623
+      ],
+      "actualOriginalRunIds": [
+        1779623
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1903824,
+      "recordedOriginalRunIds": [
+        1903837
+      ],
+      "actualOriginalRunIds": [
+        1903837
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1972504,
+      "recordedOriginalRunIds": [
+        1972518
+      ],
+      "actualOriginalRunIds": [
+        1972518
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1982431,
+      "recordedOriginalRunIds": [
+        1984014
+      ],
+      "actualOriginalRunIds": [
+        1984014
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 1988738,
+      "recordedOriginalRunIds": [
+        1988746
+      ],
+      "actualOriginalRunIds": [
+        1988746
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2156084,
+      "recordedOriginalRunIds": [
+        2156103
+      ],
+      "actualOriginalRunIds": [
+        2156103
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2160665,
+      "recordedOriginalRunIds": [
+        2160668
+      ],
+      "actualOriginalRunIds": [
+        2160668
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2161350,
+      "recordedOriginalRunIds": [
+        2161353
+      ],
+      "actualOriginalRunIds": [
+        2161353
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2349441,
+      "recordedOriginalRunIds": [
+        2349454
+      ],
+      "actualOriginalRunIds": [
+        2349454
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2354630,
+      "recordedOriginalRunIds": [
+        2354663
+      ],
+      "actualOriginalRunIds": [
+        2354663
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2439748,
+      "recordedOriginalRunIds": [
+        2439788
+      ],
+      "actualOriginalRunIds": [
+        2439788
+      ],
+      "actualOriginalLandingIds": [],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    },
+    {
+      "nativeStairId": 2474568,
+      "recordedOriginalRunIds": [
+        2474569,
+        2474572
+      ],
+      "actualOriginalRunIds": [
+        2474569,
+        2474572
+      ],
+      "actualOriginalLandingIds": [
+        2474574
+      ],
+      "recordedRunsAbsentFromActualCensus": [],
+      "actualRunsAbsentFromRecordedInventory": [],
+      "completeRunSetMatchesRecordedInventory": true
+    }
+  ],
+  "scope": "No missing original source-owned flight for these28 parents after complete schema-closed current-source census. This says nothing about correctness of original root scalar/index interpretation, physical support or routes.",
+  "routeApproved": false
+}

@@ -1,0 +1,30 @@
+{
+  "status": "integration checks; no release approval",
+  "checkedAt": "2026-10-18T15:16:19.813576+00:00",
+  "globalTypecheck": {
+    "passed": true,
+    "command": "npx tsc --noEmit"
+  },
+  "focusedTests": {
+    "passed": 11,
+    "failed": 0,
+    "command": "node --import tsx --test tests/unit/place-discovery.test.ts tests/unit/visitor-render-readiness.test.ts"
+  },
+  "scopedLint": {
+    "errors": 0,
+    "warnings": 1,
+    "warning": "pre-existing default import name in display-passages.ts"
+  },
+  "sourceFiles": {
+    "app/pages/progressive-visitor-page.tsx": "4b85a336720964a3887462f23333c997ddf197d68a07ce2bc71c2c3cdee892f2",
+    "app/pages/progressive-visitor.css": "4a85571c28b00875b0e1aa31742d5381dfe71cda1562c781b5e8777a37d66d71",
+    "app/indoor-project/visitor-render-status.tsx": "2c4162016c65ddaf86c3a5fd4cf2eee34f97104589661dc005e4ee0492df2915",
+    "app/indoor-project/visitor-render-readiness.ts": "31007ef0f2f40f5888d562fc3339925dc381d8a1a92af63c975ea60a2e5a4220",
+    "app/indoor-project/place-discovery.ts": "843f8d9fc4eb6bb8e2fa588d5d147a9c7726f73a711d934186a9e4f1f47461fa",
+    "app/indoor-project/display-passages.ts": "3f98179c3f4ea1798593fd3ffec4c1ee1301995fc2f003cbafe4534e31d0da20",
+    "tests/unit/visitor-render-readiness.test.ts": "03cab6c89f038953f35f921051859ed06b1d81e0ea16e131d046e7663f5a907d"
+  },
+  "physicalPhoneAcceptance": false,
+  "finalEngineBrowserAcceptance": false,
+  "releaseApproved": false
+}

@@ -1,0 +1,123 @@
+{
+  "publication": "isolated immutable baseline9ff with corrected labels and source-admitted shared carriers",
+  "appUrl": "http://127.0.0.1:42184/openindoormaps/index.html",
+  "manifestUrl": "http://127.0.0.1:42184/data/unbc/manifest.json",
+  "manifestBytesSha256": "55125fc83df5cc0126747d2c70c66080776f0cdff28c80819735fbac52b0c13b",
+  "revisionSha256": "a0ec01eda9de2fc296d9f8094e2d667d9d309dbf82c9fefc1d16e7ca88661cf6",
+  "engineSha256": "9ff279531839658e175655b3796bf95fdc2f9d676e7c37076cb9da97ed1dd32b",
+  "datasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "planRuntimeSha256": "f0672367c676a32639a04edb02c4a6cabe437fc32e7a3e3ed1a667e06abaf0f8",
+  "compiledRegistry": {
+    "path": "/workspace/scratch/unbc-plan-label-delta-receipts-9ff.json",
+    "sha256": "555035e329a22edaff5bacc877ba1cb00304fa6396f61082432e53e3732b21a5",
+    "admittedScopeCount": 7
+  },
+  "appIndexHtmlSha256": "767ff859dada66daa429d1d6a428ae860b36b9a3affb1a6ced8b17e7cb022388",
+  "browser": {
+    "kind": "cloud Chromium",
+    "executable": "/usr/bin/chromium",
+    "softwareRasterizer": true,
+    "physicalDevice": false
+  },
+  "authority": {
+    "geometry": false,
+    "publicAccess": false,
+    "stepFreeAccess": false,
+    "operatingHours": false,
+    "physicalDevice": false,
+    "finalChangedEngineRelease": false
+  },
+  "archiveInstruction": "Preserve raw results and PNGs in the project Drive evidence archive; this small source receipt hashes the originals.",
+  "format": "unbc-complete-map-all-network-offline-browser-evidence-v1",
+  "recordedAt": "2026-10-18T16:11:50.141219+00:00",
+  "executedTestFile": "tests/e2e/published-visitor-plan.spec.ts",
+  "executedTestFileSha256": "67636ec46d9faa8c683ea44544f739d1faebfad7f30ca9c4ee080cc3a6255ca0",
+  "stats": {
+    "startTime": "2026-10-18T16:02:40.139Z",
+    "duration": 463133.251,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "name": "actual complete map download reopens the app, glyphs and full/shared floors with all network offline",
+      "expectedStatus": "passed",
+      "outcome": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 460508,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "actualCompletionAndOfflineProof": {
+    "completionText": "Complete map and app saved for offline use (9.0 MB of app files). Checked directions cache saved; routes are verified when opened.",
+    "navigatorOnline": false,
+    "navigationFromServiceWorker": true,
+    "fullScopeId": "scope-e680033f456ba1f82eb717fe454c422a6fb1b536362190709fc5dda0df78d773",
+    "sharedScopeId": "scope-42b2c71a7e7f07adce66dce2eae156cc0fe0697b2709d02bff5c3ce89a5120af",
+    "sharedBaseScopeId": "scope-30d853ef4991134fc01a695acfa0b82ea8fab1f37d017af3f367ddfb87f6f40b",
+    "offlineGlyphs": [
+      {
+        "url": "http://127.0.0.1:42184/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42184/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      },
+      {
+        "url": "http://127.0.0.1:42184/openindoormaps/glyphs/Noto%20Sans%20Regular/0-255.pbf",
+        "status": 200,
+        "fromServiceWorker": true
+      }
+    ],
+    "physicalDevice": false,
+    "geometryOrAccessApproval": false
+  },
+  "observedFunctionalEvidence": {
+    "realCompleteMapDownload": true,
+    "allSavedPlansCoexistenceGateCompleted": true,
+    "browserContextAllNetworkOffline": true,
+    "coldAppNavigationServedByServiceWorker": true,
+    "cachedManifestFallback": true,
+    "fullFloorAndSharedMainDeltaPainted": true,
+    "glyphsServedByServiceWorkerWhileOffline": true,
+    "buildingLabelsVisuallyInspectedOnOfflineScreenshot": true,
+    "noPageErrors": true
+  },
+  "timingNote": "Cumulative functional test duration includes saving all actual map/app assets, verification, floor decoding, concurrent host CPU work and software rasterization. It is not a compact Main first-paint or physical-device latency measurement.",
+  "notIncluded": [
+    "route overlay and instruction click proof",
+    "final changed-source engine release acceptance",
+    "physical phone or on-campus access validation"
+  ],
+  "rawEvidenceDirectory": "/workspace/scratch/visitor-plan-full-offline-browser-20261018",
+  "rawEvidenceFiles": [
+    {
+      "path": ".last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "published-visitor-plan-act-09a05-rs-with-all-network-offline/complete-map-all-network-offline.png",
+      "bytes": 95504,
+      "sha256": "64db8ab1f6d157fabbca57a35732dc29baed0f40a80f852aeb6fdb53ab874f1a"
+    },
+    {
+      "path": "results.json",
+      "bytes": 6222,
+      "sha256": "4f029d449337bcb8e638eccf89012032266945ee6c8a75d1654869fdd43ea2ac"
+    }
+  ],
+  "priorTestPrecheckCorrection": {
+    "rawDirectory": "/workspace/scratch/visitor-plan-full-offline-browser-20261018-carrier-direction-check",
+    "reason": "Pre-browser test check assumed default Main was a delta base. Actual admitted Main is the shared delta of broader Floor1; corrected the test to select actual Main. No app or production source changes."
+  }
+}

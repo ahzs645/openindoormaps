@@ -1,0 +1,70 @@
+{
+  "format": "unbc-current-browser-drive-restore-index-v1",
+  "evidence": "EVIDENCE-017-current-browser",
+  "verifiedAt": "2026-10-18T20:56:24.694300+00:00",
+  "driveFolderId": "1EUFgNbO9Hxcc6cDhZLrFt6BoQAFOfhA8",
+  "archiveName": "EVIDENCE-017-current-browser-20261018.tar.gz",
+  "archiveBytes": 37146929,
+  "archiveSha256": "45dbd2029c27531622df23cf0802415f1292ee95ec2da5ecc86d52f41e37cef7",
+  "partsInOrder": [
+    {
+      "part": 1,
+      "fileName": "EVIDENCE-017-current-browser-20261018.tar.gz.part-001",
+      "bytes": 25165824,
+      "sha256": "573df26f09ee2f4e44d960a0752574f3300aaae7e2018d34f614c8604267994c",
+      "driveFileId": "1fcBxQBuuUf5nzGvrUT5z-UWEqyUzLJlK",
+      "driveUrl": "https://drive.google.com/file/d/1fcBxQBuuUf5nzGvrUT5z-UWEqyUzLJlK/view?usp=drivesdk"
+    },
+    {
+      "part": 2,
+      "fileName": "EVIDENCE-017-current-browser-20261018.tar.gz.part-002",
+      "bytes": 11981105,
+      "sha256": "241d69b8283237eef8c445bff9bd64c3ad09842288c0ecdf0026db78624dd729",
+      "driveFileId": "1DacKOwBHxxmVRTF1_EthPBXSd2A06MHT",
+      "driveUrl": "https://drive.google.com/file/d/1DacKOwBHxxmVRTF1_EthPBXSd2A06MHT/view?usp=drivesdk"
+    }
+  ],
+  "remoteAllPartsAndWholeArchiveVerified": true,
+  "remoteEveryRegularMemberFreshlyRestoredAndSha256Verified": true,
+  "regularMembers": 240,
+  "memberInventorySha256": "48ac2fe3af3b801e294bf9e663ffe300eb89be2e749bb314c1dc32dbe5e099b6",
+  "sourceBeforeAfterEqual": true,
+  "sourceInventoryCounts": {
+    "openindoormaps": 1321,
+    "reviter": 1286
+  },
+  "actualBuiltAppFiles": 106,
+  "actualPublicDataFilesRehashedBeforeAfter": 130,
+  "actualUniqueBrowserCasesPassed": 12,
+  "flakyCases": 0,
+  "functionalTenCaseSuiteCompleted": false,
+  "bindings": {
+    "enginePreparationSha256": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+    "routingRuntimeSha256": "a84471d00460a44e5678bd69d9f30a6fa06b3471133790054ecd1c8878411a51",
+    "planRuntimeSha256": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c",
+    "manifestFileSha256": "c626d43905a9bbd819b453345d68c3afda09b3c3086fb9e6e29642831ca2bdbb",
+    "progressiveRevisionSha256": "171af2a065b9fee0f9c462db71e445e687677613b3aa56d2804be9d759f6aeb5",
+    "acceptedDatasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+    "originalRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50"
+  },
+  "dependencyRestoreIndexUrl": "https://drive.google.com/file/d/1w0puQULQW3kuomBmqW6h2AgZJ9xj0PHg/view?usp=drivesdk",
+  "restore": [
+    "Download the two complete original parts in this index.",
+    "Verify each part byte length and SHA-256.",
+    "Concatenate part-001 then part-002; verify complete archive length and SHA-256.",
+    "Extract into a fresh directory; verify all member files using manifest.json.",
+    "For complete served data restore EVIDENCE-016 first; this archive preserves the exact tested built app and current UI/static/receipt overlay, not duplicated map carriers."
+  ],
+  "limits": [
+    "Local HTTP/cloud Chromium with real IndexedDB/service-worker; not a physical phone or WAN test.",
+    "Seven-case partial functional run is preserved as interrupted; three corrected cases passed separately.",
+    "Accepted original dataset/source, not a new native master, venue access policy or release approval.",
+    "Shared new3fa parser not included."
+  ],
+  "physicalDeviceAcceptance": false,
+  "newNativeMasterApproval": false,
+  "venuePolicyApproval": false,
+  "releaseApproval": false,
+  "published": false,
+  "sharingChanged": false
+}

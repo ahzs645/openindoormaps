@@ -1,0 +1,60 @@
+{
+  "format": "private-json-browser-drive-readback-v1",
+  "evidence": "EVIDENCE-026",
+  "verifiedAt": "2026-10-18T21:30:32.777044+00:00",
+  "driveFileId": "1xHicjRGX00DdCIblJOThEDFCZ_G9jM4X",
+  "driveUrl": "https://drive.google.com/file/d/1xHicjRGX00DdCIblJOThEDFCZ_G9jM4X/view?usp=drivesdk",
+  "driveFolderId": "1EUFgNbO9Hxcc6cDhZLrFt6BoQAFOfhA8",
+  "archiveName": "EVIDENCE-026-private-json-browser-20261018.tar.gz",
+  "archiveBytes": 13863965,
+  "archiveSha256": "2647a1ac8723370a78fd4c3150e2a9ae2d8ce3b68cc2fdc4b7ea75b03f6a75bd",
+  "remoteWholeArchiveMatchesClosedLocal": true,
+  "remoteEveryRegularMemberFreshlyRestoredAndReadbackSha256Verified": true,
+  "regularMembers": 206,
+  "memberInventorySha256": "4245d5becba7bfc6aee8fb718e4a43ac09411bed1b6f37a450b0e9102cfcb726",
+  "sourceBeforeAfterEqual": true,
+  "sourceInventoryCounts": {
+    "openindoormaps": 1321,
+    "reviter": 1286
+  },
+  "boundModuleEntriesChecked": 679,
+  "actualBuildFiles": 106,
+  "actualBuildBytes": 25299266,
+  "actualPublicDataFilesCheckedBeforeAfter": 130,
+  "actualPublicDataBytes": 155714101,
+  "newActualBrowserCasesPassed": 3,
+  "flakyCases": 0,
+  "newActualColdBrowserRouteMs": 33711,
+  "newActualOfflineBrowserRouteMs": 29344,
+  "bindings": {
+    "display": "1fc36910bad7588b3bb82cb66b1d4b040845278f385ddb26a86734f8652b13d7",
+    "runtime": "3fa380e54213c9dcfe08f9e9c8d9d3dfe6a1249468b001f57e1868bbc4d1b018",
+    "plan": "61f4638e4352a1eaf6727135745e139001798f72527c7dc263a341f1fb77cb6c"
+  },
+  "dependencies": [
+    {
+      "evidence": "EVIDENCE-016",
+      "archiveSha256": "55f864bba4e405bb89fd0b28e014a8c8e535fb3c33779f83eb9c5671b57450e2",
+      "restoreIndexUrl": "https://drive.google.com/file/d/1w0puQULQW3kuomBmqW6h2AgZJ9xj0PHg/view?usp=drivesdk"
+    },
+    {
+      "evidence": "EVIDENCE-024",
+      "archiveSha256": "f3e11daab3aba1591df7ec65a28b37c91f0b2919df8df73198683915f08361ab",
+      "driveUrl": "https://drive.google.com/file/d/1eUlKl7Ni6fKkOyrhb-k7vNMWuM8S04Th/view?usp=drivesdk"
+    }
+  ],
+  "restore": [
+    "Verify whole archive size and SHA before extraction.",
+    "Extract into a fresh directory and verify all files against manifest.json.",
+    "Restore EVIDENCE-016 data/source, apply EVIDENCE-024 privateJSON deltas, then this exact built-app/source-current overlay."
+  ],
+  "old25844msRelabelled": false,
+  "browserTimingSavingsClaimed": false,
+  "physicalDeviceAcceptance": false,
+  "WANAcceptance": false,
+  "newNativeMasterApproval": false,
+  "venuePolicyApproval": false,
+  "releaseApproval": false,
+  "published": false,
+  "sharingChanged": false
+}

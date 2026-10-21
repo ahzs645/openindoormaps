@@ -13,6 +13,10 @@ type FloorNames = {
   floors: readonly { levelIds: readonly number[]; name: string }[];
 };
 
+function normalizePlaceSearch(value: string) {
+  return value.trim().toLowerCase().replaceAll(/\s+/g, " ");
+}
+
 /** Original native floor names distinguish levels grouped in one Main view. */
 export function progressivePlaceContext(
   place: Pick<NamedPlace, "building" | "levelId">,
@@ -29,6 +33,49 @@ export function progressivePlaceContext(
 export function progressivePlaceLabel(place: NamedPlace, names: FloorNames) {
   const originalName = [place.number, place.name].filter(Boolean).join(" ");
   return `${originalName} · ${progressivePlaceContext(place, names)}`;
+}
+
+/** Search only published place data. Exact room/name matches lead; original
+ * source order breaks ties. Ranking never changes endpoint availability. */
+export function progressivePlaceSearchMatches<T extends NamedPlace>(
+  places: readonly T[],
+  names: FloorNames,
+  search: string,
+): T[] {
+  const query = normalizePlaceSearch(search);
+  if (!query) return [];
+  const terms = query.split(" ");
+  return places
+    .map((place, index) => {
+      const number = normalizePlaceSearch(place.number),
+        name = normalizePlaceSearch(place.name),
+        floor =
+          names.nativeLevels.find((level) => level.id === place.levelId)
+            ?.name ??
+          names.floors.find((level) => level.levelIds.includes(place.levelId))
+            ?.name ??
+          "",
+        searchable = normalizePlaceSearch(
+          [place.number, place.name, "Building", place.building, floor].join(
+            " ",
+          ),
+        );
+      if (!terms.every((term) => searchable.includes(term))) return;
+      let rank = 6;
+      if (number === query) rank = 0;
+      else if (name === query) rank = 1;
+      else if (number.startsWith(query)) rank = 2;
+      else if (name.startsWith(query)) rank = 3;
+      else if (number.includes(query)) rank = 4;
+      else if (name.includes(query)) rank = 5;
+      return { place, index, rank };
+    })
+    .filter(
+      (match): match is { place: T; index: number; rank: number } => !!match,
+    )
+    .sort((a, b) => a.rank - b.rank || a.index - b.index)
+    .slice(0, 12)
+    .map((match) => match.place);
 }
 
 /** Keep a compatible composite floor instead of loading a narrower duplicate. */

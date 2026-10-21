@@ -14,6 +14,9 @@ import {
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
+import { publishedRouteRuntimeBinding } from "./published-route-runtime-binding";
+import { PUBLISHED_ROUTE_RUNTIME_SHA256 } from "../../app/indoor-project/published-route-runtime-binding";
+import { createImmutableRoutingWorkerDataset } from "../../app/indoor-project/verified-routing-dataset";
 
 const [input, expectedSha, publicRoot, output] = process.argv.slice(2);
 if (
@@ -41,12 +44,21 @@ assert.equal(
   PREPARED_DISPLAY_ENGINE_SHA256,
   "Generated engine must match the final source tree",
 );
-const data = routeWorkerDataset(JSON.parse(bytes.toString()) as IndoorDataset);
+const data = createImmutableRoutingWorkerDataset(
+  routeWorkerDataset(JSON.parse(bytes.toString()) as IndoorDataset),
+);
 const receipt = publishedRouteCellReceipt(data);
 assert(
   receipt,
   "No matching compiled directions receipt: publication would repeat expensive physical preparation",
 );
+if (receipt.runtimeSha256)
+  assert.equal(
+    publishedRouteRuntimeBinding(path.resolve(import.meta.dirname, "../.."))
+      .sha256,
+    PUBLISHED_ROUTE_RUNTIME_SHA256,
+    "Generated route runtime must match the final actual consumer closure",
+  );
 const base = path.resolve(publicRoot),
   asset = path.resolve(base, "." + receipt.url);
 assert(
@@ -65,6 +77,7 @@ const report = {
   format: "published-directions-source-asset-check-v1",
   inputSha256: expectedSha,
   engineSha256: PREPARED_DISPLAY_ENGINE_SHA256,
+  runtimeSha256: receipt.runtimeSha256,
   routingDatasetSha256: receipt.datasetSha256,
   assetUrl: receipt.url,
   assetSha256: sha(stored),

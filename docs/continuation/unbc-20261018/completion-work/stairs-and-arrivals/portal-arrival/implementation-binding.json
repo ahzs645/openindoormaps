@@ -1,0 +1,1795 @@
+{
+  "nodeVersion": "v24.19.0",
+  "initialSourceManifest": [
+    {
+      "path": "/workspace/reviter/lib/reviter/architectural-plan.ts",
+      "sha256": "ae910bbb6c5617eb18d678bc581e8e1e006035845fb24a8e11ffe2092fdbc5bd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/basic-file-info.ts",
+      "sha256": "9dd2f0713989e28ee9fbe5af0f8268b4f8d3d6d01fdefb8df07bff630f82566f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/bounds-records.ts",
+      "sha256": "efc36fdd6c4c73fe892c8e03ecaeaff654a97c9d5b01fa28e379a6b7553d8900"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/brep-tessellator.ts",
+      "sha256": "ccc9df977d5ae4e283421219d1533ba58dab4c206e4af24f90fb325a0e655fb2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/building-connections.ts",
+      "sha256": "85213aa867481d68d06224f514f21413fd73ff6ea0d587c3d72ffe3ffee57709"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/building-transitions.ts",
+      "sha256": "c8129b99082e16bd2234fdb68736229dd741b5cbf7b00013af56465d393cd863"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/built-in-categories.ts",
+      "sha256": "1a918ba48cf007fd065a85295977fb8370a12792b72207d918539f778e199c1e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/built-in-parameters.ts",
+      "sha256": "86c563212e28d59984b82e1b61f9d83909ed51e5a4c0b25cec49f3aa3a0bf9f7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/cad-files.ts",
+      "sha256": "5aaf466b9b54cd8b1b2ad3a091b24f49934383c80d81b19928450e9a8e4a3035"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/campus-floors.ts",
+      "sha256": "f04d00b752d7c91c5f66c748c0aae473fcfc810061d07b4226c1fe5bd2d37648"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/compound-structure-materials.ts",
+      "sha256": "8a328a2fc5fc0954047a7934444d80fe0dd80dfc2858c45d410a8a643d87624f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/connected-floor-plans.ts",
+      "sha256": "185f9ab3c9f88204147fa1ef4e1a4ae4479047947c905712749e571e2f7e4d97"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/connector-area-arrivals.ts",
+      "sha256": "de94a2f45d8e98ac0062be91714056f0ed39ad2cfd0831dda6fe2298d4bbe77b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/constrained-region-triangulation.ts",
+      "sha256": "560de6845cb1bb11ccdf6c781e8afee8669c37e67c0d4b445658fd0b4c10462f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/content-documents.ts",
+      "sha256": "b0cfa9deb33e3ea22a03a1f192b504ece2f023558fae964e6637285c7e75b053"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-container.ts",
+      "sha256": "42498f0df1812a5feebc31db871ae9ba1e0c2a4777f8120c855529133c226fe6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-display-scene.ts",
+      "sha256": "5b39232fdae36156eb3e2792be7d6a893c60679888765b74bfccf8a95a3806b6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-element-geometry.ts",
+      "sha256": "62179aa169717e3a892ca7673c368bbb05a48bbc6ea974ffeb220ee2593211f2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-native-relations.ts",
+      "sha256": "f5577219b50fe7290f3e95bd36dffe678e460517726f1773a45dd911fb444d02"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-native-surfaces.ts",
+      "sha256": "58e92b80b56393feac55a3e95156c0a485a76a0fd1632bc26bed0d5ec01233f8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-partition-scan.ts",
+      "sha256": "f47d06f0faa8e5736f49db99ef7c5f77d4b559c682b612328002d36404ea8a8f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-report.ts",
+      "sha256": "bb26aff9b07aea0218d5ee850daae48a0cfce7884546131ecb272d26e65a5a1d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert-synthesised-records.ts",
+      "sha256": "947f85682d9af38536d168e8879912393bb56fc369f5003231c586b9339df46b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convert.ts",
+      "sha256": "fd22e591f173dbd93d64a0b67a3314e18be1438a7476f1360214bdc113ee652b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/convex-facets.ts",
+      "sha256": "782820af3014baa34ba95e6d132def93a8146061460c7e709954abc80c02e8bd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/counted-arrays.ts",
+      "sha256": "77958cf30c93d1c0fe372550e46d06c2419713c0fcef48209580e82a4fa7dd59"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/coverage.ts",
+      "sha256": "d8034c78ce2a9e14c93ad51b1167238ca993a0f82ac02e263baba31f3d281cb0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/curtain-panel-boundary.ts",
+      "sha256": "18637ada15a9d640348c2ef61f66ae08d5a7eddee9f1b193cdf0054e86e18ddd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/curved-wall-sketch.ts",
+      "sha256": "7c399a2ab3ce7a278a1eefec3d37b09e9b6fff34e75fa33858b4b82c973ffd67"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/datum-pile.ts",
+      "sha256": "0e81ef05aa44f8180c95c79b386513c5ecc12167650a406bc569b64e8fc9f6aa"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/derived-rooms.ts",
+      "sha256": "a643f236686d1472eb221c1688cddbb9b8ddffef61c78a0aa5aefa8b622a5a4f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/deterministic-math.ts",
+      "sha256": "627f6a8d72ddc733d14e0441e426b356bbc0621b4e54c21bca77dffe479f4bb0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-areas.ts",
+      "sha256": "a9b7165ea694e4385b5836534bbd4e9a442bca047fbc6adc4a69edd759350ab3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-audit.ts",
+      "sha256": "6868424687ab14046664824b21892c27c11c6dcf1d5062700970520f68638172"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-location.ts",
+      "sha256": "ae903ac7fd732e3669045ae43f02b0593af1dab3e9f88038d22bff5e10b4a019"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-navigation.ts",
+      "sha256": "605952508816bf2f39a54cd914bb91145c848c69ea76ca4660404e1b55fea84a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-openings.ts",
+      "sha256": "ddb41bdb88346e56638a740776b9166de43a84495c70c676b76685b6120d8147"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/directory-stair-geometry.ts",
+      "sha256": "05e4b40d7999b55aa3983f663422c2304c487aa01ddc83a3ceecbc608d07c2af"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/door-leaf.ts",
+      "sha256": "5fb6f4fbb321360ba502acf10499a08d30ba5712d07e0aae18f2ea1db21625c2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/drawn-bounds.ts",
+      "sha256": "9cd9225edab65c989b73740b38c3c2c1bebfa5bbbb6053305778cf8b4ba1cee8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-building-scene.ts",
+      "sha256": "50519de510a2e1108dd71774b5b39c469bda255dc75e9a9aa45013b6d8bf5c91"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-circulation-review.ts",
+      "sha256": "19fb9eb5589bcc6f0dfefecd7f842a9a1a7144b40b5b0d850cc5957afebd0773"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-derived-outlines.ts",
+      "sha256": "3705cac8f031e48052034a214e727d1c2d7ed7d20d05520ffb7abbb459b5c2f9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-door-display.ts",
+      "sha256": "dedb91550a35b5c688d5551193fe0654d29ea295f09ebf5a72a9af2ed6ea9b19"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-drawing-paths.ts",
+      "sha256": "334dffa1637d98e6f231bdc5f6af771f600b3fff35339c9176fbd1ada0aedc24"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-entities.ts",
+      "sha256": "b62ce8c26ad640d0a9d7fae82057805b82a90786692ce7a472dcb54876009b3c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-floor-analysis-view.ts",
+      "sha256": "2a4967ae5c5b617272faf85376dddddd7eb7eff8f4fbb35f07bb1e8c0878322d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-floor-analysis.ts",
+      "sha256": "6f23fd06222ecca5cc063af853f97a9cada71fe59cd813a162ec209550d8948e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-floor-surfaces.ts",
+      "sha256": "f4f1dca251238529a8030d10c5eece2557fa9334b7a3fb67e90a48d84c3b62ea"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-inspection.ts",
+      "sha256": "c3f9b2e31640952b7dd06b63c0d6ca09ee76eae7f8d0d30e85604d4f513e2ac3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-layouts.ts",
+      "sha256": "806743b74d0dcae4eabf983952b73af70970c97ebc5473b5efd6e34ac410b327"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-path-regions.ts",
+      "sha256": "a6a1b6d3bdc12e131280a4d27657f771df1834d6e7b95c35a089a1f07cf64c84"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-plan.ts",
+      "sha256": "9b67f28b16707d0f6f364960ea2e9d2b9c975eb4ca0b58da9e41af2f77900e02"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-print.ts",
+      "sha256": "87ffb5cdea06602dd657428cc007201c5861bd1d6aa0d6515e5d6bbb4321898f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-review-package.ts",
+      "sha256": "32a7b80c0db2fbc68f3c7acb9ce092affa0a2945ab28832f0e874d1f97c50d11"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-stair-assumptions.ts",
+      "sha256": "22359bbcdaa51c32d69e6dea547d27b30e9f1773beeea3ba03256610fc60f10f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-thumbnail.ts",
+      "sha256": "e927d53b3eb771974c7884c86d03ff9232a0785c4ff8d0b300f0bb1aed6421c4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dwg-worker.ts",
+      "sha256": "fc23dfd84985215f31d01f1ecee63fc3bea6cac506d04ddd3fac9f8f747a1bb0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dynamic-geometry-queue.ts",
+      "sha256": "8f74539404f39789c24d234b3ef376730ab6ab3e5110f867b823ec956e1640ad"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/dynamic-object-registry.ts",
+      "sha256": "c9ad1894b94be1c9cf712241724464393c0607030951daf0735f848473bd7d59"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/elem-table.ts",
+      "sha256": "acaedc27aa0cd2d920892a6cea7258b59cff4e05bb00c8ee4d240b5cf85e3df1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-headers.ts",
+      "sha256": "510de0965b57c79a7c7abe632d65486ab4c4e56876f0f90b902141bc62befe97"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-id-width.ts",
+      "sha256": "8df556bf2fa6268f03eb0730fa4b64bf7096bdba8774d4cf14e04b6ad653e864"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-objects.ts",
+      "sha256": "3535407ab013efa1060f87e612d3ab6d1a1e07162448c47636c4c8c6b657c9b8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-parameters.ts",
+      "sha256": "6f4a9ac59182a1fe2b2b46a4711bc027357f1e4a7a21465e809e9d6e9d22a32c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-relations.ts",
+      "sha256": "ca580033fcf860d4d121d8ef338656ddff9f59180daedca9496a5e90091d28b5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/element-types.ts",
+      "sha256": "cd451a16beb9b8d0b743453be85fb7b2e9f8efcbdad45ed5032cf8b5a56018d7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-glb.ts",
+      "sha256": "b5c20e469157bf600f0d560784357a5b22a4bc91292d7c7e747f142c2122dabe"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-ifc.ts",
+      "sha256": "18ee6a200ffd7955587b637cd792ccb3f9e57b0ef033d690e9d2717a1d02b540"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-mesh-text.ts",
+      "sha256": "28cec4f982dd99995a4268d8c065603c260c7c7faca071573fcdbc353bb75bca"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-naming.ts",
+      "sha256": "2fbef48fff01e82560169387cb4239d62d0aa40e74fd23593250c58f6ad92855"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-pascal.ts",
+      "sha256": "70d40075858f818ee83d938f3e5cb7ccb9aea1effe843cfdfdea3bc96db58edf"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-report.ts",
+      "sha256": "b5983cd428853baadc793701c6b56ae1d20f3499f6cf57d2bac953a9db2d5d99"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/export-svg.ts",
+      "sha256": "cb64839e69ce4a7d0e2cb2bf44f049c4e8bb8d9343f69eb464d6ec37b1e33e6d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/exports.ts",
+      "sha256": "9d00be65b932237295485fb608b4e7270bac21dda79773156be8f1bec589180d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/faceted-topology.ts",
+      "sha256": "03d0d82fe9115f46e3319d16e20eff7145a36bfce903383825fb03eec9095666"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/family-forms.ts",
+      "sha256": "73e9acf4368691479f7f98223e5c475350be6c7ad44c0c0b53f9732b60863947"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/family-library.ts",
+      "sha256": "58e686a9b612451d33a134ca95a72398aa217aac5a7cdc96ef0c439f30584977"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/family-material-relations.ts",
+      "sha256": "5799548a9c017d932b622b98db7bded08caf87368cf7f302800d5d89d14736ed"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/family-symbol-materials.ts",
+      "sha256": "3cc64b2dfae38447d4dfdacc2af6ebea38469537c4118267088020073a581e91"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/family-type-names.ts",
+      "sha256": "77643ff1dd57ea473131439c1c9a07daeab6beaa3950481c8402420ac7b87d67"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/floor-reference-catalog.ts",
+      "sha256": "bf12575e17d8134a2f9719decb5e0ee815396722b3d257f16b6556ecc7a8fd30"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/floor-reference-overlay.ts",
+      "sha256": "184631a6a11910d64c4797daa3036112df931b914f5f1e5bfb219b97fa08500c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/format-length.ts",
+      "sha256": "da0112e9c1a6ad82fd00a3b96d9c7e48e5b3e5e98a376047c3fd7fecf7ae03c5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/geometry-diff-status.ts",
+      "sha256": "52329e3b7db6bbcf865b0f15cf2d979c6879ebde54ca288cea5278f11f5939b3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/georeference.ts",
+      "sha256": "4771dde3199049aba46e9d191e0aeda24e71741c7f637db58a147bc21c978959"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/hallway-connections.ts",
+      "sha256": "8372c1ebbdfa15bc5540ebbf6e16164998755f821cd5e8d5597f9f46c1d6e8c6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/host-relations.ts",
+      "sha256": "34e94e72074500365fe486dd7677187868d55daaaabe3f44b9558a27a747f513"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/ifc-reference.ts",
+      "sha256": "2cf717f118ee9f33db40bc23c6f4ff643ae249f1837e7b7ad8cd6e178f651e9a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/ifc-worker.ts",
+      "sha256": "5d75353ff43374ed85fbd080381c3d5aa438cce7c2ced3262619dd21c7bb372b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/index.ts",
+      "sha256": "d9337f6226ed2cec1bf861e5b73cd097268dde5ccda6f9259145cf6eec3fc296"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-arrival-recovery.ts",
+      "sha256": "00862043959cff50bedb2dde9697fb0c5e6949a749ead5a46650254bfec7457d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-connectors.ts",
+      "sha256": "b38fe061c0d3458a858ff62dec515a743c8da2889bebd56cd34c199e1eb322e9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-contract.ts",
+      "sha256": "9db34e1e9d0b3b33bdd3ca79ea8106772cd3f2929def41654236534adc7081b5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-exclusions.ts",
+      "sha256": "5ec44c9d220eb50ef0f33bcf020c03f2527545e34e3c61d591afd58571dcc231"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-final-edge-reviews.ts",
+      "sha256": "3ce60321be5caa17843988081831550ac55995eb6056875fbff73971627d6b40"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-grid.ts",
+      "sha256": "e8bddece8ffd987288ee405f7876dbacdef63c2f97c7d9b119f5772c4489c24d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-lift-evidence.ts",
+      "sha256": "e10411d6c24627c1e86c31430063875f688a17a9bd91d4433fab009359f1cd93"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-native-prepass.ts",
+      "sha256": "770544c876189def0316fbdddeed5ad76b92b785c08485ae96673fffa44d1d16"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-opening-spans.ts",
+      "sha256": "0b495c10e385a03bd969d910cafea218b92a21674ef4d02f796031a85181bbbb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-pipeline.ts",
+      "sha256": "68ceebb499e7c797b6d5976f960593d2dec07acfd887c606fbf5a0cd2a065a56"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-presentation.ts",
+      "sha256": "29fdf1f6c9f1cba6b7897b0e10e24c96ba5a185206c458bf0786e1f512aa41b9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-ramps.ts",
+      "sha256": "87fce7a3dea07b94f9551aed1a8f2927fcea6392ecda011b44e5bbd7020070de"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-region.ts",
+      "sha256": "5818d2e20764adb593bc269852dccad001711ee351815b156d88c41f7d64a297"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-reviewed-flat-landing.ts",
+      "sha256": "44db5adc9eb0f95f8d64edf40b6f02b68634727e8101490afcb7d9568508e2b1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-stair-display.ts",
+      "sha256": "c3be4bd4b459278a79c55681a8d4feeeb30e3642cad25ae357e4f8e910c12847"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-stair-landings.ts",
+      "sha256": "d1feb853161d0992f18d2cbba88b872f93f5f4529bf3e8d8bf41d6f8b53133c5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-stair-run-surfaces.ts",
+      "sha256": "1ad111fb714e58263748b6c82f318bfbef8ccd43ea0369c34579200a86844ef6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-stationary-native-alias.ts",
+      "sha256": "56f07006765695639df72f4b1d563d5b31750c26ff9ce921d4547aebe553ac04"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/indoor-worker.ts",
+      "sha256": "194c3643cf878a1553264d7fa5a38b23ece9d32f3e04bcba474835536a16105e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/instanced-geometry.ts",
+      "sha256": "9b1350e12bc817a4d22267e41909c03552cb178aa6245df194041b174f4c69b2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/legacy-revit-2021.data.ts",
+      "sha256": "57fcb5c853c8ddec66cb2d67d633a8427849783f6f5976ee25662b5fccda241d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/legacy-revit-2021.ts",
+      "sha256": "41107d3253b2f0c1115c74cd39944db765bea4a5d1adb13b5f071d2182a545e6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/level-definitions.ts",
+      "sha256": "beb2598985628fb3ade3563243a1f7638447d63850172e5675c0b2bce96eee96"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/level-relations.ts",
+      "sha256": "9743391f0fcdca2d3f3996606d210f1a7108ae80bb6d877db5dc9a01980971fc"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/limit-census.ts",
+      "sha256": "f34e18a39c0a515dbc2f6aeeb4f2be0f35721d0e16e5e1c58136e872290a6bdb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/map-viewport.ts",
+      "sha256": "b547c7a3e234e73318e785dc6355c66fa9602d45e5fecde724782d8347a52c63"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/material-palette.ts",
+      "sha256": "6917e280ed5848a7b27894c540b0b0ad38624590b7eaea127f580d89d97b4c40"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/material-records.ts",
+      "sha256": "832b71ead4f0785d06a0872840855868c8f92bed74748a9eaa51a2d391316d37"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/mesh-element-bounds.ts",
+      "sha256": "8be8a3f9fde393d67f9fb2fb4dcf8c67e304c4b3463dd20c6b7dd774103031c7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/model-boundary-review.ts",
+      "sha256": "840a04527f97f7047b35a23c0b1bc098f37ce1162a22f8f426383bcc7f485eba"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/model-elements.ts",
+      "sha256": "73b6df6743a74710532f1e29b74be390e4a14ad61d88449c8ecddf65c5d60465"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/model-walkways.ts",
+      "sha256": "c8eae17653514da763fea9981e9394d20c9f2a9f48db7902e08fe7dbb3912467"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/name-entries.ts",
+      "sha256": "2ff0af70c60af88a6a45f757f96b7c381b0670ceaca1ead2f05fad4dd81dbe1e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-access-zones.ts",
+      "sha256": "f72f47ed1b0495c1c30fa0b9fba925f834cbf6c5bc12405e9c0aef718be14467"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-arrival-owner.ts",
+      "sha256": "3e65199dc04e481faa304ef10b4d49b81aa885ecea0567bd6b9d176ee179d447"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-authored-stair-treads.ts",
+      "sha256": "c739aa28fb6e1da819c6ba21c3eb101ac8c215a656b5a041ce109b9065fcf8ae"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-barrier-topology.ts",
+      "sha256": "9af967a0c2279d02751bbf11cabc3b9e5b0a7673e6a95e887ef017ed13ef759c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-boundary-material.ts",
+      "sha256": "a4545acb5273a0a2248b9c60105d20ef7586e6aaa81c14ba3b672c8aa10158d9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-boundary-patches.ts",
+      "sha256": "6f26fa4b916901cee09c677b3730c5b2ed300734a970614211a6fae05fc126c6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-boundary-source-review-evidence.ts",
+      "sha256": "a3a1b78c2f86136af800734f69902af79454d438f0c5be2516a054948d65667f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-categories.ts",
+      "sha256": "42f2686b3afe96229a5c91848a42390a3f7f88608a05874cb31deba9c58b851b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-circulation-binding.ts",
+      "sha256": "3d137619785857886c658079c76277840bac64e3d079a64a65357fc4c0771494"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-circulation-clearance.ts",
+      "sha256": "240bb9f33b6f107a1b8f09e7c37ea9c2749db2911e71932135941daf06bfe54c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-circulation-geometry.ts",
+      "sha256": "240ee655082ef23390fcd633948b76dce41308b97a0ed9a1f2c3334bf5b1651b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-circulation-links.ts",
+      "sha256": "c9ddde7c58fa9e5a7061267bbbafd877c6b70dd583fda25dbacc943c4ed64f2a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-column-cap-supersession.ts",
+      "sha256": "78ea1fb9a4ce12391cc22e91961f4952f4e33424858c8b80736e6738d59e8f7c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-column-jamb-profile.ts",
+      "sha256": "d7b8a3d339153fb3c783f615e9119b1e50f2d133e0f1779d924d48b07e6adf17"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-connector-anchors.ts",
+      "sha256": "40a1c49c1ef477639ec499e32616b1c7748858f495ec8b7cd69fbe020650fcf4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-contained-cell-display.ts",
+      "sha256": "977a4ba1264d521caa974ff5e930aabeebf2fdb331873c90abceffefc26688b2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-contained-display.ts",
+      "sha256": "958054cd99a65a9a64694738c9e7753342eb757151dba312485b5bfbc7adbad3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-curtain-openings.ts",
+      "sha256": "032bcd2d0eec251def58a5396ff9849bf65525f2ba24b14f7fb6ef129536ed87"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-decoder.ts",
+      "sha256": "3c5724bc0abe4d9a7a6e0fa31e40787ef129b72d67703a3c7b37b90eede2dcc5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-derived-frame-returns.ts",
+      "sha256": "dbf44b382296624a04495f17c6d3d6cbcba12344f84277771d508fc5246116df"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-display-scopes.ts",
+      "sha256": "86ccf78dcd0f770b53597070dfc29fcdb35a92fca3b404ddd19c9103a97010c0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-boundary-closures.ts",
+      "sha256": "0276a30e797815ae2f8803d5cd85272ae43a7d79e1a24544618b718bfd488f84"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-boundary-source-review-evidence.ts",
+      "sha256": "24be37af6c3c7681b92a54b8b9877f92dd613476356139136d33d24ec0a8f7f0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-bridge-proof.ts",
+      "sha256": "c0817a271e1bafc234e72a066e19d1d409dba8720dda8d24dbcf91159672eb39"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-clear-opening.ts",
+      "sha256": "6a1cec5ab9516a7a744e8fc8da9ca7e6e29ed1ff348061ec87bce2e14040c1c4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-exact-overlay.ts",
+      "sha256": "23eb7a1d4e9a06a957178b4d245ffade6047b3318dbe4eb2edb3e63f737e971a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-floor-support.ts",
+      "sha256": "c5627cfc29ee2dd9312a14ce7125abada4e84e4374cddbdc3f1c62a7f352cc39"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-ownership.ts",
+      "sha256": "e9bff7f91e2fb759fa0a71146dbae4a7ea272b2c69aaead84e391d799fcb112d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-side-proposals.ts",
+      "sha256": "cfb26ca3cf944bb299d5a868c06f66a50dbb2ba544224b126802d6d2bc4a3ca6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-sill-candidates.ts",
+      "sha256": "ab79c4bf191730758b68bce36ffb5b3547d49a70b5a94563415763f0327d13f3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-terminal-arrival.ts",
+      "sha256": "0a07872cde34c5941ad9073c3ec99ab03599cbb219a841f0e0bc4acec0b65170"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-door-threshold-proposal.ts",
+      "sha256": "e66451c14ba739cdd1589fd547e89a6e58929450e2e4477be050d46e4b5972da"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-drawing-reference-source.ts",
+      "sha256": "a91b89802de3a673afc7a629007f8609b064a85bb7230ced1aeebbaf8a99cc4c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-exact-geos-overlay.ts",
+      "sha256": "b61f9f439d03734c837869a9dcd16ab150820794a8b1996092250b9619a71d58"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-exact-planar-topology.ts",
+      "sha256": "e1dedd6d3bd7157a36c8797ff33c1dd783a6b96e4559388f728558072dff1adf"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-exact-routing-authority.ts",
+      "sha256": "9003184d627bf1bc84b71e321212cc6d62a4655b27f90ab3bfc145f0d5a4f1b5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-filled-threshold-body.ts",
+      "sha256": "41448fec9ce663d78355119ed054c05a7985d0217cc22ce0a8ec5b8e0e555863"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-filled-threshold-step.ts",
+      "sha256": "4e9a46fcd0152bce4db05096c321d2158fe509813d11b5543b5b81cee3788b67"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-flat-landing-driver.ts",
+      "sha256": "4b270f454c2da6eee96b44e1ab048bdff3eebcb484c9846358234812c1b27b8f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-floor-edge-connectors.ts",
+      "sha256": "49a25a3a713494535fab6d564ef33e7c81b065806deaae1f1d2c1f7288d8c04d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-floor-edge-rules.ts",
+      "sha256": "cb24e9bdd7e32cf1f1a0f0bcbe5111affbec7c8dd85931945abae22e32bd695e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-floor-opening-ownership.ts",
+      "sha256": "0ab2f6afe245265331248768ecf50dfb142e055e6d99b32285ddd5a2c344a060"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-geometry.ts",
+      "sha256": "4f09c574a80e7916760f8ee82676a4b1367c1ef9cdac7ee29fa740b7d4712618"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-identity.ts",
+      "sha256": "eaf749158363cdf23a6886f15ddff02497f960005e2d6db3661d5e98baf11c21"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-indoor-envelope-supplement.ts",
+      "sha256": "4a55b6db94476a6b4039aa0135ad7d68798cf8af9f19311f36028802cdfe2bcf"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-indoor-envelopes.ts",
+      "sha256": "bd50358a4950c42dcaab5ce0148cca5db9b94e92eb689675c792e8f58cc80983"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-local-face-join.ts",
+      "sha256": "22cc4f3b313ec3fa88dc8eec502959fe7eb40671e2ba281d07268440c1c5c1e2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-local-transition-qualification.ts",
+      "sha256": "97d1851603a714c1dd3a46aac9c1b3537c39bb9282d703cc8fa7373fd3dd6945"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-plan.ts",
+      "sha256": "43d7c64884e3e88efef99189ace933906a15316e9b0fc682e56df559613246e2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-section-supplement-derive.ts",
+      "sha256": "05c28f5c0503d23b36ecb8bd461078b82097deda04e04f0a602a48d7ef40a3cb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-section-supplement.ts",
+      "sha256": "e84a06622a10a12b17bdfd61d5ab909e1b99159403b75f5ce9c6d8d1a8897e03"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-sections.ts",
+      "sha256": "66ef1af850c526da86c658902eddce56cdda113a0afb24479e71c2ccfe8b6972"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-source.ts",
+      "sha256": "a40b9afa3e81e5dfed11c5faaf1d20b2a48a5eaedead0c072a278b4ad1ac2945"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-supplement-closures.ts",
+      "sha256": "5cead8b5f704577289d86226b248b2af10ea452f81bf6db1342cc07594b603d9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-material-wire.ts",
+      "sha256": "9ceaab4fecbc3114f9b8c12a91b41ccfdf5070c3167c98644386390a563fa36a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-mesh-barrier-cuts.ts",
+      "sha256": "0966b8264aa9040d0d69df18cb4ab1e07835971bd44b28552437ecd80e1591b5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-mesh-cleanup.ts",
+      "sha256": "41d74799284422b199938342bf473d1bebae8d86356f7660e04588d79e751aca"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-mesh-room-presentation.ts",
+      "sha256": "d54af52ee8b4a5357f6ed5976058acec38fe2e20f4dbef694df0a0f958bf3cb3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-physical-level-doors.ts",
+      "sha256": "a601a4bc75e8623335793b6b0b1808ee9441a72cb934bb9c9c519726984cfd89"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-physical-level-records.ts",
+      "sha256": "f3f0a20570bf46206718c7c6ebcd0346d3782154ecd55f3b9af14f93f4fda94f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-physical-levels.ts",
+      "sha256": "dd3d0fa2bb9bfcf895d71b242b1fac79223df5692b507e1d55609e434ece36bf"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-planar-component-envelopes.ts",
+      "sha256": "223742d6e85fe174229c782eefcc739abf59831d83ef5c8d156e52a3fe4fa5ee"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-planar-path-support.ts",
+      "sha256": "b961c24685c0f6002682e9be6dc6168cb6f9564294f4cc684a64d1f8a9423a4f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-portal-floor-voids.ts",
+      "sha256": "469ce692125f99982838b6b6a2f6d1248a5b00e6f2e55326ae86e74fc4f59cf9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-positive-material-bands.ts",
+      "sha256": "cdfde7a6036c1afc7fe66ea6c288e97870761666ebce0f8da2bb3d41818ca46c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-provisional-corner-seals.ts",
+      "sha256": "d23bb59f5cb1bc8657077f11e5f9ec7bf6ae188d2cc4fd053a7b2eec349de385"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-ramp-arrival-integration.ts",
+      "sha256": "3d76e2f8a3b36355e18cf7bd17c0be593e8349cba8f311a5c5efbc16535ac321"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-ramp-crossfall.ts",
+      "sha256": "9aca1b52cfca98f6c1239bde72d606430be620f36217254300839eb36641ed03"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-ramp-display.ts",
+      "sha256": "46fc1873535936d166f32f770cb608d18828802295abb5329717496c83cb2955"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-ramp-terminal-arrival.ts",
+      "sha256": "4cf1f4fea326cedd8f168338caf671c9a86784ca15f35f745fd55b4ae4815192"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-rational-intersection-broadphase.ts",
+      "sha256": "6b3a36046ceb58490b223800eeefc861b3a3afc0a301e72184492f5dbe4f4640"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-rational-overlay.ts",
+      "sha256": "f18aa32ad0e18a3d5f23b0cff06a636580439f5ac11dcd4c21af74f41ec81cc7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-room-internal-stairs.ts",
+      "sha256": "c60ec82f7f56dde39c5e5e258b52b9386257eaaf40f8c1e1961cb5816509bcd9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-room-presentation-jsts.d.ts",
+      "sha256": "6da1244042795a7094e4527cabe32eb48ef351e29289f6714ce56eefbc260d01"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-room-presentation.ts",
+      "sha256": "62687a59d1ab48abadc3d165b1e439bd50373c6d2b7333d86d81136c54931b9e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-room-promotion.ts",
+      "sha256": "b550716a6a59ca02d162dc703c1c449ca444369461a1b02329ba66111e7f2d98"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-routing-material.ts",
+      "sha256": "e51c6306fa8245da2dc5615eb6d47ce55fa65605deed2c82797519613f4418b5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-selection-contact-guards.ts",
+      "sha256": "284ea834ebdad8960f468a86e552d54423c5e85ca7fdd342d561ec993818b53d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-selection-contact-repairs.ts",
+      "sha256": "e47905b24921b15954b238b29c810ab60318ae77fa09f48b426d2b887a8a38cb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-selection-exact-overlay.ts",
+      "sha256": "eb9c0fc0f5b5d959aacc10219c53083b00146129c686179df1c5427cc94f4918"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-slab-join-closures.ts",
+      "sha256": "0a0f60ba73315e0ad61c8dc178b0777acd88372d04dcf34502fcd61f59ecd02a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-cap-side-adjacency.ts",
+      "sha256": "6d08edfe0acdabc8c103725f64d48436580ee3d9c06d7fd41de38f86ac4697a9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-curtain-cell-bindings.ts",
+      "sha256": "efb4529139c5b7840e2701b971e099011bc55682bbc0e07478704d5f887ed859"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-curtain-host.ts",
+      "sha256": "c4000bf0877abd86c436fae538aa524bc4ca62d81ced7b04ea1671c0fecc304a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-curtain-instance.ts",
+      "sha256": "3c75cafe71749661a2a4f189616667e6c252812af1b1fa51ad4c4020ed23e9f7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-direction-selection.ts",
+      "sha256": "876a7575ac5defe3b3b93160834be6099f851ae3a09aba0c1d40a26d9d2d82d1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-element-header.ts",
+      "sha256": "0ed24c2bcbb09b8b9319af6ea89c67b17b28c5a8fc9ab8254f04fd5852823405"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-element-level-prefix.ts",
+      "sha256": "a31462e3007a86013493169088d524eab9ad3d72a254750ffecab8b1770e2d3f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-cap-demand.ts",
+      "sha256": "ec4d5351ff41f51b2c00e2114106633e1c810b267194c46f081b592198cc8278"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-local-support.ts",
+      "sha256": "018f59797002e92527b039a25305b1497a3fe3e90abf55e1c0070e37d878c215"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-obstacle-domains.ts",
+      "sha256": "1bf37dbd7d2d553a4a37620b9c2765ac9ffdab4adefd5580f3c54cd8a7c1393f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-foreign-envelope-census.ts",
+      "sha256": "53500033e21de4974d39c1ae465580ddc6382bacea2bf8720d7a27ca3d50c222"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-mullion-host-enclosure.ts",
+      "sha256": "b127de95aa7316901ac64237609629e0cc40449c558c862bfc70c7dafbed99a9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-mullion-symbol.ts",
+      "sha256": "6b42a00e3813205d51608262d24ddaf27da582a1329e2562d2f45a47dc7d2b1e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-panel-symbol.ts",
+      "sha256": "2bd06ea3202df7cbe511d811a151583d13463030a4bf8b7a2fe941734f85d935"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-partmaker-prefix.ts",
+      "sha256": "bf649c58a47c0957683c6491491304ae9afdaf77228ca1b5f9afd8b06d2a2a8d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-placed-planar-obstacles.ts",
+      "sha256": "e72530cbbd36fa3862c6562a635a835125f09fc08fa66acc6a2aa46309e58652"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-placed-trim-obstacles.ts",
+      "sha256": "d56ec803ddf0bd2598d21351956dbc185582a8739d7418a1745854477daf5948"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-planar-slab-envelope.ts",
+      "sha256": "9573cfe3b05f1963f7ea51ac943ea586c5013aba6cb512ce03a67c8e09750064"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-rectangular-mullion-envelope.ts",
+      "sha256": "02cb13e8f326c70dc833b72ede1d4b4c9c72af86fc8b3b0d3e29bff7888b87eb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-simple-system-panel.ts",
+      "sha256": "5e27c422d630688f2257f1cdfc15fe61ada1658b18306c8f1ed2dbe3c2bcaacf"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-body.ts",
+      "sha256": "a09cad1963ee5c09b0eedfd6e6f7be9aa751e0d6018c7c74be18eabdc7936746"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-face-orientation.ts",
+      "sha256": "16e62e430a736646a5cf235992a9f959235cc11e0819492c1bbdb82e7de89d8c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-floor-attachment.ts",
+      "sha256": "fadff512458e229ec4346e87d28c45f960ff4064b8d539a8557539ca6498d437"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-local-material.ts",
+      "sha256": "13dfaa33e4eac9b04366c6a6993553b32929b30df96c8388559eea4d3ca3bf79"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-material.ts",
+      "sha256": "0900e3f8af25ec0917fdb092b41f335174e682b800dff81f7b6044d23228b3fd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-owned-terminal.ts",
+      "sha256": "60f332d0840ae6f265ac6444bd1e2ffb7421bf451b623695002d60a4d4b4dc0d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-path.ts",
+      "sha256": "18e70c0efba6a4447ca240392a22746741af9e410a45619740ab04f77ed93d6d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-physical-inventory.ts",
+      "sha256": "ace9f4afb29d849ae6ee10e9419c9c14d7670eb1e7fabca8dc7924dbb9d0d259"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-placed-envelope.ts",
+      "sha256": "a4cb4481b693b05c83d5e4507a280668ac119612f0f1d9cbccba852c8af978e7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-receipts.ts",
+      "sha256": "787116c4dc56b1b69aea047752b68da27787b35a0210e6ac8203b4e011b31240"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-riser-continuity.ts",
+      "sha256": "ba4fe5920f913d309806fa2067088e15e0510120323a4a99be8720cd097006b7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-riser-crossing.ts",
+      "sha256": "9a35d7205b600e0d23b4cf1f90511d1dc12ec1bab3aae9437795208b2ae3525c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-solid-proof.ts",
+      "sha256": "d325e18cfaa30edfae7a1a530b98148f3a57d6054267febff6c30afb121be9ae"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-stepped-stations.ts",
+      "sha256": "d721e7b70e6f2222589219cf12ce596518a3dbdc6b5b30e1f188bb4033ab7dbe"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-support-envelopes.ts",
+      "sha256": "b3c3cca863c90547bc99ad08115e27140cdd4f9e89863deaef0178c4b6193009"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair-width.ts",
+      "sha256": "9592f1f6a38b8f686c9000334dc2c35cd08a7d7be7af0ae6613fc8ca2a57ca10"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-stair.ts",
+      "sha256": "5cde4b4480935e696dbb77c6342fa70e161eb61c9bfc3390fd8ecc34cb69f211"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-standing-footprint.ts",
+      "sha256": "7187d79984f7b079407abf6b9c6df0f089590323e49bacd7e432947112dade35"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-unbounded-instance-envelope.ts",
+      "sha256": "2c69d0b06bf77d5f65eeb258711c7131c8aadc4bd91713c1d9730dce61ca0c2f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-walking-volume.ts",
+      "sha256": "db4c4b01f03169f19c0f1d0becfacc5b6e57dd03a5ec16aff1265f59c858adf3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-wall-trim-obstacles.ts",
+      "sha256": "85b45e7e79a2569e38f53c2b897ec7cc2065062fac6a181f88f1fbf73ed46b9e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stair-headroom-audit.ts",
+      "sha256": "566b98da7370c0c4a9b0c96f13201feb2834d39b6efd01e39ad508f9b771b352"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stair-landing-contact.ts",
+      "sha256": "22ce2a610fe8856f360a473c8021361f8be76aeb032cd65b3c0a1ac344dcd083"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stair-owned-display-inventory.ts",
+      "sha256": "104e856a5ae3a3f59937e155304f88eff784031bcbbc1dc08362bd576c63351b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stair-typed-fifo.ts",
+      "sha256": "b737d535c3aac8b7153b94c85807cc895be4f6caeba7c037bdb334805065556a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-carrier.ts",
+      "sha256": "ced0f7d83611dc3a25233b1e3093416535c7f15d5a01130ff961e67d2bc30990"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-closed-contact.ts",
+      "sha256": "59bab25b9da4ca6d084887c859d525bf4a50f6881bb4413e4ad0591b317b738d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-footing-boundary.ts",
+      "sha256": "3572a444b742ab41396c628f01b98a041e2be52bf68b90c9ec6b70df6fd99628"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-graph-binding.ts",
+      "sha256": "f40cd70276a9d4f4b8ca2c42810850255cedef094d8c1262a9c6aeeca3c133f7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-kernel.ts",
+      "sha256": "59066a74267fc41879ec8f559e0ce7faf2722aa7e93498a191b508ec8965e4f3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-lazy-wire.ts",
+      "sha256": "675e5f605e1876d65b2ac657b42fda8c3aa4a1354740087893035926a2e40730"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-riser-crossing.ts",
+      "sha256": "21b48bcfa7e1842acfe533dc2168a97863ebfbfc8abe92a6d020b1150d19d0ea"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-source-types.ts",
+      "sha256": "262bcb1f56a31437e107cb2e09fb1f3ee38017698f31db5c0fa74c2f16eb1189"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-stations.ts",
+      "sha256": "2987f721626f07c30429861f4b62eb5dc2c6185bdc37885464ff43f23944739a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2-walking-volume.ts",
+      "sha256": "b650e1d2bbafe3e7892396f832da194ab208daafe9badc1a4e148578dadf8c27"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-stepped-stair-v2.ts",
+      "sha256": "96b26a1524533c738310113cd732dd452101fdc53bc0541f21dbf8b05d8485fe"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-terminal-refinement.ts",
+      "sha256": "73c93c75d384cc5fb3e9d15346b3c27f2b75d77b1311a25217ed933f77473559"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-terminal-repair-pairs.ts",
+      "sha256": "7511cc30422503ac3a96ee174795d62e9cb09762ce85d1c5f9268eaeff33f8de"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-terminal-visibility.ts",
+      "sha256": "2dc7137907dd8c1e9677bd34cd70a21a1418d8792bdb75de220c1f1ef427c62b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-tessellation-policy.ts",
+      "sha256": "3d655a7eadb3e7c37e89a19cba3c4c31377c28080375ce2a0863dfa5ee6617f5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-wall-position-repairs.ts",
+      "sha256": "9755d4a0624c0112c4a574df264618f9ff7c867af57c462766f3c14203dd375b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-window-display.ts",
+      "sha256": "9361ece6ed5c158733b6f212eea8e12e3eaa1b366b096b449fde2fb6f70c26ea"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/omniclass.ts",
+      "sha256": "49f0e82b1834f347fb07dc005722fc338f06663114ef92612ad45e99a209f5dc"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/original-curtain-door-threshold.ts",
+      "sha256": "17a040dd326bd8e71232a03b52b69cf927d7105b3cb5c73ec3482f123c357da1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/ownership-report.ts",
+      "sha256": "829329af8a9c4fac65e0064dbe73d34bde262239af81818cd104e3cb98cc909b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/page-frame-index.ts",
+      "sha256": "824e4f9406aaefb988051cfbffe861f36efe01da1c68a9782a77953741c94232"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/paired-source-stair-body.ts",
+      "sha256": "0a2ad3006559953c8a99152da46855baa462b0c7705db9ec534e58330b97c8fa"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/paired-source-stair-walking.ts",
+      "sha256": "aa8f2f9628ffd4d6dffa627497860e73aac914e68c4a567902420f6b3f1236dd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/parameter-specs.data.ts",
+      "sha256": "d9b0775dd52896a0bb154a373f3ef8ebd8a7ff131f20850a6a96638016568f1f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/parameter-specs.ts",
+      "sha256": "b6ea46a5809cb8aa681550d56b59fb0b9f115b6734ff11e8b73ce2385fd458f0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/part-atom.ts",
+      "sha256": "3bce3c1c2e676b9187167c14efa40a46b03caa56136e1d0e31e4995142ad6a40"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/partition-names.ts",
+      "sha256": "e13c24ec2a3ad75dfb8d27455d981640575215e5f0c4ae437006d9799c8ef604"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/pending-native-door-assembly-bridge.ts",
+      "sha256": "6dd787cf7f70784ab455c4d8215786402a181a8a8571bc8568fc20f5bde10903"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/physical-portal-barrier-scope.ts",
+      "sha256": "3383a7276221d4cbf35372fa48801c1d1cc3693f2efcb693831fe9083453eca8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/polygon-bounds-query.ts",
+      "sha256": "44a53e78c05eb64615b063f471c5138846324bc2082109a03a81fe157d00718f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/polygon.ts",
+      "sha256": "8e34db4a4bcf06ae367b28a8de57e0783abca91afef244c5bed24d924e6122e1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/prepared-display-cache-container.ts",
+      "sha256": "d90c663765207ef6ba365d6c3ea1910c6f6acf1c02dbcefc71bbe24ad87e1533"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/preserved-native-door-portals.ts",
+      "sha256": "3d6381225417f9d97fadd6ba323772380306c15d2d46d2e8f5d79d6222b9bb1b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/project-information.ts",
+      "sha256": "0a050ce713826e7dd4f2b278306f2cb38aa344c842fff3ac0329169d6797523e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/project-package.ts",
+      "sha256": "d1b09feab2448bf8da7daad14e55967013ec25ecc20e240ea585979e05b0d9d7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/ramp-wall-clearance.ts",
+      "sha256": "ad615eb6a3f4e352aa64ee4dfae7d01b6167c2c648e626e5c16f830f92e156f3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reader-support.ts",
+      "sha256": "ce394cc303ea45aac906d73162dadd7c5939a189e133b577bb8eda06b3301bf5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/record-codes.ts",
+      "sha256": "6c7c2201f462d11585b981ed37dee6b265e4eee8bc2d752c6ccc4605ba270d3f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/recovered-extents.ts",
+      "sha256": "c976e715484aee30e9ba483635c7852a1ddd90bce4add49aa28561d4e82283d2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/rectify-audit.ts",
+      "sha256": "6b5098be09c9f669cc0d062ea88eafbd61faebcb2218fc1256cb309011bc746e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/rectify-plan.ts",
+      "sha256": "a99257630998088ff97aba43f332c840319946dab2ace476d0e684db2434d06b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/rectify-walk.ts",
+      "sha256": "e2f716a1dd6a58164450728f18936a3f256d28bbb9bf617bcc3ceab23572dfa3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reference-assisted-recovery.ts",
+      "sha256": "abd970f6430b41214413047e90e8026d0887e9e8da666bef3a18028d291a13b0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-door-symbols.ts",
+      "sha256": "ae1a5ef90f0ea0a8860645dbc3ccef4dd8e54b991550edea1bc08cad20ce9212"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-native-interior.ts",
+      "sha256": "ccdd436581818292dc48f5e304935a42ea2c8540a0f390be31d77b068cb0459b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-open-fronts.ts",
+      "sha256": "9c54eb49cc8b6dcbbb2b6f8aae001ed9ecdf031a46d8aeb509c2d59d1b45d906"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-room-presentation.ts",
+      "sha256": "4e616775401d69fdae5f8c4e193608b6cdee7f5326bbf5b740c7a91ca93039f8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-single-door-swings.ts",
+      "sha256": "31eb3cb7ac12c4be0c83a13be666ba38f7cc83bee0997161237523a4f8660c8b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/registered-source-doors.ts",
+      "sha256": "907b8d28b0becc190a577045f6bdf811a3fca7282b7d624b0d918c6faec58628"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/regression.ts",
+      "sha256": "9ebb8784fb222bc36fc92b48e6951bae3a254490f5d671a9e01907fe87e699af"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/review-bundle-core.ts",
+      "sha256": "fda99716d5e2c4a49d8d7f5830b8a8bacc3d2d78adc5329f5c54394abcf23ca2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/review-bundle-inflate.ts",
+      "sha256": "09af630966aaec9ec227cf5879b332d1de08f2f4f8b63230e676baa14d070c71"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/review-bundle-limits.ts",
+      "sha256": "aea4cc9b3af084a5fc28d9bacad53e442f8a5e5171e936b594899774186c7775"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/review-bundle-wire.ts",
+      "sha256": "7402d0b448b042aa7df5a5b66f8dd4d71540b14061c4a91b381d53f358d13926"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-area-partition-evidence.ts",
+      "sha256": "24c29eb2517ba634a0c3533817f9894b65a7df877dd1275537a695474d338000"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-area-partitions.ts",
+      "sha256": "376c28836e4ff0f956f5611d55ccac5673e6a4675bee8ebe04f38baea5c8e584"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-circulation-links.ts",
+      "sha256": "792229756f7d5e72fe41e11600a98b9a77c5b2d94d89c0204542178c25d1a7e4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-door-apertures.ts",
+      "sha256": "3b8e89219412167fe204c8e3f0d24ca82ba76dd9b449c1ce46c64f2702a89b3f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-drawing-reference-source.ts",
+      "sha256": "e2e5a296b02bc5d2faf37a2ec3e1a335790ddda944fa7bde4d54f48fa654c418"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-drawing-references.ts",
+      "sha256": "2e3dcef5dffb38e8d2f0331af5eb83e76a041ce7fba16779bf6d8a375dc314b2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-drawn-door-compile.ts",
+      "sha256": "3799b5b935f3ac253f8f959806d63abfc65f66e1ce2a79b3312b7be699c88d65"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-drawn-doors.ts",
+      "sha256": "300c2811b65ba8bd9b1bcaff44dee4f53328729df4b7f5ac98482dd3feb696ab"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-landing-door-links.ts",
+      "sha256": "f2aeffd880cc8be898c0e6e60ae5336dca7b48cf91d76619974d236b3f6cbfae"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-native-circulation.ts",
+      "sha256": "df8be0aaf18ba75bdb95a7c8ce148c42f71bd7f1a4f1673c0a23622307c83ed0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-place-labels.ts",
+      "sha256": "a590ce1aa2251d5c1f43a1001cf79b4ec1f21dccff896e260db42d86b2f9e817"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-room-presentation.ts",
+      "sha256": "0a2a4dc340e1491e0ced106e351e28025a7fb88df49405e68621e2ec40eaf622"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/reviewed-shaft.ts",
+      "sha256": "c154f576aa2264784689583bab1412d7689c10abb6828963de8f0554fc9b31f3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2026-element-grep.ts",
+      "sha256": "6fd552a058e052ff06c552861c6c07de48483fd1856bfdd34bd11a3d73c9b304"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2026-grep-root.ts",
+      "sha256": "456c8b00ee710ecda6ebd451ab404a506b648ab63295bd948f8bf3ed80d45f7c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2026-object-dispatch.ts",
+      "sha256": "f13cf37627e4435095ad90fe551ebe0107f63e13f7252b5d5a501e098888649e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2026-queued-object-replay.ts",
+      "sha256": "936bff2682bb0ed09c8dda90e89e34d5120527f1271c3cdcd82e96651a70fe36"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2026-source-representations.ts",
+      "sha256": "4b41e4a7a52726300ad93c5ed90b5c0dd1b57ec1aead7cccc54091037571c682"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-analytic-edge.ts",
+      "sha256": "498af81221de0b6eb43640a602eefe8c9bbde96998caaf3db6bced668ac1ef57"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-arc-surfrev-owner-mesh.ts",
+      "sha256": "4cea06311f77e5017669cda83a4c7bd8b90ce3a21b948cb82eef4b46a7faa243"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-arc-surfrev.ts",
+      "sha256": "1cb6a68afc5aa42bbba2d7f3feeccd2314f4c3ff9141e7234945b7effb2dc14b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-asset-properties.ts",
+      "sha256": "5687847abeb5e80df52cc3094df609598e8cc24932415d2e8bb60910728226a4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-baluster-instances.ts",
+      "sha256": "81024a3191e879af0d74aae26abad2e903e933db47e3a9f4491443c9a1f079e1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-base-railing-stairs.ts",
+      "sha256": "8aab15e4b9d1bf728ee9c67415d67b55337c4f6439841ed21f80466563df89ee"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-brep-handoff.ts",
+      "sha256": "1d324ec67828feaf0fc925247ae818da7056b590e3359bd6cd1d048542ac2329"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-certified-owner-mesh.ts",
+      "sha256": "bc71e76e610c4d62ca87536ffb90b374c6fec2e3dad515525215ab221fd73ee7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-class-names.data.ts",
+      "sha256": "bb5240b4adda2125255a0d07f8723c962c28c866d6ee1d82a74378099d61a7c0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-cone-apex-sector.ts",
+      "sha256": "2ac2538c12e31167b60decf8f0aab1ef0cc3729cfe069fac0d23013c64ac2360"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-cone-owner-mesh.ts",
+      "sha256": "8f97b3f4d08bd2b1502d4def70bda1cd039dd66115d6445bb2835f806ac0e38b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-curve-evaluator.ts",
+      "sha256": "45cab5c29f236a8bddf378a302a659c22f27fd7017b637130aa79a92ea580e84"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-cylinder-owner-mesh.ts",
+      "sha256": "010dcedc8dd2da1f35d13c90111ae3596a86589b5e22994ba486fabc992b6df0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-cylinder-sampled-brep.ts",
+      "sha256": "31298c0003e9864a23b7cf00cadda5619f4a9db47e134f1fbc9b7bdb234fd5b4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-default-3d-selection.ts",
+      "sha256": "a227b4cbf8fc1c4b495afb4d5c46f8e4ce77469bb8ccec9cc345845c3c6afc39"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-direct-geometry-root.ts",
+      "sha256": "3105f1c18289e1ad7c47fa553f6dd6e502e007cd7063f3b3efd5a3f0d5809a95"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-edge-1423.ts",
+      "sha256": "54a74f7935dcad4ddc0bdf65585decd1c732f53bfb7f3a58b385c15a30f07baa"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-edge-loop-static.ts",
+      "sha256": "652f3aa735a68ed01fa9a90a5356889bae62a61ca053a00e2b8e75c354ae6ec4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-face-material.ts",
+      "sha256": "adca0b21b31c989570b72b273b6ec122e323292bd8e68d06de0c8d28c6238459"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-face-static.ts",
+      "sha256": "e87412a38532fd85db9ca0a2d3d8c2e90105b5a96a6f47103fca6c53b5a2ab55"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-faceted-topology.ts",
+      "sha256": "ff4991caa61f83e59ab4aeefa66adb36129524ca136dfa2be8bd573e4bea7b63"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-fill-grid.ts",
+      "sha256": "eb16c47b9fb3f383b9112e654afc69734b799d6fc11985c289dc06e3dc8d394f"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-fill-pattern-data.ts",
+      "sha256": "dc4255fa9360eae4cb80847eceea240bb5bbbfe6265d428ab7602622fe43aee6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-framed-grep-root.ts",
+      "sha256": "b02782846261857061e4239ccd1b617e3bd8d3ce114aa4c1abb6cff0d6709d2d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-garc.ts",
+      "sha256": "626901c4a65123d5079673061d332cf7529b36a41c854c17af97541646a0d3d8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gbi-flip-control.ts",
+      "sha256": "3372e4e66b33f92a588d73aa56e21d55b3701bfaae53e8ad626f00ece64d35af"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gbitmap.ts",
+      "sha256": "eb84eddb97c70336b4998b39db9b43600bc3a484ffca3e94661641cda64c1013"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gcomponent-ref.ts",
+      "sha256": "5cf75787c78b64744167c4a2e396f6403557259e22971a2bdcd78de8e649158d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gcondition-cut.ts",
+      "sha256": "eeecb66c28f8852e681a872b912759b4b635def0693f49c00f3f1bdc11e7b3f2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gcondition-dir.ts",
+      "sha256": "e24cfa38241b987e363362170357ab8047375920358a7172e6f5f00b7aea8ff7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gcondition-int.ts",
+      "sha256": "7161f93b7e8a4708eba384cafa15dbecfdacf3847fea53f14da97c5fc53c40a3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gcylindrical-helix.ts",
+      "sha256": "6b4ca3c306617fb7b6217955f09d688239fcd078eb3e0b40ea223c9a47a84618"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gelement.ts",
+      "sha256": "3a2d6071e09057f9fbf7ac82db68097f5ab240ae01bdc650d124ab0021bcb9a1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gellipse.ts",
+      "sha256": "ee501c21ae9ee5da108468b5f0cd999caff2aff2a9c853eee46a8b321d2294f7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-geometry.ts",
+      "sha256": "b4c15056f30702ff6490a9257ef16dd20591807bc7ca3315a93c0dd0cdd8dd3d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gfilling.ts",
+      "sha256": "0acfaff76462554d06030b23dce1975968de637eda5a4d2181d582550be14dbd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gfilter.ts",
+      "sha256": "dc670dba0cfc2a77003f7e379938d579507fd8ddbad685b6a0225412aa1e02aa"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-ggroup-fifo.ts",
+      "sha256": "eaafb86b64989490909531b00cf0ae98f845cd279517eefca5b45ddebdc0fefc"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-ggtag.ts",
+      "sha256": "23477563460f93b4eb8f5f09fb2e1dff4ddf3ac93c1eea49cf386de3cf352855"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-ghermite-spline.ts",
+      "sha256": "94f697592d13e4dbcd3ec5e3d9e516406d05312f767cc4c1199a10b8b78d183a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gimposter.ts",
+      "sha256": "a6195d3142c55384ed8c553fe559ac4d401d1afb17f162dacb6a545a6ade6ffe"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-ginstance.ts",
+      "sha256": "0d95fcc6e285e1dac8185cd7cdc43d7afb0a9e9ecf8e4e8dbe7f55587223b4cb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gline.ts",
+      "sha256": "3829d4b05279a44288555f71560097a425de2e5f5b595f4f03bcf9204c046901"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gpoint.ts",
+      "sha256": "6f39d899c5b2eeae3ac805efaaba5aa875d37b316cef4c2da221ea0cddab3799"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gpolyline.ts",
+      "sha256": "63fb6c178c3c5390cb7f6e6829367706cbb33def142c3ec4e589a3279982ae20"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gpolymesh.ts",
+      "sha256": "3a6878c7bb2880d49ff92d7b747bf119b7752da564cc273c1c474501c7a9536b"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-grep-prefixes.ts",
+      "sha256": "47df3090b9ae9322d3e12a33925915ee78e4218f70331c4e17abff16e5b6e93e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-grep-replay.ts",
+      "sha256": "d4e111db02a51dce1992ff7f917ac1c6ad3d7fb100b736f0a82970e5a4d11cec"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-gstyle-material.ts",
+      "sha256": "95adb2c511d201e6a6e258cf0e519ccbd4b8a34f9aef55c38284104f28bc94d4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-hermite-owner-mesh.ts",
+      "sha256": "5770b073db0116e89d6faf4d6674c7fa821f94487487414cba3fd26459f65cfc"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-hermite-surface.ts",
+      "sha256": "b4c420892cf7fcf6cd2b2cb008bc24ab09beaa67eb6461ebb9b61ea5c03d9659"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-native-mesh-bridge.ts",
+      "sha256": "f7af2f376cff08ec6c1d2bb7bf536bfaa6d8267c2181a3986896097971d035ad"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-nested-instance.ts",
+      "sha256": "bef877df5d765486181fb1294034e14a510fabba9e5069f87d91b05cacdf1e35"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-owner-mesh-grid.ts",
+      "sha256": "520f1c7d558ae0f414c8c44385fd6a71961ec7f1f16c0023cac84bb83e54f00c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-owner-mesh-index.ts",
+      "sha256": "c5fdb76144d58a9b24896b05fa94ae4cef768043f4da4a9fce5a979a868f0a85"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-owner-mesh-trim.ts",
+      "sha256": "235f0d6b0745bd84f55ea0e3f60ef4a09f546ae77328c41f35ba707d67948c25"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-planar-owner-mesh.ts",
+      "sha256": "a734543bed4a4900fb8f2514994091026d075ceb3108fe36824e9fa6a8860277"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-planar-sampled-brep.ts",
+      "sha256": "dcbbd91f51ff916a830bd5e2004e87cbb0a5040b378bee3754269398c4c21632"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-polymesh-owner-mesh.ts",
+      "sha256": "d80239ec09a9cc2bcc739f020930285576ef72077baed320b08fb7be2db7d854"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-ruled-helix-owner-mesh.ts",
+      "sha256": "6240b710355bdf05abbaeef15e5342fa22819a7b9f32d7d1b6748f45ec5410ec"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-spiral-stair-mesh.ts",
+      "sha256": "15a44a37dde18dce70425af50182da79ca94df38827915982f02e8406780c918"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-split-alternate-frame-collector.ts",
+      "sha256": "8e89690fcdc42fba5aa143b91ace72017686a636c828d64eb7085f67e4280fe1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-stairs-aggregate.ts",
+      "sha256": "845eb7e30f4127e8a78878dc1bda103ba9f2315e90336a009e7407e7d62f8956"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-stairs-run-collector.ts",
+      "sha256": "85c539be6f9ae52f6818cf514f2254db94534d6d7e414c86ce678bbbba320767"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-surface-evaluator.ts",
+      "sha256": "2e1606e5b32d403b10c7bcbaf407b9c7efa37868fb6b63863bbc9b1b4c0c1eef"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-surfaces.ts",
+      "sha256": "a4335391ffc411b2e730e6f77ef900d571524d60c932e3e8247ee82b75c237bb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-top-rail-mesh.ts",
+      "sha256": "baca405a4c6655b0968dc54e5933db3287d100e512ff60da665d7d9a71596aa7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-trimmed-owner-mesh.ts",
+      "sha256": "0bdccbd5353046700bd1b36610766ec317257e214ac827dd0582e76d7dfb6de4"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-trimmed-uv-mesh.ts",
+      "sha256": "b95fc98ae9bcf80de95e228cd6e1adec2d91eebd9dfc932cf800e2ba4fa74533"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-2027-undrawn-geometry.ts",
+      "sha256": "401432258eebd319908a87daec12e0c59c76de5c693aa8921778facb62a3312c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-class-tags.ts",
+      "sha256": "c4b24878d570b64864323aac0f5ecc44fbeadb48c30ea917bbd0db258ab18daa"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-container.ts",
+      "sha256": "da9a7128921cf7f7d0c0cc4a5cb7ed35b02dbfc4754a2bc863fb66d5b4e293b2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-enum-tables.ts",
+      "sha256": "70095679b84366d527aaad380099505aaf0227e868841b0df6af614f1fd7f895"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-finish-inventory.ts",
+      "sha256": "de0d6559c9d053062d3def7a60713d83349e0d6a5bf923f1a359ac7ccdb8ea52"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-grep-queue-replay.ts",
+      "sha256": "c85e039c9f2a84d3bbf494bffc348d1e9d9c2ba51d319260cc58215e0006d06a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/revit-text-encoding.ts",
+      "sha256": "95c595f602493884fc00ee16b3a3c0cacf5f7e2283a71a4066a55e872b701386"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-block-presentation.ts",
+      "sha256": "6c07ebc89fd93856bb28b4656acd70d658d7f746fb6444e9f03e51fdc5d593b0"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-boundaries.ts",
+      "sha256": "d1787e8985a9f28fa074938ed6160987342ca03cf577e43fad1544386dc3ba64"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-boundary-audit.ts",
+      "sha256": "0393394d3adc40c46e6ace17d946682be30798fae524dcb8759e2d501cd825dd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-directory.ts",
+      "sha256": "f3486c68fed9f638894ca7067423f23f51eb38a8e72d2ab65cbba2c60f643fde"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-review.ts",
+      "sha256": "5765b3d4c2376bdbb97e063c84a403b1b0c46602965ba04ea33744bb54f84044"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/room-touch-normalization.ts",
+      "sha256": "2c27ababeabf321a788f334a19887b3167cdeab2a8b911c959a338b142def6b3"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/routing-apertures.ts",
+      "sha256": "846d51000f4714e50addbc26024a9761277f316b1f408d32b591f1650a7016a5"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/routing-floor-support.ts",
+      "sha256": "8c3a6e00fb92d8089ccb77f0fa92a3e7f9339e3cddd1b51cf0f63ebb65ec777d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/scene.ts",
+      "sha256": "1e71a4836b2e01b148cc4e4a42668756f8ca8387fb09bee2b44a787a746f110c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/schema-reader.ts",
+      "sha256": "72a1d8b5304faf2ad424dfdaea0b883a501bf4e07a123210bc0b66c78fa83368"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/schema-tag-references.ts",
+      "sha256": "c830f078316a20c17ed83fc5a1d7b0173ce770a6abc01754122eef9b265bf8c9"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/schema.ts",
+      "sha256": "1f7da77f50f142771eb7fc2b18f7dae19da8ea9e3948b3abfcd82cae35eae324"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/segment-scan.ts",
+      "sha256": "d45956801fab54bb93304b50985e74a2c9422791d754b65f53e88a6842a5b358"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/selection-door-thresholds.ts",
+      "sha256": "f3b879a340572d9bdaacd69230b09bab48d2dffc74714e81995d25a98fbcea51"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/semantic-door-links.ts",
+      "sha256": "025dc312d37365c68287adb91855bfc22d2c2ca7934c1006b4aeb16ae678452e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/semantic-room-boundaries.ts",
+      "sha256": "54141138762998305f5f00991c0b4f9dfe445e1e7dc553b5ad9cbb878e98fb81"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/shared-parameters.ts",
+      "sha256": "3955181394f1c2bc672ac018d5ac7d4bea8bc09ad20301ca4084d262d41bad87"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/sketch-curves.ts",
+      "sha256": "a358c63591e4177f87f400cf43f50967cb43c7a5f19c889265a753b2c45207de"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/solid-clip.ts",
+      "sha256": "a5ef4e9badd1766b0bc1c3308d5d7b6f6e705537ee655f8d30605f1a357b4e8a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/source-inspection-scene.ts",
+      "sha256": "6a7e036eb528bb4efd40ea6f4d33ba097d0ad32f70b202fccc2f3d4b9a613383"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/split-frame-stream.ts",
+      "sha256": "2fb4b7bc5754ba865dcc38b5f3f16012318fb5d1eb66cea3680dddae6e688a91"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/stair-assemblies.ts",
+      "sha256": "ee9d863c73f064d681f461755022cb7d59fc84bfe3d2e95d6b88794ad11df99e"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/stair-treads.ts",
+      "sha256": "3e4053cf1b7773f9ca996664db17a73e6b3c01268eff9fb62a838d8395477277"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/static-bounds-index.ts",
+      "sha256": "3e85799dbdd970598191197d4964791a37b9e81e748c2b9b3389b11f2a5182b8"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/stream-coverage.ts",
+      "sha256": "f24ab3883041b7b0cfdb201c023c9a05b855c16552aed2e3fb50ddd9169eb139"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/strict-native-floor-polygons.ts",
+      "sha256": "8c0265a84a45518e9f8574d1b5badd03e8fa076a33880fc86d239c14edbd7dfb"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/surface-orientation.ts",
+      "sha256": "e38cac5b5b22e9dc72e65156dee6765e0c94e0d7cd640819c3d0031feeb9b8ea"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/surfaces.ts",
+      "sha256": "f57f2d152830e5eddde0cfeaa0bf31cf6930af63fff648ce64258e07877a3998"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/transmission-data.ts",
+      "sha256": "b5803af92c5a93aa0f99564bd78eea0ef0a65c4a4cd42810f2e2acce4cb872d6"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/type-catalog.ts",
+      "sha256": "900d2b0c1cd8f434b7edfb1f0bc00e87044670727e2c75354d5f1343d8ba695c"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/types.ts",
+      "sha256": "9a79cc99acabfd665112192c64e7605ef38b33b14c1d8fc58f8b4a2698260597"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/unassigned-circulation.ts",
+      "sha256": "af9970e3b34c0ab9a76bf3a4d4e13324bc87a8caa7801760576fcb1581fc1bd2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/vendor/native-exact-geos/native-exact-geos.mjs",
+      "sha256": "e0c026609abfd711d659a4b3e7aaabe391b7765086c7311ede7ba06ce6a471d2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/vendor/native-rational-overlay-arithmetic.mjs",
+      "sha256": "ec2ab2aff522171f90ae3309de5c27b0f88e458046b447c067153f0ccde0451a"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/vendor/native-rational-polygon-clipping.mjs",
+      "sha256": "4f2a6fa2b39242c951773c71f5a07f3d0cdc6b345486d70e54747385665a9dc1"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/viewer.ts",
+      "sha256": "87142a2a7633695d6b8af9ea70a24757d2c3a5141e1ff81c6afa2c3c3ca97ef7"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/visitor-metadata.ts",
+      "sha256": "a7e370803b18b76042eb1a7e1045b90c8cad76e94d2121de459cc7d2aefbe024"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/wall-envelope-thickness.ts",
+      "sha256": "07c43e5ff6cae7a31d9674ba2dcd584c62b5e2c84a9fed9f9edef9b037383509"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/wall-joins.ts",
+      "sha256": "8a46411bc3bb1e5e1649e83e9b83de898aebd90b62d4c18ea847c65916991a14"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/wall-kinds.ts",
+      "sha256": "e8c022bbdb7d3f8201bbd8b69086508501f1d81d3a1a487c53296053cf0011bd"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/wall-native-admission.ts",
+      "sha256": "ae815a27866a740aa9d3f211502b4e91fbb17a32ce92a521385760e1f70f685d"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/web-mercator-tiles.ts",
+      "sha256": "af93cd242191fe84fb59cc0f1b2b1315779f4f238e213c7479fe6c24f6002675"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/worker-client.ts",
+      "sha256": "b016a4a2074a3b64b9addea1ffbf5adf91a2c32e0a421e45e3acccc4a13082e2"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/worker.ts",
+      "sha256": "b13939661e5b554849a765879cc33da1b2685e8b44169403c8d89a92a54bb0ac"
+    }
+  ],
+  "changedFiles": [
+    "/workspace/reviter/lib/reviter/native-filled-threshold-step.ts",
+    "/workspace/reviter/lib/reviter/native-stepped-stair-v2-kernel.ts",
+    "/workspace/reviter/lib/reviter/native-stepped-stair-v2-stations.ts"
+  ],
+  "historicalBinding": true,
+  "changedInitialBytesArchive": "changed-implementation-start.tar.gz",
+  "scopedFloorDemandEntryBindings": [
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-cap-demand.ts",
+      "sha256": "ec4d5351ff41f51b2c00e2114106633e1c810b267194c46f081b592198cc8278"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-floor-local-support.ts",
+      "sha256": "018f59797002e92527b039a25305b1497a3fe3e90abf55e1c0070e37d878c215"
+    },
+    {
+      "path": "/workspace/reviter/lib/reviter/native-source-element-level-prefix.ts",
+      "sha256": "a31462e3007a86013493169088d524eab9ad3d72a254750ffecab8b1770e2d3f"
+    }
+  ],
+  "currentVisitorAdmissionClaimed": false
+}

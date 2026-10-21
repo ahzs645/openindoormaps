@@ -1,0 +1,586 @@
+{
+  "format": "actual-original-fourteen-floors-correct-grammar-compact-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "sourceCensusSha256": "2845c6052d305c1f67a1bdb28e4a524d059f6c4005ebdf3b60af1fa67df72edf",
+  "actualSourceReceiptSha256": "f0ba2fb917e7e6c6fd6464c5a2dd0cb9abd0827456ae14b8182d773835d1951c",
+  "rawDiagnostic": "/workspace/scratch/assembly-binding-final-carrier-complete-20261018/floor-correct-grammar-diagnostic.json",
+  "rawDiagnosticSha256": "e8072458fe84c9614739e3fadbc00d7a953615bdb2f93eb542cd9a5ed94a9a04",
+  "correctCapSupportPassedCount": 6,
+  "completeFloorObstacleEnclosurePassedCount": 8,
+  "bothMathematicalChecksPassedCount": 5,
+  "sourceModulesUnchanged": true,
+  "sourceModuleHashes": {
+    "native-source-floor-local-support": "7eb8e73ea6914bbef62b4beac0f3e107c20514db5487341c0700f4fde2b93528",
+    "native-source-floor-obstacle-domains": "1bf37dbd7d2d553a4a37620b9c2765ac9ffdab4adefd5580f3c54cd8a7c1393f",
+    "native-source-element-level-prefix": "3b25a97575b7f22583b7bb8cb1b9b0f1ac12f183caa471e480f68ac34d75952d",
+    "native-source-cylinder-domain-enclosure": "4c05ce4b335adf394769414d3c352ed55cfc420908379dbbc14ca6ef711c30ca",
+    "native-source-planar-slab-envelope": "9573cfe3b05f1963f7ea51ac943ea586c5013aba6cb512ce03a67c8e09750064",
+    "revit-2027-owner-mesh-index": "c5fdb76144d58a9b24896b05fa94ae4cef768043f4da4a9fce5a979a868f0a85",
+    "revit-2027-owner-mesh-trim": "235f0d6b0745bd84f55ea0e3f60ef4a09f546ae77328c41f35ba707d67948c25"
+  },
+  "rows": [
+    {
+      "nativeFloorElementId": 423406,
+      "sourceFloorFrameSha256": "fe78ec6a88b11c3786ec68746118333e8d6bdf1200b1f650ff4b39884d421100",
+      "sourceGElementFrameSha256": "b572d1268c92505bbf760ee1a2e082f3b25eb2ce251f902edb3300df78e35b9b",
+      "originalAssociatedNativeLevelId": 311,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 0:73/0:75.",
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 47,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 41,
+        "6": 3
+      },
+      "fillingFlagCounts": {
+        "18": 46
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 43657,
+      "globalMilliseconds": 115,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 427511,
+      "sourceFloorFrameSha256": "f09246b7072356ce29e5bcc57b9f102c565a569f230fcb7852498e1ce4b9e102",
+      "sourceGElementFrameSha256": "ea9720e17ba3ea2b6d97b99c6cac952ccb154ad7dbcf8c8498d36e1f33581783",
+      "originalAssociatedNativeLevelId": 694,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 93,
+        "6": 2
+      },
+      "fillingFlagCounts": {
+        "18": 97
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 386,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            101,
+            136,
+            155,
+            179,
+            254
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 389,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            206,
+            246,
+            171,
+            383,
+            128
+          ]
+        }
+      ],
+      "capMilliseconds": 44726,
+      "globalMilliseconds": 1,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 437656,
+      "sourceFloorFrameSha256": "9eb24129d4c8c4ab86b7888c269aaaf8384b09c3c0275254b425482d3ac560e4",
+      "sourceGElementFrameSha256": "a0abfe133e61ca8061221e5b7f7b9f27762f803c730904d2ee6d57e5f74e5a89",
+      "originalAssociatedNativeLevelId": 400176,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 5:20/5:22.",
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 136,
+        "6": 2
+      },
+      "fillingFlagCounts": {
+        "18": 140
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 558,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            146,
+            182,
+            293,
+            300,
+            324,
+            359,
+            395,
+            242,
+            278
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 561,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            145,
+            258,
+            411,
+            375,
+            339,
+            316,
+            214,
+            195,
+            162
+          ]
+        }
+      ],
+      "capMilliseconds": 81866,
+      "globalMilliseconds": 0,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 501699,
+      "sourceFloorFrameSha256": "96ade5f96c8d38371a53edce90f8f12485a40c051563a852427b45115aae9ba8",
+      "sourceGElementFrameSha256": "2de15c0aa7cbd43a927900e07d5d5bdf0770b3990e6cd36b35c2e3176771b9a1",
+      "originalAssociatedNativeLevelId": 402367,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 0:161/0:163.",
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 135,
+        "6": 2
+      },
+      "fillingFlagCounts": {
+        "18": 139
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 554,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            145,
+            175,
+            465,
+            289,
+            421,
+            348,
+            384,
+            234,
+            270
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 557,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            144,
+            253,
+            403,
+            367,
+            331,
+            308,
+            209,
+            190,
+            164
+          ]
+        }
+      ],
+      "capMilliseconds": 46744,
+      "globalMilliseconds": 1,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 447970,
+      "sourceFloorFrameSha256": "8942474eba636466f42c7f9d0cab7cd6f765a03aff3c6b57e681e49223ff12f1",
+      "sourceGElementFrameSha256": "e0e6cf45b7b1a2de1e2291b30647754a6ee96ee3a5355a279a2eb921d8feb870",
+      "originalAssociatedNativeLevelId": 311,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 144,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 141
+      },
+      "fillingFlagCounts": {
+        "18": 143
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 2101,
+      "globalMilliseconds": 155,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 503705,
+      "sourceFloorFrameSha256": "720140cb48740b00921cec7289f79e338d83e621fb508585fd0b145aa244094d",
+      "sourceGElementFrameSha256": "f62a7d90ffaf540708cea9c0d7954d03e240878be156b885dc2d844ecf0bb9cc",
+      "originalAssociatedNativeLevelId": 694,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Unsupported finite original cylinder angle",
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 179,
+        "6": 4
+      },
+      "fillingFlagCounts": {
+        "18": 185
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 738,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            548,
+            583,
+            197,
+            233,
+            269,
+            305,
+            341,
+            377,
+            413,
+            449,
+            485,
+            521
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 741,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            546,
+            510,
+            474,
+            438,
+            402,
+            366,
+            330,
+            294,
+            258,
+            222,
+            608,
+            572
+          ]
+        }
+      ],
+      "capMilliseconds": 267,
+      "globalMilliseconds": 1,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1496668,
+      "sourceFloorFrameSha256": "b22990011a92c33be561e8988a8d7c300b89d604bf38cf3acc46012abf5186c0",
+      "sourceGElementFrameSha256": "5a559811b9fed43a75a9f886782055eb0fd48c9b8b57b1dcb3ff1a96a1926e8e",
+      "originalAssociatedNativeLevelId": 400176,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 2:7/2:5.",
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 31,
+      "faceFlagCounts": {
+        "4": 30
+      },
+      "fillingFlagCounts": {
+        "18": 30
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 247,
+      "globalMilliseconds": 20,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1495596,
+      "sourceFloorFrameSha256": "ba3879ad5ab3367cb364296c4bdd94cad8795b4b4339f6e041e0f7c19c63db69",
+      "sourceGElementFrameSha256": "f08d663b14c85f2f101e5931efc7a6f57cf4db7dd29b17021b936483c6cf64c5",
+      "originalAssociatedNativeLevelId": 402367,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 0:3/0:1.",
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 28,
+      "faceFlagCounts": {
+        "4": 27
+      },
+      "fillingFlagCounts": {
+        "18": 27
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 353,
+      "globalMilliseconds": 21,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1496653,
+      "sourceFloorFrameSha256": "d8602e155f8285fca3db22b3d7031025f6659853b59517986bf227eee4b644db",
+      "sourceGElementFrameSha256": "d10da762e6c459629c98e3c8fdaa273d66adacb685befd7e00b21820c73a9604",
+      "originalAssociatedNativeLevelId": 400176,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 27,
+      "faceFlagCounts": {
+        "4": 26
+      },
+      "fillingFlagCounts": {
+        "18": 26
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 307,
+      "globalMilliseconds": 46,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1495537,
+      "sourceFloorFrameSha256": "f2b9d043b36b920411f767a93aed11b8a39668253e01a2e435fdf5db9fe557c5",
+      "sourceGElementFrameSha256": "2b093ce422110e7907a0fe663cab3202ed1497bf807dbb27f4e30f6efdeedb01",
+      "originalAssociatedNativeLevelId": 402367,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 27,
+      "faceFlagCounts": {
+        "4": 26
+      },
+      "fillingFlagCounts": {
+        "18": 26
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 197,
+      "globalMilliseconds": 8,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1498765,
+      "sourceFloorFrameSha256": "7016be257e03b03a1d8bc35ea0aca3526979b2d3d3192edf72d562388530b89f",
+      "sourceGElementFrameSha256": "f6cbedf479fcf5e3a5ecf4f271da007f31e4830b0ecb9f89fe01e381dd3a33a1",
+      "originalAssociatedNativeLevelId": 694,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 29,
+      "faceFlagCounts": {
+        "4": 28
+      },
+      "fillingFlagCounts": {
+        "18": 28
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 361,
+      "globalMilliseconds": 26,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1505065,
+      "sourceFloorFrameSha256": "02d89d93d9072963211f58c3bf0627dab9a4cd836596b00d2194e4752d2b0f95",
+      "sourceGElementFrameSha256": "26a7335fbc65872d298584cd07117190b18b2e18cf3c2ac8996f4a728400ac74",
+      "originalAssociatedNativeLevelId": 400176,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 0:0/0:120.",
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 165
+      },
+      "fillingFlagCounts": {
+        "18": 167
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 666,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            173,
+            486,
+            183,
+            643,
+            407,
+            443,
+            239,
+            275,
+            311,
+            347
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 669,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            172,
+            345,
+            309,
+            273,
+            237,
+            441,
+            405,
+            641,
+            181,
+            484
+          ]
+        }
+      ],
+      "capMilliseconds": 538,
+      "globalMilliseconds": 0,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1503517,
+      "sourceFloorFrameSha256": "3aa6983eb85da89afca18c918b04f4cb6b1e82531c7f9fb0e7a3e0abacd641a2",
+      "sourceGElementFrameSha256": "ddcf6c7943897783185846a25846ee55e638c9b255c8452970bc2ac14261367d",
+      "originalAssociatedNativeLevelId": 402367,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": false,
+      "correctNamedCapSupportBlocker": "Error: Self-intersecting exact native rings 0:0/0:112.",
+      "completeFloorObstacleDomainEnclosurePassed": false,
+      "completeFloorObstacleDomainBlockers": [
+        "Unsupported original floor source branch/owner"
+      ],
+      "floorObstructionCellCount": 0,
+      "faceFlagCounts": {
+        "516": 2,
+        "4": 140
+      },
+      "fillingFlagCounts": {
+        "18": 142
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 566,
+          "originalFaceReference": 4,
+          "originalChainStartEdgeReferences": [
+            148,
+            437,
+            158,
+            537,
+            372,
+            453,
+            215,
+            251,
+            287,
+            323
+          ]
+        },
+        {
+          "readerId": "Revit2027EdgeLoopWithChainEnvelopes",
+          "sourceClassSlot": 1437,
+          "sourcePropertyToken": 569,
+          "originalFaceReference": 5,
+          "originalChainStartEdgeReferences": [
+            147,
+            300,
+            264,
+            228,
+            192,
+            385,
+            550,
+            171,
+            337,
+            416
+          ]
+        }
+      ],
+      "capMilliseconds": 293,
+      "globalMilliseconds": 0,
+      "routeApproved": false
+    },
+    {
+      "nativeFloorElementId": 1501009,
+      "sourceFloorFrameSha256": "34da7b0fb7862b50f4bdfd08fd27873703b80596bbacf4587546721b3bed6961",
+      "sourceGElementFrameSha256": "f71cab171a7bc58601b21d54bf4ee332fbf6ffd7ac8f8bd61524ec1673c05954",
+      "originalAssociatedNativeLevelId": 1487816,
+      "originalCapFaceToken": 5,
+      "correctNamedCapSupportPassed": true,
+      "correctNamedCapSupportBlocker": null,
+      "completeFloorObstacleDomainEnclosurePassed": true,
+      "completeFloorObstacleDomainBlockers": [],
+      "floorObstructionCellCount": 17,
+      "faceFlagCounts": {
+        "4": 16
+      },
+      "fillingFlagCounts": {
+        "18": 16
+      },
+      "allFillingDataNullAndNoQueuedExtra": true,
+      "unadmittedReaders": [],
+      "capMilliseconds": 126,
+      "globalMilliseconds": 12,
+      "routeApproved": false
+    }
+  ],
+  "scope": "Pure Floor cap/domain mathematics on exact original current-census archived frames. A fresh opaque original-source consumer must independently bind role/source/terminal/clearance; these saved results grant no route authority.",
+  "sourceChangesMade": false,
+  "routeApproved": false
+}

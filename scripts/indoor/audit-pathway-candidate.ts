@@ -50,18 +50,22 @@ import {
   type RouteCase,
 } from "./pathway-candidate-audit";
 
+import { retainDistinctActualRouteCase } from "./pathway-route-case-identity";
+
 const args = process.argv.slice(2);
 const option = (name: string) => {
   const i = args.indexOf(name);
-  if (i < 0) return undefined;
+  if (i === -1) return;
   if (!args[i + 1] || args[i + 1].startsWith("--"))
-    throw Error(`Missing value for ${name}`);
+    throw new Error(`Missing value for ${name}`);
   return args[i + 1];
 };
 const usage =
   "node --max-old-space-size=8192 --expose-gc --import tsx scripts/indoor/audit-pathway-candidate.ts --baseline VERIFIED-VISITOR.zip --candidate CANDIDATE.zip --source-baseline ORIGINAL-MASTER.zip [--source-candidate NEW-MASTER.zip] --baseline-audit VERIFIED-AUDIT-DIRECTORY --out NEW-DIRECTORY [--review-scope source-bound-review.json] [--cases actual-route-cases.json] [--prepare-selected-scope LEVEL_ID,...]";
 if (args.includes("--help")) {
   console.log(usage);
+  // This standalone CLI exits successfully after printing its requested usage.
+  // eslint-disable-next-line unicorn/no-process-exit
   process.exit(0);
 }
 assert.equal(
@@ -84,12 +88,12 @@ if (
   !baselineAudit ||
   !sourceBaselinePath
 )
-  throw Error(usage);
+  throw new Error(usage);
 if (path.resolve(baselinePath) === path.resolve(candidatePath))
-  throw Error("Use separate immutable baseline and candidate archives.");
+  throw new Error("Use separate immutable baseline and candidate archives.");
 await fs.mkdir(out, { recursive: true });
-if ((await fs.readdir(out)).length)
-  throw Error(
+if ((await fs.readdir(out)).length > 0)
+  throw new Error(
     "Choose an empty QA output directory; prior evidence must not be overwritten.",
   );
 const started = performance.now(),
@@ -126,12 +130,12 @@ async function archiveSnapshot(file: string, withDataset = false) {
       filter: (entry) => entry.name === "manifest.json",
     });
   if (!manifestFiles["manifest.json"])
-    throw Error(`Missing manifest in ${file}`);
+    throw new Error(`Missing manifest in ${file}`);
   const manifest = JSON.parse(
     new TextDecoder().decode(manifestFiles["manifest.json"]),
   ) as ArchiveManifest;
   if (!["reviter-project", "openindoormaps-viewer"].includes(manifest.format))
-    throw Error(`Unsupported QA source archive ${file}`);
+    throw new Error(`Unsupported QA source archive ${file}`);
   const declared = [
     manifest.indoor,
     manifest.floors,
@@ -146,12 +150,12 @@ async function archiveSnapshot(file: string, withDataset = false) {
       !Number.isSafeInteger(entry.bytes) ||
       !/^[a-f0-9]{64}$/.test(entry.sha256)
     )
-      throw Error(`Invalid manifest entry in ${file}`);
+      throw new Error(`Invalid manifest entry in ${file}`);
     const one = unzipSync(bytes, { filter: (e) => e.name === entry.path })[
       entry.path
     ];
     if (!one || one.length !== entry.bytes || sha256(one) !== entry.sha256)
-      throw Error(`Baseline/checksum mismatch ${file}:${entry.path}`);
+      throw new Error(`Baseline/checksum mismatch ${file}:${entry.path}`);
   }
   const sourceHashes = {
     modelSha256: manifest.model.sha256,
@@ -297,7 +301,7 @@ const rawCandidateArrivals = new Map(
         removedArrivalNodeIds.has(edge.to)),
   );
 let originalPhysicalWalkBlockers = new Set<string>();
-if (originalIncidentEdges.length) {
+if (originalIncidentEdges.length > 0) {
   await initializeNativeExactGeosOverlay();
   log("fresh-original-lost-arrival-physical-replay", {
     arrivals: removedDeclaredArrivalRecords.length,
@@ -339,7 +343,7 @@ if (
   candidateSnapshot.manifest.format === "openindoormaps-viewer" &&
   !sourceCandidatePath
 )
-  throw Error(
+  throw new Error(
     "A visitor candidate requires --source-candidate NEW-MASTER.zip for independent actual source-byte and exact master/visitor physical authority checks",
   );
 await write("candidate-binding.json", candidateSnapshot);
@@ -371,16 +375,28 @@ candidateBytes = new Uint8Array();
 const data = routeWorkerDataset(project.dataset),
   projectionSha256 = jsonSha256(data),
   candidateSafety = safetySnapshot(data);
-let selectedDisplayPreparation: Awaited<ReturnType<typeof prepareOneSelectedDisplayScope>> | undefined;
+let selectedDisplayPreparation:
+  | Awaited<ReturnType<typeof prepareOneSelectedDisplayScope>>
+  | undefined;
 const requestedDisplayScope = option("--prepare-selected-scope");
 if (requestedDisplayScope) {
-  assert(/^\d+(?:,\d+)*$/.test(requestedDisplayScope), "Invalid selected display scope");
-  log("one-selected-display-scope-preparation", { levelIds: requestedDisplayScope });
+  assert(
+    /^\d+(?:,\d+)*$/.test(requestedDisplayScope),
+    "Invalid selected display scope",
+  );
+  log("one-selected-display-scope-preparation", {
+    levelIds: requestedDisplayScope,
+  });
   selectedDisplayPreparation = await prepareOneSelectedDisplayScope(
-    editorVisitorDataset(project), requestedDisplayScope.split(",").map(Number),
+    editorVisitorDataset(project),
+    requestedDisplayScope.split(",").map(Number),
     path.join(out, "selected-display-scope"),
   );
-  assert.equal(jsonSha256(data), projectionSha256, "Display preparation changed routing inputs");
+  assert.equal(
+    jsonSha256(data),
+    projectionSha256,
+    "Display preparation changed routing inputs",
+  );
 }
 let safety = compareSafety(baselineSafety, candidateSafety);
 // Imported source/scene/authoring buffers are not needed for routing QA after complete validation.
@@ -431,7 +447,7 @@ if (sourceCandidatePath) {
     masterVisitorPhysicalAuthorityMatched: true,
   });
 }
-if (safety.missingSourceFloorIds.length)
+if (safety.missingSourceFloorIds.length > 0)
   failures.push(
     `Original floor element identities removed: ${safety.missingSourceFloorIds.join(",")}`,
   );
@@ -456,7 +472,12 @@ type ReviewScope = {
     evidenceIds: string[];
     reason?: "certify-stationary-native-alias";
   }[];
-  postcompileSteppedOutcomes?: { requestedEdgeIds: string[]; qualifiedEdgeIds: string[]; declinedEdgeIds: string[]; evidenceIds: string[] };
+  postcompileSteppedOutcomes?: {
+    requestedEdgeIds: string[];
+    qualifiedEdgeIds: string[];
+    declinedEdgeIds: string[];
+    evidenceIds: string[];
+  };
 };
 const scopePath = option("--review-scope");
 let scope: ReviewScope | undefined;
@@ -481,7 +502,7 @@ if (scopePath) {
   }
   for (const item of [...scope.records, ...scope.edges])
     assert(
-      item.evidenceIds.length &&
+      item.evidenceIds.length > 0 &&
         item.evidenceIds.every((id) =>
           scope!.evidence.some((e) => e.id === id),
         ),
@@ -489,14 +510,34 @@ if (scopePath) {
     );
   const outcomes = scope.postcompileSteppedOutcomes;
   if (outcomes) {
-    assertExactSteppedOutcomeInventory(outcomes.requestedEdgeIds, outcomes.qualifiedEdgeIds, outcomes.declinedEdgeIds);
-    assert(outcomes.evidenceIds.length > 0 && outcomes.evidenceIds.every(id => scope!.evidence.some(row => row.id === id)),
-      "Postcompile outcome inventory lacks its independently bound replay evidence");
-    assert.deepEqual(data.edges.filter(edge => edge.nativeSteppedStairV2).map(edge => edge.id).sort(), [...outcomes.qualifiedEdgeIds].sort());
-    assert.equal(data.nativeSteppedStairV2SourceIndices?.length ?? 0, outcomes.qualifiedEdgeIds.length);
+    assertExactSteppedOutcomeInventory(
+      outcomes.requestedEdgeIds,
+      outcomes.qualifiedEdgeIds,
+      outcomes.declinedEdgeIds,
+    );
+    assert(
+      outcomes.evidenceIds.length > 0 &&
+        outcomes.evidenceIds.every((id) =>
+          scope!.evidence.some((row) => row.id === id),
+        ),
+      "Postcompile outcome inventory lacks its independently bound replay evidence",
+    );
+    assert.deepEqual(
+      data.edges
+        .filter((edge) => edge.nativeSteppedStairV2)
+        .map((edge) => edge.id)
+        .sort(),
+      [...outcomes.qualifiedEdgeIds].sort(),
+    );
+    assert.equal(
+      data.nativeSteppedStairV2SourceIndices?.length ?? 0,
+      outcomes.qualifiedEdgeIds.length,
+    );
     for (const id of outcomes.declinedEdgeIds) {
-      const matches = data.edges.filter(edge => edge.id === id); assert.equal(matches.length, 1);
-      assert.equal(matches[0]!.enabled, false); assert.equal(matches[0]!.nativeSteppedStairV2, undefined);
+      const matches = data.edges.filter((edge) => edge.id === id);
+      assert.equal(matches.length, 1);
+      assert.equal(matches[0]!.enabled, false);
+      assert.equal(matches[0]!.nativeSteppedStairV2, undefined);
     }
   }
   await write("review-scope.json", scope);
@@ -646,7 +687,7 @@ for (const change of changes) {
         const matrix = oldMatrices.get(mode)!,
           index = matrix.endpoints.findIndex((r) => r.key === roomKey);
         return (
-          index >= 0 &&
+          index !== -1 &&
           matrix.endpoints.every(
             (_r, j) =>
               !available(matrix, index, j) && !available(matrix, j, index),
@@ -677,7 +718,12 @@ await write(
 );
 
 const generated = connectorCases(data),
-  declinedCases = scope?.postcompileSteppedOutcomes ? postcompileDeclinedRouteCases(data, scope.postcompileSteppedOutcomes.declinedEdgeIds) : [],
+  declinedCases = scope?.postcompileSteppedOutcomes
+    ? postcompileDeclinedRouteCases(
+        data,
+        scope.postcompileSteppedOutcomes.declinedEdgeIds,
+      )
+    : [],
   explicitCases: RouteCase[] = option("--cases")
     ? JSON.parse(await fs.readFile(option("--cases")!, "utf8"))
     : [],
@@ -689,7 +735,7 @@ for (const profile of coverage) {
       j = profile.endpoints.findIndex((_r, index) =>
         available(profile, i, index),
       );
-    if (j >= 0)
+    if (j !== -1)
       for (const reverse of [false, true])
         affectedCases.push({
           name: `recovered-arrival:${key}:${reverse ? "return" : "depart"}:${profile.mode}`,
@@ -711,26 +757,20 @@ for (const profile of coverage) {
     }
 }
 const seenCases = new Set<string>(),
-  cases = [...generated.cases, ...declinedCases, ...affectedCases, ...explicitCases].filter(
-    (test) => {
-      if (
-        !profiles.includes(test.mode) ||
-        !data.records.some((r) => r.key === test.start) ||
-        !data.records.some((r) => r.key === test.end)
-      )
-        throw Error(`Invalid actual route case ${test.name}`);
-      const key = JSON.stringify([
-        test.start,
-        test.end,
-        test.mode,
-        test.intendedEdgeId,
-        test.forbiddenEdgeIds,
-      ]);
-      if (seenCases.has(key)) return false;
-      seenCases.add(key);
-      return true;
-    },
-  );
+  cases = [
+    ...generated.cases,
+    ...declinedCases,
+    ...affectedCases,
+    ...explicitCases,
+  ].filter((test) => {
+    if (
+      !profiles.includes(test.mode) ||
+      !data.records.some((r) => r.key === test.start) ||
+      !data.records.some((r) => r.key === test.end)
+    )
+      throw new Error(`Invalid actual route case ${test.name}`);
+    return retainDistinctActualRouteCase(test, seenCases);
+  });
 for (const unmapped of generated.unresolved)
   failures.push(
     `Enabled connector has no original selectable approach pair: ${unmapped.edgeId}`,
@@ -842,10 +882,20 @@ const result = {
   stationaryAliasCertifications,
   withheldUnsupportedOriginalArrivals,
   reachabilityChanges: changes.map(
-    ({ comparableGainExamples, comparableLossExamples, ...rest }) => rest,
+    ({
+      comparableGainExamples: _comparableGainExamples,
+      comparableLossExamples: _comparableLossExamples,
+      ...rest
+    }) => rest,
   ),
   coverage: coverage.map(
-    ({ matrix, endpoints, blockers, rows, ...rest }) => rest,
+    ({
+      matrix: _matrix,
+      endpoints: _endpoints,
+      blockers: _blockers,
+      rows: _rows,
+      ...rest
+    }) => rest,
   ),
   actualRouteCalculations: routeResults.length,
   actualRouteCasesFileSha256: sha256(
@@ -865,7 +915,7 @@ const result = {
   ),
   unmappedConnectors: generated.unresolved,
   failures,
-  passed: !failures.length,
+  passed: failures.length === 0,
   elapsedMs: Math.round(performance.now() - started),
   limits:
     "Full original candidate importer, exact native physical validators, every-origin original reachability oracle and selected actual production worker calculator functions. No publisher cache/receipt was installed. Graph coverage is not all-pairs path centering, browser/WebGL/memory or mobile QA. Review-scope documents bind evidence and changed identities but do not themselves certify physical clearance or public/step-free access.",
@@ -876,4 +926,4 @@ log("complete", {
   failures: failures.length,
   actualRouteCalculations: routeResults.length,
 });
-if (failures.length) process.exitCode = 1;
+if (failures.length > 0) process.exitCode = 1;

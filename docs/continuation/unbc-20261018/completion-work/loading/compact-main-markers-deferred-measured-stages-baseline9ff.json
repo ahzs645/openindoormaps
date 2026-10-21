@@ -1,0 +1,167 @@
+{
+  "format": "unbc-compact-main-markers-deferred-measured-stage-receipt-v1",
+  "recordedAt": "2026-10-18T16:54:00.994243+00:00",
+  "app": "http://127.0.0.1:42186/openindoormaps/index.html",
+  "manifestUrl": "http://127.0.0.1:42186/data/unbc/manifest.json",
+  "manifestSha256": "55125fc83df5cc0126747d2c70c66080776f0cdff28c80819735fbac52b0c13b",
+  "registryFile": "/workspace/scratch/unbc-plan-markers-deferred-receipts-9ff.json",
+  "registrySha256": "60bf27e2055a00587cf32cb92be5f0b5704b29853ce4181efd8c11e2b2e09028",
+  "sourceEngineSha256": "9ff279531839658e175655b3796bf95fdc2f9d676e7c37076cb9da97ed1dd32b",
+  "datasetSha256": "87194bb96ce4564699f5fb431ef00917fae93181f5730fe3e5f7056c1ca6ca1b",
+  "revisionSha256": "a0ec01eda9de2fc296d9f8094e2d667d9d309dbf82c9fefc1d16e7ca88661cf6",
+  "planRuntimeSha256": "c2174116ea44153e91d9e2e3c6224bdf173121b6a75cbe97185145fa4b8d2431",
+  "scopeId": "scope-42b2c71a7e7f07adce66dce2eae156cc0fe0697b2709d02bff5c3ce89a5120af",
+  "baseScopeId": "scope-30d853ef4991134fc01a695acfa0b82ea8fab1f37d017af3f367ddfb87f6f40b",
+  "appIndexHtmlSha256": "13cd88696387166e5a572de1f828057552e497ceea21d69012a9daa2a748eac0",
+  "compiledStyleAssets": [
+    {
+      "path": "/workspace/scratch/loading-baseline-markers-style-app/assets/progressive-visitor-page-ooIhJui7.css",
+      "bytes": 3129,
+      "sha256": "c4405f3422da99b6c01db91421441abc6084e33abd28769c95661ff646f68a4d"
+    }
+  ],
+  "instrumentation": {
+    "kind": "External browser-response and builtin wrappers; production files and checked carrier data unchanged",
+    "scriptSha256": "c6764f8120de79043626e9c8a4dff456b8e8ff3c732d5141448342ab87aceae6",
+    "assetBindings": [
+      {
+        "url": "http://127.0.0.1:42186/openindoormaps/assets/browser-CFC4ujh3.js",
+        "name": "browser-CFC4ujh3.js",
+        "originalSha256": "80be7df1765b7ea9525cdb2a5ac7a7d9b3afbbdb21bccaee121c4325d4931358",
+        "wrapperInstrumentedSha256": "73ce65147bc3d79dfff65da97d4dd02d01453ddde4d95199edc4631dc25ad014"
+      },
+      {
+        "url": "http://127.0.0.1:42186/openindoormaps/assets/progressive-visitor-page-BsIAhXIR.js",
+        "name": "progressive-visitor-page-BsIAhXIR.js",
+        "originalSha256": "b447b3789d2cbd48621918dc43200e7c111aa85f763c4ca652c30127b4e09268",
+        "wrapperInstrumentedSha256": "5738d439b72bd34852b72199688da00884a187c5a440f674c1351814a2de4cde"
+      },
+      {
+        "url": "http://127.0.0.1:42186/openindoormaps/assets/maplibre-BcKPbwae.js",
+        "name": "maplibre-BcKPbwae.js",
+        "originalSha256": "ca7c7dc88535759935f217d3c89b79631900382f4e48d3a4cf5f26ff888bc446",
+        "wrapperInstrumentedSha256": "58463e496c880f52dd061c9b2fd53814cda98dfc4bcce93293928fa088b65cd5"
+      }
+    ],
+    "expectedPlanSources": 14
+  },
+  "quietCpuWindowConfirmedBy": [
+    "root",
+    "loading (new publisher held)",
+    "visitor_flow and both children (owned typecheck SIGSTOP, other heavy jobs finished)",
+    "routing_readiness"
+  ],
+  "sourceDataUnchanged": true,
+  "checksumAndSourceAdmissionBypassed": false,
+  "stagesMs": {
+    "carrierFetchHeaders": 79.3,
+    "carrierReadBody": 225.0,
+    "gzipInflateTotal": 1142.7,
+    "deltaJsonParse": 33.2,
+    "baseJsonParse": 483.9,
+    "deltaRestore": 14.7,
+    "reconstructedMainJsonStringify": 408.3,
+    "reconstructedMainUtf8Encode": 728.5,
+    "sha256AllPlanCarriersAndLogicalValues": 309.0,
+    "sourceAndLayerInstallationSpan": 898,
+    "firstNativeOverviewDrawCallbackCpuSubmission": 48.0,
+    "firstConnectorMarkerDrawCallback": 9.0,
+    "firstCarrierRequestToFirstNativeDrawCallbackStart": 9477.2,
+    "firstCarrierRequestToSourceReadyRender": 15082.1,
+    "navigationToFirstNativeDrawCallbackStart": 19578.2,
+    "navigationToFirstConnectorMarkerDrawCallback": 19626.4,
+    "navigationToSourceReadyRender": 25183.1,
+    "navigationToAppReadyPaintGate": 25189
+  },
+  "observedUnattributedGapsMs": {
+    "baseJsonParseEndToDeltaRestoreStart": 15.7,
+    "finalReconstructedHashEndToFirstSourceInstall": 1606.2,
+    "lastLayerInstallEndToSourceReadyRender": 8222.1
+  },
+  "exactParseAndReadinessEvidence": {
+    "baseParses": 1,
+    "deltaParses": 1,
+    "secondReconstructedMainParses": 0,
+    "actualConnectorFirstDrawBeforeAppReadyGate": true,
+    "actualPlanSources": 14
+  },
+  "singleRunComparison": {
+    "priorReceipt": "compact-main-measured-stages-baseline9ff.json",
+    "priorRuntimeSha256": "f0672367c676a32639a04edb02c4a6cabe437fc32e7a3e3ed1a667e06abaf0f8",
+    "priorCarrierToSourceReadyMs": 16369,
+    "currentCarrierToSourceReadyMs": 15082.1,
+    "priorBaseParseToRestoreGapMs": 3009.2,
+    "currentBaseParseToRestoreGapMs": 15.7,
+    "interpretation": "Observed matched-protocol single runs, with the current build additionally restoring original markers. The awaited base-persistence bracket is reduced; total time includes other variable stages. No statistical speedup or physical-device latency claim."
+  },
+  "visibleNativeMapAndLabelsScreenshotInspected": true,
+  "pageErrors": [],
+  "timingLimits": [
+    "Cloud Chromium with SwiftShader; no physical-phone or on-campus latency claim",
+    "Synchronous draw callback timing measures CPU submission and not GPU completion or physical display presentation",
+    "JSON/crypto/native gzip wrappers add measurement overhead; source-ready render is qualified by actual source feature counts and map readiness",
+    "Fresh isolated browser context; service workers blocked; actual admitted carrier bytes and all checksum gates remain active"
+  ],
+  "authority": {
+    "physicalDevice": false,
+    "geometry": false,
+    "publicAccess": false,
+    "stepFreeAccess": false,
+    "finalChangedEngineRelease": false,
+    "latencySla": false
+  },
+  "rawEvidenceDirectory": "/workspace/scratch/compact-main-markers-deferred-stage-probe-20261018",
+  "rawEvidenceFiles": [
+    {
+      "path": "actual-instrumented-main.png",
+      "bytes": 135579,
+      "sha256": "7317ef66167ec077f13f474a0a5abb07c27ac8a9087aa72ff6997453fcf16b48"
+    },
+    {
+      "path": "browser-CFC4ujh3.js.instrumented.js",
+      "bytes": 18504,
+      "sha256": "73ce65147bc3d79dfff65da97d4dd02d01453ddde4d95199edc4631dc25ad014"
+    },
+    {
+      "path": "browser-CFC4ujh3.js.original.js",
+      "bytes": 18444,
+      "sha256": "80be7df1765b7ea9525cdb2a5ac7a7d9b3afbbdb21bccaee121c4325d4931358"
+    },
+    {
+      "path": "maplibre-BcKPbwae.js.instrumented.js",
+      "bytes": 1025457,
+      "sha256": "58463e496c880f52dd061c9b2fd53814cda98dfc4bcce93293928fa088b65cd5"
+    },
+    {
+      "path": "maplibre-BcKPbwae.js.original.js",
+      "bytes": 1025407,
+      "sha256": "ca7c7dc88535759935f217d3c89b79631900382f4e48d3a4cf5f26ff888bc446"
+    },
+    {
+      "path": "probe-compact-main-marker-stages.mjs",
+      "bytes": 15226,
+      "sha256": "c6764f8120de79043626e9c8a4dff456b8e8ff3c732d5141448342ab87aceae6"
+    },
+    {
+      "path": "progressive-visitor-page-BsIAhXIR.js.instrumented.js",
+      "bytes": 48777,
+      "sha256": "5738d439b72bd34852b72199688da00884a187c5a440f674c1351814a2de4cde"
+    },
+    {
+      "path": "progressive-visitor-page-BsIAhXIR.js.original.js",
+      "bytes": 48716,
+      "sha256": "b447b3789d2cbd48621918dc43200e7c111aa85f763c4ca652c30127b4e09268"
+    },
+    {
+      "path": "stage-probe.json",
+      "bytes": 17956,
+      "sha256": "a01d87d6bf52156a5cbf2ba8cb2ac606048d32acd3e9213f822d5e16b40151d9"
+    },
+    {
+      "path": "wrapper-asset-bindings.json",
+      "bytes": 978,
+      "sha256": "fb6ec5994f6bcf350c45ce1f57ced6ee05e8ccbba31a255225d2c9bdabfb64ca"
+    }
+  ],
+  "archiveInstruction": "Archive raw JSON/PNG, exact wrapper script and original/instrumented modules in Drive evidence; keep this small receipt in source."
+}

@@ -116,3 +116,34 @@ test("new snapshots invalidate private bindings; mutable authoring guards still 
   assert.deepEqual(edited.route, expected.route);
   assert.deepEqual(edited.diagnostic, expected.diagnostic);
 });
+
+test("selected inside arrival preserves route, policy and coverage without unused hallway alternatives", () => {
+  const { data, startKey, endKey } = fixture();
+  for (const [start, end] of [
+    [startKey, endKey],
+    [endKey, startKey],
+  ]) {
+    for (const mode of ["public", "accessible"] as const) {
+      const run = createWorkerRouteCalculator(
+        structuredClone(routeWorkerDataset(data)),
+      );
+      const legacy = run(start, end, mode);
+      const selected = run(start, end, mode, { endpointMode: "inside" });
+      assert.deepEqual(selected.route, legacy.route);
+      assert.deepEqual(selected.diagnostic, legacy.diagnostic);
+      assert.deepEqual(selected.reachable, legacy.reachable);
+      assert.deepEqual(selected.arrivals?.doorway, legacy.arrivals?.doorway);
+      assert.equal(selected.arrivals?.hallway, undefined);
+      assert.ok(Object.hasOwn(legacy.arrivals ?? {}, "hallway"));
+    }
+  }
+  const run = createWorkerRouteCalculator(
+    structuredClone(routeWorkerDataset(data)),
+  );
+  const legacy = run(startKey, "not-a-place", "public");
+  const selected = run(startKey, "not-a-place", "public", {
+    endpointMode: "inside",
+  });
+  assert.equal(selected.route, null);
+  assert.deepEqual(selected.diagnostic, legacy.diagnostic);
+});

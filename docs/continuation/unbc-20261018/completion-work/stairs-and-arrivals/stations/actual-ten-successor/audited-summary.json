@@ -1,0 +1,826 @@
+{
+  "externalPauseJournalPath": "/workspace/scratch/single-run-successor-ten-20261018/run-control-v1/external-pauses.jsonl",
+  "externalPauseJournalSha256": "7e439084735d03f44a7f3df587707099675ceb60c40ec2314636ae32cd43a2d6",
+  "explicitQuietPauseSeconds": 264.537259,
+  "caseElapsedSecondsIncludeExternalPauses": true,
+  "format": "ten-successor-actual-audited-subset-summary-v1",
+  "receiptPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/receipt.json",
+  "receiptSha256": "1e9aee827ca5af0302814904bd339ed43ee2929a2580e9b19f66076e5247cfb1",
+  "externalInputAfterGuardPath": "/workspace/scratch/single-run-successor-ten-20261018/run-control-v1/input-after-guard.json",
+  "externalInputAfterGuardSha256": "bbec3a8c261b832eb7fb74f65ea681854fde5a91c045e8906822134cd661a062",
+  "launchControlPath": "/workspace/scratch/single-run-successor-ten-20261018/run-control-v1/launch.json",
+  "launchControlSha256": "17d50a794362cdb1af6bcfb9fd2c8cad3e5b34923284fbe800baa475b12b77e0",
+  "exitControl": {
+    "pid": 89181,
+    "startTicks": 4201466,
+    "exitCode": 0,
+    "elapsedSeconds": 1893.4397852539987,
+    "maximumObservedCgroupBytes": 14796709888,
+    "maximumObservedChildRssBytes": 4100325376,
+    "memoryGuardPauses": 0,
+    "receiptPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/receipt.json",
+    "receiptExists": true,
+    "routeApproved": false
+  },
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "originalDatasetSha256": "4f814aca91b3550186953f101824ce9f6528b1994a391760cbfed26e3312931d",
+  "originalRoomsSha256": "f329b643c18c86fa611b0843da0b8c5924b9e211336005eeaf5020c76bffac50",
+  "sourceCensusSha256": "50c9dd53de55bb9f553f0f694670a8e4b9f9feb4b92e827056da765926b0b6c6",
+  "completeForeignRows": 39739,
+  "all28ActualParents": 28,
+  "all38ActualOriginalNativeRunRequests": 38,
+  "requestSha256": "e2ccf703d27a0fbc9cd0c07ab9b4e37ba9d4237481e5b8577fb2bad1876881d5",
+  "sourceImplementationBefore": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+  "sourceImplementationAfter": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+  "liveSourceImplementationBefore": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+  "liveSourceImplementationAfter": "a940e40ab0c139b443bd6f4bcffd92e000f37ada8baf096c82f60b2db92e9fec",
+  "sourceAndExternalInputBeforeAfterGuardsPassed": true,
+  "classificationCounts": {
+    "actual-source-both-directions-pass": 1,
+    "both-kernel-finite-riser-refusal": 5,
+    "source-initial-terminal-floor-demand-refusal-before-kernels": 2,
+    "source-expanded-transfer-floor-demand-refusal-before-kernels": 2
+  },
+  "rows": [
+    {
+      "nativeStairId": 1696006,
+      "nativeRunId": 1696012,
+      "originalEdgeId": "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7",
+      "requestChange": "unchanged-exact-known-source-vector-control",
+      "proposalSha256": "03f1a4060832e8b19f795f52bd711b80a1dc5089843db209e0b69658f599febe",
+      "classification": "actual-source-both-directions-pass",
+      "elapsedSeconds": 179.325,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": true,
+      "reversePassed": true,
+      "reportedProfileIssues": [],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1696006-result.json",
+      "resultSha256": "7335329b41abfd8842460fd524e0004109e90fe3b7f6733a7c1cbd31f00eb9dc",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": false,
+      "routeApproved": false,
+      "portableWirePath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1696006-source-proof-wire.json",
+      "portableWireSha256": "a5463e140bad83789057216a9318782efbdf5719d346abe8125920770e9c10d6",
+      "portableWireDoesNotRestoreOpaqueAuthority": true
+    },
+    {
+      "nativeStairId": 1903824,
+      "nativeRunId": 1903837,
+      "originalEdgeId": "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "fae924e9b592d147d96d1b4e2ae1581fe729bcf79d88652221ffc7f5a4fd9b50",
+      "classification": "both-kernel-finite-riser-refusal",
+      "elapsedSeconds": 319.188,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [
+        "A full-width crossing leaves the exact finite source riser",
+        "A full-width crossing leaves the exact finite source riser"
+      ],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1903824-result.json",
+      "resultSha256": "3b16d66a1383aaa151a7ee233940c2698a118d6c6af9399f70b08e5329fc405b",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1982431,
+      "nativeRunId": 1984014,
+      "originalEdgeId": "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "c27c6be77d3afa666790aaa3a66f3f1443640f30ca0e215b1ddfb340b63e8d24",
+      "classification": "both-kernel-finite-riser-refusal",
+      "elapsedSeconds": 91.749,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [
+        "A full-width crossing leaves the exact finite source riser",
+        "A full-width crossing leaves the exact finite source riser"
+      ],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1982431-result.json",
+      "resultSha256": "9476eedf12208fa9cffa5204f9457928bc63d7db6309e76fb6b7ae917c90836d",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1988738,
+      "nativeRunId": 1988746,
+      "originalEdgeId": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "fb451cb47230ed71947c91632bd3a4a53cb1e02efcfee85e1b817bb1e191ce9e",
+      "classification": "source-initial-terminal-floor-demand-refusal-before-kernels",
+      "elapsedSeconds": 38.363,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": false,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1988738-result.json",
+      "resultSha256": "af7219b13e3bdd0d49a2f86c72bfe863929801b1d2477d4ba616bdaf7580611d",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false,
+      "exactSourceFloorQualifier": {
+        "originalGraphNodeId": "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:1",
+        "nativeFloorElementId": 1505065,
+        "originalCapFaceToken": 5,
+        "originalNativeServedLevelId": 400176,
+        "originalLogicalPointFeet": [
+          {
+            "$rational": [
+              "145611911982839",
+              "2199023255552"
+            ]
+          },
+          {
+            "$rational": [
+              "2077270895835569",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "3416855032248777",
+              "140737488355328"
+            ]
+          }
+        ],
+        "originalPhysicalAttachmentPointFeet": [
+          {
+            "$rational": [
+              "145611911982839",
+              "2199023255552"
+            ]
+          },
+          {
+            "$rational": [
+              "2077270895835569",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "3416855032248777",
+              "140737488355328"
+            ]
+          }
+        ],
+        "logicalToPhysicalHeightDeltaFeet": {
+          "$rational": [
+            "0",
+            "1"
+          ]
+        },
+        "originalRunReferencePlane": {
+          "heightFeet": 24.278215223097114,
+          "reference": "original-qualified-local-ordered-boundary",
+          "originalRootNominalHeightFeet": 34.120734908136484,
+          "originalPartitionSha256": "6eee210995448150013e26c0a43388d8f55e819c251d99868d0af2a77ee0d7bc",
+          "originalBoundary": {
+            "originalLocalIndex": 25,
+            "originalLoopDescriptor": {
+              "token": -1,
+              "sourceClassSlot": 1087,
+              "start": 4494,
+              "end": 4500,
+              "path": "StairsRun.m_orderedRisers[25]"
+            },
+            "originalLoopSpan": [
+              27329,
+              27340
+            ],
+            "originalCurveDescriptor": {
+              "token": 339,
+              "sourceClassSlot": 1973,
+              "start": 27334,
+              "end": 27340,
+              "path": "CurveLoop.m_curves[0]"
+            },
+            "originalCurveSpan": [
+              87521,
+              87605
+            ],
+            "originalFiniteCurve": {
+              "m_GInfo": {
+                "m_categoryId": {
+                  "m_id": {
+                    "m_id64": -1
+                  }
+                },
+                "m_tag": 1407,
+                "m_controlCommand": 0,
+                "m_flags": 17302020
+              },
+              "m_endParams": [
+                0,
+                5.905780623921371
+              ],
+              "m_origin": [
+                69.53783303847385,
+                470.36126124313927,
+                24.278215223097114
+              ],
+              "m_dirVec": [
+                0.5002623886379436,
+                0.8658738606253564,
+                0
+              ]
+            }
+          },
+          "servedPlaneApproved": false,
+          "routeApproved": false
+        },
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "unchangedLogicalHeightMatchesOriginalNominalRunHeight": false,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 5,
+          "completeBoundaryUncertaintyContact": true,
+          "completeConnectedDemandSupported": false,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "fullOriginalSourceQualifierPreservedInResultJson": true
+    },
+    {
+      "nativeStairId": 2160665,
+      "nativeRunId": 2160668,
+      "originalEdgeId": "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "96f6763deb15084e9e268835480aeb004ffed3fbc83a8a19a002bd03177b33a0",
+      "classification": "both-kernel-finite-riser-refusal",
+      "elapsedSeconds": 210.19,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [
+        "A full-width crossing leaves the exact finite source riser",
+        "A full-width crossing leaves the exact finite source riser"
+      ],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/2160665-result.json",
+      "resultSha256": "5216148d20ae43b5aeabf8572a24b2fd46d90fc38f11579080930b320b2b7295",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 2161350,
+      "nativeRunId": 2161353,
+      "originalEdgeId": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "f2ade72f975e2dd2063e5b06be60520e4aa962b3b8dce935612df3a7b3f2da44",
+      "classification": "source-initial-terminal-floor-demand-refusal-before-kernels",
+      "elapsedSeconds": 134.725,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": false,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/2161350-result.json",
+      "resultSha256": "132092019b6b2a8fa82d5398ab52a0df41e8f880679940fe1a633bb38f3499a7",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false,
+      "exactSourceFloorQualifier": {
+        "originalGraphNodeId": "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1",
+        "nativeFloorElementId": 501699,
+        "originalCapFaceToken": 5,
+        "originalNativeServedLevelId": 402367,
+        "originalLogicalPointFeet": [
+          {
+            "$rational": [
+              "-1370694613250809",
+              "17592186044416"
+            ]
+          },
+          {
+            "$rational": [
+              "2204484444236827",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "1200516632952273",
+              "35184372088832"
+            ]
+          }
+        ],
+        "originalPhysicalAttachmentPointFeet": [
+          {
+            "$rational": [
+              "-1370694613250809",
+              "17592186044416"
+            ]
+          },
+          {
+            "$rational": [
+              "2204484444236827",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "1200516632952273",
+              "35184372088832"
+            ]
+          }
+        ],
+        "logicalToPhysicalHeightDeltaFeet": {
+          "$rational": [
+            "0",
+            "1"
+          ]
+        },
+        "originalRunReferencePlane": {
+          "heightFeet": 34.120734908136484,
+          "reference": "original-qualified-local-ordered-boundary",
+          "originalRootNominalHeightFeet": 34.120734908136484,
+          "originalPartitionSha256": "3b2ae1010f6be3e5217585e6ef8fd296e64d8eab4779192798584856f74dcd55",
+          "originalBoundary": {
+            "originalLocalIndex": 25,
+            "originalLoopDescriptor": {
+              "token": -1,
+              "sourceClassSlot": 1087,
+              "start": 4594,
+              "end": 4600,
+              "path": "StairsRun.m_orderedRisers[25]"
+            },
+            "originalLoopSpan": [
+              28897,
+              28908
+            ],
+            "originalCurveDescriptor": {
+              "token": 353,
+              "sourceClassSlot": 1973,
+              "start": 28902,
+              "end": 28908,
+              "path": "CurveLoop.m_curves[0]"
+            },
+            "originalCurveSpan": [
+              98119,
+              98203
+            ],
+            "originalFiniteCurve": {
+              "m_GInfo": {
+                "m_categoryId": {
+                  "m_id": {
+                    "m_id64": -1
+                  }
+                },
+                "m_tag": 1141,
+                "m_controlCommand": 0,
+                "m_flags": 17302020
+              },
+              "m_endParams": [
+                0,
+                4.593175853018366
+              ],
+              "m_origin": [
+                -77.79467871406281,
+                507.80169301153694,
+                34.120734908136484
+              ],
+              "m_dirVec": [
+                -1,
+                0,
+                0
+              ]
+            }
+          },
+          "servedPlaneApproved": false,
+          "routeApproved": false
+        },
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "unchangedLogicalHeightMatchesOriginalNominalRunHeight": true,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 6,
+          "completeBoundaryUncertaintyContact": true,
+          "completeConnectedDemandSupported": false,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "fullOriginalSourceQualifierPreservedInResultJson": true
+    },
+    {
+      "nativeStairId": 2349441,
+      "nativeRunId": 2349454,
+      "originalEdgeId": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "e54ad2539b354ce614b2189c148d0b43f0dffbfd0789c107fdac64098bb06f1a",
+      "classification": "source-expanded-transfer-floor-demand-refusal-before-kernels",
+      "elapsedSeconds": 71.352,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": false,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/2349441-result.json",
+      "resultSha256": "20134fead4e772627b3cd09214afb9680ab1a9b13a17fd5695c33c00157411c1",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false,
+      "exactSourceFloorQualifier": {
+        "originalGraphNodeId": "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1",
+        "nativeFloorElementId": 402395,
+        "originalCapFaceToken": 249,
+        "originalNativeServedLevelId": 400176,
+        "originalLogicalPointFeet": [
+          {
+            "$rational": [
+              "58",
+              "1"
+            ]
+          },
+          {
+            "$rational": [
+              "-2899192260119757",
+              "17592186044416"
+            ]
+          },
+          {
+            "$rational": [
+              "3416855032248777",
+              "140737488355328"
+            ]
+          }
+        ],
+        "originalPhysicalAttachmentPointFeet": [
+          {
+            "$rational": [
+              "58",
+              "1"
+            ]
+          },
+          {
+            "$rational": [
+              "-2899192260119757",
+              "17592186044416"
+            ]
+          },
+          {
+            "$rational": [
+              "6833710064497559",
+              "281474976710656"
+            ]
+          }
+        ],
+        "logicalToPhysicalHeightDeltaFeet": {
+          "$rational": [
+            "5",
+            "281474976710656"
+          ]
+        },
+        "originalRunReferencePlane": {
+          "heightFeet": 24.278215223097114,
+          "reference": "original-qualified-local-ordered-boundary",
+          "originalRootNominalHeightFeet": 24.278215223097114,
+          "originalPartitionSha256": "f7f1fdd7e8860cb410de91b20a51f7bb84dd3f25713036873916eab33893dc33",
+          "originalBoundary": {
+            "originalLocalIndex": 15,
+            "originalLoopDescriptor": {
+              "token": -1,
+              "sourceClassSlot": 1087,
+              "start": 3042,
+              "end": 3048,
+              "path": "StairsRun.m_orderedRisers[15]"
+            },
+            "originalLoopSpan": [
+              16983,
+              16994
+            ],
+            "originalCurveDescriptor": {
+              "token": 229,
+              "sourceClassSlot": 1973,
+              "start": 16988,
+              "end": 16994,
+              "path": "CurveLoop.m_curves[0]"
+            },
+            "originalCurveSpan": [
+              52661,
+              52745
+            ],
+            "originalFiniteCurve": {
+              "m_GInfo": {
+                "m_categoryId": {
+                  "m_id": {
+                    "m_id64": -1
+                  }
+                },
+                "m_tag": 719,
+                "m_controlCommand": 0,
+                "m_flags": 17302020
+              },
+              "m_endParams": [
+                0,
+                4.046851765185494
+              ],
+              "m_origin": [
+                19.821759720566014,
+                -160.91059341335963,
+                24.278215223097114
+              ],
+              "m_dirVec": [
+                -1.7557913582918977e-15,
+                -1,
+                0
+              ]
+            }
+          },
+          "servedPlaneApproved": false,
+          "routeApproved": false
+        },
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "unchangedLogicalHeightMatchesOriginalNominalRunHeight": true,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 6,
+          "completeBoundaryUncertaintyContact": true,
+          "completeConnectedDemandSupported": false,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "fullOriginalSourceQualifierPreservedInResultJson": true
+    },
+    {
+      "nativeStairId": 2439748,
+      "nativeRunId": 2439788,
+      "originalEdgeId": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2",
+      "requestChange": "only-specified-intermediate-terminal-detour-points-changed",
+      "proposalSha256": "f25ad6b3241ffcbfe4434ece83b2607c3699d585b3c54572800b4f3c21213eff",
+      "classification": "source-expanded-transfer-floor-demand-refusal-before-kernels",
+      "elapsedSeconds": 389.584,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": false,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/2439748-result.json",
+      "resultSha256": "2237bcafd98f20c89b864fc06ff54c2d54e4c6d6b69cd83e6691fb40318515b5",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false,
+      "exactSourceFloorQualifier": {
+        "originalGraphNodeId": "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1",
+        "nativeFloorElementId": 503705,
+        "originalCapFaceToken": 5,
+        "originalNativeServedLevelId": 694,
+        "originalLogicalPointFeet": [
+          {
+            "$rational": [
+              "592595351712681",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "1570856884697681",
+              "8796093022208"
+            ]
+          },
+          {
+            "$rational": [
+              "1015821766344231",
+              "70368744177664"
+            ]
+          }
+        ],
+        "originalPhysicalAttachmentPointFeet": [
+          {
+            "$rational": [
+              "592595351712681",
+              "4398046511104"
+            ]
+          },
+          {
+            "$rational": [
+              "1570856884697681",
+              "8796093022208"
+            ]
+          },
+          {
+            "$rational": [
+              "1015821766344231",
+              "70368744177664"
+            ]
+          }
+        ],
+        "logicalToPhysicalHeightDeltaFeet": {
+          "$rational": [
+            "0",
+            "1"
+          ]
+        },
+        "originalRunReferencePlane": {
+          "heightFeet": 14.435695538057743,
+          "reference": "original-qualified-local-ordered-boundary",
+          "originalRootNominalHeightFeet": 14.435695538057743,
+          "originalPartitionSha256": "c673ed60af858dc07fc77ca84255c39ed9e22a6089650cf9c1b219b23943dfbf",
+          "originalBoundary": {
+            "originalLocalIndex": 14,
+            "originalLoopDescriptor": {
+              "token": -1,
+              "sourceClassSlot": 1087,
+              "start": 2700,
+              "end": 2706,
+              "path": "StairsRun.m_orderedRisers[14]"
+            },
+            "originalLoopSpan": [
+              15612,
+              15623
+            ],
+            "originalCurveDescriptor": {
+              "token": 186,
+              "sourceClassSlot": 1973,
+              "start": 15617,
+              "end": 15623,
+              "path": "CurveLoop.m_curves[0]"
+            },
+            "originalCurveSpan": [
+              50321,
+              50405
+            ],
+            "originalFiniteCurve": {
+              "m_GInfo": {
+                "m_categoryId": {
+                  "m_id": {
+                    "m_id64": -1
+                  }
+                },
+                "m_tag": 861,
+                "m_controlCommand": 0,
+                "m_flags": 17302020
+              },
+              "m_endParams": [
+                0,
+                4.754822968543852
+              ],
+              "m_origin": [
+                136.5572043687624,
+                174.46298754790388,
+                14.435695538057743
+              ],
+              "m_dirVec": [
+                0.8480480961567,
+                -0.5299192642327667,
+                0
+              ]
+            }
+          },
+          "servedPlaneApproved": false,
+          "routeApproved": false
+        },
+        "zeroOriginalServedLevelOffset": true,
+        "unchangedLogicalHeightMatchesOriginalRunReferencePlane": true,
+        "unchangedLogicalHeightMatchesOriginalNominalRunHeight": true,
+        "floorAndStairNamedLevelAgree": true,
+        "completeScopedAttachmentQualified": false,
+        "cap": {
+          "retainedOriginalHoleCount": 5,
+          "completeBoundaryUncertaintyContact": true,
+          "completeConnectedDemandSupported": false,
+          "sourceLoopWindings": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
+      "fullOriginalSourceQualifierPreservedInResultJson": true
+    },
+    {
+      "nativeStairId": 1638837,
+      "nativeRunId": 1638854,
+      "originalEdgeId": "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3",
+      "requestChange": "unchanged-v3-proposal-current-explicit-scoped-transfer-semantics",
+      "proposalSha256": "1b70b805927d94313c61052b2d53e90aa592d1440bed3b246126fc23bc59b970",
+      "classification": "both-kernel-finite-riser-refusal",
+      "elapsedSeconds": 189.51,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [
+        "A full-width crossing leaves the exact finite source riser",
+        "A full-width crossing leaves the exact finite source riser"
+      ],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/1638837-result.json",
+      "resultSha256": "fbe10da72254ae49128992c6b3fe81c794ef4b287441a2f7d27eeda791b5d39b",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 2156084,
+      "nativeRunId": 2156103,
+      "originalEdgeId": "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4",
+      "requestChange": "unchanged-v3-proposal-current-explicit-scoped-transfer-semantics",
+      "proposalSha256": "eb4d9902214a9c458d213c31082b8923bcc00630e80ff8d2172250805fd028bb",
+      "classification": "both-kernel-finite-riser-refusal",
+      "elapsedSeconds": 110.853,
+      "actualFreshSourceConsumerAttempted": true,
+      "bothKernelDirectionsConfirmed": true,
+      "forwardPassed": false,
+      "reversePassed": false,
+      "reportedProfileIssues": [
+        "A full-width crossing leaves the exact finite source riser",
+        "A full-width crossing leaves the exact finite source riser"
+      ],
+      "resultPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/2156084-result.json",
+      "resultSha256": "ef95dc74e40bde18f6a980d09097fd46ef6b958d71fbd9c91b0037e40cfa5f4a",
+      "laterGuardsAndSixFootMaterialClearanceNotClaimedAfterAnyRefusal": true,
+      "routeApproved": false
+    }
+  ],
+  "positiveReviewPath": "/workspace/scratch/single-run-successor-ten-20261018/actual-ten-successor-v1/positive-source-review.json",
+  "positiveReviewSha256": "d58d8bdac3eeca68947c8a7fb66bfacdcf8fe9d3a3ac4b67fb2f602785f6f7e1",
+  "positiveReviewParentIds": [
+    1696006
+  ],
+  "untouchedHistoricalCases": [
+    {
+      "nativeStairId": 1298202,
+      "originalEdgeId": "stair:1298202:rm-694-bf1328011ec6:rm-400176-858c5daba8e8",
+      "historicalV3Category": "own-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1689936,
+      "originalEdgeId": "stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1693246,
+      "originalEdgeId": "stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779403,
+      "originalEdgeId": "stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779495,
+      "originalEdgeId": "stair:1779495:rm-694-b17d80e3d57c:rm-1487353-b7dc671f702f",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1779620,
+      "originalEdgeId": "stair:1779620:rm-694-607258e63bb3:rm-1487353-6e5cbce7fec2",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 1972504,
+      "originalEdgeId": "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    },
+    {
+      "nativeStairId": 2354630,
+      "originalEdgeId": "stair:2354630:rm-694-504b25e5319a:rm-400176-4ebbf37094e0",
+      "historicalV3Category": "terminal-source",
+      "notRerunByThisSuccessor": true
+    }
+  ],
+  "notANewAll18OrAll28Proof": true,
+  "originalNodesAccessAndNativeHeightPlanesUnchanged": true,
+  "noMaterialWidthRiserOrFloorPredicateWeakened": true,
+  "runtimeIntegrationApproved": false,
+  "routeApproved": false
+}

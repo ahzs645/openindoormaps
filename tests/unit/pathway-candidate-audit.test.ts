@@ -14,6 +14,7 @@ import {
   safetySnapshot,
   compareSafety,
   connectorCases,
+  type RouteCase,
   checkRouteResult,
   originalBlockedArrivalEvidence,
   checkedStationaryNativeAliasChanges,
@@ -29,6 +30,7 @@ import { nativeCirculationWalkBlockers } from "../../app/indoor-project/native-c
 import { validateIndoorDataset } from "../../app/indoor-project/routing";
 import type { ConvertResult } from "../../../reviter/lib/reviter/types";
 import { strictOriginalBlockedArrivalEvidence } from "../../scripts/indoor/candidate-arrival-loss";
+import { retainDistinctActualRouteCase } from "../../scripts/indoor/pathway-route-case-identity";
 
 function coverage(
   data: IndoorDataset,
@@ -120,15 +122,23 @@ test("candidate safety refuses silent staff/public, walkability, GIS, aperture a
 });
 
 test("master/visitor parity binds complete shared v2 source index inventory and every exact nested operand", () => {
-  const data = progressiveRoutingFixture() as IndoorDataset & { nativeSteppedStairV2SourceIndices?: unknown },
+  const data = progressiveRoutingFixture() as IndoorDataset & {
+      nativeSteppedStairV2SourceIndices?: unknown;
+    },
     original = masterVisitorPhysicalAuthoritySha256(data);
   // Hash-binding fixture only; these values do not claim a valid source index.
-  data.nativeSteppedStairV2SourceIndices = [{ id: "source-index", cells: [{ exact: { n: "1", d: "3" } }] }] as never;
+  data.nativeSteppedStairV2SourceIndices = [
+    { id: "source-index", cells: [{ exact: { n: "1", d: "3" } }] },
+  ] as never;
   const indexBound = masterVisitorPhysicalAuthoritySha256(data);
   assert.notEqual(indexBound, original);
   const clone = structuredClone(data);
   assert.equal(masterVisitorPhysicalAuthoritySha256(clone), indexBound);
-  (clone.nativeSteppedStairV2SourceIndices as unknown as { cells: { exact: { n: string; d: string } }[] }[])[0].cells[0].exact.n = "2";
+  (
+    clone.nativeSteppedStairV2SourceIndices as unknown as {
+      cells: { exact: { n: string; d: string } }[];
+    }[]
+  )[0].cells[0].exact.n = "2";
   assert.notEqual(masterVisitorPhysicalAuthoritySha256(clone), indexBound);
   delete clone.nativeSteppedStairV2SourceIndices;
   assert.equal(masterVisitorPhysicalAuthoritySha256(clone), original);
@@ -161,28 +171,63 @@ test("candidate QA runs real source-qualified steps up/down and independently ve
 
 test("step-free connector cases permit a valid alternate lift while public stair cases require the actual intended stair", () => {
   const data = structuredClone(stairFixture.data) as unknown as IndoorDataset,
-    stair = data.edges[0]!, liftId = "synthetic-reviewed-alternate-lift",
+    stair = data.edges[0]!,
+    liftId = "synthetic-reviewed-alternate-lift",
     evidence = "Synthetic reviewed served native lift entrances";
-  Object.assign(data, { format: "reviter-indoor", version: 1, generator: "reviter/indoor-pipeline-1",
-    issues: [], report: progressiveRoutingFixture().report });
+  Object.assign(data, {
+    format: "reviter-indoor",
+    version: 1,
+    generator: "reviter/indoor-pipeline-1",
+    issues: [],
+    report: progressiveRoutingFixture().report,
+  });
   // This case has actual landing records on both named planes; it does not use
   // the fixture's separate display-only fractional-floor alias experiment.
-  data.nativePhysicalLevels = { ...data.nativePhysicalLevels!,
-    levels: data.nativePhysicalLevels!.levels.map(level => ({ ...level, annotationLevel: true })), displayAliases: [] };
-  data.connectors = [{ id: liftId, kind: "elevator", nativeElementId: 999,
-    sourceModelSha256: data.source.modelSha256, accessible: "yes", direction: "both", evidence,
-    entrances: [stair.from, stair.to].map(nodeId => {
-      const node = data.nodes.find(n => n.id === nodeId)!;
-      return { nodeId, roomKey: node.roomKey, levelId: node.levelId };
-    }),
-  }];
-  data.edges.push({ id: `${liftId}:edge`, nativeElementId: 999, connectorId: liftId,
-    from: stair.from, to: stair.to, kind: "elevator", roomKeys: [...stair.roomKeys],
-    pointsFeet: [structuredClone(data.nodes[0].pointFeet), structuredClone(data.nodes[1].pointFeet)],
-    enabled: true, accessible: "yes", direction: "both", evidence, lengthMetres: 10,
+  data.nativePhysicalLevels = {
+    ...data.nativePhysicalLevels!,
+    levels: data.nativePhysicalLevels!.levels.map((level) => ({
+      ...level,
+      annotationLevel: true,
+    })),
+    displayAliases: [],
+  };
+  data.connectors = [
+    {
+      id: liftId,
+      kind: "elevator",
+      nativeElementId: 999,
+      sourceModelSha256: data.source.modelSha256,
+      accessible: "yes",
+      direction: "both",
+      evidence,
+      entrances: [stair.from, stair.to].map((nodeId) => {
+        const node = data.nodes.find((n) => n.id === nodeId)!;
+        return { nodeId, roomKey: node.roomKey, levelId: node.levelId };
+      }),
+    },
+  ];
+  data.edges.push({
+    id: `${liftId}:edge`,
+    nativeElementId: 999,
+    connectorId: liftId,
+    from: stair.from,
+    to: stair.to,
+    kind: "elevator",
+    roomKeys: [...stair.roomKeys],
+    pointsFeet: [
+      structuredClone(data.nodes[0].pointFeet),
+      structuredClone(data.nodes[1].pointFeet),
+    ],
+    enabled: true,
+    accessible: "yes",
+    direction: "both",
+    evidence,
+    lengthMetres: 10,
   });
   validateIndoorDataset(data);
-  const cases = connectorCases(data).cases.filter(c => c.name.includes(stair.id)),
+  const cases = connectorCases(data).cases.filter((c) =>
+      c.name.includes(stair.id),
+    ),
     calculate = createWorkerRouteCalculator(data);
   assert.equal(cases.length, 4);
   for (const routeCase of cases) {
@@ -192,20 +237,24 @@ test("step-free connector cases permit a valid alternate lift while public stair
     if (routeCase.mode === "accessible") {
       assert.equal(routeCase.intendedEdgeId, undefined);
       assert.deepEqual(routeCase.forbiddenEdgeIds, [stair.id]);
-      assert(result.route.edges.some(e => e.kind === "elevator"));
-      assert(!result.route.edges.some(e => e.id === stair.id));
+      assert(result.route.edges.some((e) => e.kind === "elevator"));
+      assert(!result.route.edges.some((e) => e.id === stair.id));
     } else {
       assert.equal(routeCase.intendedEdgeId, stair.id);
-      assert(result.route.edges.some(e => e.id === stair.id));
+      assert(result.route.edges.some((e) => e.id === stair.id));
       const alternate = calculate(routeCase.start, routeCase.end, "accessible");
-      assert(checkRouteResult(data, routeCase, alternate).errors.includes("intended-connector-not-exercised"));
+      assert(
+        checkRouteResult(data, routeCase, alternate).errors.includes(
+          "intended-connector-not-exercised",
+        ),
+      );
     }
   }
-  const accessibleCase = cases.find(c => c.mode === "accessible")!,
+  const accessibleCase = cases.find((c) => c.mode === "accessible")!,
     actualSteps = calculate(accessibleCase.start, accessibleCase.end, "public"),
     forged = checkRouteResult(data, accessibleCase, actualSteps);
   assert(forged.errors.includes(`forbidden-connector-exercised:${stair.id}`));
-  assert(forged.errors.some(e => e.startsWith("step-free-veto:")));
+  assert(forged.errors.some((e) => e.startsWith("step-free-veto:")));
 });
 
 test("QA catches calculator output whose edge was disabled or whose one-way restriction changed", () => {
@@ -394,7 +443,7 @@ async function stationaryFixture() {
     elementBounds: [
       {
         elementId: 10,
-        categoryId: -2000032,
+        categoryId: -2_000_032,
         boundsFeet: { min: { x: 0, y: 0, z: -1 }, max: { x: 20, y: 10, z: 0 } },
         loops: [ring.map(([x, y]) => [x, y, 0])],
       },
@@ -549,4 +598,117 @@ test("candidate alias certification refuses near motion, height/owner/surface/ce
       new Set([id]),
     ).violations.some((v) => v.includes("Accessibility")),
   );
+});
+
+test("a stricter explicit expected route survives a matching generated intended case and rejects an actual refusal", () => {
+  const data = progressiveRoutingFixture();
+  data.edges[0]!.enabled = false;
+  const generated: RouteCase = {
+      name: "generated intended connector",
+      start: data.records[0]!.key,
+      end: data.records[1]!.key,
+      mode: "public",
+      intendedEdgeId: data.edges[0]!.id,
+    },
+    explicit: RouteCase = {
+      ...generated,
+      name: "required repaired approach",
+      expect: "route",
+    },
+    seen = new Set<string>(),
+    retained = [generated, explicit].filter((row) =>
+      retainDistinctActualRouteCase(row, seen),
+    ),
+    before = JSON.stringify(data),
+    run = createImmutableRoutingSession(data),
+    calculate = createWorkerRouteCalculator(data),
+    result = run(() =>
+      calculate(generated.start, generated.end, generated.mode),
+    );
+  assert.deepEqual(
+    retained.map((row) => row.name),
+    [generated.name, explicit.name],
+  );
+  assert.equal(result.route, null);
+  assert.deepEqual(
+    run(() => checkRouteResult(data, retained[0]!, result)).errors,
+    [],
+  );
+  assert(
+    run(() => checkRouteResult(data, retained[1]!, result)).errors.includes(
+      "explicit-route-expectation",
+    ),
+  );
+  assert.equal(JSON.stringify(data), before);
+});
+
+test("identical expected cases still deduplicate while contradictory availability expectations both remain checked", () => {
+  const original: RouteCase = {
+      name: "required route",
+      start: "a",
+      end: "b",
+      mode: "public",
+      expect: "route",
+    },
+    duplicate = { ...original, name: "same request repeated" },
+    blocked: RouteCase = {
+      ...original,
+      name: "explicit refusal",
+      expect: "blocked",
+    },
+    intended = {
+      ...original,
+      name: "particular connector",
+      intendedEdgeId: "original-edge",
+    },
+    forbidden = {
+      ...original,
+      name: "forbidden original connector",
+      forbiddenEdgeIds: ["original-edge"],
+    },
+    input = [original, duplicate, blocked, intended, forbidden],
+    before = JSON.stringify(input),
+    seen = new Set<string>(),
+    retained = input.filter((row) => retainDistinctActualRouteCase(row, seen));
+  assert.deepEqual(
+    retained.map((row) => row.name),
+    [original.name, blocked.name, intended.name, forbidden.name],
+  );
+  assert.equal(JSON.stringify(input), before);
+});
+
+test("retained explicit positive cases still exercise actual calculator paths and original instruction guards", () => {
+  const data = progressiveRoutingFixture(),
+    generated: RouteCase = {
+      name: "generated available connector",
+      start: data.records[0]!.key,
+      end: data.records[1]!.key,
+      mode: "public",
+      intendedEdgeId: data.edges[0]!.id,
+    },
+    explicit: RouteCase = {
+      ...generated,
+      name: "required available connector",
+      expect: "route",
+    },
+    seen = new Set<string>(),
+    retained = [generated, explicit].filter((row) =>
+      retainDistinctActualRouteCase(row, seen),
+    ),
+    before = JSON.stringify(data),
+    run = createImmutableRoutingSession(data),
+    calculate = createWorkerRouteCalculator(data),
+    result = run(() => calculate(explicit.start, explicit.end, explicit.mode));
+  assert.equal(retained.length, 2);
+  assert(result.route);
+  const checked = run(() => checkRouteResult(data, retained[1]!, result));
+  assert.deepEqual(checked.errors, []);
+  assert(checked.instructionCount > 0);
+  const refusal: RouteCase = { ...explicit, expect: "blocked" };
+  assert(
+    run(() => checkRouteResult(data, refusal, result)).errors.includes(
+      "explicit-route-expectation",
+    ),
+  );
+  assert.equal(JSON.stringify(data), before);
 });

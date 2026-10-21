@@ -1,0 +1,572 @@
+{
+  "schema": "hall-a-q-targeted-git-history-review-v1",
+  "observedAtUtc": "2026-10-18T21:50:27.056309+00:00",
+  "status": "NO_PUBLIC_LETTER_TO_ID_BINDING_RECOVERED",
+  "authority": {
+    "accessChanges": false,
+    "nativeIdentityApproval": false,
+    "physicalRouteApproval": false
+  },
+  "limits": {
+    "perProcessAddressSpaceBytes": 536870912,
+    "gitPackedWindow": "4m",
+    "gitPackedLimit": "32m",
+    "networkRequests": 0,
+    "browserProcesses": 0,
+    "sourceModelJobs": 0,
+    "workingSourceChanges": 0,
+    "scope": "Available tracked local refs only; not unreachable objects, external artifact content, or remote refs not already fetched."
+  },
+  "refs": {
+    "openindoormaps": {
+      "refs": [
+        {
+          "ref": "refs/heads/codex/ship-readiness-20261018",
+          "commit": "b365a825dcc974d03c718e3fd46c12f6f6368508"
+        },
+        {
+          "ref": "refs/heads/work",
+          "commit": "5e856d6850515144d71c68f78b8ba15c173e9667"
+        },
+        {
+          "ref": "refs/remotes/origin/main",
+          "commit": "22f7b1aeb3efd383fb8eeb63b7b8c304258d82b8"
+        }
+      ],
+      "reachableCommitCount": 466
+    },
+    "reviter": {
+      "refs": [
+        {
+          "ref": "refs/heads/codex/ship-readiness-20261018",
+          "commit": "cc46ace780f9258724edc2d94ff87a112e36eb7b"
+        },
+        {
+          "ref": "refs/heads/work",
+          "commit": "c9fa5c7969aa9c34821776bf57b4d9652bffd0ca"
+        }
+      ],
+      "reachableCommitCount": 285
+    }
+  },
+  "queryScope": {
+    "exactPickaxePathspecs": [
+      "docs",
+      "scripts",
+      ".agents",
+      "app",
+      "lib"
+    ],
+    "exactPickaxeStrings": [
+      "r3-b7-halls-staff",
+      "Q3.4"
+    ],
+    "broadLiteralPickaxeStrings": [
+      "String.fromCharCode(65",
+      "ascii_uppercase",
+      "Hall A",
+      "Halls A"
+    ],
+    "pathInventory": "git log --all --format= --name-only over the same likely paths, filtered for round3/hall/question/review/artifact/diagram/date variants; October 8\u201313 commit context inspected.",
+    "boundedResults": "Exact pickaxe capped at 12 matching commits; generic literal pickaxe capped at 10. Returned at most two matching commits, so these result caps did not truncate matches. Individual Git calls had 60/75-second timeouts and exited 0."
+  },
+  "queryLogs": {
+    "openindoormaps-Hall_A.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "openindoormaps-Halls_A.log": {
+      "bytes": 398,
+      "sha256": "b75b39abecaf81369a385c002264be9fddc0bb94791927e22dc010370b398fa9",
+      "output": "12492fdc73d9463ca55bf0150eed33c2933bf88a 2026-10-14T14:26:01-07:00 docs(indoor): add the UNBC native indoor final handoff (2026-10-14)\n\ndocs/continuation/unbc-20261014/decisions/2026-10-10-round3.json\n8038ee65e5bbe0e4028bd16fa34640141b24b866 2026-10-12T16:59:51Z docs(indoor): 2026-10-12 UNBC handoff, owner decisions and candidate-2 summary\n\ndocs/continuation/unbc-20261012/2026-10-10-round3.json\n"
+    },
+    "openindoormaps-Q3_4.log": {
+      "bytes": 500,
+      "sha256": "959893e7b86fd2a9711ea8706b7e5437ec75cb489a479a3271528339f2c7fc81",
+      "output": "12492fdc73d9463ca55bf0150eed33c2933bf88a 2026-10-14T14:26:01-07:00 docs(indoor): add the UNBC native indoor final handoff (2026-10-14)\n\ndocs/continuation/unbc-20261014/decisions/2026-10-10-round3.json\ndocs/continuation/unbc-20261014/tools/candidate16/leaks.py\n8038ee65e5bbe0e4028bd16fa34640141b24b866 2026-10-12T16:59:51Z docs(indoor): 2026-10-12 UNBC handoff, owner decisions and candidate-2 summary\n\ndocs/continuation/unbc-20261012/2026-10-10-round3.json\ndocs/continuation/unbc-20261012/HANDOFF.md\n"
+    },
+    "openindoormaps-String.fromCharCode_65.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "openindoormaps-ascii_uppercase.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "openindoormaps-r3-b7-halls-staff.log": {
+      "bytes": 398,
+      "sha256": "b75b39abecaf81369a385c002264be9fddc0bb94791927e22dc010370b398fa9",
+      "output": "12492fdc73d9463ca55bf0150eed33c2933bf88a 2026-10-14T14:26:01-07:00 docs(indoor): add the UNBC native indoor final handoff (2026-10-14)\n\ndocs/continuation/unbc-20261014/decisions/2026-10-10-round3.json\n8038ee65e5bbe0e4028bd16fa34640141b24b866 2026-10-12T16:59:51Z docs(indoor): 2026-10-12 UNBC handoff, owner decisions and candidate-2 summary\n\ndocs/continuation/unbc-20261012/2026-10-10-round3.json\n"
+    },
+    "reviter-Hall_A.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "reviter-Halls_A.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "reviter-Q3_4.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "reviter-String.fromCharCode_65.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "reviter-ascii_uppercase.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    },
+    "reviter-r3-b7-halls-staff.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    }
+  },
+  "candidatePaths": {
+    "reviter-candidate-history-paths": {
+      "exit": 0,
+      "paths": [
+        "lib/reviter/hallway-connections.ts"
+      ],
+      "stderr": ""
+    },
+    "reviter-broader-history-paths": [],
+    "openindoormaps-candidate-history-paths": {
+      "exit": 0,
+      "paths": [
+        "app/indoor-project/hallway-center-endpoints.ts",
+        "app/indoor-project/hallway-path-legend.tsx",
+        "app/indoor-project/hallway-path-url.ts",
+        "app/indoor-project/hallway-path-view.ts",
+        "app/indoor-project/native-hallway-display.ts",
+        "app/indoor-project/native-mixed-hallway-review.ts",
+        "docs/continuation/unbc-20261012/2026-10-10-round3.json",
+        "docs/continuation/unbc-20261014/decisions/2026-10-10-round3.json",
+        "docs/continuation/unbc-20261015/HALLWAY-ENDPOINTS-AND-STAIR-EXCLUSIONS.md",
+        "docs/continuation/unbc-20261016/screenshots/hallway.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/README.md",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/all-floors-compilation.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/browser-proof.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/browser-routes.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/comparison.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/desktop-route.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/desktop-setting.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/REPORT.md",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/desktop-arrival-zoom.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/desktop-arrival.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/desktop-instruction-0.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/desktop-instruction-2.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/mobile-instruction-2.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/outlet-overview.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/outlet-route-controls.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/outlet-route.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mappedin/proof.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mobile-route.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/mobile-setting.png",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/navigation.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/package.json",
+        "docs/continuation/unbc-20261017/corridor-backbone/straight-hallways/targeted-replay.json",
+        "docs/continuation/unbc-20261017/pathway-repairs/browser-before-paint-fix/desktop-hallway-paths.png",
+        "docs/continuation/unbc-20261017/pathway-repairs/browser/desktop-hallway-paths.png",
+        "docs/continuation/unbc-20261017/pathway-repairs/floor-hallway-guides.png",
+        "docs/continuation/unbc-20261018/hallway-display-links/README.md",
+        "docs/continuation/unbc-20261018/hallway-display-links/SHA256SUMS",
+        "docs/continuation/unbc-20261018/hallway-display-links/building08-building10-diagnostic.png",
+        "docs/continuation/unbc-20261018/hallway-display-links/overlap-check.json",
+        "docs/continuation/unbc-20261018/hallway-display-links/overlapping-guides-diagnostic.png",
+        "docs/continuation/unbc-20261018/hallway-display-links/source-check.json",
+        "docs/screenshots/unbc-arrival-hallway-desktop.png",
+        "docs/screenshots/unbc-arrival-hallway-mobile.png",
+        "docs/screenshots/unbc-hallways-2d-desktop.png",
+        "docs/screenshots/unbc-hallways-2d-mobile.png",
+        "docs/screenshots/unbc-hallways-3d-desktop.png",
+        "docs/screenshots/unbc-hallways-3d-mobile.png",
+        "scripts/indoor/audit-hallway-display-links.ts",
+        "scripts/indoor/render-hallway-display-links.py"
+      ],
+      "stderr": ""
+    },
+    "openindoormaps-broader-history-paths": [
+      "docs/continuation/unbc-20261009/user-decisions/2026-10-09-round2.json",
+      "docs/continuation/unbc-20261009/user-decisions/questions.json",
+      "docs/continuation/unbc-20261009/user-decisions/r2-questions.json",
+      "docs/continuation/unbc-20261012/2026-10-09-round2.json",
+      "docs/continuation/unbc-20261012/2026-10-10-round3.json",
+      "docs/continuation/unbc-20261012/questions.json",
+      "docs/continuation/unbc-20261014/decisions/2026-10-09-round2.json",
+      "docs/continuation/unbc-20261014/decisions/2026-10-10-round3.json",
+      "docs/continuation/unbc-20261014/decisions/2026-10-13-round10.json",
+      "docs/continuation/unbc-20261014/decisions/2026-10-13-round11.json",
+      "docs/continuation/unbc-20261014/decisions/2026-10-14-round12.json",
+      "docs/continuation/unbc-20261014/decisions/questions.json",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/check-publication-artifact.mjs",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/download-diagnostic.png",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/latest-download.png",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/proof.json",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/publication-check.png",
+      "docs/continuation/unbc-20261017/pathway-repairs/publication-artifact/test.log",
+      "docs/indoor-zoom-artifacts.md",
+      "scripts/indoor/postcompile-stepped-stair-artifacts.ts"
+    ]
+  },
+  "sourceExcerpts": {
+    "decision": {
+      "commit": "12492fdc73d9463ca55bf0150eed33c2933bf88a",
+      "path": "docs/continuation/unbc-20261014/decisions/2026-10-10-round3.json",
+      "bytes": 14762,
+      "sha256": "3b4a1f5d26966532a5edba6d0b600df1863e09cb0eb4d202f5954a8364e6d288",
+      "record": {
+        "by": "u_jP81Rq_rROTVxlGEpM1_6w",
+        "choice": "Halls A-Q are public; the six red ones are staff-only halls, combined into one staff area",
+        "item": "r3-b7-halls-staff",
+        "note": "So the six red \u201crooms\u201d arent rooms they are halls aswell, but they arent accessible except by staff so combine it to one area?",
+        "updatedAt": "2026-10-10T21:20:00.000Z"
+      }
+    },
+    "staffRepairScript": {
+      "commit": "12492fdc73d9463ca55bf0150eed33c2933bf88a",
+      "path": "docs/continuation/unbc-20261014/tools/candidate16/leaks.py",
+      "bytes": 31715,
+      "sha256": "d170635d2ef529913301aa783b457b6d44265c75ee3c7529b3e92cac9284f95a",
+      "excerptLineStart": 26,
+      "excerpt": [
+        "        ({'09-271', '09-272'}, 'handoff \u00a77'),",
+        "        ({'07-312', '07-301'}, '2026-10-09-round2#f1-3'), ({'03-1058', '03-1059'}, '2026-10-09-round2#f2-4'), ({'05-423', '05-425'}, '2026-10-09-round2#f34-4'),",
+        "        ({'05-430', '05-451'}, '2026-10-09-round2#f34-5'), ({'03-3045', '03-3046'}, '2026-10-09-round2#f34-6'),",
+        "        ({'03-2034', '03-2038', '03-2039', '03-2041', '03-2052'}, '2026-10-09-round2#f34-8'),",
+        "        ({'07-702', '07-704', '07-706', '07-750', '07-751', '07-720', '05-117'}, '2026-10-09-round2#f1-7 / round3#Q3.4 (staff halls one area)'),",
+        "        ({'06-270', '06-274', '06-280'}, '2026-10-09-round2#f2-1 (06-274 Cooler / 06-280 Dry Goods open as part of the kitchen)'),",
+        "        ({'08-245', '08-247', '08-249', '08-240'}, '2026-10-10-round3#Q5.4 (Floor 2 suite one open area with corridor 08-240)'),",
+        "    ]",
+        "    pl = J(RUN + '/combined-build/round2/place-labels-round2.json')['reviewedPlaceLabels']['labels']"
+      ]
+    },
+    "questionMetadata": [
+      {
+        "path": "docs/continuation/unbc-20261009/user-decisions/questions.json",
+        "commit": "7ea1d844ba391e977468f8e410d6a51d3748d6ee",
+        "sha256": "017933dabd2cb04a0c37fa859de3df09c9a25bd3b60ef5844776ba3c977c7c7b",
+        "bytes": 21992,
+        "topLevelKeys": [
+          "generatedAt",
+          "coordinateUnits",
+          "colourKey",
+          "images"
+        ],
+        "containsQ3_4": false,
+        "containsR3Id": false,
+        "containsAtoQ": false,
+        "generatedAt": "2026-10-09",
+        "round": null,
+        "images": [
+          {
+            "file": "q1-overview.png",
+            "question_id": "A1-provisional-seals (overview)"
+          },
+          {
+            "file": "q1a-b9-gap-63mm.png",
+            "question_id": "A1-provisional-seals: 63.5 mm"
+          },
+          {
+            "file": "q1b-b9-gap-50mm.png",
+            "question_id": "A1-provisional-seals: 50 mm"
+          },
+          {
+            "file": "q1c-b9-gap-12mm.png",
+            "question_id": "A1-provisional-seals: 11.9 mm"
+          },
+          {
+            "file": "q1d-b9-gap-1ft-column.png",
+            "question_id": "A1-provisional-seals: 1.03 ft at +8 ft"
+          },
+          {
+            "file": "q2-b9-micro-gaps.png",
+            "question_id": "A2-micro-gap-contact-rule"
+          },
+          {
+            "file": "q3-b9-f2-south-facade.png",
+            "question_id": "A3-reconstructed-walls"
+          },
+          {
+            "file": "q4-b78-door-1630256.png",
+            "question_id": "C-a-associate-door-1630256"
+          },
+          {
+            "file": "q5-b78-08-106-corner.png",
+            "question_id": "C-b-is-08-106-corner-seam-real"
+          }
+        ]
+      },
+      {
+        "path": "docs/continuation/unbc-20261009/user-decisions/r2-questions.json",
+        "commit": "9c533d5b2e9433a27e261a5686f6ce0aa1398180",
+        "sha256": "252553972bab11505dfe8f8e056eff0a36085034710b8120b952e8138e4776c2",
+        "bytes": 49810,
+        "topLevelKeys": [
+          "generatedAt",
+          "round",
+          "coordinateUnits",
+          "colourKey",
+          "images"
+        ],
+        "containsQ3_4": false,
+        "containsR3Id": false,
+        "containsAtoQ": false,
+        "generatedAt": "2026-10-09",
+        "round": 2,
+        "images": [
+          {
+            "file": "r2-f2-1-06-274-cooler-06-280.png",
+            "question_id": "f2-1"
+          },
+          {
+            "file": "r2-f2-2-06-212-storage-label.png",
+            "question_id": "f2-2"
+          },
+          {
+            "file": "r2-f2-3-b4-facade-strip.png",
+            "question_id": "f2-3"
+          },
+          {
+            "file": "r2-f2-4-03-1058-03-1059.png",
+            "question_id": "f2-4"
+          },
+          {
+            "file": "r2-env-1-b10-atrium-column-gaps.png",
+            "question_id": "env-1"
+          },
+          {
+            "file": "r2-env-2-b9-f2-1172mm-gaps.png",
+            "question_id": "env-2"
+          },
+          {
+            "file": "r2-env-3-b8-f2-12mm-column.png",
+            "question_id": "env-3"
+          },
+          {
+            "file": "r2-env-4-05-170B-95mm.png",
+            "question_id": "env-4"
+          },
+          {
+            "file": "r2-f1-1-07-250-401-07-712-728.png",
+            "question_id": "f1-1"
+          },
+          {
+            "file": "r2-f1-2-07-113-05-123-openings.png",
+            "question_id": "f1-2"
+          },
+          {
+            "file": "r2-f1-3-07-312-07-317-pickup-front.png",
+            "question_id": "f1-3"
+          },
+          {
+            "file": "r2-f1-4-library-05-173-05-180.png",
+            "question_id": "f1-4"
+          },
+          {
+            "file": "r2-f1-5-07-314-freezer.png",
+            "question_id": "f1-5"
+          },
+          {
+            "file": "r2-f1-6-10-1513-stair-head.png",
+            "question_id": "f1-6"
+          },
+          {
+            "file": "r2-f1-7-07-750-staff-circulation.png",
+            "question_id": "f1-7"
+          },
+          {
+            "file": "r2-f1-8-07-102-suite-10-1046.png",
+            "question_id": "f1-8"
+          },
+          {
+            "file": "r2-f34-1-04-333-337-lab-suites.png",
+            "question_id": "f34-1"
+          },
+          {
+            "file": "r2-f34-2-08-318-08-319.png",
+            "question_id": "f34-2"
+          },
+          {
+            "file": "r2-f34-3-08-342-08-441-open-offices.png",
+            "question_id": "f34-3"
+          },
+          {
+            "file": "r2-f34-4-05-425-archives-office.png",
+            "question_id": "f34-4"
+          },
+          {
+            "file": "r2-f34-5-05-430-archives-storage.png",
+            "question_id": "f34-5"
+          },
+          {
+            "file": "r2-f34-6-03-3046-opening.png",
+            "question_id": "f34-6"
+          },
+          {
+            "file": "r2-f34-7-03-3087A-lounge.png",
+            "question_id": "f34-7"
+          },
+          {
+            "file": "r2-f34-8-03-2038-reception-suite.png",
+            "question_id": "f34-8"
+          },
+          {
+            "file": "r2-f34-9-copy-label-anchors.png",
+            "question_id": "f34-9"
+          },
+          {
+            "file": "r2-f34-10-dwg-x-marks-shafts.png",
+            "question_id": "f34-10"
+          }
+        ],
+        "staffOnlyEarlierQuestion": {
+          "file": "r2-f1-7-07-750-staff-circulation.png",
+          "question_id": "f1-7",
+          "title": "Building 7, Floor 1 \u2014 staff service corridor 07-750 / 07-751 / 07-706 / 07-704: circulation records, not rooms?",
+          "explanation": "This is the staff-only service corridor behind the Agora, one native selection face (native-region:311:307, 2115.5 sq ft). Its pieces carry room numbers 07-750, 07-751, 07-706 and 07-704, all named 'Circulation' with access 'staff'. They are not flagged as circulation records, so the inventory counts them as separate places sharing one space. 07-702 ESR is in the same face. 05-117 and 07-720 separate by numerical seams (checked contact rows). Nothing physical is missing; this is a metadata question.",
+          "measured": {
+            "levelId": 311,
+            "region": "native-region:311:307",
+            "records": {
+              "07-750": "Circulation, staff, circulation=false",
+              "07-751": "Circulation, staff, circulation=false",
+              "07-706": "Circulation, staff, circulation=false",
+              "07-704": "Circulation, staff, circulation=false",
+              "07-702": "ESR, staff",
+              "07-720": "Office, access unknown",
+              "05-117": "Circulation, staff"
+            }
+          },
+          "answer_options": [
+            "Mark 07-750/07-751/07-706/07-704 as staff circulation records (metadata only, access unchanged)",
+            "Keep them as places",
+            "Also review 07-702 ESR"
+          ],
+          "sources": "Native cut: RUN/shared-extracts/compiled-2fad94-material-sections.json (production material sections at +0.1/+4 ft); room records, doors, envelopes: compiled-2fad94-routing-core.json; selection regions: RUN/shared-extracts/native-level-*/native-areas-baseline.json or derive-gap0.json; DWG: RUN/shared-extracts/dwg/registered-sections-level-*.json, registered-room-labels.json. Widths are float (shapely) nearest-point measurements on these extracts at the +4 ft cut unless stated; diagnostic, not certificates."
+        }
+      },
+      {
+        "path": "docs/continuation/unbc-20261012/questions.json",
+        "commit": "8038ee65e5bbe0e4028bd16fa34640141b24b866",
+        "sha256": "dde453ebd3def63b69218e87c64d17876bdbcd95bf111c08e0b32ef4bbf7e384",
+        "bytes": 22087,
+        "topLevelKeys": [
+          "generatedAt",
+          "coordinateUnits",
+          "colourKey",
+          "images"
+        ],
+        "containsQ3_4": false,
+        "containsR3Id": false,
+        "containsAtoQ": false,
+        "generatedAt": "2026-10-09",
+        "round": null,
+        "images": [
+          {
+            "file": "q1-overview.png",
+            "question_id": "A1-provisional-seals (overview)"
+          },
+          {
+            "file": "q1a-b9-gap-63mm.png",
+            "question_id": "A1-provisional-seals: 63.5 mm"
+          },
+          {
+            "file": "q1b-b9-gap-50mm.png",
+            "question_id": "A1-provisional-seals: 50 mm"
+          },
+          {
+            "file": "q1c-b9-gap-12mm.png",
+            "question_id": "A1-provisional-seals: 11.9 mm"
+          },
+          {
+            "file": "q1d-b9-gap-1ft-column.png",
+            "question_id": "A1-provisional-seals: 1.03 ft at +8 ft"
+          },
+          {
+            "file": "q2-b9-micro-gaps.png",
+            "question_id": "A2-micro-gap-contact-rule"
+          },
+          {
+            "file": "q3-b9-f2-south-facade.png",
+            "question_id": "A3-reconstructed-walls"
+          },
+          {
+            "file": "q4-b78-door-1630256.png",
+            "question_id": "C-a-associate-door-1630256"
+          },
+          {
+            "file": "q5-b78-08-106-corner.png",
+            "question_id": "C-b-is-08-106-corner-seam-real"
+          }
+        ]
+      },
+      {
+        "path": "docs/continuation/unbc-20261014/decisions/questions.json",
+        "commit": "12492fdc73d9463ca55bf0150eed33c2933bf88a",
+        "sha256": "017933dabd2cb04a0c37fa859de3df09c9a25bd3b60ef5844776ba3c977c7c7b",
+        "bytes": 21992,
+        "topLevelKeys": [
+          "generatedAt",
+          "coordinateUnits",
+          "colourKey",
+          "images"
+        ],
+        "containsQ3_4": false,
+        "containsR3Id": false,
+        "containsAtoQ": false,
+        "generatedAt": "2026-10-09",
+        "round": null,
+        "images": [
+          {
+            "file": "q1-overview.png",
+            "question_id": "A1-provisional-seals (overview)"
+          },
+          {
+            "file": "q1a-b9-gap-63mm.png",
+            "question_id": "A1-provisional-seals: 63.5 mm"
+          },
+          {
+            "file": "q1b-b9-gap-50mm.png",
+            "question_id": "A1-provisional-seals: 50 mm"
+          },
+          {
+            "file": "q1c-b9-gap-12mm.png",
+            "question_id": "A1-provisional-seals: 11.9 mm"
+          },
+          {
+            "file": "q1d-b9-gap-1ft-column.png",
+            "question_id": "A1-provisional-seals: 1.03 ft at +8 ft"
+          },
+          {
+            "file": "q2-b9-micro-gaps.png",
+            "question_id": "A2-micro-gap-contact-rule"
+          },
+          {
+            "file": "q3-b9-f2-south-facade.png",
+            "question_id": "A3-reconstructed-walls"
+          },
+          {
+            "file": "q4-b78-door-1630256.png",
+            "question_id": "C-a-associate-door-1630256"
+          },
+          {
+            "file": "q5-b78-08-106-corner.png",
+            "question_id": "C-b-is-08-106-corner-seam-real"
+          }
+        ]
+      }
+    ]
+  },
+  "conclusion": "The explicit public approval remains preserved, but neither exact decision copy embeds letters-to-room IDs. Earlier 2026-10-09 question metadata and a later staff grouping script corroborate staff-side context only. No original round-3 renderer, deterministic A\u2013Q assignment, or pinned public legend was recovered. No access values or source geometry changed."
+}

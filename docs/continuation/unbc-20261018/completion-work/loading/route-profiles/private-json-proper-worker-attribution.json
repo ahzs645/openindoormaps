@@ -1,0 +1,103 @@
+{
+  "format": "proper-worker-contemporaneous-private-json-attribution-v1",
+  "sameExactInputDatasetDisplayManifestNormalGeometryResultsAndInstructions": true,
+  "all10NormalCasesMatchedBoth": true,
+  "inclusiveFrameTimesOverlap": true,
+  "singleColdRunEachNotStatisticalLatencyAcceptance": true,
+  "samples": [
+    {
+      "runtime": "3fa-successor",
+      "reportPath": "/workspace/scratch/unbc-private-json-3fa-actual-progressive-worker-768-20261018/report.json",
+      "coldSeconds": 23.159633819000003,
+      "reverseSeconds": 2.297218518999998,
+      "profileSeconds": 22.959006,
+      "selfTop": {
+        "(idle)": 4.636952,
+        "process": 3.241001,
+        "(garbage collector)": 1.890734,
+        "gcd": 1.771381,
+        "compare": 1.515203,
+        "readNext": 1.010167,
+        "": 0.819503,
+        "freezeOwnedJsonTree": 0.807465,
+        "parseVerifiedRoutingDataset": 0.667261,
+        "decodeUTF8": 0.621204,
+        "getSource": 0.529424,
+        "putAsset": 0.472572,
+        "scalar2": 0.471056,
+        "decodePublishedRouteCells": 0.294566,
+        "inflt": 0.271609
+      },
+      "inclusiveSelectedSeconds": {
+        "loadRouting": 3.080512,
+        "parseVerifiedRoutingDataset": 3.080512,
+        "freezeOwnedGraph": 0.0,
+        "freezeOwnedJsonTree": 0.807465,
+        "progressiveSha256": 3.192109,
+        "logicalBytes": 2.471418,
+        "prepareProgressiveRouteCalculator": 3.327018,
+        "decodePublishedRouteCells": 2.538233,
+        "hydratePublishedTopology": 2.055458,
+        "calculateRoute": 4.698526
+      },
+      "sourceParserCompleteCacheFetch": {
+        "seconds": 13.373331902999999,
+        "heapUsed": 331742592,
+        "rss": 1273737216
+      },
+      "heapLimit": 855638016,
+      "maxSampledHeapBytes": 575530016
+    },
+    {
+      "runtime": "a844-contemporaneous-reference",
+      "reportPath": "/workspace/scratch/unbc-a844-contemporaneous-reference-progressive-worker-768-20261018/report.json",
+      "coldSeconds": 23.599384055,
+      "reverseSeconds": 2.2075908899999996,
+      "profileSeconds": 23.406208,
+      "selfTop": {
+        "(idle)": 4.27974,
+        "process": 3.067569,
+        "(garbage collector)": 2.575389,
+        "freezeOwnedGraph": 2.208034,
+        "compare": 1.641187,
+        "gcd": 1.426873,
+        "": 0.932121,
+        "parseVerifiedRoutingDataset": 0.721052,
+        "readNext": 0.459264,
+        "scalar2": 0.43055,
+        "getSource": 0.397721,
+        "putAsset": 0.345681,
+        "readBounded": 0.331105,
+        "decodeUTF8": 0.302766,
+        "decodePublishedRouteCells": 0.289811
+      },
+      "inclusiveSelectedSeconds": {
+        "loadRouting": 4.159482,
+        "parseVerifiedRoutingDataset": 4.159482,
+        "freezeOwnedGraph": 2.208034,
+        "freezeOwnedJsonTree": 0.0,
+        "progressiveSha256": 2.99645,
+        "logicalBytes": 2.020515,
+        "prepareProgressiveRouteCalculator": 2.955835,
+        "decodePublishedRouteCells": 2.141566,
+        "hydratePublishedTopology": 1.661443,
+        "calculateRoute": 5.15431
+      },
+      "sourceParserCompleteCacheFetch": {
+        "seconds": 13.549963025999999,
+        "heapUsed": 372795544,
+        "rss": 1258926080
+      },
+      "heapLimit": 855638016,
+      "maxSampledHeapBytes": 574339312
+    }
+  ],
+  "newMinusReferenceColdSeconds": -0.4397502359999983,
+  "parserCpuSecondsSaved": 1.0789699999999995,
+  "freezeCpuSecondsSaved": 1.400569,
+  "postParserHeapBytesSaved": 41052952,
+  "postParserRssBytesSaved": -14811136,
+  "noMeaningfulWholeRouteOrPeakMemoryClaim": true,
+  "browserOrPhysicalDeviceAcceptance": false,
+  "published": false
+}

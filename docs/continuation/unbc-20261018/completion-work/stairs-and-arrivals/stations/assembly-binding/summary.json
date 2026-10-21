@@ -1,0 +1,586 @@
+{
+  "format": "actual-original-ten-assembly-binding-compact-summary-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "sourceCensusSha256": "2845c6052d305c1f67a1bdb28e4a524d059f6c4005ebdf3b60af1fa67df72edf",
+  "completeSourcePages": 3666,
+  "rawActualReceipt": "/workspace/scratch/assembly-binding-final-carrier-complete-20261018/actual-ten-final.json",
+  "rawActualReceiptSha256": "f0ba2fb917e7e6c6fd6464c5a2dd0cb9abd0827456ae14b8182d773835d1951c",
+  "implementationModuleHashes": {
+    "native-source-stair-assembly": "e4d4fcc5206e5198034551c0fcd498da80958371efc293ab4a3afaa0d7b5cc02",
+    "native-source-stair-landing-carrier-material": "ac413340443b263ed1cc2ad5a91c91fdfb3a6a303b001ab0a69abbf9bed05a3a",
+    "native-source-stair-placed-envelope": "a4cb4481b693b05c83d5e4507a280668ac119612f0f1d9cbccba852c8af978e7",
+    "native-stair-typed-fifo": "b737d535c3aac8b7153b94c85807cc895be4f6caeba7c037bdb334805065556a",
+    "native-source-stair-support-envelopes": "b3c3cca863c90547bc99ad08115e27140cdd4f9e89863deaef0178c4b6193009",
+    "native-source-stair-local-material": "13dfaa33e4eac9b04366c6a6993553b32929b30df96c8388559eea4d3ca3bf79",
+    "native-source-stair-face-orientation": "16e62e430a736646a5cf235992a9f959235cc11e0819492c1bbdb82e7de89d8c",
+    "native-source-foreign-envelope-census": "2d208b5c63358123d5971cce435dca3349dc86259b81652fe3de3f3d8e89970e",
+    "schema-reader": "72a1d8b5304faf2ad424dfdaea0b883a501bf4e07a123210bc0b66c78fa83368",
+    "revit-2027-framed-grep-root": "b02782846261857061e4239ccd1b617e3bd8d3ce114aa4c1abb6cff0d6709d2d",
+    "revit-2027-grep-replay": "d4e111db02a51dce1992ff7f917ac1c6ad3d7fb100b736f0a82970e5a4d11cec",
+    "revit-2027-owner-mesh-index": "c5fdb76144d58a9b24896b05fa94ae4cef768043f4da4a9fce5a979a868f0a85",
+    "revit-2027-owner-mesh-trim": "235f0d6b0745bd84f55ea0e3f60ef4a09f546ae77328c41f35ba707d67948c25",
+    "revit-2027-nested-instance": "bef877df5d765486181fb1294034e14a510fabba9e5069f87d91b05cacdf1e35"
+  },
+  "sourceModulesUnchangedDuringActualReplay": true,
+  "originalSourceModelUnchanged": true,
+  "elapsedMs": 143436,
+  "assemblyCount": 10,
+  "completeOriginalOwnedChildCount": 30,
+  "completeOriginalMemberMaterialCount": 10,
+  "definitionLocalCells": 81,
+  "carrierInlineFaceDomains": 43,
+  "carrierFiniteLinePointDomains": 71,
+  "completeOriginalMemberCells": 195,
+  "automaticNamedLandingPortSuccessCount": 9,
+  "sourceGeometryArenasPreserved": true,
+  "testResults": {
+    "newRegressionPassCount": 10,
+    "separateActualRvtGatedTestSkipped": 1,
+    "freshActualTenSourceReplayPassed": true,
+    "scopedEslintPassed": true,
+    "fullReviterTypecheckPassed": true
+  },
+  "rows": [
+    {
+      "nativeStairId": 1293690,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1293981,
+          "nativeDefinitionId": 1293982,
+          "originalBottomElevationFeet": 0,
+          "originalTopElevationFeet": 2.706692913385827
+        },
+        {
+          "nativeRunId": 1294068,
+          "nativeDefinitionId": 1294069,
+          "originalBottomElevationFeet": 2.706692913385827,
+          "originalTopElevationFeet": 16.240157480314963
+        }
+      ],
+      "nativeLandingId": 1294440,
+      "nativeLandingDefinitionId": 1294441,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "3047465299032693",
+        "denominator": "1125899906842624"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1293981,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 1294068,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1295966,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1296000,
+          "nativeDefinitionId": 1296001,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 30.01968503937008
+        },
+        {
+          "nativeRunId": 1296189,
+          "nativeDefinitionId": 1296190,
+          "originalBottomElevationFeet": 30.01968503937008,
+          "originalTopElevationFeet": 35.35104986876641
+        }
+      ],
+      "nativeLandingId": 1296191,
+      "nativeLandingDefinitionId": 1296192,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "4224895073658961",
+        "denominator": "140737488355328"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1296000,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 1296189,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1305141,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1305306,
+          "nativeDefinitionId": 1305307,
+          "originalBottomElevationFeet": 0,
+          "originalTopElevationFeet": 9.117281392457523
+        },
+        {
+          "nativeRunId": 1305425,
+          "nativeDefinitionId": 1305426,
+          "originalBottomElevationFeet": 9.117281392457523,
+          "originalTopElevationFeet": 14.435695538057743
+        }
+      ],
+      "nativeLandingId": 1305763,
+      "nativeLandingDefinitionId": 1305764,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 12,
+      "definitionLocalCellCount": 11,
+      "carrierInlineFaceCount": 0,
+      "carrierFiniteLinePointCount": 10,
+      "completeOriginalMemberCellCount": 21,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 42,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "5132573135212957",
+        "denominator": "562949953421312"
+      },
+      "namedLandingPorts": {
+        "ok": false,
+        "blocker": "Error: Original landing map/history boundary identity unavailable",
+        "originalRunEndpointBindings": []
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1496322,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1496323,
+          "nativeDefinitionId": 1496324,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 30.83989501312336
+        },
+        {
+          "nativeRunId": 1496326,
+          "nativeDefinitionId": 1496327,
+          "originalBottomElevationFeet": 30.83989501312336,
+          "originalTopElevationFeet": 34.120734908136484
+        }
+      ],
+      "nativeLandingId": 1496328,
+      "nativeLandingDefinitionId": 1496329,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "4340329365288987",
+        "denominator": "140737488355328"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1496323,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 1496326,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1498360,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1498361,
+          "nativeDefinitionId": 1498362,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 30.83989501312336
+        },
+        {
+          "nativeRunId": 1498364,
+          "nativeDefinitionId": 1498365,
+          "originalBottomElevationFeet": 30.83989501312336,
+          "originalTopElevationFeet": 34.120734908136484
+        }
+      ],
+      "nativeLandingId": 1498366,
+      "nativeLandingDefinitionId": 1498367,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "4340329365288987",
+        "denominator": "140737488355328"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1498361,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 1498364,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1498457,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1498458,
+          "nativeDefinitionId": 1498459,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 29.691601049868765
+        },
+        {
+          "nativeRunId": 1498461,
+          "nativeDefinitionId": 1498462,
+          "originalBottomElevationFeet": 29.691601049868765,
+          "originalTopElevationFeet": 34.120734908136484
+        }
+      ],
+      "nativeLandingId": 1498463,
+      "nativeLandingDefinitionId": 1498464,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 8,
+      "definitionLocalCellCount": 7,
+      "carrierInlineFaceCount": 4,
+      "carrierFiniteLinePointCount": 6,
+      "completeOriginalMemberCellCount": 17,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 32,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "2089360678503475",
+        "denominator": "70368744177664"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1498458,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 1
+          },
+          {
+            "nativeRunId": 1498461,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 5
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1500191,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1500192,
+          "nativeDefinitionId": 1500193,
+          "originalBottomElevationFeet": 14.435695538057743,
+          "originalTopElevationFeet": 20.99737532808399
+        },
+        {
+          "nativeRunId": 1500195,
+          "nativeDefinitionId": 1500196,
+          "originalBottomElevationFeet": 20.99737532808399,
+          "originalTopElevationFeet": 24.278215223097114
+        }
+      ],
+      "nativeLandingId": 1500197,
+      "nativeLandingDefinitionId": 1500198,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "92347433304021",
+        "denominator": "4398046511104"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1500192,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 1500195,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1500288,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1500289,
+          "nativeDefinitionId": 1500290,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 29.691601049868765
+        },
+        {
+          "nativeRunId": 1500292,
+          "nativeDefinitionId": 1500293,
+          "originalBottomElevationFeet": 29.691601049868765,
+          "originalTopElevationFeet": 34.120734908136484
+        }
+      ],
+      "nativeLandingId": 1500294,
+      "nativeLandingDefinitionId": 1500295,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 8,
+      "definitionLocalCellCount": 7,
+      "carrierInlineFaceCount": 4,
+      "carrierFiniteLinePointCount": 6,
+      "completeOriginalMemberCellCount": 17,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 32,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "2089360678503475",
+        "denominator": "70368744177664"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1500289,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 1
+          },
+          {
+            "nativeRunId": 1500292,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 5
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 1514126,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 1514127,
+          "nativeDefinitionId": 1514128,
+          "originalBottomElevationFeet": 24.278215223097114,
+          "originalTopElevationFeet": 30.183727034120736
+        },
+        {
+          "nativeRunId": 1514130,
+          "nativeDefinitionId": 1514131,
+          "originalBottomElevationFeet": 30.183727034120736,
+          "originalTopElevationFeet": 34.120734908136484
+        }
+      ],
+      "nativeLandingId": 1514132,
+      "nativeLandingDefinitionId": 1514133,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "2123990965992483",
+        "denominator": "70368744177664"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 1514127,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 2
+          },
+          {
+            "nativeRunId": 1514130,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    },
+    {
+      "nativeStairId": 2474568,
+      "originalRunsInNominalAscendingOrder": [
+        {
+          "nativeRunId": 2474569,
+          "nativeDefinitionId": 2474570,
+          "originalBottomElevationFeet": 3.2808398950131235,
+          "originalTopElevationFeet": 10.717410323709537
+        },
+        {
+          "nativeRunId": 2474572,
+          "nativeDefinitionId": 2474573,
+          "originalBottomElevationFeet": 10.717410323709537,
+          "originalTopElevationFeet": 14.435695538057743
+        }
+      ],
+      "nativeLandingId": 2474574,
+      "nativeLandingDefinitionId": 2474575,
+      "originalParentDeclaredMemberIds": [],
+      "completeOwnedRunLandingCount": 3,
+      "exactNominalJunctionMatches": true,
+      "definitionFaceCount": 9,
+      "definitionLocalCellCount": 8,
+      "carrierInlineFaceCount": 5,
+      "carrierFiniteLinePointCount": 7,
+      "completeOriginalMemberCellCount": 20,
+      "completeOriginalMemberMaterialEnclosed": true,
+      "originalSupportCapFaceToken": 4,
+      "originalSupportCapFaceTag": 37,
+      "originalPhysicalPlaneHeightFeet": {
+        "numerator": "1508341410632343",
+        "denominator": "140737488355328"
+      },
+      "namedLandingPorts": {
+        "ok": true,
+        "blocker": null,
+        "originalRunEndpointBindings": [
+          {
+            "nativeRunId": 2474569,
+            "originalRunEndpointType": 2,
+            "originalBoundaryCurveIndex": 3
+          },
+          {
+            "nativeRunId": 2474572,
+            "originalRunEndpointType": 1,
+            "originalBoundaryCurveIndex": 6
+          }
+        ]
+      },
+      "fullAssemblyClearanceApproved": false,
+      "routeApproved": false,
+      "exactPhysicalCapMatchesNominalJunction": true,
+      "guaranteedInnerCapSupportPartCount": 1
+    }
+  ],
+  "remainingGates": [
+    "Sketched1305763 landing history interpretation and endWithRiser0 remain refused.",
+    "Original run extent contradictions1293690/1295966 remain held by the existing source predicates.",
+    "The source consumer must separately prove every run profile, own/foreign/material/hole/headroom clearance, source landing path, original outer-floor attachment, and runtime composition."
+  ],
+  "terminalCoordinatesChanged": false,
+  "sourceJoinsApproved": false,
+  "routeApproved": false,
+  "originalDefinitionPhysicalFaceCount": 91,
+  "originalCarrierPhysicalFaceCount": 43,
+  "all20LandingGRepFrameHashesMatchEarlierCompleteOriginalScan": true
+}

@@ -4,6 +4,7 @@ import {
   verifyOfflineRouteCellCache,
 } from "./offline-route-cell-cache";
 import { readProgressiveRoutingParts } from "./progressive-routing-parts";
+import { parseVerifiedRoutingDataset } from "./verified-routing-dataset";
 import {
   decodeProgressiveFloor,
   progressiveSha256,
@@ -263,6 +264,10 @@ export class ProgressiveVisitorClient {
   private activeScope?: AbortController;
   private generation = 0;
   private closed = false;
+  readonly #retainedGzip = new WeakMap<
+    Uint8Array,
+    { sha256: string; logicalBytes: number; gzip: Uint8Array }
+  >();
   private constructor(
     url: string,
     manifest: ProgressiveManifest,
@@ -453,6 +458,21 @@ export class ProgressiveVisitorClient {
       this.options.onStorageError?.(error);
     }
   }
+  private async putAsset(asset: ProgressiveAsset, bytes: Uint8Array) {
+    const transport = this.#retainedGzip.get(bytes);
+    // Custom storage must never receive the privately retained buffer itself.
+    // The built-in backend also owns its argument before its first await.
+    return transport &&
+      transport.sha256 === asset.logicalSha256 &&
+      transport.logicalBytes === asset.logicalBytes &&
+      this.cache.putGzipAsset
+      ? this.cache.putGzipAsset(
+          transport.sha256,
+          new Uint8Array(transport.gzip),
+          transport.logicalBytes,
+        )
+      : this.cache.putAsset(asset.logicalSha256, bytes);
+  }
   private asset(id: string): ProgressiveAsset {
     const asset = this.manifest.assets[id];
     if (!asset || asset.logicalBytes > ASSET_LIMIT)
@@ -466,6 +486,15 @@ export class ProgressiveVisitorClient {
     asset: ProgressiveAsset,
     signal?: AbortSignal,
   ): Promise<Uint8Array> {
+    // Keep the exact logical/carrier declarations stable across all awaits.
+    // This is a private metadata snapshot, not an authority attestation.
+    asset = {
+      ...asset,
+      representations: asset.representations.map((representation) => ({
+        ...representation,
+        parts: representation.parts?.map((part) => ({ ...part })),
+      })),
+    };
     const existing = await this.cache
       .getAsset(asset.logicalSha256)
       .catch((error) => {
@@ -540,6 +569,7 @@ export class ProgressiveVisitorClient {
       }
       aborted(signal);
       let logical: Uint8Array;
+      let retainedGzip: Uint8Array | undefined;
       // HTTP Content-Encoding has already been decoded by fetch. Verify the
       // logical bytes directly; compressed Content-Length is not a decoded limit.
       if (
@@ -572,10 +602,17 @@ export class ProgressiveVisitorClient {
           asset.logicalBytes,
           signal,
         );
+        retainedGzip = bytes;
       }
       verifyProgressiveAssetBytes(asset, logical);
       aborted(signal);
-      await this.store(() => this.cache.putAsset(asset.logicalSha256, logical));
+      if (retainedGzip)
+        this.#retainedGzip.set(logical, {
+          sha256: asset.logicalSha256,
+          logicalBytes: asset.logicalBytes,
+          gzip: retainedGzip,
+        });
+      await this.store(() => this.putAsset(asset, logical));
       return logical;
     }
     throw new VisitorDeliveryError(
@@ -745,8 +782,8 @@ export class ProgressiveVisitorClient {
       }
     });
   }
-  /** Exact existing calculator projection, fetched only when directions start.
-   * The caller transfers this to its ordinary validation/calculation worker. */
+  /** Exact calculator projection, fetched only when directions start. The
+   * worker owns its checked immutable parse and original validation results. */
   async loadRouting(signal?: AbortSignal): Promise<IndoorDataset> {
     const asset = this.asset(this.manifest.routeAssetId);
     if (asset.kind !== "routing")
@@ -754,7 +791,10 @@ export class ProgressiveVisitorClient {
         "format",
         "The map has no routing authority.",
       );
-    const data = json(await this.readAsset(asset.id, signal)) as IndoorDataset;
+    const data = parseVerifiedRoutingDataset(
+      await this.readAsset(asset.id, signal),
+      asset.logicalSha256,
+    );
     if (
       !data ||
       data.format !== "reviter-indoor" ||
@@ -795,7 +835,7 @@ export class ProgressiveVisitorClient {
     for (const asset of assets) {
       aborted(signal);
       const bytes = await this.readAsset(asset.id, signal);
-      await this.cache.putAsset(asset.logicalSha256, bytes);
+      await this.putAsset(asset, bytes);
       const saved = await this.cache.getAsset(asset.logicalSha256);
       if (!saved)
         throw new VisitorDeliveryError(

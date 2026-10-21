@@ -1,0 +1,21 @@
+✔ single-source support tiles preserve normalized cell intersections and excluded hole boundaries (107.836037ms)
+✔ tile support preserves exact slab and envelope holes without source mutations (45.317478ms)
+✔ sub-IEEE holes and positive gaps survive and still block a crossing (111.464248ms)
+✔ touching slabs, aperture edges and grid boundaries remain byte equivalent (90.640807ms)
+✔ exact containing cells retain sub-IEEE geometry on either side of positive and negative grid lines (81.102668ms)
+✔ diagonal generated intersections keep canonical final geometry (30.707997ms)
+✔ query caches never share across operation or physical-level owners (8.723439ms)
+✔ captured support is an exact private snapshot and returned intersections cannot corrupt tiles (17.752213ms)
+✔ deterministic many-cell and empty-support cases match direct intersections (1176.398865ms)
+✔ published intermediate tiles preserve full strips, holes, negative boundaries, overlapping parents and own extra halves (188.44338ms)
+✔ sub-IEEE positive gaps and holes remain refusals; touching atomic edges do not expand support (53.128741ms)
+✔ missing, duplicate, stale, foreign or wrong-plane parents never confer a prepared query (8.639163ms)
+✔ missing optimization and a failed geometry provider keep the ordinary exact kernel (5.008673ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2607.006387

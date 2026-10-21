@@ -1,0 +1,2054 @@
+{
+  "format": "original-riser-modes-concrete-findings-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceSchemaSha256": "d961c44726fe7fc32bce4425639481a5d5e91acecec7b7fd897610fc369f046f",
+  "originalContextCompletePages": 3666,
+  "all17FramesMatchFreshOpaqueContext": true,
+  "contextElapsedMs": 85886,
+  "typedExtractionElapsedMs": 34957,
+  "localIndexRepairRuns": [
+    1496326,
+    1498364,
+    1498461,
+    1500195,
+    1500292,
+    1514130,
+    2474572
+  ],
+  "declaredExtentMismatchRuns": [
+    1294068,
+    1296189,
+    1779406,
+    1972518,
+    1988746,
+    2354663
+  ],
+  "endWithRiserZeroRuns": [
+    1305425
+  ],
+  "zeroVectorRuns": [
+    1294068,
+    1298203,
+    1689940,
+    1779623
+  ],
+  "allZeroVectorTreadsHaveNonparallelBoundaries": true,
+  "rows": [
+    {
+      "nativeStairId": 1293690,
+      "nativeRunId": 1294068,
+      "nativeDefinitionId": 1294069,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 6,
+        "topRiserIndex": 36,
+        "typedCount": 25,
+        "typedDescriptorCount": 25,
+        "orderedRiserCount": 26,
+        "topMinusBase": 30,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 1,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            26807,
+            27068
+          ]
+        },
+        {
+          "m_firstRiser": 1,
+          "m_lastRiser": 14,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            27068,
+            27329
+          ]
+        },
+        {
+          "m_firstRiser": 14,
+          "m_lastRiser": 15,
+          "m_runType": 2,
+          "sourceByteSpan": [
+            27329,
+            27590
+          ]
+        },
+        {
+          "m_firstRiser": 15,
+          "m_lastRiser": 25,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            27590,
+            27851
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 2.706692913385827,
+      "declaredTopElevationFeet": 16.240157480314963,
+      "typedSourceTreadOriginZRangeFeet": [
+        3.1578083989501313,
+        13.984580052493438
+      ],
+      "zeroVectorTreads": [
+        {
+          "typedIndex": 14,
+          "runInfoIndex": 2,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "-196153356057741406884304815620347439870145091/713623846352979940529142984724747568191373312",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        }
+      ],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 4058,
+          "end": 4062
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4271,
+          "end": 4275
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4276,
+          "end": 4277
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4277,
+          "end": 4278
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 19330,
+          "end": 19334
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 19392,
+          "end": 19396
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1295966,
+      "nativeRunId": 1296189,
+      "nativeDefinitionId": 1296190,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 14,
+        "topRiserIndex": 27,
+        "typedCount": 9,
+        "typedDescriptorCount": 9,
+        "orderedRiserCount": 10,
+        "topMinusBase": 13,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 9,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            8867,
+            9128
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 30.01968503937008,
+      "declaredTopElevationFeet": 35.35104986876641,
+      "typedSourceTreadOriginZRangeFeet": [
+        30.42979002624672,
+        33.710629921259844
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1676,
+          "end": 1680
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1793,
+          "end": 1797
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1798,
+          "end": 1799
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1799,
+          "end": 1800
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 6206,
+          "end": 6210
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 6268,
+          "end": 6272
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1298202,
+      "nativeRunId": 1298203,
+      "nativeDefinitionId": 1298204,
+      "currentFirstPredicateFailure": "Original finite boundary cannot be oriented by the declared riser direction",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 32,
+        "typedCount": 31,
+        "typedDescriptorCount": 31,
+        "orderedRiserCount": 32,
+        "topMinusBase": 32,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 31,
+          "m_runType": 2,
+          "sourceByteSpan": [
+            28541,
+            28802
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 24.278215223097114,
+      "typedSourceTreadOriginZRangeFeet": [
+        14.743274278215223,
+        23.970636482939632
+      ],
+      "zeroVectorTreads": [
+        {
+          "typedIndex": 0,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441921179228328536967249/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 1,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441923470370598738475117/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 2,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2334265220960506537231692933575/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 3,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2334265220960618706994683360483/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 4,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "9337060883847588635250205109757/162259276829213363391578010288128",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 5,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441919777649426393396293/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 6,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441921057930129932703583/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 7,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441923518830313630818719/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 8,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "1167132610479870623642692017087/20282409603651670423947251286016",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 9,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "291783152620189688112425498145/5070602400912917605986812821504",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 10,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2334265220960718839012526870827/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 11,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "18674121767682726201674747609291/324518553658426726783156020576256",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 12,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "74696487070748291727177282057101/1298074214633706907132624082305024",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 13,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "583566305240294210007373213799/10141204801825835211973625643008",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 14,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2334265220960265181061396757877/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 15,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "583566305240367286364038396833/10141204801825835211973625643008",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 16,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "9337060883841285711347294188521/162259276829213363391578010288128",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 17,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "18674121767686540540150967301003/324518553658426726783156020576256",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 18,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4668530441922025266959838758033/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 19,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2604370384644121257878744991113/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 20,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "8934071714130018513589057700875/162259276829213363391578010288128",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 21,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "9241708667171888031387731117383/162259276829213363391578010288128",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 22,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4622444790138308506258556102333/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 23,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4623992412938020152360352519915/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 24,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "1098749817352576919145687296339/20282409603651670423947251286016",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 25,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "1759330620509619404874890477135/20282409603651670423947251286016",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 26,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "611151445928052331292695862099/20282409603651670423947251286016",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 27,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "4629668168900899696835391841331/81129638414606681695789005144064",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 28,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "578867209946608264597527431337/10141204801825835211973625643008",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 29,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "2316069752915513592064520078793/40564819207303340847894502572032",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 30,
+          "runInfoIndex": 0,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "1158317476828435032861579254559/20282409603651670423947251286016",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        }
+      ],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 4740,
+          "end": 4744
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4889,
+          "end": 4893
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4894,
+          "end": 4895
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4895,
+          "end": 4896
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 19258,
+          "end": 19262
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 19320,
+          "end": 19324
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1305141,
+      "nativeRunId": 1305425,
+      "nativeDefinitionId": 1305426,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 0,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 19,
+        "typedCount": 7,
+        "typedDescriptorCount": 7,
+        "orderedRiserCount": 7,
+        "topMinusBase": 7,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": false,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 7,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            8301,
+            8562
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 9.117281392457523,
+      "declaredTopElevationFeet": 14.435695538057743,
+      "typedSourceTreadOriginZRangeFeet": [
+        9.877054841828983,
+        14.435695538057743
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1402,
+          "end": 1406
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1511,
+          "end": 1515
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1516,
+          "end": 1517
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1517,
+          "end": 1518
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 6242,
+          "end": 6246
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 6304,
+          "end": 6308
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1496322,
+      "nativeRunId": 1496326,
+      "nativeDefinitionId": 1496327,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 18,
+        "typedCount": 5,
+        "typedDescriptorCount": 5,
+        "orderedRiserCount": 6,
+        "topMinusBase": 6,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 5,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            5547,
+            5808
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 30.83989501312336,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        31.386701662292214,
+        33.57392825896763
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1124,
+          "end": 1128
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1233,
+          "end": 1237
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1238,
+          "end": 1239
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1239,
+          "end": 1240
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4090,
+          "end": 4094
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4152,
+          "end": 4156
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1498360,
+      "nativeRunId": 1498364,
+      "nativeDefinitionId": 1498365,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 18,
+        "typedCount": 5,
+        "typedDescriptorCount": 5,
+        "orderedRiserCount": 6,
+        "topMinusBase": 6,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 5,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            5553,
+            5814
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 30.83989501312336,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        31.386701662292214,
+        33.57392825896763
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1124,
+          "end": 1128
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1233,
+          "end": 1237
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1238,
+          "end": 1239
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1239,
+          "end": 1240
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4096,
+          "end": 4100
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4158,
+          "end": 4162
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1498457,
+      "nativeRunId": 1498461,
+      "nativeDefinitionId": 1498462,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 11,
+        "topRiserIndex": 20,
+        "typedCount": 8,
+        "typedDescriptorCount": 8,
+        "orderedRiserCount": 9,
+        "topMinusBase": 9,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 8,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            8040,
+            8301
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 29.691601049868765,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        30.183727034120736,
+        33.628608923884514
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1538,
+          "end": 1542
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1647,
+          "end": 1651
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1652,
+          "end": 1653
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1653,
+          "end": 1654
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5680,
+          "end": 5684
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5742,
+          "end": 5746
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1500191,
+      "nativeRunId": 1500195,
+      "nativeDefinitionId": 1500196,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 18,
+        "typedCount": 5,
+        "typedDescriptorCount": 5,
+        "orderedRiserCount": 6,
+        "topMinusBase": 6,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 5,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            5547,
+            5808
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 20.99737532808399,
+      "declaredTopElevationFeet": 24.278215223097114,
+      "typedSourceTreadOriginZRangeFeet": [
+        21.544181977252844,
+        23.73140857392826
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1124,
+          "end": 1128
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1233,
+          "end": 1237
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1238,
+          "end": 1239
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1239,
+          "end": 1240
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4090,
+          "end": 4094
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4152,
+          "end": 4156
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1500288,
+      "nativeRunId": 1500292,
+      "nativeDefinitionId": 1500293,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 11,
+        "topRiserIndex": 20,
+        "typedCount": 8,
+        "typedDescriptorCount": 8,
+        "orderedRiserCount": 9,
+        "topMinusBase": 9,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 8,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            8040,
+            8301
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 29.691601049868765,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        30.183727034120736,
+        33.628608923884514
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1538,
+          "end": 1542
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1647,
+          "end": 1651
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1652,
+          "end": 1653
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1653,
+          "end": 1654
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5680,
+          "end": 5684
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5742,
+          "end": 5746
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1514126,
+      "nativeRunId": 1514130,
+      "nativeDefinitionId": 1514131,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 20,
+        "typedCount": 7,
+        "typedDescriptorCount": 7,
+        "orderedRiserCount": 8,
+        "topMinusBase": 8,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 7,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            7209,
+            7470
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 30.183727034120736,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        30.675853018372706,
+        33.628608923884514
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1400,
+          "end": 1404
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1509,
+          "end": 1513
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1514,
+          "end": 1515
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1515,
+          "end": 1516
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5150,
+          "end": 5154
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 5212,
+          "end": 5216
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1689936,
+      "nativeRunId": 1689940,
+      "nativeDefinitionId": 1689941,
+      "currentFirstPredicateFailure": "Original finite boundary cannot be oriented by the declared riser direction",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 13,
+        "typedCount": 12,
+        "typedDescriptorCount": 12,
+        "orderedRiserCount": 13,
+        "topMinusBase": 13,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 1,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            16762,
+            17023
+          ]
+        },
+        {
+          "m_firstRiser": 1,
+          "m_lastRiser": 11,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            17023,
+            17284
+          ]
+        },
+        {
+          "m_firstRiser": 11,
+          "m_lastRiser": 12,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            17284,
+            17545
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 24.278215223097114,
+      "typedSourceTreadOriginZRangeFeet": [
+        15.192812436906925,
+        23.52109832424793
+      ],
+      "zeroVectorTreads": [
+        {
+          "typedIndex": 0,
+          "runInfoIndex": 0,
+          "sourceRunType": 1,
+          "sourceTreadType": 3,
+          "runInfoType": 1,
+          "boundaryDirectionsExactCross": "-1",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        }
+      ],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 2130,
+          "end": 2134
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 2295,
+          "end": 2299
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 2300,
+          "end": 2301
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 2301,
+          "end": 2302
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 13198,
+          "end": 13202
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 13260,
+          "end": 13264
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1779403,
+      "nativeRunId": 1779406,
+      "nativeDefinitionId": 1779407,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 28,
+        "typedCount": 26,
+        "typedDescriptorCount": 26,
+        "orderedRiserCount": 27,
+        "topMinusBase": 28,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 12,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            23226,
+            23487
+          ]
+        },
+        {
+          "m_firstRiser": 12,
+          "m_lastRiser": 13,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            23487,
+            23748
+          ]
+        },
+        {
+          "m_firstRiser": 13,
+          "m_lastRiser": 25,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            23748,
+            24009
+          ]
+        },
+        {
+          "m_firstRiser": 25,
+          "m_lastRiser": 26,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            24009,
+            24270
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 30.426752211529113,
+      "typedSourceTreadOriginZRangeFeet": [
+        15.006804704967434,
+        29.28453387770973
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 4016,
+          "end": 4020
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4133,
+          "end": 4137
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4138,
+          "end": 4139
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4139,
+          "end": 4140
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 15448,
+          "end": 15452
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 15510,
+          "end": 15514
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1779620,
+      "nativeRunId": 1779623,
+      "nativeDefinitionId": 1779624,
+      "currentFirstPredicateFailure": "Original finite boundary cannot be oriented by the declared riser direction",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 30,
+        "typedCount": 29,
+        "typedDescriptorCount": 29,
+        "orderedRiserCount": 30,
+        "topMinusBase": 30,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 9,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            28637,
+            28898
+          ]
+        },
+        {
+          "m_firstRiser": 9,
+          "m_lastRiser": 10,
+          "m_runType": 2,
+          "sourceByteSpan": [
+            28898,
+            29159
+          ]
+        },
+        {
+          "m_firstRiser": 10,
+          "m_lastRiser": 11,
+          "m_runType": 2,
+          "sourceByteSpan": [
+            29159,
+            29420
+          ]
+        },
+        {
+          "m_firstRiser": 11,
+          "m_lastRiser": 28,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            29420,
+            29681
+          ]
+        },
+        {
+          "m_firstRiser": 28,
+          "m_lastRiser": 29,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            29681,
+            29942
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 29.855643044619423,
+      "typedSourceTreadOriginZRangeFeet": [
+        14.949693788276466,
+        29.3416447944007
+      ],
+      "zeroVectorTreads": [
+        {
+          "typedIndex": 9,
+          "runInfoIndex": 1,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "-176988427965304927987084936551/10141204801825835211973625643008",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        },
+        {
+          "typedIndex": 10,
+          "runInfoIndex": 2,
+          "sourceRunType": 2,
+          "sourceTreadType": 3,
+          "runInfoType": 2,
+          "boundaryDirectionsExactCross": "88494213982649655661755646053/5070602400912917605986812821504",
+          "boundariesExactlyParallel": false,
+          "originalVectorsBothZero": true
+        }
+      ],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 4436,
+          "end": 4440
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4553,
+          "end": 4557
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4558,
+          "end": 4559
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4559,
+          "end": 4560
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 19956,
+          "end": 19960
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 20018,
+          "end": 20022
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1972504,
+      "nativeRunId": 1972518,
+      "nativeDefinitionId": 1972519,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 32,
+        "typedCount": 26,
+        "typedDescriptorCount": 26,
+        "orderedRiserCount": 27,
+        "topMinusBase": 32,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 14,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            23980,
+            24241
+          ]
+        },
+        {
+          "m_firstRiser": 14,
+          "m_lastRiser": 15,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            24241,
+            24502
+          ]
+        },
+        {
+          "m_firstRiser": 15,
+          "m_lastRiser": 26,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            24502,
+            24763
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": -3.2808398950131235,
+      "declaredTopElevationFeet": 17.716535433070867,
+      "typedSourceTreadOriginZRangeFeet": [
+        -2.6246719160104988,
+        13.779527559055119
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 4114,
+          "end": 4118
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4295,
+          "end": 4299
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4300,
+          "end": 4301
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4301,
+          "end": 4302
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 16202,
+          "end": 16206
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 16264,
+          "end": 16268
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 1988738,
+      "nativeRunId": 1988746,
+      "nativeDefinitionId": 1988747,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 52,
+        "typedCount": 25,
+        "typedDescriptorCount": 25,
+        "orderedRiserCount": 26,
+        "topMinusBase": 52,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 1,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            24319,
+            24580
+          ]
+        },
+        {
+          "m_firstRiser": 1,
+          "m_lastRiser": 12,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            24580,
+            24841
+          ]
+        },
+        {
+          "m_firstRiser": 12,
+          "m_lastRiser": 13,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            24841,
+            25102
+          ]
+        },
+        {
+          "m_firstRiser": 13,
+          "m_lastRiser": 24,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            25102,
+            25363
+          ]
+        },
+        {
+          "m_firstRiser": 24,
+          "m_lastRiser": 25,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            25363,
+            25624
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        14.814253987482335,
+        23.899656773672522
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 3988,
+          "end": 3992
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 4169,
+          "end": 4173
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 4174,
+          "end": 4175
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 4175,
+          "end": 4176
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 16842,
+          "end": 16846
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 16904,
+          "end": 16908
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 2354630,
+      "nativeRunId": 2354663,
+      "nativeDefinitionId": 2354664,
+      "currentFirstPredicateFailure": "Unsupported original begin/end/ordered-riser layout",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 0,
+        "topRiserIndex": 44,
+        "typedCount": 21,
+        "typedDescriptorCount": 21,
+        "orderedRiserCount": 22,
+        "topMinusBase": 44,
+        "topEqualsBasePlusOrderedCount": false
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": false,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 9,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            20095,
+            20356
+          ]
+        },
+        {
+          "m_firstRiser": 9,
+          "m_lastRiser": 10,
+          "m_runType": 1,
+          "sourceByteSpan": [
+            20356,
+            20617
+          ]
+        },
+        {
+          "m_firstRiser": 10,
+          "m_lastRiser": 21,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            20617,
+            20878
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 14.435695538057743,
+      "declaredTopElevationFeet": 34.120734908136484,
+      "typedSourceTreadOriginZRangeFeet": [
+        14.883082796468624,
+        23.830827964686232
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 3424,
+          "end": 3428
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 3605,
+          "end": 3609
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 3610,
+          "end": 3611
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 3611,
+          "end": 3612
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 13822,
+          "end": 13826
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 13884,
+          "end": 13888
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    },
+    {
+      "nativeStairId": 2474568,
+      "nativeRunId": 2474572,
+      "nativeDefinitionId": 2474573,
+      "currentFirstPredicateFailure": "Original tread does not bind consecutive named riser indices",
+      "layout": {
+        "beginWithRiser": 1,
+        "endWithRiser": 1,
+        "baseRiserIndex": 12,
+        "topRiserIndex": 18,
+        "typedCount": 5,
+        "typedDescriptorCount": 5,
+        "orderedRiserCount": 6,
+        "topMinusBase": 6,
+        "topEqualsBasePlusOrderedCount": true
+      },
+      "allSpecifiedIndicesLocal": true,
+      "exactCompleteOrderedCurveChain": true,
+      "supportedSevenCaseLocalIndexRepair": true,
+      "runInfo": [
+        {
+          "m_firstRiser": 0,
+          "m_lastRiser": 5,
+          "m_runType": 0,
+          "sourceByteSpan": [
+            5547,
+            5808
+          ]
+        }
+      ],
+      "declaredBottomElevationFeet": 10.717410323709537,
+      "declaredTopElevationFeet": 14.435695538057743,
+      "typedSourceTreadOriginZRangeFeet": [
+        11.337124526100904,
+        13.815981335666375
+      ],
+      "zeroVectorTreads": [],
+      "typedRootIndexFieldSpans": [
+        {
+          "path": "StairsRun.m_baseRiserIndex",
+          "sourceClassName": "StairsRunAndLanding",
+          "schemaFieldOffset": 445657,
+          "start": 1124,
+          "end": 1128
+        },
+        {
+          "path": "StairsRun.m_topRiserIndex",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 447957,
+          "start": 1233,
+          "end": 1237
+        },
+        {
+          "path": "StairsRun.m_beginWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448007,
+          "start": 1238,
+          "end": 1239
+        },
+        {
+          "path": "StairsRun.m_endWithRiser",
+          "sourceClassName": "StairsRun",
+          "schemaFieldOffset": 448031,
+          "start": 1239,
+          "end": 1240
+        }
+      ],
+      "firstTreadSpecifiedIndexFieldSpans": [
+        {
+          "path": "StairsTreadInfo.m_startRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4090,
+          "end": 4094
+        },
+        {
+          "path": "StairsTreadInfo.m_endRiser.m_specifiedIdx",
+          "sourceClassName": "IntStairInfo",
+          "schemaFieldOffset": 294898,
+          "start": 4152,
+          "end": 4156
+        }
+      ],
+      "noMissingStepsAdmitted": true,
+      "sourceAuthorityGranted": false,
+      "routeApproved": false
+    }
+  ],
+  "productionEdited": false,
+  "sourceAuthorityGranted": false,
+  "routeApproved": false
+}
