@@ -17,7 +17,8 @@ jobs:
     permissions:
       contents: read
       pages: read
-    runs-on: ubuntu-latest
+    # Keep the browser-test host within the pinned Playwright support matrix.
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: openindoormaps
