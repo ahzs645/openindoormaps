@@ -14,6 +14,7 @@ import { roomsWithCheckedNativeBoundaryMemberReview } from "./source-native-boun
 import { roomsWithCheckedNativeBoundaryReviewBundle } from "./source-native-boundary-review-bundle";
 import { roomsWithCheckedSourceDoorBoundaryClosureReview } from "./source-door-boundary-closure-review";
 import { roomsWithCheckedSourceAccessDecision } from "./source-access-decision-review";
+import { roomsWithCheckedSourceDoorApertures } from "./source-door-aperture-review";
 import { initializeReviewedSourceSteppedStairV2Proofs } from "./source-stepped-stair-v2-review";
 import { finalizeSourceSteppedStairV2Dataset } from "./finalize-source-stepped-stair-v2";
 import { initializeOriginalDoorStandingReview } from "./source-door-standing-review";
@@ -57,7 +58,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -76,6 +77,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--boundary-contact-review",
       "--door-boundary-closure-review",
       "--access-decision-review",
+      "--door-aperture-review",
       "--source-flat-landing-review",
       "--source-stepped-stair-review",
       "--source-door-standing-review",
@@ -459,7 +461,7 @@ async function compileAndExportMaster() {
         sourceModelSha256,
       )
     : undefined;
-  const rooms = accessDecisionReplay?.rooms ?? doorReviewedRooms;
+  const accessReviewedRooms = accessDecisionReplay?.rooms ?? doorReviewedRooms;
   if (accessDecisionReplay) {
     const receiptBytes =
       JSON.stringify(accessDecisionReplay.receipt, null, 2) + "\n";
@@ -480,6 +482,42 @@ async function compileAndExportMaster() {
       JSON.stringify({
         stage: "source-access-decision-rechecked",
         changed: accessDecisionReplay.receipt.changed.length,
+        receiptSha256: createHash("sha256").update(receiptBytes).digest("hex"),
+      }),
+    );
+  }
+  // Reviewed apertures for native doors whose host could not be measured. The
+  // compiler validates each against the native model like a saved aperture.
+  const doorAperturePath = workerOptions.get("--door-aperture-review");
+  const doorApertureBytes = doorAperturePath
+    ? await readFile(resolve(doorAperturePath))
+    : undefined;
+  const doorApertureReplay = doorApertureBytes
+    ? roomsWithCheckedSourceDoorApertures(
+        accessReviewedRooms,
+        JSON.parse(doorApertureBytes.toString("utf8")),
+        sourceModelSha256,
+      )
+    : undefined;
+  const rooms = doorApertureReplay?.rooms ?? accessReviewedRooms;
+  if (doorApertureReplay) {
+    const receiptBytes =
+      JSON.stringify(doorApertureReplay.receipt, null, 2) + "\n";
+    await mkdir(output, { recursive: true });
+    await writeFile(
+      join(output, "source-door-aperture-replay.json"),
+      receiptBytes,
+      { flag: "wx" },
+    );
+    await writeFile(
+      join(output, "source-door-aperture-review.json"),
+      doorApertureBytes!,
+      { flag: "wx" },
+    );
+    console.log(
+      JSON.stringify({
+        stage: "source-door-apertures-rechecked",
+        appended: doorApertureReplay.receipt.appended.length,
         receiptSha256: createHash("sha256").update(receiptBytes).digest("hex"),
       }),
     );
