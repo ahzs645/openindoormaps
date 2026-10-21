@@ -203,6 +203,8 @@ function actualOfflineMethods(f: ReturnType<typeof fixture>) {
     "downloadOffline",
     "verifyOfflineInventory",
     "verifySavedManifest",
+    // Offline saving stores each asset through the actual private writer.
+    "putAsset",
   ]);
   const methods = declaration.members.filter(
     (node) =>
@@ -210,9 +212,9 @@ function actualOfflineMethods(f: ReturnType<typeof fixture>) {
       node.name &&
       names.has(node.name.getText(source)),
   );
-  assert.equal(methods.length, 3);
+  assert.equal(methods.length, 4);
   const js = ts.transpileModule(
-    `class ActualOfflineMethods { ${methods.map((node) => node.getText(source)).join("\n")} }`,
+    `class ActualOfflineMethods { #retainedGzip = new WeakMap(); ${methods.map((node) => node.getText(source)).join("\n")} }`,
     {
       compilerOptions: { target: ts.ScriptTarget.ES2022 },
     },
@@ -527,7 +529,7 @@ test("dropped writes, storage failures and later eviction cannot report retained
       f.manifest,
       {
         ...f.options,
-        cache: { getAsset: async () => undefined, putAsset: async () => {} },
+        cache: { getAsset: async () => {}, putAsset: async () => {} },
       },
       f.policy,
     ),
@@ -539,7 +541,7 @@ test("dropped writes, storage failures and later eviction cannot report retained
       {
         ...f.options,
         cache: {
-          getAsset: async () => undefined,
+          getAsset: async () => {},
           putAsset: async () => {
             throw new Error("Storage full");
           },
