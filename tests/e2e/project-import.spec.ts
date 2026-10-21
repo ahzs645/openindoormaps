@@ -356,8 +356,10 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     mimeType: "application/zip",
     buffer: newBytes,
   });
+  // A full ZIP import, like upload(): measured 0.4–7.9 s with two workers.
   await expect(page.locator('p.project-status[role="status"]')).toContainText(
     "Loaded",
+    { timeout: 60_000 },
   );
   await revision(page, newRevision);
   await expect
@@ -394,8 +396,10 @@ test("overlapping imports keep the latest selection and Venue maps waits for its
     (globalThis as unknown as { importProbe: ImportProbe }).importProbe
       .releaseWrite!(),
   );
+  // Venue maps then loads the whole saved project, as heavy as an import.
   await expect(page.locator('p.project-status[role="status"]')).toContainText(
     "Loaded",
+    { timeout: 60_000 },
   );
   await revision(page, newRevision, true);
 });
