@@ -181,6 +181,9 @@ function fixture() {
 /** Execute the three actual class methods with the same real transport helper
  * bound to a synthetic publisher policy. This does not alter production pins
  * or qualify a fixture as navigable. No browser/UI claim comes from this test. */
+// A cache miss; void is not assignable to the cache reader type.
+const missingAsset = (): Promise<Uint8Array | undefined> =>
+  Promise.resolve(void 0);
 function actualOfflineMethods(f: ReturnType<typeof fixture>) {
   const source = ts.createSourceFile(
     "progressive-visitor-client.ts",
@@ -529,7 +532,7 @@ test("dropped writes, storage failures and later eviction cannot report retained
       f.manifest,
       {
         ...f.options,
-        cache: { getAsset: async () => {}, putAsset: async () => {} },
+        cache: { getAsset: missingAsset, putAsset: async () => {} },
       },
       f.policy,
     ),
@@ -541,7 +544,7 @@ test("dropped writes, storage failures and later eviction cannot report retained
       {
         ...f.options,
         cache: {
-          getAsset: async () => {},
+          getAsset: missingAsset,
           putAsset: async () => {
             throw new Error("Storage full");
           },
