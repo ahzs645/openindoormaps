@@ -21,4 +21,4 @@ The user will test afterward. Use the final candidate link and journey list on i
 
 Send one record per journey: **start→destination; profile; online/offline; timings; passed/failed/untested; what happened; photo/recording**. Software success does not establish physical access or the correct arrival side.
 
-The observed 308-second cold first route is not proven fixed. All 28 originally held stairs still require final reconciliation. Access, thresholds and arrival evidence remain open. Halls A–Q public approval is preserved, but the letter-to-room legend is unverified. The engineering handoff records the remaining rebuild, QA, publication and recovery gates.
+The observed 308-second cold first route is not proven fixed. All 28 originally held stairs still require final reconciliation. Access, thresholds and arrival evidence remain open. Halls A–Q public approval is preserved, and its letter-to-room legend is now recovered, but the access change is not yet applied. The engineering handoff records the remaining rebuild, QA, publication and recovery gates.

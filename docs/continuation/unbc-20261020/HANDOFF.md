@@ -25,7 +25,7 @@ The observed 308-second cold first route is not proven fixed. Preserve the preme
 
 ## Open evidence and recovery
 
-Door thresholds, correct arrival standing points, access conditions, lift operation and phone behavior remain unresolved until recorded. Halls A–Q have preserved public approval in the [original decision record](../unbc-20261014/decisions/2026-10-10-round3.json); the letter-to-room legend/current diagram remains unverified. Do not infer map identities or additional public access from it.
+Door thresholds, correct arrival standing points, access conditions, lift operation and phone behavior remain unresolved until recorded. Halls A–Q have preserved public approval in the [original decision record](../unbc-20261014/decisions/2026-10-10-round3.json); the letter-to-room legend was recovered from the original artifact on October 21 and bound to sixteen source identities in [hall-a-q-legend](hall-a-q-legend/README.md). Access flags are not yet applied, and no other public access follows from it.
 
 Use the [plain visitor and phone guide](VISITOR-AND-PHONE-GUIDE.md), [local repair loop](../../indoor-local-iteration.md), [enclosure/policy rules](../../indoor-enclosure-review.md) and [threshold/startup findings](../unbc-20261018/directions-and-threshold-blockers/README.md). Historical handoffs retain earlier failures and publications; this handoff supersedes their current-version statements.
 
