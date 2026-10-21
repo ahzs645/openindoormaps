@@ -58,6 +58,14 @@ for (const mobile of [false, true]) {
       );
     await floor.selectOption(options[1]);
     await expect(floor).toHaveValue(options[1]);
+    // This renderer fixture has saved arrivals but no doors or edges. Select
+    // inside endpoints explicitly; the default hallway mode must refuse it.
+    await page
+      .getByRole("button", { name: "Route endpoints", exact: true })
+      .click();
+    await page
+      .getByRole("menuitemradio", { name: "Inside room", exact: true })
+      .click();
     // Exercise the bundled route worker on the static Pages host too.
     const departure = page.getByLabel("Route start", { exact: true });
     const arrival = page.getByLabel("Route destination", { exact: true });
