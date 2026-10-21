@@ -13,6 +13,7 @@ import { roomsWithCurrentDrawingFloorBindings } from "./rebind-drawing-floor-sou
 import { roomsWithCheckedNativeBoundaryMemberReview } from "./source-native-boundary-member-review";
 import { roomsWithCheckedNativeBoundaryReviewBundle } from "./source-native-boundary-review-bundle";
 import { roomsWithCheckedSourceDoorBoundaryClosureReview } from "./source-door-boundary-closure-review";
+import { roomsWithCheckedSourceAccessDecision } from "./source-access-decision-review";
 import { initializeReviewedSourceSteppedStairV2Proofs } from "./source-stepped-stair-v2-review";
 import { finalizeSourceSteppedStairV2Dataset } from "./finalize-source-stepped-stair-v2";
 import { initializeOriginalDoorStandingReview } from "./source-door-standing-review";
@@ -56,7 +57,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -74,6 +75,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--refresh-drawing-floor-bindings",
       "--boundary-contact-review",
       "--door-boundary-closure-review",
+      "--access-decision-review",
       "--source-flat-landing-review",
       "--source-stepped-stair-review",
       "--source-door-standing-review",
@@ -415,7 +417,7 @@ async function compileAndExportMaster() {
         },
       )
     : undefined;
-  const rooms = doorBoundaryReplay?.rooms ?? boundaryReviewedRooms;
+  const doorReviewedRooms = doorBoundaryReplay?.rooms ?? boundaryReviewedRooms;
   const doorBoundaryReceiptPath = join(
     output,
     "source-door-boundary-closure-replay.json",
@@ -441,6 +443,44 @@ async function compileAndExportMaster() {
         receiptSha256: createHash("sha256")
           .update(doorBoundaryReceiptBytes)
           .digest("hex"),
+      }),
+    );
+  }
+  // An owner access decision changes only source annotation access. The
+  // compiler then derives records, policies and reviewed zone carves from it.
+  const accessDecisionPath = workerOptions.get("--access-decision-review");
+  const accessDecisionBytes = accessDecisionPath
+    ? await readFile(resolve(accessDecisionPath))
+    : undefined;
+  const accessDecisionReplay = accessDecisionBytes
+    ? roomsWithCheckedSourceAccessDecision(
+        doorReviewedRooms,
+        JSON.parse(accessDecisionBytes.toString("utf8")),
+        sourceModelSha256,
+      )
+    : undefined;
+  const rooms = accessDecisionReplay?.rooms ?? doorReviewedRooms;
+  if (accessDecisionReplay) {
+    const receiptBytes =
+      JSON.stringify(accessDecisionReplay.receipt, null, 2) + "\n";
+    await mkdir(output, { recursive: true });
+    await writeFile(
+      join(output, "source-access-decision-replay.json"),
+      receiptBytes,
+      {
+        flag: "wx",
+      },
+    );
+    await writeFile(
+      join(output, "source-access-decision-review.json"),
+      accessDecisionBytes!,
+      { flag: "wx" },
+    );
+    console.log(
+      JSON.stringify({
+        stage: "source-access-decision-rechecked",
+        changed: accessDecisionReplay.receipt.changed.length,
+        receiptSha256: createHash("sha256").update(receiptBytes).digest("hex"),
       }),
     );
   }

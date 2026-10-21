@@ -27,8 +27,26 @@ The legend has sixteen letters and skips O. The earlier seventeen-slot list in [
 
 The authorization file and the recovery note are left unchanged because checkpoint receipts pin their hashes. This folder supplies the missing bindings alongside them.
 
-## Not yet done
+## Applying it in the next build
 
-- No access flags were changed. Applying the approval means marking these sixteen records public and carving the staff zone `native-region:311:307` out of face 293. That needs the compiler/runtime contract described in Q3.4, which is not implemented yet.
-- Legend areas were not compared with source geometry, because this repository keeps only ring hashes. Check them against the dataset before applying.
-- After the native006 rebuild, confirm that each bound record still lies in face 293.
+[ACCESS-DECISION.json](ACCESS-DECISION.json) is the checked decision input. Pass it to the build entrypoint:
+
+```sh
+node --import tsx scripts/indoor/regenerate-from-native-cache.ts master.zip native-cache.json OUT \
+  --access-decision-review docs/continuation/unbc-20261020/hall-a-q-legend/ACCESS-DECISION.json ...
+```
+
+[`roomsWithCheckedSourceAccessDecision`](../../../../scripts/indoor/source-access-decision-review.ts) sets source annotation access to public on the sixteen halls. The compiler then derives records, route policy and the existing staff-zone carve (`access-zone:311:b7-staff-halls`, already in the preserved master) as usual. The step refuses if any of these hold:
+
+- the model differs;
+- the staff zone is missing;
+- any hall is missing, renamed, renumbered, moved, void, deleted or inside the staff zone;
+- any hall already carries a different reviewed access.
+
+It writes `source-access-decision-replay.json` with before and after digests. P (07-113A) is already public and is reported as already applied. [Tests](../../../../tests/unit/source-access-decision-review.test.ts) also check the committed decision against this legend, the source identity index and the approval record.
+
+## Still open
+
+- Nothing has been compiled with the decision yet. It needs the native006 rebuild inputs.
+- The remainder of face 293 can still be refused as a whole if any staff or void record lies mostly inside it (`reviter/lib/reviter/native-circulation-geometry.ts:419`). 07-752 is staff but outside the zone, and its position relative to the remainder can only be checked against geometry.
+- Legend areas have not been compared with source geometry.
