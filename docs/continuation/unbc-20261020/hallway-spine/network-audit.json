@@ -1,0 +1,420 @@
+{
+  "format": "hallway-network-audit-v1",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "buildMs": 7171,
+  "network": {
+    "nodes": 10702,
+    "edges": 11262,
+    "arrivals": 1740,
+    "jsonBytes": 1267423,
+    "edgeKinds": {
+      "door": 1561,
+      "elevator": 43,
+      "gate": 169,
+      "join": 1782,
+      "local-steps": 1,
+      "opening": 200,
+      "ramp": 4,
+      "spine": 5011,
+      "walk": 2491
+    }
+  },
+  "report": {
+    "levels": 8,
+    "surfaces": 144,
+    "staffSurfaces": 0,
+    "gates": 85,
+    "joins": 1710,
+    "unconnected": [
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-8e1b19ddd9ef:2:59:0",
+        "surface": 1,
+        "levelId": 311
+      },
+      {
+        "kind": "doorway",
+        "id": "door:311:863899:1",
+        "surface": 1,
+        "levelId": 311
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-front:rm-694-bd3586e3bc13:rm-694-634bc404f221:1:10:1",
+        "surface": 26,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-694-54c346297935:rm-694-54c64c297937:5:10:0",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-694-54c64c297937:rm-694-642e2117d7e1:5:3:1",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-5dfe73297e98:16:2:1",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64209917d7d6:3:2:1",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1499599:1",
+        "surface": 27,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1513790:0",
+        "surface": 21,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:725888:0",
+        "surface": 25,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1369072:0",
+        "surface": 0,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1499590:0",
+        "surface": 36,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1499598:1",
+        "surface": 36,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1108589:1",
+        "surface": 9,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "door:694:1513789:0",
+        "surface": 21,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-694-54d0ce297940",
+        "surface": 29,
+        "levelId": 694
+      },
+      {
+        "kind": "doorway",
+        "id": "opening:recovered-circulation-seam:rm-400176-4c55011c215d:rm-400176-b9e71c7b63cd:30:3:1",
+        "surface": 13,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "door:400176:2215437:1",
+        "surface": 19,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "door:400176:2215404:0",
+        "surface": 19,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "door:400176:2215429:0",
+        "surface": 19,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "door:400176:1924141:1",
+        "surface": 13,
+        "levelId": 400176
+      },
+      {
+        "kind": "doorway",
+        "id": "door:1487353:1779494:0",
+        "surface": 2,
+        "levelId": 1487353
+      },
+      {
+        "kind": "gate",
+        "id": "door:402367:1126909",
+        "surface": 12,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:1066108:0",
+        "surface": 4,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:1074014:1",
+        "surface": 4,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:2227675:1",
+        "surface": 16,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:2410487:1",
+        "surface": 4,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:1929847:0",
+        "surface": 12,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:2282718:1",
+        "surface": 6,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:2227667:1",
+        "surface": 16,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "door:402367:2144171:1",
+        "surface": 0,
+        "levelId": 402367
+      },
+      {
+        "kind": "doorway",
+        "id": "arrival:rm-402367-7220610d03a7",
+        "surface": 5,
+        "levelId": 402367
+      }
+    ],
+    "unreachedSurfaces": [
+      {
+        "levelId": 311,
+        "area": 368,
+        "rooms": ["07-239"]
+      },
+      {
+        "levelId": 311,
+        "area": 124,
+        "rooms": ["07-236A"]
+      },
+      {
+        "levelId": 311,
+        "area": 130,
+        "rooms": ["07-304"]
+      },
+      {
+        "levelId": 311,
+        "area": 51,
+        "rooms": ["07-309"]
+      },
+      {
+        "levelId": 311,
+        "area": 59,
+        "rooms": ["05-188"]
+      },
+      {
+        "levelId": 311,
+        "area": 135,
+        "rooms": ["10-1300"]
+      },
+      {
+        "levelId": 694,
+        "area": 170,
+        "rooms": ["03-1052", "03-1102", "03-1104"]
+      },
+      {
+        "levelId": 1487353,
+        "area": 64,
+        "rooms": ["06-304", "06-309", "06-308", "06-364", "06-318"]
+      },
+      {
+        "levelId": 1487353,
+        "area": 69,
+        "rooms": ["06-304", "06-309", "06-308", "06-364", "06-318"]
+      }
+    ],
+    "straightCrossings": 13,
+    "spokeAreas": 36,
+    "spineMetres": 5869,
+    "restoredEdges": 460
+  },
+  "profiles": {
+    "walking": {
+      "rooms": 1740,
+      "roomPairs": 1512930,
+      "lostPairs": 0,
+      "gainedPairs": 0,
+      "lengthRatio": {
+        "samples": 259,
+        "p05": 0.811,
+        "median": 0.866,
+        "p95": 0.959,
+        "min": 0.777,
+        "max": 1.056
+      },
+      "routeMs": {
+        "median": 2.05,
+        "p95": 4.51,
+        "max": 8.41
+      },
+      "largestDifferences": [
+        {
+          "ratio": 0.777,
+          "network": 48.7,
+          "compiled": 62.7,
+          "pair": "06-264 H,C Washroom -> 06-213 Lecture Theatre"
+        },
+        {
+          "ratio": 0.788,
+          "network": 193.1,
+          "compiled": 245,
+          "pair": "07-148 Reception -> 03-2021 Office"
+        },
+        {
+          "ratio": 0.792,
+          "network": 157.9,
+          "compiled": 199.3,
+          "pair": "06-356 Library -> Central circulation"
+        },
+        {
+          "ratio": 0.795,
+          "network": 264.8,
+          "compiled": 333,
+          "pair": "04-301 Vestibule -> 03-S303 Stair"
+        },
+        {
+          "ratio": 0.795,
+          "network": 254.3,
+          "compiled": 320,
+          "pair": "Native ramp lower approach -> 03-2007A Copy"
+        },
+        {
+          "ratio": 0.799,
+          "network": 239.1,
+          "compiled": 299.1,
+          "pair": "05-162 Nurse Office -> 06-201 Vestibule"
+        },
+        {
+          "ratio": 0.805,
+          "network": 343.1,
+          "compiled": 426.1,
+          "pair": "05-156F RESPITE & EXAM -> 03-2003 Office"
+        },
+        {
+          "ratio": 0.806,
+          "network": 242.4,
+          "compiled": 300.8,
+          "pair": "Native ramp lower approach -> 03-008 Observation Room"
+        }
+      ]
+    },
+    "step-free": {
+      "rooms": 1740,
+      "roomPairs": 1512930,
+      "lostPairs": 0,
+      "gainedPairs": 0,
+      "lengthRatio": {
+        "samples": 259,
+        "p05": 0.811,
+        "median": 0.866,
+        "p95": 0.959,
+        "min": 0.777,
+        "max": 1.056
+      },
+      "routeMs": {
+        "median": 1.89,
+        "p95": 3.83,
+        "max": 8.18
+      },
+      "largestDifferences": [
+        {
+          "ratio": 0.777,
+          "network": 48.7,
+          "compiled": 62.7,
+          "pair": "06-264 H,C Washroom -> 06-213 Lecture Theatre"
+        },
+        {
+          "ratio": 0.788,
+          "network": 193.1,
+          "compiled": 245,
+          "pair": "07-148 Reception -> 03-2021 Office"
+        },
+        {
+          "ratio": 0.792,
+          "network": 157.9,
+          "compiled": 199.3,
+          "pair": "06-356 Library -> Central circulation"
+        },
+        {
+          "ratio": 0.795,
+          "network": 264.8,
+          "compiled": 333,
+          "pair": "04-301 Vestibule -> 03-S303 Stair"
+        },
+        {
+          "ratio": 0.795,
+          "network": 254.3,
+          "compiled": 320,
+          "pair": "Native ramp lower approach -> 03-2007A Copy"
+        },
+        {
+          "ratio": 0.799,
+          "network": 239.1,
+          "compiled": 299.1,
+          "pair": "05-162 Nurse Office -> 06-201 Vestibule"
+        },
+        {
+          "ratio": 0.805,
+          "network": 343.1,
+          "compiled": 426.1,
+          "pair": "05-156F RESPITE & EXAM -> 03-2003 Office"
+        },
+        {
+          "ratio": 0.806,
+          "network": 242.4,
+          "compiled": 300.8,
+          "pair": "Native ramp lower approach -> 03-008 Observation Room"
+        }
+      ]
+    }
+  },
+  "geometry": {
+    "spineSamples": 45099,
+    "offWalkableCell": 1227,
+    "maxOffFeet": 1.27,
+    "offWithinHalfFoot": 1223
+  }
+}
