@@ -5,6 +5,17 @@ import type { IndoorDataset } from "./contract";
  * and authoring issue text are unused by route policy or floor/path validation;
  * sending them to a route worker wastes a large synchronous structured clone. */
 export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
+  // A stepped-stair proof digests its two claimed terminal cells whole, so
+  // those cells keep their display containment for the worker to recheck,
+  // with the residual topology their containment refers to.
+  const claimedCells = new Set(
+    data.edges.flatMap(
+      (e) =>
+        e.nativeSteppedStairV2?.terminalApproaches?.map(
+          (a) => a.nativeCellId,
+        ) ?? [],
+    ),
+  );
   return {
     ...data,
     // Derived frame material is separate from original cuts and remains exact
@@ -18,10 +29,14 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
         data.circulationGeometry.cells.some((c) => c.containedDisplay))
         ? {
             ...data.circulationGeometry,
-            displayResidualTopology: undefined,
-            cells: data.circulationGeometry.cells.map(
-              ({ containedDisplay: _, ...cell }) => cell,
-            ),
+            displayResidualTopology: claimedCells.size
+              ? data.circulationGeometry.displayResidualTopology
+              : undefined,
+            cells: data.circulationGeometry.cells.map((cell) => {
+              if (claimedCells.has(cell.id)) return cell;
+              const { containedDisplay: _, ...rest } = cell;
+              return rest;
+            }),
           }
         : data.circulationGeometry,
     nativeSourceStairMaterials: nativeSourceStairPhysicalEvidence(

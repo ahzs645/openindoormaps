@@ -69,7 +69,10 @@ test("an absent optional stair index preserves the existing route snapshot", () 
 
 test("worker projection retains source flights for the v2 connector without copying display meshes", () => {
   const { data } = transportFixture();
-  const physical = { stairElementId: 77, treads: [{ exactSource: "retained" }] };
+  const physical = {
+    stairElementId: 77,
+    treads: [{ exactSource: "retained" }],
+  };
   data.stairDisplay = {
     flights: [{ displayMesh: "omit" }],
     sourceFlights: [physical, { stairElementId: 78, treads: [] }],
@@ -85,4 +88,38 @@ test("worker projection retains source flights for the v2 connector without copy
   assert.deepEqual(projected.stairDisplay?.sourceFlights, [physical]);
   assert.equal(data.stairDisplay.sourceFlights?.length, 2);
   assert.equal(data.stairDisplay.flights.length, 1);
+});
+
+test("worker projection keeps display containment only on cells a stepped stair claims", async () => {
+  const { nativeSteppedStairV2Digest } = await import(
+    "../../app/indoor-project/native-stepped-stair-v2"
+  );
+  const { data } = transportFixture();
+  const claimed = { id: "cell-claimed", containedDisplay: { faces: [1] } };
+  const other = { id: "cell-other", containedDisplay: { faces: [2] } };
+  const residual = { faces: ["cell-claimed:render-residual"] };
+  data.circulationGeometry = {
+    cells: [claimed, other],
+    displayResidualTopology: residual,
+  } as unknown as NonNullable<IndoorDataset["circulationGeometry"]>;
+  const cellSha256 = nativeSteppedStairV2Digest(claimed);
+  data.edges[0].nativeSteppedStairV2 = {
+    terminalApproaches: [{ nativeCellId: "cell-claimed", cellSha256 }],
+  } as unknown as NonNullable<
+    IndoorDataset["edges"][number]["nativeSteppedStairV2"]
+  >;
+  const geometry = routeWorkerDataset(data).circulationGeometry!;
+  assert.equal(geometry.displayResidualTopology, residual);
+  const [kept, stripped] = geometry.cells as unknown as Record<
+    string,
+    unknown
+  >[];
+  assert.equal(nativeSteppedStairV2Digest(kept), cellSha256);
+  assert.equal(stripped.containedDisplay, undefined);
+  assert.deepEqual(other.containedDisplay, { faces: [2] });
+  delete data.edges[0].nativeSteppedStairV2;
+  assert.equal(
+    routeWorkerDataset(data).circulationGeometry!.displayResidualTopology,
+    undefined,
+  );
 });

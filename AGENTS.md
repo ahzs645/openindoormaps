@@ -22,7 +22,7 @@ For indoor room boundaries, missing/low room blocks, doors, circulation, stair/r
 
 No special requirements here apply to unrelated venue demos or ordinary non-indoor changes.
 
-For the current UNBC continuation, start with [the October 20 handoff](docs/continuation/unbc-20261020/HANDOFF.md). It distinguishes the source checkpoint, running native rebuild, verified recovery files and pending release checks. Older handoffs are historical.
+For the current UNBC continuation, start with [the October 22 handoff](docs/continuation/unbc-20261022/HANDOFF.md). It covers the passed link-door recompile, the local promotion, the route-worker stepped-stair fix, measured optimisation findings and the open release gates. The [October 20 handoff](docs/continuation/unbc-20261020/HANDOFF.md) and older ones are historical.
 
 The [October 17 pathway repairs](docs/continuation/unbc-20261017/pathway-repairs/README.md) add current viewer checks and data availability: the previously created large handoff archive and failed-run checkpoints are absent from this filesystem. Do not assume old scratch paths still exist or treat the visitor ZIP as authoring evidence.
 
