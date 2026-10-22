@@ -10,6 +10,7 @@ import type {
 import { precisionWallLayer } from "./precision-wall-layer";
 import { HALLWAY_COLOR, OVERVIEW_SOLID_COLOR } from "./display-passages";
 import { ROOM_DETAIL_START, ROOM_DETAIL_END } from "./zoom-presentation";
+import { visitorRoomPaintExpression } from "./visitor-map-style";
 
 const multi = (
   geometry: FeatureCollection,
@@ -111,7 +112,7 @@ export function ProgressiveOverviewLayer({
           ROOM_DETAIL_START,
           lowTint,
           ROOM_DETAIL_END,
-          ["coalesce", ["get", "color"], OVERVIEW_SOLID_COLOR],
+          visitorRoomPaintExpression,
         ]
       : lowTint;
     map.addSource(tintId, {
@@ -139,6 +140,7 @@ export function ProgressiveOverviewLayer({
         overviewTint: true,
         overviewLocked: true,
         featureColors: revealRooms,
+        quietRoomColors: true,
         revealRoomsWithZoom: revealRooms,
       }),
     );
@@ -175,7 +177,7 @@ export function ProgressiveOverviewLayer({
       },
     });
     ids.push(labelId);
-    if (revealRooms && roomLabels.features.length) {
+    if (revealRooms && roomLabels.features.length > 0) {
       const previewId = "visitor-room-preview-labels";
       map.addSource(previewId, {
         type: "geojson",

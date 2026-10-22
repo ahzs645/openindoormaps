@@ -26,6 +26,12 @@ import { DEFAULT_LABEL_SETTINGS } from "./label-settings";
 import { precisionWallLayer } from "./precision-wall-layer";
 import { nativeStairZoomStyle } from "./native-stair-style";
 import { connectorMarkerLayer } from "./connector-marker-layer";
+import {
+  VISITOR_BOUNDARY,
+  VISITOR_WALL_FILL,
+  visitorBoundaryWidth,
+  visitorRoomPaintExpression,
+} from "./visitor-map-style";
 
 export const VISITOR_PLAN_CONNECTORS_LAYER_ID = "project-connector-markers";
 
@@ -80,11 +86,7 @@ const lowTint: ExpressionSpecification = [
   HALLWAY_COLOR,
   OVERVIEW_SOLID_COLOR,
 ];
-const byColor: ExpressionSpecification = [
-  "coalesce",
-  ["get", "color"],
-  OVERVIEW_SOLID_COLOR,
-];
+const byColor = visitorRoomPaintExpression;
 
 /** Display-only geographic paint and picking. The caller supplies an admitted,
  * hash-checked plan; this component grants no geometry or access authority. */
@@ -248,7 +250,7 @@ export function PublishedVisitorPlanLayer({
         source: "visitor-plan-native-walls",
         minzoom: WALL_DETAIL_START,
         paint: {
-          "fill-color": "#d6d7d7",
+          "fill-color": VISITOR_WALL_FILL,
           "fill-antialias": false,
           "fill-opacity": fade(WALL_DETAIL_START, WALL_DETAIL_END),
         },
@@ -258,8 +260,8 @@ export function PublishedVisitorPlanLayer({
         type: "line",
         source: "visitor-plan-native-outlines",
         paint: {
-          "line-color": "#d6d7d7",
-          "line-width": 0.6,
+          "line-color": VISITOR_BOUNDARY,
+          "line-width": visitorBoundaryWidth,
           "line-opacity": fade(WALL_DETAIL_START, WALL_DETAIL_END),
         },
       });
@@ -284,10 +286,10 @@ export function PublishedVisitorPlanLayer({
       });
     }
     if (!plan.native || !plan.display.nativeMaterialSections) {
-      fill("walls", "#deded9", {
+      fill("walls", VISITOR_WALL_FILL, {
         minzoom: WALL_DETAIL_START,
         paint: {
-          "fill-color": "#deded9",
+          "fill-color": VISITOR_WALL_FILL,
           "fill-opacity": fade(WALL_DETAIL_START, WALL_DETAIL_END),
         },
       });

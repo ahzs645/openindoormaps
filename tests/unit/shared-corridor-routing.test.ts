@@ -38,6 +38,12 @@ import { projectNavigationSteps } from "../../app/indoor-project/navigation-step
 import { hallwayPathView } from "../../app/indoor-project/hallway-path-view";
 import { centeredRoutePaths } from "../../app/indoor-project/viewer-centered-route";
 import { projectRoutingGraph } from "../../app/indoor-project/routing-graph";
+import { prepareSharedCorridorRouting } from "../../app/indoor-project/prepare-corridor-routing";
+import { composeSharedCorridorGuide } from "../../app/indoor-project/shared-corridor-composition";
+import {
+  corridorRoutingCoverage,
+  indexCorridorRoutingScope,
+} from "../../app/indoor-project/corridor-routing-scope";
 
 async function fixture(
   compact = false,
@@ -492,6 +498,132 @@ test("scoped enumeration uses the same physical/policy binding and retains restr
   );
 });
 
+test("subset emission constructs the same complete cell with more than eight terminals", async () => {
+  const data = await fixture(false, true);
+  for (let i = 0; i < 12; i++) {
+    const id = `extra-${i.toString().padStart(2, "0")}`;
+    const point: [number, number, number] = [10 + i * 2, 2, 0];
+    data.nodes.push({ ...data.nodes[1], id, pointFeet: point });
+    data.edges.push({
+      ...data.edges[0],
+      id: `walk-${id}`,
+      to: id,
+      pointsFeet: [data.nodes[0].pointFeet, point],
+    });
+  }
+  const before = JSON.stringify(data);
+  const complete = await prepareSharedCorridorRouting(data);
+  const subset = await prepareSharedCorridorRouting(data, {
+    edgeIds: new Set(["AB"]),
+  });
+  assert.ok(complete.prepared.guides.length > 0);
+  assert.deepEqual(
+    subset.prepared.guides,
+    complete.prepared.guides.filter((guide) => guide.edgeId === "AB"),
+  );
+  assert.deepEqual(
+    subset.report.cells[0].networks,
+    complete.report.cells[0].networks,
+  );
+  assert.equal(subset.report.cells[0].terminalCount, 15);
+  assert.equal(subset.report.cells[0].eligibleEdges, 14);
+  assert.equal(subset.report.cells[0].requestedEdges, 1);
+  assert.equal(subset.report.cells[0].emittedEdges, 1);
+  assert.equal(JSON.stringify(data), before);
+  const reordered = structuredClone(data);
+  reordered.nodes.reverse();
+  reordered.edges.reverse();
+  reordered.records.reverse();
+  // Reordering source arrays changes their exact source binding. Rebuild the
+  // independent literal fixture certificate; stale evidence must stay refused.
+  reordered.circulationGeometry!.sourceGeometryKey =
+    nativeCirculationGeometryKey(reordered);
+  reordered.circulationGeometry!.exactTopology = encodeNativeExactTopology(
+    {
+      sourceModelSha256: reordered.source.modelSha256,
+      sourceGeometryKey: reordered.circulationGeometry!.sourceGeometryKey,
+      kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+    },
+    [
+      {
+        id: "hall-face",
+        parts: nativeRationalOverlay("union", [
+          reordered.circulationGeometry!.cells[0].ringsFeet,
+        ]),
+      },
+    ],
+  );
+  const replay = await prepareSharedCorridorRouting(reordered);
+  assert.deepEqual(replay.prepared.guides, complete.prepared.guides);
+});
+
+test("coverage accounts for non-target circulation cells and unrepresented physical levels", async () => {
+  const data = await fixture();
+  data.circulationGeometry!.cells.push({
+    ...data.circulationGeometry!.cells[0],
+    id: "fragment-without-walks",
+  });
+  data.nativePhysicalLevels = {
+    version: 1,
+    sourceModelSha256: data.source.modelSha256,
+    displayAliases: [],
+    levels: [
+      {
+        nativeLevelId: 123,
+        sourceName: "Unrepresented plane",
+        elevationFeet: 11.25,
+        nativeFloorElementIds: [7],
+        nativeStairElementIds: [],
+        annotationLevel: false,
+      },
+    ],
+  };
+  const scope = indexCorridorRoutingScope(data);
+  assert.equal(scope.eligible.length, 2);
+  const coverage = corridorRoutingCoverage(data, scope);
+  const omitted = coverage.circulationCells.find(
+    (cell) => cell.cellId === "fragment-without-walks",
+  )!;
+  assert.equal(omitted.selectionReason, "no-original-walking-edge");
+  assert.equal(omitted.sharesTargetCirculationIdentity, true);
+  assert.equal(omitted.reviewRequired, true);
+  assert.equal(coverage.levels[0].compiledCells, 0);
+  assert.equal(coverage.levels[0].reviewRequired, true);
+  data.records[0].access = "staff";
+  assert.equal(indexCorridorRoutingScope(data).eligible.length, 1);
+});
+
+test("failed native admission accounts for every requested original edge", async () => {
+  const data = await fixture();
+  data.circulationGeometry!.sourceGeometryKey = "stale";
+  const cells: string[] = [];
+  const result = await prepareSharedCorridorRouting(data, {
+    cellCompleted: (cell) => {
+      cells.push(cell.cellId);
+    },
+  });
+  assert.deepEqual(cells, ["hall"]);
+  assert.equal(result.prepared.guides.length, 0);
+  assert.equal(result.report.cells[0].refusedEdges.length, 2);
+  assert.ok(
+    result.report.cells[0].refusedEdges.every(
+      (edge) => edge.reason === "native-cell-not-admitted",
+    ),
+  );
+});
+
+test("unknown and newly ineligible requested edges have explicit replay outcomes", async () => {
+  const data = await fixture();
+  data.edges[0].enabled = false;
+  const result = await prepareSharedCorridorRouting(data, {
+    edgeIds: new Set(["AB", "missing"]),
+  });
+  assert.deepEqual(result.report.requestedEdgesOutsideInitialTargets, [
+    { edgeId: "AB", reason: "disabled-source-edge" },
+    { edgeId: "missing", reason: "unknown-source-edge" },
+  ]);
+});
+
 test("exact retraces remove unused spurs while preserving fixed outer endpoints and non-retraced bends", () => {
   const path: [number, number, number][] = [
     [0, 5, 0],
@@ -575,11 +707,16 @@ test("the corridor setting defaults on and persists independently for each model
   }
 });
 
-test("compact vestibule routes straighten through intermediate arrival anchors, while holes veto the chord", async () => {
+test("compact vestibule routes retain the compiled shared trunk and real floor holes", async () => {
   for (const hole of [false, true]) {
     const data = await fixture(true, hole);
     const before = JSON.stringify(data);
     const prepared = await prepareRouting(data, { method: "shared-corridor" });
+    const guides = preparedWalkingGuides(prepared.dataset);
+    const expected = composeSharedCorridorGuide([
+      ...guides.get("AB")!,
+      ...guides.get("BC")!,
+    ]);
     for (const [from, to] of [
       ["A", "C"],
       ["C", "A"],
@@ -589,15 +726,13 @@ test("compact vestibule routes straighten through intermediate arrival anchors, 
       const points = route.paths.flatMap((p, i) =>
         i ? p.pointsFeet.slice(1) : p.pointsFeet,
       );
+      assert.deepEqual(points, from === "A" ? expected : expected.toReversed());
       if (hole) {
         assert.ok(
           points.length > 2,
           "the real floor hole cannot be averaged away",
         );
         assert.ok(route.distanceMetres > 8 * 0.3048);
-      } else {
-        assert.equal(points.length, 2);
-        assert.ok(points.every((p) => p[1] === 5));
       }
     }
     assert.equal(JSON.stringify(data), before);
@@ -782,7 +917,7 @@ test("cleanup retains the exact hallway stop anchors even when their outer appro
     );
 });
 
-test("compact vestibule shortcuts preserve both outer hallway-center stops before trimming door approaches", async () => {
+test("compact vestibule shared trunks preserve both outer hallway-center stops before trimming door approaches", async () => {
   const source = await fixture(true);
   source.nodes[0].pointFeet[1] = 1;
   source.nodes[2].pointFeet[1] = 9;
@@ -836,7 +971,19 @@ test("compact vestibule shortcuts preserve both outer hallway-center stops befor
       "arrival keeps its middle-of-hallway stop",
     );
     assert.equal(route.paths.length, 1);
-    assert.equal(route.paths[0].pointsFeet.length, 2);
+    const originalPoints = original.paths[0].pointsFeet;
+    assert.deepEqual(
+      route.paths[0].pointsFeet,
+      originalPoints.slice(
+        originalPoints.findIndex((p) =>
+          p.every((v, i) => v === route.departure!.pointFeet[i]),
+        ),
+        originalPoints.findLastIndex((p) =>
+          p.every((v, i) => v === route.arrival!.pointFeet[i]),
+        ) + 1,
+      ),
+      "endpoint trimming preserves every compiled interior bend",
+    );
     assert.notDeepEqual(route.departure.pointFeet, start);
     assert.notDeepEqual(route.arrival.pointFeet, end);
     assert.deepEqual(route.departure.hallwayCenter.doorPointFeet, start);

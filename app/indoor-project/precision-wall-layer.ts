@@ -11,6 +11,7 @@ import {
   zoomFade,
 } from "./zoom-presentation";
 import { floorDiagnostic, floorDiagnosticsEnabled } from "./floor-diagnostics";
+import { visitorRoomPaintColor } from "./visitor-map-style";
 
 // Default import keeps this module loadable by Node unit tests (CJS build).
 const { MercatorCoordinate } = maplibregl;
@@ -44,8 +45,9 @@ export function precisionWallMesh(
   overview = false,
   overviewTint = false,
   featureColors = false,
+  quietRoomColors = false,
 ): PrecisionWallMesh {
-  const key = `${originGeographic[0]},${originGeographic[1]},${windowOpacity},${overview},${overviewTint},${featureColors}`;
+  const key = `${originGeographic[0]},${originGeographic[1]},${windowOpacity},${overview},${overviewTint},${featureColors},${quietRoomColors}`;
   let byOptions = meshes.get(walls);
   const cached = byOptions?.get(key);
   if (cached) return cached;
@@ -78,7 +80,13 @@ export function precisionWallMesh(
       continue;
     const nativeColor = overview
       ? featureColors
-        ? new THREE.Color(String(f.properties?.color ?? OVERVIEW_SOLID_COLOR))
+        ? new THREE.Color(
+            quietRoomColors
+              ? visitorRoomPaintColor(
+                  String(f.properties?.color ?? OVERVIEW_SOLID_COLOR),
+                )
+              : String(f.properties?.color ?? OVERVIEW_SOLID_COLOR),
+          )
         : overviewTint && f.properties?.circulation === true
           ? hallwayColor
           : overviewColor
@@ -176,6 +184,7 @@ export function precisionWallLayer(
     overviewTint?: boolean;
     /** Flat source-native room colours while a full visitor floor is loading. */
     featureColors?: boolean;
+    quietRoomColors?: boolean;
     /** Interpolate grey/circulation to source colours on every zoom frame. */
     revealRoomsWithZoom?: boolean;
     overviewLocked?: boolean;
@@ -193,6 +202,7 @@ export function precisionWallLayer(
     !!options.overview,
     !!options.overviewTint,
     !!options.featureColors,
+    !!options.quietRoomColors,
   );
   const geometry = new THREE.BufferGeometry();
   // Shared read-only typed arrays: BufferAttribute does not copy them.

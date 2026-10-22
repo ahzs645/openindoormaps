@@ -48,6 +48,12 @@ import {
 import { mapReady } from "~/components/map/map-ready";
 import { precisionWallLayer } from "./precision-wall-layer";
 import type { FeatureCollection, MultiPolygon } from "geojson";
+import {
+  VISITOR_BOUNDARY,
+  VISITOR_WALL_FILL,
+  visitorBoundaryWidth,
+  visitorRoomPaintExpression,
+} from "./visitor-map-style";
 
 // Retain one immutable dataset's complete results within both count/byte
 // budgets; pending walls and cancelled workers never populate this cache.
@@ -312,9 +318,11 @@ export function NativeExploreLayer({
         tolerance: 0,
         maxzoom: 23,
       });
-    const before = ["project-route-line", "project-label"].find((id) =>
-      map.getLayer(id),
-    );
+    const before = [
+      "project-route-halo",
+      "project-route-line",
+      "project-label",
+    ].find((id) => map.getLayer(id));
     map.addLayer(
       {
         id: layers[0],
@@ -357,7 +365,7 @@ export function NativeExploreLayer({
         source: sources[4],
         minzoom: WALL_DETAIL_START,
         paint: {
-          "fill-color": "#d6d7d7",
+          "fill-color": VISITOR_WALL_FILL,
           "fill-antialias": false,
           "fill-opacity": [
             "interpolate",
@@ -382,8 +390,8 @@ export function NativeExploreLayer({
         type: "line",
         source: sources[1],
         paint: {
-          "line-color": "#d6d7d7",
-          "line-width": 0.6,
+          "line-color": VISITOR_BOUNDARY,
+          "line-width": visitorBoundaryWidth,
           "line-opacity": [
             "interpolate",
             ["linear"],
@@ -526,7 +534,7 @@ export function NativeExploreLayer({
                 ["get", "color"],
                 ["in", ["get", "nativeRegionId"], ["literal", selectedRegions]],
                 "#ffe09d",
-                ["get", "color"],
+                visitorRoomPaintExpression,
               ],
             ];
         map.setPaintProperty(id, "fill-color", color);

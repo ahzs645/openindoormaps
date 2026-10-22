@@ -88,6 +88,12 @@ import {
   WALL_DETAIL_END,
 } from "./zoom-presentation";
 import { mapReady } from "~/components/map/map-ready";
+import {
+  VISITOR_BOUNDARY,
+  VISITOR_ROUTE,
+  VISITOR_WALL_FILL,
+  visitorRoomPaintExpression,
+} from "./visitor-map-style";
 
 const collection = <T extends Geometry>(
   features: Feature<T>[],
@@ -807,11 +813,18 @@ export function PreparedProjectMapLayers({
         },
       });
       map.addLayer({
+        id: "project-route-halo",
+        type: "line",
+        source: sources[4],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: { "line-color": "#ffffff", "line-width": 8 },
+      });
+      map.addLayer({
         id: ids[4],
         type: "line",
         source: sources[4],
         layout: { "line-cap": "round", "line-join": "round" },
-        paint: { "line-color": "#39b4f7", "line-width": 5 },
+        paint: { "line-color": VISITOR_ROUTE, "line-width": 5 },
       });
       map.addLayer({
         id: ids[5],
@@ -1311,6 +1324,7 @@ export function PreparedProjectMapLayers({
           relativeHeights,
           circulationOnly,
           selected,
+          quietRoomColors: true,
           opacity: geometryOpacity,
         }),
         "project-room-boxes",
@@ -1324,6 +1338,7 @@ export function PreparedProjectMapLayers({
           relativeHeights,
           circulationOnly,
           selected,
+          quietRoomColors: true,
           opacity: geometryOpacity,
         }),
         "project-network-line",
@@ -1578,7 +1593,7 @@ export function PreparedProjectMapLayers({
               RESTRICTED_AREA_COLOR,
               ["==", ["get", "circulation"], true],
               HALLWAY_COLOR,
-              ["get", "color"],
+              visitorRoomPaintExpression,
             ],
           ],
     );
@@ -1600,7 +1615,7 @@ export function PreparedProjectMapLayers({
               ROOM_DETAIL_START,
               OVERVIEW_SOLID_COLOR,
               ROOM_DETAIL_END,
-              ["get", "color"],
+              visitorRoomPaintExpression,
             ],
       );
     map.setPaintProperty(
@@ -1833,6 +1848,7 @@ export function PreparedProjectMapLayers({
           map.moveLayer(id);
         }
       }
+      map.moveLayer("project-route-halo");
       map.moveLayer(ids[4]);
     } else
       for (const role of ["passage", "transition", "held", "gap"])
@@ -1883,7 +1899,7 @@ export function PreparedProjectMapLayers({
               HALLWAY_COLOR,
               selectionMatch,
               "#ffe09d",
-              ["get", "color"],
+              visitorRoomPaintExpression,
             ]
           : [
               "case",
@@ -1893,7 +1909,7 @@ export function PreparedProjectMapLayers({
               RESTRICTED_AREA_COLOR,
               selectionMatch,
               "#ffe09d",
-              ["get", "color"],
+              review ? ["get", "color"] : visitorRoomPaintExpression,
             ];
       const overview = isArea
         ? [
@@ -1950,15 +1966,29 @@ export function PreparedProjectMapLayers({
         "case",
         ["==", ["get", "key"], selected],
         "#f08e22",
-        "#d6d7d7",
+        review ? "#d6d7d7" : VISITOR_BOUNDARY,
       ]);
-      map.setPaintProperty(id, "line-width", [
-        "case",
-        ["==", ["get", "key"], selected],
-        2,
-        0.6,
-      ]);
+      map.setPaintProperty(
+        id,
+        "line-width",
+        review
+          ? ["case", ["==", ["get", "key"], selected], 2, 0.6]
+          : [
+              "interpolate",
+              ["linear"],
+              ["zoom"],
+              18.5,
+              ["case", ["==", ["get", "key"], selected], 2, 0.35],
+              21,
+              ["case", ["==", ["get", "key"], selected], 2, 0.8],
+            ],
+      );
     }
+    map.setPaintProperty(
+      "project-exposed-wall-fill",
+      "fill-color",
+      review ? "#deded9" : VISITOR_WALL_FILL,
+    );
     const pick = (event: MapMouseEvent) => {
       if (
         !pickEnabled ||

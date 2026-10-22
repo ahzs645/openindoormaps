@@ -7,6 +7,7 @@ import type {
   Polygon,
 } from "geojson";
 import { requestPrecisionSurfaceUnion } from "./precision-surface-union-worker-bridge";
+import { visitorRoomPaintColor } from "./visitor-map-style";
 import {
   HALLWAY_COLOR,
   OVERVIEW_SOLID_COLOR,
@@ -355,6 +356,7 @@ export function precisionSurfaceColor(
   kind: SurfaceKind,
   selected: string,
   progress: number,
+  quietRoomColors = false,
 ) {
   const overview =
     p.nativeFloor === true
@@ -371,7 +373,9 @@ export function precisionSurfaceColor(
           ? HALLWAY_COLOR
           : typeof p.key === "string" && p.key === selected
             ? "#ffe09d"
-            : (p.color ?? OVERVIEW_SOLID_COLOR);
+            : quietRoomColors
+              ? visitorRoomPaintColor(p.color ?? OVERVIEW_SOLID_COLOR)
+              : (p.color ?? OVERVIEW_SOLID_COLOR);
   const a = new THREE.Color(overview),
     b = new THREE.Color(detail);
   a.getRGB(a, THREE.SRGBColorSpace);
@@ -393,6 +397,7 @@ export function precisionSurfaceLayer(
     id?: string;
     selected?: string;
     opacity?: number;
+    quietRoomColors?: boolean;
   },
 ): CustomLayerInterface & {
   readonly unionStatus: string;
@@ -593,6 +598,7 @@ export function precisionSurfaceLayer(
             options.kind,
             options.selected ?? "",
             progress,
+            options.quietRoomColors,
           );
           const z = range.base + (range.top - range.base) * progress;
           for (let i = range.start; i < range.start + range.count; i++) {
@@ -611,6 +617,7 @@ export function precisionSurfaceLayer(
               options.kind,
               options.selected ?? "",
               progress,
+              options.quietRoomColors,
             ),
             z = range.base + (range.top - range.base) * progress;
           for (let i = range.start; i < range.start + range.count; i++) {

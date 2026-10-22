@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   createCorridorCenterline,
+  composeCorridorCenterlineRoute,
   type CorridorXY,
 } from "../../app/indoor-project/corridor-centerline";
 import {
@@ -14,6 +15,7 @@ import {
   nativeRationalPathSupported,
 } from "../../app/indoor-project/native-exact-planar-topology";
 import { proposeStraightCorridorAxis } from "../../app/indoor-project/corridor-straight-axis";
+import { createTwoFootCorridorSupport } from "../../app/indoor-project/corridor-guide-support";
 const rect = (x: number, y: number, w: number, h: number): CorridorXY[] => [
   [x, y],
   [x + w, y],
@@ -46,6 +48,74 @@ function clearance(parts: NativeRationalParts) {
 const terminal = (id: string, x: number, y: number) => ({
   id,
   point: [x, y] as CorridorXY,
+});
+
+test("core-only retrace cancellation retains fixed approaches and introduces no chord", () => {
+  const start: CorridorXY[] = [
+    [-3, 0],
+    [-2, 0],
+    [-3, 0],
+  ];
+  const core: CorridorXY[] = [
+    [0, 0],
+    [1, 0],
+    [0, 0],
+    [3, 0],
+  ];
+  const end: CorridorXY[] = [
+    [3, 0],
+    [4, 0],
+    [3, 0],
+  ];
+  const before = JSON.stringify([start, core, end]);
+  const route = composeCorridorCenterlineRoute(start, core, end);
+  const [first, last] = route.hallwayJoins;
+  assert.deepEqual(route.points.slice(0, first + 1), start);
+  assert.deepEqual(route.points.slice(last).toReversed(), end);
+  assert.deepEqual(route.points[first], start.at(-1));
+  assert.deepEqual(route.points[last], end.at(-1));
+  assert.deepEqual(route.points.slice(first, last + 1), [
+    [-3, 0],
+    [0, 0],
+    [3, 0],
+  ]);
+  const originalCore = [start.at(-1)!, ...core];
+  const originalSegments = new Set(
+    originalCore
+      .slice(1)
+      .map((point, i) => JSON.stringify([originalCore[i], point])),
+  );
+  for (let i = first + 1; i <= last; i++)
+    assert.ok(
+      originalSegments.has(
+        JSON.stringify([route.points[i - 1], route.points[i]]),
+      ),
+    );
+  route.points[0][0] = 999;
+  assert.equal(JSON.stringify([start, core, end]), before);
+});
+
+test("a genuine core cycle survives exact retrace cancellation", () => {
+  const start: CorridorXY[] = [
+    [-1, 0],
+    [0, 0],
+  ];
+  const core: CorridorXY[] = [
+    [2, 0],
+    [2, 2],
+    [0, 2],
+    [0, 0],
+    [4, 0],
+  ];
+  const end: CorridorXY[] = [
+    [5, 0],
+    [4, 0],
+  ];
+  const route = composeCorridorCenterlineRoute(start, core, end);
+  assert.deepEqual(
+    route.points.slice(route.hallwayJoins[0], route.hallwayJoins[1] + 1),
+    [start.at(-1), ...core],
+  );
 });
 
 test("opposite room doors use one corridor centre and retain their exact endpoints", () => {
@@ -132,7 +202,11 @@ test("small wall recesses are averaged into one straight axis, with separate che
   assert.equal(network.statistics().straightAxisProposed, true);
   const route = network.routeDetails("a", "b")!;
   assert.ok(clearance(parts)(route.points));
-  assert.equal(route.hallwayJoins[1] - route.hallwayJoins[0], 1);
+  assert.equal(
+    route.hallwayJoins[1] - route.hallwayJoins[0],
+    2,
+    "the common axis retains the other complete-cell terminal join",
+  );
   const axis = proposeStraightCorridorAxis(rings)!;
   const a = route.points[route.hallwayJoins[0]],
     b = route.points[route.hallwayJoins[1]];
@@ -184,9 +258,17 @@ test("both alternatives around an island survive; a newly blocked side uses the 
     const path = network.route("a", "b");
     assert.ok(path);
     assert.ok(clearance(parts)(path));
-    const crossing = path.filter((p) => p[0] > 25 && p[0] < 35);
+    const crossing = path.slice(1).flatMap((b, i) => {
+      const a = path[i];
+      if (Math.min(a[0], b[0]) > 30 || Math.max(a[0], b[0]) < 30) return [];
+      if (a[0] === b[0]) return [a, b];
+      const t = (30 - a[0]) / (b[0] - a[0]);
+      return [[30, a[1] + (b[1] - a[1]) * t]];
+    });
     assert.ok(crossing.length > 0);
     assert.ok(crossing.every((p) => (blockTop ? p[1] < 6 : p[1] > 14)));
+    assert.deepEqual(path[0], terminals[0].point);
+    assert.deepEqual(path.at(-1), terminals[1].point);
   }
 });
 
@@ -215,12 +297,14 @@ test("sampling limits, blocked terminal approaches and repeated identities fail 
   );
   assert.equal(budget.statistics().budgetExceeded, true);
   assert.equal(budget.route("a", "a"), null);
+  assert.equal(budget.refusalReason("a", "a"), "sampling-budget");
   const blocked = createCorridorCenterline(
     rings,
     [terminal("a", 4, 5)],
     (_p, id) => id === undefined,
   );
   assert.deepEqual(blocked.missing, ["a"]);
+  assert.equal(blocked.refusalReason("a", "a"), "terminal-attachment");
   assert.throws(
     () =>
       createCorridorCenterline(
@@ -230,4 +314,55 @@ test("sampling limits, blocked terminal approaches and repeated identities fail 
       ),
     /Duplicate/,
   );
+  for (const maxSites of [Infinity, Number.NaN, 25.5, 100_001])
+    assert.throws(
+      () => createCorridorCenterline(rings, [], () => true, { maxSites }),
+      /sampling budget/,
+    );
+});
+
+test("an unanchored proposal cycle survives until checked terminal alternatives can use it", () => {
+  const rings = [rect(0, 0, 60, 20), rect(25, 6, 10, 8)];
+  const parts = nativeRationalOverlay("union", [rings]);
+  const network = createCorridorCenterline(rings, [], clearance(parts));
+  assert.ok(network.statistics().attachmentFitting.acceptedChains > 0);
+  assert.equal(network.statistics().attachedTerminals, 0);
+});
+
+test("an original terminal retries a checked receiving chain after its nearest sampled fragment is severed", () => {
+  const rings = [rect(0, 0, 40, 20), rect(18, 6, 4, 8)];
+  // The proposal omits this exact physical seam. Its adjacent sampled chain
+  // therefore fails width qualification. Only A has a separately qualified
+  // finite extension; that extension can never be borrowed by the lane or B.
+  const base = nativeRationalOverlay(
+    "difference",
+    [rings],
+    [[rect(27, 0, 0.1, 20)]],
+  );
+  const ownExtension = nativeRationalOverlay("union", [[rect(24, 1, 14, 5)]]);
+  const check = createTwoFootCorridorSupport(base, 0);
+  const terminals = [terminal("a", 26, 3), terminal("b", 36, 3)];
+  const before = JSON.stringify([rings, terminals]);
+  const build = (ordered: typeof terminals) =>
+    createCorridorCenterline(
+      rings,
+      ordered,
+      (path, id) => check(path, id === "a" ? ownExtension : []),
+      { requiredEdges: [{ id: "original-walk", from: "a", to: "b" }] },
+    );
+  const network = build(terminals);
+  const route = network.routeDetails("a", "b")!;
+  assert.ok(route);
+  assert.ok(network.statistics().reattachedTerminals > 0);
+  assert.equal(network.statistics().connectedRequiredEdges, 1);
+  const [first, last] = route.hallwayJoins;
+  assert.ok(first <= 2 && route.points.length - 1 - last <= 2);
+  assert.ok(check(route.points.slice(0, first + 1), ownExtension));
+  assert.ok(check(route.points.slice(first, last + 1)));
+  assert.ok(check(route.points.slice(last)));
+  assert.deepEqual(route.points[0], terminals[0].point);
+  assert.deepEqual(route.points.at(-1), terminals[1].point);
+  assert.deepEqual(network.route("b", "a"), route.points.toReversed());
+  assert.deepEqual(build(terminals.toReversed()).routeDetails("a", "b"), route);
+  assert.equal(JSON.stringify([rings, terminals]), before);
 });

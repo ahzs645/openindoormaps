@@ -3,7 +3,7 @@ import { bytesToHex } from "@noble/hashes/utils.js";
 import type { IndoorDataset } from "./contract";
 import { routingCalculationValue, routingSnapshot } from "./routing-cache";
 import { routeWorkerDataset } from "./route-worker-dataset";
-export const ROUTING_GUIDE_VERSION = "native-walking-guides-3";
+export const ROUTING_GUIDE_VERSION = "native-walking-guides-4";
 export type PreparedRouting = {
   version: 1;
   resolverVersion: string;

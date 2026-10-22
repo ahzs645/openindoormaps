@@ -1,0 +1,55 @@
+[
+  {
+    "id": "door-2311764:08-216-to-08-260",
+    "from": "rm-694-3eff6106de76",
+    "to": "rm-694-fa60cb06b7c9",
+    "mode": "public",
+    "options": { "allowOtherRoomTransit": false, "endpointMode": "hallway" },
+    "expected": true,
+    "requiredNativeDoorId": 2311764
+  },
+  {
+    "id": "link-4-8:walking-hallway-only",
+    "from": "rm-694-072a835d76b9",
+    "to": "rm-694-0179b206bb5d",
+    "mode": "public",
+    "options": { "allowOtherRoomTransit": false, "endpointMode": "hallway" },
+    "expected": false
+  },
+  {
+    "id": "link-4-8:walking-other-room-transit",
+    "from": "rm-694-072a835d76b9",
+    "to": "rm-694-0179b206bb5d",
+    "mode": "public",
+    "options": { "allowOtherRoomTransit": true, "endpointMode": "hallway" },
+    "expected": true,
+    "requiredNativeDoorId": 2311764,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "link-4-8:return-walking-other-room-transit",
+    "from": "rm-694-0179b206bb5d",
+    "to": "rm-694-072a835d76b9",
+    "mode": "public",
+    "options": { "allowOtherRoomTransit": true, "endpointMode": "hallway" },
+    "expected": true,
+    "requiredNativeDoorId": 2311764,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "link-4-8:strict-step-free-hallway-only",
+    "from": "rm-694-072a835d76b9",
+    "to": "rm-694-0179b206bb5d",
+    "mode": "accessible",
+    "options": { "allowOtherRoomTransit": false, "endpointMode": "hallway" },
+    "expected": false
+  },
+  {
+    "id": "link-4-8:strict-step-free-other-room-transit",
+    "from": "rm-694-072a835d76b9",
+    "to": "rm-694-0179b206bb5d",
+    "mode": "accessible",
+    "options": { "allowOtherRoomTransit": true, "endpointMode": "hallway" },
+    "expected": false
+  }
+]

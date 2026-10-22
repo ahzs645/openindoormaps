@@ -1,0 +1,3129 @@
+{
+  "format": "unbc-pathway-source-baseline-v1",
+  "recordedAt": "2026-10-22T20:49:15.477666+00:00",
+  "status": "SOURCE_BYTES_AND_SCOPE_INVENTORY_VERIFIED_NOT_NAVIGATION_ACCEPTANCE",
+  "developmentBaseline": {
+    "openindoormaps": "662f400aa347dc79133d11923bfd90a7d24ea5c0",
+    "reviter": "80177ed21becc91c02df48bb27cd1d24f5fbf297"
+  },
+  "nativeProducer": {
+    "openindoormaps": "b78a3147335f420834557b1c0321637c6b84b499",
+    "reviter": "cb140e46d06d8fa728b059ab6068d58fb55e9ea9",
+    "reviterDifferenceFromDevelopmentMain": "Documentation only; no lib/ or scripts/ difference verified by git diff."
+  },
+  "archive": {
+    "driveId": "15OrcynRH85dWnupwqHq-gMEYaPEF73ei",
+    "bytes": 667190127,
+    "sha256": "2dadeb7a41cfec54d573cdc29c8eecad284b9a74a20d1bac98eaae7a9bf3862a",
+    "seconds": 8.131549343000017,
+    "downloadMethod": "normal shared Drive download; connector rejected size over 256 MiB",
+    "url": "https://drive.google.com/file/d/15OrcynRH85dWnupwqHq-gMEYaPEF73ei/view",
+    "localPath": "/workspace/scratch/task-source/compile-result-20261022T083159Z.tar.gz",
+    "hashEvidence": "Full SHA-256 calculated from downloaded bytes; prefix matches handoff."
+  },
+  "outputsDirectory": "/workspace/scratch/task-source/compile-result/output",
+  "files": {
+    "UNBC.campus-viewer.zip": {
+      "bytes": 55206326,
+      "sha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e"
+    },
+    "UNBC.master.reviter.zip": {
+      "bytes": 247209909,
+      "sha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc"
+    },
+    "compiled-dataset.json": {
+      "bytes": 243679296,
+      "sha256": "efd7efad5e8bc332e2a5eb68348d55241eb8c74bf386256f65b14bb40de07798"
+    },
+    "regeneration.json": {
+      "bytes": 393960,
+      "sha256": "0854394e20a233f104353061d2cf631e0154fab2efb6bf94561439d858c77b2b"
+    }
+  },
+  "manifestMemberChecks": [
+    {
+      "package": "UNBC.campus-viewer.zip",
+      "descriptor": "floors",
+      "path": "viewer/metadata.json",
+      "bytes": 1244887,
+      "sha256": "733384bfd2b26c6027ff20f079636c3fd65a394d8853408dcbc591a8f7241bf1",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.campus-viewer.zip",
+      "descriptor": "georeference",
+      "path": "gis/reference-points.json",
+      "bytes": 602,
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.campus-viewer.zip",
+      "descriptor": "indoor",
+      "path": "viewer/indoor.json",
+      "bytes": 296568130,
+      "sha256": "951b2539d8e1df676bf376cfce5b6f71ed156e4d2be8b4928ff99f9190584e37",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "model",
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "bytes": 70336512,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "floors",
+      "path": "floors/rooms.json",
+      "bytes": 82337070,
+      "sha256": "5291e1148cc27130b9239b6de26b2f7623c308f227f5dfc2b3e64b17f55e593c",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "georeference",
+      "path": "gis/reference-points.json",
+      "bytes": 602,
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "indoor",
+      "path": "viewer/indoor.json",
+      "bytes": 300494207,
+      "sha256": "e345c723733ef4dcd3badda3cc5f9f87d6fee8c66432ea42b9a0e1357a055bb6",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "scene",
+      "path": "model/scene.glb",
+      "bytes": 52216228,
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "status": "PASS"
+    },
+    {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "reviewBundle",
+      "path": "review/companions.bin",
+      "bytes": 88626822,
+      "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+      "status": "PASS"
+    }
+  ],
+  "regenerationOutputHashesMatch": true,
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "5291e1148cc27130b9239b6de26b2f7623c308f227f5dfc2b3e64b17f55e593c"
+  },
+  "counts": {
+    "compiledNativePhysicalCells": 1188,
+    "cellsWithEncodedExactFace": 1188,
+    "allEncodedTopologyFaces": 5327,
+    "initialTargetCells": 109,
+    "eligibleOriginalWalkingEdges": 2884,
+    "eligibleOriginalTerminalNodes": 2016,
+    "circulationIdentityCells": 170,
+    "circulationCellsOutsideTargets": 61,
+    "outsideTargetsWithoutOriginalWalkingEdges": 59,
+    "sourceNativeLevels": 12,
+    "nativeElevationsWithCompiledCells": 8,
+    "sourceNativeLevelsWithoutCompiledCells": 4,
+    "installedPreparedGuides": 0
+  },
+  "eligibilityDefinition": "Enabled native-cell walking edge; both endpoint nodes on the same level and exact elevation; every edge point at that elevation; both endpoint owners circulation, walkable and access != staff. This does not approve public access or accessibility.",
+  "scope": [
+    {
+      "cellId": "native-cell:-7.217848:2",
+      "exactFaceId": "native-face:-7.217848:7",
+      "elevationFeet": -7.217847769028872,
+      "levelIds": [2295121],
+      "roomKeys": ["rm-2295121-398346497705", "rm-2295121-7509922f7d32"],
+      "eligibleEdgeCount": 8,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:14",
+      "exactFaceId": "native-face:-3.280840:32",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": [
+        "landing:ramp:1643796:lower",
+        "rm-1450417-dba13529f060",
+        "rm-1450417-dbab6729f069",
+        "rm-1450417-dbca0729f083",
+        "rm-1450417-dbcd6929f085",
+        "rm-1450417-dbd43929f08b",
+        "rm-1450417-dbde6729f094",
+        "rm-1450417-dbe24929f098",
+        "rm-1450417-f65fe5d929e4",
+        "rm-1450417-f669f7d929ed",
+        "rm-1450417-f77d65d92ad7",
+        "rm-1450417-f780e3d92ada"
+      ],
+      "eligibleEdgeCount": 92,
+      "eligibleTerminalCount": 63,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:18",
+      "exactFaceId": "native-face:-3.280840:49",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-f66373d929e8"],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:25",
+      "exactFaceId": "native-face:-3.280840:86",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-f779f7d92ad4"],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:29",
+      "exactFaceId": "native-face:-3.280840:93",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-c0d5fc29e0f9"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:32",
+      "exactFaceId": "native-face:-3.280840:112",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-c0d28e29e0f6"],
+      "eligibleEdgeCount": 5,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:36",
+      "exactFaceId": "native-face:-3.280840:128",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-ed574ad924ac"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:40",
+      "exactFaceId": "native-face:-3.280840:137",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-ed5ad0d924af"],
+      "eligibleEdgeCount": 4,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:50",
+      "exactFaceId": "native-face:-3.280840:154",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-d1783c29ea33", "rm-1450417-d17b2229ea35"],
+      "eligibleEdgeCount": 4,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:57",
+      "exactFaceId": "native-face:-3.280840:181",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-dba51b29f064"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:-3.280840:60",
+      "exactFaceId": "native-face:-3.280840:187",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-db9e5929f05e"],
+      "eligibleEdgeCount": 9,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:68",
+      "exactFaceId": "native-face:0.000000:237",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-1fbbe8ddb7d0",
+        "rm-311-1fbf6eddb7d4",
+        "rm-311-84e9ae1b6aa3",
+        "rm-311-8a07470948d3",
+        "rm-311-f8440ac8dc13"
+      ],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:71",
+      "exactFaceId": "native-face:0.000000:243",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "circulation:07:311:400238:1331:17290",
+        "landing:ramp:1622190:lower",
+        "rm-311-033e0b326c5c",
+        "rm-311-04790b3025b4",
+        "rm-311-05a95d8222f3",
+        "rm-311-0850e3c8e4ce",
+        "rm-311-1f9c5af51998",
+        "rm-311-238958c8f493",
+        "rm-311-2740cc4a6fc3",
+        "rm-311-3578f4ca0bc1",
+        "rm-311-38b5a830435d",
+        "rm-311-399064f64ec1",
+        "rm-311-3a294ef64f43",
+        "rm-311-3fa50c3046cd",
+        "rm-311-403b1c30474d",
+        "rm-311-4168ef4a7ea0",
+        "rm-311-416c514a7ea3",
+        "rm-311-4170374a7ea7",
+        "rm-311-4177074a7eac",
+        "rm-311-4181394a7eb5",
+        "rm-311-44abfe297071",
+        "rm-311-47f7cd792af2",
+        "rm-311-47fab5792af4",
+        "rm-311-4ddcbfa88cc4",
+        "rm-311-537bd6f65d6a",
+        "rm-311-539686f65d80",
+        "rm-311-57784be66f65",
+        "rm-311-5dceef297e70",
+        "rm-311-5de373297e81",
+        "rm-311-5de6f9297e84",
+        "rm-311-5e4b23464af3",
+        "rm-311-6ecd9309a135",
+        "rm-311-802ece0942e9",
+        "rm-311-86e02816d8fe",
+        "rm-311-86e3ac16d901",
+        "rm-311-89fd150948ca",
+        "rm-311-8a44270f914c",
+        "rm-311-8aa369094957",
+        "rm-311-8b2f269a6163",
+        "rm-311-8b32069a6165",
+        "rm-311-8e1b19ddd9ef",
+        "rm-311-930f94094e0b",
+        "rm-311-9356d20f968d",
+        "rm-311-935a520f9690",
+        "rm-311-9466cb0f9774",
+        "rm-311-9b63fb0f9af0",
+        "rm-311-9b6e6b0f9af9",
+        "rm-311-9b71eb0f9afd",
+        "rm-311-9c58eb0f9bc1",
+        "rm-311-a1a7b5f5e7e7",
+        "rm-311-a1c62ff5e800",
+        "rm-311-a1c9adf5e803",
+        "rm-311-a61bf9a36e17",
+        "rm-311-ac6ce9426f1c",
+        "rm-311-ac7069426f1f",
+        "rm-311-bb30c6dfc1d2",
+        "rm-311-c64e159a8271",
+        "rm-311-c6f1359a82fc",
+        "rm-311-d62943fe8220",
+        "rm-311-d62cc9fe8223",
+        "rm-311-f015ce646f7a"
+      ],
+      "eligibleEdgeCount": 453,
+      "eligibleTerminalCount": 268,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:99",
+      "exactFaceId": "native-face:0.000000:314",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["landing:ramp:1587605:lower", "rm-311-df4c89e6b168"],
+      "eligibleEdgeCount": 5,
+      "eligibleTerminalCount": 5,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:103",
+      "exactFaceId": "native-face:0.000000:318",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-deadbb6f0a1c"],
+      "eligibleEdgeCount": 20,
+      "eligibleTerminalCount": 13,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:109",
+      "exactFaceId": "native-face:0.000000:331",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-1f7048f51973"],
+      "eligibleEdgeCount": 21,
+      "eligibleTerminalCount": 15,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:113",
+      "exactFaceId": "native-face:0.000000:340",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-deb4476f0a21"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:115",
+      "exactFaceId": "native-face:0.000000:344",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-9d6780bb1ab2"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:126",
+      "exactFaceId": "native-face:0.000000:368",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-9375c20f96a8"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:140",
+      "exactFaceId": "native-face:0.000000:417",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["landing:ramp:1586431:lower", "rm-311-203cecddb83e"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:142",
+      "exactFaceId": "native-face:0.000000:428",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-204072ddb841"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:180",
+      "exactFaceId": "native-face:0.000000:563",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-8f9d52f5dd7b",
+        "rm-311-aabdc9f5ed2b",
+        "rm-311-aac849f5ed34"
+      ],
+      "eligibleEdgeCount": 9,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:183",
+      "exactFaceId": "native-face:0.000000:603",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-a19a1df5e7db"],
+      "eligibleEdgeCount": 19,
+      "eligibleTerminalCount": 15,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:204",
+      "exactFaceId": "native-face:0.000000:742",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-4f50db792ebc", "rm-311-a08d9ff5e6f7"],
+      "eligibleEdgeCount": 9,
+      "eligibleTerminalCount": 9,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:239",
+      "exactFaceId": "native-face:0.000000:843",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-466d127929a2"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:269",
+      "exactFaceId": "native-face:0.000000:979",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["landing:ramp:1643796:upper", "reviewed-native:pin-9"],
+      "eligibleEdgeCount": 5,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:314",
+      "exactFaceId": "native-face:0.000000:1220",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-96c5f8d2663d",
+        "rm-311-96d6fcd2664c",
+        "rm-311-96d728d2664c",
+        "rm-311-97e034d2672d"
+      ],
+      "eligibleEdgeCount": 26,
+      "eligibleTerminalCount": 16,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:328",
+      "exactFaceId": "native-face:0.000000:1257",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-38a4a830434f"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:337",
+      "exactFaceId": "native-face:0.000000:1288",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-40344c304747",
+        "rm-311-6e11521018ff",
+        "rm-311-ce76b13ffde1",
+        "rm-311-ce83c93ffdec"
+      ],
+      "eligibleEdgeCount": 15,
+      "eligibleTerminalCount": 11,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:349",
+      "exactFaceId": "native-face:0.000000:1345",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-44b9f629707d",
+        "rm-311-c97808fc205b",
+        "rm-311-c97eccfc2061"
+      ],
+      "eligibleEdgeCount": 11,
+      "eligibleTerminalCount": 7,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:0.000000:369",
+      "exactFaceId": "native-face:0.000000:1434",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-3f97fc3046c3"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:376",
+      "exactFaceId": "native-face:3.280840:1555",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [311, 1487816],
+      "roomKeys": [
+        "landing:ramp:1586431:upper",
+        "rm-311-2054e6ddb852",
+        "rm-311-b7fa83011b32"
+      ],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:384",
+      "exactFaceId": "native-face:3.280840:1594",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "landing:local:07:311:08:1487816:1620957:1",
+        "landing:ramp:1622190:upper"
+      ],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:389",
+      "exactFaceId": "native-face:3.280840:1608",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-f77395f50bc8", "rm-1487816-f7769bf50bca"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:393",
+      "exactFaceId": "native-face:3.280840:1617",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-1de56ef45078"],
+      "eligibleEdgeCount": 16,
+      "eligibleTerminalCount": 13,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:407",
+      "exactFaceId": "native-face:3.280840:1644",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "rm-1487816-1a0ccf3066a5",
+        "rm-1487816-3e4571f4120f",
+        "rm-1487816-781c56fde119",
+        "rm-1487816-800e4ffde566",
+        "rm-1487816-959fe1d830e0"
+      ],
+      "eligibleEdgeCount": 50,
+      "eligibleTerminalCount": 36,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:410",
+      "exactFaceId": "native-face:3.280840:1649",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-1a09473066a2"],
+      "eligibleEdgeCount": 4,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:413",
+      "exactFaceId": "native-face:3.280840:1667",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "rm-1487816-11a2b941dd58",
+        "rm-1487816-19466641e161",
+        "rm-1487816-1949cc41e164",
+        "rm-1487816-1950d841e16a",
+        "rm-1487816-603968192edb",
+        "rm-1487816-62e57b407134",
+        "rm-1487816-9319f35b541f"
+      ],
+      "eligibleEdgeCount": 72,
+      "eligibleTerminalCount": 52,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:414",
+      "exactFaceId": "native-face:3.280840:1668",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-93135f5b541a"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:429",
+      "exactFaceId": "native-face:3.280840:1705",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "rm-1487816-ee5665f5067e",
+        "rm-1487816-ef5bf5f5075c",
+        "rm-1487816-ef5f79f5075f",
+        "rm-1487816-f75f11f50bb7",
+        "rm-1487816-f76297f50bba"
+      ],
+      "eligibleEdgeCount": 12,
+      "eligibleTerminalCount": 9,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:456",
+      "exactFaceId": "native-face:3.280840:1823",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-62f28b40713f"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:459",
+      "exactFaceId": "native-face:3.280840:1839",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "rm-1487816-38e6d6497680",
+        "rm-1487816-555ae048650d",
+        "rm-1487816-55654e486516",
+        "rm-1487816-556850486518"
+      ],
+      "eligibleEdgeCount": 38,
+      "eligibleTerminalCount": 20,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:469",
+      "exactFaceId": "native-face:3.280840:1872",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-62db4b40712b"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:477",
+      "exactFaceId": "native-face:3.280840:1947",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-55574e486509"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:485",
+      "exactFaceId": "native-face:3.280840:1993",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-68b6de3fca43"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:488",
+      "exactFaceId": "native-face:3.280840:1998",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-68b37a3fca40"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:3.280840:489",
+      "exactFaceId": "native-face:3.280840:2011",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": [
+        "rm-1487816-5fc2a13fc51b",
+        "rm-1487816-68b09a3fca3e",
+        "rm-1487816-68bdaa3fca49",
+        "rm-1487816-cbbac047fdd9",
+        "rm-1487816-cc20b447fe30"
+      ],
+      "eligibleEdgeCount": 91,
+      "eligibleTerminalCount": 58,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:522",
+      "exactFaceId": "native-face:14.435696:2102",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-0b29f3582964",
+        "rm-694-0b30ff58296a",
+        "rm-694-0b3aff582973",
+        "rm-694-0e0ad8ab64e9",
+        "rm-694-0e0ebcab64ec",
+        "rm-694-240576583727",
+        "rm-694-2408fa58372a",
+        "rm-694-24136e583733",
+        "rm-694-2419fa583738",
+        "rm-694-241d6e58373b",
+        "rm-694-2420f658373e",
+        "rm-694-242af6583747",
+        "rm-694-b17d7fe3d57c"
+      ],
+      "eligibleEdgeCount": 45,
+      "eligibleTerminalCount": 32,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:527",
+      "exactFaceId": "native-face:14.435696:2174",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-25377258382b"],
+      "eligibleEdgeCount": 4,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:536",
+      "exactFaceId": "native-face:14.435696:2292",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-0e3aecab6512"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:545",
+      "exactFaceId": "native-face:14.435696:2324",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-2ba828f6dc56"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:552",
+      "exactFaceId": "native-face:14.435696:2346",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-07de695d7751",
+        "rm-694-2b939bf6dc44",
+        "rm-694-2b971ef6dc47",
+        "rm-694-3399eaf6e0a1"
+      ],
+      "eligibleEdgeCount": 52,
+      "eligibleTerminalCount": 36,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:557",
+      "exactFaceId": "native-face:14.435696:2367",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-8e8f6d6b9df1",
+        "rm-694-a9a5df6bad99",
+        "rm-694-a9a9606bad9c"
+      ],
+      "eligibleEdgeCount": 21,
+      "eligibleTerminalCount": 15,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:558",
+      "exactFaceId": "native-face:14.435696:2376",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-0ca9e8ab63bd"],
+      "eligibleEdgeCount": 4,
+      "eligibleTerminalCount": 4,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:561",
+      "exactFaceId": "native-face:14.435696:2383",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-072e095d76bc",
+        "rm-694-075a175d76e1",
+        "rm-694-07db835d774f",
+        "rm-694-07e5355d7757"
+      ],
+      "eligibleEdgeCount": 21,
+      "eligibleTerminalCount": 18,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:573",
+      "exactFaceId": "native-face:14.435696:2423",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-339d4df6e0a4", "rm-694-a9d5716badc1"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:576",
+      "exactFaceId": "native-face:14.435696:2447",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-0cb418ab63c6"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:580",
+      "exactFaceId": "native-face:14.435696:2505",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-ca5cff3b49a3"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:584",
+      "exactFaceId": "native-face:14.435696:2580",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-07d8105d774c"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:589",
+      "exactFaceId": "native-face:14.435696:2619",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-fa60cb06b7c9"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:600",
+      "exactFaceId": "native-face:14.435696:2737",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-b20c73f5f0ec",
+        "rm-694-b3934df5f238",
+        "rm-694-b39733f5f23c",
+        "rm-694-b3ab0ff5f24c",
+        "rm-694-cce9b8f60063",
+        "rm-694-ccec9ef60065",
+        "rm-694-ccf6c8f6006e",
+        "rm-694-ccfd9cf60074"
+      ],
+      "eligibleEdgeCount": 16,
+      "eligibleTerminalCount": 13,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:601",
+      "exactFaceId": "native-face:14.435696:2763",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-484f9eec97d0",
+        "rm-694-70a223eafba2",
+        "rm-694-70a5a7eafba5",
+        "rm-694-70d53beafbcd",
+        "rm-694-91e922e3a38d"
+      ],
+      "eligibleEdgeCount": 34,
+      "eligibleTerminalCount": 18,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:613",
+      "exactFaceId": "native-face:14.435696:2841",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-3eeb5906de65",
+        "rm-694-3eee6106de67",
+        "rm-694-3f0d5906de82",
+        "rm-694-3f13e106de87",
+        "rm-694-3f176906de8a",
+        "rm-694-3fa5e106df03",
+        "rm-694-3facd106df09"
+      ],
+      "eligibleEdgeCount": 14,
+      "eligibleTerminalCount": 10,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:616",
+      "exactFaceId": "native-face:14.435696:2848",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-01803a06bb62",
+        "rm-694-01a5ba06bb82",
+        "rm-694-3eff6106de76",
+        "rm-694-43988ffdc334",
+        "rm-694-439b95fdc336",
+        "rm-694-43c823fdc35c",
+        "rm-694-43cb29fdc35f"
+      ],
+      "eligibleEdgeCount": 41,
+      "eligibleTerminalCount": 29,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:617",
+      "exactFaceId": "native-face:14.435696:2849",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-3fb6e106df12"],
+      "eligibleEdgeCount": 6,
+      "eligibleTerminalCount": 5,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:622",
+      "exactFaceId": "native-face:14.435696:2866",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-fa5a0906b7c3", "rm-694-fa64a106b7cd"],
+      "eligibleEdgeCount": 16,
+      "eligibleTerminalCount": 12,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:631",
+      "exactFaceId": "native-face:14.435696:2881",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-634bc404f221",
+        "rm-694-6f4aa3eafa7e",
+        "rm-694-91df31e3a385",
+        "rm-694-91eca9e3a390",
+        "rm-694-91f3b5e3a397",
+        "rm-694-91f6b9e3a399",
+        "rm-694-9bfad9e3a9a7",
+        "rm-694-9c054be3a9b0",
+        "rm-694-a3a573e3adb7",
+        "rm-694-a3a8f7e3adba",
+        "rm-694-a3ac7fe3adbd",
+        "rm-694-a3b003e3adc0",
+        "rm-694-bd3202e3bc10",
+        "rm-694-bd3586e3bc13",
+        "rm-694-bd3bf2e3bc18",
+        "rm-694-c74dabe3c232",
+        "rm-694-c7512fe3c235"
+      ],
+      "eligibleEdgeCount": 15,
+      "eligibleTerminalCount": 16,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:647",
+      "exactFaceId": "native-face:14.435696:2930",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-d302635a3d75",
+        "rm-694-d308ec5a3d7b",
+        "rm-694-d30c735a3d7e",
+        "rm-694-d30ff45a3d81",
+        "rm-694-d3135e5a3d84",
+        "rm-694-d319e65a3d89",
+        "rm-694-d3ac6f5a3e06",
+        "rm-694-e1f7de51288d",
+        "rm-694-e208de51289b",
+        "rm-694-ec366a5a4b83",
+        "rm-694-ec396e5a4b85",
+        "rm-694-ec3cde5a4b88"
+      ],
+      "eligibleEdgeCount": 97,
+      "eligibleTerminalCount": 66,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:651",
+      "exactFaceId": "native-face:14.435696:2950",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-7ecf02632b2a"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:655",
+      "exactFaceId": "native-face:14.435696:2972",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-1a939d8c895c",
+        "rm-694-1ab59d8c8979",
+        "rm-694-1ae52d8c89a2",
+        "rm-694-1ae8378c89a4",
+        "rm-694-54c346297935",
+        "rm-694-54c64c297937",
+        "rm-694-54d0ce297940",
+        "rm-694-54d3d4297942",
+        "rm-694-54d74a297945",
+        "rm-694-54dad0297949",
+        "rm-694-5d2f75297de9",
+        "rm-694-5d32fb297dec",
+        "rm-694-5d35f1297dee",
+        "rm-694-5d3977297df1",
+        "rm-694-5d3cfd297df4",
+        "rm-694-5dfe73297e98",
+        "rm-694-5e01f9297e9b",
+        "rm-694-6412a117d7ca",
+        "rm-694-64209917d7d6",
+        "rm-694-64272517d7db",
+        "rm-694-642e2117d7e1",
+        "rm-694-6431a517d7e4",
+        "rm-694-64382117d7ea",
+        "rm-694-a61f68a36e1a",
+        "rm-694-ae4c939d8f9e",
+        "rm-694-ae5aab9d8faa",
+        "rm-694-ae61739d8fb0",
+        "rm-694-ae645d9d8fb2",
+        "rm-694-b5dfde9d939a",
+        "rm-694-b5ecf69d93a4",
+        "rm-694-b5f0dc9d93a8",
+        "rm-694-b78b969d9505",
+        "rm-694-ecf634619eae"
+      ],
+      "eligibleEdgeCount": 182,
+      "eligibleTerminalCount": 95,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:671",
+      "exactFaceId": "native-face:14.435696:3010",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-3b4b5cfee0de",
+        "rm-694-3b4edcfee0e1",
+        "rm-694-3b51e4fee0e4",
+        "rm-694-3b556cfee0e7",
+        "rm-694-3b58f4fee0ea",
+        "rm-694-3b5c74fee0ed",
+        "rm-694-3b5fdcfee0f0",
+        "rm-694-3b62e4fee0f2",
+        "rm-694-3b7e74fee10a",
+        "rm-694-44498dfee60e"
+      ],
+      "eligibleEdgeCount": 13,
+      "eligibleTerminalCount": 11,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:702",
+      "exactFaceId": "native-face:14.435696:3134",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["walkway:10:694:1498827:1", "walkway:10:694:1498827:11"],
+      "eligibleEdgeCount": 7,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:724",
+      "exactFaceId": "native-face:14.435696:3258",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-7cb2ae717e05",
+        "rm-694-7cf63e717e3e",
+        "rm-694-7cf9ae717e41",
+        "rm-694-7d073e717e4c"
+      ],
+      "eligibleEdgeCount": 11,
+      "eligibleTerminalCount": 10,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:729",
+      "exactFaceId": "native-face:14.435696:3290",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-e3da0c414247",
+        "rm-694-e3ff8d414267",
+        "rm-694-e4248d414287",
+        "rm-694-e4280d41428a",
+        "rm-694-eb40c641461d",
+        "rm-694-eb4ab6414626",
+        "rm-694-f43edf414b4d",
+        "rm-694-f45a6f414b65",
+        "rm-694-f4645f414b6d"
+      ],
+      "eligibleEdgeCount": 74,
+      "eligibleTerminalCount": 51,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:739",
+      "exactFaceId": "native-face:14.435696:3379",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-07b485afc4b1",
+        "rm-694-24c7c7638991",
+        "rm-694-985fc56bc655",
+        "rm-694-e774946366a3",
+        "rm-694-e79a146366c3",
+        "rm-694-e7a4286366cb",
+        "rm-694-e7a7ac6366ce"
+      ],
+      "eligibleEdgeCount": 93,
+      "eligibleTerminalCount": 59,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:745",
+      "exactFaceId": "native-face:14.435696:3385",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-e7a0a06366c8"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:14.435696:748",
+      "exactFaceId": "native-face:14.435696:3391",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-e686b06365d8"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:796",
+      "exactFaceId": "native-face:24.278215:3602",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-0f6e59c1a3f5",
+        "rm-400176-33ce8b748889",
+        "rm-400176-409ef8ec17e6",
+        "rm-400176-40a286ec17ea",
+        "rm-400176-79e48add7818",
+        "rm-400176-79e80cdd781b",
+        "rm-400176-79eb92dd781e",
+        "rm-400176-79ef1cdd7821",
+        "rm-400176-79f222dd7823",
+        "rm-400176-79f90add7829",
+        "rm-400176-79fc94dd782c",
+        "rm-400176-81e435dd7c6f",
+        "rm-400176-81f1cddd7c7b",
+        "rm-400176-81f533dd7c7e",
+        "rm-400176-81f8bddd7c81",
+        "rm-400176-bae50c707dac",
+        "rm-400176-bae882707daf",
+        "rm-400176-bb0708707dc9",
+        "rm-400176-cc0c3f8e8424"
+      ],
+      "eligibleEdgeCount": 69,
+      "eligibleTerminalCount": 49,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:801",
+      "exactFaceId": "native-face:24.278215:3629",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-408e02ec17d8",
+        "rm-400176-409188ec17db",
+        "rm-400176-b24e426325b2"
+      ],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:816",
+      "exactFaceId": "native-face:24.278215:3760",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-a4b94b10b2f8"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:819",
+      "exactFaceId": "native-face:24.278215:3782",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-3da2a3708b41",
+        "rm-400176-3da621708b44",
+        "rm-400176-44814c708ea3",
+        "rm-400176-4487d8708ea8",
+        "rm-400176-458a48708f84",
+        "rm-400176-458dce708f87",
+        "rm-400176-45914c708f8a",
+        "rm-400176-45945a708f8c",
+        "rm-400176-459ecc708f95",
+        "rm-400176-45b9dc708fac",
+        "rm-400176-45bd5a708faf",
+        "rm-400176-4e96717094c0",
+        "rm-400176-4e99f77094c3",
+        "rm-400176-4eb8857094dd",
+        "rm-400176-4ee801709505",
+        "rm-400176-4ef1f370950d",
+        "rm-400176-4ef8f7709513",
+        "rm-400176-4eff83709519",
+        "rm-400176-561f2a7098b2",
+        "rm-400176-5e76d5709d55",
+        "rm-400176-5e7dc1709d5b",
+        "rm-400176-5e8147709d5e",
+        "rm-400176-5e844d709d60",
+        "rm-400176-5f1349709dda",
+        "rm-400176-5f16cf709ddd",
+        "rm-400176-5f19d5709ddf",
+        "rm-400176-5f1d5b709de2",
+        "rm-400176-5f20c1709de5",
+        "rm-400176-5f2447709de8",
+        "rm-400176-5f27cd709deb",
+        "rm-400176-5f2ad3709dee",
+        "rm-400176-7fc3c541796f",
+        "rm-400176-94c3a92ce8a9",
+        "rm-400176-9c2fe270c099",
+        "rm-400176-9c336870c09d",
+        "rm-400176-9c3d7270c0a5",
+        "rm-400176-9c40f870c0a8",
+        "rm-400176-9c47e470c0ae",
+        "rm-400176-f2c59b797e70"
+      ],
+      "eligibleEdgeCount": 75,
+      "eligibleTerminalCount": 56,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:826",
+      "exactFaceId": "native-face:24.278215:3813",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-21857a17a696",
+        "rm-400176-2188e217a698",
+        "rm-400176-dd463417803a",
+        "rm-400176-dd49b817803d",
+        "rm-400176-dd50a4178043",
+        "rm-400176-dd5424178046",
+        "rm-400176-dd5728178048",
+        "rm-400176-e64ec1178573",
+        "rm-400176-e652a9178576",
+        "rm-400176-e6597517857c",
+        "rm-400176-e65c5917857e",
+        "rm-400176-e65fc1178581",
+        "rm-400176-e663a5178585",
+        "rm-400176-e6668d178587",
+        "rm-400176-e699851785b2",
+        "rm-400176-e69d6d1785b6",
+        "rm-400176-fd5448070a66"
+      ],
+      "eligibleEdgeCount": 57,
+      "eligibleTerminalCount": 40,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:838",
+      "exactFaceId": "native-face:24.278215:3853",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-24531e7aeb10",
+        "rm-400176-2456a17aeb13",
+        "rm-400176-245d3d7aeb19"
+      ],
+      "eligibleEdgeCount": 17,
+      "eligibleTerminalCount": 11,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:852",
+      "exactFaceId": "native-face:24.278215:3904",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-0342cc83f580",
+        "rm-400176-0353c683f58e",
+        "rm-400176-035a9683f594",
+        "rm-400176-045fc483f671",
+        "rm-400176-04668c83f677",
+        "rm-400176-046a7683f67b",
+        "rm-400176-0470be83f680",
+        "rm-400176-0d6bcd83fbad",
+        "rm-400176-c45c487227b6",
+        "rm-400176-c45fcc7227b9",
+        "rm-400176-c46d447227c4",
+        "rm-400176-c5f7cc722914"
+      ],
+      "eligibleEdgeCount": 79,
+      "eligibleTerminalCount": 53,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:883",
+      "exactFaceId": "native-face:24.278215:3980",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-4671ea1dd0fd",
+        "rm-400176-4b8fe81c20b5",
+        "rm-400176-4ba0e61c20c4",
+        "rm-400176-4ba3c41c20c6",
+        "rm-400176-4c2f211c213c",
+        "rm-400176-4c3d391c2149",
+        "rm-400176-4c40191c214b",
+        "rm-400176-4c46e91c2150",
+        "rm-400176-4c51191c2159",
+        "rm-400176-4c55011c215d",
+        "rm-400176-ae535b9d8fa3",
+        "rm-400176-b9e01d7b63c6",
+        "rm-400176-b9e71c7b63cd",
+        "rm-400176-b9ea8e7b63d0",
+        "rm-400176-b9f49c7b63d8",
+        "rm-400176-e290e4852927",
+        "rm-400176-f91a4f2d9cb3"
+      ],
+      "eligibleEdgeCount": 79,
+      "eligibleTerminalCount": 50,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:887",
+      "exactFaceId": "native-face:24.278215:3986",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-957c01fd2089",
+        "rm-400176-957ee7fd208b",
+        "rm-400176-958fe5fd2099",
+        "rm-400176-959343fd209c"
+      ],
+      "eligibleEdgeCount": 12,
+      "eligibleTerminalCount": 9,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:911",
+      "exactFaceId": "native-face:24.278215:4086",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "walkway:10:400176:2183541:1",
+        "walkway:10:400176:2183541:7"
+      ],
+      "eligibleEdgeCount": 8,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:956",
+      "exactFaceId": "native-face:24.278215:4246",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": [
+        "rm-400176-072911afc43a",
+        "rm-400176-0904d5f8f1a0",
+        "rm-400176-8520f28ccbd8",
+        "rm-400176-8527de8ccbde",
+        "rm-400176-8e26178cd10e",
+        "rm-400176-8e299d8cd111",
+        "rm-400176-8e2d1b8cd114",
+        "rm-400176-8e30898cd117",
+        "rm-400176-8e3a9b8cd11f",
+        "rm-400176-8e3e198cd122",
+        "rm-400176-8f197dc4bc66",
+        "rm-400176-8f350dc4bc7e",
+        "rm-400176-9683a6c4c03f",
+        "rm-400176-969baec4c053",
+        "rm-400176-9768c08cd678",
+        "rm-400176-976f448cd67d",
+        "rm-400176-9772b28cd680",
+        "rm-400176-9776308cd683",
+        "rm-400176-9779b68cd686",
+        "rm-400176-9780428cd68c"
+      ],
+      "eligibleEdgeCount": 108,
+      "eligibleTerminalCount": 73,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:958",
+      "exactFaceId": "native-face:24.278215:4248",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-851d748ccbd5"],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:24.278215:961",
+      "exactFaceId": "native-face:24.278215:4253",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-8d2a9b8cd038"],
+      "eligibleEdgeCount": 3,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:29.855643:986",
+      "exactFaceId": "native-face:29.855643:4354",
+      "elevationFeet": 29.855643044619423,
+      "levelIds": [1487353],
+      "roomKeys": ["rm-1487353-c75375ebb3cc"],
+      "eligibleEdgeCount": 1,
+      "eligibleTerminalCount": 2,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:29.855643:988",
+      "exactFaceId": "native-face:29.855643:4357",
+      "elevationFeet": 29.855643044619423,
+      "levelIds": [1487353],
+      "roomKeys": [
+        "rm-1487353-6e5cbce7fec2",
+        "rm-1487353-c767f9ebb3de",
+        "rm-1487353-c771fbebb3e6",
+        "rm-1487353-c8d3e4ebb513"
+      ],
+      "eligibleEdgeCount": 20,
+      "eligibleTerminalCount": 14,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:29.855643:994",
+      "exactFaceId": "native-face:29.855643:4392",
+      "elevationFeet": 29.855643044619423,
+      "levelIds": [1487353],
+      "roomKeys": [
+        "rm-1487353-4d6acad786b9",
+        "rm-1487353-4e14d2d7874a",
+        "rm-1487353-4e25d4d78758",
+        "rm-1487353-4e295ad7875b",
+        "rm-1487353-c8cc98ebb50c",
+        "rm-1487353-c8d07cebb510"
+      ],
+      "eligibleEdgeCount": 35,
+      "eligibleTerminalCount": 24,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:29.855643:1006",
+      "exactFaceId": "native-face:29.855643:4444",
+      "elevationFeet": 29.855643044619423,
+      "levelIds": [1487353],
+      "roomKeys": ["rm-1487353-4d7862d786c5", "rm-1487353-4d82d4d786ce"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1009",
+      "exactFaceId": "native-face:34.120735:4463",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-03844688998a",
+        "rm-402367-039546889998",
+        "rm-402367-04a526889a7f",
+        "rm-402367-04a90e889a83",
+        "rm-402367-133b24ba6565",
+        "rm-402367-442aa2d548ef",
+        "rm-402367-6f10b6325a76",
+        "rm-402367-9777dc917a58",
+        "rm-402367-977b4c917a5b",
+        "rm-402367-977e4c917a5d",
+        "rm-402367-9788dc917a66",
+        "rm-402367-da8f18764721",
+        "rm-402367-dba21876480a"
+      ],
+      "eligibleEdgeCount": 55,
+      "eligibleTerminalCount": 41,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1028",
+      "exactFaceId": "native-face:34.120735:4585",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-442e8ad548f3"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1039",
+      "exactFaceId": "native-face:34.120735:4684",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-06c17688ef7f",
+        "rm-402367-06c45288ef81",
+        "rm-402367-06cb2688ef87",
+        "rm-402367-06ce8688ef8a",
+        "rm-402367-06d93688ef93",
+        "rm-402367-08527288f0d4",
+        "rm-402367-08555688f0d6",
+        "rm-402367-085c2288f0dc",
+        "rm-402367-1661b44ff51e",
+        "rm-402367-1664b44ff520",
+        "rm-402367-1668404ff523",
+        "rm-402367-19a18388faa0",
+        "rm-402367-1a173e806e36",
+        "rm-402367-1a1acc806e39",
+        "rm-402367-1a2bc8806e47",
+        "rm-402367-1a2f4a806e4a",
+        "rm-402367-1a3cc0806e56",
+        "rm-402367-1fc26d4ffaa1",
+        "rm-402367-1fc9594ffaa7",
+        "rm-402367-321065890806",
+        "rm-402367-321b0c890810",
+        "rm-402367-321dee890812",
+        "rm-402367-323256890823",
+        "rm-402367-7b0c418257c7",
+        "rm-402367-7b16518257cf",
+        "rm-402367-7b1cd18257d4",
+        "rm-402367-7b20418257d7",
+        "rm-402367-cc3a6067bdfc",
+        "rm-402367-cc413067be02",
+        "rm-402367-cc4b6067be0b",
+        "rm-402367-cc4e4867be0d",
+        "rm-402367-d4b44967c2bc",
+        "rm-402367-da1e04828d90",
+        "rm-402367-da2184828d93",
+        "rm-402367-da2494828d95",
+        "rm-402367-da2814828d99",
+        "rm-402367-da2b94828d9c",
+        "rm-402367-ed5ffd80547c",
+        "rm-402367-ed630380547f",
+        "rm-402367-ed6d75805488",
+        "rm-402367-ed70fb80548b",
+        "rm-402367-ed740580548d",
+        "rm-402367-eec7fd8055ae",
+        "rm-402367-eee6738055c8"
+      ],
+      "eligibleEdgeCount": 73,
+      "eligibleTerminalCount": 60,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1049",
+      "exactFaceId": "native-face:34.120735:4713",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-1f1e120e87d5",
+        "rm-402367-1f21180e87d7",
+        "rm-402367-1f249e0e87da",
+        "rm-402367-1f28040e87dd",
+        "rm-402367-22410ce4ecbc",
+        "rm-402367-6b37460d003c",
+        "rm-402367-7220610d03a7",
+        "rm-402367-72bc5d0d042b",
+        "rm-402367-8373700d0d77"
+      ],
+      "eligibleEdgeCount": 75,
+      "eligibleTerminalCount": 47,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1073",
+      "exactFaceId": "native-face:34.120735:4788",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-41e937cad92b",
+        "rm-402367-5c827acae869",
+        "rm-402367-5c8caacae872",
+        "rm-402367-ad63b2d433c2",
+        "rm-402367-ad6b02d433c9",
+        "rm-402367-ad6de2d433cb",
+        "rm-402367-ad71cad433cf",
+        "rm-402367-b48013d43759",
+        "rm-402367-b482f3d4375b",
+        "rm-402367-b486dbd4375f",
+        "rm-402367-b4910bd43768",
+        "rm-402367-b493f3d4376a",
+        "rm-402367-b497dbd4376e"
+      ],
+      "eligibleEdgeCount": 80,
+      "eligibleTerminalCount": 57,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1104",
+      "exactFaceId": "native-face:34.120735:4877",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-69baf50cfef9",
+        "rm-402367-69bdd50cfefb",
+        "rm-402367-69c1390cfefe",
+        "rm-402367-69c5290cff02",
+        "rm-402367-69cbc20cff07"
+      ],
+      "eligibleEdgeCount": 16,
+      "eligibleTerminalCount": 12,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1110",
+      "exactFaceId": "native-face:34.120735:4892",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-e869565e095e"],
+      "eligibleEdgeCount": 5,
+      "eligibleTerminalCount": 5,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1114",
+      "exactFaceId": "native-face:34.120735:4911",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-e870225e0964"],
+      "eligibleEdgeCount": 11,
+      "eligibleTerminalCount": 8,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1119",
+      "exactFaceId": "native-face:34.120735:4924",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-e840165e093b",
+        "rm-402367-e85b465e0952",
+        "rm-402367-e85f225e0955",
+        "rm-402367-e87a525e096d",
+        "rm-402367-f2b16b5e0fa6"
+      ],
+      "eligibleEdgeCount": 10,
+      "eligibleTerminalCount": 10,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1130",
+      "exactFaceId": "native-face:34.120735:4965",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-5e5131c03aa8",
+        "rm-402367-5e540fc03aaa",
+        "rm-402367-5e5e41c03ab3",
+        "rm-402367-5e622fc03ab7",
+        "rm-402367-5e6511c03ab9",
+        "rm-402367-67f90ac04068",
+        "rm-402367-67fc78c0406b",
+        "rm-402367-680a08c04076",
+        "rm-402367-680d6ac04079",
+        "rm-402367-e10ced5e0591",
+        "rm-402367-e10fcd5e0593",
+        "rm-402367-e11ded5e05a0",
+        "rm-402367-e120c95e05a2",
+        "rm-402367-e82f165e092c",
+        "rm-402367-f2a73b5e0f9e",
+        "rm-402367-f2ae0f5e0fa4"
+      ],
+      "eligibleEdgeCount": 39,
+      "eligibleTerminalCount": 30,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1133",
+      "exactFaceId": "native-face:34.120735:4985",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-21d39ed0cbd2",
+        "rm-402367-2c07d5d0d20a",
+        "rm-402367-2c0e15d0d20f",
+        "rm-402367-2c1207d0d213"
+      ],
+      "eligibleEdgeCount": 19,
+      "eligibleTerminalCount": 14,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1139",
+      "exactFaceId": "native-face:34.120735:5018",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-5c894acae86f"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1157",
+      "exactFaceId": "native-face:34.120735:5184",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": [
+        "rm-402367-072205afc434",
+        "rm-402367-1788a6ec624c",
+        "rm-402367-1912beec639b",
+        "rm-402367-209455ec6787",
+        "rm-402367-2097d2ec678a",
+        "rm-402367-20a8d2ec6798",
+        "rm-402367-644f9175053f",
+        "rm-402367-64d41b7505af",
+        "rm-402367-64d7917505b2"
+      ],
+      "eligibleEdgeCount": 101,
+      "eligibleTerminalCount": 65,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1163",
+      "exactFaceId": "native-face:34.120735:5190",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-179caaec625d"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    },
+    {
+      "cellId": "native-cell:34.120735:1166",
+      "exactFaceId": "native-face:34.120735:5196",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-179944ec625a"],
+      "eligibleEdgeCount": 2,
+      "eligibleTerminalCount": 3,
+      "status": "NOT_COMPILED_BY_SOURCE_INVENTORY"
+    }
+  ],
+  "nativeLevels": [
+    {
+      "nativeLevelId": 2295121,
+      "sourceName": "Floor 0",
+      "elevationFeet": -7.217847769028872,
+      "nativeFloorElementIds": [2295333],
+      "nativeStairElementIds": [2296425],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 8,
+      "targetCells": 1,
+      "eligibleWalkingEdges": 8,
+      "eligibleTerminalNodes": 8,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1450417,
+      "sourceName": "Floor 0.5",
+      "elevationFeet": -3.2808398950131235,
+      "nativeFloorElementIds": [1454817, 1521516, 2071957, 2081596],
+      "nativeStairElementIds": [
+        1523099, 1644499, 1972504, 1976619, 2072647, 2075088, 2082097, 2082669,
+        2082742
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 60,
+      "targetCells": 10,
+      "eligibleWalkingEdges": 125,
+      "eligibleTerminalNodes": 97,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 311,
+      "sourceName": "Floor 1",
+      "elevationFeet": 0,
+      "nativeFloorElementIds": [
+        400238, 423406, 444577, 447970, 1593239, 1950094
+      ],
+      "nativeStairElementIds": [
+        1270216, 1271877, 1277881, 1279833, 1280525, 1293690, 1303394, 1305141,
+        1372994, 1460777, 1588220, 1620957, 1644499, 1693246, 1801478, 1808228,
+        1821194, 1842431, 1949419, 2156084, 2439748
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 308,
+      "targetCells": 20,
+      "eligibleWalkingEdges": 606,
+      "eligibleTerminalNodes": 393,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1487816,
+      "sourceName": "Floor 1.25",
+      "elevationFeet": 3.2808398950131235,
+      "nativeFloorElementIds": [
+        1500982, 1501009, 1501037, 1514723, 1582103, 2484309
+      ],
+      "nativeStairElementIds": [
+        1515631, 1949419, 1982431, 2024027, 2140032, 2190850, 2193325, 2193529,
+        2296425, 2474568
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 144,
+      "targetCells": 16,
+      "eligibleWalkingEdges": 299,
+      "eligibleTerminalNodes": 216,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1425915,
+      "sourceName": "Floor 1.5",
+      "elevationFeet": 9.84251968503937,
+      "nativeFloorElementIds": [
+        1426532, 1726620, 1759381, 1773943, 1840413, 1980767
+      ],
+      "nativeStairElementIds": [
+        1270216, 1279833, 1280525, 1429108, 1470884, 1515631, 1727059, 1728649,
+        1842431, 1844188, 1858181, 1861765, 1976619, 1979157, 2045315
+      ],
+      "annotationLevel": false,
+      "compiledPhysicalCells": 0,
+      "targetCells": 0,
+      "eligibleWalkingEdges": 0,
+      "eligibleTerminalNodes": 0,
+      "coverageStatus": "NO_CURRENT_CELLS_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "nativeLevelId": 694,
+      "sourceName": "Floor 2",
+      "elevationFeet": 14.435695538057743,
+      "nativeFloorElementIds": [
+        400479, 427511, 490040, 503705, 1327372, 1468016, 1498750, 1498765,
+        1498827, 1513098, 1521608
+      ],
+      "nativeStairElementIds": [
+        1277881, 1293690, 1298202, 1303394, 1307177, 1372994, 1429108, 1500191,
+        1500252, 1500324, 1515631, 1523099, 1638837, 1689936, 1693246, 1717000,
+        1779326, 1779403, 1779473, 1779620, 1858181, 1861765, 1903824, 1972504,
+        1979157, 1982431, 1988738, 2024027, 2045315, 2046769, 2047572, 2140032,
+        2156084, 2160665, 2190850, 2193325, 2193439, 2193529, 2349441, 2354630,
+        2439748, 2474568
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 275,
+      "targetCells": 30,
+      "eligibleWalkingEdges": 782,
+      "eligibleTerminalNodes": 538,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1466293,
+      "sourceName": "Floor 2.5",
+      "elevationFeet": 19.35695538057743,
+      "nativeFloorElementIds": [],
+      "nativeStairElementIds": [],
+      "annotationLevel": false,
+      "compiledPhysicalCells": 0,
+      "targetCells": 0,
+      "eligibleWalkingEdges": 0,
+      "eligibleTerminalNodes": 0,
+      "coverageStatus": "NO_CURRENT_CELLS_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "nativeLevelId": 400176,
+      "sourceName": "Floor 3",
+      "elevationFeet": 24.278215223097114,
+      "nativeFloorElementIds": [
+        402395, 437656, 511340, 1279070, 1473216, 1474096, 1496653, 1496668,
+        1505065, 1521899, 2183541
+      ],
+      "nativeStairElementIds": [
+        1295966, 1298202, 1307578, 1496322, 1498360, 1498457, 1498493, 1500191,
+        1500252, 1500288, 1500324, 1514126, 1638837, 1689936, 1696006, 1903824,
+        1988738, 2046769, 2047572, 2160665, 2161350, 2193439, 2349441, 2354630
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 188,
+      "targetCells": 13,
+      "eligibleWalkingEdges": 514,
+      "eligibleTerminalNodes": 360,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1487353,
+      "sourceName": "Floor 3.5",
+      "elevationFeet": 29.855643044619423,
+      "nativeFloorElementIds": [1779842],
+      "nativeStairElementIds": [1295966, 1779326, 1779403, 1779495, 1779620],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 24,
+      "targetCells": 4,
+      "eligibleWalkingEdges": 58,
+      "eligibleTerminalNodes": 43,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 402367,
+      "sourceName": "Floor 4",
+      "elevationFeet": 34.120734908136484,
+      "nativeFloorElementIds": [
+        405772, 501699, 515291, 1495537, 1495596, 1503517, 2183935
+      ],
+      "nativeStairElementIds": [
+        1295966, 1496322, 1496383, 1498360, 1498457, 1498493, 1500288, 1506328,
+        1514126, 1696006, 2161350, 2162706
+      ],
+      "annotationLevel": true,
+      "compiledPhysicalCells": 181,
+      "targetCells": 15,
+      "eligibleWalkingEdges": 492,
+      "eligibleTerminalNodes": 361,
+      "coverageStatus": "CURRENT_TARGETS"
+    },
+    {
+      "nativeLevelId": 1399969,
+      "sourceName": "Floor 4.5",
+      "elevationFeet": 40.026246719160106,
+      "nativeFloorElementIds": [1718155],
+      "nativeStairElementIds": [1506328, 1717000],
+      "annotationLevel": false,
+      "compiledPhysicalCells": 0,
+      "targetCells": 0,
+      "eligibleWalkingEdges": 0,
+      "eligibleTerminalNodes": 0,
+      "coverageStatus": "NO_CURRENT_CELLS_REQUIRES_SOURCE_REVIEW"
+    },
+    {
+      "nativeLevelId": 407620,
+      "sourceName": "Floor 5",
+      "elevationFeet": 43.963254593175854,
+      "nativeFloorElementIds": [
+        407647, 502039, 530368, 1495187, 1495202, 1495236, 1502995
+      ],
+      "nativeStairElementIds": [1496383, 1506328, 2162706],
+      "annotationLevel": false,
+      "compiledPhysicalCells": 0,
+      "targetCells": 0,
+      "eligibleWalkingEdges": 0,
+      "eligibleTerminalNodes": 0,
+      "coverageStatus": "NO_CURRENT_CELLS_REQUIRES_SOURCE_REVIEW"
+    }
+  ],
+  "circulationCoverageReview": [
+    {
+      "cellId": "native-cell:-3.280840:9",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [311, 1450417],
+      "roomKeys": ["rm-311-80323c0942ec"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-80323c0942ec",
+          "number": "07-239",
+          "name": "Lounge"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:-3.280840:39",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-dbca0729f083"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1450417-dbca0729f083",
+          "number": "09-224",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:-3.280840:41",
+      "elevationFeet": -3.2808398950131235,
+      "levelIds": [1450417],
+      "roomKeys": ["rm-1450417-dbcd6929f085"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1450417-dbcd6929f085",
+          "number": "09-218",
+          "name": "Student Commons"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:111",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-89f2630948c0"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-89f2630948c0",
+          "number": "07-236A",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:114",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-df4c89e6b168"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-df4c89e6b168",
+          "number": "04-126",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:148",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-0850e3c8e4ce"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-0850e3c8e4ce",
+          "number": "07-203",
+          "name": "Unnamed area"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:160",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-0850e3c8e4ce"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-0850e3c8e4ce",
+          "number": "07-203",
+          "name": "Unnamed area"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:165",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-0850e3c8e4ce"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-0850e3c8e4ce",
+          "number": "07-203",
+          "name": "Unnamed area"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:166",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-0850e3c8e4ce"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-0850e3c8e4ce",
+          "number": "07-203",
+          "name": "Unnamed area"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:290",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": [
+        "rm-311-3f6fcd792626",
+        "rm-311-47e9b7792ae6",
+        "rm-311-47f103792aec"
+      ],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-47f103792aec",
+          "number": "07-304",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 9,
+      "candidateEligibility": "ENDPOINT_OWNER_PREDICATE_NOT_MET",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:299",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-3f5ed3792618"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-3f5ed3792618",
+          "number": "07-309",
+          "name": "Vestibule"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:320",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-44abfe297071"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-44abfe297071",
+          "number": "05-134",
+          "name": "Open Area"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:330",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-4168ef4a7ea0"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-4168ef4a7ea0",
+          "number": "05-140C",
+          "name": "Computer Lab"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:334",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-38b5a830435d"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-38b5a830435d",
+          "number": "05-188",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:335",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-38b5a830435d"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-38b5a830435d",
+          "number": "05-188",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:336",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-38b5a830435d"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-38b5a830435d",
+          "number": "05-188",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:340",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-ce76b13ffde1"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-ce76b13ffde1",
+          "number": "05-168A",
+          "name": "Waiting"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:0.000000:371",
+      "elevationFeet": 0,
+      "levelIds": [311],
+      "roomKeys": ["rm-311-3fa50c3046cd"],
+      "circulationIdentities": [
+        {
+          "key": "rm-311-3fa50c3046cd",
+          "number": "05-182",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:472",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-38e6d6497680"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-38e6d6497680",
+          "number": "10-1312",
+          "name": "Atrium"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:473",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-38e6d6497680"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-38e6d6497680",
+          "number": "10-1312",
+          "name": "Atrium"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:474",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-5550ce486504"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-5550ce486504",
+          "number": "10-1300",
+          "name": "Vestibule"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:478",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-38e6d6497680"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-38e6d6497680",
+          "number": "10-1312",
+          "name": "Atrium"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:479",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-38e6d6497680"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-38e6d6497680",
+          "number": "10-1312",
+          "name": "Atrium"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:3.280840:480",
+      "elevationFeet": 3.2808398950131235,
+      "levelIds": [1487816],
+      "roomKeys": ["rm-1487816-38e6d6497680"],
+      "circulationIdentities": [
+        {
+          "key": "rm-1487816-38e6d6497680",
+          "number": "10-1312",
+          "name": "Atrium"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:533",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-240576583727"],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-240576583727",
+          "number": "06-215",
+          "name": "Vestibule"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:579",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-3399eaf6e0a1"],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-3399eaf6e0a1",
+          "number": "04-237",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:588",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-2b971ef6dc47"],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-2b971ef6dc47",
+          "number": "04-204",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:623",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": [
+        "rm-694-474583e52c63",
+        "rm-694-50479be53197",
+        "rm-694-504b25e5319a",
+        "rm-694-504e2be5319c",
+        "rm-694-5051ade5319f",
+        "rm-694-50f1ace53228",
+        "rm-694-50f834e5322d",
+        "rm-694-50fb9ce53230",
+        "rm-694-50ff23e53233",
+        "rm-694-5102a5e53236",
+        "rm-694-510935e5323b",
+        "rm-694-ad5824e3b380",
+        "rm-694-ad5ba4e3b383"
+      ],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-5051ade5319f",
+          "number": "03-1041",
+          "name": "Hallway"
+        }
+      ],
+      "originalEnabledWalkingEdges": 37,
+      "candidateEligibility": "ENDPOINT_OWNER_PREDICATE_NOT_MET",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:703",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["walkway:10:694:1498827:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:694:1498827:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:705",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["walkway:10:694:1498827:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:694:1498827:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:707",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["walkway:10:694:1498827:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:694:1498827:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:720",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-a61f68a36e1a"],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-a61f68a36e1a",
+          "number": "05-236",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:721",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["walkway:10:694:1498827:11"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:694:1498827:11",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:14.435696:787",
+      "elevationFeet": 14.435695538057743,
+      "levelIds": [694],
+      "roomKeys": ["rm-694-f45a6f414b65"],
+      "circulationIdentities": [
+        {
+          "key": "rm-694-f45a6f414b65",
+          "number": "09-317",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:912",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["walkway:10:400176:2183541:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:400176:2183541:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:913",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["walkway:10:400176:2183541:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:400176:2183541:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:915",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c55011c215d"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c55011c215d",
+          "number": "05-343",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:916",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:917",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:918",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:919",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:920",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:921",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:922",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:923",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:924",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:925",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:926",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:927",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:928",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:929",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:930",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:931",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:933",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["walkway:10:400176:2183541:1"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:400176:2183541:1",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:938",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:942",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-b9e01d7b63c6"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-b9e01d7b63c6",
+          "number": "05-320",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:943",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["walkway:10:400176:2183541:7"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:400176:2183541:7",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:945",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:946",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["walkway:10:400176:2183541:7"],
+      "circulationIdentities": [
+        {
+          "key": "walkway:10:400176:2183541:7",
+          "number": "",
+          "name": "Atrium crosswalk"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:24.278215:950",
+      "elevationFeet": 24.278215223097114,
+      "levelIds": [400176],
+      "roomKeys": ["rm-400176-4c40191c214b"],
+      "circulationIdentities": [
+        {
+          "key": "rm-400176-4c40191c214b",
+          "number": "05-339",
+          "name": "Study Carrels"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    },
+    {
+      "cellId": "native-cell:34.120735:1148",
+      "elevationFeet": 34.120734908136484,
+      "levelIds": [402367],
+      "roomKeys": ["rm-402367-2c1207d0d213"],
+      "circulationIdentities": [
+        {
+          "key": "rm-402367-2c1207d0d213",
+          "number": "10-4304",
+          "name": "Corridor"
+        }
+      ],
+      "originalEnabledWalkingEdges": 0,
+      "candidateEligibility": "NO_ORIGINAL_WALKING_EDGE_IN_CELL",
+      "disposition": "REQUIRES_SOURCE_REVIEW",
+      "permissionChanged": false
+    }
+  ],
+  "exactSupportEvidence": {
+    "encodedFaces": "Every current physical cell references a face encoded in the checksummed source exactTopology descriptor.",
+    "independentSupportedFaces": "Not present as a saved sidecar in this archive. Current nativeCirculationExactCellParts recomputes original floor/envelope/material support before guide qualification.",
+    "historicSupportedCache": "The replacement pathway ZIP does not recover the original independently supported-face cache or raw attachment diagnostic programs. Its historical all-faces-supported result is not newly replayed by this inventory."
+  },
+  "sourceAssetsVerified": {
+    "rvt": {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "model",
+      "path": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "bytes": 70336512,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "status": "PASS"
+    },
+    "scene": {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "scene",
+      "path": "model/scene.glb",
+      "bytes": 52216228,
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+      "status": "PASS"
+    },
+    "rooms": {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "floors",
+      "path": "floors/rooms.json",
+      "bytes": 82337070,
+      "sha256": "5291e1148cc27130b9239b6de26b2f7623c308f227f5dfc2b3e64b17f55e593c",
+      "status": "PASS"
+    },
+    "gis": {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "georeference",
+      "path": "gis/reference-points.json",
+      "bytes": 602,
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+      "status": "PASS"
+    },
+    "authoringReviewBundle": {
+      "package": "UNBC.master.reviter.zip",
+      "descriptor": "reviewBundle",
+      "path": "review/companions.bin",
+      "bytes": 88626822,
+      "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+      "status": "PASS"
+    }
+  },
+  "notRecoveredOrNotAccepted": [
+    "Original pathway-implementation-evidence.zip, raw library attachment diagnostics and independent supported-face sidecar.",
+    "09d baseline visitor and its every-origin oracle directory.",
+    "stationary-alias-evidence.json and four final acceptance algorithm-binding files identified as missing in the October 22 handoff.",
+    "The separate 420947461-byte native-cache.json; it remains recoverable from pinned split files in docs/continuation/unbc-20261021/recompile/inputs.json but was not needed to inventory the compiled visitor.",
+    "Fresh candidate guide compilation, full normal source import/export, route/worker/cache acceptance, site/browser/offline/device acceptance are separate checks, not established by source recovery."
+  ],
+  "preservation": {
+    "canonicalMasterModified": false,
+    "sourceGraphModified": false,
+    "accessOrTransitionStatesModified": false,
+    "published": false
+  }
+}
