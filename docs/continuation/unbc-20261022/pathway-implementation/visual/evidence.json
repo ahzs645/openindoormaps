@@ -1,0 +1,163 @@
+{
+  "purpose": "Native visitor styling proof; separate from new shared-path route acceptance and publication qualification.",
+  "captureDateUtc": "2026-10-22",
+  "captureUrl": "http://127.0.0.1:42555/openindoormaps/#/projects/indoor?view=2d",
+  "source": {
+    "visitorZipName": "UNBC.campus-viewer.zip",
+    "visitorZipSha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e",
+    "preparedRoutingInstalled": false
+  },
+  "buildEpoch": {
+    "purpose": "native visitor paint-only browser proof, not new shared-path route acceptance",
+    "baseMain": "662f400aa347dc79133d11923bfd90a7d24ea5c0",
+    "sourceFilesSha256": "838a28b3e73f235850dc8f16c19db9b78361c59cb92c20cd45080eed8b8d2820",
+    "bundleFilesSha256": "cd289e893999c2ae19c4b197a5131267fb0b303d27263c37f7e71462654d954a",
+    "displayEngine": "6c6235a2f577d2541131a055feb874a22ea156e6fe97c0876a1226798b79d968",
+    "visitorZipSha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e",
+    "noPreparedRoutingInstalled": true,
+    "bundleFileCount": 106,
+    "sourceFileCount": 833
+  },
+  "rendererParityCheckedAgainstCommit": "0136c83d88500f98bbc394345b99683a39d430c1",
+  "rendererFiles": {
+    "app/indoor-project/visitor-map-style.ts": {
+      "sha256": "83753a5f9f4126703cc25f751cb238657d29c1198d535a9fd6ebe6d845698701",
+      "snapshotSha256": "83753a5f9f4126703cc25f751cb238657d29c1198d535a9fd6ebe6d845698701",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/map-layers.tsx": {
+      "sha256": "7a5734741e4e34b9fa9559e1b5790c2100685a39f0d2ae49a3abf58da4c28694",
+      "snapshotSha256": "7a5734741e4e34b9fa9559e1b5790c2100685a39f0d2ae49a3abf58da4c28694",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/native-explore-layer.tsx": {
+      "sha256": "0f01028540c60950f3eba7c7a2db68eb852c174446e872117a63d78d4cac4257",
+      "snapshotSha256": "0f01028540c60950f3eba7c7a2db68eb852c174446e872117a63d78d4cac4257",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/precision-surface-layer.ts": {
+      "sha256": "535f3dc3c5378cc49e2344cb336e0c43318465b382bd45cbfa2a139be2cb5eef",
+      "snapshotSha256": "535f3dc3c5378cc49e2344cb336e0c43318465b382bd45cbfa2a139be2cb5eef",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/precision-wall-layer.ts": {
+      "sha256": "649aed2d44d09f416a7486eaaf7207164e28f7407cb79a67da01649ea09dc395",
+      "snapshotSha256": "649aed2d44d09f416a7486eaaf7207164e28f7407cb79a67da01649ea09dc395",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/progressive-overview-layer.tsx": {
+      "sha256": "9878cc7ea6a249a149af419372a3366c37006bdcc0e2191468e37a1b27bae916",
+      "snapshotSha256": "9878cc7ea6a249a149af419372a3366c37006bdcc0e2191468e37a1b27bae916",
+      "matchesSnapshot": true
+    },
+    "app/indoor-project/published-visitor-plan-layer.tsx": {
+      "sha256": "9f6a909a5929bd05f28868b863c7b5de512de473a3c5aa9042a85c9c805b28c5",
+      "snapshotSha256": "9f6a909a5929bd05f28868b863c7b5de512de473a3c5aa9042a85c9c805b28c5",
+      "matchesSnapshot": true
+    }
+  },
+  "browser": "Chromium 154.0.8037.57, Debian GNU/Linux 13, headless, SwiftShader",
+  "normalImport": {
+    "result": "PASS",
+    "durationMs": 329616,
+    "method": "Normal file-input import of the unchanged recovered campus viewer; no validation cache or prepared routing installed."
+  },
+  "nativeCaptures": {
+    "desktop2d": {
+      "result": "PASS",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "renderedNativeFeatures": 2853
+    },
+    "mobile2d": {
+      "result": "PASS",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "renderedNativeFeatures": 855
+    },
+    "mobile3d": {
+      "result": "PASS",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "method": "Waited for floor-preparation to be hidden and map pitch above 40 degrees; manually inspected actual native room surfaces."
+    },
+    "selectedDestination": "Equipment Storage, 08-272, Building 08, Floor 2",
+    "checks": [
+      "Actual rendered native features present after floor preparation",
+      "Built-in neutral fill expression installed",
+      "Boundary width is scale-aware",
+      "Selected room and full place name visible",
+      "Route paint #087fb5 and white halo layer installed",
+      "No page/paint-expression errors",
+      "No horizontal overflow in desktop/mobile 2D checks"
+    ],
+    "errors": [],
+    "browserClosed": true
+  },
+  "limitations": [
+    "The screenshots use the isolated styling build, whose seven renderer files match the stated committed source. Other later compiler changes are outside this visual epoch.",
+    "The recovered visitor has no newly compiled preparedRouting and no route was requested. Route paint layer checks do not establish new shared-path route behavior.",
+    "Normal raw-package import and floor preparation timings do not qualify prepared publication startup or establish a performance improvement.",
+    "This is viewer/browser rendering evidence, not source-model enclosure certification."
+  ],
+  "screenshots": {
+    "desktop-native-overview.png": {
+      "sha256": "40d3ca7831f56c7e4237ac192465ce9f8b2766b8eb277b2deed42849018b5508",
+      "bytes": 215426,
+      "width": 1440,
+      "height": 1000
+    },
+    "desktop-native-selected.png": {
+      "sha256": "477a8f5dcb6e62ef803f646272a6441698246791de5850898b2b96fd3074f8a4",
+      "bytes": 165922,
+      "width": 1440,
+      "height": 1000
+    },
+    "mobile-native-2d.png": {
+      "sha256": "8bfb54f8621f2f3a41131f01b404b031cd1ee3ac346adc7cdb4df831018404f8",
+      "bytes": 68013,
+      "width": 390,
+      "height": 844
+    },
+    "mobile-native-3d.png": {
+      "sha256": "7effe5f4d8db4f2d074b421d89f459cad48a858125fa6ee60f5d497ae713ef43",
+      "bytes": 67681,
+      "width": 390,
+      "height": 844
+    }
+  },
+  "syntheticFixture": {
+    "result": "PASS",
+    "existingProofDirectory": "work/visual-proof",
+    "views": [
+      "desktop2d",
+      "desktopSelected",
+      "desktop3d",
+      "mobile2d",
+      "mobileSelected",
+      "mobile3d"
+    ],
+    "checks": [
+      "Native holes retained",
+      "Custom authored room color retained",
+      "No page/paint errors",
+      "No horizontal overflow"
+    ]
+  },
+  "regressionChecks": {
+    "scopedEslint": "PASS",
+    "existingUnitTests": {
+      "total": 33,
+      "passed": 33,
+      "failed": 0
+    },
+    "isolatedViteBuild": "PASS",
+    "rendererByteParity": "7/7 PASS"
+  }
+}

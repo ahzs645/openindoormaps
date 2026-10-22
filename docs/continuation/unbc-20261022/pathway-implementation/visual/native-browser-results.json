@@ -1,0 +1,89 @@
+{
+  "zip": "/workspace/scratch/task-source/compile-result/output/UNBC.campus-viewer.zip",
+  "source": "native visitor 8ad33533",
+  "normalImportMs": 329616,
+  "totalBrowserMs": 1124969,
+  "results": [
+    {
+      "mobile": false,
+      "state": {
+        "nativeRenderedFeatures": 2853,
+        "visibleSourceColors": ["#f5f5f4", "#e9edef", "#bdd5c9"],
+        "fill": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          17.5,
+          ["case", ["==", ["get", "circulation"], true], "#bdd5c9", "#8d9395"],
+          18.5,
+          [
+            "case",
+            ["==", ["get", "restricted"], true],
+            ["get", "color"],
+            ["==", ["get", "circulation"], true],
+            ["get", "color"],
+            [
+              "in",
+              ["get", "nativeRegionId"],
+              ["literal", ["native-region:694:906"]]
+            ],
+            "#ffe09d",
+            [
+              "match",
+              ["get", "color"],
+              ["#b8d5a5", "#eee7d5", "#f5f5f4", "#e9edef"],
+              "#edf0ec",
+              ["coalesce", ["get", "color"], "#edf0ec"]
+            ]
+          ]
+        ],
+        "boundary": ["interpolate", ["linear"], ["zoom"], 18.5, 0.35, 21, 0.8],
+        "route": "#087fb5",
+        "halo": true,
+        "overflow": false,
+        "selected": " All placesEquipment Storage08-272 · Building 08Floor 2From hereDirections"
+      }
+    },
+    {
+      "mobile": true,
+      "state": {
+        "nativeRenderedFeatures": 855,
+        "visibleSourceColors": ["#e9edef", "#f5f5f4", "#bdd5c9"],
+        "fill": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          17.5,
+          ["case", ["==", ["get", "circulation"], true], "#bdd5c9", "#8d9395"],
+          18.5,
+          [
+            "case",
+            ["==", ["get", "restricted"], true],
+            ["get", "color"],
+            ["==", ["get", "circulation"], true],
+            ["get", "color"],
+            [
+              "in",
+              ["get", "nativeRegionId"],
+              ["literal", ["native-region:694:906"]]
+            ],
+            "#ffe09d",
+            [
+              "match",
+              ["get", "color"],
+              ["#b8d5a5", "#eee7d5", "#f5f5f4", "#e9edef"],
+              "#edf0ec",
+              ["coalesce", ["get", "color"], "#edf0ec"]
+            ]
+          ]
+        ],
+        "boundary": ["interpolate", ["linear"], ["zoom"], 18.5, 0.35, 21, 0.8],
+        "route": "#087fb5",
+        "halo": true,
+        "overflow": false,
+        "selected": " All placesEquipment Storage08-272 · Building 08Floor 2From hereDirections"
+      }
+    }
+  ],
+  "errors": []
+}

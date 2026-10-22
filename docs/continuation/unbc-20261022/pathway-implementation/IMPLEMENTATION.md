@@ -38,6 +38,25 @@ A separately bound 0.15-foot experiment retained 588 bends in its 214 matched
 guides, compared with 426 at 0.75 feet before the final exact-retrace correction.
 The selected default is 0.75 feet, with exact physical checks unchanged.
 
+The complete campus candidate processed all 109 targets and all 2,884 eligible
+original walks, accepting 2,701 guides versus 2,642 on unchanged main: 60 gained
+and one refused. All 109 cells have explicit outcomes, with no refused native
+cell admission. The 183 remaining refusals comprise 72 terminal-attachment,
+60 distance-limit, 38 sampled-graph and 13 checked-chain disconnections. No new
+source connection, owner, access rule or physical geometry was introduced.
+[CAMPUS-COMPARISON.json](CAMPUS-COMPARISON.json) lists every cell and changed
+accepted ID. The single lost guide has an explained complete-cell attachment
+tradeoff and qualified ordinary physical fallback in
+[CELL-71-FALLBACK.md](CELL-71-FALLBACK.md).
+
+Across the 2,641 matched guides, bends over five degrees fall from 7,004 to 3,768
+(46.2%), core vertices from 13,360 to 9,773 (26.8%), and measured core length
+from 34,075.66 to 33,582.62 feet (1.4%). This describes accepted guide geometry;
+it is not a clearance, route-policy or wheelchair certification. Full candidate
+compilation took 1,110.09 seconds versus 655.69 seconds for the unchanged-main
+baseline. The candidate overlapped the independent normal master import, so this
+is not an isolated performance benchmark. No compile/startup speedup is claimed.
+
 The recovered current source differs from the historical attachment diagnosis:
 door 1887988 side 1 already has all three incident guides on the current baseline.
 The two seam 43:2 anchors improve from 2/4 to 3/4 and 0/4 to 4/4. Do not relabel
@@ -67,6 +86,12 @@ these current results as a reproduction of the lost nine-edge diagnostic.
   See [candidate commands](../../../../scripts/indoor/corridor-candidates.md).
 - [Visual cleanup](VISUAL-CLEANUP.md) changes visitor paint and visual hierarchy
   while retaining native outlines, holes, obstacle geometry and optional 3D.
+
+Report fields describing attempted networks are separate from the accepted-guide
+ledger. `approachTopologyConflicts` can include routes later refused by final
+compiler checks, and `newTopologyContacts` counts fitting trials that were
+reverted or refused. Neither field alone describes a conflict remaining in an
+emitted guide.
 
 ## Reproduction
 
@@ -98,7 +123,30 @@ joins; they are descriptive measurements, not physical predicates.
 `verify-shared-corridor-candidate.ts` performs one normal source import, installs
 matching guides into a new authoring candidate, verifies source-member/export
 parity and replays the [policy cases](ROUTE-CASES.json), including a serialized
-production worker. A successful candidate compile alone does not satisfy it.
+production worker. A successful candidate compile alone does not satisfy it:
+
+```bash
+node --max-old-space-size=4096 --import tsx \
+  scripts/indoor/verify-shared-corridor-candidate.ts \
+  "$SOURCE_MASTER" "$CANDIDATE/prepared-routing.json" \
+  docs/continuation/unbc-20261022/pathway-implementation/ROUTE-CASES.json \
+  "$NEW_ACCEPTANCE_DIRECTORY"
+```
+
+The largest cell's attachment tradeoff and directly qualified original physical
+fallback are recorded in [CELL-71-FALLBACK.md](CELL-71-FALLBACK.md). Its scoped
+physical result does not replace normal package or route-policy acceptance.
+
+Fresh normal acceptance passes in [NORMAL-ACCEPTANCE.json](NORMAL-ACCEPTANCE.json):
+all 2,701 guides bind to the normally imported master, export preserves original
+RVT, GLB, rooms, GIS and review-bundle bytes, and all six normal calculator cases
+and six serialized production-worker replays pass. Complete worker route values
+and instructions match the normal calculator. Selected original edges, door IDs
+and policy diagnostics match with guides on/off; all 27 disabled non-walking
+transitions remain held. The candidate archive is 247,334,685 bytes, SHA-256
+`c11333d9d94d09b80e4ee70069d19960d6787c9eafc5b7ec6773ea6c3d607bc5`.
+[CHECKS.json](CHECKS.json) records these artifacts, source bindings, full unit/type/
+build results, six browser checks and the separate native visual evidence.
 
 ## Release boundary
 

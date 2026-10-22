@@ -1,0 +1,307 @@
+{
+  "version": 1,
+  "kind": "supplemental-shared-guide-refusal-review",
+  "date": "2026-10-22",
+  "sourceRevision": "0136c83d88500f98bbc394345b99683a39d430c1",
+  "conclusion": "Shared-guide coverage tradeoff from complete-cell terminal attachment reassignment. The unchanged distance cap correctly refuses this shared proposal; normal physical fallback qualifies on the full unchanged visitor.",
+  "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+  "cellId": "native-cell:0.000000:71",
+  "from": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+  "to": "arrival:rm-311-6ecd9309a135",
+  "inputs": {
+    "baselineCheckpoint": {
+      "path": "/workspace/scratch/pathway-baseline-campus/cells/a07f39fc97caf96a.json",
+      "sha256": "15e95d3d43ef0532f45ab79fc9c43f33d31cb222bfc652a04b6075659ea5dd52"
+    },
+    "candidateCheckpoint": {
+      "path": "/workspace/scratch/pathway-candidate-campus/cells/a07f39fc97caf96a8b10dc6b29cbec05509c83609000299cffad2676a6cf465b.json",
+      "sha256": "74c4eff994c19d3b7fe8292d9591616758ddb7cf36b5920e45c115a2391bcab5",
+      "payloadSha256": "dc08029af0bc54a368d1e48384716a2565a89fb03781e093a2a8f48800829a99",
+      "binding": {
+        "version": 2,
+        "inputZipSha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e",
+        "inputJsonSha256": "951b2539d8e1df676bf376cfce5b6f71ed156e4d2be8b4928ff99f9190584e37",
+        "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "sourceGeometryKey": "872eada277dfcce7cd4950f8c4d7e7a58b927366aaa8dc44a6a40689b05757ad",
+        "compilerBinding": "abec36060cb7b56671b970e8d0172b4066ac78f329930be981fb61b982272e70",
+        "resolverVersion": "native-walking-guides-4",
+        "runtime": {
+          "node": "v24.19.0",
+          "v8": "13.6.233.17-node.51",
+          "platform": "linux",
+          "architecture": "x64",
+          "execArgv": ["--max-old-space-size=4096", "--import", "tsx"],
+          "nodeOptions": ""
+        },
+        "parameters": {
+          "method": "shared-corridor",
+          "constructionScope": "complete-native-physical-cell",
+          "emittedEdges": "all-eligible-original-walks",
+          "compiler": {
+            "spacingFeet": 2,
+            "maxSites": 25000,
+            "maxAttachments": 64,
+            "maxDeviationFeet": 0.75
+          }
+        }
+      }
+    },
+    "refinementModule": {
+      "path": "app/indoor-project/viewer-centered-route.ts",
+      "sha256": "d0bc915d8e612c9ef974af75d0b6459e487fd0ea5a9dcb67a2dd51ff81436b46"
+    }
+  },
+  "cellComparison": {
+    "eligibleOriginalEdges": 453,
+    "terminalCount": 268,
+    "baselineAcceptedGuides": 407,
+    "candidateAcceptedGuides": 419,
+    "gainedGuideCount": 13,
+    "lostGuideCount": 1,
+    "lostGuideIds": [
+      "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0"
+    ],
+    "candidateNetworkSummary": [
+      {
+        "sites": 10389,
+        "attachedTerminals": 265,
+        "missingTerminals": 3,
+        "requiredEdges": 453,
+        "connectedRequiredEdges": 435,
+        "reattachedTerminals": 71,
+        "sharedChains": 456
+      }
+    ]
+  },
+  "sourceLengthFeet": 17.252312268145385,
+  "distanceCap": {
+    "formula": "original path length * 1.15 + 0.6 + 2 * 12 feet",
+    "feet": 44.4401591083672,
+    "unchanged": true
+  },
+  "refusal": {
+    "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+    "reason": "guide-distance-limit"
+  },
+  "baselineGeometry": {
+    "approaches": {
+      "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0": [
+        [139.41094164818566, 247.04506256072898, 0],
+        [136.42958270199753, 248.14693425598034, 0]
+      ],
+      "arrival:rm-311-6ecd9309a135": [
+        [139.36797502273248, 261.4940926541318, 0],
+        [140.69806898016364, 260.003813064273, 0]
+      ]
+    },
+    "acceptedGuide": {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "pointsFeet": [
+        [139.41094164818566, 247.04506256072898, 0],
+        [136.42958270199753, 248.14693425598034, 0],
+        [140.69806898016364, 260.003813064273, 0],
+        [139.36797502273248, 261.4940926541318, 0]
+      ],
+      "kind": "shared-corridor",
+      "hallwayJoins": [1, 2]
+    },
+    "acceptedGuideLengthFeet": 17.777788946144472,
+    "emittedCoreDiagnostic": {
+      "lengthFeet": 17.777788946144472,
+      "corePointsFeet": [
+        [136.42958270199753, 248.14693425598034, 0],
+        [140.69806898016364, 260.003813064273, 0]
+      ],
+      "sourceGuideEdges": [
+        "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0"
+      ]
+    }
+  },
+  "candidateGeometry": {
+    "approaches": {
+      "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0": [
+        [139.41094164818566, 247.04506256072898, 0],
+        [139.5144640843752, 242.32834267633731, 0]
+      ],
+      "arrival:rm-311-6ecd9309a135": [
+        [139.36797502273248, 261.4940926541318, 0],
+        [135.73464639378838, 260.65845111244465, 0]
+      ]
+    },
+    "acceptedGuide": null,
+    "acceptedGuideLengthFeet": null,
+    "emittedCoreDiagnostic": {
+      "lengthFeet": 44.704142656125136,
+      "corePointsFeet": [
+        [139.5144640843752, 242.32834267633731, 0],
+        [151.35006171724433, 242.58811004237663, 0],
+        [140.77667467957497, 255.1075317022419, 0],
+        [136.35693364752396, 257.95277651199393, 0],
+        [135.73464639378838, 260.65845111244465, 0]
+      ],
+      "sourceGuideEdges": [
+        "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:0",
+        "native-cell:0.000000:71:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-ac7069426f1f:20:1:0"
+      ]
+    }
+  },
+  "emittedCoreDiagnosticLimit": "Coordinate-union shortest path assembled from accepted guide core segments and the fixed candidate approaches. It can merge coincident coordinates with separate graph identities, and it omits unused core segments; it is not a replay of the refused graph path or route acceptance proof. The bound checkpoint records the authoritative guide-distance-limit refusal.",
+  "incidentOriginalEdgeComparison": [
+    {
+      "edgeId": "native-cell:0.000000:71:walk:opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:1",
+      "from": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:1",
+      "to": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "baseline": "accepted",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|door:311:754560:1",
+      "from": "arrival:rm-311-6ecd9309a135",
+      "to": "door:311:754560:1",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-2740cc4a6fc3:rm-311-6ecd9309a135:14:3:1",
+      "from": "arrival:rm-311-6ecd9309a135",
+      "to": "opening:recovered-circulation-seam:rm-311-2740cc4a6fc3:rm-311-6ecd9309a135:14:3:1",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "from": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "to": "arrival:rm-311-6ecd9309a135",
+      "baseline": "accepted",
+      "candidate": "guide-distance-limit"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:1",
+      "from": "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:1",
+      "to": "arrival:rm-311-6ecd9309a135",
+      "baseline": "no-supported-shared-route",
+      "candidate": "guide-distance-limit"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:0",
+      "from": "arrival:rm-311-6ecd9309a135",
+      "to": "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:0",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-4181394a7eb5:rm-311-6ecd9309a135:20:1:1",
+      "from": "arrival:rm-311-6ecd9309a135",
+      "to": "opening:recovered-circulation-seam:rm-311-4181394a7eb5:rm-311-6ecd9309a135:20:1:1",
+      "baseline": "no-supported-shared-route",
+      "candidate": "guide-distance-limit"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-4177074a7eac|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "from": "arrival:rm-311-4177074a7eac",
+      "to": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:0|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "from": "opening:recovered-circulation-seam:rm-311-4177074a7eac:rm-311-6ecd9309a135:18:12:0",
+      "to": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    },
+    {
+      "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-ac7069426f1f|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "from": "arrival:rm-311-ac7069426f1f",
+      "to": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+      "baseline": "no-supported-shared-route",
+      "candidate": "accepted"
+    }
+  ],
+  "normalFallbackPhysicalEvidence": {
+    "version": 1,
+    "kind": "scoped-normal-fallback-physical-qualification",
+    "sourceRevision": "0136c83d88500f98bbc394345b99683a39d430c1",
+    "archive": {
+      "path": "/workspace/scratch/task-source/compile-result/output/UNBC.campus-viewer.zip",
+      "sha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e",
+      "indoorPath": "viewer/indoor.json",
+      "indoorSha256": "951b2539d8e1df676bf376cfce5b6f71ed156e4d2be8b4928ff99f9190584e37"
+    },
+    "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+    "cellId": "native-cell:0.000000:71",
+    "from": "opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0",
+    "to": "arrival:rm-311-6ecd9309a135",
+    "method": {
+      "module": "app/indoor-project/viewer-centered-route.ts",
+      "centeredRoutePaths": {
+        "enabled": true,
+        "useSharedGuides": false
+      },
+      "prepareWalkingGuide": true,
+      "fullVisitorContextRetained": true,
+      "originalPreparedGuidePresent": false,
+      "originalSharedGuidePresent": false,
+      "exactGeosInitialized": true
+    },
+    "sourceContext": {
+      "nodes": 5493,
+      "edges": 7337
+    },
+    "sourceLengthFeet": 17.252312268145385,
+    "sourcePointsFeet": [
+      [139.41094164818566, 247.04506256072898, 0],
+      [139.54610221606362, 247.2689207717444, 0],
+      [136.61378972396338, 247.90259533228235, 0],
+      [139.52869270243787, 261.3912327959434, 0],
+      [139.36797502273248, 261.4940926541318, 0]
+    ],
+    "normalPaths": [
+      {
+        "edgeIds": [
+          "native-cell:0.000000:71:walk:arrival:rm-311-6ecd9309a135|opening:recovered-circulation-seam:rm-311-6ecd9309a135:rm-311-ac7069426f1f:0:1:0"
+        ],
+        "levelIds": [311],
+        "pointsFeet": [
+          [139.41094164818566, 247.04506256072898, 0],
+          [132.9167493759159, 251.0605095312141, 0],
+          [136.9422680636456, 257.57099081658225, 0]
+        ],
+        "centered": true,
+        "nativeFloorSupported": true,
+        "nativeCirculationUsed": true,
+        "shape": "centered",
+        "lengthFeet": 15.289822204895518,
+        "originalAnchorsExact": false
+      }
+    ],
+    "preparedWalkingGuide": {
+      "pointsFeet": [
+        [139.41094164818566, 247.04506256072898, 0],
+        [139.36797502273248, 261.4940926541318, 0]
+      ],
+      "lengthFeet": 14.449093977511644,
+      "originalAnchorsExact": true
+    },
+    "originalEdgeUnchanged": true,
+    "seconds": 84.79924112399999,
+    "limits": [
+      "One original edge with the complete visitor geometry, floor, obstacle, doorway and ownership context.",
+      "No shared candidate guide was supplied or reused.",
+      "This is physical refinement evidence, not whole-master normal-import acceptance, a graph-search or profile-permission qualification, or wheelchair certification."
+    ],
+    "normalRuntimeRefinementQualified": true,
+    "fixedEndpointGuideQualified": true,
+    "normalRuntimeArrivalBehavior": {
+      "fixedOpeningExact": true,
+      "circulationArrivalRecentered": true,
+      "arrivalOffsetFeet": 4.61245946097602,
+      "sourceRule": "viewer-centered-route.ts refine arrival(): !fixedAnchors && node.kind === arrival && circulation && !stair. prepareWalkingGuide uses fixedAnchors=true."
+    }
+  },
+  "limits": [
+    "No source/compiler, native geometry, graph edge, terminal join, access rule or distance threshold was modified.",
+    "No full cell recomputation was performed for this supplemental diagnostic.",
+    "Physical fallback qualification is scoped to one existing edge. It is distinct from normal whole-master import, route graph/profile permission acceptance, publication checks and wheelchair certification."
+  ]
+}

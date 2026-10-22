@@ -1,0 +1,252 @@
+{
+  "format": "shared-pathway-implementation-checks-v1",
+  "status": "PASS_CANDIDATE_IMPLEMENTATION",
+  "sourceCommit": "0136c83d88500f98bbc394345b99683a39d430c1",
+  "reviterCommit": "80177ed21becc91c02df48bb27cd1d24f5fbf297",
+  "unit": {
+    "status": "PASS",
+    "tests": 2101,
+    "passed": 2067,
+    "skipped": 34,
+    "failed": 0,
+    "durationMilliseconds": 155062.359763
+  },
+  "fullTypeScript": {
+    "status": "PASS"
+  },
+  "pagesBuild": {
+    "status": "PASS",
+    "durationSeconds": 44.95,
+    "warning": "Existing large-chunk warning"
+  },
+  "changedSourceLintAndFormatting": {
+    "status": "PASS"
+  },
+  "pagesBrowser": {
+    "status": "PASS",
+    "tests": 6,
+    "failed": 0,
+    "workers": 1,
+    "durationApproxSeconds": 138,
+    "browser": "/usr/bin/chromium",
+    "buildDirectory": "/workspace/scratch/pathway-final-site-v3"
+  },
+  "logEvidence": {
+    "unit": {
+      "localPath": "/workspace/scratch/pathway-final-v3-unit.log",
+      "sha256": "3b8100aa1f7d6897fbd431a374efcad42aa35e3fa92e23b233019441555a6d4f",
+      "bytes": 223111
+    },
+    "typecheck": {
+      "localPath": "/workspace/scratch/pathway-final-v3-typecheck.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "build": {
+      "localPath": "/workspace/scratch/pathway-final-v3-build.log",
+      "sha256": "7350131e059355dbee5e93885aef05feb7bb918ce3f8cf13c732306d59dd2d30",
+      "bytes": 14348
+    },
+    "pagesBrowser": {
+      "localPath": "/workspace/scratch/pathway-final-pages.log",
+      "sha256": "a7d8503c61cfefda80150035bb9fa17aa1972bfa96b85729742f2fab851adb2e",
+      "bytes": 1714
+    }
+  },
+  "pilotComparison": "PILOT-COMPARISON.json",
+  "visualEvidence": "visual/evidence.json",
+  "coverageReview": "COVERAGE-REVIEW.json",
+  "readOnlyIntegrationReview": {
+    "status": "NO_NEW_CORRECTNESS_BLOCKERS",
+    "limitations": [
+      "Attempted-network diagnostics can include routes refused before emission; use accepted-guide ledgers for emitted outcomes."
+    ]
+  },
+  "publication": {
+    "published": false,
+    "candidateOnly": true,
+    "privateUnbcSiteChanged": false,
+    "releaseGates": "See IMPLEMENTATION.md Release boundary and SOURCE-BASELINE.md."
+  },
+  "campusCompilation": {
+    "status": "PASS",
+    "targetCells": 109,
+    "eligibleOriginalWalks": 2884,
+    "acceptedGuides": 2701,
+    "baselineAcceptedGuides": 2642,
+    "gainedGuides": 60,
+    "lostGuides": 1,
+    "remainingRefusals": 183,
+    "refusalReasons": {
+      "guide-distance-limit": 60,
+      "terminal-attachment": 72,
+      "sampled-graph-disconnection": 38,
+      "checked-chain-disconnection": 13
+    },
+    "sourceGraphAndGeometryUnchanged": true,
+    "unavailableCellIds": [],
+    "seconds": 1110.0854755149999,
+    "comparison": "CAMPUS-COMPARISON.json",
+    "lostGuidePhysicalFallback": "CELL-71-FALLBACK.json",
+    "binding": {
+      "version": 2,
+      "inputZipSha256": "8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e",
+      "inputJsonSha256": "951b2539d8e1df676bf376cfce5b6f71ed156e4d2be8b4928ff99f9190584e37",
+      "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "sourceGeometryKey": "872eada277dfcce7cd4950f8c4d7e7a58b927366aaa8dc44a6a40689b05757ad",
+      "compilerBinding": "abec36060cb7b56671b970e8d0172b4066ac78f329930be981fb61b982272e70",
+      "resolverVersion": "native-walking-guides-4",
+      "runtime": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "architecture": "x64",
+        "execArgv": ["--max-old-space-size=4096", "--import", "tsx"],
+        "nodeOptions": ""
+      },
+      "parameters": {
+        "method": "shared-corridor",
+        "constructionScope": "complete-native-physical-cell",
+        "emittedEdges": "all-eligible-original-walks",
+        "compiler": {
+          "spacingFeet": 2,
+          "maxSites": 25000,
+          "maxAttachments": 64,
+          "maxDeviationFeet": 0.75
+        }
+      }
+    },
+    "artifacts": {
+      "prepared-routing.json": {
+        "localPath": "/workspace/scratch/pathway-candidate-campus/prepared-routing.json",
+        "sha256": "54f10449efcc1620724ccc2ccf8179823f1d8c28a39b8be56e54c2fcbf64cd40",
+        "bytes": 1363852
+      },
+      "report.json": {
+        "localPath": "/workspace/scratch/pathway-candidate-campus/report.json",
+        "sha256": "20ebc45d0ba13e444560226c7b7eee27ab194570022f2b331c7a636f0693d996",
+        "bytes": 1559590
+      },
+      "shared-guides-display.geojson": {
+        "localPath": "/workspace/scratch/pathway-candidate-campus/shared-guides-display.geojson",
+        "sha256": "386c92991ba2ef43145e51996934e3400df8e27b0a4bdc9492b5c19bce8bf203",
+        "bytes": 5559220
+      }
+    }
+  },
+  "normalSynchronousCases": {
+    "status": "PASS",
+    "cases": [
+      {
+        "id": "door-2311764:08-216-to-08-260",
+        "expected": true,
+        "available": true,
+        "sharedPaths": 2,
+        "seconds": 256.2399669969999
+      },
+      {
+        "id": "link-4-8:walking-hallway-only",
+        "expected": false,
+        "available": false,
+        "sharedPaths": 0,
+        "seconds": 0.10116690999991261
+      },
+      {
+        "id": "link-4-8:walking-other-room-transit",
+        "expected": true,
+        "available": true,
+        "sharedPaths": 3,
+        "seconds": 15.667853943999857
+      },
+      {
+        "id": "link-4-8:return-walking-other-room-transit",
+        "expected": true,
+        "available": true,
+        "sharedPaths": 3,
+        "seconds": 15.897966149999993
+      },
+      {
+        "id": "link-4-8:strict-step-free-hallway-only",
+        "expected": false,
+        "available": false,
+        "sharedPaths": 0,
+        "seconds": 0.05435143500007689
+      },
+      {
+        "id": "link-4-8:strict-step-free-other-room-transit",
+        "expected": false,
+        "available": false,
+        "sharedPaths": 0,
+        "seconds": 0.03737642000010237
+      }
+    ],
+    "failures": []
+  },
+  "normalAcceptance": {
+    "status": "PASS",
+    "report": "NORMAL-ACCEPTANCE.json",
+    "reportSha256": "255f37b49994e5a24d9dec2d4622fe41c85d05f1be40b3a29eae3cf1e0bcec05",
+    "implementationBinding": "cdae675a748e0da403a0145ef10dc32100283545e9acd1220d9b381bcc7b83aa",
+    "normalCases": 6,
+    "serializedProductionWorkerCases": 6,
+    "fullRouteValuesAndInstructionsEqual": true,
+    "sourceGraphGeometryAndPolicyUnchanged": true,
+    "heldNonWalkTransitionsPreserved": 27,
+    "sourceAssetsUnchanged": [
+      {
+        "name": "review/companions.bin",
+        "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+        "bytes": 88626822
+      },
+      {
+        "name": "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "bytes": 70336512
+      },
+      {
+        "name": "gis/reference-points.json",
+        "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        "bytes": 602
+      },
+      {
+        "name": "model/scene.glb",
+        "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        "bytes": 52216228
+      },
+      {
+        "name": "floors/rooms.json",
+        "sha256": "5291e1148cc27130b9239b6de26b2f7623c308f227f5dfc2b3e64b17f55e593c",
+        "bytes": 82337070
+      }
+    ],
+    "secondsIncludingGuideWait": 1748.1519559229998,
+    "phases": [
+      {
+        "phase": "normal-source-import",
+        "seconds": 565.746123793
+      },
+      {
+        "phase": "normal-export-and-transport-verification",
+        "seconds": 24.880964405999986
+      }
+    ],
+    "candidateArchive": {
+      "localPath": "/workspace/scratch/pathway-normal-acceptance-v3/UNBC.shared-pathways.candidate.reviter.zip",
+      "sha256": "c11333d9d94d09b80e4ee70069d19960d6787c9eafc5b7ec6773ea6c3d607bc5",
+      "bytes": 247334685
+    },
+    "guideSha256": "54f10449efcc1620724ccc2ccf8179823f1d8c28a39b8be56e54c2fcbf64cd40",
+    "casesSha256": "e152d8cd636e97b8d3ede1c0e95eace9094520afe0999969b4025ab3ff422843",
+    "sourceMasterSha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc",
+    "sourceDatasetSha256": "e345c723733ef4dcd3badda3cc5f9f87d6fee8c66432ea42b9a0e1357a055bb6",
+    "productionWorkerSourceSha256": "791d1954669753a949c136a71c56b6957b6aee3f0fcf4b7fff7ffa5b1a6712d3",
+    "productionWorkerBundleSha256": "30df84ab91e94c9a0b59e15964888d5b7ae562293bbb84519a614f8c66ef2c44",
+    "compiledTrustRootChanged": false,
+    "releaseAcceptance": false
+  },
+  "generatedBindings": {
+    "preparedDisplayEngine": "d58229f4a32d054e5bcc2452443f06a8be57b18df595f809984c6ebc7088871a",
+    "publishedRouteRuntime": "3d5fb50b5df2b591ed26c69e8f65f9b4d5d75209180dc7d415229b650e2e3299",
+    "publishedVisitorPlanRuntime": "dec8d9440309fb9ac10966ebe4b526d2809161f3ad49169370d04bd61d8e6ecd"
+  }
+}

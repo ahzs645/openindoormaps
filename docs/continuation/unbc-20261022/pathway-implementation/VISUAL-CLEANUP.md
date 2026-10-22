@@ -30,7 +30,34 @@ six screenshots and the source-layer observations are in the local
 `work/visual-proof/` folder. This fixture establishes renderer behaviour, not
 native UNBC routing or campus acceptance.
 
-Browser proof must wait for floor preparation to finish and inspect actual
-desktop/mobile map pixels. A populated source or a screenshot showing the
-preparation overlay is not rendering acceptance. A stable native-campus
-served build remains the final visual check.
+The recovered native campus viewer was also imported normally into an isolated
+production build. Actual native Building 08 / Floor 2 pixels were checked after
+floor preparation completed: 2,853 rendered native features on 1440×1000 desktop
+and 855 on 390×844 mobile. The selected Equipment Storage room (08-272), its
+irregular native shape, surrounding neutral rooms, circulation and full place
+name are visible. Both viewports passed the neutral-paint, boundary, route-paint
+and halo-layer checks without page/paint-expression errors or horizontal
+overflow. Optional mobile 3D preparation also completed; its actual pitched
+native surfaces were inspected before the browser closed.
+
+Portable proof is in [visual/evidence.json](visual/evidence.json), with the raw
+[browser observations](visual/native-browser-results.json), screenshot hashes
+and all seven renderer hashes. Each renderer file is byte-identical to the
+isolated build and commit `0136c83d88500f98bbc394345b99683a39d430c1`.
+The viewer ZIP SHA-256 is
+`8ad33533e28c387da03567e7979ced4268c7bc1cc3c8727b3762ea908d44546e`.
+The build's display-engine identity is
+`6c6235a2f577d2541131a055feb874a22ea156e6fe97c0876a1226798b79d968`.
+
+- [Native building overview](visual/desktop-native-overview.png)
+- [Selected room on desktop](visual/desktop-native-selected.png)
+- [Selected room on mobile](visual/mobile-native-2d.png)
+- [Optional native 3D on mobile](visual/mobile-native-3d.png)
+
+This is styling evidence from the isolated source epoch, not acceptance of the
+new shared-path compiler or source-model enclosure certification. The recovered
+viewer contains no newly compiled `preparedRouting`, and no route was requested
+in these captures. The route paint and halo are installed, while route behavior
+has its own acceptance evidence. The normal full-package import took 329,616 ms;
+this timing does not qualify prepared-publication startup or show a performance
+improvement. The browser was closed after capture to release its memory.

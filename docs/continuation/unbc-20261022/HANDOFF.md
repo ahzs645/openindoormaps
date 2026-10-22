@@ -1,5 +1,18 @@
 # UNBC link-door recompile and release handoff — October 22, 2026
 
+**Later update — shared pathways and visitor styling:** implementation
+`0136c83d88500f98bbc394345b99683a39d430c1` extends the complete-cell compiler and
+simplifies native visitor paint. The complete campus candidate accepts 2,701 guides from
+2,884 eligible original walks (60 gained, one explained refusal with qualified
+ordinary physical fallback). Normal full-master import/export and all six normal
+plus six serialized production-worker cases pass; source assets, graph, policy
+and 27 disabled non-walking transitions remain unchanged. Native desktop/mobile
+2D and mobile 3D styling proof is retained. Start with the
+[implementation and checks](pathway-implementation/IMPLEMENTATION.md).
+This is a new candidate engine epoch, not a private Site publication; earlier
+release gates and missing evidence below still apply. Old caches/receipts do not
+become current under the new bindings.
+
 Status at 20:00 UTC on October 22, 2026. This supersedes the [October 20 handoff](../unbc-20261020/HANDOFF.md) as the place to start. Those older documents are still the record of their own source checkpoints.
 
 **In one paragraph:** the native recompile with the reviewed Building 4–8 link-door apertures passed on Colab. Its master and viewer are promoted in the local canonical folder. Testing the new visitor found a route-worker bug that stopped all directions on this dataset, and the fix is in this commit. The private Site still serves **v14**. Nothing new has been published, and most release acceptance gates are still open (see [Release gates](#release-gates-still-open)).
