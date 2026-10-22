@@ -12,6 +12,8 @@
 # Optional environment:
 #   NATIVE_WORKERS=1|2  LANDING_WORKERS=1..8  PARENT_HEAP_MIB=N
 #     override the sizing chosen from this machine's cores and memory.
+#   NATIVE_WORKER_HEAP_MIB / LANDING_WORKER_HEAP_MIB=256..8192
+#     per-worker heap caps (default 4096).
 #   SYNC_DIR=dir   copy checkpoints there every 10 minutes and restore them
 #     at start when WORK/run/checkpoints is empty (Colab: a Drive folder).
 #   DRY_RUN=1      print the command without running it.
@@ -52,9 +54,13 @@ chmod 700 "$RUN/imports"; find "$RUN/imports" -type f -exec chmod 600 {} +
 # Output and diagnostic directories must be new; checkpoints carry the work.
 rm -rf "$RUN/output" "$RUN/diagnostic"
 
+# Floor-plane workers inherit these flags. tsx alone does not resolve reviter's
+# extensionless local imports inside worker threads; reviter's resolver does.
 cmd=(node --max-old-space-size="$heap" --expose-gc --import tsx
+  --import "$WORK/reviter/scripts/register-local-typescript.mjs"
   scripts/indoor/regenerate-from-native-cache.ts "$IN/master.zip" "$IN/native-cache.json" "$RUN/output"
-  --native-workers "$native" --native-worker-heap-mib 4096 --landing-workers "$landing"
+  --native-workers "$native" --native-worker-heap-mib "${NATIVE_WORKER_HEAP_MIB:-4096}" --landing-workers "$landing"
+  ${LANDING_WORKER_HEAP_MIB:+--landing-worker-heap-mib "$LANDING_WORKER_HEAP_MIB"}
   --checkpoint-dir "$RUN/checkpoints"
   --drawing-reference-review "$IN/reviewed-drawing-references.json" --refresh-drawing-floor-bindings checked
   --boundary-contact-review "$IN/checked-boundary-review-bundle.json"
