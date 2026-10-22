@@ -6,7 +6,7 @@ Status at 20:00 UTC on October 22, 2026. This supersedes the [October 20 handoff
 
 ## Where everything is
 
-**Git.** All of this work is on the local branch `recompile-runbook-fix` of this repository. It is based on `b78a314` from `origin/claude/laughing-davinci-34tcj1` and has **not been pushed**.
+**Git.** This work was developed on branch `recompile-runbook-fix`, based on `b78a314` from `origin/claude/laughing-davinci-34tcj1`. On October 22 it was merged with `main` and pushed to `main`, which also brought the eleven earlier `claude/laughing-davinci-34tcj1` commits onto `main`.
 
 | Commit      | What it holds                                                                                                 |
 | ----------- | ------------------------------------------------------------------------------------------------------------- |
@@ -35,7 +35,7 @@ The producer for Reviter is `cb140e46` on its `claude/laughing-davinci-34tcj1` b
 
 - Session `unbc-opt` (CPU High-RAM, 8 cores, 50 GB) may still be running. Check with `colab sessions` and stop it with `colab stop -s unbc-opt`.
 - The repos sit at the exact `/content/unbc/{openindoormaps,reviter,inputs,run}` layout that `regeneration.json` records. `run/` holds the restored compile result.
-- The openindoormaps copy carries the uncommitted equivalent of this commit's code change, with engine `af10315b…`.
+- The openindoormaps copy carries an earlier, functionally identical form of the route-worker fix, with engine `af10315b…`. Re-sync it to the committed tree before reusing anything from it.
 - `/content/unbc/dircache/` holds the cache candidate, and `/content/landing-diff/` holds the snapshot pairs.
 - Sessions `unbc` and `unbc-fast` were stopped.
 
@@ -74,7 +74,7 @@ The producer for Reviter is `cb140e46` on its `claude/laughing-davinci-34tcj1` b
    - **This affects any dataset with a v2 stepped-stair proof, including attempt 006.**
    - Fix (this commit): the projection keeps `containedDisplay` on the cells a stepped-stair proof claims, and keeps `displayResidualTopology` (13 MB) only when such a proof exists. Other datasets are unchanged, and no recompile is needed.
    - Test: `tests/unit/native-stepped-stair-v2-transport.test.ts`. The stair and route-worker tests pass, 16/16.
-   - The engine bindings are regenerated: engine `af10315b…`, route runtime `77fda4b2…`, plan runtime `d495ca84…`.
+   - The engine bindings are regenerated: engine `62e85891…`, route runtime `76252eef…`, plan runtime `c23ae787…` (final values after the lint-clean refactor; the Colab cache candidate and its profile used the functionally identical `af10315b…` build).
 7. **Directions cache with the fix** (Colab, `prepare-directions-candidate.ts`).
    - Times: validation 96 s, public policy graph 306 s, total 466 s.
    - The carrier is `82f995e0…json.gz` (2.6 MB).
@@ -113,12 +113,12 @@ The earlier figure of "189.9 m, walking and step-free" came from the simplified 
 
 Full release was requested, so these are listed in order. Check every claim against the scripts before acting on it.
 
-1. **Commit and push.** Push `recompile-runbook-fix` (or merge it into the delivery branch) after review. This is a new source epoch, engine `af10315b…`; reuse no receipt from `469c764e…` or older.
+1. **Source epoch.** Done: on `main` since October 22. This is a new source epoch, engine `62e85891…`; reuse no receipt from `469c764e…` or older. Checks run before the push: full unit suite in UTC 2027 pass / 1 fail / 34 skipped. The one failure, `private import data preserves bytes…`, also fails on the pre-fix code on this Mac's Node 26 and is unconfirmed on Node 22. The CI typecheck `tsc -p tsconfig.indoor-project.json` and `npm run build:pages` both pass.
 2. **Redo the progressive export and pages build** under the new engine, in UTC.
    - Export: `TZ=UTC node --max-old-space-size=8192 --expose-gc --import tsx scripts/indoor/export-progressive-viewer.ts VIEWER.zip NEW_DIR --prepare --checkpoints --priority-scope=1450417,311,1487816`, about 18 min on the Mac.
    - Build: `SITE_DEMOS=indoor node --max-old-space-size=3072 --import tsx node_modules/vite/bin/vite.js build --configLoader native --mode pages --outDir NEW_ABS_DIR`.
 3. **Directions cache.**
-   - Rebuild the candidate on the committed tree; the Colab one used the same fix and engine.
+   - Rebuild the candidate on the committed tree; the Colab one used an earlier form of the fix (engine `af10315b…`).
    - Add its receipt to `app/indoor-project/published-route-cell-receipts.ts`.
    - Place the carrier at `public/data/unbc-routing/` and at the Site root `/data/unbc-routing/`.
    - Then run `check-published-directions-cache.ts`.
@@ -171,7 +171,7 @@ Everything in `tools/` was used as-is here. Paths inside are the scratch or Cola
 
 ## Suggested next steps
 
-1. Review and push this branch, then decide whether hallway-only directions should treat the 4–8 link and vestibule as passable (a policy and source decision).
+1. Decide whether hallway-only directions should treat the 4–8 link and vestibule as passable (a policy and source decision).
 2. Make checkpoints reusable (finding 1) before any further compile. It is the largest saving.
-3. Rebuild export, pages and directions cache under engine `af10315b…`, and finish the browser proof.
+3. Rebuild export, pages and directions cache under engine `62e85891…`, and finish the browser proof.
 4. Work release gates 4–9 in order. Locate the 09d baseline inputs first, or define a replacement baseline procedure with the owner.

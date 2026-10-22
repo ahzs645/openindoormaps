@@ -4,7 +4,18 @@ import type { IndoorDataset } from "./contract";
 /** Physical routing evidence stays exact. Render meshes, selection tessellation
  * and authoring issue text are unused by route policy or floor/path validation;
  * sending them to a route worker wastes a large synchronous structured clone. */
-export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
+function workerCirculationGeometry(
+  data: IndoorDataset,
+): IndoorDataset["circulationGeometry"] {
+  const geometry = data.circulationGeometry;
+  if (
+    !geometry ||
+    !(
+      geometry.displayResidualTopology ||
+      geometry.cells.some((c) => c.containedDisplay)
+    )
+  )
+    return geometry;
   // A stepped-stair proof digests its two claimed terminal cells whole, so
   // those cells keep their display containment for the worker to recheck,
   // with the residual topology their containment refers to.
@@ -17,28 +28,26 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
     ),
   );
   return {
+    ...geometry,
+    displayResidualTopology:
+      claimedCells.size > 0 ? geometry.displayResidualTopology : undefined,
+    cells: geometry.cells.map((cell) => {
+      if (claimedCells.has(cell.id)) return cell;
+      const { containedDisplay: _, ...rest } = cell;
+      return rest;
+    }),
+  };
+}
+
+export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
+  return {
     ...data,
     // Derived frame material is separate from original cuts and remains exact
     // in the worker; render/private authoring wrappers below may be omitted.
     nativeDerivedFrameReturns: data.nativeDerivedFrameReturns,
     nativeProvisionalCornerSeals: data.nativeProvisionalCornerSeals,
     presentation: undefined,
-    circulationGeometry:
-      data.circulationGeometry &&
-      (data.circulationGeometry.displayResidualTopology ||
-        data.circulationGeometry.cells.some((c) => c.containedDisplay))
-        ? {
-            ...data.circulationGeometry,
-            displayResidualTopology: claimedCells.size
-              ? data.circulationGeometry.displayResidualTopology
-              : undefined,
-            cells: data.circulationGeometry.cells.map((cell) => {
-              if (claimedCells.has(cell.id)) return cell;
-              const { containedDisplay: _, ...rest } = cell;
-              return rest;
-            }),
-          }
-        : data.circulationGeometry,
+    circulationGeometry: workerCirculationGeometry(data),
     nativeSourceStairMaterials: nativeSourceStairPhysicalEvidence(
       data.nativeSourceStairMaterials,
     ),
@@ -61,7 +70,8 @@ export function routeWorkerDataset(data: IndoorDataset): IndoorDataset {
                 : data.stairDisplay.sourceFlights?.filter((f) =>
                     data.edges.some(
                       (e) =>
-                        e.nativeSourceStair?.nativeStairId === f.stairElementId ||
+                        e.nativeSourceStair?.nativeStairId ===
+                          f.stairElementId ||
                         (e.nativeSteppedStairV2 &&
                           e.nativeElementId === f.stairElementId),
                     ),
