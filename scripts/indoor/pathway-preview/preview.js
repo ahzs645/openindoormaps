@@ -1,7 +1,7 @@
 /* This viewer consumes the production display export. It never builds a graph
  * or connects endpoints from coordinates. Native source feet are not rounded. */
 (() => {
-  const $ = (id) => document.getElementById(id);
+  const $ = (id) => document.querySelector(`#${id}`);
   const svg = $("map");
   const state = {
     index: null,
@@ -45,7 +45,7 @@
       circle.setAttribute("r", String(radius));
   }
   function fit(points) {
-    if (!points.length) {
+    if (points.length === 0) {
       setView([0, 0, 100, 100]);
       return;
     }
@@ -78,11 +78,13 @@
       building === "all"
         ? [
             ...state.level.cells.flatMap((cell) => cell.ringsFeet.flat()),
-            ...state.features.flatMap(pointsOf),
+            ...state.features.flatMap((feature) => pointsOf(feature)),
           ]
         : rooms.flatMap((room) => room.ringsFeet.flat());
     fit(
-      points.length ? points : rooms.flatMap((room) => room.ringsFeet.flat()),
+      points.length > 0
+        ? points
+        : rooms.flatMap((room) => room.ringsFeet.flat()),
     );
   }
   function featureClass(feature) {
@@ -177,16 +179,18 @@
     const summary = level.summary;
     $("counts").textContent =
       `${summary.sharedGuideSegments} shared segments · ${summary.savedWalkSegments} saved walk segments · ${summary.connectionLines} connection lines · ${summary.connectionMarkers} stops / gaps · ${summary.unresolvedDoorMarkers} unresolved doors`;
-    $("message").textContent = sharedOnly
-      ? summary.sharedGuideSegments
-        ? "Guide-only comparison omits original thresholds, fallbacks and floor changes."
-        : "This source has no accepted shared guides. Choose Complete saved network to inspect its original paths."
-      : level.summary.sourceEdges > 0
-        ? ""
-        : level.doorDiagnostics.length
-          ? "No saved walking network on this physical level; unresolved original doors are marked."
-          : "No saved network is displayed on this declared physical level.";
+    $("message").textContent = levelMessage(level, sharedOnly);
     setView(state.view);
+  }
+  function levelMessage(level, sharedOnly) {
+    if (sharedOnly)
+      return level.summary.sharedGuideSegments
+        ? "Guide-only comparison omits original thresholds, fallbacks and floor changes."
+        : "This source has no accepted shared guides. Choose Complete saved network to inspect its original paths.";
+    if (level.summary.sourceEdges > 0) return "";
+    return level.doorDiagnostics.length > 0
+      ? "No saved walking network on this physical level; unresolved original doors are marked."
+      : "No saved network is displayed on this declared physical level.";
   }
   function renderSelection() {
     $("selection").replaceChildren();
@@ -270,8 +274,8 @@
       features.find(
         (feature) =>
           String(feature.properties.nativeElementId ?? "") === query ||
-          (feature.properties.edgeIds ?? [feature.properties.edgeId]).some(
-            (id) => id === query,
+          (feature.properties.edgeIds ?? [feature.properties.edgeId]).includes(
+            query,
           ),
       ) ??
       features.find((feature) =>
@@ -300,7 +304,7 @@
   $("fit").addEventListener("click", fitLevel);
   function zoom(factor) {
     const [x, y, w, h] = state.view;
-    if (w * factor < 1 || w * factor > 20000) return;
+    if (w * factor < 1 || w * factor > 20_000) return;
     setView([
       x + (w * (1 - factor)) / 2,
       y + (h * (1 - factor)) / 2,
