@@ -1,0 +1,330 @@
+{
+  "format": "connected-campus-current-route-summary-v1",
+  "runId": "6125723b-ff0a-4506-ade1-e09b49d2e79b",
+  "status": "PASS",
+  "inventoryStatus": "INCOMPLETE",
+  "counts": {
+    "connections": 6,
+    "requests": 30,
+    "checked": 10,
+    "available": 4,
+    "expectedRefusals": 6,
+    "failed": 0,
+    "notTested": 0,
+    "evidenceRequired": 20
+  },
+  "allEndpointMode": "hallway",
+  "normalCases": 10,
+  "productionWorkerCases": 10,
+  "rows": [
+    {
+      "id": "door-2311764:08-216-to-08-260",
+      "from": "rm-694-3eff6106de76",
+      "to": "rm-694-fa60cb06b7c9",
+      "fromNumber": "08-216",
+      "toNumber": "08-260",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "available": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "requireSharedGuide": true,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "distanceMetres": 12.216145586002494,
+      "sharedPaths": 1,
+      "normalSeconds": 273.91111754600007,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 294.1010638169999,
+      "unknownAccessAreaCount": 8,
+      "unknownAccessibilityEdgeCount": 3
+    },
+    {
+      "id": "link-4-8:walking-hallway-only",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "fromNumber": "04-255",
+      "toNumber": "08-272",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.1443053930000169,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.08511913200002164,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+        "constraint": "hallways"
+      },
+      "diagnosticBlockerCount": 0,
+      "diagnosticSourceWitnessEdgeCount": 51
+    },
+    {
+      "id": "link-4-8:walking-other-room-transit",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "fromNumber": "04-255",
+      "toNumber": "08-272",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "available": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "requireSharedGuide": true,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "distanceMetres": 178.21889221661343,
+      "sharedPaths": 3,
+      "normalSeconds": 16.926635183999895,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 4.634575706999982,
+      "unknownAccessAreaCount": 17,
+      "unknownAccessibilityEdgeCount": 41
+    },
+    {
+      "id": "link-4-8:return-walking-other-room-transit",
+      "from": "rm-694-0179b206bb5d",
+      "to": "rm-694-072a835d76b9",
+      "fromNumber": "08-272",
+      "toNumber": "04-255",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "available": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "requireSharedGuide": true,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "distanceMetres": 177.60849326324396,
+      "sharedPaths": 3,
+      "normalSeconds": 15.991113519999898,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 3.0964260209999046,
+      "unknownAccessAreaCount": 17,
+      "unknownAccessibilityEdgeCount": 41
+    },
+    {
+      "id": "link-4-8:strict-step-free-hallway-only",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "fromNumber": "04-255",
+      "toNumber": "08-272",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.07834829100000207,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.0984657760001719,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+      },
+      "diagnosticBlockerCount": 41,
+      "diagnosticSourceWitnessEdgeCount": 44
+    },
+    {
+      "id": "link-4-8:strict-step-free-other-room-transit",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "fromNumber": "04-255",
+      "toNumber": "08-272",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.0671656180000864,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.07388044300000184,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+      },
+      "diagnosticBlockerCount": 41,
+      "diagnosticSourceWitnessEdgeCount": 44
+    },
+    {
+      "id": "door-2311764:08-216-to-08-260:reverse",
+      "from": "rm-694-fa60cb06b7c9",
+      "to": "rm-694-3eff6106de76",
+      "fromNumber": "08-260",
+      "toNumber": "08-216",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "available": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "requireSharedGuide": true,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "distanceMetres": 12.216145586002492,
+      "sharedPaths": 1,
+      "normalSeconds": 0.308910060999915,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.28502598899998705,
+      "unknownAccessAreaCount": 8,
+      "unknownAccessibilityEdgeCount": 3
+    },
+    {
+      "id": "link-4-8:walking-hallway-only:reverse",
+      "from": "rm-694-0179b206bb5d",
+      "to": "rm-694-072a835d76b9",
+      "fromNumber": "08-272",
+      "toNumber": "04-255",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.12300265999999829,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.08856741599994712,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+        "constraint": "hallways"
+      },
+      "diagnosticBlockerCount": 0,
+      "diagnosticSourceWitnessEdgeCount": 51
+    },
+    {
+      "id": "link-4-8:strict-step-free-hallway-only:reverse",
+      "from": "rm-694-0179b206bb5d",
+      "to": "rm-694-072a835d76b9",
+      "fromNumber": "08-272",
+      "toNumber": "04-255",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.05103581899998244,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.027990224000066517,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+      },
+      "diagnosticBlockerCount": 41,
+      "diagnosticSourceWitnessEdgeCount": 44
+    },
+    {
+      "id": "link-4-8:strict-step-free-other-room-transit:reverse",
+      "from": "rm-694-0179b206bb5d",
+      "to": "rm-694-072a835d76b9",
+      "fromNumber": "08-272",
+      "toNumber": "04-255",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "available": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "sharedPaths": 0,
+      "normalSeconds": 0.05382511400000658,
+      "productionWorkerStatus": "PASS",
+      "productionWorkerSeconds": 0.029218176000053064,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+      },
+      "diagnosticBlockerCount": 41,
+      "diagnosticSourceWitnessEdgeCount": 44
+    }
+  ],
+  "sourceAssetsUnchanged": 5,
+  "heldTransitionsUnchanged": 27,
+  "timingSeconds": {
+    "scopedCompileWall": 53.04221962600059,
+    "normalSourceImport": 571.612456298,
+    "normalExportAndTransportVerification": 26.413893582000046,
+    "firstColdNormalOnOff": 273.91111754600007,
+    "remainingNineNormalOnOff": 33.7443416599998,
+    "firstColdWorkerRequest": 294.1010638169999,
+    "remainingNineWarmWorkerRequests": 8.419268884000136,
+    "normalAcceptanceWall": 1226.6935853220002
+  },
+  "memory": {
+    "kernelMaxChildRssKiB": 6960356,
+    "sampledSharedCgroupPeakBytes": 8589934592,
+    "cgroupLimitBytes": 8589934592,
+    "cgroupEventDeltas": {
+      "low": 0,
+      "high": 0,
+      "max": 7842,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0
+    },
+    "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+  },
+  "campusConnectivityProven": false,
+  "releaseAcceptance": false,
+  "published": false
+}

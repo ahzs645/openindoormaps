@@ -1,0 +1,37 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "node",
+    "--max-old-space-size=4096",
+    "--import",
+    "tsx",
+    "scripts/indoor/export-pathway-preview.ts",
+    "/workspace/scratch/6c5c946bd748/connected-campus-inputs/compiled-dataset.json",
+    "/workspace/scratch/6c5c946bd748/connected-campus-results/preview/unbc-native-network-20261030",
+    "--guides",
+    "/workspace/scratch/6c5c946bd748/connected-campus-results/acceptance/candidate-616-617-20261030/prepared-routing.json"
+  ],
+  "workingDirectory": "/workspace/scratch/6c5c946bd748/worktrees/connected-campus-rebuild-20261030/openindoormaps",
+  "startedAt": "2026-10-30T22:05:16.151774+00:00",
+  "finishedAt": "2026-10-30T22:05:38.163814+00:00",
+  "seconds": 22.012040444000377,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 2305232,
+  "kernelChildUserSeconds": 24.562274,
+  "kernelChildSystemSeconds": 3.906234,
+  "cgroupLimitBytes": 8589934592,
+  "sampledSharedCgroupPeakBytes": 4168630272,
+  "sampleIntervalSeconds": 1,
+  "samples": 23,
+  "cgroupEventDeltas": {
+    "low": 0,
+    "high": 0,
+    "max": 0,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}

@@ -1,0 +1,92 @@
+{
+  "format": "connected-campus-current-scoped-compile-v1",
+  "recordedAt": "2026-10-30T21:44:37.336909+00:00",
+  "status": "CURRENT_CANDIDATE_COMPILE_PASS",
+  "candidateOnly": true,
+  "sourceMasterSha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc",
+  "sourceIndoorMemberSha256": "e345c723733ef4dcd3badda3cc5f9f87d6fee8c66432ea42b9a0e1357a055bb6",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "compilerBinding": "b99447af5eb944a8accbc8fd3ddd600082bbb097cdade1789eeed39c988625b0",
+  "revalidatedCompilerBinding": "b99447af5eb944a8accbc8fd3ddd600082bbb097cdade1789eeed39c988625b0",
+  "compiledCellsThisRun": 2,
+  "reusedCells": 0,
+  "eligibleWalkingEdges": 47,
+  "compiledWalkingEdges": 46,
+  "uncompiledWalkingEdges": 1,
+  "cells": [
+    {
+      "cellId": "native-cell:14.435696:616",
+      "elevationFeet": 14.435695538057743,
+      "eligibleEdges": 41,
+      "terminalCount": 29,
+      "compiledEdges": 40,
+      "refusedEdges": [
+        {
+          "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1",
+          "reason": "sampled-graph-disconnection"
+        }
+      ],
+      "seconds": 19.211429621000004
+    },
+    {
+      "cellId": "native-cell:14.435696:617",
+      "elevationFeet": 14.435695538057743,
+      "eligibleEdges": 6,
+      "terminalCount": 5,
+      "compiledEdges": 6,
+      "refusedEdges": [],
+      "seconds": 0.6592981109999965
+    }
+  ],
+  "preparedRoutingSha256": "0b0ab0b1b003eff07cb4b04fab4b63a7b69b1630458a9380c9bdb03e40a05936",
+  "preparedRoutingBytes": 22117,
+  "sourceGraphAndGeometryUnchanged": true,
+  "fullPackageImportPerformed": false,
+  "actualNavigationAcceptancePerformed": false,
+  "execution": {
+    "format": "supervised-candidate-execution-v1",
+    "command": [
+      "node",
+      "--max-old-space-size=4096",
+      "--import",
+      "tsx",
+      "scripts/indoor/compile-corridor-candidates.ts",
+      "/workspace/scratch/6c5c946bd748/connected-campus-inputs/UNBC.master.reviter.zip",
+      "/workspace/scratch/6c5c946bd748/connected-campus-results/acceptance/candidate-616-617-20261030",
+      "--cell",
+      "native-cell:14.435696:616",
+      "--cell",
+      "native-cell:14.435696:617"
+    ],
+    "workingDirectory": "/workspace/scratch/6c5c946bd748/worktrees/connected-campus-rebuild-20261030/openindoormaps",
+    "startedAt": "2026-10-30T21:41:59.078520+00:00",
+    "finishedAt": "2026-10-30T21:42:52.120735+00:00",
+    "seconds": 53.04221962600059,
+    "exitCode": 0,
+    "timedOut": false,
+    "interrupted": false,
+    "kernelMaxChildRssKiB": 3306492,
+    "kernelChildUserSeconds": 61.816597,
+    "kernelChildSystemSeconds": 4.458387,
+    "cgroupLimitBytes": 8589934592,
+    "sampledSharedCgroupPeakBytes": 5773303808,
+    "sampleIntervalSeconds": 1,
+    "samples": 54,
+    "cgroupEventDeltas": {
+      "low": 0,
+      "high": 0,
+      "max": 0,
+      "oom": 0,
+      "oom_kill": 0,
+      "oom_group_kill": 0
+    },
+    "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+  },
+  "fullNormalAndWorkerAcceptance": "PASS_SEE_CURRENT_ACCEPTANCE",
+  "inventoryComplete": false,
+  "campusConnectivityProven": false,
+  "releaseAcceptance": false,
+  "published": false,
+  "acceptanceRunId": "6125723b-ff0a-4506-ade1-e09b49d2e79b",
+  "acceptanceReportSha256": "bdc90436739436d2aa3932af5690428b7dc5afc5404ba256fa3383d0c1c722e2"
+}

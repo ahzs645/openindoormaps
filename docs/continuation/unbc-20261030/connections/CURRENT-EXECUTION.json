@@ -1,0 +1,40 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "node",
+    "--max-old-space-size=4096",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/workspace/scratch/6c5c946bd748/connected-campus-inputs/UNBC.master.reviter.zip",
+    "/workspace/scratch/6c5c946bd748/connected-campus-results/acceptance/candidate-616-617-20261030/prepared-routing.json",
+    "/workspace/scratch/6c5c946bd748/worktrees/connected-campus-rebuild-20261030/openindoormaps/docs/continuation/unbc-20261030/connections/ROUTE-CASES.json",
+    "/workspace/scratch/6c5c946bd748/connected-campus-results/acceptance/normal-616-617-20261030",
+    "--connection-inventory",
+    "/workspace/scratch/6c5c946bd748/worktrees/connected-campus-rebuild-20261030/openindoormaps/docs/continuation/unbc-20261030/connections/CONNECTION-INVENTORY.json"
+  ],
+  "workingDirectory": "/workspace/scratch/6c5c946bd748/worktrees/connected-campus-rebuild-20261030/openindoormaps",
+  "startedAt": "2026-10-30T21:44:03.544680+00:00",
+  "finishedAt": "2026-10-30T22:04:30.238240+00:00",
+  "seconds": 1226.6935853220002,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 6960356,
+  "kernelChildUserSeconds": 1450.613981,
+  "kernelChildSystemSeconds": 31.524537,
+  "cgroupLimitBytes": 8589934592,
+  "sampledSharedCgroupPeakBytes": 8589934592,
+  "sampleIntervalSeconds": 1,
+  "samples": 1227,
+  "cgroupEventDeltas": {
+    "low": 0,
+    "high": 0,
+    "max": 7842,
+    "oom": 0,
+    "oom_kill": 0,
+    "oom_group_kill": 0
+  },
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}
