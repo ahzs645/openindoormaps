@@ -42,7 +42,13 @@ const base64 = (bytes: Uint8Array) => {
 const unbase64 = (value: string) => {
   if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value)) return fail();
   try {
-    return Uint8Array.from(atob(value), (c) => c.codePointAt(0) ?? 0);
+    const binary = atob(value);
+    const bytes = new Uint8Array(binary.length);
+    // Avoid the iterable conversion's large temporary numeric array for
+    // packed authoring companions. atob returns one byte per character.
+    for (let i = 0; i < binary.length; i++)
+      bytes[i] = binary.codePointAt(i) ?? 0;
+    return bytes;
   } catch {
     return fail();
   }

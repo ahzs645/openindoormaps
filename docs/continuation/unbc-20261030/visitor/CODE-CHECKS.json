@@ -1,0 +1,204 @@
+{
+  "checkedAt": "2026-10-30T21:42:12.642387+00:00",
+  "status": "PASS_WITH_DISCLOSED_SKIP",
+  "unit": {
+    "total": 37,
+    "passed": 36,
+    "failed": 0,
+    "skipped": 1,
+    "skip": "Optional canonical companion fixture was not supplied to that existing test. The full authoring-master import is a separate acceptance gate.",
+    "command": "node --import tsx --test --test-isolation=none tests/unit/progressive-route-options.test.ts tests/unit/progressive-route-worker-options.test.ts tests/unit/progressive-route-client.test.ts tests/unit/progressive-route-entry.test.ts tests/unit/project-route-link.test.ts tests/unit/review-bundle-wire.test.ts tests/unit/review-bundle-inflate.test.ts"
+  },
+  "typescript": {
+    "strict": true,
+    "scope": "Visitor changes, tests, both pages and transitive imports; repository compiler options.",
+    "errors": 0
+  },
+  "eslint": {
+    "errors": 0,
+    "warnings": 12,
+    "warningScope": "Existing hook/Tailwind warnings in indoor-project-page.tsx outside changed lines."
+  },
+  "build": {
+    "command": "npm run build:pages",
+    "exitCode": 0,
+    "note": "Generated display, route and visitor-plan runtime bindings refreshed. Existing large-bundle and plugin-timing warnings retained."
+  },
+  "browser": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "browserVersion": "147.0.7727.15",
+    "build": "Production Pages build",
+    "productionWorker": true,
+    "syntheticSource": true,
+    "nativeUNBCApproval": false,
+    "screenshots": [
+      "mobile-step-free-refusal-actual-worker.png",
+      "mobile-transit-enabled-actual-worker.png",
+      "desktop-step-free-refusal-actual-worker.png",
+      "desktop-transit-enabled-actual-worker.png",
+      "desktop-selected-place-directions.png",
+      "desktop-unavailable-place.png",
+      "mobile-selected-place-directions.png",
+      "mobile-unavailable-place.png"
+    ],
+    "portableCommand": "npm run build:pages && npx playwright test --config playwright.visitor-flow.config.ts"
+  },
+  "sourceFiles": [
+    {
+      "path": "app/indoor-project/progressive-route-options.ts",
+      "sha256": "bbd503356e95ee5cd9643986798f837c3d988f141b9cb52ec860b5d1ea27d451"
+    },
+    {
+      "path": "app/indoor-project/progressive-route-client.ts",
+      "sha256": "385e55d82e03e81854c52b7b60a13fc64d164bedda68c445e24a95008e0429a7"
+    },
+    {
+      "path": "app/indoor-project/progressive-route.worker.ts",
+      "sha256": "da2027e895b7b2443c059bd30d550f1f41b5cde970aa27bfc779d5a3c8d69fbe"
+    },
+    {
+      "path": "app/indoor-project/review-bundle-wire.ts",
+      "sha256": "b5da15b030d7b9f62c31357970da6fd3eb47b6eba5cc54faf467bfe489bbf82b"
+    },
+    {
+      "path": "app/indoor-project/route-link.ts",
+      "sha256": "b2fdec3a35231b307c1c8d7151421ab5cee2f5dc606a47c5b451393fb7e8dfe2"
+    },
+    {
+      "path": "app/pages/progressive-visitor-page.tsx",
+      "sha256": "d98ff6b54275238ec5b700c4eb5b3c3a0993bca849a8ef2b6265c4dc963fac37"
+    },
+    {
+      "path": "app/pages/indoor-project-page.tsx",
+      "sha256": "43d2b3770150876c60ed4f9d31cdd80fba19ebb788e4c6d64151763d3157c644"
+    },
+    {
+      "path": "app/indoor-project/prepared-display-engine-binding.ts",
+      "sha256": "165d63e21eb7cb0095434804ef89050b4624e835df08f734d56d88bab62601f0"
+    },
+    {
+      "path": "app/indoor-project/published-route-runtime-binding.ts",
+      "sha256": "a0529bcb858fd01886a4c62504d37b3226a5a0c2dcb76ab04e6ebf5372156583"
+    },
+    {
+      "path": "app/indoor-project/published-visitor-plan-runtime-binding.ts",
+      "sha256": "720d0a7daf120b9ba97e1c3c3cabf4aa38ff9c26fe35973680cd53f24d64497c"
+    },
+    {
+      "path": "tests/unit/progressive-route-options.test.ts",
+      "sha256": "a242d9e701c7f64ca5e0b11a48ae839ec3fbded096e89c1dd711c5f89f763175"
+    },
+    {
+      "path": "tests/unit/progressive-route-worker-options.test.ts",
+      "sha256": "8a0e92cb695a3c1d7e913c27e1d522530018906079e145771d3723aa1426a079"
+    },
+    {
+      "path": "tests/unit/progressive-route-client.test.ts",
+      "sha256": "f743908a3747b85e0cc7a7b34359b98b7b1486a6d47275f33d565b69a9aa4c4a"
+    },
+    {
+      "path": "tests/unit/progressive-route-entry.test.ts",
+      "sha256": "d0ef91f8ff5a27770d4c25633b4714cbd5bf47074c1f304abf52ace09254f39a"
+    },
+    {
+      "path": "tests/unit/project-route-link.test.ts",
+      "sha256": "ecfb3b73ad3f034cdc610aab76cecc3c0d1d996034c4e434693149a05230a0b5"
+    },
+    {
+      "path": "tests/fixtures/progressive-visitor-ui.ts",
+      "sha256": "4090cb6c5578f26d5a71a274b677774f3a222a2a6d10c22b1c1431e7a164aa8b"
+    },
+    {
+      "path": "tests/e2e/progressive-visitor-flow.spec.ts",
+      "sha256": "9631e61b24e767fc9cdc72fad1dd50f9f6f8a9f39d06c8dfcad7a8f12a4431f1"
+    },
+    {
+      "path": "tests/e2e/progressive-visitor.spec.ts",
+      "sha256": "e22c65f015d26af4414d0e2616b9df46bfac7c06a6d2073307d4993076f7ffda"
+    },
+    {
+      "path": "playwright.visitor-flow.config.ts",
+      "sha256": "d72b14271a51af8144f18c078272bdb2e7a236ffe5f90e47c7c1a8434d7d2385"
+    }
+  ],
+  "environmentNotes": [
+    "The process sandbox suppresses Node child-process output. A minimal reproduction was verified; the retained successful decoder test ran through approved normal child-process execution. No assertions were removed.",
+    "Initial scoped typecheck configuration lived outside the repository and could not resolve its type definitions. The retained check used the repository configuration and dependency resolution.",
+    "The configured legacy disclosure E2E case now opts into ordinary-room transit; equivalent actual-worker behavior is exercised by the two retained desktop/mobile flow cases."
+  ],
+  "published": false,
+  "evidence": [
+    {
+      "path": "desktop-selected-place-directions.png",
+      "bytes": 104181,
+      "sha256": "0afd9d6c84bab446950ef811e3648cf6ff9a33b16ec5e9f13e91396735c181e4"
+    },
+    {
+      "path": "desktop-step-free-refusal-actual-worker.png",
+      "bytes": 96350,
+      "sha256": "b53c945c7798aceb4c88d2233843226b88cf8042a908dde25c46aa354d3900ae"
+    },
+    {
+      "path": "desktop-transit-enabled-actual-worker.png",
+      "bytes": 86894,
+      "sha256": "eaa73de5ecc117dbd2deed432b0e801573a274546f0c16b95ec7e02b9d4384bf"
+    },
+    {
+      "path": "desktop-unavailable-place.png",
+      "bytes": 101998,
+      "sha256": "92f8e8e3358f432c83c1293cd3da72f7e9f4a648e38267032999cbd1b996711f"
+    },
+    {
+      "path": "mobile-selected-place-directions.png",
+      "bytes": 44907,
+      "sha256": "07f35191f78ed6993d0a3689e05c65cc73b775e11de804095bc1387537e03739"
+    },
+    {
+      "path": "mobile-step-free-refusal-actual-worker.png",
+      "bytes": 40760,
+      "sha256": "0bf28e9e421fbb464f5a7c53e361c7fd5633bf93b03e92b21a6a539bd0296bc8"
+    },
+    {
+      "path": "mobile-transit-enabled-actual-worker.png",
+      "bytes": 39246,
+      "sha256": "ad95a7ef9ef91be67364068d71d48a195748a27c642de77b56b01f51d5eae2c4"
+    },
+    {
+      "path": "mobile-unavailable-place.png",
+      "bytes": 35674,
+      "sha256": "75f11753fca7f199359e13c8662422455b8490e736c6a7c1787865d78b4a838d"
+    },
+    {
+      "path": "pages-build.log",
+      "bytes": 17742,
+      "sha256": "019a3c81675d6fe8d7da02df4123ee140453b009b4ed5761b3f5d24d3bc928af"
+    },
+    {
+      "path": "visitor-browser-results.json",
+      "bytes": 7381,
+      "sha256": "59d67500bc77a9d6b07939b15a1849e56abbed06587197165d026dde9881de02"
+    },
+    {
+      "path": "visitor-browser.log",
+      "bytes": 1871,
+      "sha256": "a6b51ebe07fcd284c7aac26414973fc5f48aa91f25771136be05180ad79ed28d"
+    },
+    {
+      "path": "visitor-lint.log",
+      "bytes": 2420,
+      "sha256": "2f158243ce8136a5a2f7e63a5a1adaac7453a78d7a54af6f686d027c2344a2f4"
+    },
+    {
+      "path": "visitor-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "visitor-unit.log",
+      "bytes": 3703,
+      "sha256": "288e2f2f6092c433903a6659111f265e29a547e1daeb064fa397bf1170b66107"
+    }
+  ]
+}

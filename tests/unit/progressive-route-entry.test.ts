@@ -74,7 +74,12 @@ globalThis.runSelectEndpoint = (${selectEndpoint.initializer.getText(pageSource)
   { compilerOptions: { target: ts.ScriptTarget.ES2022 } },
 ).outputText;
 
-function setup(start: string, end: string, mode = "public") {
+function setup(
+  start: string,
+  end: string,
+  mode = "public",
+  allowOtherRoomTransit = false,
+) {
   const messages: ProgressiveRouteRequest[] = [];
   let workerCount = 0;
   const routes = new ProgressiveRouteClient(() => {
@@ -126,6 +131,7 @@ function setup(start: string, end: string, mode = "public") {
     start,
     end,
     profile: mode,
+    allowOtherRoomTransit,
     client: {
       manifestUrl: "https://map.invalid/manifest.json",
       manifest: { revisionSha256: "a".repeat(64) },
@@ -211,6 +217,10 @@ test("actual compact-page handler still requests checked routing for distinct id
     assert.equal(check.messages[0].start, "agora-floor-one");
     assert.equal(check.messages[0].end, "agora-floor-two");
     assert.equal(check.messages[0].mode, profile);
+    assert.deepEqual(check.messages[0].options, {
+      endpointMode: "inside",
+      allowOtherRoomTransit: false,
+    });
     assert.deepEqual(check.starts, ["route"]);
     assert.deepEqual(check.states.calculating, [true, false]);
     assert(
@@ -218,6 +228,17 @@ test("actual compact-page handler still requests checked routing for distinct id
     );
     check.dispose();
   }
+});
+
+test("actual compact-page handler carries the selected room-transit preference", async () => {
+  const check = setup("original-start", "original-end", "public", true);
+  await check.run();
+  assert.equal(check.messages.length, 1);
+  assert.deepEqual(check.messages[0].options, {
+    endpointMode: "inside",
+    allowOtherRoomTransit: true,
+  });
+  check.dispose();
 });
 
 test("actual compact-page handler does not start directions with an unselected endpoint", async () => {

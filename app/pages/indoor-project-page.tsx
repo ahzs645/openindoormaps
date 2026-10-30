@@ -671,6 +671,7 @@ export default function IndoorProjectPage() {
       setRoutePickTarget(null);
       setEnd(linkedRoute.end);
       setMode(linkedRoute.mode);
+      setAllowOtherRoomTransit(linkedRoute.allowOtherRoomTransit === true);
       setRouteLinkNotice(linkedRoute.notice);
       fitSelection.current = true;
       fitted.current = false;
@@ -682,9 +683,12 @@ export default function IndoorProjectPage() {
   );
   useEffect(() => {
     if (!project) return;
-    const next = projectRouteLinkUrl({ start, end, mode }, location.href);
+    const next = projectRouteLinkUrl(
+      { start, end, mode, allowOtherRoomTransit },
+      location.href,
+    );
     if (next !== location.href) history.replaceState(history.state, "", next);
-  }, [project, start, end, mode]);
+  }, [project, start, end, mode, allowOtherRoomTransit]);
   useEffect(() => {
     return () => {
       if (download) URL.revokeObjectURL(download.url);

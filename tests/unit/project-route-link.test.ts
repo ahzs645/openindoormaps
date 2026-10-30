@@ -38,6 +38,7 @@ test("stable string identities and accessible mode survive both hosting styles",
     const link = projectRouteLinkUrl(state, base);
     assert.deepEqual(readProjectRouteLink(routeSearch(link), data), {
       ...state,
+      allowOtherRoomTransit: false,
       notice: "",
     });
     assert.equal(
@@ -52,6 +53,47 @@ test("stable string identities and accessible mode survive both hosting styles",
     assert.equal(
       projectRouteLinkUrl({ start: "", end: "", mode: "public" }, link),
       base,
+    );
+  }
+});
+
+test("ordinary-room transit is explicit and survives both hosting styles", () => {
+  for (const base of [
+    "https://example.test/openindoormaps/#/projects/indoor?package=%2Fproject.json",
+    "https://example.test/projects/indoor?manifest=%2Fm.json#details",
+  ]) {
+    const state = {
+      start: "a & b",
+      end: "rm-2",
+      mode: "public" as const,
+      allowOtherRoomTransit: true,
+    };
+    const link = projectRouteLinkUrl(state, base);
+    assert.equal(
+      new URLSearchParams(routeSearch(link)).get("roomTransit"),
+      "1",
+    );
+    assert.deepEqual(readProjectRouteLink(routeSearch(link), data), {
+      ...state,
+      notice: "",
+    });
+    const reset = projectRouteLinkUrl(
+      { ...state, allowOtherRoomTransit: false },
+      link,
+    );
+    assert.equal(
+      new URLSearchParams(routeSearch(reset)).has("roomTransit"),
+      false,
+    );
+    assert.equal(
+      readProjectRouteLink(routeSearch(reset), data).allowOtherRoomTransit,
+      false,
+    );
+  }
+  for (const value of ["true", "yes", "staff", "0", ""]) {
+    assert.equal(
+      readProjectRouteLink(`roomTransit=${value}`, data).allowOtherRoomTransit,
+      false,
     );
   }
 });

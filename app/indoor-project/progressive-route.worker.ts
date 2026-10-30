@@ -5,6 +5,7 @@ import { progressiveRouteSummary } from "./progressive-route-summary";
 import { projectPlaceDisplayName } from "./visitor-metadata";
 import { projectNavigationSteps } from "./navigation-steps";
 import { ProgressiveVisitorClient } from "./progressive-visitor-client";
+import { progressiveRouteOptions } from "./progressive-route-options";
 import type { IndoorDataset } from "./contract";
 import type {
   ProgressiveRouteRequest,
@@ -52,6 +53,9 @@ async function load(next: NonNullable<ProgressiveRouteRequest["delivery"]>) {
 scope.onmessage = ({ data: request }) => {
   pending = pending.then(async () => {
     try {
+      const options = progressiveRouteOptions(request.options);
+      if (request.mode !== "public" && request.mode !== "accessible")
+        throw new Error("Invalid visitor routing profile.");
       if (request.delivery) {
         delivery = request.delivery;
         await load(request.delivery);
@@ -66,12 +70,11 @@ scope.onmessage = ({ data: request }) => {
       }
       if (!data || !calculator || request.revisionSha256 !== revision)
         throw new Error("Directions are missing their checked map revision.");
-      // This interface displays the inside arrival only. Request that selected
-      // mode explicitly instead of also solving the unused legacy hallway
-      // alternative. The returned route and its physical/policy checks stay
-      // identical; the full source-viewer calculator still supports all modes.
+      // Calculate only the selected arrival, keeping every physical/access
+      // check and the visitor's explicit ordinary-room transit preference.
       const value = calculator(request.start, request.end, request.mode, {
-        endpointMode: "inside",
+        ...options,
+        preferHallways: true,
       });
       const name = (key: string) => {
         const room = data!.records.find((entry) => entry.key === key);

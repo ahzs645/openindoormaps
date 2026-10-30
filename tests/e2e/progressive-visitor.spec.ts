@@ -206,9 +206,14 @@ test("progressive visitor discloses source access and ordinary-room transit then
     `${process.env.PROGRESSIVE_VISITOR_APP_URL ?? "http://127.0.0.1:42554/openindoormaps/"}#/projects/visitor?manifest=${encodeURIComponent(url!)}`,
   );
   await expect(page.getByLabel("Floor", { exact: true })).toBeVisible();
-  await page.getByText("Directions", { exact: true }).click();
   await page.getByLabel("From", { exact: true }).selectOption("0");
   await page.getByLabel("To", { exact: true }).selectOption("1");
+  await page
+    .getByRole("checkbox", {
+      name: "Allow paths through other rooms",
+      exact: true,
+    })
+    .check();
   await page
     .getByRole("button", { name: "Get directions", exact: true })
     .click();
@@ -221,6 +226,7 @@ test("progressive visitor discloses source access and ordinary-room transit then
   await expect(page.getByTestId("route-transit-places")).toContainText(
     "01-2 · Unconfirmed transit room",
   );
+  await page.getByText("Change journey", { exact: true }).click();
   await page.getByLabel("To", { exact: true }).selectOption("0");
   await expect(page.getByTestId("route-unknown-access")).toHaveCount(0);
   await expect(page.getByTestId("route-unknown-accessibility")).toHaveCount(0);

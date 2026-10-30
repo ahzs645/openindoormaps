@@ -11,13 +11,20 @@ import {
   type ProgressiveManifest,
 } from "../../app/indoor-project/progressive-delivery";
 import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepared-display-engine-binding";
+import type { IndoorDataset } from "../../app/indoor-project/contract";
 
-/** Search/form fixture only. It is not physical or UNBC route approval. */
-export function progressiveVisitorUiFixture(base: string) {
-  const data = fixture();
-  data.records[0].arrivalNodeId = "office-arrival";
-  data.records[1].arrivalNodeId = "corridor-arrival";
-  data.records[2].arrivalNodeId = "staff-arrival";
+/** Synthetic display fixture; optional complete routing source exercises the
+ * actual worker. Neither variant is physical or UNBC route approval. */
+export function progressiveVisitorUiFixture(
+  base: string,
+  routingData?: IndoorDataset,
+) {
+  const data = routingData ? structuredClone(routingData) : fixture();
+  if (!routingData) {
+    data.records[0].arrivalNodeId = "office-arrival";
+    data.records[1].arrivalNodeId = "corridor-arrival";
+    data.records[2].arrivalNodeId = "staff-arrival";
+  }
   // Two distinct rooms deliberately share a label to exercise identity selection.
   data.records[1].name = "Office";
   data.records[1].circulation = false;

@@ -1,0 +1,77 @@
+{
+  "format": "pathway-preview-code-checks-v1",
+  "createdAt": "2026-10-30T21:18:49.161707+00:00",
+  "status": "PASS",
+  "sourceBase": "b227739977bcc0ba9e33e8f61ad8ae31f2557bdd",
+  "checks": [
+    {
+      "command": "node --import tsx --test --test-isolation=none tests/unit/path-network-preview.test.ts tests/unit/path-network-systemic.test.ts tests/unit/path-connections.test.ts",
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "durationMilliseconds": 4047.443464
+    },
+    {
+      "name": "strict scoped TypeScript for display/helper/exporter/unit imports",
+      "exitCode": 0
+    },
+    {
+      "name": "scoped ESLint for production changes, exporter/helper, unit test and browser-check script",
+      "exitCode": 0
+    },
+    {
+      "name": "fresh complete-source fixture export",
+      "exitCode": 0,
+      "sourceUnchanged": true,
+      "nativeLevels": 1,
+      "routeAcceptancePerformed": false
+    },
+    {
+      "name": "git diff --check for owned paths",
+      "exitCode": 0
+    }
+  ],
+  "files": [
+    {
+      "path": "app/indoor-project/path-network-view.ts",
+      "sha256": "924b0b0de506b8164252097a637c1cc616b118d8a83e66ed2c6986baa4aed84c"
+    },
+    {
+      "path": "app/indoor-project/path-connections.ts",
+      "sha256": "a329082bea746faf9e668329a52a72b3daf55be5a9768f323e27aa353a7f6175"
+    },
+    {
+      "path": "app/indoor-project/prepared-floor.ts",
+      "sha256": "3a30f796e062d6d3639352b6e66c77810c5c9eb11e1c6236a2a46fb1f38a456c"
+    },
+    {
+      "path": "scripts/indoor/lib/pathway-preview.ts",
+      "sha256": "dd606e6bcf1ede0e8316711fb4fdcfb225a8f4fbe60d8815afe49ca35a7440a3"
+    },
+    {
+      "path": "scripts/indoor/export-pathway-preview.ts",
+      "sha256": "7b804404686e97f70f6f9bc85ee0d80f728439a9961bac8cd831572cd73125ae"
+    },
+    {
+      "path": "scripts/indoor/pathway-preview/index.html",
+      "sha256": "ccfbbee1c709b7c7d57a78a6991d2ec8fc078bc993b7439d38a0906c32369ae7"
+    },
+    {
+      "path": "scripts/indoor/pathway-preview/preview.css",
+      "sha256": "a9fa9b593624d3c6a255a2309a7c2a6ca9ad461468c40c4490b7d70c9adb2245"
+    },
+    {
+      "path": "scripts/indoor/pathway-preview/preview.js",
+      "sha256": "be553543ff74486840ecc4a284dd2a169c4bc6c3c909bb2b742af75ab81f8877"
+    },
+    {
+      "path": "tests/unit/path-network-preview.test.ts",
+      "sha256": "a182b2eecae8756559d80d5766408a82df0ec53dd3864152cf3b62836380c44c"
+    },
+    {
+      "path": "tests/preview/check-pathway-preview.mjs",
+      "sha256": "986207e69b6c3606a1233ae417972a39c01ab2dcb5bb47f0826df2b10748b361"
+    }
+  ],
+  "qualification": "These are fresh code/fixture checks, not UNBC source route acceptance. A later README-only export text correction fixes the manifest path and removes an unsupported room-search claim; no display/helper semantics changed."
+}

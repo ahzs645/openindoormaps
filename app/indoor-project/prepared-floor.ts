@@ -1,6 +1,5 @@
 import { generalizedRoomGeometry } from "./generalized-room-geometry";
-import { hallwayPathView } from "./hallway-path-view";
-import { pathConnections } from "./path-connections";
+import { pathNetworkView } from "./path-network-view";
 import { nativeFloorGround } from "./native-floor-ground";
 import { visitorRoomSurfaces } from "./visitor-room-surfaces";
 import { relativeHeightGeometry } from "./relative-heights";
@@ -198,21 +197,9 @@ export function prepareFloor(
     physicalHeights,
     data,
   );
-  const hallwayPaths = hallwayPathView(data, levelIds, building);
-  const displayedWalkingEdges = new Set<string>(
-    hallwayPaths.features.flatMap(
-      (f) => f.properties?.edgeIds ?? [f.properties?.edgeId],
-    ),
-  );
   return {
     presentation: withRaisedLabels,
-    hallwayPaths,
-    pathConnections: pathConnections(
-      data,
-      levelIds,
-      building,
-      displayedWalkingEdges,
-    ),
+    ...pathNetworkView(data, levelIds, building),
     assumedRoomBlocks,
     nativeStairKeys,
     stairSurroundKeys,

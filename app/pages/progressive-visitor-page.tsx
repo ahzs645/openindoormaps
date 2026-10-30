@@ -414,6 +414,7 @@ export default function ProgressiveVisitorPage() {
   const startRef = useRef<HTMLSelectElement>(null);
   const endRef = useRef<HTMLSelectElement>(null);
   const [profile, setProfile] = useState<"public" | "accessible">("public");
+  const [allowOtherRoomTransit, setAllowOtherRoomTransit] = useState(false);
   const [calculating, setCalculating] = useState(false);
   const [route, setRoute] = useState<ProjectRoute | null>(null);
   const [steps, setSteps] = useState<ProjectStep[]>([]);
@@ -522,6 +523,7 @@ export default function ProgressiveVisitorPage() {
         const linkedEnd = endpoint("to");
         setStart(linkedStart);
         setEnd(linkedEnd);
+        setAllowOtherRoomTransit(link.get("roomTransit") === "1");
         setProfile(
           link.get("profile") === "accessible" || link.get("accessible") === "1"
             ? "accessible"
@@ -557,7 +559,10 @@ export default function ProgressiveVisitorPage() {
   useEffect(() => {
     if (!client) return;
     const next = new URL(
-      projectRouteLinkUrl({ start, end, mode: profile }, location.href),
+      projectRouteLinkUrl(
+        { start, end, mode: profile, allowOtherRoomTransit },
+        location.href,
+      ),
     );
     const search = new URLSearchParams(routeSearch(next.href));
     search.set("manifest", client.manifestUrl);
@@ -566,7 +571,7 @@ export default function ProgressiveVisitorPage() {
     else next.search = search.toString();
     if (next.href !== location.href)
       history.replaceState(history.state, "", next.href);
-  }, [client, start, end, profile]);
+  }, [client, start, end, profile, allowOtherRoomTransit]);
   useEffect(
     () => () => {
       client?.close();
@@ -930,6 +935,7 @@ export default function ProgressiveVisitorPage() {
           preferHttpBrotli: client.httpBrotliEnabled,
           offline: client.offlineOnly,
         },
+        { endpointMode: "inside", allowOtherRoomTransit },
       ).promise;
       if (
         requestEpoch !== routeEpoch.current ||
@@ -943,7 +949,11 @@ export default function ProgressiveVisitorPage() {
       setRouteMessage(
         result.value.route
           ? `${Math.round(result.value.route.distanceMetres)} m`
-          : visitorRouteFailureMessage(result.value.diagnostic, profile, false),
+          : visitorRouteFailureMessage(
+              result.value.diagnostic,
+              profile,
+              !allowOtherRoomTransit,
+            ),
       );
       if (result.value.route) {
         if (journeyRef.current) journeyRef.current.open = false;
@@ -1482,6 +1492,17 @@ export default function ProgressiveVisitorPage() {
                     <option value="public">Walking</option>
                     <option value="accessible">Step-free</option>
                   </select>
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={allowOtherRoomTransit}
+                    onChange={(event) => {
+                      resetDirections();
+                      setAllowOtherRoomTransit(event.target.checked);
+                    }}
+                  />{" "}
+                  Allow paths through other rooms
                 </label>
                 <button
                   onClick={() => void calculate()}

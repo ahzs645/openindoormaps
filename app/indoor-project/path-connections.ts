@@ -11,6 +11,7 @@ export function pathConnections(
   levels: number[],
   building: string,
   displayedWalkingEdges: ReadonlySet<string> = new Set(),
+  options: { includeSourceFeet?: boolean } = {},
 ): FeatureCollection<LineString | Point> {
   const result: FeatureCollection<LineString | Point> = {
     type: "FeatureCollection",
@@ -81,6 +82,15 @@ export function pathConnections(
       nativeElementId: edge.nativeElementId,
       fromBuilding: a.building,
       toBuilding: b.building,
+      ...(options.includeSourceFeet
+        ? {
+            pointsFeet: edge.pointsFeet,
+            fromNodeId: a.id,
+            toNodeId: b.id,
+            fromRoomKey: a.roomKey,
+            toRoomKey: b.roomKey,
+          }
+        : {}),
     };
     const coordinates = edge.pointsFeet.map((p) => geographicPoint(data, p));
     if (
@@ -123,6 +133,14 @@ export function pathConnections(
         nodeId: marker.point.id,
         edgeIds: marker.edgeIds,
         toFloors: [...marker.targets].sort(),
+        ...(options.includeSourceFeet
+          ? {
+              pointFeet: marker.point.pointFeet,
+              levelId: marker.point.levelId,
+              roomKey: marker.point.roomKey,
+              building: marker.point.building,
+            }
+          : {}),
         label:
           marker.role === "held"
             ? "Held stairs"
@@ -161,6 +179,14 @@ export function pathConnections(
         nodeId: stop.nodeId,
         edgeIds: stop.edgeIds,
         approachStatus: stop.status,
+        ...(options.includeSourceFeet
+          ? {
+              pointFeet: stop.pointFeet,
+              levelId: stop.levelId,
+              roomKey: stop.roomKey,
+              building: stop.building,
+            }
+          : {}),
         label: `Missing path${stop.roomNumber ? ` · ${stop.roomNumber}` : ""}`,
       },
       geometry: {

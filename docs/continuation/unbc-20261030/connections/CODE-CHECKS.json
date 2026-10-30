@@ -1,0 +1,76 @@
+{
+  "format": "Changed TypeScript and tests formatted with repository Prettier configuration. Raw bound cases and inventory deliberately retain their hashed bytes.",
+  "checkedAt": "2026-10-30T21:18:17.864478+00:00",
+  "status": "PASS",
+  "nodeVersion": "v24.22.1",
+  "unit": {
+    "command": "node --import tsx --test --test-isolation=none tests/unit/shared-corridor-acceptance.test.ts tests/unit/connection-acceptance.test.ts",
+    "namedTests": 18,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0
+  },
+  "typecheck": {
+    "command": "node --max-old-space-size=3072 node_modules/typescript/bin/tsc --strict --noEmit --skipLibCheck --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --esModuleInterop --types node --lib ES2023,DOM scripts/indoor/lib/shared-corridor-acceptance.ts scripts/indoor/lib/connection-acceptance.ts scripts/indoor/verify-shared-corridor-candidate.ts tests/unit/shared-corridor-acceptance.test.ts tests/unit/connection-acceptance.test.ts",
+    "scope": "Acceptance CLI, helpers, tests and their transitive imports; strict matches repository configuration."
+  },
+  "lint": {
+    "command": "node node_modules/eslint/bin/eslint.js scripts/indoor/lib/shared-corridor-acceptance.ts scripts/indoor/lib/connection-acceptance.ts scripts/indoor/verify-shared-corridor-candidate.ts tests/unit/shared-corridor-acceptance.test.ts tests/unit/connection-acceptance.test.ts",
+    "errors": 0,
+    "warnings": 0
+  },
+  "sourceFiles": [
+    {
+      "path": "scripts/indoor/lib/shared-corridor-acceptance.ts",
+      "sha256": "4548fed6a8a28c3a5a6fc361cbd7039b7655a5340d6c992fcf4f0f4f89d4a54e"
+    },
+    {
+      "path": "scripts/indoor/lib/connection-acceptance.ts",
+      "sha256": "17f1694d098f839c98200b35f1baa5c68bc2c96020f97c6557531b1d381fffc0"
+    },
+    {
+      "path": "scripts/indoor/verify-shared-corridor-candidate.ts",
+      "sha256": "aaf50768ad18dc91c88959b3f8fe2580a72287584298faf654596d373721906a"
+    },
+    {
+      "path": "tests/unit/shared-corridor-acceptance.test.ts",
+      "sha256": "12057eadbd3223f5dfe6a56e8a3c21a280013072b4d59431bce9a4fe15e918d3"
+    },
+    {
+      "path": "tests/unit/connection-acceptance.test.ts",
+      "sha256": "52017ce9e2726cac2f6f9461340e4fcc9a6cbccb3fefe4f19de2c9652908cb0b"
+    }
+  ],
+  "logs": [
+    {
+      "kind": "unit",
+      "path": "unit.log",
+      "bytes": 1896,
+      "sha256": "2543abbbdc5970fb8af4c9136ebfa9403407b26eedb74d69e6b70215ef8f3ee9",
+      "exitCode": 0
+    },
+    {
+      "kind": "lint",
+      "path": "lint.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0
+    },
+    {
+      "kind": "typecheck",
+      "path": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0
+    }
+  ],
+  "attemptNotes": [
+    "Initial scoped lint identified two style errors, fixed before the retained successful run.",
+    "Initial manually constructed typecheck omitted strict mode; it produced discriminated-union narrowing errors in existing modules. The retained invocation uses repository-equivalent strict mode and passes."
+  ],
+  "normalSourceImportPerformed": false,
+  "productionWorkerReplayPerformed": false,
+  "releaseAcceptance": false,
+  "published": false,
+  "additionalReview": "Source bindings require all three exact hashes; identical semantic requests are deduplicated using the production route-request options key, including omitted defaults."
+}

@@ -1,0 +1,45 @@
+✔ routing remains lazy, reuses a checked worker revision and never posts a full dataset (5.884959ms)
+✔ superseded routes terminate CPU work and stale replies cannot resolve another revision (1.374212ms)
+✔ unreadable worker replies reject and dispose instead of leaving directions pending (0.578939ms)
+✔ worker factory and postMessage failures reject and release the worker (0.800842ms)
+✔ route options are copied on every request, including a resident revision (0.804236ms)
+✔ invalid visitor options reject before a worker or download is created (0.32643ms)
+✔ preparation loads a revision without a route, and the next request only calculates (1.060411ms)
+✔ a route request takes over an unfinished preparation in the same worker (0.711127ms)
+✔ a failed or cancelled preparation releases its worker; the next request reloads (0.758868ms)
+✔ only an idle resident worker is released for floor work (0.463035ms)
+✔ actual compact-page handler returns same-place status without scheduling or loading routing (8.606092ms)
+✔ actual compact-page handler still requests checked routing for distinct identities (5.176817ms)
+✔ actual compact-page handler carries the selected room-transit preference (3.690807ms)
+✔ actual compact-page handler does not start directions with an unselected endpoint (9.929016ms)
+✔ actual place-card endpoint action reopens the collapsed journey before focusing its other select (5.962285ms)
+✔ visitor requests default to inside arrival and hallway-only transit (0.369864ms)
+✔ both arrival modes and explicit room-transit choices are copied (0.277516ms)
+✔ invalid shapes and ambiguous preference types refuse instead of coercing (0.358378ms)
+✔ visitor preferences cannot carry source overrides or compiler options (0.459129ms)
+✔ worker keeps explicit hallway/transit options through checked calculation (13.403439ms)
+✔ worker rejects injected authority flags and malformed options before source loading (8.6188ms)
+✔ worker rejects nonvisitor route profiles (7.256507ms)
+✔ worker preparation remains lazy and does not calculate a route (2.509355ms)
+✔ stable string identities and accessible mode survive both hosting styles (2.064297ms)
+✔ ordinary-room transit is explicit and survives both hosting styles (0.923956ms)
+✔ unknown, renamed-label, restricted and closed endpoints refuse selection (0.330546ms)
+✔ missing arrival remains available for normal refusal; no route authority is invented (0.236665ms)
+✔ bounded inflation preserves empty, stored and Huffman streams across input/window boundaries (394.665721ms)
+✔ bounds reject invalid declarations, missing output, overruns and truncated/invalid blocks (48.175778ms)
+✔ an undeclared expansion is rejected without allocating its full bomb output (420.838454ms)
+﹣ actual canonical companion decodes byte-for-byte against independent zlib and original source digests (0.123025ms) # SKIP
+✔ packed authoring evidence preserves default streams, nondefault streams, binary files and ordering exactly (71.597878ms)
+✔ legacy wire is unchanged; only exceeding rooms JSON packs review companions (112.068041ms)
+✔ packed wire refuses damaged payload, truncated stream, trailing bytes and wrong declared lengths (123.143042ms)
+✔ metadata and expansion bounds reject unsafe paths, file/count/total/header excess and raw bombs (135.542079ms)
+✔ legacy noncanonical base64 spelling is retained rather than silently normalized (51.151252ms)
+✔ binary archive fallback binds the exact container, hydrates evidence and excludes it from visitors (55.49951ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 3621.636241

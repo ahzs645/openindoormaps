@@ -2,6 +2,10 @@ import type { ProgressiveManifest } from "./progressive-delivery";
 import type { RouteCalculation } from "./route-calculation";
 import type { ProgressiveRouteSummary } from "./progressive-route-summary";
 import type { ProjectStep } from "./navigation-steps";
+import {
+  progressiveRouteOptions,
+  type ProgressiveRouteOptions,
+} from "./progressive-route-options";
 export type ProgressiveRouteRequest = {
   requestId: number;
   revisionSha256: string;
@@ -16,6 +20,7 @@ export type ProgressiveRouteRequest = {
   start: string;
   end: string;
   mode: "public" | "accessible";
+  options?: ProgressiveRouteOptions;
 };
 export type ProgressiveRouteResponse = { requestId: number } & (
   | { prepared: true }
@@ -52,6 +57,7 @@ export class ProgressiveRouteClient {
     end: string,
     mode: "public" | "accessible",
     deliveryOptions: { preferHttpBrotli?: boolean; offline?: boolean } = {},
+    options: ProgressiveRouteOptions = {},
   ) {
     if (this.reject || this.residentRevision !== manifest.revisionSha256)
       this.dispose();
@@ -68,6 +74,7 @@ export class ProgressiveRouteClient {
       reject = fail;
       this.reject = fail;
       try {
+        const checkedOptions = progressiveRouteOptions(options);
         if (!this.worker) this.worker = this.factory();
         const worker = this.worker;
         worker.onmessage = ({ data }) => {
@@ -111,6 +118,7 @@ export class ProgressiveRouteClient {
           start,
           end,
           mode,
+          options: checkedOptions,
         });
         this.residentRevision = manifest.revisionSha256;
       } catch (error) {

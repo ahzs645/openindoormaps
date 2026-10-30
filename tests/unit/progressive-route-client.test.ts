@@ -46,6 +46,10 @@ test("routing remains lazy, reuses a checked worker revision and never posts a f
   const initial = workers[0].requests[0];
   assert.equal(initial.delivery?.manifest, manifest);
   assert.ok(!("data" in initial));
+  assert.deepEqual(initial.options, {
+    endpointMode: "inside",
+    allowOtherRoomTransit: false,
+  });
   workers[0].reply({
     requestId: initial.requestId,
     value: { route: null },
@@ -169,6 +173,40 @@ const routeReply = (worker: Worker, index: number) =>
     steps: [],
     summary: { transitPlaces: [] },
   });
+test("route options are copied on every request, including a resident revision", async () => {
+  const worker = new Worker();
+  const client = new ProgressiveRouteClient(() => worker);
+  const options = {
+    endpointMode: "hallway" as const,
+    allowOtherRoomTransit: true,
+  };
+  const first = client.request(url, manifest, "a", "b", "public", {}, options);
+  options.allowOtherRoomTransit = false;
+  assert.deepEqual(worker.requests[0].options, {
+    endpointMode: "hallway",
+    allowOtherRoomTransit: true,
+  });
+  routeReply(worker, 0);
+  await first.promise;
+  const next = client.request(url, manifest, "b", "a", "public", {}, options);
+  assert.equal(worker.requests[1].delivery, undefined);
+  assert.equal(worker.requests[1].options?.allowOtherRoomTransit, false);
+  routeReply(worker, 1);
+  await next.promise;
+  client.dispose();
+});
+
+test("invalid visitor options reject before a worker or download is created", async () => {
+  const client = new ProgressiveRouteClient(() =>
+    assert.fail("invalid options started a worker"),
+  );
+  await assert.rejects(
+    client.request(url, manifest, "a", "b", "public", {}, {
+      allowOtherRoomTransit: "true",
+    } as never).promise,
+    /transit preference/,
+  );
+});
 test("preparation loads a revision without a route, and the next request only calculates", async () => {
   const workers: Worker[] = [];
   const client = new ProgressiveRouteClient(() => {

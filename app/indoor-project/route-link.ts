@@ -6,6 +6,7 @@ export type ProjectRouteLink = {
   start: string;
   end: string;
   mode: "public" | "accessible";
+  allowOtherRoomTransit?: boolean;
 };
 
 /** Links select existing places; the normal route calculator still checks access. */
@@ -28,6 +29,7 @@ export function readProjectRouteLink(
   return {
     start,
     end,
+    allowOtherRoomTransit: params.get("roomTransit") === "1",
     mode:
       params.get("profile") === "accessible" || params.get("accessible") === "1"
         ? "accessible"
@@ -46,10 +48,12 @@ export function projectRouteLinkUrl(state: ProjectRouteLink, base: string) {
   const params = hashRoute
     ? new URLSearchParams(routeSearch(base))
     : url.searchParams;
-  for (const key of ["from", "to", "profile", "accessible"]) params.delete(key);
+  for (const key of ["from", "to", "profile", "accessible", "roomTransit"])
+    params.delete(key);
   if (state.start) params.set("from", state.start);
   if (state.end) params.set("to", state.end);
   if (state.mode === "accessible") params.set("accessible", "1");
+  if (state.allowOtherRoomTransit === true) params.set("roomTransit", "1");
   if (hashRoute)
     url.hash = url.hash.split("?")[0] + (params.size > 0 ? `?${params}` : "");
   return url.toString();

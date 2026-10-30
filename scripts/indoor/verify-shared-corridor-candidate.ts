@@ -2,7 +2,7 @@
  * worker replay. Results are candidate evidence, never a published receipt.
  */
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -31,26 +31,35 @@ import {
 import { routeWorkerDataset } from "../../app/indoor-project/route-worker-dataset";
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
-import { projectRoutingOptionsKey } from "../../app/indoor-project/routing-options";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import {
+  assertSharedCorridorRouteParity,
+  validateCandidateRouteCases,
+} from "./lib/shared-corridor-acceptance";
+import {
+  summarizeConnectionAcceptance,
+  validateConnectionInventory,
+  type ConnectionInventory,
+  type CurrentNormalConnectionResult,
+  type CurrentWorkerConnectionResult,
+} from "./lib/connection-acceptance";
 
-type CandidateCase = {
-  id: string;
-  from: string;
-  to: string;
-  mode: RouteRequest["mode"];
-  options: NonNullable<RouteRequest["options"]>;
-  expected: boolean;
-  requiredNativeDoorId?: number;
-  requireSharedGuide?: boolean;
-};
 const [input, guidesPath, casesPath, output, ...extra] = process.argv.slice(2);
-if (!input || !guidesPath || !casesPath || !output || extra.length > 0)
+if (
+  !input ||
+  !guidesPath ||
+  !casesPath ||
+  !output ||
+  (extra.length > 0 &&
+    (extra.length !== 2 || extra[0] !== "--connection-inventory" || !extra[1]))
+)
   throw new Error(
-    "Usage: verify-shared-corridor-candidate.ts SOURCE-MASTER.zip PREPARED-ROUTING.json CASES.json NEW-OUTPUT-DIRECTORY",
+    "Usage: verify-shared-corridor-candidate.ts SOURCE-MASTER.zip PREPARED-ROUTING.json CASES.json NEW-OUTPUT-DIRECTORY [--connection-inventory INVENTORY.json]",
   );
 const root = path.resolve(import.meta.dirname, "../.."),
   out = path.resolve(output),
+  inventoryPath = extra[1],
+  runId = randomUUID(),
   started = performance.now();
 await mkdir(out, { recursive: false });
 const sha = (bytes: Uint8Array | string) =>
@@ -74,24 +83,19 @@ const binding = () =>
 const implementation = binding(),
   inputSha256 = await fileSha(input),
   casesBytes = await readFile(casesPath),
-  cases = JSON.parse(casesBytes.toString()) as CandidateCase[];
-assert(
-  Array.isArray(cases) && cases.length > 0,
-  "Require explicit route cases",
-);
-const ids = new Set<string>();
-for (const item of cases) {
-  assert(item.id && !ids.has(item.id), "Cases require unique explicit IDs");
-  ids.add(item.id);
-  assert(item.from && item.to && item.from !== item.to);
-  assert(["public", "accessible"].includes(item.mode));
-  assert.equal(
-    typeof item.expected,
-    "boolean",
-    "Every case needs an expectation",
+  cases: unknown = JSON.parse(casesBytes.toString()),
+  inventoryBytes = inventoryPath ? await readFile(inventoryPath) : undefined,
+  inventory = inventoryBytes
+    ? (JSON.parse(inventoryBytes.toString()) as ConnectionInventory)
+    : undefined;
+validateCandidateRouteCases(cases);
+if (inventory)
+  validateConnectionInventory(
+    inventory,
+    inventory.source,
+    cases,
+    sha(casesBytes),
   );
-  projectRoutingOptionsKey(item.options);
-}
 assert(
   cases.some((item) => item.expected && item.requireSharedGuide),
   "Require an actual shared-guide route; an all-fallback replay is incomplete",
@@ -110,10 +114,12 @@ const write = (name: string, value: unknown) =>
 await write("started.json", {
   format: "shared-corridor-candidate-acceptance-v1",
   status: "RUNNING",
+  runId,
   sourceMaster: path.resolve(input),
   inputSha256,
   guidesPath: path.resolve(guidesPath),
   casesSha256: sha(casesBytes),
+  connectionInventorySha256: inventoryBytes ? sha(inventoryBytes) : undefined,
   implementation,
   nodeVersion: process.version,
   published: false,
@@ -143,6 +149,18 @@ const source = project.dataset,
       kind: edge.kind,
       nativeElementId: edge.nativeElementId,
     }));
+const connectionSource = {
+  sourceMasterSha256: inputSha256,
+  sourceModelSha256: source.source.modelSha256,
+  sourceRoomsSha256: source.source.roomsSha256,
+};
+if (inventory)
+  validateConnectionInventory(
+    inventory,
+    connectionSource,
+    cases,
+    sha(casesBytes),
+  );
 // A complete import can overlap independent complete-cell compilation. Never
 // restart the importer just because its immutable guides are not ready yet.
 for (let attempt = 0; ; attempt++) {
@@ -229,6 +247,11 @@ for (const item of cases) {
     byKey.has(item.from) && byKey.has(item.to),
     `${item.id}: missing original destination`,
   );
+  for (const id of item.requiredSourceEdgeIds ?? [])
+    assert(
+      originalEdges.get(id)?.enabled,
+      `${item.id}: required source edge is absent or disabled: ${id}`,
+    );
 }
 const calculate = createWorkerRouteCalculator(data),
   actual: {
@@ -236,7 +259,7 @@ const calculate = createWorkerRouteCalculator(data),
     result: RouteCalculation;
     instructions: ReturnType<typeof projectNavigationSteps>;
   }[] = [],
-  rows: unknown[] = [],
+  rows: CurrentNormalConnectionResult[] = [],
   failures: { id: string; message: string }[] = [];
 for (const item of cases) {
   at = performance.now();
@@ -248,65 +271,20 @@ for (const item of cases) {
         ...options,
         useSharedCorridorGuides: false,
       });
-    assert.equal(
-      !!result.route,
-      item.expected,
-      `${item.id}: route expectation`,
+    const parity = assertSharedCorridorRouteParity(
+      item,
+      result,
+      baseline,
+      originalEdges,
     );
-    assert.equal(
-      !!result.route,
-      !!baseline.route,
-      "Guides changed route availability",
-    );
-    if (result.route && baseline.route) {
-      assert.deepEqual(
-        result.route.edges.map((edge) => edge.id),
-        baseline.route.edges.map((edge) => edge.id),
-        "Guides changed selected source edges",
-      );
-      assert.deepEqual(result.route.doorEdgeIds, baseline.route.doorEdgeIds);
-      assert.deepEqual(
-        result.route.unknownAccessAreas,
-        baseline.route.unknownAccessAreas,
-      );
-      assert.deepEqual(
-        result.route.unknownAccessibilityEdges,
-        baseline.route.unknownAccessibilityEdges,
-      );
-      for (const edge of result.route.edges) {
-        const original = originalEdges.get(edge.id);
-        assert(
-          original?.enabled,
-          "A disabled or invented source edge was used",
-        );
-        assert.deepEqual(edge, original, "A source edge changed");
-      }
-      if (item.requiredNativeDoorId !== undefined)
-        assert(
-          result.route.edges.some(
-            (edge) =>
-              edge.kind === "door" &&
-              edge.nativeElementId === item.requiredNativeDoorId,
-          ),
-          "Required original door was not used",
-        );
-      if (item.requireSharedGuide)
-        assert(
-          result.route.paths.some((part) => part.sharedCorridorGuideUsed),
-          "No accepted shared guide exercised",
-        );
-      if (item.mode === "accessible")
-        assert(
-          result.route.paths.every((part) => !part.sharedCorridorGuideUsed),
-          "Shared walking guides cannot approve step-free clearance",
-        );
-    }
     const instructions = result.route
       ? projectNavigationSteps(data, result.route, item.from, item.to)
       : [];
     actual.push({ id: item.id, result, instructions });
     const row = {
       ...item,
+      ...parity,
+      runId,
       fromNumber: byKey.get(item.from)!.number,
       toNumber: byKey.get(item.to)!.number,
       available: !!result.route,
@@ -316,6 +294,7 @@ for (const item of cases) {
       distanceMetres: result.route?.distanceMetres,
       edgeIds: result.route?.edges.map((edge) => edge.id),
       diagnostic: result.diagnostic,
+      baselineDiagnostic: baseline.diagnostic,
       seconds: (performance.now() - at) / 1000,
     };
     rows.push(row);
@@ -376,6 +355,7 @@ const worker = new Worker(pathToFileURL(bundle), {
 });
 let pending:
   | {
+      requestId: number;
       resolve: (value: RouteCalculation) => void;
       reject: (error: Error) => void;
     }
@@ -391,6 +371,13 @@ worker.on("message", (response: RouteResponse & { _ready?: boolean }) => {
     ready?.();
     return;
   }
+  if (pending && response.requestId !== pending.requestId) {
+    pending.reject(
+      new Error("Production worker returned another request identity"),
+    );
+    pending = undefined;
+    return;
+  }
   if ("error" in response) pending?.reject(new Error(response.error));
   else if ("value" in response) pending?.resolve(response.value);
   pending = undefined;
@@ -399,7 +386,14 @@ worker.on("error", (error) => {
   rejectReady?.(error);
   pending?.reject(error);
 });
-const workerRows: unknown[] = [];
+worker.on("exit", (code) => {
+  const error = new Error(
+    `Production worker exited before completing its response: ${code}`,
+  );
+  rejectReady?.(error);
+  pending?.reject(error);
+});
+const workerRows: CurrentWorkerConnectionResult[] = [];
 let sentData = false;
 try {
   let readyTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -419,7 +413,7 @@ try {
     log("production-worker-route-start", { id: item.id });
     try {
       const response = new Promise<RouteCalculation>((resolve, reject) => {
-        pending = { resolve, reject };
+        pending = { requestId: index + 1, resolve, reject };
       });
       worker.postMessage({
         requestId: index + 1,
@@ -455,7 +449,8 @@ try {
       );
       const row = {
         id: item.id,
-        status: "PASS",
+        runId,
+        status: "PASS" as const,
         seconds: (performance.now() - at) / 1000,
       };
       workerRows.push(row);
@@ -463,7 +458,7 @@ try {
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       failures.push({ id: `worker:${item.id}`, message });
-      workerRows.push({ id: item.id, status: "FAILED", message });
+      workerRows.push({ id: item.id, runId, status: "FAILED", message });
       break;
     }
   }
@@ -490,14 +485,37 @@ assert.equal(
   sha(casesBytes),
   "Route cases changed during acceptance",
 );
+if (inventoryPath && inventoryBytes)
+  assert.equal(
+    await fileSha(inventoryPath),
+    sha(inventoryBytes),
+    "Connection inventory changed during acceptance",
+  );
 assert.equal(
   binding().sha256,
   implementation.sha256,
   "Implementation changed during acceptance",
 );
+const connectionAcceptance =
+  inventory && inventoryBytes
+    ? summarizeConnectionAcceptance({
+        inventory,
+        runId,
+        source: connectionSource,
+        cases,
+        casesSha256: sha(casesBytes),
+        inventorySha256: sha(inventoryBytes),
+        implementationSha256: implementation.sha256,
+        normal: rows,
+        worker: workerRows,
+        failures,
+      })
+    : undefined;
+if (connectionAcceptance) await write("connections.json", connectionAcceptance);
 const report = {
   format: "shared-corridor-candidate-acceptance-v1",
   status: failures.length > 0 ? "FAILED" : "PASS",
+  runId,
   sourceMasterSha256: inputSha256,
   sourceModel: data.source,
   sourceDatasetSha256: sourceSha256,
@@ -507,6 +525,8 @@ const report = {
   archiveSha256,
   archiveBytes,
   casesSha256: sha(casesBytes),
+  connectionInventorySha256: inventoryBytes ? sha(inventoryBytes) : undefined,
+  connectionAcceptance,
   implementation,
   nodeVersion: process.version,
   productionWorkerBundleSha256: await fileSha(bundle),

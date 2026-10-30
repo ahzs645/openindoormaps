@@ -1,0 +1,26 @@
+✔ current normal and production-worker evidence distinguishes availability, expected refusal and unresolved scope (7.641223ms)
+✔ normal-only success cannot count as checked without a current production-worker replay (0.482865ms)
+✔ historical normal or worker PASS rows are rejected (8.60553ms)
+✔ source, raw case bytes, endpoint direction and policy must match the inventory (6.395465ms)
+✔ one case cannot count for multiple connections, even with different inventory request names (0.622584ms)
+✔ duplicate identical journeys with renamed case IDs cannot inflate coverage (0.560411ms)
+✔ an available connection needs the exact original crossing and verified traversal (0.421892ms)
+✔ worker failures and changed expected availability remain failures (0.228493ms)
+✔ unclaimed cases, foreign results and persisted PASS fields cannot enter the current coverage report (0.792028ms)
+✔ complete route parity permits geometric guide changes while retaining the original crossing and unknown policy records (0.971958ms)
+✔ two refused routes with different complete diagnostic evidence do not pass (5.917698ms)
+✔ an unchanged refusal passes as a refusal, including its arrival message (0.80657ms)
+✔ a detour using the same native door ID cannot satisfy a required original edge (0.364557ms)
+✔ a changed original edge or disabled source crossing is refused (0.782383ms)
+✔ guide use cannot silently change access uncertainty or selected source nodes (0.448112ms)
+✔ guide-on and guide-off availability and selected original edges must agree (0.381873ms)
+✔ a walking guide cannot satisfy an accessible route assertion (0.285588ms)
+✔ acceptance cases require explicit endpoint/transit choices and reject policy overrides or duplicate identities (5.303887ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 447.751427

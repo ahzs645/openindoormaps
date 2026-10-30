@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { progressiveVisitorUiFixture } from "../fixtures/progressive-visitor-ui";
+import { progressiveRoutingDisclosureFixture } from "../fixtures/progressive-routing";
 
 for (const mobile of [false, true]) {
   test(`visitor search goes directly into directions on ${mobile ? "mobile" : "desktop"}`, async ({
@@ -53,7 +54,10 @@ for (const mobile of [false, true]) {
     await page.getByText("Map tools", { exact: true }).click();
     await search.fill("01-0");
     await page
-      .getByRole("button", { name: "01-0 Office", exact: true })
+      .getByRole("button", {
+        name: "01-0 Office · Building 01 · Floor 1",
+        exact: true,
+      })
       .click();
     await page
       .getByRole("button", { name: "Directions to here", exact: true })
@@ -65,7 +69,10 @@ for (const mobile of [false, true]) {
     ).toHaveCount(3);
     await search.fill("01-1");
     await page
-      .getByRole("button", { name: "01-1 Office", exact: true })
+      .getByRole("button", {
+        name: "01-1 Office · Building 01 · Floor 1",
+        exact: true,
+      })
       .click();
     await page.getByRole("button", { name: "Start here", exact: true }).click();
     await expect(page.getByLabel("From", { exact: true })).toHaveValue("1");
@@ -75,6 +82,13 @@ for (const mobile of [false, true]) {
       .click();
     await expect(page.getByLabel("From", { exact: true })).toHaveValue("0");
     await expect(page.getByLabel("To", { exact: true })).toHaveValue("1");
+    const transit = page.getByRole("checkbox", {
+      name: "Allow paths through other rooms",
+      exact: true,
+    });
+    await expect(transit).not.toBeChecked();
+    await transit.check();
+    await expect(page).toHaveURL(/roomTransit=1/);
     await page
       .getByLabel("Route preference", { exact: true })
       .selectOption("accessible");
@@ -89,6 +103,7 @@ for (const mobile of [false, true]) {
     await expect(
       page.getByLabel("Route preference", { exact: true }),
     ).toHaveValue("accessible");
+    await expect(transit).toBeChecked();
     await page.getByLabel("To", { exact: true }).selectOption("0");
     await page
       .getByRole("button", { name: "Get directions", exact: true })
@@ -109,7 +124,10 @@ for (const mobile of [false, true]) {
     ]) {
       await search.fill(number);
       await page
-        .getByRole("button", { name: `${number} ${name}`, exact: true })
+        .getByRole("button", {
+          name: `${number} ${name} · Building 01 · Floor 1`,
+          exact: true,
+        })
         .click();
       const card = page.getByRole("region", {
         name: "Selected place",
@@ -136,6 +154,91 @@ for (const mobile of [false, true]) {
     await expect(
       page.getByRole("button", { name: "Get directions", exact: true }),
     ).toBeDisabled();
+    expect(errors).toEqual([]);
+  });
+
+  test(`actual visitor worker respects room transit and step-free on ${mobile ? "mobile" : "desktop"}`, async ({
+    page,
+  }) => {
+    test.setTimeout(120_000);
+    const appUrl =
+      process.env.PROGRESSIVE_VISITOR_APP_URL ??
+      "http://127.0.0.1:42554/openindoormaps/";
+    const manifestUrl = new URL("visitor-route-fixture/manifest.json", appUrl)
+      .href;
+    const { files } = progressiveVisitorUiFixture(
+      manifestUrl,
+      progressiveRoutingDisclosureFixture(),
+    );
+    const errors: string[] = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.setViewportSize(
+      mobile ? { width: 390, height: 844 } : { width: 1440, height: 1000 },
+    );
+    await page.addInitScript(() =>
+      localStorage.setItem("openindoormaps.reveal-rooms-on-zoom.v2", "false"),
+    );
+    await page.route("**/visitor-route-fixture/**", async (request) => {
+      const body = files.get(request.request().url());
+      await request.fulfill({
+        status: body ? 200 : 404,
+        body: body ? Buffer.from(body) : "Missing fixture",
+      });
+    });
+    await page.goto(
+      `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl)}&from=0&to=1`,
+    );
+    const transit = page.getByRole("checkbox", {
+      name: "Allow paths through other rooms",
+      exact: true,
+    });
+    const getDirections = page.getByRole("button", {
+      name: "Get directions",
+      exact: true,
+    });
+    await expect(transit).not.toBeChecked({ timeout: 60_000 });
+    await getDirections.click();
+    await expect(page.getByTestId("route-status")).toContainText(
+      "No hallway-only route",
+      { timeout: 60_000 },
+    );
+    await transit.check();
+    await expect(page.getByTestId("route-status")).toBeEmpty();
+    await getDirections.click();
+    await expect(page.getByTestId("route-status")).toHaveText(/^\d+ m$/, {
+      timeout: 60_000,
+    });
+    await expect(page.getByTestId("route-unknown-access")).toContainText(
+      "1 areas",
+    );
+    await expect(page.getByTestId("route-unknown-accessibility")).toContainText(
+      "2 connections",
+    );
+    await expect(page.getByTestId("route-transit-places")).toContainText(
+      "01-2 · Unconfirmed transit room",
+    );
+    await page.screenshot({
+      path: test.info().outputPath("transit-enabled-actual-worker.png"),
+      fullPage: true,
+    });
+    await page.getByText("Change journey", { exact: true }).click();
+    await transit.uncheck();
+    await expect(page.getByTestId("route-status")).toBeEmpty();
+    await expect(page.getByTestId("route-unknown-access")).toHaveCount(0);
+    await expect(page.getByTestId("route-transit-places")).toHaveCount(0);
+    await transit.check();
+    await page
+      .getByLabel("Route preference", { exact: true })
+      .selectOption("accessible");
+    await getDirections.click();
+    await expect(page.getByTestId("route-status")).toContainText(
+      "No confirmed step-free route",
+      { timeout: 60_000 },
+    );
+    await page.screenshot({
+      path: test.info().outputPath("step-free-refusal-actual-worker.png"),
+      fullPage: true,
+    });
     expect(errors).toEqual([]);
   });
 }

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pathway connections · source display review</title>
+    <link rel="stylesheet" href="preview.css" />
+    <script src="preview.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">SAVED NATIVE NETWORK</p>
+        <h1>Pathways & connections</h1>
+      </div>
+      <p class="scope">
+        Source display review <span>No new route qualification</span>
+      </p>
+    </header>
+    <form id="controls">
+      <label
+        >Physical level<select id="level" aria-label="Physical level"></select
+      ></label>
+      <label
+        >Building focus<select id="building" aria-label="Building focus">
+          <option value="all">All buildings</option>
+        </select></label
+      >
+      <label
+        >Display<select id="mode" aria-label="Display mode">
+          <option value="complete">Complete saved network</option>
+          <option value="guides">Shared guides only</option>
+        </select></label
+      >
+      <label class="lookup"
+        >Find original edge or door<input
+          id="edge"
+          placeholder="e.g. door ID"
+          aria-label="Original edge or door ID"
+      /></label>
+      <button type="submit">Find</button>
+      <button type="button" id="fit">Fit level</button>
+    </form>
+    <p id="experiment" class="experiment" hidden></p>
+    <main>
+      <section class="map-panel" aria-label="Native pathway map">
+        <div id="message" role="status">Loading source display…</div>
+        <svg
+          id="map"
+          role="img"
+          aria-label="Plan view of original pathway geometry"
+          tabindex="0"
+        >
+          <g id="context"></g>
+          <g id="network"></g>
+          <g id="selection"></g>
+        </svg>
+        <div class="zoom">
+          <button type="button" id="zoom-in" aria-label="Zoom in">+</button
+          ><button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+        </div>
+        <div id="counts" aria-live="polite"></div>
+      </section>
+      <aside>
+        <h2>What is shown</h2>
+        <ul class="legend">
+          <li><i class="shared"></i>Shared guide</li>
+          <li><i class="fallback"></i>Original saved walk</li>
+          <li><i class="passage"></i>Door or building connection</li>
+          <li><i class="transition"></i>Floor change and stop</li>
+          <li><i class="held"></i>Held stair · remains disabled</li>
+          <li><i class="gap"></i>Missing approach / unresolved door</li>
+        </ul>
+        <p class="note">
+          Lines preserve the saved source geometry and direction. Public access
+          and step-free suitability still require the route checks. Vertical
+          lines are plan projections; their original elevations remain separate.
+        </p>
+        <h2>Selected connection</h2>
+        <p id="selection-help">
+          Click a path or stop, or search its original ID.
+        </p>
+        <pre id="details" aria-live="polite"></pre>
+        <details>
+          <summary>Source and scope</summary>
+          <div id="source"></div>
+        </details>
+      </aside>
+    </main>
+  </body>
+</html>
