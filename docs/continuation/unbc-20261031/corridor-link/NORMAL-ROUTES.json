@@ -1,0 +1,1424 @@
+{
+  "rows": [
+    {
+      "id": "door-2311764:08-216-to-08-260",
+      "from": "rm-694-3eff6106de76",
+      "to": "rm-694-fa60cb06b7c9",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "requireSharedGuide": true,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "08-216",
+      "toNumber": "08-260",
+      "available": true,
+      "sharedPaths": 1,
+      "distanceMetres": 12.216145586002494,
+      "edgeIds": [
+        "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0",
+        "door:694:2311764",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1"
+      ],
+      "seconds": 402.05240771399997
+    },
+    {
+      "id": "link-4-8:corridor:04-204-to-08-267:hallway-only",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "04-204",
+      "toNumber": "08-267",
+      "available": true,
+      "sharedPaths": 3,
+      "distanceMetres": 122.0507335447281,
+      "edgeIds": [
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:1109261:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:2124777:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2124777:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+        "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+        "door:694:1609857",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+        "door:694:2311764",
+        "native-cell:14.435696:616:walk:door:694:1513787:0|door:694:2311764:0",
+        "door:694:1513787",
+        "native-cell:14.435696:617:walk:door:694:1513787:1|door:694:1998054:0",
+        "door:694:1998054",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+        "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+        "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+        "opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10",
+        "native-cell:14.435696:616:walk:door:694:2041118:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:0",
+        "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:2041118:0",
+        "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+        "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+        "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+      ],
+      "seconds": 8.58133613499999
+    },
+    {
+      "id": "link-4-8:corridor:04-204-to-08-267:strict-step-free",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "04-204",
+      "toNumber": "08-267",
+      "available": false,
+      "sharedPaths": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2125655",
+            "nativeElementId": 2125655
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609987",
+            "nativeElementId": 1609987
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609857",
+            "nativeElementId": 1609857
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2311764",
+            "nativeElementId": 2311764
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0",
+          "door:694:2125655",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1",
+          "door:694:1609987",
+          "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0",
+          "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+          "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+          "door:694:1609857",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+          "door:694:2311764",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+        "reviewRoomKey": "rm-694-07de695d7751"
+      },
+      "baselineDiagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2125655",
+            "nativeElementId": 2125655
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609987",
+            "nativeElementId": 1609987
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609857",
+            "nativeElementId": 1609857
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2311764",
+            "nativeElementId": 2311764
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0",
+          "door:694:2125655",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1",
+          "door:694:1609987",
+          "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0",
+          "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+          "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+          "door:694:1609857",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+          "door:694:2311764",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+        "reviewRoomKey": "rm-694-07de695d7751"
+      },
+      "seconds": 0.06015174000011757
+    },
+    {
+      "id": "link-4-8:corridor:08-267-to-04-204:hallway-only",
+      "from": "rm-694-43988ffdc334",
+      "to": "rm-694-2b971ef6dc47",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "08-267",
+      "toNumber": "04-204",
+      "available": true,
+      "sharedPaths": 3,
+      "distanceMetres": 122.03954959558847,
+      "edgeIds": [
+        "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+        "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+        "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+        "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:2041118:0",
+        "native-cell:14.435696:616:walk:door:694:2041118:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:0",
+        "opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10",
+        "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+        "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+        "door:694:1998054",
+        "native-cell:14.435696:617:walk:door:694:1513787:1|door:694:1998054:0",
+        "door:694:1513787",
+        "native-cell:14.435696:616:walk:door:694:1513787:0|door:694:2311764:0",
+        "door:694:2311764",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+        "door:694:1609857",
+        "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+        "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+        "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2124777:0",
+        "native-cell:14.435696:552:walk:door:694:2124777:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:1109261:0",
+        "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+      ],
+      "seconds": 6.102882502000081
+    },
+    {
+      "id": "link-4-8:corridor:08-267-to-04-204:strict-step-free",
+      "from": "rm-694-43988ffdc334",
+      "to": "rm-694-2b971ef6dc47",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "08-267",
+      "toNumber": "04-204",
+      "available": false,
+      "sharedPaths": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2311764",
+            "nativeElementId": 2311764
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609857",
+            "nativeElementId": 1609857
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609987",
+            "nativeElementId": 1609987
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2125655",
+            "nativeElementId": 2125655
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+          "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0",
+          "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0",
+          "door:694:2311764",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+          "door:694:1609857",
+          "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+          "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+          "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0",
+          "door:694:1609987",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1",
+          "door:694:2125655",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+        "reviewRoomKey": "rm-694-01803a06bb62"
+      },
+      "baselineDiagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2311764",
+            "nativeElementId": 2311764
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609857",
+            "nativeElementId": 1609857
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:1609987",
+            "nativeElementId": 1609987
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:694:2125655",
+            "nativeElementId": 2125655
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:2468795:1",
+          "native-cell:14.435696:616:walk:door:694:1513755:0|door:694:1513756:0",
+          "native-cell:14.435696:616:walk:door:694:1513756:0|door:694:1999390:0",
+          "native-cell:14.435696:616:walk:door:694:1999390:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|opening:recovered-circulation-seam:rm-694-43988ffdc334:rm-694-439b95fdc336:0:10:1",
+          "native-cell:14.435696:616:walk:door:694:1513759:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998843:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-3eff6106de76|door:694:2311764:0",
+          "door:694:2311764",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+          "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+          "door:694:1609857",
+          "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+          "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+          "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:1609987:0",
+          "door:694:1609987",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:1609987:1",
+          "native-cell:14.435696:581:walk:arrival:rm-694-ca63fb3b49a9|door:694:2125655:1",
+          "door:694:2125655",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125655:0",
+          "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+          "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:616:walk:arrival:rm-694-43988ffdc334|door:694:2468795:1",
+        "reviewRoomKey": "rm-694-01803a06bb62"
+      },
+      "seconds": 0.02911627099988982
+    },
+    {
+      "id": "link-4-8:corridor:04-237-to-08-205:hallway-only",
+      "from": "rm-694-3399eaf6e0a1",
+      "to": "rm-694-439b95fdc336",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "04-237",
+      "toNumber": "08-205",
+      "available": true,
+      "sharedPaths": 3,
+      "distanceMetres": 118.78810994091165,
+      "edgeIds": [
+        "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1",
+        "native-cell:14.435696:552:walk:connector:unbc-04-lift:1|door:694:2126282:0",
+        "native-cell:14.435696:552:walk:door:694:2126282:0|opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23:1",
+        "opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23",
+        "native-cell:14.435696:552:walk:door:694:2125965:0|opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125965:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:1109261:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:2124777:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2124777:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+        "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+        "door:694:1609857",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+        "door:694:2311764",
+        "native-cell:14.435696:616:walk:door:694:1513787:0|door:694:2311764:0",
+        "door:694:1513787",
+        "native-cell:14.435696:617:walk:door:694:1513787:1|door:694:1998054:0",
+        "door:694:1998054",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+        "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+      ],
+      "seconds": 12.265792811000022
+    },
+    {
+      "id": "link-4-8:corridor:04-237-to-08-205:strict-step-free",
+      "from": "rm-694-3399eaf6e0a1",
+      "to": "rm-694-439b95fdc336",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "04-237",
+      "toNumber": "08-205",
+      "available": false,
+      "sharedPaths": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-04-lift:0:1",
+            "nativeElementId": 2103602
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-circulation:door:311:1025027:0|ramp:1586431:lower"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025027",
+            "nativeElementId": 1025027
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025127",
+            "nativeElementId": 1025127
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:1630256",
+            "nativeElementId": 1630256
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:2018182",
+            "nativeElementId": 2018182
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-tea-lab-lift:0:1",
+            "nativeElementId": 1514920
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1",
+          "connector:unbc-04-lift:0:1",
+          "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper",
+          "ramp:1586431",
+          "native-circulation:door:311:1025027:0|ramp:1586431:lower",
+          "door:311:1025027",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0",
+          "door:311:1025127",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0",
+          "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0",
+          "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10",
+          "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1",
+          "walk:ramp:1622190:lower",
+          "ramp:1622190",
+          "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper",
+          "door:1487816:1630256",
+          "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+          "door:1487816:2018182",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0",
+          "connector:unbc-tea-lab-lift:0:1",
+          "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1",
+        "reviewRoomKey": "rm-694-07de695d7751"
+      },
+      "baselineDiagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-04-lift:0:1",
+            "nativeElementId": 2103602
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-circulation:door:311:1025027:0|ramp:1586431:lower"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025027",
+            "nativeElementId": 1025027
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025127",
+            "nativeElementId": 1025127
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:1630256",
+            "nativeElementId": 1630256
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:2018182",
+            "nativeElementId": 2018182
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-tea-lab-lift:0:1",
+            "nativeElementId": 1514920
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1",
+          "connector:unbc-04-lift:0:1",
+          "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper",
+          "ramp:1586431",
+          "native-circulation:door:311:1025027:0|ramp:1586431:lower",
+          "door:311:1025027",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0",
+          "door:311:1025127",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0",
+          "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0",
+          "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10",
+          "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1",
+          "walk:ramp:1622190:lower",
+          "ramp:1622190",
+          "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper",
+          "door:1487816:1630256",
+          "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+          "door:1487816:2018182",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0",
+          "connector:unbc-tea-lab-lift:0:1",
+          "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1",
+        "reviewRoomKey": "rm-694-07de695d7751"
+      },
+      "seconds": 0.02719535499997437
+    },
+    {
+      "id": "link-4-8:corridor:08-205-to-04-237:hallway-only",
+      "from": "rm-694-439b95fdc336",
+      "to": "rm-694-3399eaf6e0a1",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": true,
+      "requiredNativeDoorId": 2311764,
+      "requiredSourceEdgeIds": [
+        "door:694:2311764"
+      ],
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": true,
+      "requiredNativeDoorVerified": true,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "08-205",
+      "toNumber": "04-237",
+      "available": true,
+      "sharedPaths": 3,
+      "distanceMetres": 118.6310871069753,
+      "edgeIds": [
+        "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0",
+        "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+        "door:694:1998054",
+        "native-cell:14.435696:617:walk:door:694:1513787:1|door:694:1998054:0",
+        "door:694:1513787",
+        "native-cell:14.435696:616:walk:door:694:1513787:0|door:694:2311764:0",
+        "door:694:2311764",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:2311764:1",
+        "native-cell:14.435696:589:walk:arrival:rm-694-fa60cb06b7c9|door:694:1609857:1",
+        "door:694:1609857",
+        "native-cell:14.435696:552:walk:door:694:1609857:0|door:694:1609919:0",
+        "native-cell:14.435696:552:walk:door:694:1609919:0|door:694:1609984:0",
+        "native-cell:14.435696:552:walk:door:694:1609984:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2126329:0",
+        "native-cell:14.435696:552:walk:door:694:1609321:0|door:694:2124777:0",
+        "native-cell:14.435696:552:walk:door:694:2124777:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:2125802:0",
+        "native-cell:14.435696:552:walk:door:694:1009351:0|door:694:1109261:0",
+        "native-cell:14.435696:552:walk:door:694:1109261:0|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125576:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-2b971ef6dc47|door:694:2125965:0",
+        "native-cell:14.435696:552:walk:door:694:2125965:0|opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23:0",
+        "opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23",
+        "native-cell:14.435696:552:walk:door:694:2126282:0|opening:recovered-circulation-seam:rm-694-2b971ef6dc47:rm-694-3399eaf6e0a1:0:23:1",
+        "native-cell:14.435696:552:walk:connector:unbc-04-lift:1|door:694:2126282:0",
+        "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+      ],
+      "seconds": 12.127047865999863
+    },
+    {
+      "id": "link-4-8:corridor:08-205-to-04-237:strict-step-free",
+      "from": "rm-694-439b95fdc336",
+      "to": "rm-694-3399eaf6e0a1",
+      "mode": "accessible",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false,
+      "diagnosticParity": true,
+      "requiredSourceEdgesVerified": false,
+      "requiredNativeDoorVerified": false,
+      "runId": "980f6e59-324d-4bf1-9d6e-8c8a33cedaa4",
+      "fromNumber": "08-205",
+      "toNumber": "04-237",
+      "available": false,
+      "sharedPaths": 0,
+      "diagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-tea-lab-lift:0:1",
+            "nativeElementId": 1514920
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:2018182",
+            "nativeElementId": 2018182
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:1630256",
+            "nativeElementId": 1630256
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025127",
+            "nativeElementId": 1025127
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025027",
+            "nativeElementId": 1025027
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-circulation:door:311:1025027:0|ramp:1586431:lower"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-04-lift:0:1",
+            "nativeElementId": 2103602
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1",
+          "connector:unbc-tea-lab-lift:0:1",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0",
+          "door:1487816:2018182",
+          "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+          "door:1487816:1630256",
+          "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper",
+          "ramp:1622190",
+          "walk:ramp:1622190:lower",
+          "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1",
+          "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10",
+          "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1",
+          "door:311:1025127",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1",
+          "door:311:1025027",
+          "native-circulation:door:311:1025027:0|ramp:1586431:lower",
+          "ramp:1586431",
+          "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper",
+          "connector:unbc-04-lift:0:1",
+          "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0",
+        "reviewRoomKey": "rm-694-01803a06bb62"
+      },
+      "baselineDiagnostic": {
+        "kind": "blocked",
+        "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review.",
+        "blockers": [
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-tea-lab-lift:0:1",
+            "nativeElementId": 1514920
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:2018182",
+            "nativeElementId": 2018182
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:1487816:1630256",
+            "nativeElementId": 1630256
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025127",
+            "nativeElementId": 1025127
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "door:311:1025027",
+            "nativeElementId": 1025027
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-circulation:door:311:1025027:0|ramp:1586431:lower"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper"
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "connector:unbc-04-lift:0:1",
+            "nativeElementId": 2103602
+          },
+          {
+            "kind": "step-free",
+            "edgeId": "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+          }
+        ],
+        "sourceEdgeIds": [
+          "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0",
+          "native-cell:14.435696:616:walk:door:694:1513793:0|door:694:1998054:1",
+          "native-cell:14.435696:616:walk:connector:unbc-tea-lab-lift:1|door:694:1998054:1",
+          "connector:unbc-tea-lab-lift:0:1",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|connector:unbc-tea-lab-lift:0",
+          "native-cell:3.280840:407:walk:arrival:rm-1487816-1a0ccf3066a5|door:1487816:2018182:0",
+          "door:1487816:2018182",
+          "reviewed-link:door:1487816:1630256:1|door:1487816:2018182:1",
+          "door:1487816:1630256",
+          "native-cell:3.280840:384:walk:door:1487816:1630256:0|ramp:1622190:upper",
+          "ramp:1622190",
+          "walk:ramp:1622190:lower",
+          "native-cell:0.000000:71:walk:arrival:rm-311-86e02816d8fe|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:1",
+          "opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10",
+          "native-cell:0.000000:71:walk:door:311:2427810:0|opening:recovered-circulation-seam:rm-311-399064f64ec1:rm-311-86e02816d8fe:12:10:0",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:2427810:0",
+          "native-cell:0.000000:71:walk:arrival:rm-311-399064f64ec1|door:311:1025127:1",
+          "door:311:1025127",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025127:0",
+          "native-cell:0.000000:142:walk:arrival:rm-311-204072ddb841|door:311:1025027:1",
+          "door:311:1025027",
+          "native-circulation:door:311:1025027:0|ramp:1586431:lower",
+          "ramp:1586431",
+          "native-cell:3.280840:376:walk:connector:unbc-04-lift:0|ramp:1586431:upper",
+          "connector:unbc-04-lift:0:1",
+          "native-cell:14.435696:552:walk:arrival:rm-694-3399eaf6e0a1|connector:unbc-04-lift:1"
+        ],
+        "reviewEdgeId": "native-cell:14.435696:616:walk:arrival:rm-694-439b95fdc336|door:694:1513793:0",
+        "reviewRoomKey": "rm-694-01803a06bb62"
+      },
+      "seconds": 0.03010175499995239
+    }
+  ],
+  "failures": []
+}
