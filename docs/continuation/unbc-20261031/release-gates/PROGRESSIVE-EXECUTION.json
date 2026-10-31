@@ -1,0 +1,33 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "node",
+    "--max-old-space-size=8192",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/export-progressive-viewer.ts",
+    "/home/user/unbc-work/candidate.zip",
+    "/home/user/unbc-work/progressive",
+    "--visitor",
+    "--prepare",
+    "--checkpoints",
+    "--priority-scope=1450417,311,1487816"
+  ],
+  "workingDirectory": "/home/user/openindoormaps",
+  "startedAt": "2026-10-31T08:25:42.348756+00:00",
+  "finishedAt": "2026-10-31T09:38:30.762976+00:00",
+  "seconds": 4368.4142203129995,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 5911296,
+  "kernelChildUserSeconds": 5028.834378,
+  "kernelChildSystemSeconds": 198.153443,
+  "cgroupLimitBytes": null,
+  "sampledSharedCgroupPeakBytes": 0,
+  "sampleIntervalSeconds": 1,
+  "samples": 4366,
+  "cgroupEventDeltas": {},
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}

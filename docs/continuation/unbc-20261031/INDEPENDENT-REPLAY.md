@@ -73,60 +73,92 @@ unchanged on a 4-core, 16 GB container.
 - The exported candidate ZIP hash differs (`db4fd5a2…`) only because member
   timestamps differ. All seven members have identical sizes and CRCs.
 
-## Exploratory diagnostics (not acceptance evidence)
+## Additional bound acceptance runs
 
-These calls used the normal calculator on the verified candidate without
-assertions. They are diagnostics for the next decision, not bound receipts.
+Both runs use the same verifier, supervisor, run-1 master and 46-guide catalog
+as the reproduction above, with new case files kept byte-exact. Their
+`casesSha256` values in each `REPORT.json` equal the committed files. The
+implementation graph is `65fd6159…`, identical to the October 30 run.
 
-### Inside-room arrival
+### Inside-room arrival — [inside-arrival/](inside-arrival/)
 
-The visitor app requests `endpointMode: "inside"`, while all ten acceptance
-cases use hallway arrival. With inside arrival on the same candidate:
+The visitor app requests `endpointMode: "inside"`; all ten October 30 cases use
+hallway arrival. [ROUTE-CASES-INSIDE.json](ROUTE-CASES-INSIDE.json) repeats
+those ten cases with only the arrival mode changed. Result: PASS, zero
+failures, normal and production-worker results identical (1,653 s, child peak
+RSS 5.57 GB).
 
-| Request                     | Hallway-only                      | Other-room transit                 |
-| --------------------------- | --------------------------------- | ---------------------------------- |
-| 08-216 ↔ 08-260            | available, 12.216 m, door 2311764 | same                               |
-| 04-255 → 08-272             | refused (`constraint: hallways`)  | available, 187.241 m, door 2311764 |
-| 08-272 → 04-255             | refused (`constraint: hallways`)  | available, 186.630 m, door 2311764 |
-| Any of the above, step-free | refused                           | refused                            |
+| Request                                 | Hallway-only                                        | Other-room transit                                      |
+| --------------------------------------- | --------------------------------------------------- | ------------------------------------------------------- |
+| 08-216 ↔ 08-260                        | available, 12.216 m, door 2311764, one shared guide | —                                                       |
+| 04-255 → 08-272                         | expected refusal                                    | available, 187.241 m, door 2311764, three shared guides |
+| 08-272 → 04-255                         | expected refusal                                    | available, 186.630 m, door 2311764, three shared guides |
+| Step-free, both settings and directions | expected refusal                                    | expected refusal                                        |
 
-Inside arrival therefore behaves like hallway arrival for these journeys; the
-long walk is about 9 m longer because it ends inside the rooms. A bound
-acceptance case for inside arrival is still needed before release.
+### Corridor-to-corridor with default settings — [corridor-link/](corridor-link/)
 
-### What blocks the long walk under hallway-only routing
+[ROUTE-CASES-CORRIDOR.json](ROUTE-CASES-CORRIDOR.json) checks the link between
+Building 04 and Building 08 corridors with the visitor default, hallway-only
+routing. Result: PASS, zero failures (1,667 s, child peak RSS 5.55 GB).
 
-The refusal has zero physical blockers; only the ordinary-room rule stops it.
-`08-216 Vestibule` and `08-260 Link` are `circulation: true`, so they are not
-the cause. Comparing room owners along the allowed short route with the
-transit-enabled long route leaves three Building 04 rooms that only the long
-route touches: `04-256 Research Office`, `04-257 Tech Office` and
-`04-259 Rotunda`. Owner lists of shared native cells over-approximate actual
-transit, so this narrows the cause rather than proving it.
+| Request (hallway-only)            | Walking                                      | Strict step-free |
+| --------------------------------- | -------------------------------------------- | ---------------- |
+| 04-204 Corridor → 08-267 Corridor | 122.051 m, door 2311764, three shared guides | expected refusal |
+| 08-267 Corridor → 04-204 Corridor | 122.040 m, door 2311764, three shared guides | expected refusal |
+| 04-237 Corridor → 08-205 Corridor | 118.788 m, door 2311764, three shared guides | expected refusal |
+| 08-205 Corridor → 04-237 Corridor | 118.631 m, door 2311764, three shared guides | expected refusal |
 
-`04-259 Rotunda` (`rm-694-07de695d7751`) is `circulation: false` with unknown
-access. A what-if run that set only its in-memory `circulation` flag to `true`
-did not answer the question: every request, including the previously
-available 08-216 ↔ 08-260 crossing, was refused with "a source path uses a
-walking connection outside its verified native floor boundaries or with stale
-boundary evidence". The boundary evidence is bound to the room records, so an
-unreviewed record edit is rejected, as it should be.
+**The Floor 2 Building 04–08 link works with the default visitor setting.** The
+hallway-only refusal of 04-255 ↔ 08-272 is specific to that endpoint, as
+explained below. Access to all these areas is still `unknown` in the source,
+and the step-free refusals remain correct.
 
-The sanctioned way to test this is the existing per-room reviewed
-through-navigation (`app/indoor-project/through-navigation.ts`:
-`properties.throughNavigationReview` with notes and a geometry key bound to the
-source model), applied through review and a normal regeneration, then replayed
-as a bound acceptance case. Whether the Rotunda (or the two offices) should be
-crossed by default is a site and policy decision for UNBC.
+## Why 04-255 ↔ 08-272 needs other-room transit
+
+04-255 Research Office opens directly onto 04-244 Corridor (door 1108666).
+04-244 Corridor is `circulation: true`, but every one of the 23 saved walking
+edges in its native cell `native-cell:14.435696:561` has the owner set
+{04-244 Corridor, 04-245 Vestibule, 04-256 Research Office, 04-257 Tech Office}.
+The two offices each also have their own door onto the corridor (1183029 and
+1182981). Under hallway-only routing, walks that touch those office owners are
+treated as ordinary-room transit, so no destination on 04-244 Corridor can
+leave it. 04-244 Corridor ↔ 08-202 Corridor is refused for the same reason
+([diagnostics/corridor-link-exploration.jsonl](diagnostics/corridor-link-exploration.jsonl)).
+
+Two exploratory what-if runs used the editor's own `reviewArea(...,
+{ throughNavigation: true, notes })` in memory on the candidate, with nothing
+saved ([diagnostics/through-navigation-whatif.jsonl](diagnostics/through-navigation-whatif.jsonl)):
+
+| Reviewed areas                            | 04-255 ↔ 08-272, hallway-only                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 04-259 Rotunda only                       | still refused                                                                                    |
+| 04-259 Rotunda, 04-256 and 04-257 offices | available: 175.201 / 171.735 m hallway arrival, 180.823 / 179.563 m inside arrival, door 2311764 |
+
+Reviewing the Rotunda alone shortens the corridor journeys by about 4 m
+(04-204 ↔ 08-267 118.2 m) but does not free 04-244 Corridor. A room review also
+changes the source geometry key, so the guide catalog no longer applies and
+routes fall back to original walks (08-216 → 08-260 becomes 11.690 m). Any
+accepted review needs a fresh guide compile and replay.
+
+The likely correct fix is not to mark two offices as through-passages. If
+04-256 and 04-257 are enclosed offices, their inclusion in the corridor's
+native circulation cell is a source-boundary leak to inspect in Reviter (both
+sides of each office door, walls and room separation lines), followed by a
+regenerated master. If they are open alcoves, a reviewed through-navigation
+is appropriate. This needs a drawing or site check.
+
+A first exploratory attempt instead set only `circulation: true` on the
+Rotunda record. Every route, including the 08-216 ↔ 08-260 crossing, was then
+refused for stale boundary evidence: unreviewed record edits are rejected.
 
 ## Still open
 
-- OpenIndoorMaps commits here could not be pushed from this session
-  (GitHub App access refused). Reviter's commit is on
-  `claude/dazzling-curie-id7wh1`.
+- OpenIndoorMaps commits here could not be pushed from this session (GitHub App
+  access refused). Reviter's commit is on `claude/dazzling-curie-id7wh1`.
 - Door 2315416 on Floor 3 remains unmatched; 08-316 Corridor is the leading
   owner candidate and needs on-site or drawing confirmation.
+- Native cell 561 (04-244 Corridor with offices 04-256 and 04-257) needs the
+  boundary check above.
 - Twenty of the thirty inventory requests still need source and route
-  evidence. Release gates 2–9 from `../unbc-20261022/HANDOFF.md` remain open,
-  and the changed engine bindings require regenerated progressive, route and
-  plan assets before any publication.
+  evidence. The October 22 release gates remain open; see
+  [RELEASE-GATES.md](RELEASE-GATES.md) for what was attempted here.
