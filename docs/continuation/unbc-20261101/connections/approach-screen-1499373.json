@@ -1,0 +1,239 @@
+{
+ "portal": "door:694:1499373:1",
+ "portalPoint": [
+  160.23707389400028,
+  844.5855706679309,
+  14.435695538057743
+ ],
+ "approximation": "float Sutherland-Hodgman clip of the 2 ft flat-capped strip; production uses exact rational overlay with nativeRoomIdentityRings",
+ "incidentWalks": [
+  {
+   "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499404:1",
+   "from": "door:694:1499373:1",
+   "to": "door:694:1499404:1",
+   "points": 5,
+   "overlapSqFtPerSegment": [
+    {
+     "10-2006 Office": 0.0525
+    },
+    {
+     "10-2006 Office": 3.9214
+    },
+    {},
+    {}
+   ]
+  },
+  {
+   "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:2200269:1",
+   "from": "door:694:2200269:1",
+   "to": "door:694:1499373:1",
+   "points": 5,
+   "overlapSqFtPerSegment": [
+    {},
+    {},
+    {
+     "10-2006 Office": 1.0939
+    },
+    {
+     "10-2006 Office": 0.0525
+    }
+   ]
+  },
+  {
+   "edgeId": "native-cell:14.435696:647:walk:door:694:1499372:0|door:694:1499373:1",
+   "from": "door:694:1499373:1",
+   "to": "door:694:1499372:0",
+   "points": 5,
+   "overlapSqFtPerSegment": [
+    {
+     "10-2006 Office": 0.0525
+    },
+    {
+     "10-2006 Office": 1.0939
+    },
+    {},
+    {}
+   ]
+  },
+  {
+   "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499406:1",
+   "from": "door:694:1499406:1",
+   "to": "door:694:1499373:1",
+   "points": 5,
+   "overlapSqFtPerSegment": [
+    {},
+    {},
+    {
+     "10-2006 Office": 2.6407
+    },
+    {
+     "10-2006 Office": 0.0525
+    }
+   ]
+  }
+ ],
+ "candidates": [
+  {
+   "to": "door:694:2200269:1",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 9.08,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 3.2814
+   },
+   "wallsCrossed": [
+    1499338,
+    1499339
+   ]
+  },
+  {
+   "to": "door:694:2200269:0",
+   "toKind": "portal",
+   "toRoom": "10-2000 Vestibule",
+   "lengthFeet": 9.315,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 4.0666
+   },
+   "wallsCrossed": [
+    1499333,
+    1499338,
+    1499339
+   ]
+  },
+  {
+   "to": "door:694:1499372:0",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 9.372,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 0.1774
+   },
+   "wallsCrossed": []
+  },
+  {
+   "to": "door:694:1499404:1",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 9.372,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 10.737,
+    "10-2008 Office": 0.0813
+   },
+   "wallsCrossed": [
+    1499339,
+    1499341
+   ]
+  },
+  {
+   "to": "arrival:rm-694-d30c735a3d7e",
+   "toKind": "arrival",
+   "toRoom": "10-2000 Vestibule",
+   "lengthFeet": 12.182,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 6.0827
+   },
+   "wallsCrossed": [
+    1499333,
+    1499334,
+    1499337,
+    1499338,
+    1499339
+   ]
+  },
+  {
+   "to": "door:694:1499406:1",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 13.682,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2012 Comm": 9.4517
+   },
+   "wallsCrossed": [
+    1499296,
+    1499332
+   ]
+  },
+  {
+   "to": "door:694:2200187:0",
+   "toKind": "portal",
+   "toRoom": "10-2000 Vestibule",
+   "lengthFeet": 14.161,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 7.524
+   },
+   "wallsCrossed": [
+    1499334,
+    1499337,
+    1499338,
+    1499339
+   ]
+  },
+  {
+   "to": "door:694:1499371:0",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 15.84,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 0.421
+   },
+   "wallsCrossed": []
+  },
+  {
+   "to": "door:694:2200187:1",
+   "toKind": "portal",
+   "toRoom": " Atrium crosswalk",
+   "lengthFeet": 16.144,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 9.1842
+   },
+   "wallsCrossed": [
+    1498812,
+    1499312,
+    1499334,
+    1499335,
+    1499336,
+    1499338,
+    1499339
+   ]
+  },
+  {
+   "to": "opening:recovered-circulation-seam:rm-694-d308ec5a3d7b:rm-694-d3135e5a3d84:2:4:1",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 17.008,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 0.0001,
+    "10-2012 Comm": 1.2802
+   },
+   "wallsCrossed": [
+    1499296,
+    1499332
+   ]
+  },
+  {
+   "to": "opening:recovered-circulation-seam:rm-694-d308ec5a3d7b:rm-694-d3135e5a3d84:2:4:0",
+   "toKind": "portal",
+   "toRoom": "10-2010 Corridor",
+   "lengthFeet": 17.17,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2012 Comm": 2.4891
+   },
+   "wallsCrossed": [
+    1499296,
+    1499332
+   ]
+  },
+  {
+   "to": "door:694:1499602:1",
+   "toKind": "portal",
+   "toRoom": "10-2002 Corridor",
+   "lengthFeet": 18.84,
+   "ordinaryRoomOverlapSqFt": {
+    "10-2006 Office": 0.1751
+   },
+   "wallsCrossed": [
+    1499383
+   ]
+  }
+ ]
+}

@@ -1,0 +1,309 @@
+{
+ "format": "proposed-source-review-v1",
+ "status": "PROPOSED_NOT_APPLIED",
+ "door": 2471813,
+ "levelId": 1487816,
+ "levelName": "Floor 1 (level 1487816)",
+ "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+ "inputs": {
+  "graph-compact.json": "3191adf5f2c9f6ed94c8a9b3b9336feaef2fbc6a32eb96d50bbd99b898675e1f",
+  "walls-native.json (visitor walls, derived)": "72ad4b4f7220c0bc5f1491a1925bc04cf1ed9aed8ba86f22aee147fc7ccd2f3b",
+  "native-cell-owner-audit.json": "13fbe34e9b69d1a228e6bd346de4c5e8fb3a1b5fc6585ac552cbe1aa8b24fc27",
+  "level-400176.json": "dc22119f6552bb4967fef6a179d369c831ca89373442eb20dbac9cdc182e0dea",
+  "level-1487816.json": "b4143ce6d171403c89a4fd377966a1d5c6750fd6178ca385e373ab29cf26c782"
+ },
+ "savedDoor": {
+  "state": "unmatched",
+  "roomKeys": [
+   "rm-1487816-5550ce486504"
+  ],
+  "pointFeet": [
+   176.8415013736413,
+   762.6395333781979
+  ],
+  "normalFeet": [
+   0,
+   1
+  ],
+  "footprintFeet": [
+   [
+    174.0363832634051,
+    762.5353667115313
+   ],
+   [
+    179.64661948387752,
+    762.5353667115313
+   ],
+   [
+    179.64661948387752,
+    762.7437000448646
+   ],
+   [
+    174.0363832634051,
+    762.7437000448646
+   ]
+  ],
+  "hostWallNativeElementId": 2471383,
+  "note": "Same failure as the Oct 21 curtain doors: the host 2471383 carries a 3.2808 ft band (y 760.9991..764.2800) but the door kept its 0.21 ft leaf, so 10-1302 Atrium (outline 1.84 ft away) fails the footprint envelope."
+ },
+ "primaryRecord": {
+  "file": "source door-aperture review (Oct 21 format, compiler --door-aperture-review; Reviter reviewedDoorApertures)",
+  "format": "source-door-aperture-review-v1",
+  "patch": {
+   "id": "reviewed-aperture:1487816:2471813:10-1300-atrium",
+   "levelId": 1487816,
+   "nativeDoorId": 2471813,
+   "normalFeet": [
+    0,
+    1
+   ],
+   "apertureFeet": [
+    [
+     179.64661948387752,
+     760.9991134306913
+    ],
+    [
+     179.64661948387752,
+     764.2799533257046
+    ],
+    [
+     174.0363832634051,
+     764.2799533257046
+    ],
+    [
+     174.0363832634051,
+     760.9991134306913
+    ]
+   ],
+   "wallEvidence": [
+    {
+     "nativeElementId": 2471383,
+     "partsFeet": [
+      [
+       [
+        171.37343488161943,
+        760.9991134306913
+       ],
+       [
+        182.265823333063,
+        760.9991134306913
+       ],
+       [
+        182.265823333063,
+        764.2799533257046
+       ],
+       [
+        171.37343488161943,
+        764.2799533257046
+       ],
+       [
+        171.37343488161943,
+        760.9991134306913
+       ]
+      ]
+     ],
+     "note": "Taken from the derived visitor wall list; must equal architecturalPlanGeometry(model, 1487816) parts byte-for-byte or the validator rejects it as stale."
+    }
+   ],
+   "frameEvidence": "TO FILL FROM THE NATIVE MODEL: exactly four curtain-mullion (category -2000171, native provenance) members with orientedBox byte-equal to model.elementBounds: two jambs cut at the floor cut elevation with inner faces exactly at x=174.0363832634051 and x=179.6466194838775 (plan candidates 2471836 and 2471837 below), plus the head and sill spanning the clear width (not present in the plan wall cut).",
+   "notes": "Proposed through-host aperture for the original curtain-wall door between 10-1300 Vestibule and 10-1302 Atrium, following link-4-8-curtain-doors-20261021: native clear width between same-host jambs across the host persisted thickness. Access and step-free status unknown; not confirmed on site."
+  },
+  "jambPlanCandidates": [
+   {
+    "nativeElementId": 2471836,
+    "planPartsFeet": [
+     [
+      [
+       173.87234126865442,
+       762.393470386072
+      ],
+      [
+       174.0363832634051,
+       762.393470386072
+      ],
+      [
+       174.0363832634051,
+       762.8855963703239
+      ],
+      [
+       173.87234126865442,
+       762.8855963703239
+      ]
+     ]
+    ]
+   },
+   {
+    "nativeElementId": 2471837,
+    "planPartsFeet": [
+     [
+      [
+       179.64661948387752,
+       762.393470386072
+      ],
+      [
+       179.8106614786282,
+       762.393470386072
+      ],
+      [
+       179.8106614786282,
+       762.8855963703239
+      ],
+      [
+       179.64661948387752,
+       762.8855963703239
+      ]
+     ]
+    ]
+   }
+  ],
+  "reviewRequired_elementCrossingTheBand": {
+   "element": [
+    {
+     "nativeElementId": 2472128,
+     "planPartsFeet": [
+      [
+       [
+        170.6844585036667,
+        762.8331616376669
+       ],
+       [
+        182.9836868739894,
+        762.8331616376669
+       ],
+       [
+        182.9836868739894,
+        762.5050776481656
+       ],
+       [
+        170.6844585036667,
+        762.5050776481656
+       ]
+      ]
+     ]
+    }
+   ],
+   "note": "Element 2472128 (x 170.684..182.984, y 762.505..762.833) lies across the door band in the visitor wall list. It may be the glazing/curtain grid line or a real obstruction; its category must be checked in the model before applying the aperture."
+  }
+ },
+ "optionalRecord": {
+  "navigation.doorLinks[] (append)": {
+   "doorId": 2471813,
+   "levelId": 1487816,
+   "rooms": [
+    "rm-1487816-5550ce486504",
+    "rm-1487816-555ae048650d"
+   ]
+  },
+  "note": "Not needed if the aperture is applied (the automatic matcher then pairs exactly these two rooms, as for 2311764). Without the aperture, this link alone is rejected by reviewedDoorPortal for the same envelope reason."
+ },
+ "compilerAcceptance": {
+  "currentLeafFootprint": {
+   "10-1300 Vestibule": {
+    "outlineDistanceFeet": 0.1257,
+    "nearestBoundaryPoint": [
+     176.8415,
+     762.5138
+    ],
+    "dxFeet": 0.0,
+    "dyFeet": 0.1257,
+    "envelope": [
+     3.4051,
+     0.7042
+    ],
+    "passes": true
+   },
+   "10-1302 Atrium": {
+    "outlineDistanceFeet": 1.8363,
+    "nearestBoundaryPoint": [
+     176.8415,
+     764.4758
+    ],
+    "dxFeet": 0.0,
+    "dyFeet": 1.8363,
+    "envelope": [
+     3.4051,
+     0.7042
+    ],
+    "passes": false
+   }
+  },
+  "withProposedAperture": {
+   "10-1300 Vestibule": {
+    "outlineDistanceFeet": 0.1257,
+    "nearestBoundaryPoint": [
+     176.8415,
+     762.5138
+    ],
+    "dxFeet": 0.0,
+    "dyFeet": 0.1257,
+    "envelope": [
+     3.4051,
+     2.2404
+    ],
+    "passes": true
+   },
+   "10-1302 Atrium": {
+    "outlineDistanceFeet": 1.8363,
+    "nearestBoundaryPoint": [
+     176.8415,
+     764.4758
+    ],
+    "dxFeet": 0.0,
+    "dyFeet": 1.8363,
+    "envelope": [
+     3.4051,
+     2.2404
+    ],
+    "passes": true
+   },
+   "otherRoomsWithin8ft": [],
+   "sideTest": "Vestibule boundary point is 0.126 ft on the -normal side and Atrium 1.836 ft on the +normal side, so roomPortals keeps them as opposite doorway sides."
+  },
+  "nativeCellMatcher": {
+   "audit": {
+    "flags": [],
+    "door": 2471813,
+    "id": "door:1487816:2471813",
+    "levelId": 1487816,
+    "state": "unmatched",
+    "category": "unmatched:new-native-pair",
+    "existingOwners": [
+     "10-1300 Vestibule"
+    ],
+    "existingKeys": [
+     "rm-1487816-5550ce486504"
+    ],
+    "nativeKind": "native-pair",
+    "nativeOwners": [
+     "10-1300 Vestibule",
+     "10-1302 Atrium"
+    ],
+    "nativeKeys": [
+     "rm-1487816-5550ce486504",
+     "rm-1487816-555ae048650d"
+    ],
+    "sides": [
+     {
+      "cell": "native-cell:3.280840:474",
+      "stepFeet": 0.25,
+      "owner": "10-1300 Vestibule",
+      "ownerGapFeet": 0
+     },
+     {
+      "cell": "native-cell:3.280840:459",
+      "stepFeet": 0.25,
+      "owner": "10-1302 Atrium",
+      "ownerGapFeet": 1.482
+     }
+    ]
+   }
+  }
+ },
+ "notConfirmed": [
+  "Frame (jamb/head/sill) oriented boxes and the exact host parts from the native model.",
+  "Category of element 2472128 crossing the band.",
+  "Whether the door is normally open and public.",
+  "Walking approaches, compiler support replay, regenerated master and route acceptance."
+ ],
+ "unchanged": "No source, owner, access, door or geometry was edited."
+}

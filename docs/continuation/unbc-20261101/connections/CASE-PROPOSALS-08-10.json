@@ -1,0 +1,157 @@
+{
+ "format": "directions-cache-cases-proposal-v1",
+ "status": "PROPOSED",
+ "replaces": "the single 08-10-floor2 entry in docs/continuation/unbc-20261031/release-gates/DIRECTIONS-CACHE-CASES.json",
+ "cases": [
+  {
+   "id": "08-10-floor2",
+   "from": "rm-694-01803a06bb62",
+   "to": "rm-694-d302635a3d75",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": false,
+   "observedOnVisitor61c805ba": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "reason": "Keep refused until the 10-2006 terminal approach is rebuilt: its hallway end door:694:1499373:1 is unreachable because every approach strip overlaps 10-2006 itself. Flip to true only after the compiler fix and replay.",
+   "observedOnMasterD4d36d18": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  {
+   "id": "08-10-floor2:inside",
+   "from": "rm-694-01803a06bb62",
+   "to": "rm-694-d302635a3d75",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "inside"
+   },
+   "expected": true,
+   "observedOnVisitor61c805ba": {
+    "available": true,
+    "distanceMetres": 84.00987334204771,
+    "message": null
+   },
+   "reason": "Same journey with inside arrival; endpoint rooms are exempt from transit there (viewer-routing.ts:305).",
+   "observedOnMasterD4d36d18": {
+    "available": true,
+    "distanceMetres": 81.90901256548705,
+    "message": null
+   }
+  },
+  {
+   "id": "08-10-crossing:08-267-to-10-2066:hallway",
+   "from": "rm-694-43988ffdc334",
+   "to": "rm-694-d30ff45a3d81",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": true,
+   "observedOnVisitor61c805ba": {
+    "available": true,
+    "distanceMetres": 34.38092399778793,
+    "message": null
+   },
+   "reason": "Corridor-to-corridor across doors 1499620/1499619 via 10-2070 Vestibule.",
+   "observedOnMasterD4d36d18": {
+    "available": true,
+    "distanceMetres": 33.3305433048177,
+    "message": null
+   }
+  },
+  {
+   "id": "08-10-crossing:10-2066-to-08-267:hallway",
+   "from": "rm-694-d30ff45a3d81",
+   "to": "rm-694-43988ffdc334",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": true,
+   "observedOnVisitor61c805ba": {
+    "available": true,
+    "distanceMetres": 34.380923997787974,
+    "message": null
+   },
+   "reason": "Reverse direction.",
+   "observedOnMasterD4d36d18": {
+    "available": true,
+    "distanceMetres": 33.33054330481775,
+    "message": null
+   }
+  },
+  {
+   "id": "08-10-crossing:08-264-to-10-2066:hallway",
+   "from": "rm-694-01803a06bb62",
+   "to": "rm-694-d30ff45a3d81",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": true,
+   "observedOnVisitor61c805ba": {
+    "available": true,
+    "distanceMetres": 36.57163475887267,
+    "message": null
+   },
+   "reason": "The original start reaches Building 10 hallway-only.",
+   "observedOnMasterD4d36d18": {
+    "available": true,
+    "distanceMetres": 35.44287645971094,
+    "message": null
+   }
+  },
+  {
+   "id": "08-10-crossing:08-267-to-10-2002:hallway",
+   "from": "rm-694-43988ffdc334",
+   "to": "rm-694-d3135e5a3d84",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": true,
+   "observedOnVisitor61c805ba": {
+    "available": true,
+    "distanceMetres": 57.24840445941102,
+    "message": null
+   },
+   "reason": "Reaches the corridor that serves 10-2006.",
+   "observedOnMasterD4d36d18": null
+  },
+  {
+   "id": "10-2006-endpoint:10-2066-to-10-2006:hallway",
+   "from": "rm-694-d30ff45a3d81",
+   "to": "rm-694-d302635a3d75",
+   "mode": "public",
+   "options": {
+    "allowOtherRoomTransit": false,
+    "endpointMode": "hallway"
+   },
+   "expected": false,
+   "observedOnVisitor61c805ba": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "reason": "Isolates the endpoint defect inside Building 10 (no building crossing involved).",
+   "observedOnMasterD4d36d18": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  }
+ ]
+}

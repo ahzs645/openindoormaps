@@ -1,0 +1,353 @@
+{
+ "format": "connections-0810-findings-v1",
+ "case": "08-10-floor2 (08-264 -> 10-2006, public, hallway endpoint, allowOtherRoomTransit false)",
+ "datasets": {
+  "visitor": {
+   "path": "/home/user/unbc-work/dircache/viewer/indoor.json",
+   "sha256": "61c805ba77eeb781b9888d2ff329917d1438b88a541ecf98fac070b3b172ef73",
+   "note": "The independent visitor JSON whose 21-case run recorded the refusal (DIRECTIONS-CACHE-REPORT.json)."
+  },
+  "master": {
+   "path": "/home/user/unbc-work/output/UNBC.master.reviter.zip",
+   "sha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc"
+  }
+ },
+ "commands": [
+  "cd /home/user/oim-connections && TZ=UTC flock /home/user/unbc-work/agents-heavy.lock node --max-old-space-size=8192 --import tsx scripts/indoor/diagnose-hallway-gap.ts --visitor /home/user/unbc-work/dircache/viewer/indoor.json --out .../diag-0810-visitor.jsonl --from rm-694-01803a06bb62 --to rm-694-d302635a3d75 --probe ... (10 probes)",
+  "same with --master /home/user/unbc-work/output/UNBC.master.reviter.zip --out .../diag-0810-master.jsonl",
+  "python3 -I scripts/approach_screen.py door:694:1499373:1 (float screen of the strip test, approach candidates)"
+ ],
+ "verifiedFacts": {
+  "endpoints": {
+   "kind": "endpoints",
+   "seconds": 408.793721576,
+   "start": {
+    "key": "rm-694-01803a06bb62",
+    "label": "08-264 Signout Equip Storage",
+    "arrival": "arrival:rm-694-01803a06bb62",
+    "circulation": false,
+    "access": "unknown",
+    "hallwayStarts": [
+     "door:694:2468795:1 (portal, 08-267 Corridor [circ])"
+    ]
+   },
+   "end": {
+    "key": "rm-694-d302635a3d75",
+    "label": "10-2006 Office",
+    "arrival": "arrival:rm-694-d302635a3d75",
+    "circulation": false,
+    "access": "unknown",
+    "hallwayEnds": [
+     "door:694:1499373:1 (portal, 10-2002 Corridor [circ])"
+    ]
+   }
+  },
+  "hallwaySets": {
+   "reachableFromStart": 1730,
+   "coReachableToEnd": 1,
+   "overlap": 0,
+   "coReachableRoomsToEnd": [
+    "10-2002 Corridor [circ]"
+   ]
+  },
+  "blockingRule": "viewer-routing.ts:300-308 skips any link whose requiredRooms is non-empty when endpointMode is \"hallway\", including the endpoint rooms themselves. route-policy.ts:150-165 lists 10-2006 Office as required on both walks because nativeWalkTouchesTransitRoom (native-walk-transit-owners.ts:19-121) finds positive overlap between the walk's flat-capped 2 ft strip and 10-2006's identity outline; neither walk has any blocker.",
+  "endpointRooms": {
+   "08-264 Signout Equip Storage": "ordinary room (circulation=false, walkable, access unknown); its hallway start door:694:2468795:1 in 08-267 Corridor reaches 1,730 nodes, so the start side is fine.",
+   "10-2006 Office": "ordinary room; single hallway end door:694:1499373:1 (10-2002 Corridor side of door 1499373). This end is unreachable."
+  },
+  "buildingCrossing": {
+   "08-267->10-2066 hallway": {
+    "available": true,
+    "distanceMetres": 34.38092399778793,
+    "message": null
+   },
+   "10-2066->08-267 hallway": {
+    "available": true,
+    "distanceMetres": 34.380923997787974,
+    "message": null
+   },
+   "08-267->10-2070 hallway": {
+    "available": true,
+    "distanceMetres": 28.73936436262035,
+    "message": null
+   },
+   "10-2070->10-2066 hallway": {
+    "available": true,
+    "distanceMetres": 5.610776063905721,
+    "message": null
+   },
+   "08-267->10-2002 hallway": {
+    "available": true,
+    "distanceMetres": 57.24840445941102,
+    "message": null
+   },
+   "08-264->10-2066 hallway": {
+    "available": true,
+    "distanceMetres": 36.57163475887267,
+    "message": null
+   },
+   "note": "Doors 1499620 (08-267 Corridor/10-2070 Vestibule) and 1499619 (10-2070 Vestibule/10-2066 Corridor) carry hallway-only public journeys; 10-2070 Vestibule is circulation=true. The Building 08-10 crossing is NOT the cause."
+  },
+  "caseVariants": {
+   "case-as-recorded": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "case-inside-no-transit": {
+    "available": true,
+    "distanceMetres": 84.00987334204771,
+    "message": null
+   },
+   "case-hallway-transit-allowed": {
+    "available": true,
+    "distanceMetres": 73.13018004842439,
+    "message": null
+   },
+   "case-inside-transit-allowed": {
+    "available": true,
+    "distanceMetres": 84.00987334204771,
+    "message": null
+   },
+   "probe:10-2066->10-2006:hallway": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "probe:10-2006->08-264:hallway": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "accessibleProfile": "All variants refuse in accessible mode (unknown step-free status on the crossing; unchanged and correct).",
+  "linksIntoTheEndPortal": [
+   {
+    "edgeId": "door:694:1499373",
+    "kind": "door",
+    "nativeCellId": null
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499404:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:2200269:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499372:0|door:694:1499373:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499406:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   }
+  ],
+  "linksIntoTheEndPortalNote": "Corrected November 1: 4 enabled walks plus the door edge reach door:694:1499373:1; each walk requires 10-2006 Office as a transit room under hallway-only routing (see the diagnostic frontier). The earlier list named only two."
+ },
+ "geometry_floatScreen": {
+  "door1499373": "Host 1499339, normal (-0.848, 0.530). Corridor-side portal door:694:1499373:1 lies INSIDE the door footprint, +0.20 ft along the normal (corridor face +0.279 ft); the 10-2006 outline follows the office-side footprint face at -0.279 ft, so the portal is 0.479 ft from the destination outline.",
+  "incidentWalkOverlapSqFt": [
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499404:1",
+    "from": "door:694:1499373:1",
+    "to": "door:694:1499404:1",
+    "points": 5,
+    "overlapSqFtPerSegment": [
+     {
+      "10-2006 Office": 0.0525
+     },
+     {
+      "10-2006 Office": 3.9214
+     },
+     {},
+     {}
+    ]
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:2200269:1",
+    "from": "door:694:2200269:1",
+    "to": "door:694:1499373:1",
+    "points": 5,
+    "overlapSqFtPerSegment": [
+     {},
+     {},
+     {
+      "10-2006 Office": 1.0939
+     },
+     {
+      "10-2006 Office": 0.0525
+     }
+    ]
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499372:0|door:694:1499373:1",
+    "from": "door:694:1499373:1",
+    "to": "door:694:1499372:0",
+    "points": 5,
+    "overlapSqFtPerSegment": [
+     {
+      "10-2006 Office": 0.0525
+     },
+     {
+      "10-2006 Office": 1.0939
+     },
+     {},
+     {}
+    ]
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499406:1",
+    "from": "door:694:1499406:1",
+    "to": "door:694:1499373:1",
+    "points": 5,
+    "overlapSqFtPerSegment": [
+     {},
+     {},
+     {
+      "10-2006 Office": 2.6407
+     },
+     {
+      "10-2006 Office": 0.0525
+     }
+    ]
+   }
+  ],
+  "why": "Every approach walk leaves the portal at about 53 degrees to the door normal (first leg (160.237,844.586)->(160.223,844.739)); a 1 ft half-width strip at that angle reaches about 0.8 ft back along the normal and crosses the office outline. A straight departure would need to be within about 28.6 degrees of the normal to stay clear.",
+  "approximation": "float Sutherland-Hodgman clip of the 2 ft flat-capped strip; production uses exact rational overlay with nativeRoomIdentityRings"
+ },
+ "reviewedLinkCandidate": {
+  "result": "NONE QUALIFIES. This is not a missing approach like 06-388: four walking approaches exist; their geometry touches the destination room.",
+  "evidence": "All existing same-plane nodes within 60 ft inside the clear 35-degree cone from the portal cross wall 1499332 (the far corridor wall, about 8.7 ft away); the nearest wall-free candidates door:694:1499372:0 (9.37 ft) and door:694:1499371:0 (15.84 ft) still overlap 10-2006 by 0.18 and 0.42 sq ft (float screen). add-reviewed-circulation-link.ts --check-only was therefore not run: it replays physical support only, not ordinary-room ownership, so a pass would not repair the refusal."
+ },
+ "requiredFix_sourceSide": [
+  "Compiler (native rebuild): the terminal approach at door 1499373 must leave the corridor-side portal along the door normal until its 2 ft strip clears the 10-2006 outline (the portal should sit past the corridor face, at least about 0.72 ft beyond the door centre line, before any turn). Check this in the existing terminal doorway-half support (corridor-guide-support.ts / prepare-corridor-routing.ts) for cell 647, then replay cell 647 and this case.",
+  "Native cell 647 is a merged cell carrying 12 rooms including 10-2006, 10-2084, 10-2068, 10-2054, 10-2056 and 10-2072. That is why the ownership refinement is exercised here; the boundary family is the same as cells 561/616 and should be investigated with them."
+ ],
+ "notDone_policy": "Treating overlap of an endpoint room by its own door's terminal approach as arrival (not transit) in hallway mode would relax the documented rule \"End owners and explicit door crossings stay required\" (native-walk-transit-owners.ts:16). It was NOT changed; it needs an explicit owner decision.",
+ "masterConfirmation": {
+  "hallwaySets": {
+   "reachableFromStart": 1730,
+   "coReachableToEnd": 1,
+   "overlap": 0
+  },
+  "routes": {
+   "case-as-recorded/public": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "case-as-recorded/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "case-inside-no-transit/public": {
+    "available": true,
+    "distanceMetres": 81.90901256548705,
+    "message": null
+   },
+   "case-inside-no-transit/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "case-hallway-transit-allowed/public": {
+    "available": true,
+    "distanceMetres": 72.00142174926268,
+    "message": null
+   },
+   "case-hallway-transit-allowed/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "case-inside-transit-allowed/public": {
+    "available": true,
+    "distanceMetres": 81.90901256548705,
+    "message": null
+   },
+   "case-inside-transit-allowed/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "probe:08-267->10-2066:hallway/public": {
+    "available": true,
+    "distanceMetres": 33.3305433048177,
+    "message": null
+   },
+   "probe:08-267->10-2066:hallway/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "probe:10-2066->08-267:hallway/public": {
+    "available": true,
+    "distanceMetres": 33.33054330481775,
+    "message": null
+   },
+   "probe:10-2066->08-267:hallway/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "probe:08-264->10-2066:hallway/public": {
+    "available": true,
+    "distanceMetres": 35.44287645971094,
+    "message": null
+   },
+   "probe:08-264->10-2066:hallway/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "probe:10-2066->10-2006:hallway/public": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "probe:10-2066->10-2006:hallway/accessible": {
+    "available": false,
+    "distanceMetres": null,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "linksIntoTheEndPortal": [
+   {
+    "edgeId": "door:694:1499373",
+    "kind": "door",
+    "nativeCellId": null
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499404:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:2200269:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499372:0|door:694:1499373:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   },
+   {
+    "edgeId": "native-cell:14.435696:647:walk:door:694:1499373:1|door:694:1499406:1",
+    "kind": "walk",
+    "nativeCellId": "native-cell:14.435696:647"
+   }
+  ],
+  "linksIntoTheEndPortalNote": "Corrected November 1: 4 enabled walks plus the door edge reach door:694:1499373:1; each walk requires 10-2006 Office as a transit room under hallway-only routing (see the diagnostic frontier). The earlier list named only two."
+ },
+ "inferences": [
+  "The same portal-inside-footprint pattern probably blocks other hallway endpoints; a portal-distance screen alone is not predictive (580 of 1,065 ordinary/circulation doors have the portal within 1 ft of the outline, median 0.973 ft) because overlap also depends on departure angle. A production per-endpoint reachability sweep is the right census."
+ ]
+}
