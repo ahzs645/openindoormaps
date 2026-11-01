@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "input": "/tmp/fresh-map/docs/continuation/unbc-20261031/campus/map/index.html",
+  "inputSha256": "2b8c729972d8c61e8b669302ac921d70cc444f703b78a1f89faab880633c6c55",
+  "method": "Actual show()/loadFloor() from index.html in a Node VM with controlled fetch completions and DOM stubs; not a browser run.",
+  "results": {
+    "staleFinishesLast": {
+      "rendered": "floor-2",
+      "hash": "#floor-2",
+      "cur": "floor-2",
+      "selectedTabs": [
+        "floor-2"
+      ],
+      "staleRequestReturned": false
+    },
+    "staleFinishesFirst": {
+      "rendered": "floor-2",
+      "hash": "#floor-2",
+      "cur": "floor-2",
+      "selectedTabs": [
+        "floor-2"
+      ]
+    },
+    "abaDeduplicated": {
+      "rendered": "campus-floor-1",
+      "hash": "#campus-floor-1",
+      "cur": "campus-floor-1",
+      "selectedTabs": [
+        "campus-floor-1"
+      ],
+      "fetches": [
+        "floors/campus-floor-1.json",
+        "floors/floor-2.json"
+      ]
+    }
+  }
+}

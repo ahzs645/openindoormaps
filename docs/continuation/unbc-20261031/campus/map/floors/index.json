@@ -4,25 +4,81 @@
    "id": "campus-floor-1",
    "name": "Campus Floor 1",
    "compiled": 971,
-   "eligible": 1030
+   "eligible": 1030,
+   "drawnWalks": 1819,
+   "drawnAcceptedGuides": 971,
+   "drawnSavedWalks": 848,
+   "schematicChanged": 1651,
+   "sourceWallCrossings": 100,
+   "sourceWallCrossingsAcceptedGuides": 36,
+   "verify": {
+    "PASS": true,
+    "changedLines": 1651,
+    "hardRuleViolations": 0,
+    "sourceDefectLines": 100,
+    "sourceDefectLinesChanged": 0,
+    "softRuleViolations": 0
+   }
   },
   {
    "id": "floor-2",
    "name": "Floor 2",
    "compiled": 709,
-   "eligible": 782
+   "eligible": 782,
+   "drawnWalks": 1517,
+   "drawnAcceptedGuides": 709,
+   "drawnSavedWalks": 808,
+   "schematicChanged": 1374,
+   "sourceWallCrossings": 73,
+   "sourceWallCrossingsAcceptedGuides": 6,
+   "verify": {
+    "PASS": true,
+    "changedLines": 1374,
+    "hardRuleViolations": 0,
+    "sourceDefectLines": 73,
+    "sourceDefectLinesChanged": 0,
+    "softRuleViolations": 0
+   }
   },
   {
    "id": "campus-floor-3",
    "name": "Campus Floor 3",
    "compiled": 531,
-   "eligible": 572
+   "eligible": 572,
+   "drawnWalks": 1122,
+   "drawnAcceptedGuides": 531,
+   "drawnSavedWalks": 591,
+   "schematicChanged": 967,
+   "sourceWallCrossings": 102,
+   "sourceWallCrossingsAcceptedGuides": 26,
+   "verify": {
+    "PASS": true,
+    "changedLines": 967,
+    "hardRuleViolations": 0,
+    "sourceDefectLines": 102,
+    "sourceDefectLinesChanged": 0,
+    "softRuleViolations": 0
+   }
   },
   {
    "id": "floor-4",
    "name": "Floor 4",
    "compiled": 482,
-   "eligible": 492
+   "eligible": 492,
+   "drawnWalks": 1014,
+   "drawnAcceptedGuides": 482,
+   "drawnSavedWalks": 532,
+   "schematicChanged": 922,
+   "sourceWallCrossings": 55,
+   "sourceWallCrossingsAcceptedGuides": 3,
+   "verify": {
+    "PASS": true,
+    "changedLines": 922,
+    "hardRuleViolations": 0,
+    "sourceDefectLines": 55,
+    "sourceDefectLinesChanged": 0,
+    "softRuleViolations": 0
+   }
   }
  ],
  "transform": {
@@ -31,7 +87,334 @@
   "maxResidualMetres": 0.6070357408092915,
   "pairs": 13721
  },
- "about": "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. The earlier room shapes were used only to place each room's name inside its space and are not drawn. The simplified pathway set accepted 2,701 of 2,884 eligible walking paths campus-wide (2,693 of 2,876 on these four floors); the rest keep their original saved walks. Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.",
+ "drawing": {
+  "default": "Accepted geometry, unmodified: accepted shared guides (net category 0/2) and original saved walks (1/3), exactly as exported (artifact4).",
+  "acceptedGuides": 2693,
+  "savedWalks": 2779,
+  "lines": 5472
+ },
+ "schematic": {
+  "label": "Schematic drawing (display only, not route-accepted)",
+  "status": "DISPLAY_ONLY_NOT_ROUTE_ACCEPTED",
+  "meaning": "A redrawing of the accepted walks for legibility. Routes, distances and acceptance use the accepted geometry, never this layer.",
+  "rule": "hard: no overlap > 1e-6 dm with a native wall (except within 0.8 m of a door hosted by that wall) or an uncovered cell hole (except within 0.8 m of a door); soft (outside walls/holes only): samples outside every cell within 0.3 m of own original",
+  "linesChanged": 4914,
+  "linesDrawn": 5472,
+  "sourceDefectLinesKeptUnmodified": 330,
+  "verify": {
+   "ALL_PASS": true,
+   "verifierSha256": "4be270974f1e19fa06bd087931160a49c633e76aa178d2db3951e24a4211dcf8",
+   "hardRuleViolations": 0,
+   "sourceDefectLinesChanged": 0,
+   "softRuleViolations": 0
+  },
+  "generator": {
+   "regularize.py": "eec996cf03e6e783e91ec970524a498f7663b63a61390b2c91da1a1fc4c5d398",
+   "hardgeom.py": "f346e7e23374e66e264372eb7c7abb7259bfad18c00dc34999275ad60c01d4f6",
+   "no-new-wall-crossings.py": "e8fb8f5ec636f733fdea44b42dfa6950f882b959d9eae7eb457eef989f1cf147",
+   "verify.py": "4be270974f1e19fa06bd087931160a49c633e76aa178d2db3951e24a4211dcf8"
+  }
+ },
+ "sourceWallCrossings": {
+  "lines": 330,
+  "acceptedGuideLines": 71,
+  "rule": "original net line overlaps a native wall footprint (away from doors hosted by that wall, 0.8 m) or a cell hole not covered by another cell; exact, display decimetre coordinates"
+ },
+ "acceptance": {
+  "source": "docs/continuation/unbc-20261031/campus/acceptance (NORMAL-ROUTES.json, REPORT.json)",
+  "status": "PASS",
+  "releaseAcceptance": false,
+  "published": false,
+  "runId": "9b403a2d-db30-4de1-97b6-0a2ac0f691dc",
+  "sourceMasterSha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc",
+  "guideCatalogSha256": "54f10449efcc1620724ccc2ccf8179823f1d8c28a39b8be56e54c2fcbf64cd40",
+  "guides": 2701,
+  "candidateArchiveSha256": "1a7acbcb0958deb96dbf564f4b9d841d4032b5d379fea7123cbf535c8f79fb0f",
+  "normalRoutesSha256": "6ef73cd4fbdd3f4efd1461d5e7fc0d51db2d8b5e312f402679636ea475e571e0",
+  "routes": [
+   {
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 13.617,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": true,
+    "available": true,
+    "distanceMetres": 178.219,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": true,
+    "available": true,
+    "distanceMetres": 177.608,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": true,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 13.617,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": true,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 123.924,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 123.924,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 118.788,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "public",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 118.631,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "accessible",
+    "endpointMode": "hallway",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 13.617,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "available": true,
+    "distanceMetres": 187.241,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "available": true,
+    "distanceMetres": 186.63,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": true,
+    "distanceMetres": 13.617,
+    "requiredNativeDoorId": 2311764
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   },
+   {
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "available": false,
+    "distanceMetres": null,
+    "requiredNativeDoorId": null
+   }
+  ]
+ },
+ "about": "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. The earlier room shapes were used only to place each room's name inside its space and are not drawn. The walking network drawn by default is the accepted geometry, unmodified: 2,693 accepted shared guides on these four floors (2,701 of 2,884 eligible campus-wide; guide catalog 54f10449) and, for the other 2,779 enabled walks, their original saved walks. Corridor walks that only end at their own corridor's label point are hidden for legibility (routing keeps them). The optional schematic layer is a display-only redrawing that is not route-accepted: it changes 4,914 of 5,472 drawn walks, may not enter any native wall footprint away from that wall's own doors or any cell hole (exact check, independent verifier PASS), and keeps unmodified every walk whose original already does. 330 original walks (71 of them accepted guides) already overlap a native wall or hole away from doors in this drawing's coordinates; they are listed in the 'Source walks that cross a native wall' layer as source defects for review. Route distances quoted come from the full-catalog acceptance run 9b403a2d (candidate archive 1a7acbcb, releaseAcceptance false). Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.",
  "evidence": {
   "connectedAgreement": {
    "agree": 1303,
@@ -43,5 +426,11 @@
   "unmatchedNoCell": 39,
   "disconnectedVestibules": 6,
   "mainArrivals": 1693
+ },
+ "floorFiles": {
+  "campus-floor-1": "628ccfacf6d63df3365335a4e39a5ae068b2a1630e8d7198611a91e75527b1ad",
+  "floor-2": "1923b846001d77b714989e5feb3d5946ec6e1e370ee3e437752f62695c7f2a69",
+  "campus-floor-3": "f96f35a4982327d7bbc66b048b43e99fabb961541e037264cabd8e5341189f65",
+  "floor-4": "1afc42d9d2357b8fc6e8d53e189439e64afd6ffbb314d6c2ea1138f32d69241b"
  }
 }

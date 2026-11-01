@@ -29,6 +29,7 @@
   --staff: #efdcd6;
   --opening: #fbfbf9;
   --walk: #8a928d;
+  --schematic: #6d28d9;
   --font-display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
   --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
@@ -39,14 +40,14 @@
     --paper: #121614; --sheet: #181d1b; --ink: #e5e9e6; --muted: #9aa49f; --rule: #2c3431;
     --accent: #3fc79a; --link: #6aa3ff; --stop: #c18cf0; --warn: #fb8b4c; --evidence: #eab308; --ramp: #f472b6; --steps: #f59e0b;
     --wall: #b9c3be; --room: #20262a; --circ: #1c3a2f; --stair: #393224; --staff: #3a2a27; --opening: #121614;
-    --walk: #7d8782; color-scheme: dark;
+    --walk: #7d8782; --schematic: #b79cff; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #121614; --sheet: #181d1b; --ink: #e5e9e6; --muted: #9aa49f; --rule: #2c3431;
   --accent: #3fc79a; --link: #6aa3ff; --stop: #c18cf0; --warn: #fb8b4c; --evidence: #eab308; --ramp: #f472b6; --steps: #f59e0b;
   --wall: #b9c3be; --room: #20262a; --circ: #1c3a2f; --stair: #393224; --staff: #3a2a27; --opening: #121614;
-  --walk: #7d8782; color-scheme: dark;
+  --walk: #7d8782; --schematic: #b79cff; color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; margin: 0; }
@@ -85,6 +86,8 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
 .sw { width: 18px; height: 0; border-top: 3px solid; flex: none; }
 .sw.dot { width: 10px; height: 10px; border: 2px solid; border-radius: 50%; margin: 0 4px; }
 .sw.fill { height: 12px; border: 1px solid var(--rule); }
+.sw.dash { border-top-style: dashed; }
+.layers small { display: block; color: var(--muted); font-size: 11px; margin-left: 52px; margin-top: -4px; }
 .search { display: flex; gap: 6px; }
 .search input { flex: 1; min-width: 0; font: 14px var(--font-body); padding: 7px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); color: var(--ink); }
 .search button, .item { font: 500 13px var(--font-body); padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); color: var(--ink); cursor: pointer; }
@@ -94,12 +97,18 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
 .item { text-align: left; display: grid; grid-template-columns: 8px 1fr; gap: 2px 10px; padding: 8px 10px; }
 .item .pip { grid-row: span 2; width: 8px; border-radius: 2px; }
 .item b { font-weight: 500; }
-.item small { color: var(--muted); font-size: 12px; }
+.item small { color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.item b, .sel small { overflow-wrap: anywhere; }
 .ok { background: var(--accent); } .partial { background: var(--link); } .bad { background: var(--warn); } .ev { background: var(--evidence); }
 .sel { border-left: 3px solid var(--accent); padding: 8px 10px; background: var(--paper); border-radius: 0 6px 6px 0; }
 .sel b { display: block; font-weight: 600; }
 .sel small { color: var(--muted); display: block; }
 .note { color: var(--muted); font-size: 12px; max-width: 65ch; margin: 0; }
+.badge { display: inline-block; font: 600 11px var(--font-mono); padding: 2px 6px; border-radius: 4px; border: 1px solid currentColor; }
+.badge.pass { color: var(--accent); } .badge.fail { color: var(--warn); }
+.schem { border-left: 3px solid var(--schematic); padding: 8px 10px; background: var(--paper); border-radius: 0 6px 6px 0; font-size: 12px; }
+.schem b { display: block; font-weight: 600; font-size: 13px; }
+.schem[hidden] { display: none; }
 .kpi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 .kpi div { border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--paper); }
 .kpi b { display: block; font: 600 18px var(--font-display); font-variant-numeric: tabular-nums; }
@@ -113,7 +122,7 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
 <body>
 <header>
   <h1>UNBC Campus Pathways</h1>
-  <span class="sub">Native Revit walls and wall-bounded spaces with the simplified walking network, on the four visitor floors.</span>
+  <span class="sub">Native Revit walls and wall-bounded spaces with the accepted walking network drawn unmodified, on the four visitor floors.</span>
 </header>
 <nav class="tabs" id="tabs" role="tablist" aria-label="Visitor floors"></nav>
 <main>
@@ -147,6 +156,12 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
     <section>
       <h2>Layers</h2>
       <div class="layers" id="layers"></div>
+      <div class="schem" id="schemStatus" hidden></div>
+    </section>
+    <section>
+      <h2>Source walks that cross a native wall</h2>
+      <p class="note" id="defectNote"></p>
+      <div class="list scroll" id="defects"></div>
     </section>
     <section>
       <h2>Native door evidence</h2>
@@ -173,14 +188,15 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
 <script>
 "use strict";
 const GATEWAYS = [
-  { id: 2311764, floor: "floor-2", name: "Buildings 04–08 link", detail: "Tested: 04-204 ↔ 08-267 routes in 122 m with default settings. Step-free refused (50 mm sill, access unconfirmed).", status: "ok" },
+  // detail is generated from the full-catalog acceptance record in floors/index.json (see linkDetail).
+  { id: 2311764, floor: "floor-2", name: "Buildings 04–08 link", detail: "", status: "ok" },
   { id: 2112703, floor: "campus-floor-3", name: "Buildings 04–08, Building 04 end", detail: "Connected door (04-302 Corridor ↔ 08-360 Link).", status: "partial" },
   { id: 2315416, floor: "campus-floor-3", name: "Buildings 04–08, Building 08 end", detail: "Unmatched today. Native cells put 08-360 Link on one side and the Building 08 corridor space on the other; nearest named room 08-316 Corridor, 0.90 m from the door.", status: "bad" },
   { id: 1499620, floor: "floor-2", name: "Buildings 08–10, first door", detail: "Connected door; the hallway journey 08-264 → 10-2006 is still refused.", status: "partial" },
   { id: 1499619, floor: "floor-2", name: "Buildings 08–10, second door", detail: "Connected door (10-2070 Vestibule ↔ 10-2066 Corridor).", status: "partial" },
   { id: 1501580, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1", detail: "Connected door (10-1080 Vestibule ↔ 08-159 Alcove).", status: "partial" },
   { id: 1501582, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1 inner door", detail: "Connected door (10-1060 Corridor ↔ 10-1080 Vestibule).", status: "partial" },
-  { id: 1630256, floor: "campus-floor-1", name: "Buildings 07–08 ramp landing", detail: "Connected; the ramp 07-180 → 08-S101 routes in 52.3 m walking.", status: "ok" },
+  { id: 1630256, floor: "campus-floor-1", name: "Buildings 07–08 ramp landing", detail: "Connected door at the ramp landing. The ramp 07-180 → 08-S101 routed in an October 18 survey on an earlier dataset; it has not been re-run on this guide catalog, so no distance is shown.", status: "partial" },
   { id: 2018182, floor: "campus-floor-1", name: "Buildings 07–08 stair alcove", detail: "Connected door; the stair flight itself is held.", status: "partial" },
   { id: 1951047, floor: "campus-floor-1", name: "Buildings 09–07 Agora", detail: "Connected door; the local steps are a separate check.", status: "partial" },
 ];
@@ -195,8 +211,8 @@ const VESTIBULE_CAUSE = {
 const LAYERS = [
   { key: "walls", label: "Native walls", cls: "fill", color: "--wall", on: true },
   { key: "doors", label: "Doors (orange: unmatched)", color: "--warn", on: true },
-  { key: "guides", label: "Walking network (corridors and through routes)", color: "--accent", on: true },
-  { key: "roomWalks", label: "Walks into rooms", color: "--accent", on: true },
+  { key: "guides", label: "Walking network: accepted geometry, unmodified (corridors and through routes)", color: "--accent", on: true },
+  { key: "roomWalks", label: "Walks into rooms (accepted geometry)", color: "--accent", on: true },
   { key: "links", label: "Door and opening crossings", color: "--link", on: true },
   { key: "vertical", label: "Ramps and steps used in directions", color: "--ramp", on: true },
   { key: "held", label: "Stairs not used in directions yet", color: "--steps", on: true },
@@ -204,8 +220,10 @@ const LAYERS = [
   { key: "gaps", label: "Door with no walking approach", cls: "dot", color: "--warn", on: true },
   { key: "proposals", label: "Proposed native door pair", cls: "dot", color: "--evidence", on: true },
   { key: "labels", label: "Room names", cls: "fill", color: "--room", on: true },
+  { key: "schematic", label: "Schematic drawing — display only, not route-accepted", color: "--schematic", cls: "dash", on: false, note: "Opt-in redrawing for legibility; routes never use it." },
+  { key: "sourceDefects", label: "Source walks that cross a native wall", color: "--warn", on: false, note: "Original walks overlapping a wall or hole away from doors (source defects)." },
 ];
-const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {} };
+const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {}, showToken: 0, loading: new Map() };
 LAYERS.forEach((l) => (state.layers[l.key] = l.on));
 const $ = (id) => document.querySelector(`#${id}`);
 const canvas = $("map"), ctx = canvas.getContext("2d");
@@ -219,7 +237,7 @@ function ringPath(path, flat) {
 }
 function prepare(f) {
   const P = () => new Path2D();
-  const g = { fill: { room: P(), circ: P(), stair: P(), staff: P() }, cellLine: P(), walls: P(), doorsOk: P(), doorsBad: P(), guides: P(), walks: P(), roomWalks: P(), links: P(), cross: P(), held: P(), ramps: P(), steps: P(), cells: [], ownerCell: new Map() };
+  const g = { fill: { room: P(), circ: P(), stair: P(), staff: P() }, cellLine: P(), walls: P(), doorsOk: P(), doorsBad: P(), guides: P(), walks: P(), roomWalks: P(), links: P(), cross: P(), held: P(), ramps: P(), steps: P(), schematic: P(), defects: P(), defectPoints: [], cells: [], ownerCell: new Map() };
   let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const [id, owners, rings] of f.cells) {
     if (!rings.length) continue;
@@ -245,15 +263,23 @@ function prepare(f) {
   for (const [, , ei] of f.net) for (const node of f.netNodes[ei]) degree.set(node, (degree.get(node) || 0) + 1);
   const isArrival = (id) => id.startsWith("arrival:");
   g.hiddenSpurs = 0;
-  for (const [l, cat, ei] of f.net) {
+  // `net` is the accepted geometry exactly as exported (accepted shared guides and
+  // original saved walks). `schematic[i]` is 0 when the schematic equals net[i].
+  f.net.forEach(([l, cat, ei], i) => {
     const [a, b] = f.netNodes[ei];
+    const sch = f.schematic && f.schematic[i] ? f.schematic[i] : l;
     if (cat <= 1) {
       // A corridor walk that only ends at the corridor's own label point adds a
       // stray end, not a connection: hide it for display (routing keeps it).
-      if ((isArrival(a) && degree.get(a) === 1) || (isArrival(b) && degree.get(b) === 1)) { g.hiddenSpurs++; continue; }
+      if ((isArrival(a) && degree.get(a) === 1) || (isArrival(b) && degree.get(b) === 1)) { g.hiddenSpurs++; return; }
       ringPath(g.guides, l);
     } else if (!isArrival(a) && !isArrival(b)) ringPath(g.guides, l); // through traffic, e.g. across 04-259 Rotunda
     else ringPath(g.roomWalks, l);
+    ringPath(g.schematic, sch);
+  });
+  for (const [ni, , , contacts] of f.sourceWallCrossings || []) {
+    ringPath(g.defects, f.net[ni][0]);
+    for (const c of contacts) g.defectPoints.push(c[3]);
   }
   for (const l of f.seams) ringPath(g.guides, l);
   for (const l of f.approaches) ringPath(g.walks, l);
@@ -313,6 +339,10 @@ function draw() {
     ctx.strokeStyle = css("--steps"); ctx.lineWidth = px(3.4); ctx.stroke(g.steps);
   }
   if (state.layers.links) { ctx.strokeStyle = css("--link"); ctx.lineWidth = px(2); ctx.stroke(g.links); ctx.lineWidth = px(4.5); ctx.stroke(g.cross); }
+  if (state.layers.schematic) {
+    ctx.setLineDash([px(4), px(3)]); ctx.strokeStyle = css("--schematic"); ctx.lineWidth = px(1.6); ctx.stroke(g.schematic); ctx.setLineDash([]);
+  }
+  if (state.layers.sourceDefects) { ctx.strokeStyle = css("--warn"); ctx.lineWidth = px(3.2); ctx.stroke(g.defects); }
   const dot = (p, r, color, ring) => {
     ctx.beginPath(); ctx.arc(p[0], -p[1], px(r), 0, Math.PI * 2);
     if (ring) { ctx.lineWidth = px(2); ctx.strokeStyle = color; ctx.stroke(); } else { ctx.fillStyle = color; ctx.fill(); }
@@ -330,6 +360,7 @@ function draw() {
     else dot(p, 3.5, css(kind === "ramp" ? "--ramp" : "--steps"));
   }
   if (state.layers.proposals) for (const pr of f.proposals) diamond(pr[0], 6, css("--evidence"));
+  if (state.layers.sourceDefects) for (const p of g.defectPoints) dot(p, 6, css("--warn"), true);
   for (const gw of GATEWAYS) if (gw.floor === f.id && gw.p) dot(gw.p, 8, css(gw.status === "bad" ? "--warn" : gw.status === "ok" ? "--accent" : "--link"), true);
   if (state.sel && state.sel.point) dot(state.sel.point, 12, css("--ink"), true);
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -398,37 +429,53 @@ function select(sel, zoom) {
   draw();
 }
 async function loadFloor(f) {
-  if (!state.data[f.id]) {
-    const floor = await (await fetch(`floors/${f.id}.json`)).json();
-    Object.assign(f, floor);
-    state.data[f.id] = prepare(f);
-    for (const gw of GATEWAYS) if (gw.floor === f.id && !gw.p) {
-      const link = f.links.find((l) => l[1] === gw.id), door = f.doors.find((dd) => dd[1] === gw.id);
-      const pts = link ? link[0] : door ? door[0] : null;
-      if (pts) { let sx = 0, sy = 0, n = pts.length / 2; for (let i = 0; i < pts.length; i += 2) { sx += pts[i]; sy += pts[i + 1]; } gw.p = [sx / n, sy / n]; }
-    }
+  if (state.data[f.id]) return f;
+  // One fetch per floor, however many callers ask for it while it is in flight.
+  if (!state.loading.has(f.id)) {
+    const job = (async () => {
+      const floor = await (await fetch(`floors/${f.id}.json`)).json();
+      Object.assign(f, floor);
+      state.data[f.id] = prepare(f);
+      for (const gw of GATEWAYS) if (gw.floor === f.id && !gw.p) {
+        const link = f.links.find((l) => l[1] === gw.id), door = f.doors.find((dd) => dd[1] === gw.id);
+        const pts = link ? link[0] : door ? door[0] : null;
+        if (pts) { let sx = 0, sy = 0, n = pts.length / 2; for (let i = 0; i < pts.length; i += 2) { sx += pts[i]; sy += pts[i + 1]; } gw.p = [sx / n, sy / n]; }
+      }
+    })();
+    state.loading.set(f.id, job);
+    job.then(() => state.loading.delete(f.id), () => state.loading.delete(f.id));
   }
+  await state.loading.get(f.id);
   return f;
 }
+// Returns true if this request became the shown floor, false if a newer
+// selection superseded it while its floor file was loading (request token).
 async function show(id, keep) {
+  const token = (state.showToken = (state.showToken || 0) + 1);
   const f = state.floors.find((x) => x.id === id) || state.floors[0];
   for (const b of document.querySelectorAll(".tab")) b.setAttribute("aria-selected", String(b.dataset.id === f.id));
   await loadFloor(f);
+  if (token !== state.showToken) return false;
   state.cur = f;
   if (!keep) { state.sel = null; $("selection").innerHTML = ""; fit(state.data[f.id].bounds); }
   renderFloor(f);
   if (location.hash.slice(1) !== f.id) history.replaceState(null, "", `#${f.id}`);
   draw();
+  return true;
 }
 function renderFloor(f) {
   const meta = state.index.floors.find((x) => x.id === f.id);
   $("floorTitle").textContent = f.name;
   const pct = (meta.compiled / meta.eligible) * 100;
-  $("pct").innerHTML = `${pct.toFixed(1)}%<span>of walking paths simplified</span>`;
+  $("pct").innerHTML = `${pct.toFixed(1)}%<span>of eligible walks have an accepted shared guide</span>`;
   $("meter").style.width = `${pct}%`;
   const unmatched = f.doors.filter((d) => d[2] === 1).length;
   const rows = [
-    ["Simplified paths", `${fmt(meta.compiled)} / ${fmt(meta.eligible)}`],
+    ["Accepted shared guides / eligible walks", `${fmt(meta.compiled)} / ${fmt(meta.eligible)}`],
+    ["Drawn walks: accepted guides + original saved walks", `${fmt(meta.drawnAcceptedGuides)} + ${fmt(meta.drawnSavedWalks)}`],
+    ["Corridor label-point spurs hidden (kept in routing)", fmt(state.data[f.id].hiddenSpurs)],
+    ["Source walks crossing a native wall or hole", fmt(meta.sourceWallCrossings)],
+    ["Schematic layer: walks redrawn (display only)", fmt(meta.schematicChanged)],
     ["Native spaces (wall-bounded)", fmt(f.cells.length)],
     ["Room names placed", fmt(f.names.length)],
     ["Native wall pieces", fmt(f.walls.length)],
@@ -441,6 +488,8 @@ function renderFloor(f) {
   ];
   $("stats").innerHTML = "";
   for (const [k, v] of rows) { const dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = k; dd.textContent = v; $("stats").append(dt, dd); }
+  renderSchematicStatus(f, meta);
+  renderDefects(f, meta);
   const list = $("proposals"); list.innerHTML = "";
   if (!f.proposals.length) list.textContent = "None on this floor.";
   for (const [p, id, a, b, ga, gb] of [...f.proposals].sort((u, v) => (u[1] === 2315416 ? -1 : v[1] === 2315416 ? 1 : 0))) {
@@ -452,12 +501,58 @@ function renderFloor(f) {
     list.append(it);
   }
 }
+function renderSchematicStatus(f, meta) {
+  const box = $("schemStatus"), sc = state.index.schematic, v = meta.verify;
+  box.hidden = !state.layers.schematic;
+  box.innerHTML = "<b></b><span></span> <span class=\"badge\"></span><p class=\"note\"></p>";
+  box.querySelector("b").textContent = sc.label;
+  box.querySelector("span").textContent = `${f.name}: ${fmt(meta.schematicChanged)} of ${fmt(meta.drawnWalks)} walks redrawn; ${fmt(meta.sourceWallCrossings)} source-defect walks kept unmodified. Independent verifier:`;
+  const badge = box.querySelector(".badge");
+  badge.textContent = v.PASS ? `PASS · ${v.hardRuleViolations} wall/hole overlaps` : `FAIL · ${v.hardRuleViolations} wall/hole overlaps`;
+  badge.classList.add(v.PASS ? "pass" : "fail");
+  box.querySelector("p").textContent = `${sc.meaning} Rule: ${sc.rule}. Campus: ${fmt(sc.linesChanged)} of ${fmt(sc.linesDrawn)} walks redrawn; verifier ${sc.verify.ALL_PASS ? "PASS" : "FAIL"} (${sc.verify.verifierSha256.slice(0, 12)}).`;
+}
+function renderDefects(f, meta) {
+  const list = $("defects"); list.innerHTML = "";
+  // largest overlap first; each entry keeps its net index, edge id and native ids
+  const rows = [...(f.sourceWallCrossings || [])].sort((u, v) => v[3][0][2] - u[3][0][2]);
+  $("defectNote").textContent = `${fmt(rows.length)} original walks on ${f.name} (${fmt(meta.sourceWallCrossingsAcceptedGuides)} of them accepted guides) overlap a native wall footprint away from that wall's own doors, or a cell hole. They are drawn unmodified in every view and need source review; the layer of the same name marks them on the map.`;
+  for (const [ni, edgeId, cat, contacts] of rows) {
+    const c = contacts[0];
+    const what = c[0] === "wall" ? `wall ${c[1]}` : `hole of native cell ${String(c[1]).split(":").pop()}`;
+    const cells = c[4].map((x) => String(x).split(":").pop()).join(", ");
+    const [u, v] = f.netNodes[f.net[ni][2]];
+    const it = document.createElement("button"); it.className = "item"; it.type = "button"; it.title = edgeId;
+    it.innerHTML = '<span class="pip bad"></span><b></b><small></small>';
+    it.querySelector("b").textContent = `${what} · ${c[2].toFixed(1)} dm`;
+    it.querySelector("small").textContent = `${cat === 0 || cat === 2 ? "Accepted guide" : "Saved walk"} ${edgeId}${cells ? ` · native cell ${cells}` : ""}${contacts.length > 1 ? ` · +${contacts.length - 1} more` : ""}`;
+    it.addEventListener("click", () => {
+      if (!state.layers.sourceDefects) { state.layers.sourceDefects = true; $("layer-sourceDefects").checked = true; }
+      select({ point: c[3], title: `Source walk through ${what}`, detail: `Edge ${edgeId} (${u} → ${v}). ${contacts.map((k) => `${k[0]} ${k[1]}: ${k[2].toFixed(2)} dm`).join("; ")}. Original geometry, shown unmodified; the schematic never redraws it.` }, true);
+    });
+    list.append(it);
+  }
+}
+function linkDetail(acc) {
+  const r = acc.routes, m = (n) => `${n.toFixed(3)} m`;
+  const pick = (from, to, end, transit, mode = "public") => r.find((x) => x.from === from && x.to === to && x.endpointMode === end && x.allowOtherRoomTransit === transit && x.mode === mode);
+  const a = pick("04-204", "08-267", "hallway", false), b = pick("08-267", "04-204", "hallway", false);
+  const c = pick("08-216", "08-260", "hallway", false), d = pick("04-255", "08-272", "hallway", true), e = pick("04-255", "08-272", "inside", true);
+  const h = pick("04-255", "08-272", "hallway", false);
+  const sf = r.filter((x) => x.mode === "accessible");
+  const parts = [];
+  if (a && b) parts.push(`04-204 ↔ 08-267 ${m(a.distanceMetres)}${b.distanceMetres !== a.distanceMetres ? ` / ${m(b.distanceMetres)}` : " each way"} (hallway only)`);
+  if (c) parts.push(`08-216 → 08-260 ${m(c.distanceMetres)}`);
+  if (d) parts.push(`04-255 → 08-272 with other-room transit ${m(d.distanceMetres)}${e ? ` (inside arrival ${m(e.distanceMetres)})` : ""}${h && !h.available ? "; hallway-only refused" : ""}`);
+  parts.push(`step-free refused in ${sf.filter((x) => !x.available).length} of ${sf.length} step-free requests (no confirmed step-free route)`);
+  return `Full-catalog acceptance run ${acc.runId.slice(0, 8)} (guide catalog ${acc.guideCatalogSha256.slice(0, 8)}, ${fmt(acc.guides)} guides; not a release acceptance): ${parts.join("; ")}.`;
+}
 function setupUI() {
   for (const f of state.floors) {
     const meta = state.index.floors.find((x) => x.id === f.id);
     const b = document.createElement("button");
     b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.id = f.id; b.id = `tab-${f.id}`;
-    b.innerHTML = `<span></span><small>${fmt(meta.compiled)} paths</small>`;
+    b.innerHTML = `<span></span><small>${fmt(meta.compiled)} guides</small>`;
     b.querySelector("span").textContent = f.name;
     b.addEventListener("click", () => show(f.id));
     $("tabs").append(b);
@@ -465,11 +560,12 @@ function setupUI() {
   for (const l of LAYERS) {
     const lab = document.createElement("label"), cb = document.createElement("input");
     cb.type = "checkbox"; cb.id = `layer-${l.key}`; cb.checked = state.layers[l.key];
-    cb.addEventListener("change", () => { state.layers[l.key] = cb.checked; draw(); });
+    cb.addEventListener("change", () => { state.layers[l.key] = cb.checked; if (state.cur) renderSchematicStatus(state.cur, state.index.floors.find((x) => x.id === state.cur.id)); draw(); });
     const sw = document.createElement("span"); sw.className = `sw ${l.cls || ""}`; sw.style.borderColor = `var(${l.color})`;
     if (l.cls === "fill") sw.style.background = `var(${l.color})`;
     const t = document.createElement("span"); t.textContent = l.label;
     lab.append(cb, sw, t); $("layers").append(lab);
+    if (l.note) { const n = document.createElement("small"); n.textContent = l.note; $("layers").append(n); }
   }
   const ev = state.index.evidence;
   const kpis = [
@@ -491,7 +587,7 @@ function setupUI() {
   for (const gw of GATEWAYS) {
     const floorName = state.floors.find((f) => f.id === gw.floor).name;
     addItem($("gateways"), gw.status, gw.name, `${floorName} · door ${gw.id}`, gw.detail, async () => {
-      await show(gw.floor, true);
+      if (!(await show(gw.floor, true))) return;
       if (gw.p) select({ point: gw.p, title: `${gw.name} · door ${gw.id}`, detail: gw.detail }, true);
     });
   }
@@ -509,7 +605,7 @@ async function find(q, detail) {
       await loadFloor(f);
       const door = f.doors.find((d) => String(d[1]) === q);
       if (door) {
-        await show(f.id, true);
+        if (!(await show(f.id, true))) return;
         const pts = door[0]; let sx = 0, sy = 0; for (let i = 0; i < pts.length; i += 2) { sx += pts[i]; sy += pts[i + 1]; }
         const pr = f.proposals.find((p) => String(p[1]) === q);
         const st = ["connected", "unmatched", "other"][door[2]];
@@ -526,7 +622,7 @@ async function find(q, detail) {
     let i = f.names.findIndex((n) => n[0].toLowerCase() === needle);
     if (i < 0) i = f.names.findIndex((n) => `${n[0]} ${n[1]}`.toLowerCase().includes(needle));
     if (i >= 0) {
-      await show(f.id, true);
+      if (!(await show(f.id, true))) return;
       const cell = state.data[f.id].ownerCell.get(i);
       const shared = cell && cell.owners.length > 1 ? ` · native space shared by ${cell.owners.length} names` : "";
       select({ point: f.names[i][4], cell, title: nameText(f.names[i]), detail: (detail || f.name) + shared }, true);
@@ -577,6 +673,7 @@ new MutationObserver(draw).observe(document.documentElement, { attributes: true,
 (async () => {
   state.index = await (await fetch("floors/index.json")).json();
   state.floors = state.index.floors.map((f) => ({ id: f.id, name: f.name }));
+  GATEWAYS.find((g) => g.id === 2311764).detail = linkDetail(state.index.acceptance);
   setupUI(); resize();
   const start = location.hash.slice(1);
   await show(state.floors.some((f) => f.id === start) ? start : "floor-2");

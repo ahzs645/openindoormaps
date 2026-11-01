@@ -1,55 +1,45 @@
-"""Schematic regularizer for the UNBC pathway map (display only).
+"""Schematic regularizer for the UNBC pathway map (DISPLAY ONLY, not route-accepted).
 
-Reads artifact4/floors/*.json and writes artifact5/floors/*.json (plus an
-unchanged copy of index.html).  Only the geometry of `net` lines is changed
-(`seams` are two-point lines and are already straight; they are copied as-is).
-Graph topology is untouched: netNodes, edge order, edge count and every line's
-first/last point (the graph node positions) are identical to the input.
+Reads SRC/floors/*.json (the accepted drawing: `net` = accepted shared guides and
+original saved walks) and writes DST/floors/*.json with `net` UNCHANGED and a new
+parallel array `schematic`: 0 where the schematic line equals the original line,
+otherwise the schematic line (flat decimetres).  Graph topology is untouched:
+netNodes, edge order, edge count and every line's first/last point are identical.
+
+HARD CONSTRAINTS (hardgeom.py, exact segment/polygon intervals, no raster):
+  an output segment may never have positive-length overlap with the interior of
+  * a native wall footprint, except within 0.8 m of a door footprint hosted by
+    that same native wall (the door cuts its host wall), or
+  * a native cell hole not covered by another cell (except within 0.8 m of a door).
+  There is no distance-to-original allowance through walls or holes.  A line whose
+  ORIGINAL geometry already overlaps a wall/hole is a source defect: it is kept
+  unmodified (never simplified) and listed in the metrics.
+SOFT RULE (unchanged from the earlier version, applies only OUTSIDE walls/holes):
+  samples (1 dm, exact polygon tests) that are outside every native cell (e.g. a
+  door opening or the gap between two cells) must lie within 0.28 m of the
+  original line(s) the piece belongs to.
+Every simplification that fails keeps the original checked geometry.
 
 Pipeline per floor (all units decimetres, x east, y north):
   A  per-line cleanup: snap interior vertices onto a fixed node point (<= 2.5 dm)
      or a shared leader vertex (<= 3 dm), drop duplicate points, exact back-tracks
      (A,B,A) and short sawtooth spikes (turn > 150 deg, short leg <= 6 dm).
-  A3 micro-junction contraction: drawn chains shorter than 0.8 m between two
-     junctions are merged into one junction (a fixed node point wins), unless the
-     chain is a clean square step (axis-aligned, >= 0.3 m) or the move would pull
-     a straight trunk passing through the junction more than 0.15 m off its line.
-  B  drawn graph: union of all cleaned lines (vertices = unique points).
-     Junctions = fixed node points and drawn vertices of degree != 2.  Each chain
-     between junctions is simplified once, so overlapping guides stay overlapping:
-     corridor-aware Douglas-Peucker (0.7 m when the replacement segment lies
-     within 12 deg of a building axis, else 0.15 m so right-angle corners survive;
-     then 0.4 m / 0.2 m if the result is invalid).  Terminal chains <= 5 m that
-     end at a node with one drawn neighbour and contain a back-and-forth become
-     one straight spur when valid.
-  C  orthogonalization: each segment gets a local building frame from the
-     native wall footprints within 6 m; segments within 12 deg of the frame axes
-     are snapped to exact axis directions by grouping vertices that must share a
-     coordinate (least displacement, fixed points never move).  Chains that would
-     become invalid are pinned to their phase-B geometry and the solve repeats.
-  D  right-angle spurs: a straight terminal spur J->T (T a node with one drawn
-     neighbour) that meets the trunk at J obliquely is re-attached at the foot F
-     of the perpendicular from T on the trunk (on an existing trunk segment, or
-     on the straight extension of the trunk past a corner), so the trunk
-     continues straight and the spur leaves at 90 deg.
+  A3 micro-junction contraction (chains < 0.8 m between junctions).
+  B  drawn graph + corridor-aware Douglas-Peucker per chain (0.7/0.4/0.2 m).
+  C  orthogonalization to the local building frame (fixed points never move).
+  D  right-angle terminal spurs.
   E  final check per line against ITS OWN original line; any line that fails is
      restored to its original geometry.
 
-Validity: every output segment is sampled every 1 dm; each sample must lie inside
-the union of native cells (outer ring minus holes) and outside every native wall
-footprint, or within 3 dm of the original line(s) the piece belongs to.
-
-usage: python3 regularize.py [src_dir] [dst_dir]
+usage: python3 regularize.py SRC_DIR DST_DIR
 """
-import json, math, os, shutil, sys
+import argparse, json, math, os, sys
 from collections import defaultdict, Counter
 
 import numpy as np
-from PIL import Image, ImageDraw
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from hardgeom import HardConstraints, interior_intervals, _merge, _subtract  # noqa: E402
 
-W = '/home/user/unbc-work'
-SRC = sys.argv[1] if len(sys.argv) > 1 else os.path.join(W, 'artifact4')
-DST = sys.argv[2] if len(sys.argv) > 2 else os.path.join(W, 'artifact5')
 FLOORS = ['campus-floor-1', 'floor-2', 'campus-floor-3', 'floor-4']
 
 SNAP = 3.0          # dm, vertex snap radius onto a shared leader vertex (phase A)
@@ -62,7 +52,7 @@ TERM_STRAIGHT = 50.0  # dm
 AXIS_TOL = 12.0     # deg
 FRAME_R = 60.0      # dm
 MAX_MOVE = 8.0      # dm, orthogonalization displacement limit
-TOL = 3.0           # dm, allowed distance from original outside cells (spec)
+TOL = 3.0           # dm, soft rule only: distance from original for samples outside cells but NOT in a wall/hole
 TOL_INTERNAL = 2.8  # dm, used internally (margin for integer rounding)
 R_TERM = 20.0       # dm, terminal leg length examined for sawtooth (phase A, optional)
 TERM_LEG_PER_LINE = False  # per-line terminal straightening (breaks shared trunks; off)
@@ -181,47 +171,44 @@ def visible_spike_tips(lines):
     return vis
 
 
-# ---------------------------------------------------------------- validity raster
+# ---------------------------------------------------------------- validity (exact)
 class Validity:
-    def __init__(self, fl):
-        xs, ys = [], []
-        for _, _, rings in fl['cells']:
-            for r in rings:
-                xs += r[0::2]; ys += r[1::2]
-        for l, _, _ in fl['net']:
-            xs += l[0::2]; ys += l[1::2]
-        self.x0, self.y1 = min(xs) - 20, max(ys) + 20
-        self.w, self.h = int(max(xs) + 20 - self.x0) + 1, int(self.y1 - (min(ys) - 20)) + 1
-        m = np.zeros((self.h, self.w), dtype=bool)
-        for _, _, rings in fl['cells']:
-            if not rings:
-                continue
-            P0 = pts(rings[0])
-            bx0 = int(min(p[0] for p in P0) - self.x0) - 1; bx1 = int(max(p[0] for p in P0) - self.x0) + 2
-            by0 = int(self.y1 - max(p[1] for p in P0)) - 1; by1 = int(self.y1 - min(p[1] for p in P0)) + 2
-            im = Image.new('1', (bx1 - bx0, by1 - by0), 0); d = ImageDraw.Draw(im)
-            for k, r in enumerate(rings):
-                Q = [(x - self.x0 - bx0, self.y1 - y - by0) for x, y in pts(r)]
-                if len(Q) >= 3:
-                    d.polygon(Q, fill=1 if k == 0 else 0)
-            m[by0:by1, bx0:bx1] |= np.array(im, dtype=bool)
-        im = Image.new('1', (self.w, self.h), 0); d = ImageDraw.Draw(im)
-        for r in fl['walls']:
-            Q = [(x - self.x0, self.y1 - y) for x, y in pts(r)]
-            if len(Q) >= 3:
-                d.polygon(Q, fill=1)
-        m &= ~np.array(im, dtype=bool)
-        # conservative: erode by one pixel so raster edge effects never accept a point
-        # that an exact polygon test would reject
-        e = m.copy()
-        e[1:, :] &= m[:-1, :]; e[:-1, :] &= m[1:, :]; e[:, 1:] &= m[:, :-1]; e[:, :-1] &= m[:, 1:]
-        self.m = e
+    """Hard wall/hole veto (exact) + soft outside-cell rule (exact polygon tests)."""
 
-    def inside(self, X, Y):
-        c = np.round(X - self.x0).astype(int); r = np.round(self.y1 - Y).astype(int)
-        ok = (c >= 0) & (c < self.w) & (r >= 0) & (r < self.h)
-        out = np.zeros(len(X), dtype=bool)
-        out[ok] = self.m[r[ok], c[ok]]
+    def __init__(self, fl):
+        self.H = HardConstraints(fl)
+        self.cells = self.H.cells
+        self.cgrid = self.H.cgrid
+        self.ocache = {}
+
+    def outside_intervals(self, p, q):
+        """t intervals of segment p-q that are not inside any native cell (outer ring minus holes)."""
+        key = (p, q)
+        r = self.ocache.get(key)
+        if r is not None:
+            return r
+        sb = (min(p[0], q[0]), min(p[1], q[1]), max(p[0], q[0]), max(p[1], q[1]))
+        inside = []
+        for ci in self.H._near(self.cgrid, sb):
+            cid, Rs, cb = self.cells[ci]
+            if cb[2] < sb[0] or cb[0] > sb[2] or cb[3] < sb[1] or cb[1] > sb[3]:
+                continue
+            iv = interior_intervals(p, q, Rs[0])
+            for Hh in Rs[1:]:
+                if iv:
+                    iv = _subtract(iv, interior_intervals(p, q, Hh))
+            inside += iv
+        inside = _merge(inside)
+        out, cur = [], 0.0
+        for c, d in inside:
+            if c > cur:
+                out.append((cur, c))
+            cur = max(cur, d)
+        if cur < 1.0:
+            out.append((cur, 1.0))
+        if math.dist(p, q) == 0:
+            out = [(0.0, 1.0)] if not inside else []
+        self.ocache[key] = out
         return out
 
     @staticmethod
@@ -247,16 +234,29 @@ class Validity:
         dx = px - t * D[None, :, 0]; dy = py - t * D[None, :, 1]
         return np.sqrt(dx * dx + dy * dy).min(1)
 
+    def hard_ok(self, P):
+        return self.H.ok([(float(p[0]), float(p[1])) for p in P])
+
     def ok(self, P, refs):
-        """P: polyline; refs: list of original polylines.  Samples outside cells must
-        be within TOL of every ref."""
+        """P: polyline; refs: original polylines of the lines that use this piece.
+        HARD: no overlap with a wall (away from its own doors) or a hole -- no
+        allowance of any kind.  SOFT: samples outside every native cell must be
+        within TOL_INTERNAL of every ref."""
         if len(P) < 2:
             return True
-        X, Y = self.samples(P)
-        out = ~self.inside(X, Y)
-        if not out.any():
+        P = [(float(p[0]), float(p[1])) for p in P]
+        if not self.H.ok(P):
+            return False
+        X, Y = [], []
+        for a, b in zip(P, P[1:]):
+            L = math.dist(a, b)
+            for t0, t1 in self.outside_intervals(a, b):
+                n = max(1, int(math.ceil((t1 - t0) * L)))
+                t = np.linspace(t0, t1, n + 1)
+                X.append(a[0] + (b[0] - a[0]) * t); Y.append(a[1] + (b[1] - a[1]) * t)
+        if not X:
             return True
-        X, Y = X[out], Y[out]
+        X = np.concatenate(X); Y = np.concatenate(Y)
         for R in refs:
             if (self.dist_to(X, Y, R) > TOL_INTERNAL).any():
                 return False
@@ -284,6 +284,9 @@ class Frames:
         key = (int(p[0] // 20), int(p[1] // 20))
         if key in self.cache:
             return self.cache[key]
+        if len(self.M) == 0:
+            self.cache[key] = None
+            return None
         c = ((key[0] + 0.5) * 20, (key[1] + 0.5) * 20)
         d = np.hypot(self.M[:, 0] - c[0], self.M[:, 1] - c[1])
         sel = d <= FRAME_R
@@ -447,9 +450,16 @@ def regularize(fl):
     lines = []
     excluded = set()
     stats = Counter()
+    source_defects = []   # (line index, contacts) of ORIGINAL lines that overlap a wall/hole
     for i, P in enumerate(orig):
         if len(P) < 2 or P[0] == P[-1]:
             lines.append(list(P)); excluded.add(i); reasons['A: zero-length or closed edge (both nodes drawn at one point, e.g. stair landing = arrival); kept'] += 1
+            continue
+        hits = V.H.line([(float(p[0]), float(p[1])) for p in P])
+        if hits:
+            # Source defect: the original already overlaps a wall/hole. Never touch it.
+            lines.append(list(P)); excluded.add(i); source_defects.append((i, hits))
+            reasons['A: original line overlaps a native wall/hole (source defect); kept unmodified'] += 1
             continue
         Q = [P[0]] + [leader[p] for p in P[1:-1]] + [P[-1]]
         Q = clean_path(Q, fixed)
@@ -473,7 +483,7 @@ def regularize(fl):
                     Q = S if end == 0 else S[::-1]
                     stats['A: zigzag terminal legs replaced by one straight spur'] += 1
         if not V.ok(Q, [P]):
-            lines.append(list(P)); excluded.add(i); reasons['A: snapped/cleaned line would leave cells (>0.3 m off original)'] += 1
+            lines.append(list(P)); excluded.add(i); reasons['A: snapped/cleaned line fails the hard wall/hole rule or the soft outside-cell rule; kept'] += 1
             continue
         lines.append(Q)
 
@@ -525,7 +535,7 @@ def regularize(fl):
             if Q != P and V.ok(Q, [orig[i]]):
                 lines[i] = Q
             elif Q != P:
-                stats['A3: contraction skipped for a line (would leave cells)'] += 1
+                stats['A3: contraction skipped for a line (fails a rule)'] += 1
         stats['A3: micro-junctions contracted'] += merges
 
     # ---------------- B: drawn graph, chains, simplification
@@ -603,11 +613,11 @@ def regularize(fl):
             if V.ok(S, R):
                 chosen = (name, S); break
         if chosen is None:
-            chosen = ('kept', list(C)); reasons['B: chain kept as cleaned (every simplification leaves cells)'] += 1
+            chosen = ('kept', list(C)); reasons['B: chain kept as cleaned (every simplification fails a rule)'] += 1
         elif chosen[0] == 'dp2':
-            reasons['B: chain needed fine DP 0.2 m (coarser leaves cells)'] += 1
+            reasons['B: chain needed fine DP 0.2 m (coarser fails a rule)'] += 1
         elif chosen[0] == 'dp4':
-            reasons['B: chain needed DP 0.4 m (0.7 m leaves cells)'] += 1
+            reasons['B: chain needed DP 0.4 m (0.7 m fails a rule)'] += 1
         chain_stats[chosen[0]] += 1
         simp.append(chosen[1])
     simpB = [list(S) for S in simp]
@@ -714,7 +724,7 @@ def regularize(fl):
     else:
         newpos = {}
     nfail_c = sum(1 for cid, S in enumerate(simpB) if any(p in pinned and p not in fixed for p in S[1:-1]))
-    reasons['C: chain pinned to its simplified shape (axis snap would leave cells or move >0.8 m)'] += nfail_c
+    reasons['C: chain pinned to its simplified shape (axis snap fails a rule or moves >0.8 m)'] += nfail_c
     simp = [[newpos.get(p, p) for p in S] for S in simpB]
     # drop near-collinear interior vertices that are not fixed
     for cid, S in enumerate(simp):
@@ -784,7 +794,7 @@ def regularize(fl):
                     continue
                 geom = [J, F, T] if ext else [F, T]
                 if not V.ok(geom, refs[cid]):
-                    spur_stats['spur rejected: perpendicular leaves cells'] += 1
+                    spur_stats['spur rejected: perpendicular fails a rule'] += 1
                     continue
                 score = (1 if ext else 0, abs(t))
                 if best is None or score < best[0]:
@@ -827,31 +837,36 @@ def regularize(fl):
         Q[0], Q[-1] = orig[i][0], orig[i][-1]
         if len(Q) < 2:
             Q = [orig[i][0], orig[i][-1]]
+        if i in excluded:
+            Q = orig[i]
         if i not in excluded and Q != orig[i] and not V.ok(Q, [orig[i]]):
-            reasons['E: line restored (rounded/combined result >0.3 m off original outside cells)'] += 1
+            reasons['E: line restored (rounded/combined result fails the hard or soft rule)'] += 1
             Q = orig[i]
         final.append(Q)
     spur_stats.update(stats)
     spur_stats.update({'B chains: ' + k: v for k, v in chain_stats.items()})
     spur_stats['B chains: total'] = len(chains)
+    V.source_defects = source_defects
     return final, orig, fixed, reasons, spur_stats, V
 
 
 def main():
-    os.makedirs(os.path.join(DST, 'floors'), exist_ok=True)
-    shutil.copyfile(os.path.join(SRC, 'index.html'), os.path.join(DST, 'index.html'))
-    for fn in os.listdir(os.path.join(SRC, 'floors')):
-        if not any(fn == f + '.json' for f in FLOORS):
-            shutil.copyfile(os.path.join(SRC, 'floors', fn), os.path.join(DST, 'floors', fn))
+    ap = argparse.ArgumentParser(description='Schematic (display-only) regularizer with hard wall/hole constraints.')
+    ap.add_argument('src', help='input artifact dir with floors/*.json (accepted drawing in `net`)')
+    ap.add_argument('dst', help='output artifact dir; floors get `schematic` next to the unchanged `net`')
+    ap.add_argument('--floors', default=','.join(FLOORS))
+    args = ap.parse_args()
+    os.makedirs(os.path.join(args.dst, 'floors'), exist_ok=True)
     report = {}
-    for fid in FLOORS:
-        fl = json.load(open(os.path.join(SRC, 'floors', fid + '.json')))
+    for fid in args.floors.split(','):
+        fl = json.load(open(os.path.join(args.src, 'floors', fid + '.json')))
         final, orig, fixed, reasons, spur_stats, V = regularize(fl)
         before = [line_metrics(P) for P in orig]
         after = [line_metrics(P) for P in final]
         m = {
             'netLines': len(orig),
             'linesChanged': sum(1 for a, b in zip(orig, final) if a != b),
+            'sourceDefectLinesKeptUnmodified': len(V.source_defects),
             'lineVertices': [sum(len(P) for P in orig), sum(len(P) for P in final)],
             'lineBendsOver5': [sum(b for b, _ in before), sum(b for b, _ in after)],
             'lineZigzagReversals': [sum(r for _, r in before), sum(r for _, r in after)],
@@ -864,11 +879,12 @@ def main():
             'lengthDm': [round(sum(plen(P) for P in orig)), round(sum(plen(P) for P in final))],
         }
         out = dict(fl)
-        out['net'] = [[flat(P), cat, ei] for P, (_, cat, ei) in zip(final, fl['net'])]
-        json.dump(out, open(os.path.join(DST, 'floors', fid + '.json'), 'w'), separators=(',', ':'))
+        assert all(pts(l) == P for (l, _, _), P in zip(fl['net'], orig))
+        out['schematic'] = [0 if P == O else flat(P) for P, O in zip(final, orig)]
+        json.dump(out, open(os.path.join(args.dst, 'floors', fid + '.json'), 'w'), separators=(',', ':'))
         report[fid] = m
-        print(fid, json.dumps(m))
-    json.dump(report, open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'metrics.json'), 'w'), indent=1)
+        print(fid, json.dumps({k: m[k] for k in ('netLines', 'linesChanged', 'sourceDefectLinesKeptUnmodified')}), flush=True)
+    json.dump(report, open(os.path.join(args.dst, 'regularize-metrics.json'), 'w'), indent=1)
 
 
 if __name__ == '__main__':
