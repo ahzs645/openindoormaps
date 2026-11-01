@@ -145,3 +145,40 @@ The published map now draws ramps, local steps and stairs as lines, restores
 lift, ramp-end and missing-approach markers, draws in-space seams as path and
 native approach fans as walking lines, and draws every enabled walk the router
 can use, not only the hallway view.
+
+## Complete, regularized drawing — November 1, 2026
+
+The published map now draws every enabled walking edge on each floor (1,819 /
+1,517 / 1,122 / 1,014 lines), not only the hallway view, plus every enabled
+door and opening crossing (596 / 466 / 364 / 343). Accepted simplified guides
+replace their walks; all other walks keep their original geometry. Builders:
+[map/build-native-floors.py](map/build-native-floors.py),
+[map/build-complete-network.py](map/build-complete-network.py) and
+[map/add-crossings.py](map/add-crossings.py).
+
+[map/regularize/regularize.py](map/regularize/regularize.py) is a display-only
+regularizer: straight corridor trunks snapped to the local wall axis, right-angle
+spurs, despiked terminal legs. [verify.py](map/regularize/verify.py) confirms
+identical node adjacency, edge set and categories on all four floors, and that
+every output segment lies inside the native cells or within 0.3 m of its
+original line. Visible spike tips fell from 712 to 28, zigzag reversals from
+1,844 to 215, bends over 5° from 16,371 to 8,384, and right angles rose from 34%
+to 55% of drawn bends ([metrics.json](map/regularize/metrics.json)).
+
+The drawing audit ([drawing-audit/](drawing-audit/)) found no drawn break
+between lines that share a routing node. 04-259 Rotunda, 08-260 Link and
+08-249 Office are routable; they only looked unconnected because walks through
+non-circulation spaces were drawn faint (Rotunda), a refused guide was drawn
+grey (08-260 west half) and door 2463553 at the end of 08-202 had no drawn
+crossing (08-249). Walks with no arrival end (through traffic) are now drawn in
+the network style, and corridor walks that only end at their own corridor's
+label point are hidden for display (routing unchanged).
+
+Still needing source or owner work, from the room-coverage audit: 162 names
+are not routable — 38 staff-only circulation records and the offices behind
+them, 31 rooms in cut-off suites (06-366 suite fixed by the replayed 06-388
+link once exported), 27 stairs, 18 rooms with only unmatched or ambiguous
+doors, 33 with no door, no native cell or no walk, and 15 vestibules, helper
+records and non-walkable records ([NON-ROUTABLE.json](drawing-audit/NON-ROUTABLE.json)).
+04-259 Rotunda (and the 04-124, 04-329 and 04-445 Rotunda records) could be
+marked as circulation so their walks are simplified, which is an owner decision.

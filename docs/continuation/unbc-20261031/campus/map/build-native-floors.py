@@ -118,8 +118,9 @@ summary = []
 for fid, name, storey in FLOORS:
     lids = [lid for lid, (m, _) in levels.items() if any(cf["id"] == storey for cf in m.get("campusFloors", []))]
     lids.sort(key=lambda i: levels[i][0]["elevationFeet"])
-    fl = {"id": fid, "name": name, "levels": [], "names": [], "cells": [], "walls": [], "doors": [], "guides": [], "walks": [], "links": [], "stops": [], "held": [], "proposals": [], "vestibules": []}
+    fl = {"id": fid, "name": name, "levels": [], "names": [], "cells": [], "walls": [], "doors": [], "guides": [], "walks": [], "links": [], "stops": [], "held": [], "vertical": [], "seams": [], "approaches": [], "proposals": [], "vestibules": []}
     name_index = {}
+    seen_edges, seen_nodes = set(), set()
     seen_cells = set()
     for lid in lids:
         meta, data = levels[lid]
@@ -151,13 +152,35 @@ for fid, name, storey in FLOORS:
                 (fl["guides"] if f["properties"].get("source") == "shared-guide" else fl["walks"]).append(line(pts))
         for f in data["network"]["pathConnections"]["features"]:
             p = f["properties"]
+            role, kind = p.get("role"), p.get("kind")
+            if f["geometry"]["type"] == "Point":
+                # Markers carry pointFeet. One per node: lift, ramp and step
+                # ends, held stair ends and missing walking approaches.
+                node, pt = p.get("nodeId"), p.get("pointFeet")
+                if not pt or node in seen_nodes:
+                    continue
+                seen_nodes.add(node)
+                fl["stops"].append([tf(pt), "gap" if role == "gap" else kind, role, p.get("label") or "", p.get("toFloors") or []])
+                continue
             pts = p.get("pointsFeet") or []
-            if p.get("role") == "passage" and len(pts) >= 2:
-                fl["links"].append([line(pts), p.get("nativeElementId"), p.get("kind")])
-            elif p.get("role") == "held" and len(pts) >= 2 and f["geometry"]["type"] == "LineString":
-                fl["held"].append(line(pts))
-            elif p.get("role") == "transition" and pts:
-                fl["stops"].append([tf(pts[0]), p.get("kind")])
+            eid = p.get("edgeId") or ""
+            if len(pts) < 2 or eid in seen_edges:
+                continue
+            seen_edges.add(eid)
+            if role == "held":
+                fl["held"].append([line(pts), p.get("nativeElementId")])
+            elif kind in ("ramp", "local-steps", "stairs", "escalator"):
+                fl["vertical"].append([line(pts), p.get("nativeElementId"), kind])
+            elif kind == "door":
+                fl["links"].append([line(pts), p.get("nativeElementId"), kind, 1 if role == "transition" else 0])
+            elif kind == "opening" and eid.startswith("opening:"):
+                # Seams and open joins inside one native space continue the path.
+                fl["seams"].append(line(pts))
+            elif kind in ("opening", "walk"):
+                # Native approach walks (to ramp landings, across building lines):
+                # walking lines, not doorway crossings.
+                fl["approaches"].append(line(pts))
+            # Lift shafts are drawn by their stop markers only.
         for p in prop_by_level.get(lid, []):
             door = next(x for x in doors_by_level[lid] if x["nativeElementId"] == p["door"])
             fl["proposals"].append([tf(door["pointFeet"]), p["door"], p["sideA"]["nearestOwner"], p["sideB"]["nearestOwner"], p["sideA"]["gapFeet"], p["sideB"]["gapFeet"], p["existing"]])
