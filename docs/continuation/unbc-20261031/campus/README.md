@@ -105,3 +105,43 @@ the main component, because three of the vestibules have no arrival node at
 all. Applying native door ownership therefore requires the Reviter owner
 matcher to use native cells (with room shapes only for names) and a
 regenerated native build, followed by guide recompilation and acceptance.
+
+## Corrections and follow-up — November 1, 2026
+
+Three investigators and a skeptic re-checked the vestibule causes against the
+code and data. The corrected causes:
+
+| Vestibule | Corrected cause                                                                                                                       | Path to a fix                                                                                       |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 06-388    | Not a door owner: connected door 1780077 has no walking approach on its 06-364 Corridor portal, isolating 06-388 and 15 other rooms.  | One reviewed circulation link (below).                                                              |
+| 10-1300   | Door 2471813 should pair with 10-1302 Atrium; the atrium outline stops 1.85 ft short of the thin native wall (matcher reach 0.70 ft). | Outline review and `navigation.doorLinks`, or a native-cell owner matcher, then the native rebuild. |
+| 03-1052   | A pocket of native cell 601 joined only at zero-width corners; doors 1425507, 1425511, 1425135 and 481695 are unmatched.              | Outline reviews and door links for 1425507 and 1425511, then the rebuild.                           |
+| 06-207    | No doorway to 06-210 Corridor exists in the native model; door 1328018 is elsewhere.                                                  | Drawing check, then a `dwg-drawn-door` review and the rebuild.                                      |
+| 07-309    | Pairing 621887 only joins a 7-room suite cut off by an unmodelled area between doors 1732467 and 1715768.                             | Site decision first.                                                                                |
+| 06-313    | Pairing 1779388 only joins 06-314 Projection, which has no other way in; 1779387 opens onto nothing.                                  | Decision on how the booth is reached.                                                               |
+
+All six vestibules already have (unattached) arrival nodes. The union over all
+enabled edges plus the two existing reviewed links gives 1,695 main-component
+arrivals; the 1,693 above came from a narrower edge filter.
+
+`scripts/indoor/add-reviewed-circulation-link.ts` adds one owner-reviewed link
+between two existing nodes to a master, replays it with the compiler's own
+`reviewedCirculationLinkSupport` predicate (walking slab, native material,
+door leaves, exclusions, access zones) and refuses it unless it passes.
+`--check-only` replays without exporting. The 06-388 link
+`door:1487353:1780077:0 → door:1487353:1779222:0` (6.462 ft) **passed** on the
+run-1 master, with the two existing links still applied
+([reviews/06-388-LINK-REPLAY.json](reviews/06-388-LINK-REPLAY.json)). Exporting
+the new master, recompiling guides and replaying acceptance were not completed
+here because host restarts repeatedly killed the 40-minute export.
+
+A full campus compile at `--max-deviation-feet 1.0` (default 0.75) accepted the
+same 2,701 guides; matched-guide bends over 5° fell from 3,846 to 3,567 (7.3%)
+and core vertices from 10,223 to 9,934
+([GUIDE-DEVIATION-0.75-VS-1.0.json](GUIDE-DEVIATION-0.75-VS-1.0.json)). It has
+not been through route acceptance.
+
+The published map now draws ramps, local steps and stairs as lines, restores
+lift, ramp-end and missing-approach markers, draws in-space seams as path and
+native approach fans as walking lines, and draws every enabled walk the router
+can use, not only the hallway view.
