@@ -19,9 +19,9 @@ Checks per floor
     points, has >= 2 integer points; net/netNodes untouched (vs ORIGINAL_ROOT).
  2. HARD rule (the same rule the regularizer enforces, no allowance): no changed
     schematic line has positive-length overlap (> 1e-6 dm) with
-      - a native wall footprint, except within 0.8 m of a door footprint whose
+      - a native wall footprint, except inside a door footprint whose
         host wall (doorHosts) is that native wall (wallIds), or
-      - a native cell hole not covered by another cell, except within 0.8 m of
+      - a native cell hole not covered by another cell, except inside
         a door footprint.
  3. source defects: every net line whose ORIGINAL geometry overlaps a wall/hole
     must be unchanged in the schematic, and must be listed in
@@ -36,7 +36,7 @@ from collections import defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FLOORS = ['campus-floor-1', 'floor-2', 'campus-floor-3', 'floor-4']
-MARGIN = 8.0       # dm, door zone
+MARGIN = 0.0       # dm: door zone is the door footprint itself
 EPS = 1e-6         # dm, overlap below this is floating-point noise
 SOFT_TOL = 3.0     # dm, soft rule only (never inside a wall or hole)
 
@@ -302,7 +302,7 @@ def main():
     ap.add_argument('--output'); ap.add_argument('--floors', default=','.join(FLOORS))
     a = ap.parse_args()
     res = {'verifier': 'verify.py', 'verifierSha256': hashlib.sha256(open(__file__, 'rb').read()).hexdigest(),
-           'rule': 'hard: no overlap > 1e-6 dm with a native wall (except within 0.8 m of a door hosted by that wall) or an uncovered cell hole (except within 0.8 m of a door); soft (outside walls/holes only): samples outside every cell within 0.3 m of own original',
+           'rule': 'hard: no overlap > 1e-6 dm with a native wall (except inside a door hosted by that wall) or an uncovered cell hole (except inside a door); soft (outside walls/holes only): samples outside every cell within 0.3 m of own original',
            'inputs': {}}
     g = guides = None
     if a.graph_full and a.guides:

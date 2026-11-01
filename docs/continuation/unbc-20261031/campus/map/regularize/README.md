@@ -18,11 +18,11 @@ decimetre coordinates. No raster or sampling decides a wall or hole contact.
 **Hard (veto, no allowance):** a schematic segment may not overlap, for any
 positive length (> 1e-6 dm, i.e. floating-point noise only):
 
-* the interior of a native wall footprint, except within 0.8 m of a door
+* the interior of a native wall footprint, except inside a door
   footprint whose **host wall** (`doorHosts`) is that same native wall
   (`wallIds`) - the door cuts its host wall;
 * the interior of a native cell hole not covered by another native cell, except
-  within 0.8 m of a door footprint.
+  inside a door footprint.
 
 There is no "within 0.3 m of the original" exception through walls or holes.
 The earlier version accepted such samples (finding 1).

@@ -3,11 +3,11 @@
 Units are the floor files' decimetres. A drawn segment VIOLATES the hard rule if
 any part of it of positive length lies in the INTERIOR of a forbidden region:
 
-  * a native wall footprint, except the part within DOOR_MARGIN (0.8 m) of a
+  * a native wall footprint, except the part inside a
     door footprint whose host wall is that same native wall (the door cuts its
     host wall).  Doors with an unknown host do not exempt anything;
   * a native cell hole (inner ring), except where another native cell covers
-    the hole, and except within DOOR_MARGIN of any door footprint.
+    the hole, and except inside any door footprint.
 
 Everything is computed with closed-form segment/polygon and segment/capsule
 intersections (parametric intervals along the segment).  No raster and no
@@ -19,7 +19,7 @@ from collections import defaultdict
 
 import numpy as np
 
-DOOR_MARGIN = 8.0     # dm
+DOOR_MARGIN = 0.0     # dm: only the door footprint itself cuts its host wall
 EPS_LEN = 1e-6        # dm, overlap below this is floating-point noise
 GRID = 40.0           # dm
 

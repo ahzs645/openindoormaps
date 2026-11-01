@@ -8,9 +8,9 @@ netNodes, edge order, edge count and every line's first/last point are identical
 
 HARD CONSTRAINTS (hardgeom.py, exact segment/polygon intervals, no raster):
   an output segment may never have positive-length overlap with the interior of
-  * a native wall footprint, except within 0.8 m of a door footprint hosted by
+  * a native wall footprint, except inside a door footprint hosted by
     that same native wall (the door cuts its host wall), or
-  * a native cell hole not covered by another cell (except within 0.8 m of a door).
+  * a native cell hole not covered by another cell (except inside a door footprint).
   There is no distance-to-original allowance through walls or holes.  A line whose
   ORIGINAL geometry already overlaps a wall/hole is a source defect: it is kept
   unmodified (never simplified) and listed in the metrics.

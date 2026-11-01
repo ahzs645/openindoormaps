@@ -2,7 +2,7 @@
 
 For every floor in DIR/floors, every `schematic` line that differs from its `net`
 (original) line is tested with hardgeom.HardConstraints: any positive-length
-overlap with a native wall footprint (away from that wall's own doors, 0.8 m) or
+overlap with a native wall footprint (outside the footprints of that wall's own doors) or
 with a cell hole restores the original line (schematic entry set to 0).  There is
 no allowance for "the original crossed something nearby".  A line whose ORIGINAL
 overlaps a wall/hole (source defect) must be unchanged; if it is not, it is

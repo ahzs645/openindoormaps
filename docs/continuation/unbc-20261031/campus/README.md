@@ -156,14 +156,25 @@ replace their walks; all other walks keep their original geometry. Builders:
 [map/build-complete-network.py](map/build-complete-network.py) and
 [map/add-crossings.py](map/add-crossings.py).
 
-[map/regularize/regularize.py](map/regularize/regularize.py) is a display-only
-regularizer: straight corridor trunks snapped to the local wall axis, right-angle
-spurs, despiked terminal legs. [verify.py](map/regularize/verify.py) confirms
-identical node adjacency, edge set and categories on all four floors, and that
-every output segment lies inside the native cells or within 0.3 m of its
-original line. Visible spike tips fell from 712 to 28, zigzag reversals from
-1,844 to 215, bends over 5° from 16,371 to 8,384, and right angles rose from 34%
-to 55% of drawn bends ([metrics.json](map/regularize/metrics.json)).
+**Correction (November 1, 2026, after the branch review).** The paragraph that
+stood here said the regularized lines stay "inside the native cells or within
+0.3 m of its original line" and that walks "keep their original geometry". Both
+were inaccurate for the map as published: the 0.3 m allowance also accepted
+segments inside native wall footprints, and the regularizer had redrawn 96.6% of
+the drawn walks, accepted or not. Applying the corrected exact rule to that
+drawing finds 82 redrawn lines that overlap a wall or hole their original did
+not, and 317 redrawn lines whose original already did.
+
+The map now draws the **accepted geometry unmodified by default** (accepted
+shared guides plus original saved walks). The regularized drawing is an opt-in
+**schematic layer, display only and not route-accepted**, produced under a hard
+rule: no overlap with a native wall footprint away from that wall's own doors
+(0.8 m) or with a cell hole, with no distance-to-original allowance; walks whose
+original already overlaps one are kept unmodified. An independent verifier
+passes on all four floors (4,914 of 5,472 walks redrawn, 0 overlaps, 330
+source-defect walks kept). Those 330 original walks are listed in the map's
+"Source walks that cross a native wall" layer. See
+[map/README.md](map/README.md) and [map/regularize/README.md](map/regularize/README.md).
 
 The drawing audit ([drawing-audit/](drawing-audit/)) found no drawn break
 between lines that share a routing node. 04-259 Rotunda, 08-260 Link and

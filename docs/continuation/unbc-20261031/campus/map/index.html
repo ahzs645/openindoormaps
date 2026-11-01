@@ -258,22 +258,15 @@ function prepare(f) {
   }
   for (const w of f.walls) ringPath(g.walls, w);
   for (const [r, , st] of f.doors) ringPath(st === 1 ? g.doorsBad : g.doorsOk, r);
-  // Degree of every routing node over the drawn walks.
-  const degree = new Map();
-  for (const [, , ei] of f.net) for (const node of f.netNodes[ei]) degree.set(node, (degree.get(node) || 0) + 1);
   const isArrival = (id) => id.startsWith("arrival:");
-  g.hiddenSpurs = 0;
   // `net` is the accepted geometry exactly as exported (accepted shared guides and
   // original saved walks). `schematic[i]` is 0 when the schematic equals net[i].
   f.net.forEach(([l, cat, ei], i) => {
     const [a, b] = f.netNodes[ei];
     const sch = f.schematic && f.schematic[i] ? f.schematic[i] : l;
-    if (cat <= 1) {
-      // A corridor walk that only ends at the corridor's own label point adds a
-      // stray end, not a connection: hide it for display (routing keeps it).
-      if ((isArrival(a) && degree.get(a) === 1) || (isArrival(b) && degree.get(b) === 1)) { g.hiddenSpurs++; return; }
-      ringPath(g.guides, l);
-    } else if (!isArrival(a) && !isArrival(b)) ringPath(g.guides, l); // through traffic, e.g. across 04-259 Rotunda
+    // The default layers draw every accepted walk unmodified; nothing is hidden.
+    if (cat <= 1) ringPath(g.guides, l);
+    else if (!isArrival(a) && !isArrival(b)) ringPath(g.guides, l); // through traffic, e.g. across 04-259 Rotunda
     else ringPath(g.roomWalks, l);
     ringPath(g.schematic, sch);
   });
@@ -473,7 +466,6 @@ function renderFloor(f) {
   const rows = [
     ["Accepted shared guides / eligible walks", `${fmt(meta.compiled)} / ${fmt(meta.eligible)}`],
     ["Drawn walks: accepted guides + original saved walks", `${fmt(meta.drawnAcceptedGuides)} + ${fmt(meta.drawnSavedWalks)}`],
-    ["Corridor label-point spurs hidden (kept in routing)", fmt(state.data[f.id].hiddenSpurs)],
     ["Source walks crossing a native wall or hole", fmt(meta.sourceWallCrossings)],
     ["Schematic layer: walks redrawn (display only)", fmt(meta.schematicChanged)],
     ["Native spaces (wall-bounded)", fmt(f.cells.length)],

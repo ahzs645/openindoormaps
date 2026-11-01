@@ -73,7 +73,7 @@ out = {'floors': floors, 'transform': old['transform'], 'drawing': {
     'default': 'Accepted geometry, unmodified: accepted shared guides (net category 0/2) and original saved walks (1/3), exactly as exported (artifact4).',
     'acceptedGuides': tot['accepted'], 'savedWalks': tot['saved'], 'lines': tot['lines']},
     'schematic': schematic, 'sourceWallCrossings': {'lines': tot['defects'], 'acceptedGuideLines': tot['defectsAccepted'],
-    'rule': 'original net line overlaps a native wall footprint (away from doors hosted by that wall, 0.8 m) or a cell hole not covered by another cell; exact, display decimetre coordinates'},
+    'rule': 'original net line overlaps a native wall footprint (outside the footprints of doors hosted by that wall) or a cell hole not covered by another cell; exact, display decimetre coordinates'},
     'acceptance': acceptance, 'about': about, 'evidence': old['evidence'],
     'floorFiles': {f['id']: sha(os.path.join(root, 'floors', f['id'] + '.json')) for f in floors}}
 json.dump(out, open(os.path.join(root, 'floors', 'index.json'), 'w'), indent=1)
