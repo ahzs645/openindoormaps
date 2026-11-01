@@ -1,0 +1,85 @@
+[
+  {
+    "id": "door-2311764:08-216-to-08-260",
+    "from": "rm-694-3eff6106de76",
+    "to": "rm-694-fa60cb06b7c9",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true,
+    "requiredNativeDoorId": 2311764,
+    "requiredSourceEdgeIds": [
+      "door:694:2311764"
+    ],
+    "requireSharedGuide": true
+  },
+  {
+    "id": "06-388-island:06-388-to-06-364:hallway",
+    "from": "rm-1487353-c75375ebb3cc",
+    "to": "rm-1487353-c8cc98ebb50c",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:door:1487353:1780077:0|door:1487353:1779222:0"
+    ]
+  },
+  {
+    "id": "06-388-island:06-364-to-06-388:hallway",
+    "from": "rm-1487353-c8cc98ebb50c",
+    "to": "rm-1487353-c75375ebb3cc",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:door:1487353:1780077:0|door:1487353:1779222:0"
+    ]
+  },
+  {
+    "id": "06-388-island:06-366-to-06-364:inside",
+    "from": "rm-1487353-c8d3e4ebb513",
+    "to": "rm-1487353-c8cc98ebb50c",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "inside"
+    },
+    "expected": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:door:1487353:1780077:0|door:1487353:1779222:0"
+    ]
+  },
+  {
+    "id": "06-388-island:06-370-to-06-364:inside:transit",
+    "from": "rm-1487353-c041caebb03e",
+    "to": "rm-1487353-c8cc98ebb50c",
+    "mode": "public",
+    "options": {
+      "allowOtherRoomTransit": true,
+      "endpointMode": "inside"
+    },
+    "expected": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:door:1487353:1780077:0|door:1487353:1779222:0"
+    ]
+  },
+  {
+    "id": "06-388-island:06-388-to-06-364:strict-step-free",
+    "from": "rm-1487353-c75375ebb3cc",
+    "to": "rm-1487353-c8cc98ebb50c",
+    "mode": "accessible",
+    "options": {
+      "allowOtherRoomTransit": false,
+      "endpointMode": "hallway"
+    },
+    "expected": false
+  }
+]
