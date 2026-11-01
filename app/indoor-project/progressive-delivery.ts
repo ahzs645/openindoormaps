@@ -135,6 +135,28 @@ export const PROGRESSIVE_LIMITS = Object.freeze({
 const hashPattern = /^[a-f0-9]{64}$/;
 export const progressiveSha256 = (bytes: Uint8Array) =>
   bytesToHex(sha256(bytes));
+/** The same SHA-256 digest as progressiveSha256, computed by the platform's
+ * native WebCrypto when it is available (secure browser contexts, workers and
+ * Node), otherwise by the identical portable implementation. Only the speed
+ * differs: a 195 MB routing asset took seconds per pass in portable code.
+ * WebCrypto copies the input synchronously when called, so the digest covers
+ * exactly the bytes held at the call; callers that then use the bytes read
+ * them in the same synchronous turn or own an unshared private buffer. */
+export async function progressiveSha256Async(bytes: Uint8Array) {
+  const subtle = globalThis.crypto?.subtle;
+  const shared =
+    typeof SharedArrayBuffer !== "undefined" &&
+    bytes.buffer instanceof SharedArrayBuffer;
+  if (subtle && !shared)
+    try {
+      return bytesToHex(
+        new Uint8Array(await subtle.digest("SHA-256", bytes as BufferSource)),
+      );
+    } catch {
+      // Fall back to the portable digest; the check itself is unchanged.
+    }
+  return progressiveSha256(bytes);
+}
 const fail = (message: string): never => {
   throw new Error(`Progressive map: ${message}`);
 };
@@ -350,6 +372,18 @@ export function verifyProgressiveAssetBytes(
   if (
     value.length !== asset.logicalBytes ||
     progressiveSha256(value) !== asset.logicalSha256
+  )
+    fail("logical asset checksum/length mismatch");
+}
+/** verifyProgressiveAssetBytes with the native digest. Same length and
+ * SHA-256 requirement; the caller must own the unshared bytes. */
+export async function verifyProgressiveAssetBytesAsync(
+  asset: ProgressiveAsset,
+  value: Uint8Array,
+): Promise<void> {
+  if (
+    value.length !== asset.logicalBytes ||
+    (await progressiveSha256Async(value)) !== asset.logicalSha256
   )
     fail("logical asset checksum/length mismatch");
 }

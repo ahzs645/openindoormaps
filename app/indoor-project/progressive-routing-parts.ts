@@ -1,6 +1,6 @@
 import {
   PROGRESSIVE_LIMITS,
-  progressiveSha256,
+  progressiveSha256Async,
   type ProgressiveAsset,
 } from "./progressive-delivery";
 
@@ -34,12 +34,16 @@ export async function readProgressiveRoutingParts(
   let offset = 0;
   for (const part of parts) {
     const chunk = await read(part);
-    if (chunk.length !== part.bytes || progressiveSha256(chunk) !== part.sha256)
+    if (
+      chunk.length !== part.bytes ||
+      (await progressiveSha256Async(chunk)) !== part.sha256
+    )
       throw new Error("A routing part failed its checksum.");
+    // The reader's chunk is private to this loop; copy the checked bytes.
     bytes.set(chunk, offset);
     offset += chunk.length;
   }
-  if (progressiveSha256(bytes) !== representation.sha256)
+  if ((await progressiveSha256Async(bytes)) !== representation.sha256)
     throw new Error("The compressed routing stream failed its checksum.");
   return bytes;
 }

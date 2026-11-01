@@ -4,12 +4,13 @@ import {
   verifyOfflineRouteCellCache,
 } from "./offline-route-cell-cache";
 import { readProgressiveRoutingParts } from "./progressive-routing-parts";
-import { parseVerifiedRoutingDataset } from "./verified-routing-dataset";
+import { parseVerifiedRoutingDatasetAsync } from "./verified-routing-dataset";
 import {
   decodeProgressiveFloor,
-  progressiveSha256,
+  progressiveSha256Async,
   validateProgressiveManifest,
   verifyProgressiveAssetBytes,
+  verifyProgressiveAssetBytesAsync,
 } from "./progressive-delivery";
 import type {
   ProgressiveAsset,
@@ -504,7 +505,7 @@ export class ProgressiveVisitorClient {
     aborted(signal);
     if (existing) {
       try {
-        verifyProgressiveAssetBytes(asset, existing);
+        await verifyProgressiveAssetBytesAsync(asset, existing);
         return existing;
       } catch {
         await this.store(() => this.cache.deleteAsset(asset.logicalSha256));
@@ -572,15 +573,16 @@ export class ProgressiveVisitorClient {
       let retainedGzip: Uint8Array | undefined;
       // HTTP Content-Encoding has already been decoded by fetch. Verify the
       // logical bytes directly; compressed Content-Length is not a decoded limit.
-      // That synchronous check is the logical verification: no second hash.
+      // That check is the logical verification: no second hash. These
+      // downloaded bytes are private to this call (native digest, same SHA-256).
       const decodedByHttp =
         bytes.byteLength === asset.logicalBytes &&
-        progressiveSha256(bytes) === asset.logicalSha256;
+        (await progressiveSha256Async(bytes)) === asset.logicalSha256;
       if (decodedByHttp) logical = bytes;
       else {
         if (
           bytes.byteLength !== representation.bytes ||
-          progressiveSha256(bytes) !== representation.sha256
+          (await progressiveSha256Async(bytes)) !== representation.sha256
         )
           throw new VisitorDeliveryError(
             "checksum",
@@ -604,7 +606,8 @@ export class ProgressiveVisitorClient {
         );
         retainedGzip = bytes;
       }
-      if (!decodedByHttp) verifyProgressiveAssetBytes(asset, logical);
+      if (!decodedByHttp)
+        await verifyProgressiveAssetBytesAsync(asset, logical);
       aborted(signal);
       if (retainedGzip)
         this.#retainedGzip.set(logical, {
@@ -791,7 +794,7 @@ export class ProgressiveVisitorClient {
         "format",
         "The map has no routing authority.",
       );
-    const data = parseVerifiedRoutingDataset(
+    const data = await parseVerifiedRoutingDatasetAsync(
       await this.readAsset(asset.id, signal),
       asset.logicalSha256,
     );

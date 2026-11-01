@@ -2,7 +2,10 @@
  * parsed graph. No caller can attach an attestation to an existing object.
  */
 import type { IndoorDataset } from "./contract";
-import { progressiveSha256 } from "./progressive-delivery";
+import {
+  progressiveSha256,
+  progressiveSha256Async,
+} from "./progressive-delivery";
 const verified = new WeakMap<IndoorDataset, string>();
 const immutable = new WeakSet<IndoorDataset>();
 const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
@@ -111,6 +114,44 @@ export function parseVerifiedRoutingDataset(
   const value = JSON.parse(decoder.decode(bytes)) as IndoorDataset;
   // JSON.parse creates only fresh objects/arrays, with no accessors or cycles.
   // This graph belongs to the visitor worker, never an editable authoring model.
+  freezeOwnedJsonTree(value);
+  immutable.add(value);
+  verified.set(value, expectedSha256);
+  return value;
+}
+/** parseVerifiedRoutingDataset with the native SHA-256 digest. The same
+ * checks apply in the same order of evidence: WebCrypto copies the bytes when
+ * the digest starts, and the text is decoded from the same bytes in that same
+ * synchronous turn, so the parsed text is exactly the hashed content. JSON is
+ * parsed only after the digest matches. Shared storage is still refused. */
+export async function parseVerifiedRoutingDatasetAsync(
+  input: Uint8Array,
+  expectedSha256: string,
+): Promise<IndoorDataset> {
+  const buffer: unknown = bufferOf.call(input);
+  if (!(buffer instanceof ArrayBuffer))
+    throw new Error("Verified routing requires unshared source bytes.");
+  const bytes = new Uint8Array(
+    buffer,
+    offsetOf.call(input),
+    lengthOf.call(input),
+  );
+  if (!/^[a-f0-9]{64}$/.test(expectedSha256))
+    throw new Error("Directions source checksum mismatch.");
+  const digest = progressiveSha256Async(bytes);
+  let text: string | undefined;
+  try {
+    text = decoder.decode(bytes);
+  } catch (error) {
+    // Report a checksum failure first, as the synchronous parser does.
+    if ((await digest.catch(() => "")) !== expectedSha256)
+      throw new Error("Directions source checksum mismatch.");
+    throw error;
+  }
+  if ((await digest) !== expectedSha256)
+    throw new Error("Directions source checksum mismatch.");
+  const value = JSON.parse(text) as IndoorDataset;
+  text = undefined;
   freezeOwnedJsonTree(value);
   immutable.add(value);
   verified.set(value, expectedSha256);
