@@ -192,7 +192,7 @@ const GATEWAYS = [
   { id: 2311764, floor: "floor-2", name: "Buildings 04–08 link", detail: "", status: "ok" },
   { id: 2112703, floor: "campus-floor-3", name: "Buildings 04–08, Building 04 end", detail: "Connected door (04-302 Corridor ↔ 08-360 Link).", status: "partial" },
   { id: 2315416, floor: "campus-floor-3", name: "Buildings 04–08, Building 08 end", detail: "Unmatched today. Native cells put 08-360 Link on one side and the Building 08 corridor space on the other; nearest named room 08-316 Corridor, 0.90 m from the door.", status: "bad" },
-  { id: 1499620, floor: "floor-2", name: "Buildings 08–10, first door", detail: "Connected door; the hallway journey 08-264 → 10-2006 is still refused.", status: "partial" },
+  { id: 1499620, floor: "floor-2", name: "Buildings 08–10, first door", detail: "Connected door; hallway-only corridor journeys cross it (08-267 ↔ 10-2066 about 34 m). The recorded refusal 08-264 → 10-2006 is caused by the destination: every walk into door 1499373 passes 10-2006 Office's outline in merged native cell 647. Needs a source-side approach fix and a rebuild.", status: "partial" },
   { id: 1499619, floor: "floor-2", name: "Buildings 08–10, second door", detail: "Connected door (10-2070 Vestibule ↔ 10-2066 Corridor).", status: "partial" },
   { id: 1501580, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1", detail: "Connected door (10-1080 Vestibule ↔ 08-159 Alcove).", status: "partial" },
   { id: 1501582, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1 inner door", detail: "Connected door (10-1060 Corridor ↔ 10-1080 Vestibule).", status: "partial" },
@@ -201,7 +201,7 @@ const GATEWAYS = [
   { id: 1951047, floor: "campus-floor-1", name: "Buildings 09–07 Agora", detail: "Connected door; the local steps are a separate check.", status: "partial" },
 ];
 const VESTIBULE_CAUSE = {
-  "06-388": "Not a door-owner problem: connected door 1780077 has no walking approach on its 06-364 Corridor side, isolating 06-388 and 15 other rooms. Fixable with one reviewed circulation link (in progress).",
+  "06-388": "Repaired in this candidate: a replay-checked reviewed circulation link joins the 06-364 Corridor portal of door 1780077 to the portal of door 1779222 (6.46 ft). 06-388 to 06-364 now routes in 34.356 m in the normal calculator and production worker; step-free stays refused.",
   "10-1300": "Door 2471813 should pair the vestibule with 10-1302 Atrium, but the atrium outline stops 1.85 ft short of the thin native wall. Needs an outline review and the native rebuild.",
   "03-1052": "The vestibule is a pocket of native space 601 joined only at zero-width corners, and its four doors are unmatched. Needs outline reviews for doors 1425507 and 1425511 and the native rebuild.",
   "06-207": "There is no doorway between the vestibule and 06-210 Corridor in the native model; only its two washroom doors exist. Needs a drawing check and a drawn-door review before the rebuild.",
@@ -574,7 +574,7 @@ function setupUI() {
     b.addEventListener("click", onClick); host.append(b);
   };
   for (const [num, cause] of Object.entries(VESTIBULE_CAUSE)) {
-    addItem($("vestibules"), "bad", `${num} Vestibule`, cause, cause, () => find(num, cause));
+    addItem($("vestibules"), num === "06-388" ? "ok" : "bad", `${num} Vestibule`, cause, cause, () => find(num, cause));
   }
   for (const gw of GATEWAYS) {
     const floorName = state.floors.find((f) => f.id === gw.floor).name;

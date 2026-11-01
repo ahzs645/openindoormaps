@@ -76,6 +76,7 @@ python3 regularize/extract-array.py indoor.json OFFSET doors doors-native.json l
 python3 regularize/prepare-floors.py artifact4 artifact6 campus-preview walls-native.json doors-native.json graph-full.json prepared-routing.json prep
 python3 regularize/regularize.py prep out
 python3 regularize/no-new-wall-crossings.py out
+python3 regularize/enforce-verifier.py out          # verify.py geometry is authoritative
 python3 regularize/list-source-crossings.py out
 python3 regularize/verify.py out --original prep --graph-full graph-full.json --guides prepared-routing.json --output out/verify.json
 python3 regularize/build-index.py out artifact4/floors/index.json out/verify.json ../acceptance
@@ -119,3 +120,18 @@ in this drawing's fitted, decimetre-rounded coordinates with the strict
 host-wall door rule; they were not re-measured in native feet or against the
 compiler's own support predicate. Treat them as review leads, not confirmed
 compiler defects.
+
+## November 1 rebuild for the chosen candidate
+
+The floors now show the chosen candidate (corrected master `6e7971f8…` with
+the 06-388 reviewed link, straightened compiler catalog `3430c871…`, 2,728
+guides; see `docs/continuation/unbc-20261101/candidate/`). The rebuild script
+is `/home/user/unbc-work/cand/rebuild.sh` in the working environment; its
+inputs are the candidate ZIP `1a127847…`, its pathway-preview export and the
+catalog. `enforce-verifier.py` applies `verify.py`'s own geometry after the
+regularizer: on this data it restored 2 schematic lines (one new wall
+contact the regularizer missed, one redrawn source-defect line) and added one
+missed source crossing. Final `verify.py`: ALL_PASS, 0 hard-rule violations,
+0 source-defect lines changed ([verify.json](verify.json)). An independent
+exact comparison found 0 schematic lines adding wall material outside a door
+footprint.

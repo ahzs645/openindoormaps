@@ -34,7 +34,9 @@ rows = [{'from': r['fromNumber'], 'to': r['toNumber'], 'mode': r['mode'], 'endpo
          'allowOtherRoomTransit': r['options']['allowOtherRoomTransit'], 'available': r['available'],
          'distanceMetres': round(r['distanceMetres'], 3) if r.get('distanceMetres') else None,
          'requiredNativeDoorId': r.get('requiredNativeDoorId')} for r in normal['rows']]
-acceptance = {'source': 'docs/continuation/unbc-20261031/campus/acceptance (NORMAL-ROUTES.json, REPORT.json)',
+_acc = os.path.abspath(acc_dir)
+_rel = _acc.split('/openindoormaps/', 1)[1] if '/openindoormaps/' in _acc else acc_dir
+acceptance = {'source': _rel + ' (NORMAL-ROUTES.json, REPORT.json)',
               'status': report['status'], 'releaseAcceptance': report['releaseAcceptance'], 'published': report['published'],
               'runId': report['runId'], 'sourceMasterSha256': report['sourceMasterSha256'],
               'guideCatalogSha256': report['guideSha256'], 'guides': report['guides'],
@@ -70,7 +72,7 @@ about = (
     "Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. "
     "Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.")
 out = {'floors': floors, 'transform': old['transform'], 'drawing': {
-    'default': 'Accepted geometry, unmodified: accepted shared guides (net category 0/2) and original saved walks (1/3), exactly as exported (artifact4).',
+    'default': 'Accepted geometry, unmodified: accepted shared guides (net category 0/2) and original saved walks (1/3), exactly as exported from the displayed candidate.',
     'acceptedGuides': tot['accepted'], 'savedWalks': tot['saved'], 'lines': tot['lines']},
     'schematic': schematic, 'sourceWallCrossings': {'lines': tot['defects'], 'acceptedGuideLines': tot['defectsAccepted'],
     'rule': 'original net line overlaps a native wall footprint (outside the footprints of doors hosted by that wall) or a cell hole not covered by another cell; exact, display decimetre coordinates'},
