@@ -1,0 +1,873 @@
+{
+ "format": "unbc-visitor-route-latency-v1",
+ "date": "2026-11-01",
+ "timezone": "UTC",
+ "worktree": "/home/user/oim-latency",
+ "branch": "claude/visitor-route-latency",
+ "base": "1f2de762826707d3a531c5a49e95a8484c66cdc4",
+ "inputs": {
+  "progressiveManifestRevision": "61a21d81895778c817eb4e7bcd2a41e4902cf62edadf7ebdfc3cb8f580b1008f",
+  "routingDatasetSha256": "f7778395455ebbc5c669fb407a02b6a75f9e52ad0129d76eb3ca8359c67acb1b",
+  "engineSha256": "3ed1eca9591b63fa0115c706b53d3354c588809aca01e0995f5864fc69223852",
+  "beforeCache": {
+   "receipt": "/home/user/unbc-work/dircache/prep/cache/receipt.json",
+   "compressedSha256": "b164db258857db3d314bbc97ad7101fc9baa0f5048fa58431b7fbb7a47af2a73",
+   "hydration": false
+  },
+  "afterCache": {
+   "receipt": "/home/user/unbc-work/agents/latency/hydrated-cache/receipt.json",
+   "compressedSha256": "9ae86a1e2e7a618a25fe0777f1fc4c4c937592c90c92a9cc6f1f9dd42f4de58a",
+   "runtimeSha256": "0ed48c0239d9fd05c51f2369ccfd93bd670c63892c3f91b10b51ba8ac20d73c2",
+   "hydration": true,
+   "proof": "/home/user/unbc-work/agents/latency/hydrated-cache/proof.json",
+   "execution": "/home/user/unbc-work/agents/latency/hydration-export.execution.json"
+  },
+  "visitorJson": {
+   "path": "/home/user/unbc-work/dircache/viewer/indoor.json",
+   "sha256": "61c805ba77eeb781b9888d2ff329917d1438b88a541ecf98fac070b3b172ef73"
+  }
+ },
+ "builds": {
+  "before": "/home/user/unbc-work/agents/latency/builds/before (HEAD 1f2de76 + non-hydrated receipt, minified)",
+  "after": "/home/user/unbc-work/agents/latency/builds/after (branch 9add679, minified)",
+  "profiling": [
+   "builds/before-unminified",
+   "builds/sha-unminified",
+   "builds/hydrated-unminified"
+  ]
+ },
+ "metricDefinitions": {
+  "workerResponse": "seconds from Get directions click to the route worker message reaching the page",
+  "statusShown": "seconds from click until the route status shows the distance (route drawn)",
+  "readyAfterShown": "as release-gates/proof-link-route.mjs measured it: status shown AND visitor-render-status ready; after the first route this includes the detailed floor preparation that starts only after the route worker is released"
+ },
+ "finalTimings": {
+  "before/desktop/corridor-default": {
+   "workerResponse": {
+    "runs": [
+     47.113,
+     45.468
+    ],
+    "median": 46.2905
+   },
+   "statusShown": {
+    "runs": [
+     47.263,
+     45.6
+    ],
+    "median": 46.4315
+   },
+   "readyAfterShown": {
+    "runs": [
+     86.816,
+     85.359
+    ],
+    "median": 86.0875
+   }
+  },
+  "before/desktop/office-transit": {
+   "workerResponse": {
+    "runs": [
+     47.136,
+     46.899
+    ],
+    "median": 47.0175
+   },
+   "statusShown": {
+    "runs": [
+     47.242,
+     47.572
+    ],
+    "median": 47.407
+   },
+   "readyAfterShown": {
+    "runs": [
+     48.834,
+     48.796
+    ],
+    "median": 48.815
+   }
+  },
+  "before/mobile/corridor-default": {
+   "workerResponse": {
+    "runs": [
+     46.304,
+     46.397
+    ],
+    "median": 46.3505
+   },
+   "statusShown": {
+    "runs": [
+     46.456,
+     46.536
+    ],
+    "median": 46.496
+   },
+   "readyAfterShown": {
+    "runs": [
+     86.674,
+     87.682
+    ],
+    "median": 87.178
+   }
+  },
+  "before/mobile/office-transit": {
+   "workerResponse": {
+    "runs": [
+     46.606,
+     49.103
+    ],
+    "median": 47.8545
+   },
+   "statusShown": {
+    "runs": [
+     46.687,
+     49.89
+    ],
+    "median": 48.2885
+   },
+   "readyAfterShown": {
+    "runs": [
+     49.092,
+     51.476
+    ],
+    "median": 50.284
+   }
+  },
+  "after/desktop/corridor-default": {
+   "workerResponse": {
+    "runs": [
+     10.408,
+     10.905
+    ],
+    "median": 10.6565
+   },
+   "statusShown": {
+    "runs": [
+     10.834,
+     11.003
+    ],
+    "median": 10.9185
+   },
+   "readyAfterShown": {
+    "runs": [
+     50.844,
+     50.773
+    ],
+    "median": 50.8085
+   }
+  },
+  "after/desktop/office-transit": {
+   "workerResponse": {
+    "runs": [
+     13.207,
+     12.636
+    ],
+    "median": 12.9215
+   },
+   "statusShown": {
+    "runs": [
+     13.936,
+     12.776
+    ],
+    "median": 13.356
+   },
+   "readyAfterShown": {
+    "runs": [
+     15.656,
+     14.567
+    ],
+    "median": 15.1115
+   }
+  },
+  "after/mobile/corridor-default": {
+   "workerResponse": {
+    "runs": [
+     9.749,
+     10.382
+    ],
+    "median": 10.0655
+   },
+   "statusShown": {
+    "runs": [
+     9.837,
+     10.506
+    ],
+    "median": 10.1715
+   },
+   "readyAfterShown": {
+    "runs": [
+     49.207,
+     49.763
+    ],
+    "median": 49.485
+   }
+  },
+  "after/mobile/office-transit": {
+   "workerResponse": {
+    "runs": [
+     12.653,
+     12.794
+    ],
+    "median": 12.723500000000001
+   },
+   "statusShown": {
+    "runs": [
+     13.404,
+     12.91
+    ],
+    "median": 13.157
+   },
+   "readyAfterShown": {
+    "runs": [
+     14.807,
+     15.53
+    ],
+    "median": 15.1685
+   }
+  }
+ },
+ "finalTimingRows": [
+  {
+   "variant": "before",
+   "mode": "desktop",
+   "run": "final-1",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 47.113,
+   "statusShown": 47.263,
+   "readyAfterShown": 86.816,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "desktop",
+   "run": "final-1",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 47.136,
+   "statusShown": 47.242,
+   "readyAfterShown": 48.834,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "desktop",
+   "run": "final-2",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 45.468,
+   "statusShown": 45.6,
+   "readyAfterShown": 85.359,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "desktop",
+   "run": "final-2",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 46.899,
+   "statusShown": 47.572,
+   "readyAfterShown": 48.796,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "mobile",
+   "run": "final-1",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 46.304,
+   "statusShown": 46.456,
+   "readyAfterShown": 86.674,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "mobile",
+   "run": "final-1",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 46.606,
+   "statusShown": 46.687,
+   "readyAfterShown": 49.092,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "mobile",
+   "run": "final-2",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 46.397,
+   "statusShown": 46.536,
+   "readyAfterShown": 87.682,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "before",
+   "mode": "mobile",
+   "run": "final-2",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 49.103,
+   "statusShown": 49.89,
+   "readyAfterShown": 51.476,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "desktop",
+   "run": "final-1",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 10.408,
+   "statusShown": 10.834,
+   "readyAfterShown": 50.844,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "desktop",
+   "run": "final-1",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 13.207,
+   "statusShown": 13.936,
+   "readyAfterShown": 15.656,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "desktop",
+   "run": "final-2",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 10.905,
+   "statusShown": 11.003,
+   "readyAfterShown": 50.773,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "desktop",
+   "run": "final-2",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 12.636,
+   "statusShown": 12.776,
+   "readyAfterShown": 14.567,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "mobile",
+   "run": "final-1",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 9.749,
+   "statusShown": 9.837,
+   "readyAfterShown": 49.207,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "mobile",
+   "run": "final-1",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 12.653,
+   "statusShown": 13.404,
+   "readyAfterShown": 14.807,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "mobile",
+   "run": "final-2",
+   "journey": "corridor-default",
+   "freshWorker": true,
+   "workerResponse": 10.382,
+   "statusShown": 10.506,
+   "readyAfterShown": 49.763,
+   "statusText": "122 m",
+   "stepCount": 18,
+   "responseSha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+   "pageErrors": 0
+  },
+  {
+   "variant": "after",
+   "mode": "mobile",
+   "run": "final-2",
+   "journey": "office-transit",
+   "freshWorker": true,
+   "workerResponse": 12.794,
+   "statusShown": 12.91,
+   "readyAfterShown": 15.53,
+   "statusText": "187 m",
+   "stepCount": 26,
+   "responseSha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+   "pageErrors": 0
+  }
+ ],
+ "responseIdentity": {
+  "distinct (journey, sha256) across all before/after/profiling runs": [
+   [
+    "corridor-default",
+    "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67"
+   ],
+   [
+    "office-transit",
+    "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43"
+   ]
+  ],
+  "note": "sha256 of JSON.stringify({value,steps,summary}) of the worker message (Sets/Maps sorted/listed); identical for every variant, browser and Node harness"
+ },
+ "attributionBrowserMs": {
+  "before-1": {
+   "file": "runs/before-unminified/desktop-profile-route-worker-1.cpuprofile",
+   "profiledSeconds": 54.803,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 5750,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 9595,
+    "delivery: JSON.parse + deep freeze": 2184,
+    "cache admission: decode/validate carrier + hydration": 2608,
+    "  of which decodePublishedRouteCells": 2422,
+    "route calculation (calculateRoute)": 34647,
+    "  graph preparation (buildProjectRoutingGraph)": 6603,
+    "  policy snapshot hash (routingSnapshot, any caller)": 13275,
+    "  prepared routing key (preparedRoutingKey)": 7145,
+    "  route centering + exact geometry (centeredRoutePaths)": 26860,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 13174,
+    "    of which exact rational overlay (nativeRationalOverlay)": 4662,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 1138,
+    "arrival + reachability": 25,
+    "navigation steps + summary": 9,
+    "portable SHA-256 anywhere (noble hashC)": 19589,
+    "garbage collector": 1969,
+    "idle (waiting on network/IndexedDB/streams)": 2991
+   }
+  },
+  "before-2": {
+   "file": "runs/before-unminified/desktop-profile-route-worker-2.cpuprofile",
+   "profiledSeconds": 51.869,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 5771,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 7485,
+    "delivery: JSON.parse + deep freeze": 2143,
+    "cache admission: decode/validate carrier + hydration": 2494,
+    "  of which decodePublishedRouteCells": 2397,
+    "route calculation (calculateRoute)": 33986,
+    "  graph preparation (buildProjectRoutingGraph)": 6282,
+    "  policy snapshot hash (routingSnapshot, any caller)": 12541,
+    "  prepared routing key (preparedRoutingKey)": 6716,
+    "  route centering + exact geometry (centeredRoutePaths)": 26575,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 11251,
+    "    of which exact rational overlay (nativeRationalOverlay)": 4962,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 1090,
+    "arrival + reachability": 110,
+    "navigation steps + summary": 8,
+    "portable SHA-256 anywhere (noble hashC)": 17218,
+    "garbage collector": 1703,
+    "idle (waiting on network/IndexedDB/streams)": 3358
+   }
+  },
+  "sha-1": {
+   "file": "runs/sha-unminified/desktop-profile-route-worker-1.cpuprofile",
+   "profiledSeconds": 43.087,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 863,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 1103,
+    "delivery: JSON.parse + deep freeze": 1974,
+    "cache admission: decode/validate carrier + hydration": 2409,
+    "  of which decodePublishedRouteCells": 2333,
+    "route calculation (calculateRoute)": 33002,
+    "  graph preparation (buildProjectRoutingGraph)": 6768,
+    "  policy snapshot hash (routingSnapshot, any caller)": 13597,
+    "  prepared routing key (preparedRoutingKey)": 7283,
+    "  route centering + exact geometry (centeredRoutePaths)": 24940,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 11587,
+    "    of which exact rational overlay (nativeRationalOverlay)": 4228,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 1264,
+    "arrival + reachability": 14,
+    "navigation steps + summary": 6,
+    "portable SHA-256 anywhere (noble hashC)": 10650,
+    "garbage collector": 1248,
+    "idle (waiting on network/IndexedDB/streams)": 2643
+   }
+  },
+  "sha-2": {
+   "file": "runs/sha-unminified/desktop-profile-route-worker-2.cpuprofile",
+   "profiledSeconds": 47.088,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 922,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 927,
+    "delivery: JSON.parse + deep freeze": 2005,
+    "cache admission: decode/validate carrier + hydration": 2476,
+    "  of which decodePublishedRouteCells": 2334,
+    "route calculation (calculateRoute)": 36582,
+    "  graph preparation (buildProjectRoutingGraph)": 6497,
+    "  policy snapshot hash (routingSnapshot, any caller)": 12964,
+    "  prepared routing key (preparedRoutingKey)": 6921,
+    "  route centering + exact geometry (centeredRoutePaths)": 28953,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 11779,
+    "    of which exact rational overlay (nativeRationalOverlay)": 5784,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 1095,
+    "arrival + reachability": 117,
+    "navigation steps + summary": 12,
+    "portable SHA-256 anywhere (noble hashC)": 10364,
+    "garbage collector": 1523,
+    "idle (waiting on network/IndexedDB/streams)": 2877
+   }
+  },
+  "hydrated-1": {
+   "file": "runs/hydrated-unminified/desktop-profile-route-worker-1.cpuprofile",
+   "profiledSeconds": 13.184,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 928,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 1685,
+    "delivery: JSON.parse + deep freeze": 2213,
+    "cache admission: decode/validate carrier + hydration": 2758,
+    "  of which decodePublishedRouteCells": 2082,
+    "route calculation (calculateRoute)": 3224,
+    "  graph preparation (buildProjectRoutingGraph)": 64,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 3128,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 1882,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 13,
+    "navigation steps + summary": 5,
+    "portable SHA-256 anywhere (noble hashC)": 950,
+    "garbage collector": 993,
+    "idle (waiting on network/IndexedDB/streams)": 2140
+   }
+  },
+  "hydrated-2": {
+   "file": "runs/hydrated-unminified/desktop-profile-route-worker-2.cpuprofile",
+   "profiledSeconds": 17.635,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 921,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 1479,
+    "delivery: JSON.parse + deep freeze": 2294,
+    "cache admission: decode/validate carrier + hydration": 3011,
+    "  of which decodePublishedRouteCells": 2426,
+    "route calculation (calculateRoute)": 6225,
+    "  graph preparation (buildProjectRoutingGraph)": 60,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 6121,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 2768,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 158,
+    "navigation steps + summary": 8,
+    "portable SHA-256 anywhere (noble hashC)": 950,
+    "garbage collector": 1247,
+    "idle (waiting on network/IndexedDB/streams)": 3026
+   }
+  }
+ },
+ "attributionNodeMs": {
+  "before-shared-a": {
+   "file": "node/before/shared-corridor-default.cpuprofile",
+   "profiledSeconds": 49.152,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 4717,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 6296,
+    "delivery: JSON.parse + deep freeze": 1854,
+    "cache admission: decode/validate carrier + hydration": 3331,
+    "  of which decodePublishedRouteCells": 3246,
+    "route calculation (calculateRoute)": 32653,
+    "  graph preparation (buildProjectRoutingGraph)": 4568,
+    "  policy snapshot hash (routingSnapshot, any caller)": 8948,
+    "  prepared routing key (preparedRoutingKey)": 4771,
+    "  route centering + exact geometry (centeredRoutePaths)": 27290,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 13191,
+    "    of which exact rational overlay (nativeRationalOverlay)": 7391,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 742,
+    "arrival + reachability": 23,
+    "navigation steps + summary": 9,
+    "portable SHA-256 anywhere (noble hashC)": 12997,
+    "garbage collector": 2939,
+    "idle (waiting on network/IndexedDB/streams)": 905
+   }
+  },
+  "before-shared-b": {
+   "file": "node/before/shared-office-transit.cpuprofile",
+   "profiledSeconds": 6.105,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 0,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 0,
+    "delivery: JSON.parse + deep freeze": 0,
+    "cache admission: decode/validate carrier + hydration": 0,
+    "  of which decodePublishedRouteCells": 0,
+    "route calculation (calculateRoute)": 5629,
+    "  graph preparation (buildProjectRoutingGraph)": 0,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 5599,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 2631,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 109,
+    "navigation steps + summary": 6,
+    "portable SHA-256 anywhere (noble hashC)": 0,
+    "garbage collector": 359,
+    "idle (waiting on network/IndexedDB/streams)": 0
+   }
+  },
+  "before-fresh-b": {
+   "file": "node/before/fresh-b-office-transit.cpuprofile",
+   "profiledSeconds": 54.131,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 4962,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 6300,
+    "delivery: JSON.parse + deep freeze": 2077,
+    "cache admission: decode/validate carrier + hydration": 3361,
+    "  of which decodePublishedRouteCells": 3282,
+    "route calculation (calculateRoute)": 36792,
+    "  graph preparation (buildProjectRoutingGraph)": 4473,
+    "  policy snapshot hash (routingSnapshot, any caller)": 8926,
+    "  prepared routing key (preparedRoutingKey)": 4802,
+    "  route centering + exact geometry (centeredRoutePaths)": 31497,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 12772,
+    "    of which exact rational overlay (nativeRationalOverlay)": 9509,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 764,
+    "arrival + reachability": 127,
+    "navigation steps + summary": 7,
+    "portable SHA-256 anywhere (noble hashC)": 12927,
+    "garbage collector": 3468,
+    "idle (waiting on network/IndexedDB/streams)": 896
+   }
+  },
+  "hyd-shared-a": {
+   "file": "node/hydrated/shared-corridor-default.cpuprofile",
+   "profiledSeconds": 14.856,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 695,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 1048,
+    "delivery: JSON.parse + deep freeze": 1919,
+    "cache admission: decode/validate carrier + hydration": 2596,
+    "  of which decodePublishedRouteCells": 1935,
+    "route calculation (calculateRoute)": 4805,
+    "  graph preparation (buildProjectRoutingGraph)": 95,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 4674,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 3120,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 17,
+    "navigation steps + summary": 5,
+    "portable SHA-256 anywhere (noble hashC)": 661,
+    "garbage collector": 2274,
+    "idle (waiting on network/IndexedDB/streams)": 1374
+   }
+  },
+  "hyd-shared-b": {
+   "file": "node/hydrated/shared-office-transit.cpuprofile",
+   "profiledSeconds": 5.419,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 0,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 0,
+    "delivery: JSON.parse + deep freeze": 0,
+    "cache admission: decode/validate carrier + hydration": 0,
+    "  of which decodePublishedRouteCells": 0,
+    "route calculation (calculateRoute)": 4963,
+    "  graph preparation (buildProjectRoutingGraph)": 0,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 4930,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 2050,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 117,
+    "navigation steps + summary": 5,
+    "portable SHA-256 anywhere (noble hashC)": 0,
+    "garbage collector": 331,
+    "idle (waiting on network/IndexedDB/streams)": 0
+   }
+  },
+  "hyd-fresh-b": {
+   "file": "node/hydrated/fresh-b-office-transit.cpuprofile",
+   "profiledSeconds": 19.435,
+   "stagesMs": {
+    "delivery: parse step after the awaited download (loadRouting, sync part)": 667,
+    "delivery: SHA-256 of routing parts/stream/logical bytes and cache carrier (all callers)": 1005,
+    "delivery: JSON.parse + deep freeze": 2115,
+    "cache admission: decode/validate carrier + hydration": 2540,
+    "  of which decodePublishedRouteCells": 1846,
+    "route calculation (calculateRoute)": 9020,
+    "  graph preparation (buildProjectRoutingGraph)": 73,
+    "  policy snapshot hash (routingSnapshot, any caller)": 0,
+    "  prepared routing key (preparedRoutingKey)": 0,
+    "  route centering + exact geometry (centeredRoutePaths)": 8879,
+    "    of which material query build (createNativeRoutingMaterialQuery)": 0,
+    "    of which exact rational overlay (nativeRationalOverlay)": 4980,
+    "  resolved geometry binding (nativeCirculationBinding in resolveProjectRoute)": 0,
+    "arrival + reachability": 129,
+    "navigation steps + summary": 8,
+    "portable SHA-256 anywhere (noble hashC)": 666,
+    "garbage collector": 2483,
+    "idle (waiting on network/IndexedDB/streams)": 1364
+   }
+  }
+ },
+ "nodeHarness": {
+  "before": {
+   "repo": "/home/user/unbc-work/agents/latency/wt-before",
+   "manifestRevision": "61a21d81895778c817eb4e7bcd2a41e4902cf62edadf7ebdfc3cb8f580b1008f",
+   "profile": true,
+   "sequence": [
+    "a",
+    "b"
+   ],
+   "results": [
+    {
+     "tag": "shared-corridor-default",
+     "journey": "corridor-default",
+     "seconds": 49.328749781000006,
+     "distanceMetres": 122.0507335447281,
+     "stepCount": 18,
+     "bodySha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+     "bodyBytes": 66920,
+     "rssMiB": 1280,
+     "heapUsedMiB": 875
+    },
+    {
+     "tag": "shared-office-transit",
+     "journey": "office-transit",
+     "seconds": 7.150754917000006,
+     "distanceMetres": 187.24078027141326,
+     "stepCount": 26,
+     "bodySha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+     "bodyBytes": 153293,
+     "rssMiB": 1338,
+     "heapUsedMiB": 915
+    },
+    {
+     "tag": "fresh-a-corridor-default",
+     "journey": "corridor-default",
+     "seconds": 50.728691225999995,
+     "distanceMetres": 122.0507335447281,
+     "stepCount": 18,
+     "bodySha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+     "bodyBytes": 66920,
+     "rssMiB": 1513,
+     "heapUsedMiB": 926
+    },
+    {
+     "tag": "fresh-b-office-transit",
+     "journey": "office-transit",
+     "seconds": 54.27597857799999,
+     "distanceMetres": 187.24078027141326,
+     "stepCount": 26,
+     "bodySha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+     "bodyBytes": 153293,
+     "rssMiB": 1342,
+     "heapUsedMiB": 917
+    }
+   ]
+  },
+  "after": {
+   "repo": "/home/user/oim-latency",
+   "manifestRevision": "61a21d81895778c817eb4e7bcd2a41e4902cf62edadf7ebdfc3cb8f580b1008f",
+   "profile": true,
+   "sequence": [
+    "a",
+    "b"
+   ],
+   "results": [
+    {
+     "tag": "shared-corridor-default",
+     "journey": "corridor-default",
+     "seconds": 14.919641319,
+     "distanceMetres": 122.0507335447281,
+     "stepCount": 18,
+     "bodySha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+     "bodyBytes": 66920,
+     "rssMiB": 1062,
+     "heapUsedMiB": 750
+    },
+    {
+     "tag": "shared-office-transit",
+     "journey": "office-transit",
+     "seconds": 6.273315762,
+     "distanceMetres": 187.24078027141326,
+     "stepCount": 26,
+     "bodySha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+     "bodyBytes": 153293,
+     "rssMiB": 1124,
+     "heapUsedMiB": 812
+    },
+    {
+     "tag": "fresh-a-corridor-default",
+     "journey": "corridor-default",
+     "seconds": 14.525654704999997,
+     "distanceMetres": 122.0507335447281,
+     "stepCount": 18,
+     "bodySha256": "67135bb6b2c7a3a632f9e79cc84ca7efd9025eb168545f4ab937636de7b4ae67",
+     "bodyBytes": 66920,
+     "rssMiB": 1054,
+     "heapUsedMiB": 755
+    },
+    {
+     "tag": "fresh-b-office-transit",
+     "journey": "office-transit",
+     "seconds": 19.507630634,
+     "distanceMetres": 187.24078027141326,
+     "stepCount": 26,
+     "bodySha256": "064bda84ed0bf26397ce4bc6a211ed2fae5b6bca280ac662ba088d117149fc43",
+     "bodyBytes": 153293,
+     "rssMiB": 1093,
+     "heapUsedMiB": 786
+    }
+   ]
+  }
+ }
+}

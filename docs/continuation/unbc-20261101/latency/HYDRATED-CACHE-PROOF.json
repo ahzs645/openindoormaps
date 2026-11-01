@@ -1,0 +1,298 @@
+{
+  "format": "fresh-published-routing-hydration-proof-v1",
+  "passed": true,
+  "inputSha256": "61c805ba77eeb781b9888d2ff329917d1438b88a541ecf98fac070b3b172ef73",
+  "datasetSha256": "f7778395455ebbc5c669fb407a02b6a75f9e52ad0129d76eb3ca8359c67acb1b",
+  "runtimeSha256": "0ed48c0239d9fd05c51f2369ccfd93bd670c63892c3f91b10b51ba8ac20d73c2",
+  "engineSha256": "3ed1eca9591b63fa0115c706b53d3354c588809aca01e0995f5864fc69223852",
+  "receipt": {
+    "id": "fresh-candidate-native-routing-f7778395455ebbc5c669fb407a02b6a75f9e52ad0129d76eb3ca8359c67acb1b",
+    "datasetSha256": "f7778395455ebbc5c669fb407a02b6a75f9e52ad0129d76eb3ca8359c67acb1b",
+    "engineSha256": "3ed1eca9591b63fa0115c706b53d3354c588809aca01e0995f5864fc69223852",
+    "source": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "5291e1148cc27130b9239b6de26b2f7623c308f227f5dfc2b3e64b17f55e593c"
+    },
+    "logicalSha256": "13496accf39db9d598b927a953be6a2e61e477430ceac2ad0acc40526d082f3d",
+    "logicalBytes": 35217119,
+    "compressedSha256": "9ae86a1e2e7a618a25fe0777f1fc4c4c937592c90c92a9cc6f1f9dd42f4de58a",
+    "compressedBytes": 8205661,
+    "url": "/data/candidate-routing/9ae86a1e2e7a618a25fe0777f1fc4c4c937592c90c92a9cc6f1f9dd42f4de58a.json.gz",
+    "runtimeSha256": "0ed48c0239d9fd05c51f2369ccfd93bd670c63892c3f91b10b51ba8ac20d73c2"
+  },
+  "sourceDatasetUnchanged": true,
+  "normalPhysicalValidationRepeated": true,
+  "originalFacesChecked": 5327,
+  "materialCutsChecked": 8,
+  "freshNormalRouteCases": 12,
+  "extraRouteCases": {
+    "path": "/home/user/unbc-work/agents/latency/hydration-extra-cases.json",
+    "bytes": 307,
+    "sha256": "a163caef8193b759fa1d0caf8455f2a8408854cd578266c30977e15924d7bf9b",
+    "count": 2
+  },
+  "routeCasesSha256": "09571be775c44afe425efdf94c4182c91e0170eb96df24d000b353633ae75c6f",
+  "normalRouteResultsSha256": "64b4d535c65372fb5f2963688c2dc166b4b3fa44ab3ed2f9eb49728a62d3fd5e",
+  "normalProgressiveRouteResultsSha256": "6cadd63259e87f2a8c47b7f9fd0f8800b183a70a66c1d63cde4f6a64b9e3d098",
+  "actualRouteParityCases": 0,
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "phases": [
+    {
+      "name": "loaded",
+      "seconds": 11.352243973,
+      "value": {
+        "datasetSha256": "f7778395455ebbc5c669fb407a02b6a75f9e52ad0129d76eb3ca8359c67acb1b"
+      }
+    },
+    {
+      "name": "normal-validation",
+      "seconds": 110.471950734
+    },
+    {
+      "name": "complete-normal-physical-graphs-and-supported-cells",
+      "seconds": 407.455306654
+    },
+    {
+      "name": "all-original-exact-faces-parity",
+      "seconds": 408.333421005,
+      "value": 5327
+    },
+    {
+      "name": "all-native-level-material-cuts-parity",
+      "seconds": 414.43049201400004,
+      "value": 8
+    },
+    {
+      "name": "normal-route",
+      "seconds": 497.067704473,
+      "value": {
+        "name": "main-forward",
+        "seconds": 82.632621208,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 581.0842590599999,
+      "value": {
+        "name": "main-reverse",
+        "seconds": 84.01632091,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 582.820339449,
+      "value": {
+        "name": "floor1",
+        "seconds": 1.7357649540000128,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 583.675027926,
+      "value": {
+        "name": "floor3",
+        "seconds": 0.8544620309999446,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 589.371314533,
+      "value": {
+        "name": "unavailable",
+        "seconds": 5.695845177999931,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 597.765575736,
+      "value": {
+        "name": "lift-up",
+        "seconds": 8.394041634000024,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 605.573136216,
+      "value": {
+        "name": "lift-down",
+        "seconds": 7.807400863000075,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 606.338125555,
+      "value": {
+        "name": "ramp-forward",
+        "seconds": 0.764825262999977,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 607.093542715,
+      "value": {
+        "name": "ramp-reverse",
+        "seconds": 0.7552499449999305,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 607.2498340989999,
+      "value": {
+        "name": "stepfree-refusal",
+        "seconds": 0.15613253400009125,
+        "available": false
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 610.46107281,
+      "value": {
+        "name": "browser-corridor-default-04-204-08-267",
+        "seconds": 3.211085715999943,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 622.202488146,
+      "value": {
+        "name": "browser-office-transit-04-255-08-272",
+        "seconds": 11.741285455000005,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-derived-source-checksums",
+      "seconds": 622.247205846,
+      "value": {
+        "preparedRoutingKey": "872eada277dfcce7cd4950f8c4d7e7a58b927366aaa8dc44a6a40689b05757ad",
+        "resolvedRouteGeometryKey": "native-circulation-sha256-v1:d5541db320c3b54a7c76c860765075052175f8ec5b4135bf126a77e866607c3c"
+      }
+    },
+    {
+      "name": "normal-access-zone-geometry",
+      "seconds": 622.271298557,
+      "value": {
+        "accepted": 1,
+        "issues": 0
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 799.359003228,
+      "value": {
+        "completed": 100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 800.813997248,
+      "value": {
+        "completed": 200,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 802.0719160589999,
+      "value": {
+        "completed": 300,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 804.206559693,
+      "value": {
+        "completed": 400,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 808.108247704,
+      "value": {
+        "completed": 500,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 818.406767968,
+      "value": {
+        "completed": 600,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 833.5659294879999,
+      "value": {
+        "completed": 700,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 839.5825579650001,
+      "value": {
+        "completed": 800,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 850.438079303,
+      "value": {
+        "completed": 900,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 855.497975906,
+      "value": {
+        "completed": 1000,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 863.140492045,
+      "value": {
+        "completed": 1100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 873.726780691,
+      "value": {
+        "completed": 1188,
+        "total": 1188
+      }
+    },
+    {
+      "name": "all-source-cell-support-tiles-parity",
+      "seconds": 877.870423702,
+      "value": {
+        "parents": 1188,
+        "nonempty": 3458,
+        "empty": 699,
+        "coordinates": 70224
+      }
+    }
+  ]
+}
