@@ -12,8 +12,21 @@ import {
   chooseCorridorTerminalAttachments,
   type CorridorAttachmentRequirement,
 } from "./corridor-terminal-attachments";
+import {
+  corridorDoorNormalHit,
+  corridorSegmentProjection,
+  corridorTerminalApproachProposals,
+} from "./corridor-terminal-approach";
 
 export type CorridorXY = [number, number];
+const pathLength = (path: readonly CorridorXY[]) =>
+  path
+    .slice(1)
+    .reduce(
+      (sum, point, i) =>
+        sum + DMath.hypot(point[0] - path[i][0], point[1] - path[i][1]),
+      0,
+    );
 export const CORRIDOR_CENTERLINE_PARAMETERS = CORRIDOR_COMPILER_PARAMETERS;
 export type CorridorCenterlineTerminal = {
   id: string;
@@ -73,9 +86,17 @@ export function createCorridorCenterline(
     maxAttachments?: number;
     requiredEdges?: readonly CorridorAttachmentRequirement[];
     maxDeviationFeet?: number;
+    /** See CorridorCompilerParameters.shapedApproaches. */
+    shapedApproaches?: boolean;
+    /** See CorridorCompilerParameters.slideJoins. */
+    slideJoins?: boolean;
   } = {},
 ) {
   terminals = [...terminals].sort((a, b) => a.id.localeCompare(b.id));
+  const shaped =
+    options.shapedApproaches ?? CORRIDOR_CENTERLINE_PARAMETERS.shapedApproaches;
+  const slideJoins =
+    options.slideJoins ?? CORRIDOR_CENTERLINE_PARAMETERS.slideJoins;
   const maxAttachments =
     options.maxAttachments ?? CORRIDOR_CENTERLINE_PARAMETERS.maxAttachments;
   if (
@@ -225,6 +246,71 @@ export function createCorridorCenterline(
       .sort((a, b) => a.distance - b.distance || a.edge - b.edge)
       .slice(0, maxAttachments);
     let attached = false;
+    if (shaped) {
+      // The edge first crossed by the doorway normal ray can receive a
+      // perpendicular branch even if it is not among the nearest projections.
+      let firstEdge = -1,
+        firstT = MAX_SHARED_CORRIDOR_APPROACH_FEET;
+      if (terminal.approachDirection)
+        for (const [edge, [a, b]] of coreEdges.entries()) {
+          const hit = corridorDoorNormalHit(
+            terminal.point,
+            terminal.approachDirection,
+            vertices[a],
+            vertices[b],
+          );
+          if (hit && hit.t <= firstT && (firstEdge < 0 || hit.t < firstT)) {
+            firstEdge = edge;
+            firstT = hit.t;
+          }
+        }
+      const ordered = [
+        ...(firstEdge >= 0 ? [firstEdge] : []),
+        ...candidates.flatMap((candidate) =>
+          candidate.distance > MAX_SHARED_CORRIDOR_APPROACH_FEET ||
+          candidate.edge === firstEdge
+            ? []
+            : [candidate.edge],
+        ),
+      ];
+      for (const edge of ordered) {
+        if (!coreSupported(edge)) continue;
+        const [a, b] = coreEdges[edge];
+        const proposals = corridorTerminalApproachProposals(
+          terminal,
+          vertices[a],
+          vertices[b],
+          { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
+        ).filter(
+          (proposal) =>
+            DMath.hypot(
+              proposal.point[0] - terminal.point[0],
+              proposal.point[1] - terminal.point[1],
+            ) <= MAX_SHARED_CORRIDOR_APPROACH_FEET,
+        );
+        const chosen = proposals.find(
+          (proposal) =>
+            // A floating join is a new coordinate: recheck both pieces.
+            supported(proposal.path, terminal.id) &&
+            supported([vertices[a], proposal.point]) &&
+            supported([proposal.point, vertices[b]]),
+        );
+        if (!chosen) continue;
+        const vertex = vertices.length;
+        vertices.push([...chosen.point]);
+        joins.set(terminal.id, {
+          vertex,
+          approach: chosen.path.map((p) => [...p]),
+        });
+        const list = segments.get(edge) ?? [];
+        list.push({ fraction: chosen.fraction, vertex });
+        segments.set(edge, list);
+        attached = true;
+        break;
+      }
+      if (!attached) missing.push(terminal.id);
+      continue;
+    }
     for (const candidate of candidates) {
       if (candidate.distance > MAX_SHARED_CORRIDOR_APPROACH_FEET) continue;
       if (!coreSupported(candidate.edge)) continue;
@@ -511,6 +597,67 @@ export function createCorridorCenterline(
       const points = chains[proposal.chain].points!;
       const a = points[proposal.segment],
         b = points[proposal.segment + 1];
+      if (shaped) {
+        const options = [
+          ...(proposal.preferred && initial
+            ? [
+                {
+                  path: initial.approach,
+                  point: proposal.point,
+                  fraction: proposal.fraction,
+                  cost:
+                    pathLength(initial.approach) +
+                    (initial.approach.length > 2 ? 1 : 0),
+                },
+              ]
+            : []),
+          ...corridorTerminalApproachProposals(terminal, a, b, {
+            shaped,
+            maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
+          }).filter(
+            (option) =>
+              DMath.hypot(
+                option.point[0] - terminal.point[0],
+                option.point[1] - terminal.point[1],
+              ) <= MAX_SHARED_CORRIDOR_APPROACH_FEET,
+          ),
+        ];
+        const pieces = new Map<string, boolean>();
+        // A floating join is a new coordinate. Recheck both receiving pieces
+        // rather than inheriting the containing segment's certificate.
+        const receives = (point: CorridorXY) => {
+          const key = `${point[0]},${point[1]}`;
+          let valid = pieces.get(key);
+          if (valid === undefined) {
+            valid = supported([a, point]) && supported([point, b]);
+            pieces.set(key, valid);
+          }
+          return valid;
+        };
+        const option = options.find(
+          (option) =>
+            receives(option.point) && supported(option.path, terminal.id),
+        );
+        if (option) {
+          accepted.push({
+            ...proposal,
+            // Only the unchanged initial approach retains the initial join.
+            preferred: proposal.preferred && option.path === initial?.approach,
+            point: [...option.point],
+            fraction: option.fraction,
+            approach: option.path.map((point): CorridorXY => [...point]),
+            distance: option.cost,
+          });
+          bestApproachByComponent.set(
+            proposal.component,
+            Math.min(
+              bestApproachByComponent.get(proposal.component) ?? Infinity,
+              option.cost,
+            ),
+          );
+        }
+        continue;
+      }
       // A floating projection is a new coordinate. Recheck both receiving
       // pieces rather than inheriting the containing segment's certificate.
       if (!supported([a, proposal.point]) || !supported([proposal.point, b]))
@@ -747,6 +894,402 @@ export function createCorridorCenterline(
       );
   });
   installChains(condensed);
+  const sliding = {
+    throughJoins: 0,
+    spurJoins: 0,
+    slidTerminals: 0,
+    removedSpurs: 0,
+    protectedJoins: 0,
+    fitAttempts: 0,
+    retained: null as string | null,
+  };
+  if (shaped && slideJoins) slideTerminalJoins();
+  /** Terminal joins pin the shared trunk: a pass-through join splits it into
+   * separately fitted pieces, and a join at the end of a short sampled spur
+   * keeps a junction (and its kink) on the trunk. Refit each trunk through
+   * such joins without the spur, then attach those terminals to the refitted
+   * trunk with the same checked approach proposals. Every core piece,
+   * receiving piece and approach is rechecked against exact support. A
+   * terminal that cannot attach as cleanly keeps its join and spur; any other
+   * failure retains the already checked network unchanged. Terminals stay in
+   * their checked component, and source identities are untouched. */
+  function slideTerminalJoins() {
+    const terminalsAt = new Map<number, string[]>();
+    for (const [id, join] of joins) {
+      const list = terminalsAt.get(join.vertex) ?? [];
+      list.push(id);
+      terminalsAt.set(join.vertex, list);
+    }
+    const movable = new Map<
+      number,
+      { kind: "through" | "spur"; chain?: number; length: number }
+    >();
+    for (const [vertex] of terminalsAt) {
+      const links = sharedAdjacency[vertex];
+      if (links.length === 2 && links[0].chain !== links[1].chain)
+        movable.set(vertex, { kind: "through", length: 0 });
+      else if (
+        links.length === 1 &&
+        links[0].to !== vertex &&
+        sharedAdjacency[links[0].to].length >= 3
+      )
+        movable.set(vertex, {
+          kind: "spur",
+          chain: links[0].chain,
+          length: chains[links[0].chain].length!,
+        });
+    }
+    sliding.throughJoins = [...movable.values()].filter(
+      (move) => move.kind === "through",
+    ).length;
+    sliding.spurJoins = movable.size - sliding.throughJoins;
+    if (movable.size === 0) return;
+    const terminalById = new Map(terminals.map((t) => [t.id, t]));
+    const costOf = (path: readonly CorridorXY[]) =>
+      pathLength(path) + (path.length > 2 ? 1 : 0);
+    const segmentsCross = (
+      p: CorridorXY,
+      q: CorridorXY,
+      a: CorridorXY,
+      b: CorridorXY,
+    ) => {
+      const d = (u: CorridorXY, v: CorridorXY, w: CorridorXY) =>
+        (v[0] - u[0]) * (w[1] - u[1]) - (v[1] - u[1]) * (w[0] - u[0]);
+      return d(a, b, p) * d(a, b, q) < 0 && d(p, q, a) * d(p, q, b) < 0;
+    };
+    const protectedVertices = new Set<number>();
+    for (let attempt = 0; attempt < 8; attempt++) {
+      sliding.fitAttempts++;
+      const moving = (vertex: number) =>
+        movable.has(vertex) && !protectedVertices.has(vertex);
+      const removed = new Set(
+        [...movable].flatMap(([vertex, move]) =>
+          move.kind === "spur" && moving(vertex) ? [move.chain!] : [],
+        ),
+      );
+      const adjacency = sharedAdjacency.map((links) =>
+        links.filter((link) => !removed.has(link.chain)),
+      );
+      const passThrough = (vertex: number) =>
+        adjacency[vertex].length === 2 &&
+        adjacency[vertex][0].chain !== adjacency[vertex][1].chain &&
+        (!terminalsAt.has(vertex) || moving(vertex));
+      const anchors = new Set(
+        adjacency.flatMap((links, vertex) =>
+          links.length > 0 && !passThrough(vertex) ? [vertex] : [],
+        ),
+      );
+      // Every connected piece of the network keeps at least one fixed anchor.
+      const seen = new Uint8Array(vertices.length);
+      for (let start = 0; start < adjacency.length; start++) {
+        if (seen[start] || adjacency[start].length === 0) continue;
+        const component = [start];
+        seen[start] = 1;
+        for (let i = 0; i < component.length; i++)
+          for (const { to } of adjacency[component[i]])
+            if (!seen[to]) {
+              seen[to] = 1;
+              component.push(to);
+            }
+        if (!component.some((vertex) => anchors.has(vertex)))
+          anchors.add(Math.min(...component));
+      }
+      type Trunk = { from: number; to: number; raw: CorridorXY[] };
+      const trunks: Trunk[] = [];
+      const trunkOf = new Map<number, number>();
+      const consumed = new Set<number>();
+      for (const from of anchors)
+        for (const first of adjacency[from]) {
+          if (consumed.has(first.chain)) continue;
+          consumed.add(first.chain);
+          const initial = chains[first.chain];
+          const raw = (
+            initial.from === from
+              ? initial.points!
+              : initial.points!.toReversed()
+          ).map((point): CorridorXY => [...point]);
+          let current = first.to;
+          while (!anchors.has(current)) {
+            trunkOf.set(current, trunks.length);
+            const next = adjacency[current].find(
+              (link) => !consumed.has(link.chain),
+            );
+            if (!next) break;
+            consumed.add(next.chain);
+            const chain = chains[next.chain];
+            const points =
+              chain.from === current
+                ? chain.points!
+                : chain.points!.toReversed();
+            raw.push(...points.slice(1).map((point): CorridorXY => [...point]));
+            current = next.to;
+          }
+          trunks.push({ from, to: current, raw });
+        }
+      if (
+        chains.some(
+          (chain, index) =>
+            !!chain.points && !removed.has(index) && !consumed.has(index),
+        )
+      ) {
+        sliding.retained = "unvisited-chain";
+        return;
+      }
+      const fitted = fitCheckedCorridorChains(
+        trunks.map((trunk, index) => ({
+          id: String(index),
+          from: trunk.from,
+          to: trunk.to,
+          points: trunk.raw,
+        })),
+        (path) => supported(path),
+        {
+          maxDeviationFeet:
+            options.maxDeviationFeet ??
+            CORRIDOR_CENTERLINE_PARAMETERS.maxDeviationFeet,
+        },
+      );
+      if (fitted.chains.some((points) => !points)) {
+        sliding.retained = "unsupported-refit";
+        return;
+      }
+      const component = componentIndex(trunks);
+      const componentOf = (vertex: number) =>
+        trunkOf.has(vertex)
+          ? component(trunks[trunkOf.get(vertex)!].from)
+          : component(vertex);
+      const coreSegments = fitted.chains.flatMap((points) =>
+        points!.slice(1).map((b, i) => [points![i], b] as const),
+      );
+      type Placement = {
+        trunk: number;
+        segment: number;
+        fraction: number;
+        point: CorridorXY;
+        approach: CorridorXY[];
+        cost: number;
+      };
+      const placements = new Map<string, Placement>();
+      let added = false;
+      for (const [vertex, move] of movable) {
+        if (!moving(vertex)) continue;
+        const target =
+          move.kind === "spur"
+            ? componentOf(
+                chains[move.chain!].from === vertex
+                  ? chains[move.chain!].to
+                  : chains[move.chain!].from,
+              )
+            : componentOf(vertex);
+        for (const id of terminalsAt.get(vertex)!) {
+          const terminal = terminalById.get(id)!;
+          // Never accept a less clean drawing than the fixed join had: a
+          // spur's own length counts towards its terminal's previous branch.
+          const previous = joins.get(id)!.approach;
+          const limit = costOf(previous) + move.length + 1;
+          // A moved pass-through join may not gain an elbow that also leaves
+          // its doorway at a worse angle. A removed spur's branch may never
+          // use a legacy elbow, nor leave its doorway at more than 45 degrees
+          // unless its previous branch already did.
+          const leaving = (path: readonly CorridorXY[]) => {
+            const normal = terminal.approachDirection;
+            const dx = path[1][0] - path[0][0],
+              dy = path[1][1] - path[0][1];
+            if (!normal || (dx === 0 && dy === 0)) return 0;
+            return Math.abs(
+              DMath.atan2(
+                normal[0] * dy - normal[1] * dx,
+                normal[0] * dx + normal[1] * dy,
+              ),
+            );
+          };
+          const previousAngle = leaving(previous);
+          const angleLimit = Math.max(
+            previousAngle + Math.PI / 90,
+            Math.PI / 18,
+          );
+          let best: Placement | null = null;
+          const ranked = trunks
+            .flatMap((trunk, index) =>
+              component(trunk.from) === target
+                ? fitted.chains[index]!.slice(1).flatMap((b, segment) => {
+                    const a = fitted.chains[index]![segment];
+                    const projection = corridorSegmentProjection(
+                      terminal.point,
+                      a,
+                      b,
+                    );
+                    if (!projection) return [];
+                    const distance = DMath.hypot(
+                      projection.point[0] - terminal.point[0],
+                      projection.point[1] - terminal.point[1],
+                    );
+                    return distance > MAX_SHARED_CORRIDOR_APPROACH_FEET
+                      ? []
+                      : [{ trunk: index, segment, a, b, distance }];
+                  })
+                : [],
+            )
+            .sort(
+              (x, y) =>
+                x.distance - y.distance ||
+                x.trunk - y.trunk ||
+                x.segment - y.segment,
+            )
+            .slice(0, maxAttachments);
+          for (const { trunk, segment, a, b, distance } of ranked) {
+            const bound = Math.min(best?.cost ?? Infinity, limit);
+            if (distance >= bound) break;
+            for (const option of corridorTerminalApproachProposals(
+              terminal,
+              a,
+              b,
+              { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
+            )) {
+              if (option.cost > bound) continue;
+              // A moved spur terminal must gain a clean branch.
+              if (
+                move.kind === "spur" &&
+                (option.shape === "elbow" ||
+                  leaving(option.path) > Math.max(angleLimit, Math.PI / 4))
+              )
+                continue;
+              if (
+                move.kind === "through" &&
+                option.path.length > previous.length &&
+                leaving(option.path) > angleLimit
+              )
+                continue;
+              if (
+                DMath.hypot(
+                  option.point[0] - terminal.point[0],
+                  option.point[1] - terminal.point[1],
+                ) > MAX_SHARED_CORRIDOR_APPROACH_FEET
+              )
+                continue;
+              // A display hygiene filter, never physical authority: the
+              // branch may not cut through another shared trunk segment.
+              if (
+                option.path
+                  .slice(1)
+                  .some((q, k) =>
+                    coreSegments.some(([u, v]) =>
+                      segmentsCross(option.path[k], q, u, v),
+                    ),
+                  )
+              )
+                continue;
+              if (
+                !supported([a, option.point]) ||
+                !supported([option.point, b]) ||
+                !supported(option.path, id)
+              )
+                continue;
+              best = {
+                trunk,
+                segment,
+                fraction: option.fraction,
+                point: [...option.point],
+                approach: option.path.map((p): CorridorXY => [...p]),
+                cost: option.cost,
+              };
+              break;
+            }
+          }
+          if (!best) {
+            protectedVertices.add(vertex);
+            added = true;
+            break;
+          }
+          placements.set(id, best);
+        }
+      }
+      if (added) continue;
+      // Split each refitted trunk at its new joins.
+      const pieces: Chain[] = [];
+      const moved = new Map<string, number>();
+      for (const [trunkIndex, trunk] of trunks.entries()) {
+        const points = fitted.chains[trunkIndex]!;
+        const cuts: { segment: number; fraction: number; vertex: number }[] =
+          [];
+        const keyed = new Map<string, number>();
+        for (const [id, placement] of placements) {
+          if (placement.trunk !== trunkIndex) continue;
+          const key = `${placement.point[0]},${placement.point[1]}`;
+          let vertex = keyed.get(key);
+          if (vertex === undefined) {
+            if (placement.segment === 0 && placement.fraction === 0)
+              vertex = trunk.from;
+            else if (
+              placement.segment === points.length - 2 &&
+              placement.fraction === 1
+            )
+              vertex = trunk.to;
+            else {
+              vertex = vertices.length;
+              vertices.push([...placement.point]);
+              cuts.push({
+                segment: placement.segment,
+                fraction: placement.fraction,
+                vertex,
+              });
+            }
+            keyed.set(key, vertex);
+          }
+          moved.set(id, vertex);
+        }
+        cuts.sort(
+          (x, y) =>
+            x.segment - y.segment ||
+            x.fraction - y.fraction ||
+            x.vertex - y.vertex,
+        );
+        let from = trunk.from;
+        let piece: CorridorXY[] = [[...points[0]]];
+        let valid = true;
+        const finish = (to: number) => {
+          if (piece.length === 1) piece.push([...piece[0]]);
+          valid &&= piece
+            .slice(1)
+            .every((point, i) => supported([piece[i], point]));
+          pieces.push({
+            from,
+            to,
+            raw: piece,
+            checked: true,
+            points: piece,
+            length: pathLength(piece),
+          });
+          from = to;
+          piece = [[...vertices[to]]];
+        };
+        for (let segment = 0; segment < points.length - 1; segment++) {
+          for (const cut of cuts.filter((cut) => cut.segment === segment)) {
+            const point = vertices[cut.vertex];
+            if (point.some((value, k) => value !== piece.at(-1)![k]))
+              piece.push([...point]);
+            finish(cut.vertex);
+          }
+          const point = points[segment + 1];
+          if (point.some((value, k) => value !== piece.at(-1)![k]))
+            piece.push([...point]);
+        }
+        if (from !== trunk.to || piece.length > 1) finish(trunk.to);
+        if (!valid) {
+          sliding.retained = "unsupported-piece";
+          return;
+        }
+      }
+      for (const [id, vertex] of moved)
+        joins.set(id, { vertex, approach: placements.get(id)!.approach });
+      sliding.slidTerminals = moved.size;
+      sliding.removedSpurs = removed.size;
+      sliding.protectedJoins = protectedVertices.size;
+      installChains(pieces);
+      return;
+    }
+    sliding.retained = "protection-budget";
+  }
   const finalComponent = componentIndex(
     chains.filter((chain) => !!chain.points),
   );
@@ -765,6 +1308,37 @@ export function createCorridorCenterline(
         ) > MAX_SHARED_CORRIDOR_APPROACH_FEET
       )
         continue;
+      if (shaped) {
+        // A local piece of the axis around the projection; the legacy
+        // straight and elbow candidates keep the exact axis projection.
+        const [ux, uy] = straightAxis.direction,
+          reach = 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET;
+        const approach = corridorTerminalApproachProposals(
+          terminal,
+          [point[0] - ux * reach, point[1] - uy * reach],
+          [point[0] + ux * reach, point[1] + uy * reach],
+          { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
+        )
+          .map((option) =>
+            option.shape === "straight" || option.shape === "elbow"
+              ? [...option.path.slice(0, -1), point]
+              : option.path,
+          )
+          .filter(
+            (path) =>
+              DMath.hypot(
+                path.at(-1)![0] - terminal.point[0],
+                path.at(-1)![1] - terminal.point[1],
+              ) <= MAX_SHARED_CORRIDOR_APPROACH_FEET,
+          )
+          .find((path) => supported(path, terminal.id));
+        if (approach)
+          straightApproaches.set(
+            terminal.id,
+            approach.map((p): CorridorXY => [...p]),
+          );
+        continue;
+      }
       const candidates: CorridorXY[][] = [[terminal.point, point]];
       if (terminal.approachDirection) {
         const [nx, ny] = terminal.approachDirection,
@@ -791,7 +1365,16 @@ export function createCorridorCenterline(
         path.at(-1)!,
       ]),
     ).values(),
-  ].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  ].sort((a, b) => {
+    // Order along the axis itself: coordinate order is ambiguous for joins
+    // that differ only by rounding on a near-vertical axis.
+    if (shaped && straightAxis) {
+      const [ux, uy] = straightAxis.direction;
+      const along = (p: CorridorXY) => p[0] * ux + p[1] * uy;
+      return along(a) - along(b) || a[0] - b[0] || a[1] - b[1];
+    }
+    return a[0] - b[0] || a[1] - b[1];
+  });
   const axisPositions = new Map(
     orderedAxisJoins.map((point, index) => [pointKey(point), index]),
   );
@@ -1027,6 +1610,7 @@ export function createCorridorCenterline(
       ).length,
       attachedTerminals: useStraightAxis ? straightApproaches.size : joins.size,
       missingTerminals: useStraightAxis ? 0 : missing.length,
+      joinSliding: { ...sliding },
       straightAxisProposed: !!straightAxis,
       straightAxisTerminals: useStraightAxis ? straightApproaches.size : 0,
     }),

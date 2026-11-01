@@ -42,6 +42,12 @@ export type CorridorCellCompilation = {
   networks: ReturnType<
     ReturnType<typeof createCorridorCenterline>["statistics"]
   >[];
+  /** Guides whose shaped-approach network was refused and which therefore
+   * use the legacy approach network's checked geometry (same exact checks). */
+  legacyApproachFallbackEdgeIds?: string[];
+  legacyNetworks?: ReturnType<
+    ReturnType<typeof createCorridorCenterline>["statistics"]
+  >[];
   seconds: number;
 };
 
@@ -148,14 +154,24 @@ export async function prepareSharedCorridorRouting(
             : {}),
         };
       });
-      const networks = nativeExactPartsForProposals(physical).map((rings) =>
-        createCorridorCenterline(rings, terminals, support.supported, {
-          ...parameters,
-          requiredEdges: edges,
-        }),
-      );
-      for (const edge of edges) {
-        const paths = networks
+      const proposalRings = nativeExactPartsForProposals(physical);
+      const build = (shapedApproaches: boolean) =>
+        proposalRings.map((rings) =>
+          createCorridorCenterline(rings, terminals, support.supported, {
+            ...parameters,
+            shapedApproaches,
+            requiredEdges: edges,
+          }),
+        );
+      const networks = build(parameters.shapedApproaches);
+      // Built only if a shaped network refuses an edge. Its geometry is the
+      // unchanged legacy proposal and passes the same final checks below.
+      let legacy: typeof networks | null = null;
+      const resolve = (
+        candidates: typeof networks,
+        edge: (typeof edges)[number],
+      ) => {
+        const paths = candidates
           .flatMap((network) => {
             const route = network.routeDetails(edge.from, edge.to);
             return route ? [route] : [];
@@ -176,20 +192,18 @@ export async function prepareSharedCorridorRouting(
         const candidate = withinDistance.find(({ points }) =>
           support.edgeSupported(points, edge.from, edge.to),
         );
-        if (!candidate) {
-          report.refusedEdges.push({
-            edgeId: edge.id,
+        if (!candidate)
+          return {
+            ok: false,
             reason:
               paths.length === 0
-                ? networks
+                ? candidates
                     .map((network) => network.refusalReason(edge.from, edge.to))
                     .join(";") || "no-supported-shared-route"
                 : withinDistance.length === 0
                   ? "guide-distance-limit"
                   : "final-planar-width",
-          });
-          continue;
-        }
+          } as const;
         // Require exact original coordinates, including physical elevation.
         const pointsFeet = candidate.points.map(
           (p): [number, number, number] => [p[0], p[1], cell.elevationFeet],
@@ -201,13 +215,28 @@ export async function prepareSharedCorridorRouting(
                 v === edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
             ),
           )
-        ) {
+        )
+          return { ok: false, reason: "original-terminal-mismatch" } as const;
+        return { ok: true, candidate, pointsFeet } as const;
+      };
+      for (const edge of edges) {
+        let resolved = resolve(networks, edge);
+        if (!resolved.ok && parameters.shapedApproaches) {
+          legacy ??= build(false);
+          const fallback = resolve(legacy, edge);
+          if (fallback.ok) {
+            resolved = fallback;
+            (report.legacyApproachFallbackEdgeIds ??= []).push(edge.id);
+          }
+        }
+        if (!resolved.ok) {
           report.refusedEdges.push({
             edgeId: edge.id,
-            reason: "original-terminal-mismatch",
+            reason: resolved.reason,
           });
           continue;
         }
+        const { candidate, pointsFeet } = resolved;
         if (!options.edgeIds || options.edgeIds.has(edge.id)) {
           prepared.guides.push({
             edgeId: edge.id,
@@ -221,6 +250,8 @@ export async function prepareSharedCorridorRouting(
         report.compiledEdges++;
       }
       report.networks = networks.map((network) => network.statistics());
+      if (legacy)
+        report.legacyNetworks = legacy.map((network) => network.statistics());
     });
     report.seconds = (performance.now() - started) / 1000;
     reports.push(report);

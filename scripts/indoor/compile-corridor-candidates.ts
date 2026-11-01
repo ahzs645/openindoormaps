@@ -27,18 +27,24 @@ import {
 } from "./lib/corridor-candidate-checkpoints";
 
 const usage =
-  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--resume | --merge candidate-directory ...]";
+  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--legacy-approaches] [--resume | --merge candidate-directory ...]";
 const [input, output, ...args] = process.argv.slice(2);
 if (!input || !output) throw new Error(usage);
 const selectedIds: string[] = [],
   mergeDirectories: string[] = [];
 let resume = false;
 const parameters = { ...CORRIDOR_COMPILER_PARAMETERS };
-let deviationSpecified = false;
+let deviationSpecified = false,
+  legacyApproaches = false;
 for (let i = 0; i < args.length; i++) {
   const flag = args[i];
   if (flag === "--resume" && !resume) resume = true;
-  else if (
+  else if (flag === "--legacy-approaches" && !legacyApproaches) {
+    // An explicit, separately bound experiment reproducing the previous
+    // terminal approach proposals. It is bound in every checkpoint.
+    parameters.shapedApproaches = false;
+    legacyApproaches = true;
+  } else if (
     flag === "--max-deviation-feet" &&
     !deviationSpecified &&
     args[i + 1]

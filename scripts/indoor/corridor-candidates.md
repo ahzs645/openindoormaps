@@ -15,6 +15,10 @@ node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-cand
 # Compare a separately bound fitting experiment in another new directory.
 node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-b --cell native-cell:14.435696:655 --max-deviation-feet 0.15
 
+# Reproduce the previous terminal approaches (no shaped approaches and no
+# join sliding) as a separately bound experiment.
+node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-c --cell native-cell:14.435696:655 --legacy-approaches
+
 # Merge disjoint complete-cell shards. Every requested cell must be present;
 # merge never fills a missing cell by compiling or borrowing another version.
 node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip merged --cell native-cell:14.435696:557 --cell native-cell:14.435696:655 --merge shard-557 --merge shard-655
@@ -49,3 +53,30 @@ native `pointsFeet`, original edge/from/to/cell/elevation identities and separat
 `approach-start`, `core` and `approach-end` roles. It explicitly declares
 `candidate-display-only` and `navigationAuthority: false`. The legacy hallway
 routing export is a separate product and is unchanged by this command.
+
+## Terminal approaches and trunk refitting
+
+`shapedApproaches` (default on) proposes, before the previous candidates, a
+straight branch along the original doorway normal to its crossing with the
+receiving lane, a straight branch to the projection, and a doorway-normal elbow
+whose second leg is perpendicular to the lane and never runs past it. The
+previous candidates follow as the fallback, with an elbow that runs past its
+receiving point tried last. `slideJoins` then removes short sampled spurs that
+only carry a terminal join to a junction, refits each trunk through
+pass-through joins and reattaches those terminals to the refitted trunk. A
+terminal is moved only if its new branch is no less clean than its previous
+branch plus the removed spur; otherwise it keeps its join and spur.
+
+Neither option adds physical authority. Every proposed approach is checked with
+the terminal's own exact doorway half, both receiving pieces and every refitted
+core piece are rechecked, and the final edge check is unchanged. Any other
+failure retains the already checked network. In `prepareSharedCorridorRouting`,
+an edge refused by the shaped network is compiled from the unchanged previous
+network and listed in the cell's `legacyApproachFallbackEdgeIds`, so a cell
+never loses a guide the previous proposal would have accepted.
+
+`compare-corridor-candidates.py` additionally reports complete-guide bends,
+zigzag reversals (a turn over 120 degrees with an adjacent leg of at most two
+metres, split into approach/join and core), approach elbows, core dead ends and
+dead ends at arrival points. These are descriptive drawing diagnostics, never
+physical predicates or route acceptance.
