@@ -25,10 +25,15 @@ then exported all 12 native levels with this catalog (899 s,
 [PREVIEW-INDEX.json](PREVIEW-INDEX.json)).
 
 The combined normal-import and production-worker replay of
-[../ROUTE-CASES-CAMPUS.json](../ROUTE-CASES-CAMPUS.json) on this catalog was
-interrupted twice by host restarts before completing; its result is recorded
-separately if it completes. The October 22 normal acceptance of this exact
-catalog remains the bound acceptance record.
+[../ROUTE-CASES-CAMPUS.json](../ROUTE-CASES-CAMPUS.json) (28 cases: the ten
+October 30 link cases, eight corridor cases and ten inside-arrival cases) on
+this catalog **passed** with zero failures after two host-restart
+interruptions ([acceptance/](acceptance/); 1,893 s, child peak RSS 5.61 GB).
+Twelve requests are available and sixteen are expected refusals. With the full
+catalog, 08-216 ↔ 08-260 is 13.617 m (two shared guides), 04-204 ↔ 08-267 is
+123.924 m, 04-237 → 08-205 is 118.788 m and 04-255 → 08-272 with other-room
+transit is 178.219 m (187.241 m with inside arrival). Every available route
+crosses original door 2311764.
 
 ## Native-geometry map
 
