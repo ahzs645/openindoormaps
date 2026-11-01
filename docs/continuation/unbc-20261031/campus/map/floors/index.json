@@ -1,0 +1,47 @@
+{
+ "floors": [
+  {
+   "id": "campus-floor-1",
+   "name": "Campus Floor 1",
+   "compiled": 971,
+   "eligible": 1030
+  },
+  {
+   "id": "floor-2",
+   "name": "Floor 2",
+   "compiled": 709,
+   "eligible": 782
+  },
+  {
+   "id": "campus-floor-3",
+   "name": "Campus Floor 3",
+   "compiled": 531,
+   "eligible": 572
+  },
+  {
+   "id": "floor-4",
+   "name": "Floor 4",
+   "compiled": 482,
+   "eligible": 492
+  }
+ ],
+ "transform": {
+  "metresPerFoot": 0.3028812469455074,
+  "rotationDegrees": 16.25850890268505,
+  "maxResidualMetres": 0.6070357408092915,
+  "pairs": 13721
+ },
+ "about": "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. The earlier room shapes were used only to place each room's name inside its space and are not drawn. The simplified pathway set accepted 2,701 of 2,884 eligible walking paths campus-wide (2,693 of 2,876 on these four floors); the rest keep their original saved walks. Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.",
+ "evidence": {
+  "connectedAgreement": {
+   "agree": 1303,
+   "of": 1303
+  },
+  "unmatchedNativePairs": 41,
+  "unmatchedSameCell": 41,
+  "unmatchedOneSide": 150,
+  "unmatchedNoCell": 39,
+  "disconnectedVestibules": 6,
+  "mainArrivals": 1693
+ }
+}

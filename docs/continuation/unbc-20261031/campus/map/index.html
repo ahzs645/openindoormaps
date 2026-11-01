@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UNBC Campus Pathways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Plan-room drafting sheet: native walls on paper, the map fills the stage, a ledger rail beside it. */
+:root {
+  --paper: #f3f4f1;
+  --sheet: #fbfbf9;
+  --ink: #1d2422;
+  --muted: #5d6662;
+  --rule: #d5d9d4;
+  --accent: #0f7a5c;
+  --link: #1f5fbf;
+  --stop: #7a3fb0;
+  --warn: #c2410c;
+  --evidence: #a16207;
+  --wall: #3b4541;
+  --room: #eceee9;
+  --circ: #d9e8df;
+  --stair: #ebe1cd;
+  --staff: #efdcd6;
+  --opening: #fbfbf9;
+  --walk: #8a928d;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121614; --sheet: #181d1b; --ink: #e5e9e6; --muted: #9aa49f; --rule: #2c3431;
+    --accent: #3fc79a; --link: #6aa3ff; --stop: #c18cf0; --warn: #fb8b4c; --evidence: #eab308;
+    --wall: #b9c3be; --room: #20262a; --circ: #1c3a2f; --stair: #393224; --staff: #3a2a27; --opening: #121614;
+    --walk: #7d8782; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121614; --sheet: #181d1b; --ink: #e5e9e6; --muted: #9aa49f; --rule: #2c3431;
+  --accent: #3fc79a; --link: #6aa3ff; --stop: #c18cf0; --warn: #fb8b4c; --evidence: #eab308;
+  --wall: #b9c3be; --room: #20262a; --circ: #1c3a2f; --stair: #393224; --staff: #3a2a27; --opening: #121614;
+  --walk: #7d8782; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 14px/1.45 var(--font-body); display: flex; flex-direction: column; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 20px; padding: 12px 16px 10px; border-bottom: 1px solid var(--rule); background: var(--sheet); }
+h1 { font: 600 20px/1.2 var(--font-display); letter-spacing: 0.01em; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); font-size: 13px; }
+.tabs { display: flex; gap: 6px; padding: 10px 16px; border-bottom: 1px solid var(--rule); background: var(--sheet); overflow-x: auto; }
+.tab { font: 500 13px var(--font-body); padding: 7px 12px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); border-radius: 6px; cursor: pointer; white-space: nowrap; display: flex; gap: 8px; align-items: baseline; }
+.tab small { font: 500 11px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.tab[aria-selected="true"] { background: var(--ink); color: var(--sheet); border-color: var(--ink); }
+.tab[aria-selected="true"] small { color: var(--sheet); opacity: 0.75; }
+.tab:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
+.stage { position: relative; min-height: 360px; background: var(--paper); overflow: hidden; touch-action: none; }
+canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; }
+canvas.dragging { cursor: grabbing; }
+.zoom { position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 6px; }
+.zoom button { width: 36px; height: 36px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink); border-radius: 6px; font: 500 18px var(--font-body); cursor: pointer; }
+.zoom button.fit { font-size: 11px; }
+.scale { position: absolute; left: 12px; bottom: 12px; font: 11px var(--font-mono); color: var(--muted); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 8px; display: flex; align-items: center; gap: 8px; }
+.scale i { display: block; height: 6px; border: 1.5px solid var(--ink); border-top: 0; }
+.north { position: absolute; left: 12px; top: 12px; font: 600 11px var(--font-mono); color: var(--muted); background: var(--sheet); border: 1px solid var(--rule); border-radius: 4px; padding: 4px 8px; }
+.hover { position: absolute; pointer-events: none; background: var(--ink); color: var(--sheet); font-size: 12px; padding: 5px 8px; border-radius: 4px; max-width: 320px; transform: translate(12px, 12px); display: none; }
+aside { border-left: 1px solid var(--rule); background: var(--sheet); overflow-y: auto; padding: 14px 16px 24px; display: flex; flex-direction: column; gap: 18px; }
+h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
+.stat { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-variant-numeric: tabular-nums; margin: 0; }
+.stat dt { color: var(--muted); }
+.stat dd { margin: 0; font: 500 13px var(--font-mono); text-align: right; }
+.meter { height: 6px; background: var(--rule); border-radius: 3px; overflow: hidden; margin: 6px 0 10px; }
+.meter b { display: block; height: 100%; background: var(--accent); }
+.big { font: 600 26px/1 var(--font-display); font-variant-numeric: tabular-nums; }
+.big span { font: 400 13px var(--font-body); color: var(--muted); margin-left: 6px; }
+.layers { display: grid; gap: 6px; }
+.layers label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.sw { width: 18px; height: 0; border-top: 3px solid; flex: none; }
+.sw.dot { width: 10px; height: 10px; border: 2px solid; border-radius: 50%; margin: 0 4px; }
+.sw.fill { height: 12px; border: 1px solid var(--rule); }
+.search { display: flex; gap: 6px; }
+.search input { flex: 1; min-width: 0; font: 14px var(--font-body); padding: 7px 9px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); color: var(--ink); }
+.search button, .item { font: 500 13px var(--font-body); padding: 7px 10px; border: 1px solid var(--rule); border-radius: 6px; background: var(--paper); color: var(--ink); cursor: pointer; }
+.msg { color: var(--muted); font-size: 12px; min-height: 1em; margin-top: 6px; }
+.list { display: grid; gap: 6px; }
+.list.scroll { max-height: 300px; overflow-y: auto; padding-right: 2px; }
+.item { text-align: left; display: grid; grid-template-columns: 8px 1fr; gap: 2px 10px; padding: 8px 10px; }
+.item .pip { grid-row: span 2; width: 8px; border-radius: 2px; }
+.item b { font-weight: 500; }
+.item small { color: var(--muted); font-size: 12px; }
+.ok { background: var(--accent); } .partial { background: var(--link); } .bad { background: var(--warn); } .ev { background: var(--evidence); }
+.sel { border-left: 3px solid var(--accent); padding: 8px 10px; background: var(--paper); border-radius: 0 6px 6px 0; }
+.sel b { display: block; font-weight: 600; }
+.sel small { color: var(--muted); display: block; }
+.note { color: var(--muted); font-size: 12px; max-width: 65ch; margin: 0; }
+.kpi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.kpi div { border: 1px solid var(--rule); border-radius: 6px; padding: 8px 10px; background: var(--paper); }
+.kpi b { display: block; font: 600 18px var(--font-display); font-variant-numeric: tabular-nums; }
+.kpi small { color: var(--muted); font-size: 12px; }
+@media (max-width: 860px) {
+  main { grid-template-columns: 1fr; grid-template-rows: minmax(420px, 62vh) auto; }
+  aside { border-left: 0; border-top: 1px solid var(--rule); }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>UNBC Campus Pathways</h1>
+  <span class="sub">Native Revit walls and wall-bounded spaces with the simplified walking network, on the four visitor floors.</span>
+</header>
+<nav class="tabs" id="tabs" role="tablist" aria-label="Visitor floors"></nav>
+<main>
+  <div class="stage" id="stage">
+    <canvas id="map" aria-label="Native floor plan with walking paths"></canvas>
+    <div class="north">N ↑</div>
+    <div class="zoom">
+      <button id="zin" title="Zoom in" aria-label="Zoom in">+</button>
+      <button id="zout" title="Zoom out" aria-label="Zoom out">−</button>
+      <button id="zfit" class="fit" title="Fit floor" aria-label="Fit floor">FIT</button>
+    </div>
+    <div class="scale"><i id="scalebar"></i><span id="scaletext"></span></div>
+    <div class="hover" id="hover"></div>
+  </div>
+  <aside>
+    <section>
+      <h2 id="floorTitle">Floor</h2>
+      <div class="big" id="pct"></div>
+      <div class="meter"><b id="meter"></b></div>
+      <dl class="stat" id="stats"></dl>
+    </section>
+    <section>
+      <h2>Find a room or door</h2>
+      <form class="search" id="find">
+        <input id="q" type="text" placeholder="08-216, 06-313 or 2315416" autocomplete="off">
+        <button type="submit">Find</button>
+      </form>
+      <div class="msg" id="findmsg"></div>
+      <div id="selection"></div>
+    </section>
+    <section>
+      <h2>Layers</h2>
+      <div class="layers" id="layers"></div>
+    </section>
+    <section>
+      <h2>Native door evidence</h2>
+      <div class="kpi" id="kpi"></div>
+    </section>
+    <section>
+      <h2>Disconnected vestibules</h2>
+      <div class="list" id="vestibules"></div>
+    </section>
+    <section>
+      <h2>Building connections</h2>
+      <div class="list" id="gateways"></div>
+    </section>
+    <section>
+      <h2>Proposed door pairs on this floor</h2>
+      <div class="list scroll" id="proposals"></div>
+    </section>
+    <section>
+      <h2>About this map</h2>
+      <p class="note" id="about"></p>
+    </section>
+  </aside>
+</main>
+<script>
+"use strict";
+const GATEWAYS = [
+  { id: 2311764, floor: "floor-2", name: "Buildings 04–08 link", detail: "Tested: 04-204 ↔ 08-267 routes in 122 m with default settings. Step-free refused (50 mm sill, access unconfirmed).", status: "ok" },
+  { id: 2112703, floor: "campus-floor-3", name: "Buildings 04–08, Building 04 end", detail: "Connected door (04-302 Corridor ↔ 08-360 Link).", status: "partial" },
+  { id: 2315416, floor: "campus-floor-3", name: "Buildings 04–08, Building 08 end", detail: "Unmatched today. Native cells put 08-360 Link on one side and the Building 08 corridor space on the other; nearest named room 08-316 Corridor, 0.90 m from the door.", status: "bad" },
+  { id: 1499620, floor: "floor-2", name: "Buildings 08–10, first door", detail: "Connected door; the hallway journey 08-264 → 10-2006 is still refused.", status: "partial" },
+  { id: 1499619, floor: "floor-2", name: "Buildings 08–10, second door", detail: "Connected door (10-2070 Vestibule ↔ 10-2066 Corridor).", status: "partial" },
+  { id: 1501580, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1", detail: "Connected door (10-1080 Vestibule ↔ 08-159 Alcove).", status: "partial" },
+  { id: 1501582, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1 inner door", detail: "Connected door (10-1060 Corridor ↔ 10-1080 Vestibule).", status: "partial" },
+  { id: 1630256, floor: "campus-floor-1", name: "Buildings 07–08 ramp landing", detail: "Connected; the ramp 07-180 → 08-S101 routes in 52.3 m walking.", status: "ok" },
+  { id: 2018182, floor: "campus-floor-1", name: "Buildings 07–08 stair alcove", detail: "Connected door; the stair flight itself is held.", status: "partial" },
+  { id: 1951047, floor: "campus-floor-1", name: "Buildings 09–07 Agora", detail: "Connected door; the local steps are a separate check.", status: "partial" },
+];
+const VESTIBULE_CAUSE = {
+  "07-309": "Doors 296596 and 621887 have no owner. Native cells pair 621887 with 07-304 Corridor / 07-305 Office.",
+  "10-1300": "Doors 2471813 and 1500735 are owned only by this vestibule. Native cells pair 2471813 with the 10-1302 Atrium.",
+  "03-1052": "Has walking paths but no arrival point; its doors 1425507, 1425511, 1425135 and 481695 are unmatched inside one shared native space.",
+  "06-207": "Door 1328018 is owned only by 06-210 Corridor, so the vestibule and its two washrooms form an island.",
+  "06-313": "Doors 1779388 and 1779387 are owned only by this vestibule. Native cells pair 1779388 with 06-314 Projection.",
+  "06-388": "Door 1779399 is owned only by this vestibule; the other side has no native cell, leaving an island of 16 rooms.",
+};
+const LAYERS = [
+  { key: "walls", label: "Native walls", cls: "fill", color: "--wall", on: true },
+  { key: "doors", label: "Doors (orange: unmatched)", color: "--warn", on: true },
+  { key: "guides", label: "Simplified pathway", color: "--accent", on: true },
+  { key: "walks", label: "Original saved walk (not simplified)", color: "--walk", on: true },
+  { key: "links", label: "Door and opening crossings", color: "--link", on: true },
+  { key: "stops", label: "Lifts and floor changes", cls: "dot", color: "--stop", on: true },
+  { key: "held", label: "Held stair (disabled)", color: "--muted", on: true },
+  { key: "proposals", label: "Proposed native door pair", cls: "dot", color: "--evidence", on: true },
+  { key: "labels", label: "Room names", cls: "fill", color: "--room", on: true },
+];
+const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {} };
+LAYERS.forEach((l) => (state.layers[l.key] = l.on));
+const $ = (id) => document.querySelector(`#${id}`);
+const canvas = $("map"), ctx = canvas.getContext("2d");
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const fmt = (n) => n.toLocaleString("en-CA");
+const nameText = (n) => `${n[0] || "Unnumbered"} ${n[1]}`.trim();
+
+function ringPath(path, flat) {
+  path.moveTo(flat[0], -flat[1]);
+  for (let i = 2; i < flat.length; i += 2) path.lineTo(flat[i], -flat[i + 1]);
+}
+function prepare(f) {
+  const P = () => new Path2D();
+  const g = { fill: { room: P(), circ: P(), stair: P(), staff: P() }, cellLine: P(), walls: P(), doorsOk: P(), doorsBad: P(), guides: P(), walks: P(), links: P(), cross: P(), held: P(), cells: [], ownerCell: new Map() };
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const [id, owners, rings] of f.cells) {
+    if (!rings.length) continue;
+    const path = new Path2D();
+    let a = Infinity, b = Infinity, c = -Infinity, d = -Infinity;
+    for (const r of rings) {
+      ringPath(path, r);
+      for (let i = 0; i < r.length; i += 2) { const x = r[i], y = -r[i + 1]; if (x < a) a = x; if (x > c) c = x; if (y < b) b = y; if (y > d) d = y; }
+    }
+    const flags = owners.map((o) => f.names[o][3]);
+    const kind = flags.length && flags.every((x) => x & 2) ? "stair" : flags.some((x) => x & 1) ? "circ" : flags.length && flags.every((x) => x & 4) ? "staff" : "room";
+    g.fill[kind].addPath(path);
+    g.cellLine.addPath(path);
+    const cell = { id, owners, path, bbox: [a, b, c, d], area: (c - a) * (d - b) };
+    g.cells.push(cell);
+    for (const o of owners) if (!g.ownerCell.has(o)) g.ownerCell.set(o, cell);
+    minX = Math.min(minX, a); minY = Math.min(minY, b); maxX = Math.max(maxX, c); maxY = Math.max(maxY, d);
+  }
+  for (const w of f.walls) ringPath(g.walls, w);
+  for (const [r, , st] of f.doors) ringPath(st === 1 ? g.doorsBad : g.doorsOk, r);
+  for (const l of f.guides) ringPath(g.guides, l);
+  for (const l of f.walks) ringPath(g.walks, l);
+  for (const l of f.held) ringPath(g.held, l);
+  const gw = new Set(GATEWAYS.map((x) => x.id));
+  for (const [pts, id] of f.links) ringPath(gw.has(id) ? g.cross : g.links, pts);
+  g.bounds = [minX, minY, maxX, maxY];
+  return g;
+}
+function resize() {
+  const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.max(1, Math.round(r.width * dpr));
+  canvas.height = Math.max(1, Math.round(r.height * dpr));
+  draw();
+}
+function fit(bounds, pad = 24) {
+  const r = canvas.getBoundingClientRect();
+  const [x0, y0, x1, y1] = bounds;
+  const s = Math.min((r.width - pad * 2) / Math.max(1, x1 - x0), (r.height - pad * 2) / Math.max(1, y1 - y0));
+  state.view = { s, x: r.width / 2 - ((x0 + x1) / 2) * s, y: r.height / 2 - ((y0 + y1) / 2) * s };
+  draw();
+}
+function draw() {
+  const g = state.cur && state.data[state.cur.id];
+  const dpr = window.devicePixelRatio || 1;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = css("--paper");
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (!g) return;
+  const f = state.cur, { s, x, y } = state.view, px = (n) => n / s;
+  ctx.setTransform(s * dpr, 0, 0, s * dpr, x * dpr, y * dpr);
+  const fills = { room: "--room", circ: "--circ", stair: "--stair", staff: "--staff" };
+  for (const k in fills) { ctx.fillStyle = css(fills[k]); ctx.fill(g.fill[k], "evenodd"); }
+  ctx.strokeStyle = css("--rule"); ctx.lineWidth = px(0.6); ctx.stroke(g.cellLine);
+  if (state.sel && state.sel.cell) {
+    ctx.fillStyle = css("--accent"); ctx.globalAlpha = 0.16; ctx.fill(state.sel.cell.path, "evenodd"); ctx.globalAlpha = 1;
+    ctx.strokeStyle = css("--accent"); ctx.lineWidth = px(2.4); ctx.stroke(state.sel.cell.path);
+  }
+  for (const vi of f.vestibules) {
+    const cell = g.ownerCell.get(vi);
+    if (cell) { ctx.setLineDash([px(5), px(3)]); ctx.strokeStyle = css("--warn"); ctx.lineWidth = px(2); ctx.stroke(cell.path); ctx.setLineDash([]); }
+  }
+  if (state.layers.walls) { ctx.fillStyle = css("--wall"); ctx.fill(g.walls, "nonzero"); }
+  if (state.layers.doors) {
+    ctx.fillStyle = css("--opening"); ctx.fill(g.doorsOk); ctx.fill(g.doorsBad);
+    ctx.strokeStyle = css("--warn"); ctx.lineWidth = px(1.6); ctx.stroke(g.doorsBad);
+  }
+  ctx.lineJoin = "round"; ctx.lineCap = "round";
+  if (state.layers.walks) { ctx.strokeStyle = css("--walk"); ctx.lineWidth = px(1.1); ctx.stroke(g.walks); }
+  if (state.layers.held) { ctx.setLineDash([px(4), px(4)]); ctx.strokeStyle = css("--muted"); ctx.lineWidth = px(1.4); ctx.stroke(g.held); ctx.setLineDash([]); }
+  if (state.layers.guides) { ctx.strokeStyle = css("--accent"); ctx.lineWidth = px(2.4); ctx.stroke(g.guides); }
+  if (state.layers.links) { ctx.strokeStyle = css("--link"); ctx.lineWidth = px(2.4); ctx.stroke(g.links); ctx.lineWidth = px(4.5); ctx.stroke(g.cross); }
+  const dot = (p, r, color, ring) => {
+    ctx.beginPath(); ctx.arc(p[0], -p[1], px(r), 0, Math.PI * 2);
+    if (ring) { ctx.lineWidth = px(2); ctx.strokeStyle = color; ctx.stroke(); } else { ctx.fillStyle = color; ctx.fill(); }
+  };
+  const diamond = (p, r, color) => {
+    const cx = p[0], cy = -p[1], d = px(r);
+    ctx.beginPath(); ctx.moveTo(cx, cy - d); ctx.lineTo(cx + d, cy); ctx.lineTo(cx, cy + d); ctx.lineTo(cx - d, cy); ctx.closePath();
+    ctx.fillStyle = color; ctx.fill(); ctx.lineWidth = px(1.2); ctx.strokeStyle = css("--sheet"); ctx.stroke();
+  };
+  if (state.layers.stops) for (const [p] of f.stops) dot(p, 4, css("--stop"));
+  if (state.layers.proposals) for (const pr of f.proposals) diamond(pr[0], 6, css("--evidence"));
+  for (const gw of GATEWAYS) if (gw.floor === f.id && gw.p) dot(gw.p, 8, css(gw.status === "bad" ? "--warn" : gw.status === "ok" ? "--accent" : "--link"), true);
+  if (state.sel && state.sel.point) dot(state.sel.point, 12, css("--ink"), true);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const r = canvas.getBoundingClientRect();
+  if (state.layers.labels && s > 0.8) {
+    const big = s > 2.4;
+    ctx.font = `500 ${big ? 12 : 10}px ${css("--font-mono")}`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    const taken = new Set();
+    const order = f.names.map((n, i) => i).sort((a, b) => (f.names[b][3] & 1) - (f.names[a][3] & 1));
+    for (const i of order) {
+      const n = f.names[i];
+      if (!n[0]) continue;
+      const sx = n[4][0] * s + x, sy = -n[4][1] * s + y;
+      if (sx < 0 || sy < 0 || sx > r.width || sy > r.height) continue;
+      const key = `${Math.round(sx / (big ? 58 : 42))}:${Math.round(sy / 16)}`;
+      if (taken.has(key)) continue;
+      taken.add(key);
+      ctx.fillStyle = css(n[3] & 32 ? "--warn" : "--muted");
+      ctx.fillText(n[0], sx, sy);
+      if (s > 5 && n[1]) { ctx.font = `400 10px ${css("--font-body")}`; ctx.fillText(n[1], sx, sy + 13); ctx.font = `500 12px ${css("--font-mono")}`; }
+    }
+  }
+  const target = 120 / s;
+  const nice = [1, 2, 5].flatMap((m) => [10, 100, 1000, 10000].map((p) => m * p)).sort((a, b) => a - b).find((v) => v >= target * 0.5) || 1000;
+  $("scalebar").style.width = `${(nice * s).toFixed(0)}px`;
+  $("scaletext").textContent = `${nice / 10} m`;
+}
+const _pip = ctx.isPointInPath.bind(ctx);
+function inPath(path, x, y) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); const v = _pip(path, x, y, "evenodd"); ctx.restore(); return v; }
+function cellAt(px, py) {
+  const g = state.data[state.cur.id], { s, x, y } = state.view;
+  const wx = (px - x) / s, wy = (py - y) / s;
+  let best = null;
+  for (const c of g.cells) {
+    const [a, b, cc, d] = c.bbox;
+    if (wx < a || wx > cc || wy < b || wy > d) continue;
+    if (inPath(c.path, wx, wy) && (!best || c.area < best.area)) best = c;
+  }
+  if (!best) return null;
+  // Nearest room name inside this native space: names come from the old shapes' label points.
+  let near = null, nd = Infinity;
+  for (const o of best.owners) { const p = state.cur.names[o][4], dd = Math.hypot(p[0] - wx, -p[1] - wy); if (dd < nd) { nd = dd; near = o; } }
+  return { cell: best, near };
+}
+function describeCell(hit) {
+  const f = state.cur, owners = hit.cell.owners;
+  const main = hit.near != null ? nameText(f.names[hit.near]) : "Unnamed native space";
+  const rest = owners.length > 1 ? `Native space shared by ${owners.length} room names: ${owners.slice(0, 8).map((o) => f.names[o][0] || f.names[o][1]).join(", ")}${owners.length > 8 ? "…" : ""}` : `Native space ${hit.cell.id.split(":").slice(-1)[0]}`;
+  return { title: main, detail: rest };
+}
+function select(sel, zoom) {
+  state.sel = sel;
+  const box = $("selection"); box.innerHTML = "";
+  if (sel) {
+    const d = document.createElement("div"); d.className = "sel";
+    d.innerHTML = "<b></b><small></small>";
+    d.querySelector("b").textContent = sel.title; d.querySelector("small").textContent = sel.detail || "";
+    box.append(d);
+    if (zoom) {
+      const b = sel.cell && !sel.point ? sel.cell.bbox : [sel.point[0] - 120, -sel.point[1] - 120, sel.point[0] + 120, -sel.point[1] + 120];
+      fit([b[0] - 100, b[1] - 100, b[2] + 100, b[3] + 100], 40);
+      return;
+    }
+  }
+  draw();
+}
+async function loadFloor(f) {
+  if (!state.data[f.id]) {
+    const floor = await (await fetch(`floors/${f.id}.json`)).json();
+    Object.assign(f, floor);
+    state.data[f.id] = prepare(f);
+    for (const gw of GATEWAYS) if (gw.floor === f.id && !gw.p) {
+      const link = f.links.find((l) => l[1] === gw.id), door = f.doors.find((dd) => dd[1] === gw.id);
+      const pts = link ? link[0] : door ? door[0] : null;
+      if (pts) { let sx = 0, sy = 0, n = pts.length / 2; for (let i = 0; i < pts.length; i += 2) { sx += pts[i]; sy += pts[i + 1]; } gw.p = [sx / n, sy / n]; }
+    }
+  }
+  return f;
+}
+async function show(id, keep) {
+  const f = state.floors.find((x) => x.id === id) || state.floors[0];
+  for (const b of document.querySelectorAll(".tab")) b.setAttribute("aria-selected", String(b.dataset.id === f.id));
+  await loadFloor(f);
+  state.cur = f;
+  if (!keep) { state.sel = null; $("selection").innerHTML = ""; fit(state.data[f.id].bounds); }
+  renderFloor(f);
+  if (location.hash.slice(1) !== f.id) history.replaceState(null, "", `#${f.id}`);
+  draw();
+}
+function renderFloor(f) {
+  const meta = state.index.floors.find((x) => x.id === f.id);
+  $("floorTitle").textContent = f.name;
+  const pct = (meta.compiled / meta.eligible) * 100;
+  $("pct").innerHTML = `${pct.toFixed(1)}%<span>of walking paths simplified</span>`;
+  $("meter").style.width = `${pct}%`;
+  const unmatched = f.doors.filter((d) => d[2] === 1).length;
+  const rows = [
+    ["Simplified paths", `${fmt(meta.compiled)} / ${fmt(meta.eligible)}`],
+    ["Native spaces (wall-bounded)", fmt(f.cells.length)],
+    ["Room names placed", fmt(f.names.length)],
+    ["Native wall pieces", fmt(f.walls.length)],
+    ["Doors, unmatched", `${fmt(f.doors.length)}, ${fmt(unmatched)}`],
+    ["Native levels", f.levels.map((l) => l.name).join(", ")],
+    ["Lift and floor-change stops", fmt(f.stops.length)],
+    ["Held stairs", fmt(f.held.length)],
+  ];
+  $("stats").innerHTML = "";
+  for (const [k, v] of rows) { const dt = document.createElement("dt"), dd = document.createElement("dd"); dt.textContent = k; dd.textContent = v; $("stats").append(dt, dd); }
+  const list = $("proposals"); list.innerHTML = "";
+  if (!f.proposals.length) list.textContent = "None on this floor.";
+  for (const [p, id, a, b, ga, gb] of [...f.proposals].sort((u, v) => (u[1] === 2315416 ? -1 : v[1] === 2315416 ? 1 : 0))) {
+    const it = document.createElement("button"); it.className = "item"; it.type = "button";
+    it.innerHTML = '<span class="pip ev"></span><b></b><small></small>';
+    it.querySelector("b").textContent = `Door ${id}`;
+    it.querySelector("small").textContent = `${a} ↔ ${b}`;
+    it.addEventListener("click", () => select({ point: p, title: `Proposed native pair · door ${id}`, detail: `${a} (${ga} ft) ↔ ${b} (${gb} ft). Both sides lie in distinct native spaces; names are the nearest rooms. Needs review and a native rebuild before routes use it.` }, true));
+    list.append(it);
+  }
+}
+function setupUI() {
+  for (const f of state.floors) {
+    const meta = state.index.floors.find((x) => x.id === f.id);
+    const b = document.createElement("button");
+    b.className = "tab"; b.setAttribute("role", "tab"); b.dataset.id = f.id; b.id = `tab-${f.id}`;
+    b.innerHTML = `<span></span><small>${fmt(meta.compiled)} paths</small>`;
+    b.querySelector("span").textContent = f.name;
+    b.addEventListener("click", () => show(f.id));
+    $("tabs").append(b);
+  }
+  for (const l of LAYERS) {
+    const lab = document.createElement("label"), cb = document.createElement("input");
+    cb.type = "checkbox"; cb.id = `layer-${l.key}`; cb.checked = state.layers[l.key];
+    cb.addEventListener("change", () => { state.layers[l.key] = cb.checked; draw(); });
+    const sw = document.createElement("span"); sw.className = `sw ${l.cls || ""}`; sw.style.borderColor = `var(${l.color})`;
+    if (l.cls === "fill") sw.style.background = `var(${l.color})`;
+    const t = document.createElement("span"); t.textContent = l.label;
+    lab.append(cb, sw, t); $("layers").append(lab);
+  }
+  const ev = state.index.evidence;
+  const kpis = [
+    [`${fmt(ev.connectedAgreement.agree)}/${fmt(ev.connectedAgreement.of)}`, "connected doors agree with native cells"],
+    [fmt(ev.unmatchedNativePairs), "unmatched doors with a native pair"],
+    [fmt(ev.unmatchedSameCell), "unmatched doors inside one native space"],
+    [fmt(ev.unmatchedOneSide), "unmatched doors with one native side (mostly exterior)"],
+  ];
+  for (const [v, t] of kpis) { const d = document.createElement("div"); d.innerHTML = "<b></b><small></small>"; d.querySelector("b").textContent = v; d.querySelector("small").textContent = t; $("kpi").append(d); }
+  const addItem = (host, cls, title, sub, tip, onClick) => {
+    const b = document.createElement("button"); b.className = "item"; b.type = "button"; b.title = tip;
+    b.innerHTML = `<span class="pip ${cls}"></span><b></b><small></small>`;
+    b.querySelector("b").textContent = title; b.querySelector("small").textContent = sub;
+    b.addEventListener("click", onClick); host.append(b);
+  };
+  for (const [num, cause] of Object.entries(VESTIBULE_CAUSE)) {
+    addItem($("vestibules"), "bad", `${num} Vestibule`, cause, cause, () => find(num, cause));
+  }
+  for (const gw of GATEWAYS) {
+    const floorName = state.floors.find((f) => f.id === gw.floor).name;
+    addItem($("gateways"), gw.status, gw.name, `${floorName} · door ${gw.id}`, gw.detail, async () => {
+      await show(gw.floor, true);
+      if (gw.p) select({ point: gw.p, title: `${gw.name} · door ${gw.id}`, detail: gw.detail }, true);
+    });
+  }
+  $("find").addEventListener("submit", (e) => { e.preventDefault(); find($("q").value.trim()); });
+  $("zin").addEventListener("click", () => zoomAt(1.6));
+  $("zout").addEventListener("click", () => zoomAt(1 / 1.6));
+  $("zfit").addEventListener("click", () => fit(state.data[state.cur.id].bounds));
+  $("about").textContent = state.index.about;
+}
+async function find(q, detail) {
+  $("findmsg").textContent = "";
+  if (!q) return;
+  if (/^\d{5,}$/.test(q)) {
+    for (const f of state.floors) {
+      await loadFloor(f);
+      const door = f.doors.find((d) => String(d[1]) === q);
+      if (door) {
+        await show(f.id, true);
+        const pts = door[0]; let sx = 0, sy = 0; for (let i = 0; i < pts.length; i += 2) { sx += pts[i]; sy += pts[i + 1]; }
+        const pr = f.proposals.find((p) => String(p[1]) === q);
+        const st = ["connected", "unmatched", "other"][door[2]];
+        select({ point: [sx / (pts.length / 2), sy / (pts.length / 2)], title: `Door ${q} · ${st}`, detail: pr ? `Proposed native pair: ${pr[2]} ↔ ${pr[3]}` : `${f.name}` }, true);
+        return;
+      }
+    }
+    $("findmsg").textContent = `No door ${q} on these four floors.`;
+    return;
+  }
+  const needle = q.toLowerCase();
+  for (const f of [state.cur, ...state.floors.filter((x) => x !== state.cur)]) {
+    await loadFloor(f);
+    let i = f.names.findIndex((n) => n[0].toLowerCase() === needle);
+    if (i < 0) i = f.names.findIndex((n) => `${n[0]} ${n[1]}`.toLowerCase().includes(needle));
+    if (i >= 0) {
+      await show(f.id, true);
+      const cell = state.data[f.id].ownerCell.get(i);
+      const shared = cell && cell.owners.length > 1 ? ` · native space shared by ${cell.owners.length} names` : "";
+      select({ point: f.names[i][4], cell, title: nameText(f.names[i]), detail: (detail || f.name) + shared }, true);
+      return;
+    }
+  }
+  $("findmsg").textContent = `Nothing matches “${q}”. Try a room number such as 08-216.`;
+}
+function zoomAt(k, cx, cy) {
+  const r = canvas.getBoundingClientRect(); cx ??= r.width / 2; cy ??= r.height / 2;
+  const v = state.view, s = Math.min(80, Math.max(0.02, v.s * k));
+  v.x = cx - ((cx - v.x) * s) / v.s; v.y = cy - ((cy - v.y) * s) / v.s; v.s = s; draw();
+}
+const pointers = new Map(); let moved = false, pinch = null;
+canvas.addEventListener("pointerdown", (e) => { canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, [e.offsetX, e.offsetY]); moved = false; canvas.classList.add("dragging"); });
+canvas.addEventListener("pointermove", (e) => {
+  const prev = pointers.get(e.pointerId);
+  if (!prev) {
+    const hit = state.cur && cellAt(e.offsetX, e.offsetY), h = $("hover");
+    if (hit) { const d = describeCell(hit); h.textContent = `${d.title} — ${d.detail}`; h.style.left = `${e.offsetX}px`; h.style.top = `${e.offsetY}px`; h.style.display = "block"; } else h.style.display = "none";
+    return;
+  }
+  pointers.set(e.pointerId, [e.offsetX, e.offsetY]);
+  if (pointers.size === 2) {
+    const [a, b] = [...pointers.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+    if (pinch) zoomAt(d / pinch, (a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+    pinch = d; moved = true; return;
+  }
+  const dx = e.offsetX - prev[0], dy = e.offsetY - prev[1];
+  if (Math.abs(dx) + Math.abs(dy) > 2) moved = true;
+  state.view.x += dx; state.view.y += dy; draw();
+});
+const end = (e) => {
+  const click = pointers.size === 1 && !moved;
+  pointers.delete(e.pointerId); pinch = null; canvas.classList.remove("dragging");
+  if (click && e.type === "pointerup" && state.cur) {
+    const hit = cellAt(e.offsetX, e.offsetY);
+    select(hit ? { cell: hit.cell, ...describeCell(hit) } : null, false);
+  }
+};
+canvas.addEventListener("pointerup", end);
+canvas.addEventListener("pointercancel", end);
+canvas.addEventListener("pointerleave", () => ($("hover").style.display = "none"));
+canvas.addEventListener("wheel", (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.offsetX, e.offsetY); }, { passive: false });
+window.addEventListener("resize", resize);
+window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (state.floors.some((f) => f.id === id)) show(id); });
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+(async () => {
+  state.index = await (await fetch("floors/index.json")).json();
+  state.floors = state.index.floors.map((f) => ({ id: f.id, name: f.name }));
+  setupUI(); resize();
+  const start = location.hash.slice(1);
+  await show(state.floors.some((f) => f.id === start) ? start : "floor-2");
+})();
+</script>
+</body>
+</html>
