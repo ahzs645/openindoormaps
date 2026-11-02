@@ -305,5 +305,11 @@
   "Whether the door is normally open and public.",
   "Walking approaches, compiler support replay, regenerated master and route acceptance."
  ],
- "unchanged": "No source, owner, access, door or geometry was edited."
+ "unchanged": "No source, owner, access, door or geometry was edited.",
+ "sourceEvidence20261102": {
+  "file": "../../../unbc-20261102/source-evidence/case1-2471813-frame-evidence.json",
+  "sha256": "ec57217d03e249e110ff2981addcc7c14a8a27c00bbc8ba98465ce1d7085d540",
+  "readme": "../../../unbc-20261102/source-evidence/README.md",
+  "summary": "frameEvidence found in the native model (fields above left as written): jambs 2471836/2471837, sill 2471832, head 2471834 (category -2000171, native, persisted host 2471383); exact orientedBoxes are in the evidence file's frameEvidence. East jamb inner face is 179.64661948387752 (the text above truncates it). Dry-run validator accepts the patch, but basic wall 2472128 (Interior Wall - 100mm, curtain embedded in it; native body absent across the door) still crosses the aperture in the plan cut; listing its exact plan parts in wallEvidence also validates. Evidence only; not applied."
+ }
 }

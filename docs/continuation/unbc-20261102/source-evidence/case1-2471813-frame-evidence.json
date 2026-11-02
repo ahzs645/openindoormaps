@@ -1,0 +1,2198 @@
+{
+ "format": "native-source-evidence-v1",
+ "case": "door 2471813: 10-1300 Vestibule <-> 10-1302 Atrium, Campus Floor 1 (native level 1487816, Floor 1.25)",
+ "status": "EVIDENCE_ONLY_NOT_APPLIED",
+ "inputs": {
+  "master-0388.zip": {
+   "path": "/home/user/unbc-work/master-0388.zip",
+   "sha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903"
+  },
+  "floors/rooms.json (from the master)": {
+   "path": "master-0388.zip!floors/rooms.json",
+   "sha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+  },
+  "model/\u2026(1).rvt (from the master)": {
+   "path": "master-0388.zip!model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+   "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+  },
+  "native dump (dump-native-evidence.ts output, scratch)": {
+   "sha256": "a51ec32dab4b88fe8e86dddc065077503e4c4281eb397b4d82306429de9d8de2",
+   "convert": {
+    "function": "convertRvtBytes(bytes, fileName, {})",
+    "seconds": 65.14993446400001,
+    "method": "partition-bounds-recovery",
+    "elementBounds": 40611,
+    "nativeHostRelations": 27568
+   }
+  },
+  "final candidate zip": {
+   "path": "/home/user/unbc-work/final/accept/UNBC.shared-pathways.candidate.reviter.zip",
+   "sha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd"
+  },
+  "pathway preview index.json": {
+   "path": "/home/user/unbc-work/cand-final-preview/data/index.json",
+   "sha256": "0e5f375c22d9c7b68fda2923a9b3a4161ada7ccd346ff79f4f542932d95ccc8f"
+  },
+  "cand-final/native-door-sides.json": {
+   "path": "/home/user/unbc-work/cand-final/native-door-sides.json",
+   "sha256": "02d4213ae5b4160b1779e8e946863203fc533519470cb9be0071b6489b0d6c86"
+  },
+  "cand-final/doors-native.json": {
+   "path": "/home/user/unbc-work/cand-final/doors-native.json",
+   "sha256": "a693e1e47b75fdbf09cd94182ca1149815a7f697a18b365742feed719c94a945"
+  },
+  "cand-final/walls-native.json": {
+   "path": "/home/user/unbc-work/cand-final/walls-native.json",
+   "sha256": "72ad4b4f7220c0bc5f1491a1925bc04cf1ed9aed8ba86f22aee147fc7ccd2f3b"
+  },
+  "cand-final/graph-full.json": {
+   "path": "/home/user/unbc-work/cand-final/graph-full.json",
+   "sha256": "34f4bc4f3b9e7d8dab5b28042e7f1dc1d31a2abbd9160288d850eee0f63a0d27"
+  },
+  "pathway preview level-1487816.json": {
+   "path": "/home/user/unbc-work/cand-final-preview/data/level-1487816.json",
+   "sha256": "eed02179cdf92acbbd8277890cf3bdd41749f4005fec6aaaa0388d0bc68dd86d"
+  }
+ },
+ "method": [
+  "RVT extracted from master-0388.zip and checked against manifest sha256 8c294549\u2026; converted with Reviter convertRvtBytes(bytes, archivedFileName, {}) exactly as scripts/prepare-indoor-project.ts does (Reviter 2e7875d, unmodified checkout), see tools/dump-native-evidence.ts.",
+  "Records = ConvertResult.elementBounds (category, provenance, orientedBox, boundsFeet, solid); host links = ConvertResult.nativeHostRelations (Partitions/InsertableInst.m_hostId, evidence 'persisted'); plan cut = architecturalPlanGeometry(model, level) used by the compiler and the aperture validator.",
+  "Native cells and their room lists come from the pathway preview exported from the same master (index.json sourceInputSha256 6e7971f8\u2026); door-side probes from cand-final/native-door-sides.json (0.25/0.5/1/1.5 ft steps beyond the saved footprint face).",
+  "Dry-run validation calls the compiler's own withReviewedDoorApertures on an in-memory one-patch review; no master, review file, owner, access or route is written.",
+  "Frame members = persisted children of curtain host 2471383 with category -2000171; roles by exact coordinates: jambs end at the leaf's x extent, sill/head span the same x extent at the leaf bottom/top z.",
+  "Element 2472128 classified from its decoded category/type, persisted host links, solid, and the per-triangle native BRep mesh in ConvertResult.meshes (elementIds)."
+ ],
+ "door": {
+  "elementId": 2471813,
+  "categoryId": -2000023,
+  "categoryName": "Doors",
+  "categorySource": "element-header",
+  "typeName": "Double Stained Glass Door Showcase",
+  "renderGeometryProvenance": "reconstructed",
+  "orientedBox": [
+   [
+    174.0363832634051,
+    762.5353667115313,
+    3.4448818897637743
+   ],
+   [
+    179.64661948387752,
+    762.5353667115313,
+    3.4448818897637743
+   ],
+   [
+    179.64661948387752,
+    762.7437000448646,
+    3.4448818897637743
+   ],
+   [
+    174.0363832634051,
+    762.7437000448646,
+    3.4448818897637743
+   ],
+   [
+    174.0363832634051,
+    762.5353667115313,
+    11.072834645669293
+   ],
+   [
+    179.64661948387752,
+    762.5353667115313,
+    11.072834645669293
+   ],
+   [
+    179.64661948387752,
+    762.7437000448646,
+    11.072834645669293
+   ],
+   [
+    174.0363832634051,
+    762.7437000448646,
+    11.072834645669293
+   ]
+  ],
+  "boundsFeet": {
+   "x": [
+    174.0363832634051,
+    179.64661948387752
+   ],
+   "y": [
+    759.7833982075942,
+    762.7437000448646
+   ],
+   "z": [
+    3.4448818897637743,
+    11.072834645669293
+   ]
+  },
+  "persistedHostId": 2471383,
+  "associatedLevelId": 1487816,
+  "hostedBy": {
+   "elementId": 2471813,
+   "hostId": 2471383,
+   "fieldOffset": 151,
+   "recordOffset": 54331,
+   "objectLength": 601,
+   "objectMarker": 2031,
+   "kind": "host",
+   "source": "Partitions/InsertableInst.m_hostId",
+   "evidence": "persisted"
+  },
+  "savedPreparedRecord": {
+   "levelId": 1487816,
+   "nativeElementId": 2471813,
+   "hostWallNativeElementId": 2471383,
+   "footprintFeet": [
+    [
+     174.0363832634051,
+     762.5353667115313
+    ],
+    [
+     179.64661948387752,
+     762.5353667115313
+    ],
+    [
+     179.64661948387752,
+     762.7437000448646
+    ],
+    [
+     174.0363832634051,
+     762.7437000448646
+    ]
+   ],
+   "state": "unmatched"
+  }
+ },
+ "curtainHost": {
+  "elementId": 2471383,
+  "categoryId": -2000011,
+  "categoryName": "Walls",
+  "categorySource": "element-header",
+  "wallKind": "curtain",
+  "solid": {
+   "elementId": 2471383,
+   "start": {
+    "x": 160.48104643017587,
+    "y": 762.6395333781979
+   },
+   "end": {
+    "x": 182.265823333063,
+    "y": 762.6395333781979
+   },
+   "baseElevation": 3.2808398950131235,
+   "topElevation": 13.779527559055119,
+   "thickness": 3.280839895013173
+  },
+  "boundsFeet": {
+   "x": [
+    171.37343488161943,
+    182.265823333063
+   ],
+   "y": [
+    760.9991134306914,
+    764.2799533257046
+   ],
+   "z": [
+    3.2808398950131235,
+    13.779527559055119
+   ]
+  },
+  "persistedHostId": null,
+  "associatedLevelId": 1487816,
+  "persistedChildren": [
+   {
+    "elementId": 2471384,
+    "categoryName": "Curtain Panels",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.53747687637008,
+      173.87234126865442
+     ],
+     "y": [
+      762.7199139556258,
+      762.8019349530011
+     ],
+     "z": [
+      3.4448818897637796,
+      11.072834645669289
+     ]
+    }
+   },
+   {
+    "elementId": 2471387,
+    "categoryName": "Curtain Panels",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.53747687637008,
+      173.87234126865442
+     ],
+     "y": [
+      762.7199139556258,
+      762.8019349530011
+     ],
+     "z": [
+      11.236876640419943,
+      13.615485564304462
+     ]
+    }
+   },
+   {
+    "elementId": 2471390,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.8106614786282,
+      182.10178133831235
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      13.615485564304462,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471391,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.53747687637008,
+      173.87234126865442
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      3.4448818897637796
+     ]
+    }
+   },
+   {
+    "elementId": 2471392,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      182.10178133831235,
+      182.265823333063
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      11.154855643044618
+     ]
+    }
+   },
+   {
+    "elementId": 2471393,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      182.10178133831235,
+      182.265823333063
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.154855643044616,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471394,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.37343488161943,
+      171.53747687637008
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.154855643044616,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471395,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.37343488161943,
+      171.53747687637008
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.280839895013119,
+      11.154855643044616
+     ]
+    }
+   },
+   {
+    "elementId": 2471396,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.53747687637008,
+      173.87234126865442
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.072834645669289,
+      11.236876640419943
+     ]
+    }
+   },
+   {
+    "elementId": 2471813,
+    "categoryName": "Doors",
+    "provenance": "reconstructed",
+    "boundsFeet": {
+     "x": [
+      174.0363832634051,
+      179.64661948387752
+     ],
+     "y": [
+      759.7833982075942,
+      762.7437000448646
+     ],
+     "z": [
+      3.4448818897637743,
+      11.072834645669293
+     ]
+    }
+   },
+   {
+    "elementId": 2471814,
+    "categoryName": "Curtain Panels",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      174.0363832634051,
+      179.64661948387752
+     ],
+     "y": [
+      762.7199139556258,
+      762.8019349530011
+     ],
+     "z": [
+      11.236876640419943,
+      13.615485564304462
+     ]
+    }
+   },
+   {
+    "elementId": 2471816,
+    "categoryName": "Curtain Panels",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.8106614786282,
+      182.10178133831235
+     ],
+     "y": [
+      762.7199139556258,
+      762.8019349530011
+     ],
+     "z": [
+      3.4448818897637796,
+      11.072834645669293
+     ]
+    }
+   },
+   {
+    "elementId": 2471817,
+    "categoryName": "Curtain Panels",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.8106614786282,
+      182.10178133831235
+     ],
+     "y": [
+      762.7199139556258,
+      762.8019349530011
+     ],
+     "z": [
+      11.236876640419943,
+      13.615485564304462
+     ]
+    }
+   },
+   {
+    "elementId": 2471830,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      171.53747687637008,
+      173.87234126865442
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      13.615485564304462,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471831,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      174.0363832634051,
+      179.64661948387752
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      13.615485564304462,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471832,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      174.0363832634051,
+      179.64661948387752
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      3.4448818897637796
+     ]
+    }
+   },
+   {
+    "elementId": 2471833,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.8106614786282,
+      182.10178133831235
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      3.4448818897637796
+     ]
+    }
+   },
+   {
+    "elementId": 2471834,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      174.03638326340507,
+      179.64661948387752
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.072834645669289,
+      11.236876640419947
+     ]
+    }
+   },
+   {
+    "elementId": 2471835,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.8106614786282,
+      182.10178133831235
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.072834645669289,
+      11.236876640419945
+     ]
+    }
+   },
+   {
+    "elementId": 2471836,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      173.87234126865442,
+      174.0363832634051
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      11.154855643044618
+     ]
+    }
+   },
+   {
+    "elementId": 2471837,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.64661948387752,
+      179.8106614786282
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      3.2808398950131235,
+      11.154855643044618
+     ]
+    }
+   },
+   {
+    "elementId": 2471838,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      173.87234126865442,
+      174.0363832634051
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.154855643044616,
+      13.779527559055119
+     ]
+    }
+   },
+   {
+    "elementId": 2471839,
+    "categoryName": "Curtain Wall Mullions",
+    "provenance": "native",
+    "boundsFeet": {
+     "x": [
+      179.64661948387752,
+      179.8106614786282
+     ],
+     "y": [
+      762.393470386072,
+      762.8855963703239
+     ],
+     "z": [
+      11.154855643044616,
+      13.779527559055119
+     ]
+    }
+   }
+  ],
+  "planParts(level 1487816)": [
+   [
+    [
+     171.37343488161943,
+     760.9991134306913
+    ],
+    [
+     182.265823333063,
+     760.9991134306913
+    ],
+    [
+     182.265823333063,
+     764.2799533257046
+    ],
+    [
+     171.37343488161943,
+     764.2799533257046
+    ],
+    [
+     171.37343488161943,
+     760.9991134306913
+    ]
+   ]
+  ]
+ },
+ "planCutElevationFeet": 7.2808398950131235,
+ "frameEvidence": [
+  {
+   "nativeElementId": 2471836,
+   "orientedBox": [
+    [
+     173.87234126865442,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     173.87234126865442,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     173.87234126865442,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     173.87234126865442,
+     762.393470386072,
+     3.2808398950131235
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471837,
+   "orientedBox": [
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     179.8106614786282,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     179.8106614786282,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.8106614786282,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.8106614786282,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.2808398950131235
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471832,
+   "orientedBox": [
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.4448818897637796
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.4448818897637796
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.4448818897637796
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.4448818897637796
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471834,
+   "orientedBox": [
+    [
+     174.03638326340507,
+     762.8855963703239,
+     11.072834645669293
+    ],
+    [
+     174.03638326340507,
+     762.8855963703239,
+     11.236876640419949
+    ],
+    [
+     174.03638326340507,
+     762.393470386072,
+     11.236876640419949
+    ],
+    [
+     174.03638326340507,
+     762.393470386072,
+     11.072834645669293
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.072834645669289
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.236876640419943
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.236876640419943
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.072834645669289
+    ]
+   ]
+  }
+ ],
+ "frameMembers": [
+  {
+   "nativeElementId": 2471836,
+   "role": "west jamb (inner face x = max x)",
+   "categoryId": -2000171,
+   "categoryName": "Curtain Wall Mullions",
+   "categorySource": "element-header",
+   "typeName": "50 x 150 \u043c\u043c",
+   "renderGeometryProvenance": "native",
+   "persistedHostId": 2471383,
+   "hostRelation": {
+    "elementId": 2471836,
+    "hostId": 2471383,
+    "fieldOffset": 151,
+    "recordOffset": 60671,
+    "objectLength": 567,
+    "objectMarker": 2031,
+    "kind": "host",
+    "source": "Partitions/InsertableInst.m_hostId",
+    "evidence": "persisted"
+   },
+   "boundsFeet": {
+    "x": [
+     173.87234126865442,
+     174.0363832634051
+    ],
+    "y": [
+     762.393470386072,
+     762.8855963703239
+    ],
+    "z": [
+     3.2808398950131235,
+     11.154855643044618
+    ]
+   },
+   "crossesPlanCutElevation": true,
+   "orientedBoxEqualsElementBounds": true,
+   "orientedBox": [
+    [
+     173.87234126865442,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     173.87234126865442,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     173.87234126865442,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     173.87234126865442,
+     762.393470386072,
+     3.2808398950131235
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471837,
+   "role": "east jamb (inner face x = min x)",
+   "categoryId": -2000171,
+   "categoryName": "Curtain Wall Mullions",
+   "categorySource": "element-header",
+   "typeName": "50 x 150 \u043c\u043c",
+   "renderGeometryProvenance": "native",
+   "persistedHostId": 2471383,
+   "hostRelation": {
+    "elementId": 2471837,
+    "hostId": 2471383,
+    "fieldOffset": 151,
+    "recordOffset": 61258,
+    "objectLength": 567,
+    "objectMarker": 2031,
+    "kind": "host",
+    "source": "Partitions/InsertableInst.m_hostId",
+    "evidence": "persisted"
+   },
+   "boundsFeet": {
+    "x": [
+     179.64661948387752,
+     179.8106614786282
+    ],
+    "y": [
+     762.393470386072,
+     762.8855963703239
+    ],
+    "z": [
+     3.2808398950131235,
+     11.154855643044618
+    ]
+   },
+   "crossesPlanCutElevation": true,
+   "orientedBoxEqualsElementBounds": true,
+   "orientedBox": [
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     179.8106614786282,
+     762.8855963703239,
+     11.154855643044618
+    ],
+    [
+     179.8106614786282,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.154855643044618
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.8106614786282,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.8106614786282,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.2808398950131235
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471832,
+   "role": "sill (bottom transom under the leaf, spans the clear width)",
+   "categoryId": -2000171,
+   "categoryName": "Curtain Wall Mullions",
+   "categorySource": "element-header",
+   "typeName": "50 x 150 \u043c\u043c",
+   "renderGeometryProvenance": "native",
+   "persistedHostId": 2471383,
+   "hostRelation": {
+    "elementId": 2471832,
+    "hostId": 2471383,
+    "fieldOffset": 151,
+    "recordOffset": 58323,
+    "objectLength": 567,
+    "objectMarker": 2031,
+    "kind": "host",
+    "source": "Partitions/InsertableInst.m_hostId",
+    "evidence": "persisted"
+   },
+   "boundsFeet": {
+    "x": [
+     174.0363832634051,
+     179.64661948387752
+    ],
+    "y": [
+     762.393470386072,
+     762.8855963703239
+    ],
+    "z": [
+     3.2808398950131235,
+     3.4448818897637796
+    ]
+   },
+   "crossesPlanCutElevation": false,
+   "orientedBoxEqualsElementBounds": true,
+   "orientedBox": [
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.4448818897637796
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     3.4448818897637796
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.4448818897637796
+    ],
+    [
+     174.0363832634051,
+     762.8855963703239,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.2808398950131235
+    ],
+    [
+     174.0363832634051,
+     762.393470386072,
+     3.4448818897637796
+    ]
+   ]
+  },
+  {
+   "nativeElementId": 2471834,
+   "role": "head (transom at the leaf top, spans the clear width)",
+   "categoryId": -2000171,
+   "categoryName": "Curtain Wall Mullions",
+   "categorySource": "element-header",
+   "typeName": "50 x 150 \u043c\u043c",
+   "renderGeometryProvenance": "native",
+   "persistedHostId": 2471383,
+   "hostRelation": {
+    "elementId": 2471834,
+    "hostId": 2471383,
+    "fieldOffset": 151,
+    "recordOffset": 59497,
+    "objectLength": 567,
+    "objectMarker": 2031,
+    "kind": "host",
+    "source": "Partitions/InsertableInst.m_hostId",
+    "evidence": "persisted"
+   },
+   "boundsFeet": {
+    "x": [
+     174.03638326340507,
+     179.64661948387752
+    ],
+    "y": [
+     762.393470386072,
+     762.8855963703239
+    ],
+    "z": [
+     11.072834645669289,
+     11.236876640419947
+    ]
+   },
+   "crossesPlanCutElevation": false,
+   "orientedBoxEqualsElementBounds": true,
+   "orientedBox": [
+    [
+     174.03638326340507,
+     762.8855963703239,
+     11.072834645669293
+    ],
+    [
+     174.03638326340507,
+     762.8855963703239,
+     11.236876640419949
+    ],
+    [
+     174.03638326340507,
+     762.393470386072,
+     11.236876640419949
+    ],
+    [
+     174.03638326340507,
+     762.393470386072,
+     11.072834645669293
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.072834645669289
+    ],
+    [
+     179.64661948387752,
+     762.8855963703239,
+     11.236876640419943
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.236876640419943
+    ],
+    [
+     179.64661948387752,
+     762.393470386072,
+     11.072834645669289
+    ]
+   ]
+  }
+ ],
+ "frameFindings": [
+  "Exactly four category -2000171 (Curtain Wall Mullions, element-header, renderGeometryProvenance 'native') members of the same persisted host 2471383 frame the leaf: jambs 2471836/2471837, sill 2471832, head 2471834.",
+  "Jamb inner faces: x = 174.0363832634051 (2471836 max x) and x = 179.64661948387752 (2471837 min x). The proposal text wrote the second value as 179.6466194838775; that string is a different double. Use 179.64661948387752 (it is also the value in the proposal's own apertureFeet and in the door orientedBox).",
+  "Only the two jambs cross the plan cut elevation 7.2808398950131235 ft; sill z 3.2808..3.4449 and head z 11.0728..11.2369 do not (the validator's 'cutFrames.length === 2' rule).",
+  "Sill 2471832 spans z 3.2808398950131235..3.4448818897637796, a rise of 0.16404 ft (50 mm) above the native floor; the leaf bottom (3.4448818897637743) sits on it. This is a model-derived 50 mm threshold, not a site measurement.",
+  "The validator only checks category, provenance, persisted host and exact box equality, so it also accepts the top mullion 2471831 in place of the head (control replay). The head/sill roles above rest on z: the head starts at 11.072834645669289 and the sill ends at 3.4448818897637796, within 6e-15 ft of the leaf's top 11.072834645669293 and bottom 3.4448818897637743."
+ ],
+ "dryRunValidatorReplay": {
+  "patch": {
+   "id": "dry-run:1487816:2471813",
+   "levelId": 1487816,
+   "nativeDoorId": 2471813,
+   "normalFeet": [
+    0,
+    1
+   ],
+   "apertureFeet": [
+    [
+     179.64661948387752,
+     760.9991134306913
+    ],
+    [
+     179.64661948387752,
+     764.2799533257046
+    ],
+    [
+     174.0363832634051,
+     764.2799533257046
+    ],
+    [
+     174.0363832634051,
+     760.9991134306913
+    ]
+   ],
+   "wallEvidence": [
+    {
+     "nativeElementId": 2471383,
+     "partsFeet": [
+      [
+       [
+        171.37343488161943,
+        760.9991134306913
+       ],
+       [
+        182.265823333063,
+        760.9991134306913
+       ],
+       [
+        182.265823333063,
+        764.2799533257046
+       ],
+       [
+        171.37343488161943,
+        764.2799533257046
+       ],
+       [
+        171.37343488161943,
+        760.9991134306913
+       ]
+      ]
+     ]
+    }
+   ],
+   "frameEvidence": [
+    {
+     "nativeElementId": 2471836,
+     "orientedBox": [
+      [
+       173.87234126865442,
+       762.8855963703239,
+       11.154855643044618
+      ],
+      [
+       174.0363832634051,
+       762.8855963703239,
+       11.154855643044618
+      ],
+      [
+       174.0363832634051,
+       762.393470386072,
+       11.154855643044618
+      ],
+      [
+       173.87234126865442,
+       762.393470386072,
+       11.154855643044618
+      ],
+      [
+       173.87234126865442,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       174.0363832634051,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       174.0363832634051,
+       762.393470386072,
+       3.2808398950131235
+      ],
+      [
+       173.87234126865442,
+       762.393470386072,
+       3.2808398950131235
+      ]
+     ]
+    },
+    {
+     "nativeElementId": 2471837,
+     "orientedBox": [
+      [
+       179.64661948387752,
+       762.8855963703239,
+       11.154855643044618
+      ],
+      [
+       179.8106614786282,
+       762.8855963703239,
+       11.154855643044618
+      ],
+      [
+       179.8106614786282,
+       762.393470386072,
+       11.154855643044618
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       11.154855643044618
+      ],
+      [
+       179.64661948387752,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       179.8106614786282,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       179.8106614786282,
+       762.393470386072,
+       3.2808398950131235
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       3.2808398950131235
+      ]
+     ]
+    },
+    {
+     "nativeElementId": 2471832,
+     "orientedBox": [
+      [
+       179.64661948387752,
+       762.8855963703239,
+       3.4448818897637796
+      ],
+      [
+       179.64661948387752,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       3.2808398950131235
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       3.4448818897637796
+      ],
+      [
+       174.0363832634051,
+       762.8855963703239,
+       3.4448818897637796
+      ],
+      [
+       174.0363832634051,
+       762.8855963703239,
+       3.2808398950131235
+      ],
+      [
+       174.0363832634051,
+       762.393470386072,
+       3.2808398950131235
+      ],
+      [
+       174.0363832634051,
+       762.393470386072,
+       3.4448818897637796
+      ]
+     ]
+    },
+    {
+     "nativeElementId": 2471834,
+     "orientedBox": [
+      [
+       174.03638326340507,
+       762.8855963703239,
+       11.072834645669293
+      ],
+      [
+       174.03638326340507,
+       762.8855963703239,
+       11.236876640419949
+      ],
+      [
+       174.03638326340507,
+       762.393470386072,
+       11.236876640419949
+      ],
+      [
+       174.03638326340507,
+       762.393470386072,
+       11.072834645669293
+      ],
+      [
+       179.64661948387752,
+       762.8855963703239,
+       11.072834645669289
+      ],
+      [
+       179.64661948387752,
+       762.8855963703239,
+       11.236876640419943
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       11.236876640419943
+      ],
+      [
+       179.64661948387752,
+       762.393470386072,
+       11.072834645669289
+      ]
+     ]
+    }
+   ],
+   "notes": "dry-run validation only"
+  },
+  "proposalWallEvidenceEqualsCurrentPlan": true,
+  "results": [
+   {
+    "label": "four frame members 2471836/2471837 (jambs) + 2471832 (sill) + 2471834 (head)",
+    "accepted": true,
+    "wallsStillOverlappingApertureAfterCut": [
+     {
+      "elementId": 2472128,
+      "approximate": false,
+      "overlapSqFt": 1.8406286812387407
+     }
+    ]
+   },
+   {
+    "label": "control: head replaced by top mullion 2471831",
+    "accepted": true,
+    "wallsStillOverlappingApertureAfterCut": [
+     {
+      "elementId": 2472128,
+      "approximate": false,
+      "overlapSqFt": 1.8406286812387407
+     }
+    ]
+   },
+   {
+    "label": "option: wallEvidence also lists embedding basic wall 2472128 (its exact current plan parts)",
+    "accepted": true,
+    "wallsStillOverlappingApertureAfterCut": []
+   }
+  ],
+  "foreignWallsIntersectingAperture": [
+   {
+    "elementId": 2472128,
+    "polygon": [
+     [
+      170.6844585036667,
+      762.8331616376669
+     ],
+     [
+      182.9836868739894,
+      762.8331616376669
+     ],
+     [
+      182.9836868739894,
+      762.5050776481656
+     ],
+     [
+      170.6844585036667,
+      762.5050776481656
+     ]
+    ],
+    "approximate": false
+   }
+  ]
+ },
+ "element2472128": {
+  "record": {
+   "elementId": 2472128,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "typeName": "Interior Wall - 100mm",
+   "wallKind": "basic",
+   "renderGeometryProvenance": "native",
+   "solid": {
+    "elementId": 2472128,
+    "start": {
+     "x": 170.6844585036667,
+     "y": 762.6691196429163
+    },
+    "end": {
+     "x": 182.9836868739894,
+     "y": 762.6691196429163
+    },
+    "baseElevation": 3.2808398950131235,
+    "topElevation": 13.779527559055119,
+    "thickness": 0.32808398950123774
+   },
+   "boundsFeet": {
+    "x": [
+     170.6844585036667,
+     182.9836868739894
+    ],
+    "y": [
+     762.5050776481655,
+     762.8331616376669
+    ],
+    "z": [
+     3.2808398950131235,
+     13.779527559055119
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 1487816
+  },
+  "persistedHostRelation": null,
+  "hostedChildren": [],
+  "nativeMesh": {
+   "batches": [
+    {
+     "name": "Certified native BRep \u00b7 Material 423 \u00b7 1",
+     "source": "native-brep",
+     "material": "Gypsum Wallboard"
+    }
+   ],
+   "triangleCount": 24,
+   "worldBoundsFeet": {
+    "x": [
+     170.6844564368276,
+     182.9836812903432
+    ],
+    "y": [
+     762.5050894819713,
+     762.833153446815
+    ],
+    "z": [
+     3.2808399751117534,
+     13.779527719252378
+    ]
+   },
+   "worldXIntervalsOfBody": [
+    [
+     170.6844564368276,
+     171.37343653936665
+    ],
+    [
+     182.26581630010884,
+     182.9836812903432
+    ]
+   ],
+   "note": "Float32 scene positions + ConvertResult.origin (micrometre-level quantisation)."
+  },
+  "planPolygon": [
+   [
+    170.6844585036667,
+    762.8331616376669
+   ],
+   [
+    182.9836868739894,
+    762.8331616376669
+   ],
+   [
+    182.9836868739894,
+    762.5050776481656
+   ],
+   [
+    170.6844585036667,
+    762.5050776481656
+   ]
+  ],
+  "adjacentPlanWalls": [
+   {
+    "elementId": 1501264,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 100mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      170.35637451416534,
+      751.1205774460949
+     ],
+     [
+      170.35637451416537,
+      762.8331616376669
+     ],
+     [
+      170.68445850366666,
+      762.8331616376669
+     ],
+     [
+      170.68445850366663,
+      751.1205774460949
+     ]
+    ]
+   },
+   {
+    "elementId": 1501266,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 100mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      183.31177086349072,
+      762.8331616376669
+     ],
+     [
+      183.3117708634907,
+      750.7924934565935
+     ],
+     [
+      182.9836868739894,
+      750.7924934565935
+     ],
+     [
+      182.98368687398943,
+      762.8331616376669
+     ]
+    ]
+   }
+  ],
+  "classification": "NOT a curtain grid line or glazing element: category -2000011 Walls (element-header), basic wall type 'Interior Wall - 100mm', 0.328 ft thick, z 3.2808..13.7795, location line y 762.6691196429163 from x 170.6844585036667 to 182.9836868739894 between the faces of walls 1501264 and 1501266. Its native BRep body (Gypsum Wallboard, 24 triangles) exists only at x 170.684..171.373 and x 182.266..182.984, i.e. it is cut exactly where curtain wall 2471383 (x 171.37343488161943..182.265823333063) is embedded. In the native body there is no 100 mm wall across the door band.",
+  "consequence": "architecturalPlanGeometry draws 2472128 from its full-length solid, so the plan/visitor wall list shows a 100 mm wall across the whole door band (y 762.5051..762.8332 over x 170.6845..182.9837). The reviewed curtain aperture alone cuts only host 2471383; the post-cut replay lists 2472128 as still overlapping the aperture. A source review must decide how the embedding wall's opening is represented (e.g. listing 2472128 in the aperture's wallEvidence, replayed below as an option, or a compiler fix that honours the embedded-curtain cut) before the door can connect.",
+  "notConfirmed": "Whether a physical partition exists on site at this line (the native body says no)."
+ },
+ "nativeSides": {
+  "door": 2471813,
+  "levelId": 1487816,
+  "state": "unmatched",
+  "existingOwners": [
+   "10-1300 Vestibule"
+  ],
+  "kind": "native-pair",
+  "sideA": {
+   "cell": "native-cell:3.280840:459",
+   "owners": [
+    "10-1312 Atrium",
+    "10-1302 Atrium",
+    "10-1304 Atrium",
+    "10-1306 Atrium"
+   ],
+   "stepFeet": 0.25
+  },
+  "sideB": {
+   "cell": "native-cell:3.280840:474",
+   "owners": [
+    "10-1300 Vestibule"
+   ],
+   "stepFeet": 0.25
+  },
+  "existingWithinNativeOwners": true
+ },
+ "cellOutlinesNearDoor": [
+  {
+   "id": "native-cell:3.280840:474",
+   "exactFaceId": "native-face:3.280840:1901",
+   "roomCount": 1,
+   "rooms": [
+    "10-1300 Vestibule"
+   ],
+   "nativeFloorIds": [
+    1501037
+   ],
+   "ringPointCounts": [
+    23
+   ],
+   "segmentsInWindow": {
+    "ring0": [
+     [
+      [
+       182.9016658766141,
+       753.387564874261
+      ],
+      [
+       182.9016658766141,
+       760.933496632791
+      ]
+     ],
+     [
+      [
+       182.9016658766141,
+       760.933496632791
+      ],
+      [
+       182.9836868739894,
+       760.933496632791
+      ]
+     ],
+     [
+      [
+       182.9836868739894,
+       760.933496632791
+      ],
+      [
+       182.9836868739894,
+       762.5050776481655
+      ]
+     ],
+     [
+      [
+       182.9836868739894,
+       762.5050776481655
+      ],
+      [
+       182.265823333063,
+       762.5050776481655
+      ]
+     ],
+     [
+      [
+       182.265823333063,
+       762.5050776481655
+      ],
+      [
+       182.265823333063,
+       762.393470386072
+      ]
+     ],
+     [
+      [
+       182.265823333063,
+       762.393470386072
+      ],
+      [
+       171.37343488161943,
+       762.393470386072
+      ]
+     ],
+     [
+      [
+       171.37343488161943,
+       762.393470386072
+      ],
+      [
+       171.37343488161943,
+       762.5050776481655
+      ]
+     ],
+     [
+      [
+       171.37343488161943,
+       762.5050776481655
+      ],
+      [
+       170.6844585036667,
+       762.5050776481655
+      ]
+     ],
+     [
+      [
+       170.6844585036667,
+       762.5050776481655
+      ],
+      [
+       170.6844585036667,
+       760.9334966327912
+      ]
+     ],
+     [
+      [
+       170.6844585036667,
+       760.9334966327912
+      ],
+      [
+       170.766479501042,
+       760.9334966327912
+      ]
+     ],
+     [
+      [
+       170.766479501042,
+       760.9334966327912
+      ],
+      [
+       170.766479501042,
+       760.7694546380405
+      ]
+     ],
+     [
+      [
+       170.766479501042,
+       760.7694546380405
+      ],
+      [
+       170.76647950104197,
+       757.2425517509014
+      ]
+     ],
+     [
+      [
+       170.76647950104197,
+       757.2425517509014
+      ],
+      [
+       170.76647950104197,
+       753.387564874261
+      ]
+     ]
+    ]
+   },
+   "window": {
+    "x": [
+     170,
+     184
+    ],
+    "y": [
+     755,
+     768
+    ]
+   }
+  },
+  {
+   "id": "native-cell:3.280840:459",
+   "exactFaceId": "native-face:3.280840:1839",
+   "roomCount": 4,
+   "rooms": [
+    "10-1312 Atrium",
+    "10-1302 Atrium",
+    "10-1304 Atrium",
+    "10-1306 Atrium"
+   ],
+   "nativeFloorIds": [
+    1500982,
+    1501009,
+    1501037
+   ],
+   "ringPointCounts": [
+    372,
+    5,
+    4,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    7,
+    9,
+    13,
+    16,
+    11,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    5,
+    17,
+    11,
+    5,
+    17
+   ],
+   "segmentsInWindow": {
+    "ring0": [
+     [
+      [
+       170.27435351679,
+       757.2425517509014
+      ],
+      [
+       170.27435351679003,
+       760.7694546380405
+      ]
+     ],
+     [
+      [
+       170.27435351679003,
+       760.7694546380405
+      ],
+      [
+       170.27435351679003,
+       760.9334966327912
+      ]
+     ],
+     [
+      [
+       170.27435351679003,
+       760.9334966327912
+      ],
+      [
+       170.35637451416537,
+       760.9334966327912
+      ]
+     ],
+     [
+      [
+       170.35637451416537,
+       760.9334966327912
+      ],
+      [
+       170.35637451416537,
+       762.8331616376669
+      ]
+     ],
+     [
+      [
+       170.35637451416537,
+       762.8331616376669
+      ],
+      [
+       171.37343488161943,
+       762.8331616376669
+      ]
+     ],
+     [
+      [
+       171.37343488161943,
+       762.8331616376669
+      ],
+      [
+       171.37343488161943,
+       762.8855963703239
+      ]
+     ],
+     [
+      [
+       171.37343488161943,
+       762.8855963703239
+      ],
+      [
+       182.265823333063,
+       762.8855963703239
+      ]
+     ],
+     [
+      [
+       182.265823333063,
+       762.8855963703239
+      ],
+      [
+       182.265823333063,
+       762.8331616376669
+      ]
+     ],
+     [
+      [
+       182.265823333063,
+       762.8331616376669
+      ],
+      [
+       183.31177086349072,
+       762.8331616376669
+      ]
+     ],
+     [
+      [
+       183.31177086349072,
+       762.8331616376669
+      ],
+      [
+       183.31177086349072,
+       760.933496632791
+      ]
+     ],
+     [
+      [
+       183.31177086349072,
+       760.933496632791
+      ],
+      [
+       183.39379186086606,
+       760.933496632791
+      ]
+     ],
+     [
+      [
+       183.39379186086606,
+       760.933496632791
+      ],
+      [
+       183.39379186086606,
+       753.387564874261
+      ]
+     ]
+    ]
+   },
+   "window": {
+    "x": [
+     170,
+     184
+    ],
+    "y": [
+     760,
+     768
+    ]
+   }
+  }
+ ],
+ "roomOutlines": [
+  {
+   "key": "rm-1487816-5550ce486504",
+   "levelId": 1487816,
+   "room": "10-1300 Vestibule",
+   "polygonSource": "survey-boundary-proposal",
+   "confidence": 0.65,
+   "boundaryReview": {
+    "method": "reviewed-survey-face",
+    "registrationErrorFeet": 2.2914314707516465e-13,
+    "note": "Survey vestibule boundary reaches recovered door #2471813 and restores hallway routes. Recovered curtain-wall solids conflict with the survey outline; verify glass-wall alignment before accepting this boundary.",
+    "pendingReview": true
+   },
+   "bboxFeet": {
+    "x": [
+     170.82129952346395,
+     182.90666975460888
+    ],
+    "y": [
+     751.303322602774,
+     762.514215026018
+    ]
+   },
+   "doorCentreToOutlineFeet": 0.1257,
+   "northProbeToOutlineFeet": 0.4799,
+   "southProbeToOutlineFeet": 0.2285,
+   "doorCentreNearestOutlinePoint": [
+    176.8415,
+    762.5138
+   ],
+   "northProbeNearestOutlinePoint": [
+    176.8416,
+    762.5138
+   ],
+   "southProbeNearestOutlinePoint": [
+    176.8415,
+    762.5138
+   ]
+  },
+  {
+   "key": "rm-1487816-555ae048650d",
+   "levelId": 1487816,
+   "room": "10-1302 Atrium",
+   "polygonSource": "derived",
+   "confidence": 0.65,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     128.51661511978546,
+     217.71661511978547
+    ],
+    "y": [
+     762.475786324475,
+     784.0757863244751
+    ]
+   },
+   "doorCentreToOutlineFeet": 1.8363,
+   "northProbeToOutlineFeet": 1.4821,
+   "southProbeToOutlineFeet": 2.1904,
+   "doorCentreNearestOutlinePoint": [
+    176.8415,
+    764.4758
+   ],
+   "northProbeNearestOutlinePoint": [
+    176.8415,
+    764.4758
+   ],
+   "southProbeNearestOutlinePoint": [
+    176.8415,
+    764.4758
+   ]
+  },
+  {
+   "key": "rm-1487816-556850486518",
+   "levelId": 1487816,
+   "room": "10-1306 Atrium",
+   "polygonSource": "derived",
+   "confidence": 0.65,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     153.71661511978547,
+     189.71661511978547
+    ],
+    "y": [
+     780.875786324475,
+     820.875786324475
+    ]
+   },
+   "doorCentreToOutlineFeet": 18.2507,
+   "northProbeToOutlineFeet": 17.8968,
+   "southProbeToOutlineFeet": 18.6045,
+   "doorCentreNearestOutlinePoint": [
+    176.1166,
+    780.8758
+   ],
+   "northProbeNearestOutlinePoint": [
+    176.1166,
+    780.8758
+   ],
+   "southProbeNearestOutlinePoint": [
+    176.1166,
+    780.8758
+   ]
+  },
+  {
+   "key": "rm-1487816-55654e486516",
+   "levelId": 1487816,
+   "room": "10-1304 Atrium",
+   "polygonSource": "derived",
+   "confidence": 0.65,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     186.11661511978548,
+     217.71661511978547
+    ],
+    "y": [
+     771.675786324475,
+     816.0757863244751
+    ]
+   },
+   "doorCentreToOutlineFeet": 23.2079,
+   "northProbeToOutlineFeet": 22.9183,
+   "southProbeToOutlineFeet": 23.4993,
+   "doorCentreNearestOutlinePoint": [
+    190.1166,
+    781.6758
+   ],
+   "northProbeNearestOutlinePoint": [
+    190.1166,
+    781.6758
+   ],
+   "southProbeNearestOutlinePoint": [
+    190.1166,
+    781.6758
+   ]
+  },
+  {
+   "key": "rm-1487816-555e5e486510",
+   "levelId": 1487816,
+   "room": "10-1310 Food Service",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     138.4016,
+     164.4718
+    ],
+    "y": [
+     777.3318,
+     810.4957
+    ]
+   },
+   "doorCentreToOutlineFeet": 30.628,
+   "northProbeToOutlineFeet": 30.4403,
+   "southProbeToOutlineFeet": 30.8157,
+   "doorCentreNearestOutlinePoint": [
+    150.8674,
+    778.8697
+   ],
+   "northProbeNearestOutlinePoint": [
+    151.0265,
+    779.1244
+   ],
+   "southProbeNearestOutlinePoint": [
+    150.7082,
+    778.615
+   ]
+  },
+  {
+   "key": "rm-1487816-c4a88d47fa4b",
+   "levelId": 1487816,
+   "room": "10-1584 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     218.8689,
+     231.1802
+    ],
+    "y": [
+     752.9658,
+     762.3982
+    ]
+   },
+   "doorCentreToOutlineFeet": 42.0347,
+   "northProbeToOutlineFeet": 42.0428,
+   "southProbeToOutlineFeet": 42.0296,
+   "doorCentreNearestOutlinePoint": [
+    218.8689,
+    761.8569
+   ],
+   "northProbeNearestOutlinePoint": [
+    218.8689,
+    761.8569
+   ],
+   "southProbeNearestOutlinePoint": [
+    218.8689,
+    761.8569
+   ]
+  }
+ ],
+ "remainsForDecision": [
+  "Owner/site: is door 2471813 normally open and public; is there any partition on the 2472128 line (native body says no).",
+  "Source review: how the plan represents the embedded-curtain cut in 2472128 (see consequence).",
+  "Whether the 50 mm modelled sill (2471832) is real; it must stay a stepped threshold unless a site check says otherwise."
+ ]
+}

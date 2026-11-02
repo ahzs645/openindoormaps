@@ -1,0 +1,3755 @@
+{
+ "format": "native-source-evidence-v1",
+ "case": "door 2315416: 08-360 Link <-> Building 08 side, Campus Floor 3 (native level 400176)",
+ "status": "EVIDENCE_ONLY_NO_OWNER_CHOSEN",
+ "inputs": {
+  "master-0388.zip": {
+   "path": "/home/user/unbc-work/master-0388.zip",
+   "sha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903"
+  },
+  "floors/rooms.json (from the master)": {
+   "path": "master-0388.zip!floors/rooms.json",
+   "sha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+  },
+  "model/\u2026(1).rvt (from the master)": {
+   "path": "master-0388.zip!model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+   "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+  },
+  "native dump (dump-native-evidence.ts output, scratch)": {
+   "sha256": "a51ec32dab4b88fe8e86dddc065077503e4c4281eb397b4d82306429de9d8de2",
+   "convert": {
+    "function": "convertRvtBytes(bytes, fileName, {})",
+    "seconds": 65.14993446400001,
+    "method": "partition-bounds-recovery",
+    "elementBounds": 40611,
+    "nativeHostRelations": 27568
+   }
+  },
+  "final candidate zip": {
+   "path": "/home/user/unbc-work/final/accept/UNBC.shared-pathways.candidate.reviter.zip",
+   "sha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd"
+  },
+  "pathway preview index.json": {
+   "path": "/home/user/unbc-work/cand-final-preview/data/index.json",
+   "sha256": "0e5f375c22d9c7b68fda2923a9b3a4161ada7ccd346ff79f4f542932d95ccc8f"
+  },
+  "cand-final/native-door-sides.json": {
+   "path": "/home/user/unbc-work/cand-final/native-door-sides.json",
+   "sha256": "02d4213ae5b4160b1779e8e946863203fc533519470cb9be0071b6489b0d6c86"
+  },
+  "cand-final/doors-native.json": {
+   "path": "/home/user/unbc-work/cand-final/doors-native.json",
+   "sha256": "a693e1e47b75fdbf09cd94182ca1149815a7f697a18b365742feed719c94a945"
+  },
+  "cand-final/walls-native.json": {
+   "path": "/home/user/unbc-work/cand-final/walls-native.json",
+   "sha256": "72ad4b4f7220c0bc5f1491a1925bc04cf1ed9aed8ba86f22aee147fc7ccd2f3b"
+  },
+  "cand-final/graph-full.json": {
+   "path": "/home/user/unbc-work/cand-final/graph-full.json",
+   "sha256": "34f4bc4f3b9e7d8dab5b28042e7f1dc1d31a2abbd9160288d850eee0f63a0d27"
+  },
+  "pathway preview level-400176.json": {
+   "path": "/home/user/unbc-work/cand-final-preview/data/level-400176.json",
+   "sha256": "56d8803c8c826c4289b21bbaaf9e351c31b0f95bc13bd0e67555bdb3c3a97ba1"
+  },
+  "pathway preview level-694.json": {
+   "path": "/home/user/unbc-work/cand-final-preview/data/level-694.json",
+   "sha256": "9eb1a21b9993f29dabe29d9fd683c62d83b3607da74f6618c4d6ce6903cb0f74"
+  }
+ },
+ "method": [
+  "RVT extracted from master-0388.zip and checked against manifest sha256 8c294549\u2026; converted with Reviter convertRvtBytes(bytes, archivedFileName, {}) exactly as scripts/prepare-indoor-project.ts does (Reviter 2e7875d, unmodified checkout), see tools/dump-native-evidence.ts.",
+  "Records = ConvertResult.elementBounds (category, provenance, orientedBox, boundsFeet, solid); host links = ConvertResult.nativeHostRelations (Partitions/InsertableInst.m_hostId, evidence 'persisted'); plan cut = architecturalPlanGeometry(model, level) used by the compiler and the aperture validator.",
+  "Native cells and their room lists come from the pathway preview exported from the same master (index.json sourceInputSha256 6e7971f8\u2026); door-side probes from cand-final/native-door-sides.json (0.25/0.5/1/1.5 ft steps beyond the saved footprint face).",
+  "Dry-run validation calls the compiler's own withReviewedDoorApertures on an in-memory one-patch review; no master, review file, owner, access or route is written.",
+  "Strip = x 32.25292197524376 (curtain host 2315413 east face) .. 35.4648246270012 (08-316 Corridor drawn west edge), y 526.6952031186182..530.4038645359411 (the door's clear width). 25 sample points (x 32.30/33/34/35/35.4 \u00d7 y 526.8/527.5/528.55/529.5/530.3) tested against every native cell and every room outline on levels 400176 and 1487353.",
+  "Distances measured on the door's centre ray (y 528.5495338272797): door centre x 30.612502027737193; aperture east face x 32.25292197524376; native probe x 32.50292197524376 (0.25 ft beyond the face)."
+ ],
+ "distanceConvention": {
+  "doorCentreTo08-316OutlineFeet": 4.8523,
+  "apertureFaceTo08-316OutlineFeet": 3.2119,
+  "nativeProbeTo08-316OutlineFeet": 2.9619,
+  "note": "All three are the same gap measured from different origins along the normal: 4.852 = 1.640 (half host band) + 3.212; 3.212 = 0.25 + 2.962."
+ },
+ "door": {
+  "elementId": 2315416,
+  "categoryId": -2000023,
+  "categoryName": "Doors",
+  "categorySource": "element-header",
+  "typeName": "Single-pane stained-glass door",
+  "renderGeometryProvenance": "reconstructed",
+  "orientedBox": [
+   [
+    30.65416869440381,
+    526.6952031186182,
+    24.442257217847768
+   ],
+   [
+    30.65416869440382,
+    530.4038645359411,
+    24.442257217847768
+   ],
+   [
+    30.570835361070582,
+    530.4038645359411,
+    24.442257217847768
+   ],
+   [
+    30.570835361070575,
+    526.6952031186182,
+    24.442257217847768
+   ],
+   [
+    30.65416869440381,
+    526.6952031186182,
+    32.07020997375328
+   ],
+   [
+    30.65416869440382,
+    530.4038645359411,
+    32.07020997375328
+   ],
+   [
+    30.570835361070582,
+    530.4038645359411,
+    32.07020997375328
+   ],
+   [
+    30.570835361070575,
+    526.6952031186182,
+    32.07020997375328
+   ]
+  ],
+  "boundsFeet": {
+   "x": [
+    26.737173943747727,
+    30.65416869440382
+   ],
+   "y": [
+    526.6952031186182,
+    530.4038645359411
+   ],
+   "z": [
+    24.442257217847768,
+    32.07020997375328
+   ]
+  },
+  "persistedHostId": 2315413,
+  "associatedLevelId": 400176,
+  "savedPreparedRecord": {
+   "levelId": 400176,
+   "nativeElementId": 2315416,
+   "hostWallNativeElementId": 2315413,
+   "footprintFeet": [
+    [
+     32.25292197524376,
+     526.6952031186182
+    ],
+    [
+     32.25292197524376,
+     530.4038645359411
+    ],
+    [
+     28.972082080230628,
+     530.4038645359411
+    ],
+    [
+     28.972082080230628,
+     526.6952031186182
+    ]
+   ],
+   "state": "unmatched"
+  }
+ },
+ "historicalSill": {
+  "elementId": 2315423,
+  "record": {
+   "elementId": 2315423,
+   "categoryId": -2000171,
+   "categoryName": "Curtain Wall Mullions",
+   "categorySource": "element-header",
+   "typeName": "50 x 150 \u043c\u043c",
+   "renderGeometryProvenance": "native",
+   "orientedBox": [
+    [
+     30.366439035611215,
+     530.4036458136148,
+     24.442257217847768
+    ],
+    [
+     30.366439035611215,
+     530.4036458136148,
+     24.278215223097114
+    ],
+    [
+     30.858565019863185,
+     530.4036458136148,
+     24.278215223097114
+    ],
+    [
+     30.858565019863185,
+     530.4036458136148,
+     24.442257217847768
+    ],
+    [
+     30.366439035611208,
+     526.6952031186183,
+     24.442257217847768
+    ],
+    [
+     30.366439035611208,
+     526.6952031186183,
+     24.278215223097114
+    ],
+    [
+     30.85856501986318,
+     526.6952031186183,
+     24.278215223097114
+    ],
+    [
+     30.85856501986318,
+     526.6952031186183,
+     24.442257217847768
+    ]
+   ],
+   "boundsFeet": {
+    "x": [
+     30.366439035611208,
+     30.858565019863185
+    ],
+    "y": [
+     526.6952031186183,
+     530.4036458136148
+    ],
+    "z": [
+     24.278215223097114,
+     24.442257217847768
+    ]
+   },
+   "persistedHostId": 2315413,
+   "associatedLevelId": 400176
+  },
+  "riseFeet": 0.1640419947506544,
+  "exactRationalRiseFeet(Oct 18 filled-body diagnostic)": "92347433304021/562949953421312",
+  "status": "MODEL-DERIVED, NOT MEASURED: a 50 \u00d7 150 mm bottom mullion in host 2315413 whose top is 0.16404 ft (50 mm) above the native floor; the leaf starts at that top. No site measurement exists."
+ },
+ "stripContents": {
+  "nativeRecordsWhoseBoundsEnterTheStripAboveTheFloor": [],
+  "finding": "No native element (wall, curtain member, door, column, railing, room/area/separation record) has bounds inside the strip volume above the floor top 24.278 ft. The strip is open floor bounded by host 2315413 (west), basic walls 1505949 (south face y 523.0768) and 1505979 (north face y 532.4029), and continues east without any native wall at x 35.46.",
+  "sampleCells": {
+   "(32.3, 526.8)": "native-cell:24.278215:826",
+   "(32.3, 527.5)": "native-cell:24.278215:826",
+   "(32.3, 528.55)": "native-cell:24.278215:826",
+   "(32.3, 529.5)": "native-cell:24.278215:826",
+   "(32.3, 530.3)": "native-cell:24.278215:826",
+   "(33.0, 526.8)": "native-cell:24.278215:826",
+   "(33.0, 527.5)": "native-cell:24.278215:826",
+   "(33.0, 528.55)": "native-cell:24.278215:826",
+   "(33.0, 529.5)": "native-cell:24.278215:826",
+   "(33.0, 530.3)": "native-cell:24.278215:826",
+   "(34.0, 526.8)": "native-cell:24.278215:826",
+   "(34.0, 527.5)": "native-cell:24.278215:826",
+   "(34.0, 528.55)": "native-cell:24.278215:826",
+   "(34.0, 529.5)": "native-cell:24.278215:826",
+   "(34.0, 530.3)": "native-cell:24.278215:826",
+   "(35.0, 526.8)": "native-cell:24.278215:826",
+   "(35.0, 527.5)": "native-cell:24.278215:826",
+   "(35.0, 528.55)": "native-cell:24.278215:826",
+   "(35.0, 529.5)": "native-cell:24.278215:826",
+   "(35.0, 530.3)": "native-cell:24.278215:826",
+   "(35.4, 526.8)": "native-cell:24.278215:826",
+   "(35.4, 527.5)": "native-cell:24.278215:826",
+   "(35.4, 528.55)": "native-cell:24.278215:826",
+   "(35.4, 529.5)": "native-cell:24.278215:826",
+   "(35.4, 530.3)": "native-cell:24.278215:826"
+  },
+  "roomOutlinesCoveringAnySample": []
+ },
+ "roomBoundingAndRoomRecords": {
+  "roomAreaCensus": {
+   "note": "Records whose decoded category is Rooms (-2000160), RoomSeparationLines (-2000066), Areas (-2003200), AreaSchemeLines (-2000079) or whose category name matches /room|area|separation|space/i, across all elementBounds.",
+   "elementBounds": [],
+   "nativeCategories": [],
+   "schemaClassesMatching": [
+    "AreaPlanTopologiesInterface",
+    "RoomBoundingItem",
+    "AreaBasedLoadData",
+    "AreaLoad",
+    "AreaLoadPatternHelper",
+    "AreaLoadType",
+    "AreaMeasureCurveData",
+    "AreaSchemeSegments",
+    "AreaMeasureElem",
+    "AreaMeasureTracking",
+    "AreaReinforcementAssemblyComponentDescriptor",
+    "AreaReinforcementType",
+    "AreaReportParameters",
+    "AreaReportSettingsElem",
+    "AreaReportSettingsTracking",
+    "AreaSchemePlanTopologies",
+    "AreaSettingsElem",
+    "AreaTypeElem",
+    "RoomElemDomainData",
+    "Room",
+    "RoomBoundaryElem",
+    "RoomBoundaryLoop",
+    "RoomBoundarySegment",
+    "RoomCalculationPoint",
+    "SpatialElementCalculationLocation",
+    "RoomCalculationPointControl",
+    "RoomCreate3dGeometryGStep",
+    "RoomFaceOffsets",
+    "RoomElem",
+    "RoomElemReferencePlanesStep",
+    "RoomElemSectionControl",
+    "RoomGeometryWarning",
+    "RoomTag",
+    "RoomTagControl",
+    "RoomTagPlacement",
+    "RoomTracking",
+    "RoomTriangleData",
+    "RoomTrianglePicture",
+    "RoomValidityWarning",
+    "SpaceCell",
+    "SpacesDefinedVolumeCell",
+    "SpatialElementCalculationLocationGStep",
+    "SpatialElementCalculationPointRegenData",
+    "SpatialElementFromToCalculationPoints",
+    "SpatialElementFromToCalculationPointsRegenData"
+   ]
+  },
+  "finding": "The converted model exposes no Room (-2000160), RoomSeparationLines (-2000066), Area (-2003200) or AreaSchemeLines records anywhere (the schema declares Room/RoomBoundary* classes, but no instances are decoded into elementBounds). Room ownership in this pipeline comes only from DWG-derived outlines in floors/rooms.json; there is no native room boundary or separation line to consult."
+ },
+ "stripEdgeWalls": {
+  "2315413": {
+   "elementId": 2315413,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "wallKind": "curtain",
+   "solid": {
+    "elementId": 2315413,
+    "start": {
+     "x": 30.612502027737193,
+     "y": 518.7214498377784
+    },
+    "end": {
+     "x": 30.612502027737193,
+     "y": 530.5324734598262
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 3.280839895013134
+   },
+   "boundsFeet": {
+    "x": [
+     28.972082080230624,
+     32.25292197524376
+    ],
+    "y": [
+     524.6623947196679,
+     530.5679065306917
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": [
+    2315416
+   ]
+  },
+  "1505949": {
+   "elementId": 1505949,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "typeName": "Interior Wall - 120mm",
+   "wallKind": "basic",
+   "renderGeometryProvenance": "native",
+   "solid": {
+    "elementId": 1505949,
+    "start": {
+     "x": 30.808655412501075,
+     "y": 522.8799144047073
+    },
+    "end": {
+     "x": 42.96547955948241,
+     "y": 522.8799144047073
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 0.3937007874014853
+   },
+   "boundsFeet": {
+    "x": [
+     30.808655412501075,
+     42.96547955948241
+    ],
+    "y": [
+     522.6830640110064,
+     523.076764798408
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": []
+  },
+  "1505979": {
+   "elementId": 1505979,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "typeName": "Interior Wall - 200mm",
+   "wallKind": "basic",
+   "renderGeometryProvenance": "native",
+   "solid": {
+    "elementId": 1505979,
+    "start": {
+     "x": 30.454324703838925,
+     "y": 532.7309642734732
+    },
+    "end": {
+     "x": 54.447106856069894,
+     "y": 532.7309642734731
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 0.6561679790027029
+   },
+   "boundsFeet": {
+    "x": [
+     30.454324703838925,
+     54.447106856069894
+    ],
+    "y": [
+     532.4028802839719,
+     533.0590482629746
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": []
+  },
+  "2066749": {
+   "elementId": 2066749,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "wallKind": "curtain",
+   "solid": {
+    "elementId": 2066749,
+    "start": {
+     "x": 33.82702811591336,
+     "y": 522.3603924403093
+    },
+    "end": {
+     "x": 33.82702811591336,
+     "y": 549.801011172255
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 3.2808398950131448
+   },
+   "boundsFeet": {
+    "x": [
+     32.186608168406785,
+     35.46744806341993
+    ],
+    "y": [
+     536.0807018062821,
+     549.801011172255
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": []
+  },
+  "2038167": {
+   "elementId": 2038167,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "typeName": "Interior Wall - 120mm",
+   "wallKind": "basic",
+   "renderGeometryProvenance": "native",
+   "solid": {
+    "elementId": 2038167,
+    "start": {
+     "x": 30.611805018800272,
+     "y": 515.1479590241298
+    },
+    "end": {
+     "x": 30.611805018800293,
+     "y": 524.6623947196679
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 0.39370078740157766
+   },
+   "boundsFeet": {
+    "x": [
+     30.414954625099483,
+     30.80865541250108
+    ],
+    "y": [
+     515.1479590241298,
+     524.6623947196679
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": []
+  },
+  "2315493": {
+   "elementId": 2315493,
+   "categoryId": -2000011,
+   "categoryName": "Walls",
+   "categorySource": "element-header",
+   "typeName": "Interior Wall - 200mm",
+   "wallKind": "basic",
+   "renderGeometryProvenance": "native",
+   "solid": {
+    "elementId": 2315493,
+    "start": {
+     "x": 30.530481030361873,
+     "y": 530.5679065306917
+    },
+    "end": {
+     "x": 30.530481030361877,
+     "y": 532.402880283972
+    },
+    "baseElevation": 24.278215223097114,
+    "topElevation": 33.46456692913386,
+    "thickness": 0.6561679790026247
+   },
+   "boundsFeet": {
+    "x": [
+     30.20239704086056,
+     30.85856501986319
+    ],
+    "y": [
+     530.5679065306917,
+     532.402880283972
+    ],
+    "z": [
+     24.278215223097114,
+     33.46456692913386
+    ]
+   },
+   "persistedHostId": null,
+   "associatedLevelId": 400176,
+   "hostedDoors": []
+  }
+ },
+ "curtain2066749Note": "Curtain host 2066749 (north of wall 1505979) has bounds and all 23 hosted members at y >= 536.0807; its decoded solid location line nominally starts at y 522.3604 (x 33.827), which would pass through the strip, but no geometry or member exists there. Its envelope east face x 35.46744806341993 equals 08-316's drawn west edge x 35.4648246270012 within 0.0026 ft.",
+ "planWallsAndDoors(level 400176)": {
+  "cutElevationFeet": 28.278215223097114,
+  "walls": [
+   {
+    "elementId": 1505356,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      28.774534677592925,
+      508.62663356481244
+     ],
+     [
+      28.77453467759294,
+      515.1883133548387
+     ],
+     [
+      29.430702656595564,
+      515.1883133548387
+     ],
+     [
+      29.43070265659555,
+      508.62663356481244
+     ]
+    ]
+   },
+   {
+    "elementId": 1505357,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      28.77453467759294,
+      515.8444813338413
+     ],
+     [
+      30.414954625099483,
+      515.8444813338413
+     ],
+     [
+      30.414954625099483,
+      515.1883133548386
+     ],
+     [
+      28.77453467759294,
+      515.1883133548386
+     ]
+    ]
+   },
+   {
+    "elementId": 1505359,
+    "categoryName": "Walls",
+    "typeName": null,
+    "wallKind": "curtain",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.611805018800286,
+      520.5951375018203
+     ],
+     [
+      26.70104386394172,
+      520.5951375018203
+     ],
+     [
+      26.70104386394172,
+      523.8759773968336
+     ],
+     [
+      30.611805018800286,
+      523.8759773968336
+     ]
+    ]
+   },
+   {
+    "elementId": 1505360,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 1505359,
+    "polygonFeet": [
+     [
+      25.778307642638865,
+      522.0731558745238
+     ],
+     [
+      30.250912630348843,
+      522.0731558745236
+     ],
+     [
+      30.250912630348843,
+      522.155176871899
+     ],
+     [
+      25.778307642638865,
+      522.155176871899
+     ]
+    ]
+   },
+   {
+    "elementId": 1505423,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 1505359,
+    "polygonFeet": [
+     [
+      30.25091263034884,
+      521.9894944572009
+     ],
+     [
+      30.414954625099497,
+      521.9894944572009
+     ],
+     [
+      30.414954625099497,
+      522.4816204414528
+     ],
+     [
+      30.250912630348843,
+      522.4816204414528
+     ]
+    ]
+   },
+   {
+    "elementId": 1505949,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 120mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.808655412501075,
+      523.076764798408
+     ],
+     [
+      42.96547955948241,
+      523.076764798408
+     ],
+     [
+      42.96547955948241,
+      522.6830640110065
+     ],
+     [
+      30.808655412501075,
+      522.6830640110065
+     ]
+    ]
+   },
+   {
+    "elementId": 2038167,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 120mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.414954625099483,
+      515.1479590241298
+     ],
+     [
+      30.414954625099504,
+      524.6623947196679
+     ],
+     [
+      30.808655412501082,
+      524.6623947196679
+     ],
+     [
+      30.80865541250106,
+      515.1479590241298
+     ]
+    ]
+   },
+   {
+    "elementId": 2461783,
+    "categoryName": "Walls",
+    "typeName": null,
+    "wallKind": "curtain",
+    "approximate": true,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      28.51862916578189,
+      515.8444813338413
+     ],
+     [
+      31.79946906079502,
+      515.8444813338413
+     ],
+     [
+      31.79946906079502,
+      521.9894944572009
+     ],
+     [
+      28.51862916578189,
+      521.9894944572009
+     ],
+     [
+      28.51862916578189,
+      515.8444813338413
+     ]
+    ]
+   },
+   {
+    "elementId": 2461784,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2461783,
+    "polygonFeet": [
+     [
+      30.23942969071628,
+      518.9990088928964
+     ],
+     [
+      30.321450688091605,
+      518.9990088928964
+     ],
+     [
+      30.32145068809161,
+      521.8254524624502
+     ],
+     [
+      30.239429690716282,
+      521.8254524624502
+     ]
+    ]
+   },
+   {
+    "elementId": 2461786,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2461783,
+    "polygonFeet": [
+     [
+      30.239429690716275,
+      516.008523328592
+     ],
+     [
+      30.321450688091602,
+      516.008523328592
+     ],
+     [
+      30.321450688091605,
+      518.8349668981458
+     ],
+     [
+      30.23942969071628,
+      518.8349668981458
+     ]
+    ]
+   },
+   {
+    "elementId": 2461794,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2461783,
+    "polygonFeet": [
+     [
+      29.912986121162465,
+      515.8444813338413
+     ],
+     [
+      30.405112105414435,
+      515.8444813338413
+     ],
+     [
+      30.405112105414435,
+      516.0085233285919
+     ],
+     [
+      29.912986121162465,
+      516.0085233285919
+     ]
+    ]
+   },
+   {
+    "elementId": 2461797,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2461783,
+    "polygonFeet": [
+     [
+      29.912986121162476,
+      521.8254524624502
+     ],
+     [
+      30.405112105414446,
+      521.8254524624502
+     ],
+     [
+      30.405112105414446,
+      521.9894944572009
+     ],
+     [
+      29.912986121162476,
+      521.9894944572009
+     ]
+    ]
+   },
+   {
+    "elementId": 2461800,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2461783,
+    "polygonFeet": [
+     [
+      29.91298612116247,
+      518.8349668981457
+     ],
+     [
+      30.40511210541444,
+      518.8349668981457
+     ],
+     [
+      30.40511210541444,
+      518.9990088928964
+     ],
+     [
+      29.91298612116247,
+      518.9990088928964
+     ]
+    ]
+   },
+   {
+    "elementId": 1505610,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      29.7981567248363,
+      532.4584905201929
+     ],
+     [
+      29.798156724836307,
+      536.0807018062821
+     ],
+     [
+      30.45432470383893,
+      536.0807018062821
+     ],
+     [
+      30.454324703838925,
+      532.4584905201929
+     ]
+    ]
+   },
+   {
+    "elementId": 1505611,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.45432470383893,
+      536.0807018062821
+     ],
+     [
+      33.82702811591335,
+      536.0807018062821
+     ],
+     [
+      33.82702811591335,
+      535.4245338272794
+     ],
+     [
+      30.45432470383893,
+      535.4245338272794
+     ]
+    ]
+   },
+   {
+    "elementId": 1505979,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.454324703838925,
+      533.0590482629746
+     ],
+     [
+      54.447106856069894,
+      533.0590482629744
+     ],
+     [
+      54.447106856069894,
+      532.4028802839717
+     ],
+     [
+      30.454324703838925,
+      532.4028802839719
+     ]
+    ]
+   },
+   {
+    "elementId": 2315413,
+    "categoryName": "Walls",
+    "typeName": null,
+    "wallKind": "curtain",
+    "approximate": true,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      28.972082080230628,
+      524.6623947196679
+     ],
+     [
+      32.25292197524376,
+      524.6623947196679
+     ],
+     [
+      32.25292197524376,
+      530.5324734598262
+     ],
+     [
+      28.972082080230628,
+      530.5324734598262
+     ],
+     [
+      28.972082080230628,
+      524.6623947196679
+     ]
+    ]
+   },
+   {
+    "elementId": 2315414,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2315413,
+    "polygonFeet": [
+     [
+      30.450100452934038,
+      524.8264367144185
+     ],
+     [
+      30.532121450309365,
+      524.8264367144185
+     ],
+     [
+      30.53212145030937,
+      526.5311611238676
+     ],
+     [
+      30.45010045293404,
+      526.5311611238676
+     ]
+    ]
+   },
+   {
+    "elementId": 2315424,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2315413,
+    "polygonFeet": [
+     [
+      30.366439035611215,
+      530.4038645359411
+     ],
+     [
+      30.858565019863185,
+      530.4038645359411
+     ],
+     [
+      30.858565019863185,
+      530.5679065306917
+     ],
+     [
+      30.366439035611215,
+      530.5679065306917
+     ]
+    ]
+   },
+   {
+    "elementId": 2315427,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2315413,
+    "polygonFeet": [
+     [
+      30.366439035611204,
+      524.6623947196679
+     ],
+     [
+      30.858565019863175,
+      524.6623947196679
+     ],
+     [
+      30.858565019863175,
+      524.8264367144185
+     ],
+     [
+      30.366439035611204,
+      524.8264367144185
+     ]
+    ]
+   },
+   {
+    "elementId": 2315430,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2315413,
+    "polygonFeet": [
+     [
+      30.366439035611208,
+      526.5311611238676
+     ],
+     [
+      30.85856501986318,
+      526.5311611238676
+     ],
+     [
+      30.85856501986318,
+      526.6952031186183
+     ],
+     [
+      30.366439035611208,
+      526.6952031186183
+     ]
+    ]
+   },
+   {
+    "elementId": 2315493,
+    "categoryName": "Walls",
+    "typeName": "Interior Wall - 200mm",
+    "wallKind": "basic",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.20239704086056,
+      530.5679065306917
+     ],
+     [
+      30.202397040860564,
+      532.402880283972
+     ],
+     [
+      30.85856501986319,
+      532.402880283972
+     ],
+     [
+      30.858565019863185,
+      530.5679065306917
+     ]
+    ]
+   },
+   {
+    "elementId": 1505458,
+    "categoryName": "Walls",
+    "typeName": null,
+    "wallKind": "curtain",
+    "approximate": false,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      30.126240714337616,
+      531.0641335648122
+     ],
+     [
+      27.1097238473386,
+      531.0641335648122
+     ],
+     [
+      27.1097238473386,
+      534.3449734598255
+     ],
+     [
+      30.126240714337616,
+      534.3449734598255
+     ]
+    ]
+   },
+   {
+    "elementId": 1505459,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 1505458,
+    "polygonFeet": [
+     [
+      24.995540254145098,
+      532.7849340897467
+     ],
+     [
+      29.634114730085642,
+      532.7849340897467
+     ],
+     [
+      29.634114730085642,
+      532.866955087122
+     ],
+     [
+      24.995540254145098,
+      532.866955087122
+     ]
+    ]
+   },
+   {
+    "elementId": 1505542,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 1505458,
+    "polygonFeet": [
+     [
+      29.634114730085646,
+      532.4584905201929
+     ],
+     [
+      29.798156724836304,
+      532.4584905201929
+     ],
+     [
+      29.798156724836304,
+      532.9506165044448
+     ],
+     [
+      29.63411473008565,
+      532.9506165044448
+     ]
+    ]
+   },
+   {
+    "elementId": 2066749,
+    "categoryName": "Walls",
+    "typeName": null,
+    "wallKind": "curtain",
+    "approximate": true,
+    "persistedHostId": null,
+    "polygonFeet": [
+     [
+      32.186608168406785,
+      536.0807018062821
+     ],
+     [
+      35.46744806341993,
+      536.0807018062821
+     ],
+     [
+      35.46744806341993,
+      549.801011172255
+     ],
+     [
+      32.186608168406785,
+      549.801011172255
+     ],
+     [
+      32.186608168406785,
+      536.0807018062821
+     ]
+    ]
+   },
+   {
+    "elementId": 2066750,
+    "categoryName": "Curtain Panels",
+    "typeName": "With Glazing",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2066749,
+    "polygonFeet": [
+     [
+      33.6646265411102,
+      536.2447438010328
+     ],
+     [
+      33.74664753848553,
+      536.2447438010328
+     ],
+     [
+      33.74664753848554,
+      540.5721172645644
+     ],
+     [
+      33.66462654111021,
+      540.5721172645644
+     ]
+    ]
+   },
+   {
+    "elementId": 2066773,
+    "categoryName": "Curtain Wall Mullions",
+    "typeName": "50 x 150 \u043c\u043c",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2066749,
+    "polygonFeet": [
+     [
+      33.580965123787365,
+      536.0807018062821
+     ],
+     [
+      34.073091108039335,
+      536.0807018062821
+     ],
+     [
+      34.073091108039335,
+      536.2447438010328
+     ],
+     [
+      33.580965123787365,
+      536.2447438010328
+     ]
+    ]
+   }
+  ],
+  "doors": [
+   {
+    "elementId": 2315416,
+    "categoryName": "Doors",
+    "typeName": "Single-pane stained-glass door",
+    "wallKind": null,
+    "approximate": false,
+    "persistedHostId": 2315413,
+    "polygonFeet": [
+     [
+      30.570835361070575,
+      526.6952031186182
+     ],
+     [
+      30.65416869440381,
+      526.6952031186182
+     ],
+     [
+      30.65416869440382,
+      530.4038645359411
+     ],
+     [
+      30.570835361070582,
+      530.4038645359411
+     ]
+    ]
+   }
+  ],
+  "columns": []
+ },
+ "nativeCells": {
+  "sides(native-door-sides.json)": {
+   "door": 2315416,
+   "levelId": 400176,
+   "state": "unmatched",
+   "existingOwners": [
+    "08-360 Link"
+   ],
+   "kind": "native-pair",
+   "sideA": {
+    "cell": "native-cell:24.278215:816",
+    "owners": [
+     "08-360 Link"
+    ],
+    "stepFeet": 0.25
+   },
+   "sideB": {
+    "cell": "native-cell:24.278215:826",
+    "owners": [
+     "08-325 Lab",
+     "08-305 Corridor",
+     "08-361 Classroom",
+     "08-362 Computer Lab",
+     "08-366 Corridor",
+     "08-320 Instrument Room",
+     "08-321 Chem Lab",
+     "08-309 Office",
+     "08-308 Office",
+     "08-306 Office",
+     "08-311 Office",
+     "08-313 Office",
+     "08-315 Office",
+     "08-316 Corridor",
+     "08-310 Corridor",
+     "08-314 Office",
+     "08-302 Corridor"
+    ],
+    "stepFeet": 0.25
+   },
+   "existingWithinNativeOwners": true
+  },
+  "cell826NearStrip": {
+   "id": "native-cell:24.278215:826",
+   "exactFaceId": "native-face:24.278215:3813",
+   "roomCount": 17,
+   "rooms": [
+    "08-325 Lab",
+    "08-305 Corridor",
+    "08-361 Classroom",
+    "08-362 Computer Lab",
+    "08-366 Corridor",
+    "08-320 Instrument Room",
+    "08-321 Chem Lab",
+    "08-309 Office",
+    "08-308 Office",
+    "08-306 Office",
+    "08-311 Office",
+    "08-313 Office",
+    "08-315 Office",
+    "08-316 Corridor",
+    "08-310 Corridor",
+    "08-314 Office",
+    "08-302 Corridor"
+   ],
+   "nativeFloorIds": [
+    1505065
+   ],
+   "ringPointCounts": [
+    676,
+    21,
+    5,
+    5,
+    9,
+    5,
+    5,
+    8,
+    48,
+    37,
+    7,
+    5,
+    36
+   ],
+   "segmentsInWindow": {
+    "ring0": [
+     [
+      [
+       54.447106856069894,
+       532.4028802839719
+      ],
+      [
+       30.85856501986319,
+       532.402880283972
+      ]
+     ],
+     [
+      [
+       30.85856501986319,
+       532.402880283972
+      ],
+      [
+       30.858565019863185,
+       530.5679065306917
+      ]
+     ],
+     [
+      [
+       30.858565019863185,
+       530.5679065306917
+      ],
+      [
+       30.858565019863185,
+       530.4038645359411
+      ]
+     ],
+     [
+      [
+       30.858565019863185,
+       530.4038645359411
+      ],
+      [
+       32.25292197524376,
+       530.4038645359411
+      ]
+     ],
+     [
+      [
+       32.25292197524376,
+       530.4038645359411
+      ],
+      [
+       32.25292197524376,
+       526.6952031186182
+      ]
+     ],
+     [
+      [
+       32.25292197524376,
+       526.6952031186182
+      ],
+      [
+       30.85856501986318,
+       526.6952031186182
+      ]
+     ],
+     [
+      [
+       30.85856501986318,
+       526.6952031186182
+      ],
+      [
+       30.85856501986318,
+       526.5311611238676
+      ]
+     ],
+     [
+      [
+       30.85856501986318,
+       526.5311611238676
+      ],
+      [
+       30.858565019863175,
+       524.8264367144185
+      ]
+     ],
+     [
+      [
+       30.858565019863175,
+       524.8264367144185
+      ],
+      [
+       30.858565019863175,
+       524.6623947196679
+      ]
+     ],
+     [
+      [
+       30.858565019863175,
+       524.6623947196679
+      ],
+      [
+       30.80865541250108,
+       524.6623947196679
+      ]
+     ],
+     [
+      [
+       30.80865541250108,
+       524.6623947196679
+      ],
+      [
+       30.808655412501075,
+       523.076764798408
+      ]
+     ],
+     [
+      [
+       30.808655412501075,
+       523.076764798408
+      ],
+      [
+       43.35918034688399,
+       523.076764798408
+      ]
+     ],
+     [
+      [
+       42.96547955948241,
+       522.6830640110064
+      ],
+      [
+       30.808655412501075,
+       522.6830640110064
+      ]
+     ],
+     [
+      [
+       30.808655412501075,
+       522.6830640110064
+      ],
+      [
+       30.808655412501075,
+       523.0766554370782
+      ]
+     ],
+     [
+      [
+       30.808655412501075,
+       523.0766554370782
+      ],
+      [
+       30.808655412501057,
+       515.1479590241298
+      ]
+     ]
+    ]
+   },
+   "window": {
+    "x": [
+     26,
+     40
+    ],
+    "y": [
+     518,
+     538
+    ]
+   }
+  },
+  "cell816NearDoor": {
+   "id": "native-cell:24.278215:816",
+   "exactFaceId": "native-face:24.278215:3760",
+   "roomCount": 1,
+   "rooms": [
+    "08-360 Link"
+   ],
+   "nativeFloorIds": [
+    1505065
+   ],
+   "ringPointCounts": [
+    93,
+    5
+   ],
+   "segmentsInWindow": {
+    "ring0": [
+     [
+      [
+       16.1769296902163,
+       522.4816204414528
+      ],
+      [
+       30.414954625099497,
+       522.4816204414528
+      ]
+     ],
+     [
+      [
+       30.414954625099497,
+       522.4816204414528
+      ],
+      [
+       30.414954625099497,
+       521.9894944572009
+      ]
+     ],
+     [
+      [
+       30.414954625099497,
+       521.9894944572009
+      ],
+      [
+       30.414954625099497,
+       521.9894944572
+      ]
+     ],
+     [
+      [
+       30.414954625099497,
+       521.9894944572
+      ],
+      [
+       30.414954625099497,
+       521.9894944572
+      ]
+     ],
+     [
+      [
+       30.414954625099497,
+       521.9894944572
+      ],
+      [
+       30.414954625099504,
+       524.6623947196679
+      ]
+     ],
+     [
+      [
+       30.414954625099504,
+       524.6623947196679
+      ],
+      [
+       30.366439035611204,
+       524.6623947196679
+      ]
+     ],
+     [
+      [
+       30.366439035611204,
+       524.6623947196679
+      ],
+      [
+       30.366439035611204,
+       524.8264367144185
+      ]
+     ],
+     [
+      [
+       30.366439035611204,
+       524.8264367144185
+      ],
+      [
+       30.366439035611208,
+       526.5311611238676
+      ]
+     ],
+     [
+      [
+       30.366439035611208,
+       526.5311611238676
+      ],
+      [
+       30.366439035611208,
+       526.6952031186182
+      ]
+     ],
+     [
+      [
+       30.366439035611208,
+       526.6952031186182
+      ],
+      [
+       28.972082080230628,
+       526.6952031186182
+      ]
+     ],
+     [
+      [
+       28.972082080230628,
+       526.6952031186182
+      ],
+      [
+       28.972082080230628,
+       530.4038645359411
+      ]
+     ],
+     [
+      [
+       28.972082080230628,
+       530.4038645359411
+      ],
+      [
+       30.366439035611215,
+       530.4038645359411
+      ]
+     ],
+     [
+      [
+       30.366439035611215,
+       530.4038645359411
+      ],
+      [
+       30.366439035611215,
+       530.5679065306917
+      ]
+     ],
+     [
+      [
+       30.366439035611215,
+       530.5679065306917
+      ],
+      [
+       30.20239704086056,
+       530.5679065306917
+      ]
+     ],
+     [
+      [
+       30.20239704086056,
+       530.5679065306917
+      ],
+      [
+       30.202397040860564,
+       532.402880283972
+      ]
+     ],
+     [
+      [
+       30.202397040860564,
+       532.402880283972
+      ],
+      [
+       30.454324703838925,
+       532.402880283972
+      ]
+     ],
+     [
+      [
+       30.454324703838925,
+       532.402880283972
+      ],
+      [
+       30.454324703838925,
+       532.4584905201929
+      ]
+     ],
+     [
+      [
+       30.454324703838925,
+       532.4584905201929
+      ],
+      [
+       24.9955402541451,
+       532.4584905201929
+      ]
+     ],
+     [
+      [
+       24.9955402541451,
+       532.4584905201929
+      ],
+      [
+       24.9955402541451,
+       532.9376571868596
+      ]
+     ],
+     [
+      [
+       24.9955402541451,
+       532.9376571868596
+      ],
+      [
+       24.995540254145094,
+       532.9376571868596
+      ]
+     ],
+     [
+      [
+       24.995540254145094,
+       532.9376571868596
+      ],
+      [
+       24.995540254145094,
+       532.4584905201929
+      ]
+     ],
+     [
+      [
+       24.995540254145094,
+       532.4584905201929
+      ],
+      [
+       15.226265320012029,
+       532.4584905201929
+      ]
+     ]
+    ]
+   },
+   "window": {
+    "x": [
+     20,
+     34
+    ],
+    "y": [
+     518,
+     538
+    ]
+   }
+  }
+ },
+ "roomOutlines": [
+  {
+   "key": "rm-400176-a4b94b10b2f8",
+   "levelId": 400176,
+   "room": "08-360 Link",
+   "polygonSource": "derived",
+   "confidence": 0.9,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     -48.4364,
+     30.4543
+    ],
+    "y": [
+     521.8327,
+     532.7849
+    ]
+   },
+   "probeToOutlineFeet": 2.9149,
+   "apertureFaceToOutlineFeet": 2.737,
+   "doorCentreToOutlineFeet": 1.6404,
+   "probeNearestOutlinePoint": [
+    30.3664,
+    530.5325
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    30.3664,
+    530.5325
+   ],
+   "doorCentreNearestOutlinePoint": [
+    28.9721,
+    528.5495
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e6668d178587",
+   "levelId": 400176,
+   "room": "08-316 Corridor",
+   "polygonSource": "derived",
+   "confidence": 0.9,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     35.46482462700121,
+     59.86482462700121
+    ],
+    "y": [
+     518.5976690747909,
+     532.1976690747908
+    ]
+   },
+   "probeToOutlineFeet": 2.9619,
+   "apertureFaceToOutlineFeet": 3.2119,
+   "doorCentreToOutlineFeet": 4.8523,
+   "probeNearestOutlinePoint": [
+    35.4648,
+    528.5495
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    35.4648,
+    528.5495
+   ],
+   "doorCentreNearestOutlinePoint": [
+    35.4648,
+    528.5495
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e692cd1785ac",
+   "levelId": 400176,
+   "room": "08-317 Chem Lab",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     29.890037152643743,
+     64.77843715264373
+    ],
+    "y": [
+     532.95406886345,
+     572.73096886345
+    ]
+   },
+   "probeToOutlineFeet": 4.5095,
+   "apertureFaceToOutlineFeet": 4.5095,
+   "doorCentreToOutlineFeet": 4.5095,
+   "probeNearestOutlinePoint": [
+    32.5029,
+    533.0591
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    32.2529,
+    533.0591
+   ],
+   "doorCentreNearestOutlinePoint": [
+    30.6125,
+    533.0591
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e69d6d1785b6",
+   "levelId": 400176,
+   "room": "08-314 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     29.4307,
+     42.9655
+    ],
+    "y": [
+     512.0853,
+     522.6831
+    ]
+   },
+   "probeToOutlineFeet": 5.8664,
+   "apertureFaceToOutlineFeet": 5.8664,
+   "doorCentreToOutlineFeet": 5.8697,
+   "probeNearestOutlinePoint": [
+    32.5029,
+    522.6831
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    32.2529,
+    522.6831
+   ],
+   "doorCentreNearestOutlinePoint": [
+    30.8087,
+    522.6831
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e699851785b2",
+   "levelId": 400176,
+   "room": "08-310 Corridor",
+   "polygonSource": "derived",
+   "confidence": 0.9,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     43.46482462700121,
+     47.86482462700121
+    ],
+    "y": [
+     472.5976690747909,
+     517.7976690747909
+    ]
+   },
+   "probeToOutlineFeet": 15.6427,
+   "apertureFaceToOutlineFeet": 15.8253,
+   "doorCentreToOutlineFeet": 17.0654,
+   "probeNearestOutlinePoint": [
+    43.8648,
+    517.7977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    43.8648,
+    517.7977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    43.8648,
+    517.7977
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e64b5d178570",
+   "levelId": 400176,
+   "room": "08-312 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     31.0648246270012,
+     42.664824627001224
+    ],
+    "y": [
+     502.19766907479084,
+     511.3976690747909
+    ]
+   },
+   "probeToOutlineFeet": 17.1519,
+   "apertureFaceToOutlineFeet": 17.1519,
+   "doorCentreToOutlineFeet": 17.1578,
+   "probeNearestOutlinePoint": [
+    32.5029,
+    511.3977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    32.2529,
+    511.3977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    31.0648,
+    511.3977
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e663a5178585",
+   "levelId": 400176,
+   "room": "08-315 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     48.392,
+     59.2949
+    ],
+    "y": [
+     507.8625,
+     518.0441
+    ]
+   },
+   "probeToOutlineFeet": 19.1328,
+   "apertureFaceToOutlineFeet": 19.342,
+   "doorCentreToOutlineFeet": 20.737,
+   "probeNearestOutlinePoint": [
+    48.474,
+    518.0144
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    48.474,
+    518.0144
+   ],
+   "doorCentreNearestOutlinePoint": [
+    48.474,
+    518.0144
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e65fc1178581",
+   "levelId": 400176,
+   "room": "08-313 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     48.369,
+     59.2949
+    ],
+    "y": [
+     497.3356,
+     507.4688
+    ]
+   },
+   "probeToOutlineFeet": 26.4337,
+   "apertureFaceToOutlineFeet": 26.5852,
+   "doorCentreToOutlineFeet": 27.6154,
+   "probeNearestOutlinePoint": [
+    48.451,
+    507.4688
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    48.451,
+    507.4688
+   ],
+   "doorCentreNearestOutlinePoint": [
+    48.451,
+    507.4688
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e64ec1178573",
+   "levelId": 400176,
+   "room": "08-309 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     31.864824627001212,
+     42.664824627001224
+    ],
+    "y": [
+     492.19766907479084,
+     501.3976690747909
+    ]
+   },
+   "probeToOutlineFeet": 27.1519,
+   "apertureFaceToOutlineFeet": 27.1519,
+   "doorCentreToOutlineFeet": 27.1807,
+   "probeNearestOutlinePoint": [
+    32.5029,
+    501.3977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    32.2529,
+    501.3977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    31.8648,
+    501.3977
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-fd5448070a66",
+   "levelId": 400176,
+   "room": "08-302 Corridor",
+   "polygonSource": "manual",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     50.26482462700122,
+     85.0648246270012
+    ],
+    "y": [
+     481.3976690747909,
+     536.9976690747908
+    ]
+   },
+   "probeToOutlineFeet": 28.7819,
+   "apertureFaceToOutlineFeet": 29.03,
+   "doorCentreToOutlineFeet": 30.6588,
+   "probeNearestOutlinePoint": [
+    61.0648,
+    524.9977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    61.0648,
+    524.9977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    61.0648,
+    524.9977
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-2188e217a698",
+   "levelId": 400176,
+   "room": "08-305 Corridor",
+   "polygonSource": "derived",
+   "confidence": 0.65,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     65.0648246270012,
+     73.4648246270012
+    ],
+    "y": [
+     532.5976690747909,
+     626.9976690747908
+    ]
+   },
+   "probeToOutlineFeet": 33.6658,
+   "apertureFaceToOutlineFeet": 33.9106,
+   "doorCentreToOutlineFeet": 35.5187,
+   "probeNearestOutlinePoint": [
+    65.4648,
+    535.3977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    65.4648,
+    535.3977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    65.4648,
+    535.3977
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e65c5917857e",
+   "levelId": 400176,
+   "room": "08-311 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     48.369,
+     59.2949
+    ],
+    "y": [
+     486.8747,
+     496.9419
+    ]
+   },
+   "probeToOutlineFeet": 35.4032,
+   "apertureFaceToOutlineFeet": 35.5165,
+   "doorCentreToOutlineFeet": 36.294,
+   "probeNearestOutlinePoint": [
+    48.451,
+    496.9419
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    48.451,
+    496.9419
+   ],
+   "doorCentreNearestOutlinePoint": [
+    48.451,
+    496.9419
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e652a9178576",
+   "levelId": 400176,
+   "room": "08-308 Office",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     29.4307,
+     42.9655
+    ],
+    "y": [
+     481.5748,
+     491.355
+    ]
+   },
+   "probeToOutlineFeet": 37.1945,
+   "apertureFaceToOutlineFeet": 37.1945,
+   "doorCentreToOutlineFeet": 37.1945,
+   "probeNearestOutlinePoint": [
+    32.5029,
+    491.355
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    32.2529,
+    491.355
+   ],
+   "doorCentreNearestOutlinePoint": [
+    30.6125,
+    491.355
+   ],
+   "inCell826": true,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-d2a260fd4351",
+   "levelId": 400176,
+   "room": "08-326 Janitor",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     73.5842,
+     78.0583
+    ],
+    "y": [
+     531.9029,
+     542.2989
+    ]
+   },
+   "probeToOutlineFeet": 41.2179,
+   "apertureFaceToOutlineFeet": 41.4671,
+   "doorCentreToOutlineFeet": 43.1023,
+   "probeNearestOutlinePoint": [
+    73.5842,
+    531.9029
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    73.5842,
+    531.9029
+   ],
+   "doorCentreNearestOutlinePoint": [
+    73.5842,
+    531.9029
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-d29c14fd434c",
+   "levelId": 400176,
+   "room": "08-304 Mens Washroom",
+   "polygonSource": "derived",
+   "confidence": 1,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     74.5721,
+     86.1056
+    ],
+    "y": [
+     509.2802,
+     525.8018
+    ]
+   },
+   "probeToOutlineFeet": 42.1588,
+   "apertureFaceToOutlineFeet": 42.4083,
+   "doorCentreToOutlineFeet": 44.0454,
+   "probeNearestOutlinePoint": [
+    74.5721,
+    525.8018
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    74.5721,
+    525.8018
+   ],
+   "doorCentreNearestOutlinePoint": [
+    74.5721,
+    525.8018
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  },
+  {
+   "key": "rm-400176-e68c611785a7",
+   "levelId": 400176,
+   "room": "08-318 Prep Room",
+   "polygonSource": "derived",
+   "confidence": 0.65,
+   "boundaryReview": null,
+   "bboxFeet": {
+    "x": [
+     34.26482462700122,
+     51.0648246270012
+    ],
+    "y": [
+     573.3976690747909,
+     592.5976690747909
+    ]
+   },
+   "probeToOutlineFeet": 45.0056,
+   "apertureFaceToOutlineFeet": 45.0272,
+   "doorCentreToOutlineFeet": 45.2029,
+   "probeNearestOutlinePoint": [
+    36.2648,
+    573.3977
+   ],
+   "apertureFaceNearestOutlinePoint": [
+    36.2648,
+    573.3977
+   ],
+   "doorCentreNearestOutlinePoint": [
+    36.2648,
+    573.3977
+   ],
+   "inCell826": false,
+   "stripSamplesInside": 0
+  }
+ ],
+ "floor2Analog": {
+  "door": 2311764,
+  "host": 2311758,
+  "graphEdge": [
+   {
+    "id": "door:694:2311764",
+    "enabled": true,
+    "roomKeys": [
+     "rm-694-3eff6106de76",
+     "rm-694-fa60cb06b7c9"
+    ],
+    "rooms": [
+     "08-216 Vestibule",
+     "08-260 Link"
+    ]
+   }
+  ],
+  "rooms": [
+   {
+    "key": "rm-694-3eff6106de76",
+    "room": "08-216 Vestibule",
+    "polygonSource": "manual",
+    "polygonFeet": [
+     [
+      32.24906123802165,
+      523.3698732403554
+     ],
+     [
+      43.84906123802165,
+      523.3698732403554
+     ],
+     [
+      43.84906123802165,
+      521.3698732403554
+     ],
+     [
+      45.84906123802165,
+      520.5698732403555
+     ],
+     [
+      46.64906123802166,
+      518.5698732403555
+     ],
+     [
+      49.84906123802165,
+      518.5698732403555
+     ],
+     [
+      49.84906123802165,
+      527.3698732403554
+     ],
+     [
+      53.049061238021636,
+      527.3698732403554
+     ],
+     [
+      53.049061238021636,
+      531.3698732403554
+     ],
+     [
+      48.13477089806461,
+      531.3698732403554
+     ],
+     [
+      48.13477089806463,
+      531.9663645359408
+     ],
+     [
+      43.699075360006866,
+      531.9663645359408
+     ],
+     [
+      43.699075360006844,
+      531.3698732403554
+     ],
+     [
+      32.24906123802165,
+      531.3698732403554
+     ],
+     [
+      32.24906123802165,
+      523.3698732403554
+     ]
+    ]
+   },
+   {
+    "key": "rm-694-fa60cb06b7c9",
+    "room": "08-260 Link",
+    "polygonSource": "derived",
+    "polygonFeet": [
+     [
+      -26.2091,
+      522.6457
+     ],
+     [
+      -28.8445,
+      522.6457
+     ],
+     [
+      -28.8445,
+      521.8327
+     ],
+     [
+      -42.6241,
+      521.8327
+     ],
+     [
+      -42.6241,
+      521.9148
+     ],
+     [
+      -46.1247,
+      521.9148
+     ],
+     [
+      -46.1247,
+      521.8327
+     ],
+     [
+      -47.9459,
+      521.8327
+     ],
+     [
+      -47.9459,
+      523.7807
+     ],
+     [
+      -48.11,
+      523.7807
+     ],
+     [
+      -48.11,
+      523.9447
+     ],
+     [
+      -48.4364,
+      523.9447
+     ],
+     [
+      -48.4364,
+      528.1606
+     ],
+     [
+      -48.11,
+      528.1606
+     ],
+     [
+      -48.11,
+      528.3246
+     ],
+     [
+      -48.4364,
+      528.3246
+     ],
+     [
+      -48.4364,
+      528.3944
+     ],
+     [
+      -46.7156,
+      528.3944
+     ],
+     [
+      -46.7156,
+      531.9172
+     ],
+     [
+      -48.4364,
+      531.9172
+     ],
+     [
+      -48.4364,
+      532.5405
+     ],
+     [
+      -48.356,
+      532.5405
+     ],
+     [
+      -48.356,
+      532.4585
+     ],
+     [
+      -48.192,
+      532.4585
+     ],
+     [
+      -48.192,
+      532.5405
+     ],
+     [
+      -48.11,
+      532.5405
+     ],
+     [
+      -48.11,
+      532.7046
+     ],
+     [
+      -48.192,
+      532.7046
+     ],
+     [
+      -48.192,
+      532.7849
+     ],
+     [
+      -43.5591,
+      532.7849
+     ],
+     [
+      -43.5591,
+      532.4585
+     ],
+     [
+      -43.3951,
+      532.4585
+     ],
+     [
+      -43.3951,
+      532.7849
+     ],
+     [
+      -38.6802,
+      532.7849
+     ],
+     [
+      -38.6802,
+      532.4585
+     ],
+     [
+      -38.5161,
+      532.4585
+     ],
+     [
+      -38.5161,
+      532.7849
+     ],
+     [
+      -33.8012,
+      532.7849
+     ],
+     [
+      -33.8012,
+      532.4585
+     ],
+     [
+      -33.6372,
+      532.4585
+     ],
+     [
+      -33.6372,
+      532.7849
+     ],
+     [
+      -28.9223,
+      532.7849
+     ],
+     [
+      -28.9223,
+      532.4585
+     ],
+     [
+      -28.7583,
+      532.4585
+     ],
+     [
+      -28.7583,
+      532.7849
+     ],
+     [
+      -24.0434,
+      532.7849
+     ],
+     [
+      -24.0434,
+      532.4585
+     ],
+     [
+      -23.8793,
+      532.4585
+     ],
+     [
+      -23.8793,
+      532.7849
+     ],
+     [
+      -19.1644,
+      532.7849
+     ],
+     [
+      -19.1644,
+      532.4585
+     ],
+     [
+      -19.0004,
+      532.4585
+     ],
+     [
+      -19.0004,
+      532.7849
+     ],
+     [
+      -14.2855,
+      532.7849
+     ],
+     [
+      -14.2855,
+      532.4585
+     ],
+     [
+      -14.1214,
+      532.4585
+     ],
+     [
+      -14.1214,
+      532.7849
+     ],
+     [
+      -9.4065,
+      532.7849
+     ],
+     [
+      -9.4065,
+      532.4585
+     ],
+     [
+      -9.2425,
+      532.4585
+     ],
+     [
+      -9.2425,
+      532.7849
+     ],
+     [
+      -4.5276,
+      532.7849
+     ],
+     [
+      -4.5276,
+      532.4585
+     ],
+     [
+      -4.3636,
+      532.4585
+     ],
+     [
+      -4.3636,
+      532.7849
+     ],
+     [
+      0.3513,
+      532.7849
+     ],
+     [
+      0.3513,
+      532.4585
+     ],
+     [
+      0.5154,
+      532.4585
+     ],
+     [
+      0.5154,
+      532.7849
+     ],
+     [
+      5.2303,
+      532.7849
+     ],
+     [
+      5.2303,
+      532.4585
+     ],
+     [
+      5.3943,
+      532.4585
+     ],
+     [
+      5.3943,
+      532.7849
+     ],
+     [
+      10.6735,
+      532.7849
+     ],
+     [
+      10.6735,
+      532.4585
+     ],
+     [
+      10.8376,
+      532.4585
+     ],
+     [
+      10.8376,
+      532.6004
+     ],
+     [
+      16.666,
+      532.6004
+     ],
+     [
+      16.666,
+      532.4585
+     ],
+     [
+      16.8301,
+      532.4585
+     ],
+     [
+      16.8301,
+      532.7849
+     ],
+     [
+      19.8671,
+      532.7849
+     ],
+     [
+      19.8671,
+      532.4585
+     ],
+     [
+      20.0311,
+      532.4585
+     ],
+     [
+      20.0311,
+      532.7849
+     ],
+     [
+      24.746,
+      532.7849
+     ],
+     [
+      24.746,
+      532.4585
+     ],
+     [
+      24.9101,
+      532.4585
+     ],
+     [
+      24.9101,
+      532.7849
+     ],
+     [
+      27.3832,
+      532.7849
+     ],
+     [
+      27.3832,
+      531.0641
+     ],
+     [
+      30.0351,
+      531.0641
+     ],
+     [
+      30.0351,
+      531.5203
+     ],
+     [
+      30.1525,
+      531.5203
+     ],
+     [
+      30.1525,
+      530.5679
+     ],
+     [
+      28.9721,
+      530.5679
+     ],
+     [
+      28.9721,
+      524.6447
+     ],
+     [
+      30.4157,
+      524.6447
+     ],
+     [
+      30.4157,
+      523.0768
+     ],
+     [
+      30.1262,
+      523.0768
+     ],
+     [
+      30.1262,
+      523.876
+     ],
+     [
+      28.4202,
+      523.876
+     ],
+     [
+      28.4202,
+      522.1552
+     ],
+     [
+      25.2129,
+      522.1552
+     ],
+     [
+      25.2129,
+      522.4816
+     ],
+     [
+      25.0489,
+      522.4816
+     ],
+     [
+      25.0489,
+      522.1552
+     ],
+     [
+      20.5456,
+      522.1552
+     ],
+     [
+      20.5456,
+      522.4816
+     ],
+     [
+      20.3816,
+      522.4816
+     ],
+     [
+      20.3816,
+      522.1552
+     ],
+     [
+      16.8626,
+      522.1552
+     ],
+     [
+      16.8626,
+      522.4816
+     ],
+     [
+      16.6986,
+      522.4816
+     ],
+     [
+      16.6986,
+      522.3397
+     ],
+     [
+      10.9571,
+      522.3397
+     ],
+     [
+      10.9571,
+      522.4816
+     ],
+     [
+      10.7931,
+      522.4816
+     ],
+     [
+      10.7931,
+      522.1552
+     ],
+     [
+      6.5438,
+      522.1552
+     ],
+     [
+      6.5438,
+      522.4816
+     ],
+     [
+      6.3798,
+      522.4816
+     ],
+     [
+      6.3798,
+      522.1552
+     ],
+     [
+      1.8766,
+      522.1552
+     ],
+     [
+      1.8766,
+      522.4816
+     ],
+     [
+      1.7125,
+      522.4816
+     ],
+     [
+      1.7125,
+      522.1552
+     ],
+     [
+      -2.7907,
+      522.1552
+     ],
+     [
+      -2.7907,
+      522.4816
+     ],
+     [
+      -2.9547,
+      522.4816
+     ],
+     [
+      -2.9547,
+      522.1552
+     ],
+     [
+      -7.458,
+      522.1552
+     ],
+     [
+      -7.458,
+      522.4816
+     ],
+     [
+      -7.622,
+      522.4816
+     ],
+     [
+      -7.622,
+      522.1552
+     ],
+     [
+      -12.1252,
+      522.1552
+     ],
+     [
+      -12.1252,
+      522.4816
+     ],
+     [
+      -12.2893,
+      522.4816
+     ],
+     [
+      -12.2893,
+      522.1552
+     ],
+     [
+      -16.7925,
+      522.1552
+     ],
+     [
+      -16.7925,
+      522.4816
+     ],
+     [
+      -16.9565,
+      522.4816
+     ],
+     [
+      -16.9565,
+      522.1552
+     ],
+     [
+      -21.4598,
+      522.1552
+     ],
+     [
+      -21.4598,
+      522.4816
+     ],
+     [
+      -21.6238,
+      522.4816
+     ],
+     [
+      -21.6238,
+      522.1552
+     ],
+     [
+      -26.045,
+      522.1552
+     ],
+     [
+      -26.045,
+      522.4816
+     ],
+     [
+      -26.2091,
+      522.4816
+     ]
+    ]
+   }
+  ],
+  "planWallsAndDoors(level 694)": {
+   "cutElevationFeet": 18.435695538057743,
+   "walls": [
+    {
+     "elementId": 1513313,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.363158195715435,
+       532.7045535123189
+      ],
+      [
+       54.447106856069894,
+       532.7045535123187
+      ],
+      [
+       54.447106856069894,
+       532.048385533316
+      ],
+      [
+       30.363158195715435,
+       532.0483855333162
+      ]
+     ]
+    },
+    {
+     "elementId": 1513774,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 120mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       42.965479559482404,
+       522.6830640110068
+      ],
+      [
+       30.415651634036394,
+       522.6830640110068
+      ],
+      [
+       30.80935242143797,
+       523.0767647984082
+      ],
+      [
+       42.965479559482404,
+       523.0767647984082
+      ]
+     ]
+    },
+    {
+     "elementId": 1512923,
+     "categoryName": "Walls",
+     "typeName": null,
+     "wallKind": "curtain",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.035074206214134,
+       531.0641335648122
+      ],
+      [
+       27.383223371709065,
+       531.0641335648122
+      ],
+      [
+       27.383223371709065,
+       534.3449734598255
+      ],
+      [
+       30.035074206214134,
+       534.3449734598255
+      ]
+     ]
+    },
+    {
+     "elementId": 1512924,
+     "categoryName": "Curtain Panels",
+     "typeName": "With Glazing",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 1512923,
+     "polygonFeet": [
+      [
+       24.91007165277933,
+       532.7849340897467
+      ],
+      [
+       29.542948221962156,
+       532.7849340897467
+      ],
+      [
+       29.542948221962156,
+       532.866955087122
+      ],
+      [
+       24.91007165277933,
+       532.866955087122
+      ]
+     ]
+    },
+    {
+     "elementId": 1513007,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 1512923,
+     "polygonFeet": [
+      [
+       29.542948221962156,
+       532.4584905201929
+      ],
+      [
+       29.706990216712814,
+       532.4584905201929
+      ],
+      [
+       29.706990216712814,
+       532.9506165044448
+      ],
+      [
+       29.54294822196216,
+       532.9506165044448
+      ]
+     ]
+    },
+    {
+     "elementId": 1513073,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       29.70699021671281,
+       531.5203343522139
+      ],
+      [
+       29.706990216712818,
+       536.0807018062821
+      ],
+      [
+       30.363158195715442,
+       536.0807018062821
+      ],
+      [
+       30.363158195715435,
+       531.5203343522139
+      ]
+     ]
+    },
+    {
+     "elementId": 1513074,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.363158195715442,
+       536.0807018062821
+      ],
+      [
+       34.155112105414666,
+       536.0807018062821
+      ],
+      [
+       34.155112105414666,
+       535.4245338272794
+      ],
+      [
+       30.363158195715442,
+       535.4245338272794
+      ]
+     ]
+    },
+    {
+     "elementId": 1513075,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       33.49894412641204,
+       536.0807018062821
+      ],
+      [
+       33.49894412641206,
+       550.4571791512576
+      ],
+      [
+       34.15511210541468,
+       550.4571791512576
+      ],
+      [
+       34.15511210541466,
+       536.0807018062821
+      ]
+     ]
+    },
+    {
+     "elementId": 2069895,
+     "categoryName": "Walls",
+     "typeName": null,
+     "wallKind": "curtain",
+     "approximate": true,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       28.51862916578189,
+       515.8444813338413
+      ],
+      [
+       31.79946906079502,
+       515.8444813338413
+      ],
+      [
+       31.79946906079502,
+       521.9894944572009
+      ],
+      [
+       28.51862916578189,
+       521.9894944572009
+      ],
+      [
+       28.51862916578189,
+       515.8444813338413
+      ]
+     ]
+    },
+    {
+     "elementId": 2069896,
+     "categoryName": "Curtain Panels",
+     "typeName": "With Glazing",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2069895,
+     "polygonFeet": [
+      [
+       30.23942969071628,
+       518.9990088928964
+      ],
+      [
+       30.321450688091605,
+       518.9990088928964
+      ],
+      [
+       30.32145068809161,
+       521.8254524624502
+      ],
+      [
+       30.239429690716282,
+       521.8254524624502
+      ]
+     ]
+    },
+    {
+     "elementId": 2069915,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2069895,
+     "polygonFeet": [
+      [
+       29.912986121162476,
+       521.8254524624502
+      ],
+      [
+       30.405112105414446,
+       521.8254524624502
+      ],
+      [
+       30.405112105414446,
+       521.9894944572009
+      ],
+      [
+       29.912986121162476,
+       521.9894944572009
+      ]
+     ]
+    },
+    {
+     "elementId": 2311468,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 120mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.415651634036394,
+       522.6830640110068
+      ],
+      [
+       30.415651634036397,
+       524.6446781842351
+      ],
+      [
+       30.809352421437975,
+       524.6446781842351
+      ],
+      [
+       30.80935242143797,
+       523.0767647984082
+      ]
+     ]
+    },
+    {
+     "elementId": 2311758,
+     "categoryName": "Walls",
+     "typeName": null,
+     "wallKind": "curtain",
+     "approximate": true,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       28.972082080230628,
+       524.6446781842351
+      ],
+      [
+       32.25292197524376,
+       524.6446781842351
+      ],
+      [
+       32.25292197524376,
+       530.5679065306917
+      ],
+      [
+       28.972082080230628,
+       530.5679065306917
+      ],
+      [
+       28.972082080230628,
+       524.6446781842351
+      ]
+     ]
+    },
+    {
+     "elementId": 2311759,
+     "categoryName": "Curtain Panels",
+     "typeName": "With Glazing",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2311758,
+     "polygonFeet": [
+      [
+       30.450100452934038,
+       524.8087201789857
+      ],
+      [
+       30.53212145030937,
+       524.8087201789857
+      ],
+      [
+       30.53212145030937,
+       526.5311611238676
+      ],
+      [
+       30.45010045293404,
+       526.5311611238676
+      ]
+     ]
+    },
+    {
+     "elementId": 2311774,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2311758,
+     "polygonFeet": [
+      [
+       30.366439035611215,
+       530.4038645359411
+      ],
+      [
+       30.858565019863185,
+       530.4038645359411
+      ],
+      [
+       30.858565019863185,
+       530.5679065306917
+      ],
+      [
+       30.366439035611215,
+       530.5679065306917
+      ]
+     ]
+    },
+    {
+     "elementId": 2311777,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2311758,
+     "polygonFeet": [
+      [
+       30.366439035611204,
+       524.6446781842351
+      ],
+      [
+       30.858565019863175,
+       524.6446781842351
+      ],
+      [
+       30.858565019863175,
+       524.8087201789857
+      ],
+      [
+       30.366439035611204,
+       524.8087201789857
+      ]
+     ]
+    },
+    {
+     "elementId": 2311780,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2311758,
+     "polygonFeet": [
+      [
+       30.366439035611208,
+       526.5311611238676
+      ],
+      [
+       30.85856501986318,
+       526.5311611238676
+      ],
+      [
+       30.85856501986318,
+       526.6952031186183
+      ],
+      [
+       30.366439035611208,
+       526.6952031186183
+      ]
+     ]
+    },
+    {
+     "elementId": 2312003,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.80865541250036,
+       531.5203343522139
+      ],
+      [
+       30.80865541250034,
+       530.5679065306917
+      ],
+      [
+       30.152487433497715,
+       530.5679065306917
+      ],
+      [
+       30.152487433497736,
+       531.5203343522139
+      ]
+     ]
+    },
+    {
+     "elementId": 2316274,
+     "categoryName": "Walls",
+     "typeName": "Interior Wall - 200mm",
+     "wallKind": "basic",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.454324703838914,
+       523.0767647984084
+      ],
+      [
+       30.454324703838914,
+       521.9894944572009
+      ],
+      [
+       29.79815672483629,
+       521.9894944572009
+      ],
+      [
+       29.79815672483629,
+       523.0767647984084
+      ]
+     ]
+    },
+    {
+     "elementId": 1512824,
+     "categoryName": "Walls",
+     "typeName": null,
+     "wallKind": "curtain",
+     "approximate": false,
+     "persistedHostId": null,
+     "polygonFeet": [
+      [
+       30.126240714337598,
+       520.5951375018203
+      ],
+      [
+       28.42020396893082,
+       520.5951375018203
+      ],
+      [
+       28.42020396893082,
+       523.8759773968336
+      ],
+      [
+       30.126240714337598,
+       523.8759773968336
+      ]
+     ]
+    },
+    {
+     "elementId": 1512825,
+     "categoryName": "Curtain Panels",
+     "typeName": "With Glazing",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 1512824,
+     "polygonFeet": [
+      [
+       25.21290956739758,
+       522.0731558745238
+      ],
+      [
+       29.634114730085628,
+       522.0731558745236
+      ],
+      [
+       29.634114730085628,
+       522.155176871899
+      ],
+      [
+       25.21290956739758,
+       522.155176871899
+      ]
+     ]
+    },
+    {
+     "elementId": 1512888,
+     "categoryName": "Curtain Wall Mullions",
+     "typeName": "50 x 150 \u043c\u043c",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 1512824,
+     "polygonFeet": [
+      [
+       29.634114730085628,
+       521.9894944572009
+      ],
+      [
+       29.798156724836286,
+       521.9894944572009
+      ],
+      [
+       29.798156724836286,
+       522.4816204414528
+      ],
+      [
+       29.63411473008563,
+       522.4816204414528
+      ]
+     ]
+    }
+   ],
+   "doors": [
+    {
+     "elementId": 2311764,
+     "categoryName": "Doors",
+     "typeName": "Single-pane stained-glass door",
+     "wallKind": null,
+     "approximate": false,
+     "persistedHostId": 2311758,
+     "polygonFeet": [
+      [
+       30.570835361070575,
+       526.6952031186182
+      ],
+      [
+       30.65416869440381,
+       526.6952031186182
+      ],
+      [
+       30.65416869440382,
+       530.4038645359411
+      ],
+      [
+       30.570835361070582,
+       530.4038645359411
+      ]
+     ]
+    }
+   ],
+   "columns": []
+  },
+  "finding": "Floor 2 has the same curtain door geometry (host 2311758 x 28.972..32.253, same door clear width y 526.6952..530.4039) and the same bounding walls (1513774 south, 1513313 north). There the space east of the host is drawn as 08-216 Vestibule, whose outline starts at x 32.2491 (0.0038 ft from the host face) and covers the strip; door 2311764 is connected 08-216 Vestibule <-> 08-260 Link. On Floor 3 the corresponding footprint is drawn as 08-316 Corridor (x 35.4648..59.8648), with no vestibule label."
+ },
+ "candidates": [
+  {
+   "owner": "08-316 Corridor (rm-400176-e6668d178587)",
+   "for": [
+    "Its drawn outline is the nearest on the Building 08 side (probe 2.962 ft, face 3.212 ft, centre 4.852 ft) and lies in the same native cell 826.",
+    "No native wall, door or other element separates the strip from 08-316's drawn area; the strip's north/south walls (1505979, 1505949) continue into 08-316.",
+    "Its outline shape on Floor 3 matches Floor 2's 08-216 Vestibule footprint, which on Floor 2 extends to the host face and owns door 2311764."
+   ],
+   "against": [
+    "Its drawn west edge stops 3.212 ft short of the aperture face (x 35.4648), so the DWG drew a boundary there; the reason (a line on the drawing, a finish face, or the curtain envelope 2066749 edge at x 35.4674) is not established.",
+    "The 2.962 ft probe gap exceeds the 2 ft native-owner default; legacy reach is 2 ft."
+   ]
+  },
+  {
+   "owner": "unnamed vestibule / airlock between 08-360 and 08-316",
+   "for": [
+    "Floor 2 names the identical footprint a Vestibule (08-216).",
+    "The 3.2 ft strip has the depth of a door landing between a curtain door and a corridor."
+   ],
+   "against": [
+    "No Floor 3 room outline, label or native element defines a separate space; no door or partition at x 35.46 encloses it.",
+    "No room record with that name exists on level 400176 or 1487353."
+   ]
+  },
+  {
+   "owner": "08-305 Corridor (rm-400176-2188e217a698)",
+   "for": [
+    "Listed among cell 826's 17 room names (the cell is wall-bounded but merges the whole Building 08 east wing on Floor 3)."
+   ],
+   "against": [
+    "Its outline (x 65.06..73.46, y 532.60..627.00) is 33.67 ft from the probe and covers no strip sample; cell-826 membership alone does not make it adjacent."
+   ]
+  },
+  {
+   "owner": "08-360 Link extended through the door",
+   "for": [
+    "The door is hosted in the link's curtain wall."
+   ],
+   "against": [
+    "The link is on the other side of the glazing (native cell 816); the strip is east of the host face in cell 826."
+   ]
+  }
+ ],
+ "siteOrDrawingCheckMustConfirm": [
+  "On the Floor 3 architectural drawing (08 Tea Lab LVL 3) or on site: is there any partition, glazed screen or door at about x 35.46 (3.2 ft east of the curtain face) across the corridor between walls 1505949 and 1505979?",
+  "Whether the space directly east of the curtain door is part of 08-316 Corridor, a separately numbered vestibule (as 08-216 on Floor 2), or another room.",
+  "Whether door 2315416 is normally open and public, and whether the modelled 50 mm sill (2315423) exists."
+ ]
+}
