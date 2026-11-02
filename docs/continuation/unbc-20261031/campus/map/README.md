@@ -7,10 +7,12 @@ file server (it fetches `floors/*.json`).
 ## What it draws
 
 **Default view: accepted geometry, unmodified.** The walking network is the
-floor files' `net`: the 2,693 accepted shared guides on these four floors
-(2,701 of 2,884 eligible campus-wide, guide catalog
-`54f10449efcc1620724ccc2ccf8179823f1d8c28a39b8be56e54c2fcbf64cd40`) and, for
-the other 2,779 enabled walks, their original saved walks, exactly as exported.
+floor files' `net`: the 2,720 accepted shared guides on these four floors (the
+chosen candidate accepted 2,728 of 2,884 eligible walks campus-wide; the other
+8 are on Floor 0, which is not shown; guide catalog
+`3430c8713d00b3dcf072f6ef2677ff7e4ee3bf958d35db6459cd629d6c405c40`, see
+`docs/continuation/unbc-20261101/candidate/`) and, for the other 2,753 enabled
+walks, their original saved walks, exactly as exported.
 Corridor walks that end only at their own corridor's label point are hidden for
 legibility (routing keeps them; the count is shown per floor).
 
@@ -18,18 +20,30 @@ legibility (routing keeps them; the count is shown per floor).
 default. It draws `schematic` (a regularized redrawing, see
 [`regularize/README.md`](regularize/README.md)) as a dashed overlay so it can be
 compared with the accepted lines. When it is on, the side panel shows its own
-validation status from `floors/index.json` (`schematic.verify`): 4,914 of 5,472
-walks redrawn, 0 wall/hole overlaps, 330 source-defect walks kept unmodified,
-independent verifier PASS. Routes, distances and acceptance never use it.
+validation status from `floors/index.json` (`schematic.verify`): 4,782 of 5,473
+walks redrawn, 0 wall/hole overlaps in changed lines, 490 flagged original walks
+kept unmodified, independent verifier PASS. Routes, distances and acceptance
+never use it.
 
-**Off-by-default layer: "Source walks that cross a native wall".** The 330
-original walks whose own geometry overlaps a native wall footprint away from that
-wall's own doors, or a cell hole (exact test in display coordinates). Each list
-entry gives the graph edge id, the wall native id (or hole cell) and the
-neighbouring native cell, for example edge
-`native-cell:14.435696:563:walk:arrival:rm-694-0731875d76bf|door:694:1108589:0`
-(04-253 to door 1108589) through wall 1107109, native cell 563. These are source
-defects for review; neither view hides or redraws them.
+What the hard check guarantees: no *changed* schematic line introduces a
+forbidden contact under the declared display predicate (positive-length overlap
+with a native wall footprint outside the closed footprints of that wall's own
+doors, or with a cell hole no other cell covers, outside every door footprint;
+exact clipping, zero door margin, display decimetre coordinates). It does
+**not** certify that every original line is wall-free: originals that meet the
+predicate are kept unmodified and listed in the layer below.
+
+**Off-by-default layer: "Source walks that cross a native wall".** The 490
+original walks (116 accepted guides, 374 original saved walks) whose own
+geometry overlaps a native wall footprint away from that wall's own doors, or a
+cell hole (exact test in display coordinates). Per floor: Campus Floor 1 152
+(43 guides, 109 saved walks), Floor 2 106 (24, 82), Campus Floor 3 130 (29,
+101), Floor 4 102 (20, 82). Each list entry gives the graph edge id, the wall
+native id (or hole cell) and the neighbouring native cell. These are
+display-coordinate contacts for review, not proven native defects; neither view
+hides or redraws them. One earlier flag (Campus Floor 3 `net[352]`) was a
+numerical false positive of the verifier's old door search and was removed on
+November 2 (see [`regularize/README.md`](regularize/README.md#door-footprints-november-2-correction)).
 
 ## Annotations
 
@@ -57,20 +71,24 @@ previous page.
 
 ```sh
 python3 regularize/verify.py . --output /tmp/verify.json   # exact hard rule, exit 0 = PASS
-python3 regularize/regression-wall-shortcut.py             # synthetic wall shortcut refused
+python3 regularize/regression-wall-shortcut.py             # synthetic wall shortcut refused (NumPy)
+python3 regularize/regression-door-clipping.py             # zero-margin door rule, both implementations (NumPy)
 node tests/floor-selection-race.test.mjs                   # stale floor load cannot win
 ```
 
 Browser proof (desktop and mobile, light and dark) is recorded in
-`BROWSER-PROOF.json`.
+`BROWSER-PROOF.json`. It was captured before the chosen-candidate rebuild and
+the November 2 wording and count changes, so the About and link texts it quotes
+are older than the current page.
 
 ## Limits
 
 * The schematic layer is legibility only. It is not physical-clearance,
   ownership, accessibility or route qualification.
-* The source-defect list is measured in this drawing's fitted, decimetre-rounded
-  coordinates with a strict host-wall door rule. It includes 71 accepted guides
-  that the compiler accepted under its own native-feet support predicate; those
-  need native re-measurement before being called compiler defects.
+* The flagged-original list is measured in this drawing's fitted,
+  decimetre-rounded coordinates with a strict host-wall door rule. It includes
+  116 accepted guides that the compiler accepted under its own native-feet
+  support predicate; those need native re-measurement before being called
+  compiler defects. The schematic check covers changed lines only.
 * Floor 0 is not shown. Gateway texts other than the 04-08 link are hand-written
   door evidence summaries without distances.

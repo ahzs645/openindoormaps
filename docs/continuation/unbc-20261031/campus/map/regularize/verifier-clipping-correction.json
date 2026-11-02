@@ -1,0 +1,174 @@
+{
+ "what": "Correction of the zero-margin door interval in verify.py (golden-section search replaced by exact clipping of the closed door footprint) and the matching exact clipper in hardgeom.py; floors re-checked with the corrected predicate.",
+ "baseCommit": "6acc5ca",
+ "falsePositives": {
+  "sourceContactFlagsRemoved": [
+   {
+    "floor": "campus-floor-3",
+    "netIndex": 352,
+    "edge": "native-cell:24.278215:826:walk:door:400176:2043306:1|door:400176:2043358:0",
+    "category": 1,
+    "previouslyReported": [
+     [
+      "wall",
+      1505948,
+      0.572
+     ],
+     [
+      "hole",
+      "native-cell:24.278215:826",
+      0.575
+     ]
+    ],
+    "cause": "segment (-278,336)->(-273,318) lies in door 2043358 (host wall 1505948) for t=[4/5, 54/65]; the old search returned no door interval"
+   }
+  ],
+  "schematicLinesReallowed": [
+   {
+    "floor": "campus-floor-1",
+    "netIndex": 308,
+    "edge": "native-cell:0.000000:71:walk:door:311:1025222:0|door:311:1025282:1",
+    "category": 3,
+    "previouslyReported": "wall 967804, 4.041 dm (old verify only; hardgeom found none); the corrected clipping puts all of it inside doors 1025222 and 1025282, both hosted by wall 967804"
+   },
+   {
+    "floor": "campus-floor-3",
+    "netIndex": 352,
+    "edge": "native-cell:24.278215:826:walk:door:400176:2043306:1|door:400176:2043358:0",
+    "category": 1,
+    "previouslyReported": "restored because its original was flagged (the false positive above)"
+   }
+  ],
+  "previousEnforceVerifierReport": {
+   "campus-floor-1": {
+    "schematicLinesRestored": [
+     308
+    ],
+    "sourceCrossingsAdded": []
+   },
+   "floor-2": {
+    "schematicLinesRestored": [],
+    "sourceCrossingsAdded": []
+   },
+   "campus-floor-3": {
+    "schematicLinesRestored": [
+     352
+    ],
+    "sourceCrossingsAdded": [
+     352
+    ]
+   },
+   "floor-4": {
+    "schematicLinesRestored": [],
+    "sourceCrossingsAdded": []
+   }
+  }
+ },
+ "reallowRule": "A line restored by enforce-verifier.py gets back the regularizer output for it (regularize.py rerun on the same prepared inputs; identical to the committed schematic on every other line) only if verify.py AND hardgeom.py find no contact on both its original and its schematic, and it keeps both end points. Both lines passed; the soft rule is re-checked by verify.py.",
+ "reproduction": "Running the corrected pipeline (no-new-wall-crossings.py, list-source-crossings.py, enforce-verifier.py, verify.py) on the regularizer output gives floor files byte-identical to the committed ones.",
+ "netUnchanged": true,
+ "remainingFlagsAgreement": "The 490 remaining flags are exactly the lines both corrected implementations flag (list-source-crossings.py uses hardgeom.py; verify.py checks the list matches).",
+ "before": {
+  "campus-floor-1": {
+   "netLines": 1819,
+   "changedLines": 1618,
+   "sourceContactFlags": 152,
+   "flagsAcceptedGuides": 43,
+   "flagsOriginalSavedWalks": 109,
+   "verifyPASS": true
+  },
+  "floor-2": {
+   "netLines": 1517,
+   "changedLines": 1353,
+   "sourceContactFlags": 106,
+   "flagsAcceptedGuides": 24,
+   "flagsOriginalSavedWalks": 82,
+   "verifyPASS": true
+  },
+  "campus-floor-3": {
+   "netLines": 1123,
+   "changedLines": 933,
+   "sourceContactFlags": 131,
+   "flagsAcceptedGuides": 29,
+   "flagsOriginalSavedWalks": 102,
+   "verifyPASS": true
+  },
+  "floor-4": {
+   "netLines": 1014,
+   "changedLines": 876,
+   "sourceContactFlags": 102,
+   "flagsAcceptedGuides": 20,
+   "flagsOriginalSavedWalks": 82,
+   "verifyPASS": true
+  },
+  "total": {
+   "netLines": 5473,
+   "changedLines": 4780,
+   "sourceContactFlags": 491,
+   "flagsAcceptedGuides": 116,
+   "flagsOriginalSavedWalks": 375
+  }
+ },
+ "after": {
+  "campus-floor-1": {
+   "netLines": 1819,
+   "changedLines": 1619,
+   "sourceContactFlags": 152,
+   "flagsAcceptedGuides": 43,
+   "flagsOriginalSavedWalks": 109,
+   "verifyPASS": true
+  },
+  "floor-2": {
+   "netLines": 1517,
+   "changedLines": 1353,
+   "sourceContactFlags": 106,
+   "flagsAcceptedGuides": 24,
+   "flagsOriginalSavedWalks": 82,
+   "verifyPASS": true
+  },
+  "campus-floor-3": {
+   "netLines": 1123,
+   "changedLines": 934,
+   "sourceContactFlags": 130,
+   "flagsAcceptedGuides": 29,
+   "flagsOriginalSavedWalks": 101,
+   "verifyPASS": true
+  },
+  "floor-4": {
+   "netLines": 1014,
+   "changedLines": 876,
+   "sourceContactFlags": 102,
+   "flagsAcceptedGuides": 20,
+   "flagsOriginalSavedWalks": 82,
+   "verifyPASS": true
+  },
+  "total": {
+   "netLines": 5473,
+   "changedLines": 4782,
+   "sourceContactFlags": 490,
+   "flagsAcceptedGuides": 116,
+   "flagsOriginalSavedWalks": 374
+  }
+ },
+ "floorSha256": {
+  "before": {
+   "campus-floor-1": "ded31ed345b7105b4d2c3c0ef93fb704b77e01f53a1ef73fd3b695a381687f22",
+   "floor-2": "d7bcb6d85e5588f4530267cc490c0bccac12e8de3985798b7d6d6e693704fe9d",
+   "campus-floor-3": "4ba98b5d9a48c406f36e2decae0b28f0748b99663145772e074a048311717a9d",
+   "floor-4": "5965260c17194ae06e073d54f9b00afc6ed68af4745a6834754c75ed3b913cb3"
+  },
+  "after": {
+   "campus-floor-1": "a213d6dc3c2cc21080c622b29034e8572b4ba85395a9eefe0e92e8a860b9a671",
+   "floor-2": "d7bcb6d85e5588f4530267cc490c0bccac12e8de3985798b7d6d6e693704fe9d",
+   "campus-floor-3": "d73c856c60aa68f4e64146938302f3c1332d6cf4940dc33d5a6533b199b6b985",
+   "floor-4": "5965260c17194ae06e073d54f9b00afc6ed68af4745a6834754c75ed3b913cb3"
+  }
+ },
+ "verifierSha256": {
+  "before": "7d1bbcfb75c440e6131fe2eea431f5693a30e2e77083fc296518000ff9a6a89b",
+  "after": "e37d17b77796458a47fef82ae4015ff2ce4f0b4e2abcc34f422067c2cefe2b00"
+ },
+ "hardgeomSha256": {
+  "after": "53842c8fe99baa41201a1f9f9a057015c661e5f45873cdca560fe2fa86af0a4e"
+ }
+}

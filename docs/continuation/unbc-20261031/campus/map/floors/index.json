@@ -8,12 +8,12 @@
    "drawnWalks": 1819,
    "drawnAcceptedGuides": 982,
    "drawnSavedWalks": 837,
-   "schematicChanged": 1618,
+   "schematicChanged": 1619,
    "sourceWallCrossings": 152,
    "sourceWallCrossingsAcceptedGuides": 43,
    "verify": {
     "PASS": true,
-    "changedLines": 1618,
+    "changedLines": 1619,
     "hardRuleViolations": 0,
     "sourceDefectLines": 152,
     "sourceDefectLinesChanged": 0,
@@ -48,14 +48,14 @@
    "drawnWalks": 1123,
    "drawnAcceptedGuides": 534,
    "drawnSavedWalks": 589,
-   "schematicChanged": 933,
-   "sourceWallCrossings": 131,
+   "schematicChanged": 934,
+   "sourceWallCrossings": 130,
    "sourceWallCrossingsAcceptedGuides": 29,
    "verify": {
     "PASS": true,
-    "changedLines": 933,
+    "changedLines": 934,
     "hardRuleViolations": 0,
-    "sourceDefectLines": 131,
+    "sourceDefectLines": 130,
     "sourceDefectLinesChanged": 0,
     "softRuleViolations": 0
    }
@@ -97,28 +97,31 @@
   "label": "Schematic drawing (display only, not route-accepted)",
   "status": "DISPLAY_ONLY_NOT_ROUTE_ACCEPTED",
   "meaning": "A redrawing of the accepted walks for legibility. Routes, distances and acceptance use the accepted geometry, never this layer.",
-  "rule": "hard: no overlap > 1e-6 dm with a native wall (except inside a door hosted by that wall) or an uncovered cell hole (except inside a door); soft (outside walls/holes only): samples outside every cell within 0.3 m of own original",
-  "linesChanged": 4780,
+  "rule": "hard: no overlap > 1e-6 dm with a native wall (except inside the closed footprint of a door hosted by that wall) or an uncovered cell hole (except inside a closed door footprint), door footprints clipped exactly with zero margin; soft (outside walls/holes only): samples outside every cell within 0.3 m of own original",
+  "linesChanged": 4782,
   "linesDrawn": 5473,
-  "sourceDefectLinesKeptUnmodified": 491,
+  "sourceDefectLinesKeptUnmodified": 490,
   "verify": {
    "ALL_PASS": true,
-   "verifierSha256": "7d1bbcfb75c440e6131fe2eea431f5693a30e2e77083fc296518000ff9a6a89b",
+   "verifierSha256": "e37d17b77796458a47fef82ae4015ff2ce4f0b4e2abcc34f422067c2cefe2b00",
    "hardRuleViolations": 0,
    "sourceDefectLinesChanged": 0,
    "softRuleViolations": 0
   },
+  "guarantee": "Changed schematic lines introduce no forbidden contact under the declared display predicate. Original lines are not certified wall-free; those that meet the predicate are kept unmodified and listed.",
   "generator": {
    "regularize.py": "45abc4efbe341a5f9a8ffc8a72e96ff63e06e9b7cab6fceff14d2bcd070a39d5",
-   "hardgeom.py": "c54b0668a17a3b300594f006ac47f449884a22d2b37198e9e7b435e27557ce5d",
+   "hardgeom.py": "53842c8fe99baa41201a1f9f9a057015c661e5f45873cdca560fe2fa86af0a4e",
    "no-new-wall-crossings.py": "e3bfe5447b7b4bf8ee05357a3737bcb5f7294ca59cc9afe365244590f10f4dde",
-   "verify.py": "7d1bbcfb75c440e6131fe2eea431f5693a30e2e77083fc296518000ff9a6a89b"
+   "verify.py": "e37d17b77796458a47fef82ae4015ff2ce4f0b4e2abcc34f422067c2cefe2b00"
   }
  },
  "sourceWallCrossings": {
-  "lines": 491,
+  "lines": 490,
   "acceptedGuideLines": 116,
-  "rule": "original net line overlaps a native wall footprint (outside the footprints of doors hosted by that wall) or a cell hole not covered by another cell; exact, display decimetre coordinates"
+  "savedWalkLines": 374,
+  "rule": "original net line overlaps a native wall footprint (outside the closed footprints of doors hosted by that wall) or a cell hole not covered by another cell (outside every door footprint); exact clipping in display decimetre coordinates",
+  "meaning": "Display-coordinate contacts kept unmodified for review; not proven native defects."
  },
  "acceptance": {
   "source": "docs/continuation/unbc-20261101/candidate/acceptance (NORMAL-ROUTES.json, REPORT.json)",
@@ -464,7 +467,7 @@
    }
   ]
  },
- "about": "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. The earlier room shapes were used only to place each room's name inside its space and are not drawn. The walking network drawn by default is the accepted geometry, unmodified: 2,720 accepted shared guides on these four floors (2,701 of 2,884 eligible campus-wide; guide catalog 3430c871) and, for the other 2,753 enabled walks, their original saved walks. Corridor walks that only end at their own corridor's label point are hidden for legibility (routing keeps them). The optional schematic layer is a display-only redrawing that is not route-accepted: it changes 4,780 of 5,473 drawn walks, may not enter any native wall footprint away from that wall's own doors or any cell hole (exact check, independent verifier PASS), and keeps unmodified every walk whose original already does. 491 original walks (116 of them accepted guides) already overlap a native wall or hole away from doors in this drawing's coordinates; they are listed in the 'Source walks that cross a native wall' layer as source defects for review. Route distances quoted come from the full-catalog acceptance run ea125e74 (candidate archive 1a127847, releaseAcceptance false). Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.",
+ "about": "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. The earlier room shapes were used only to place each room's name inside its space and are not drawn. The walking network drawn by default is the accepted geometry, unmodified: 2,720 accepted shared guides on these four floors (the chosen candidate accepted 2,728 of 2,884 eligible walks campus-wide; the other 8 are on Floor 0, which is not shown; guide catalog 3430c871) and, for the other 2,753 enabled walks, their original saved walks. Corridor walks that only end at their own corridor's label point are hidden for legibility (routing keeps them). The optional schematic layer is a display-only redrawing that is not route-accepted: it changes 4,782 of 5,473 drawn walks. Its hard check (independent verifier PASS) guarantees only that no changed line introduces a forbidden contact under the declared display predicate: a positive-length overlap, in this drawing's decimetre coordinates, with a native wall footprint outside the closed footprints of that wall's own doors, or with a cell hole that no other cell covers, outside every door footprint. It does not certify that the original lines are wall-free: every walk whose original already meets that predicate is kept unmodified. 490 original walks (116 accepted guides, 374 original saved walks) meet it; the 'Source walks that cross a native wall' layer lists them as display-coordinate contacts for review, not proven native defects. Route distances quoted come from the full-catalog acceptance run ea125e74 (candidate archive 1a127847, releaseAcceptance false). Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access.",
  "evidence": {
   "connectedAgreement": {
    "agree": 1303,
@@ -478,9 +481,9 @@
   "mainArrivals": 1693
  },
  "floorFiles": {
-  "campus-floor-1": "ded31ed345b7105b4d2c3c0ef93fb704b77e01f53a1ef73fd3b695a381687f22",
+  "campus-floor-1": "a213d6dc3c2cc21080c622b29034e8572b4ba85395a9eefe0e92e8a860b9a671",
   "floor-2": "d7bcb6d85e5588f4530267cc490c0bccac12e8de3985798b7d6d6e693704fe9d",
-  "campus-floor-3": "4ba98b5d9a48c406f36e2decae0b28f0748b99663145772e074a048311717a9d",
+  "campus-floor-3": "d73c856c60aa68f4e64146938302f3c1332d6cf4940dc33d5a6533b199b6b985",
   "floor-4": "5965260c17194ae06e073d54f9b00afc6ed68af4745a6834754c75ed3b913cb3"
  }
 }

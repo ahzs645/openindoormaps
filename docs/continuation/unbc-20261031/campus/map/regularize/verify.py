@@ -2,8 +2,9 @@
 
 Self-contained: needs only Python 3 (standard library) and this folder.  It does
 NOT import regularize.py or hardgeom.py; its geometry is a separate pure-Python
-implementation (winding-number containment, numeric convex search for door
-zones) so that a defect in one implementation is unlikely to hide in both.
+implementation (winding-number containment for walls and holes, exact rational
+Cyrus-Beck clipping of each segment against the closed convex door footprint)
+so that a defect in one implementation is unlikely to hide in both.
 
 usage:
   python3 verify.py FLOORS_ROOT [--original ORIGINAL_ROOT]
@@ -33,12 +34,14 @@ Exit status 0 only if every floor passes.
 """
 import argparse, hashlib, json, math, os, sys
 from collections import defaultdict
+from fractions import Fraction
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 FLOORS = ['campus-floor-1', 'floor-2', 'campus-floor-3', 'floor-4']
-MARGIN = 0.0       # dm: door zone is the door footprint itself
+MARGIN = 0.0       # dm: door zone is the closed door footprint itself (no expansion)
 EPS = 1e-6         # dm, overlap below this is floating-point noise
 SOFT_TOL = 3.0     # dm, soft rule only (never inside a wall or hole)
+assert MARGIN == 0.0, 'the declared rule has no door expansion; door_intervals clips the footprint itself'
 
 
 def pts(f):
@@ -114,43 +117,49 @@ def inside_intervals(p, q, R):
     return out
 
 
-def poly_dist(x, R):
-    if strictly_inside(x, R) or on_boundary(x, R):
-        return 0.0
-    n = len(R)
-    return min(seg_dist(x, R[i], R[(i + 1) % n]) for i in range(n))
+def door_intervals(p, q, D):
+    """Exact t-interval of segment p->q inside the CLOSED convex door footprint D.
 
-
-def zone_interval(p, q, D, r):
-    """{t in [0,1] : dist(p+t(q-p), polygon D) <= r} for a CONVEX door footprint D.
-    dist to a convex polygon is convex along a line, so the set is an interval:
-    golden-section search for the minimum, then bisection for both ends."""
-    f = lambda t: poly_dist((p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t), D)
-    lo, hi = 0.0, 1.0; g = (math.sqrt(5) - 1) / 2
-    c, d = hi - g * (hi - lo), lo + g * (hi - lo)
-    fc, fd = f(c), f(d)
-    for _ in range(80):
-        if fc < fd:
-            hi, d, fd = d, c, fc; c = hi - g * (hi - lo); fc = f(c)
+    Zero margin: the door zone is the footprint itself, never an expansion of it.
+    Cyrus-Beck clipping evaluated in exact rational arithmetic (Fraction converts
+    every float coordinate exactly), so neither a numerical search nor a
+    tolerance decides it.  Each edge a->b contributes the half-plane
+    s * cross(b - a, x - a) >= 0 (s = orientation of D).  Boundary handling:
+      * the footprint is closed, so its boundary belongs to the door zone (the
+        wall material left around a door is the wall minus the closed door, and
+        touching that remainder's boundary is not interior contact);
+      * a segment parallel to an edge is kept by that edge iff it lies on the
+        edge line or on the inner side, and dropped entirely otherwise;
+      * a touch at a single vertex or point has zero length and is dropped;
+      * zero-length edges (repeated vertices) impose nothing.
+    Returns [] or [(t0, t1)] with 0 <= t0 < t1 <= 1."""
+    F = Fraction
+    px, py = F(p[0]), F(p[1])
+    dx, dy = F(q[0]) - px, F(q[1]) - py
+    V = [(F(x), F(y)) for x, y in D]
+    n = len(V)
+    area2 = sum(V[i][0] * V[(i + 1) % n][1] - V[(i + 1) % n][0] * V[i][1] for i in range(n))
+    if (dx == 0 and dy == 0) or area2 == 0:
+        return []
+    s = 1 if area2 > 0 else -1
+    lo, hi = F(0), F(1)
+    for i in range(n):
+        (ax, ay), (bx, by) = V[i], V[(i + 1) % n]
+        ex, ey = bx - ax, by - ay
+        g0 = s * (ex * (py - ay) - ey * (px - ax))     # side of p
+        g1 = s * (ex * dy - ey * dx)                   # rate along the segment
+        if g1 == 0:
+            if g0 < 0:
+                return []                              # parallel, strictly outside
+            continue                                   # parallel, on the edge line or inside
+        t = -g0 / g1
+        if g1 > 0:
+            lo = max(lo, t)
         else:
-            lo, c, fc = c, d, fd; d = lo + g * (hi - lo); fd = f(d)
-    tm = (lo + hi) / 2
-    cands = [(f(tm), tm), (f(0.0), 0.0), (f(1.0), 1.0)]
-    fm, tm = min(cands)
-    if fm > r:
-        return None
-
-    def edge(a, b):   # f(a) <= r < f(b) -> boundary between
-        for _ in range(80):
-            m = (a + b) / 2
-            if f(m) <= r:
-                a = m
-            else:
-                b = m
-        return a
-    t0 = 0.0 if f(0.0) <= r else edge(tm, 0.0)
-    t1 = 1.0 if f(1.0) <= r else edge(tm, 1.0)
-    return (min(t0, t1), max(t0, t1))
+            hi = min(hi, t)
+        if lo >= hi:
+            return []
+    return [(float(lo), float(hi))]
 
 
 def convex(D):
@@ -230,12 +239,11 @@ class Floor:
         return not (b[2] + pad < sb[0] or b[0] - pad > sb[2] or b[3] + pad < sb[1] or b[1] - pad > sb[3])
 
     def zones(self, p, q, doors, sb):
+        """t-intervals of p->q inside the closed footprints of `doors` (exact clipping)."""
         out = []
         for _nid, _h, D, db in doors:
-            if self._hit(db, sb, MARGIN):
-                z = zone_interval(p, q, D, MARGIN)
-                if z:
-                    out.append(z)
+            if self._hit(db, sb):
+                out += door_intervals(p, q, D)
         return out
 
     def contacts(self, P):
@@ -302,7 +310,7 @@ def main():
     ap.add_argument('--output'); ap.add_argument('--floors', default=','.join(FLOORS))
     a = ap.parse_args()
     res = {'verifier': 'verify.py', 'verifierSha256': hashlib.sha256(open(__file__, 'rb').read()).hexdigest(),
-           'rule': 'hard: no overlap > 1e-6 dm with a native wall (except inside a door hosted by that wall) or an uncovered cell hole (except inside a door); soft (outside walls/holes only): samples outside every cell within 0.3 m of own original',
+           'rule': 'hard: no overlap > 1e-6 dm with a native wall (except inside the closed footprint of a door hosted by that wall) or an uncovered cell hole (except inside a closed door footprint), door footprints clipped exactly with zero margin; soft (outside walls/holes only): samples outside every cell within 0.3 m of own original',
            'inputs': {}}
     g = guides = None
     if a.graph_full and a.guides:

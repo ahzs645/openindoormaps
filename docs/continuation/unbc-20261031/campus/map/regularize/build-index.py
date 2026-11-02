@@ -12,6 +12,11 @@ old = json.load(open(old_index))
 ver = json.load(open(verify_path))
 report = json.load(open(os.path.join(acc_dir, 'REPORT.json')))
 normal = json.load(open(os.path.join(acc_dir, 'NORMAL-ROUTES.json')))
+# campus-wide compile counts of the same candidate (all floors, including Floor 0)
+compile_summary = json.load(open(os.path.join(acc_dir, '..', 'COMPILE-SUMMARY.json')))
+campus_eligible = sum(f['eligibleWalkingEdges'] for f in compile_summary['floors'])
+campus_compiled = sum(f['compiledWalkingEdges'] for f in compile_summary['floors'])
+assert campus_compiled == compile_summary['compiled'] == report['guides'], (campus_compiled, report['guides'])
 sha = lambda p: hashlib.sha256(open(p, 'rb').read()).hexdigest()
 floors = []
 tot = dict(lines=0, accepted=0, saved=0, changed=0, defects=0, defectsAccepted=0)
@@ -30,12 +35,15 @@ for m in old['floors']:
     floors.append(d)
     tot['lines'] += d['drawnWalks']; tot['accepted'] += acc; tot['saved'] += d['drawnSavedWalks']
     tot['changed'] += d['schematicChanged']; tot['defects'] += d['sourceWallCrossings']; tot['defectsAccepted'] += d['sourceWallCrossingsAcceptedGuides']
+shown = {m['name'] for m in old['floors']}
+not_shown = [f for f in compile_summary['floors'] if f['name'] not in shown]
+assert campus_compiled - tot['accepted'] == sum(f['compiledWalkingEdges'] for f in not_shown)
 rows = [{'from': r['fromNumber'], 'to': r['toNumber'], 'mode': r['mode'], 'endpointMode': r['options']['endpointMode'],
          'allowOtherRoomTransit': r['options']['allowOtherRoomTransit'], 'available': r['available'],
          'distanceMetres': round(r['distanceMetres'], 3) if r.get('distanceMetres') else None,
          'requiredNativeDoorId': r.get('requiredNativeDoorId')} for r in normal['rows']]
 _acc = os.path.abspath(acc_dir)
-_rel = _acc.split('/openindoormaps/', 1)[1] if '/openindoormaps/' in _acc else acc_dir
+_rel = ('docs/continuation/' + _acc.split('/docs/continuation/', 1)[1]) if '/docs/continuation/' in _acc else acc_dir
 acceptance = {'source': _rel + ' (NORMAL-ROUTES.json, REPORT.json)',
               'status': report['status'], 'releaseAcceptance': report['releaseAcceptance'], 'published': report['published'],
               'runId': report['runId'], 'sourceMasterSha256': report['sourceMasterSha256'],
@@ -53,6 +61,7 @@ schematic = {
                'hardRuleViolations': sum(f['verify']['hardRuleViolations'] for f in floors),
                'sourceDefectLinesChanged': sum(f['verify']['sourceDefectLinesChanged'] for f in floors),
                'softRuleViolations': sum(f['verify']['softRuleViolations'] for f in floors)},
+    'guarantee': 'Changed schematic lines introduce no forbidden contact under the declared display predicate. Original lines are not certified wall-free; those that meet the predicate are kept unmodified and listed.',
     'generator': {name: sha(os.path.join(reg_dir, name)) for name in ('regularize.py', 'hardgeom.py', 'no-new-wall-crossings.py', 'verify.py')},
 }
 g = lambda n: f'{n:,}'
@@ -60,22 +69,28 @@ about = (
     "Spaces are the native wall-bounded floor cells that Reviter computed from the original Revit model, and the linework is the native wall footprints. "
     "The earlier room shapes were used only to place each room's name inside its space and are not drawn. "
     f"The walking network drawn by default is the accepted geometry, unmodified: {g(tot['accepted'])} accepted shared guides on these four floors "
-    f"(2,701 of 2,884 eligible campus-wide; guide catalog {report['guideSha256'][:8]}) and, for the other {g(tot['saved'])} enabled walks, their original saved walks. "
+    f"(the chosen candidate accepted {g(campus_compiled)} of {g(campus_eligible)} eligible walks campus-wide; the other "
+    f"{g(campus_compiled - tot['accepted'])} are on {', '.join(f['name'] for f in not_shown)}, which is not shown; guide catalog {report['guideSha256'][:8]}) "
+    f"and, for the other {g(tot['saved'])} enabled walks, their original saved walks. "
     "Corridor walks that only end at their own corridor's label point are hidden for legibility (routing keeps them). "
-    f"The optional schematic layer is a display-only redrawing that is not route-accepted: it changes {g(tot['changed'])} of {g(tot['lines'])} drawn walks, "
-    "may not enter any native wall footprint away from that wall's own doors or any cell hole (exact check, independent verifier "
-    f"{'PASS' if ver['ALL_PASS'] else 'FAIL'}), and keeps unmodified every walk whose original already does. "
-    f"{g(tot['defects'])} original walks ({g(tot['defectsAccepted'])} of them accepted guides) already overlap a native wall or hole away from doors in this drawing's coordinates; "
-    "they are listed in the 'Source walks that cross a native wall' layer as source defects for review. "
+    f"The optional schematic layer is a display-only redrawing that is not route-accepted: it changes {g(tot['changed'])} of {g(tot['lines'])} drawn walks. "
+    f"Its hard check (independent verifier {'PASS' if ver['ALL_PASS'] else 'FAIL'}) guarantees only that no changed line introduces a forbidden contact under the declared display predicate: "
+    "a positive-length overlap, in this drawing's decimetre coordinates, with a native wall footprint outside the closed footprints of that wall's own doors, "
+    "or with a cell hole that no other cell covers, outside every door footprint. "
+    "It does not certify that the original lines are wall-free: every walk whose original already meets that predicate is kept unmodified. "
+    f"{g(tot['defects'])} original walks ({g(tot['defectsAccepted'])} accepted guides, {g(tot['defects'] - tot['defectsAccepted'])} original saved walks) meet it; "
+    "the 'Source walks that cross a native wall' layer lists them as display-coordinate contacts for review, not proven native defects. "
     f"Route distances quoted come from the full-catalog acceptance run {report['runId'][:8]} (candidate archive {report['archiveSha256'][:8]}, releaseAcceptance false). "
     "Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. "
     "Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. "
-    "Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access. Floor 0 is not shown.")
+    "Drawn north-up with a fitted georeference (worst residual 0.61 m). A drawn path is not confirmed public or step-free access.")
 out = {'floors': floors, 'transform': old['transform'], 'drawing': {
     'default': 'Accepted geometry, unmodified: accepted shared guides (net category 0/2) and original saved walks (1/3), exactly as exported from the displayed candidate.',
     'acceptedGuides': tot['accepted'], 'savedWalks': tot['saved'], 'lines': tot['lines']},
     'schematic': schematic, 'sourceWallCrossings': {'lines': tot['defects'], 'acceptedGuideLines': tot['defectsAccepted'],
-    'rule': 'original net line overlaps a native wall footprint (outside the footprints of doors hosted by that wall) or a cell hole not covered by another cell; exact, display decimetre coordinates'},
+    'savedWalkLines': tot['defects'] - tot['defectsAccepted'],
+    'rule': 'original net line overlaps a native wall footprint (outside the closed footprints of doors hosted by that wall) or a cell hole not covered by another cell (outside every door footprint); exact clipping in display decimetre coordinates',
+    'meaning': 'Display-coordinate contacts kept unmodified for review; not proven native defects.'},
     'acceptance': acceptance, 'about': about, 'evidence': old['evidence'],
     'floorFiles': {f['id']: sha(os.path.join(root, 'floors', f['id'] + '.json')) for f in floors}}
 json.dump(out, open(os.path.join(root, 'floors', 'index.json'), 'w'), indent=1)

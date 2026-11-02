@@ -9,13 +9,17 @@ any part of it of positive length lies in the INTERIOR of a forbidden region:
   * a native cell hole (inner ring), except where another native cell covers
     the hole, and except inside any door footprint.
 
-Everything is computed with closed-form segment/polygon and segment/capsule
-intersections (parametric intervals along the segment).  No raster and no
+Everything is computed with closed-form segment/polygon intersections
+(parametric intervals along the segment).  At the declared zero door margin the
+door zone is the CLOSED door footprint, clipped exactly in rational arithmetic
+(closed_footprint_intervals); the segment/capsule form is kept only for a
+positive margin, which the rule does not use.  No raster and no
 sampling decides a wall or hole contact, and there is no distance-to-original
 allowance.  Only floating-point noise (EPS_LEN = 1e-6 dm of overlap) is ignored.
 """
 import math
 from collections import defaultdict
+from fractions import Fraction
 
 import numpy as np
 
@@ -136,8 +140,76 @@ def _lin_interval(k0, k1, lo, hi):
     return (min(a, b), max(a, b))
 
 
+def _closed_contains(V, x, y):
+    """Exact: is (x, y) in the closed polygon V (list of Fraction pairs)?  A point
+    on an edge counts as inside; elsewhere the even-odd crossing rule decides."""
+    n = len(V)
+    inside = False
+    for i in range(n):
+        (ax, ay), (bx, by) = V[i], V[(i + 1) % n]
+        if ((bx - ax) * (y - ay) - (by - ay) * (x - ax) == 0
+                and min(ax, bx) <= x <= max(ax, bx) and min(ay, by) <= y <= max(ay, by)):
+            return True
+        if (ay > y) != (by > y) and x < ax + (y - ay) * (bx - ax) / (by - ay):
+            inside = not inside
+    return inside
+
+
+def closed_footprint_intervals(p, q, D):
+    """Exact t-intervals of segment p->q inside the CLOSED polygon D (zero margin).
+
+    Direct segment/polygon clipping in exact rational arithmetic (Fraction holds
+    every float coordinate exactly); D need not be convex.  This is a different
+    algorithm from verify.py's convex half-plane clipper on purpose.
+      1. Cut the segment at every parameter where it meets the boundary: proper
+         crossings and vertices of non-parallel edges, and both ends of every
+         edge that is collinear with the segment.
+      2. Between consecutive cuts membership is constant, so each piece is
+         classified by its exact midpoint: on an edge (boundary) or strictly
+         inside both count, because the footprint is closed.  A touch at a
+         single point yields no piece.
+    No search, sampling or tolerance decides membership."""
+    F = Fraction
+    px, py = F(float(p[0])), F(float(p[1]))
+    dx, dy = F(float(q[0])) - px, F(float(q[1])) - py
+    L2 = dx * dx + dy * dy
+    if L2 == 0:
+        return []
+    V = [(F(float(x)), F(float(y))) for x, y in D]
+    n = len(V)
+    ts = {F(0), F(1)}
+    for i in range(n):
+        (ax, ay), (bx, by) = V[i], V[(i + 1) % n]
+        ex, ey = bx - ax, by - ay
+        wx, wy = ax - px, ay - py
+        den = dx * ey - dy * ex
+        if den != 0:
+            t = (wx * ey - wy * ex) / den
+            u = (wx * dy - wy * dx) / den
+            if 0 < t < 1 and 0 <= u <= 1:
+                ts.add(t)
+        elif wx * dy - wy * dx == 0:            # edge on the segment's line
+            for cx, cy in ((ax, ay), (bx, by)):
+                t = ((cx - px) * dx + (cy - py) * dy) / L2
+                if 0 < t < 1:
+                    ts.add(t)
+    ts = sorted(ts)
+    out = []
+    for a, b in zip(ts, ts[1:]):
+        m = (a + b) / 2
+        if _closed_contains(V, px + dx * m, py + dy * m):
+            if out and out[-1][1] == a:
+                out[-1][1] = b
+            else:
+                out.append([a, b])
+    return [(float(a), float(b)) for a, b in out]
+
+
 def zone_intervals(p, q, D, r):
-    """t in [0,1] where p + t (q-p) is inside polygon D or within r of it (exact)."""
+    """t in [0,1] where p + t (q-p) is inside polygon D or within r of it.
+    r == 0 (the declared rule): exact clipping against the closed footprint."""
+    if r == 0:
+        return closed_footprint_intervals(p, q, D)
     d = (q[0] - p[0], q[1] - p[1])
     out = [(max(0.0, a), min(1.0, b)) for a, b in interior_intervals(p, q, D)]
     n = len(D)

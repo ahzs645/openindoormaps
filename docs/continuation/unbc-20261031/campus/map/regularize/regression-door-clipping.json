@@ -1,0 +1,265 @@
+{
+ "status": "PASS",
+ "units": "decimetres",
+ "doorMargin": {
+  "verify": 0.0,
+  "hardgeom": 0.0
+ },
+ "sources": {
+  "verify.py": "e37d17b77796458a47fef82ae4015ff2ce4f0b4e2abcc34f422067c2cefe2b00",
+  "hardgeom.py": "53842c8fe99baa41201a1f9f9a057015c661e5f45873cdca560fe2fa86af0a4e"
+ },
+ "floorFile": {
+  "campus-floor-3.json": "d73c856c60aa68f4e64146938302f3c1332d6cf4940dc33d5a6533b199b6b985"
+ },
+ "fixtures": [
+  {
+   "case": "own-host door, axis-aligned crossing",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  },
+  {
+   "case": "own-host door, rotated crossing through the door middle",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  },
+  {
+   "case": "own-host door, rotated crossing entering through a door vertex",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  },
+  {
+   "case": "own-host door, segment along a door jamb (closed footprint)",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  },
+  {
+   "case": "own-host door, axis segment along the door edge y = 55",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  },
+  {
+   "case": "wrong-host door does not cut the wall",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 20.0,
+    "hardgeom": 20.0
+   },
+   "PASS": true
+  },
+  {
+   "case": "unknown-host door does not cut the wall",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 20.0,
+    "hardgeom": 20.0
+   },
+   "PASS": true
+  },
+  {
+   "case": "wrong-host rotated door does not cut the wall",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 6.324555,
+    "hardgeom": 6.324555
+   },
+   "PASS": true
+  },
+  {
+   "case": "near miss beside the door by 0.001 dm",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 20.0,
+    "hardgeom": 20.0
+   },
+   "PASS": true
+  },
+  {
+   "case": "near miss beside the rotated door (one step outside the jamb)",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 6.324555,
+    "hardgeom": 6.324555
+   },
+   "PASS": true
+  },
+  {
+   "case": "uncovered cell hole",
+   "expectedAllowed": false,
+   "verifyAllowed": false,
+   "hardgeomAllowed": false,
+   "overlapDm": {
+    "verify": 20.0,
+    "hardgeom": 20.0
+   },
+   "PASS": true
+  },
+  {
+   "case": "cell hole covered by another cell",
+   "expectedAllowed": true,
+   "verifyAllowed": true,
+   "hardgeomAllowed": true,
+   "overlapDm": {
+    "verify": 0,
+    "hardgeom": 0
+   },
+   "PASS": true
+  }
+ ],
+ "actualCampusFloor3Line": {
+  "committed": {
+   "netIndex": 352,
+   "line": [
+    -265,
+    327,
+    -278,
+    336,
+    -273,
+    318,
+    -273,
+    318,
+    -262,
+    321
+   ],
+   "doorHost": 1505948,
+   "matchesEmbeddedCopy": true,
+   "verifyContacts": [],
+   "hardgeomContacts": []
+  },
+  "doorInterval": {
+   "segment": [
+    [
+     -278.0,
+     336.0
+    ],
+    [
+     -273.0,
+     318.0
+    ]
+   ],
+   "verify": [
+    [
+     0.8,
+     0.8307692307692308
+    ]
+   ],
+   "hardgeom": [
+    [
+     0.8,
+     0.8307692307692308
+    ]
+   ],
+   "expected": [
+    0.8,
+    0.8307692307692308
+   ]
+  },
+  "counterfactuals": {
+   "committedForeignHost": {
+    "overlapDm": [
+     0.572499,
+     0.572499
+    ],
+    "kindsVerify": [
+     "wall"
+    ],
+    "kindsHardgeom": [
+     "wall"
+    ]
+   },
+   "committedNoDoor": {
+    "overlapDm": [
+     1.147316,
+     1.147316
+    ],
+    "kindsVerify": [
+     "hole",
+     "wall"
+    ],
+    "kindsHardgeom": [
+     "hole",
+     "wall"
+    ]
+   },
+   "embeddedForeignHost": {
+    "overlapDm": [
+     0.572499,
+     0.572499
+    ],
+    "kindsVerify": [
+     "wall"
+    ],
+    "kindsHardgeom": [
+     "wall"
+    ]
+   },
+   "embeddedNoDoor": {
+    "overlapDm": [
+     1.147316,
+     1.147316
+    ],
+    "kindsVerify": [
+     "hole",
+     "wall"
+    ],
+    "kindsHardgeom": [
+     "hole",
+     "wall"
+    ]
+   }
+  },
+  "embedded": {
+   "verifyContacts": [],
+   "hardgeomContacts": []
+  },
+  "PASS": true
+ },
+ "randomized": {
+  "cases": 2000,
+  "expectedRefused": 352,
+  "verifyMismatches": 0,
+  "hardgeomMismatches": 0,
+  "examples": [],
+  "PASS": true
+ }
+}

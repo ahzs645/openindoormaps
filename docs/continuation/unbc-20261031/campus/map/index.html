@@ -221,7 +221,7 @@ const LAYERS = [
   { key: "proposals", label: "Proposed native door pair", cls: "dot", color: "--evidence", on: true },
   { key: "labels", label: "Room names", cls: "fill", color: "--room", on: true },
   { key: "schematic", label: "Schematic drawing — display only, not route-accepted", color: "--schematic", cls: "dash", on: false, note: "Opt-in redrawing for legibility; routes never use it." },
-  { key: "sourceDefects", label: "Source walks that cross a native wall", color: "--warn", on: false, note: "Original walks overlapping a wall or hole away from doors (source defects)." },
+  { key: "sourceDefects", label: "Source walks that cross a native wall", color: "--warn", on: false, note: "Original walks that overlap a wall or hole away from doors in this drawing's coordinates (display-coordinate contacts for review, not proven native defects)." },
 ];
 const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {}, showToken: 0, loading: new Map() };
 LAYERS.forEach((l) => (state.layers[l.key] = l.on));
@@ -466,7 +466,7 @@ function renderFloor(f) {
   const rows = [
     ["Accepted shared guides / eligible walks", `${fmt(meta.compiled)} / ${fmt(meta.eligible)}`],
     ["Drawn walks: accepted guides + original saved walks", `${fmt(meta.drawnAcceptedGuides)} + ${fmt(meta.drawnSavedWalks)}`],
-    ["Source walks crossing a native wall or hole", fmt(meta.sourceWallCrossings)],
+    ["Original walks with a wall/hole contact (display coordinates)", fmt(meta.sourceWallCrossings)],
     ["Schematic layer: walks redrawn (display only)", fmt(meta.schematicChanged)],
     ["Native spaces (wall-bounded)", fmt(f.cells.length)],
     ["Room names placed", fmt(f.names.length)],
@@ -498,7 +498,7 @@ function renderSchematicStatus(f, meta) {
   box.hidden = !state.layers.schematic;
   box.innerHTML = "<b></b><span></span> <span class=\"badge\"></span><p class=\"note\"></p>";
   box.querySelector("b").textContent = sc.label;
-  box.querySelector("span").textContent = `${f.name}: ${fmt(meta.schematicChanged)} of ${fmt(meta.drawnWalks)} walks redrawn; ${fmt(meta.sourceWallCrossings)} source-defect walks kept unmodified. Independent verifier:`;
+  box.querySelector("span").textContent = `${f.name}: ${fmt(meta.schematicChanged)} of ${fmt(meta.drawnWalks)} walks redrawn; ${fmt(meta.sourceWallCrossings)} flagged original walks kept unmodified. Independent verifier (changed lines only):`;
   const badge = box.querySelector(".badge");
   badge.textContent = v.PASS ? `PASS · ${v.hardRuleViolations} wall/hole overlaps` : `FAIL · ${v.hardRuleViolations} wall/hole overlaps`;
   badge.classList.add(v.PASS ? "pass" : "fail");
@@ -508,7 +508,7 @@ function renderDefects(f, meta) {
   const list = $("defects"); list.innerHTML = "";
   // largest overlap first; each entry keeps its net index, edge id and native ids
   const rows = [...(f.sourceWallCrossings || [])].sort((u, v) => v[3][0][2] - u[3][0][2]);
-  $("defectNote").textContent = `${fmt(rows.length)} original walks on ${f.name} (${fmt(meta.sourceWallCrossingsAcceptedGuides)} of them accepted guides) overlap a native wall footprint away from that wall's own doors, or a cell hole. They are drawn unmodified in every view and need source review; the layer of the same name marks them on the map.`;
+  $("defectNote").textContent = `${fmt(rows.length)} original walks on ${f.name} (${fmt(meta.sourceWallCrossingsAcceptedGuides)} of them accepted guides) overlap a native wall footprint away from that wall's own doors, or a cell hole, in this drawing's decimetre coordinates. These are display-coordinate contacts for review, not proven native defects; they are drawn unmodified in every view and the schematic never redraws them. The layer of the same name marks them on the map.`;
   for (const [ni, edgeId, cat, contacts] of rows) {
     const c = contacts[0];
     const what = c[0] === "wall" ? `wall ${c[1]}` : `hole of native cell ${String(c[1]).split(":").pop()}`;

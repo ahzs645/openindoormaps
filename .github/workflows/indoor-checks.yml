@@ -89,5 +89,7 @@ jobs:
         run: python3 -m pip install numpy
       - name: Wall-shortcut regression
         run: python3 regularize/regression-wall-shortcut.py
+      - name: Zero-margin door clipping regression (both implementations)
+        run: python3 regularize/regression-door-clipping.py --output "$RUNNER_TEMP/regression-door-clipping.json"
       - name: Floor-selection race
         run: node tests/floor-selection-race.test.mjs
