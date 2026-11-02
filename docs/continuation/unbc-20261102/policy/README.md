@@ -1,5 +1,7 @@
 # Explicit-policy route matrices for the chosen candidate — November 2, 2026
 
+> **Superseded.** This run used the earlier candidate (visitor `39e9fed5…`) and its normal stage did not complete here. The current, complete results for the final candidate (visitor `6abc227a…`, all 160 cases on both implementations) are in [../final-candidate/](../final-candidate/README.md) and [../final-proof/](../final-proof/).
+
 Inputs (unchanged): visitor JSON `39e9fed5…` (routing projection `c4c3ea4f…`),
 progressive manifest revision `bdea9eb5…`, admitted directions carrier
 `dec83a46…` (first compiled receipt in

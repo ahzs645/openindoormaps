@@ -33,7 +33,7 @@ exact clipping, zero door margin, display decimetre coordinates). It does
 **not** certify that every original line is wall-free: originals that meet the
 predicate are kept unmodified and listed in the layer below.
 
-**Off-by-default layer: "Source walks that cross a native wall".** The 490
+**Off-by-default layer: "Display contacts to review".** The 490
 original walks (116 accepted guides, 374 original saved walks) whose own
 geometry overlaps a native wall footprint away from that wall's own doors, or a
 cell hole (exact test in display coordinates). Per floor: Campus Floor 1 152

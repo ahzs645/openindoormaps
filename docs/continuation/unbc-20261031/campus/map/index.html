@@ -159,7 +159,7 @@ h2 { font: 600 12px var(--font-display); text-transform: uppercase; letter-spaci
       <div class="schem" id="schemStatus" hidden></div>
     </section>
     <section>
-      <h2>Source walks that cross a native wall</h2>
+      <h2>Display contacts to review</h2>
       <p class="note" id="defectNote"></p>
       <div class="list scroll" id="defects"></div>
     </section>
@@ -191,7 +191,7 @@ const GATEWAYS = [
   // detail is generated from the full-catalog acceptance record in floors/index.json (see linkDetail).
   { id: 2311764, floor: "floor-2", name: "Buildings 04–08 link", detail: "", status: "ok" },
   { id: 2112703, floor: "campus-floor-3", name: "Buildings 04–08, Building 04 end", detail: "Connected door (04-302 Corridor ↔ 08-360 Link).", status: "partial" },
-  { id: 2315416, floor: "campus-floor-3", name: "Buildings 04–08, Building 08 end", detail: "Unmatched today. Native cells put 08-360 Link on one side and the Building 08 corridor space on the other; nearest named room 08-316 Corridor, 0.90 m from the door.", status: "bad" },
+  { id: 2315416, floor: "campus-floor-3", name: "Buildings 04–08, Building 08 end", detail: "Unmatched today. Native cells put 08-360 Link on one side and the Building 08 corridor space on the other; nearest named outline 08-316 Corridor at 3.212 ft from the aperture face (2.962 ft from the native matcher's probe, beyond its 2 ft limit). The unlabelled strip may belong to 08-316 Corridor, 08-305 Corridor or a vestibule; it needs a source ownership review before any repair.", status: "bad" },
   { id: 1499620, floor: "floor-2", name: "Buildings 08–10, first door", detail: "Connected door; hallway-only corridor journeys cross it (08-267 ↔ 10-2066 about 34 m). The recorded refusal 08-264 → 10-2006 is caused by the destination: every walk into door 1499373 passes 10-2006 Office's outline in merged native cell 647. Needs a source-side approach fix and a rebuild.", status: "partial" },
   { id: 1499619, floor: "floor-2", name: "Buildings 08–10, second door", detail: "Connected door (10-2070 Vestibule ↔ 10-2066 Corridor).", status: "partial" },
   { id: 1501580, floor: "campus-floor-1", name: "Buildings 08–10, Floor 1", detail: "Connected door (10-1080 Vestibule ↔ 08-159 Alcove).", status: "partial" },
@@ -202,7 +202,7 @@ const GATEWAYS = [
 ];
 const VESTIBULE_CAUSE = {
   "06-388": "Repaired in this candidate: a replay-checked reviewed circulation link joins the 06-364 Corridor portal of door 1780077 to the portal of door 1779222 (6.46 ft). 06-388 to 06-364 now routes in 34.356 m in the normal calculator and production worker; step-free stays refused.",
-  "10-1300": "Door 2471813 should pair the vestibule with 10-1302 Atrium, but the atrium outline stops 1.85 ft short of the thin native wall. Needs an outline review and the native rebuild.",
+  "10-1300": "Door 2471813 has a plausible owner pair with 10-1302 Atrium (the atrium outline stops 1.85 ft short of the thin native wall), but the native aperture evidence is incomplete: the jambs, head and sill, and element 2472128 crossing the opening band must be identified and classified, and both approaches verified, before a native rebuild.",
   "03-1052": "The vestibule is a pocket of native space 601 joined only at zero-width corners, and its four doors are unmatched. Needs outline reviews for doors 1425507 and 1425511 and the native rebuild.",
   "06-207": "There is no doorway between the vestibule and 06-210 Corridor in the native model; only its two washroom doors exist. Needs a drawing check and a drawn-door review before the rebuild.",
   "07-309": "Pairing door 621887 would only join a 7-room office suite that is itself cut off by an unmodelled area between doors 1732467 and 1715768. Needs a site decision.",
@@ -221,7 +221,7 @@ const LAYERS = [
   { key: "proposals", label: "Proposed native door pair", cls: "dot", color: "--evidence", on: true },
   { key: "labels", label: "Room names", cls: "fill", color: "--room", on: true },
   { key: "schematic", label: "Schematic drawing — display only, not route-accepted", color: "--schematic", cls: "dash", on: false, note: "Opt-in redrawing for legibility; routes never use it." },
-  { key: "sourceDefects", label: "Source walks that cross a native wall", color: "--warn", on: false, note: "Original walks that overlap a wall or hole away from doors in this drawing's coordinates (display-coordinate contacts for review, not proven native defects)." },
+  { key: "sourceDefects", label: "Display contacts to review", color: "--warn", on: false, note: "Original walks that overlap a wall or hole away from doors in this drawing's coordinates (display-coordinate contacts for review, not proven native defects)." },
 ];
 const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {}, showToken: 0, loading: new Map() };
 LAYERS.forEach((l) => (state.layers[l.key] = l.on));
@@ -460,7 +460,7 @@ function renderFloor(f) {
   const meta = state.index.floors.find((x) => x.id === f.id);
   $("floorTitle").textContent = f.name;
   const pct = (meta.compiled / meta.eligible) * 100;
-  $("pct").innerHTML = `${pct.toFixed(1)}%<span>of eligible walks have an accepted shared guide</span>`;
+  $("pct").innerHTML = `${pct.toFixed(1)}%<span>of this floor's eligible walks have an accepted shared guide. Not a measure of reachability, working doors or release readiness.</span>`;
   $("meter").style.width = `${pct}%`;
   const unmatched = f.doors.filter((d) => d[2] === 1).length;
   const rows = [

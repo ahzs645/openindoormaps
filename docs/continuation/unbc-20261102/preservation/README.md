@@ -18,3 +18,31 @@ masters by entry hashes, not by archive hash.
 The guide catalog of the final candidate is committed with its candidate
 records, so candidate, visitor and directions cache can be rebuilt from the
 canonical master with the commands in those records.
+
+## Bundle of the actual tested files (November 2, 2026)
+
+The actual bytes of the final development candidate were packed into one tar
+archive and split into ten parts: nine of 94,371,840 bytes and one of
+17,827,840 bytes. All ten were delivered to the owner as files in the
+session. The bundle holds:
+
+- the master `6e7971f8…`;
+- the catalog `1c3011ff…`;
+- the candidate `32c395e1…`;
+- the independent visitor ZIP `e60634aa…`, whose `viewer/indoor.json` is
+  `6abc227a…`;
+- the complete progressive export (revision `fa6d2935…`);
+- the directions carrier `3d27eaa5…` with its receipt and proof;
+- the seven plan carriers;
+- the gate 4 and 5 admission reports and receipts.
+
+Before delivery, the parts were reassembled and extracted in a separate
+directory, and all 284 file checksums matched.
+
+- [BUNDLE-PARTS.SHA256SUMS](BUNDLE-PARTS.SHA256SUMS) lists the parts.
+- [BUNDLE-FILES.SHA256SUMS](BUNDLE-FILES.SHA256SUMS) lists every file.
+- [BUNDLE-RESTORE.md](BUNDLE-RESTORE.md) gives the restore steps.
+
+The bundle counts as preserved only after the owner stores the parts (for
+example in the recovery Drive folder) and checks them against
+`BUNDLE-PARTS.SHA256SUMS` after download.

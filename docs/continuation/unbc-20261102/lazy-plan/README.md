@@ -128,7 +128,9 @@ Stepping the zoom takes about 9–10 s in both builds on this software-GL host.
 After that, the plan's download, decode and draw (about 9 s) now come after
 the zoom instead of during the opening. A visitor who opens the page and
 immediately zooms into the main floor therefore sees its detailed plan about
-5–6 s later than before. During that time the screen shows "Loading floor…"
+5–6 s later measured from navigation. Measured from the start of their zoom,
+which is what the visitor experiences, the wait roughly doubles: from about
+10 s to about 19 s. During that time the screen shows "Loading floor…"
 over the overview.
 
 Every other path is faster or unchanged:

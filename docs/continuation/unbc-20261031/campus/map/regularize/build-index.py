@@ -79,7 +79,7 @@ about = (
     "or with a cell hole that no other cell covers, outside every door footprint. "
     "It does not certify that the original lines are wall-free: every walk whose original already meets that predicate is kept unmodified. "
     f"{g(tot['defects'])} original walks ({g(tot['defectsAccepted'])} accepted guides, {g(tot['defects'] - tot['defectsAccepted'])} original saved walks) meet it; "
-    "the 'Source walks that cross a native wall' layer lists them as display-coordinate contacts for review, not proven native defects. "
+    "the 'Display contacts to review' layer lists them as display-coordinate contacts for review, not proven native defects. "
     f"Route distances quoted come from the full-catalog acceptance run {report['runId'][:8]} (candidate archive {report['archiveSha256'][:8]}, releaseAcceptance false). "
     "Native door evidence steps just past each face of every saved door and asks which native cell is there: for the 1,303 connected doors with two distinct cells, the existing owners agree every time. "
     "Proposed door pairs are evidence for review, not applied routes; they take effect only after a regenerated native build. "

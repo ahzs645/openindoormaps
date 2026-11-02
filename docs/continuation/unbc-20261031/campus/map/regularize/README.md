@@ -37,7 +37,7 @@ The earlier version accepted such samples (finding 1).
 **Flagged originals (`sourceWallCrossings`):** a line whose ORIGINAL geometry
 already overlaps a wall or hole under this rule is never simplified. It is kept
 unmodified and listed in the floor's `sourceWallCrossings` (shown by the map's
-off-by-default layer "Source walks that cross a native wall"). These are
+off-by-default layer "Display contacts to review"). These are
 display-coordinate contacts, measured in this drawing's fitted,
 decimetre-rounded coordinates; they are review leads, not proven native defects.
 

@@ -1,5 +1,7 @@
 # Visitor package for the chosen candidate — November 2, 2026
 
+> **Superseded.** This page describes the earlier candidate `1a127847…` (visitor `39e9fed5…`). Its directions receipt was replaced; see [../final-candidate/](../final-candidate/README.md).
+
 The visitor package, directions cache, receipt and browser proof are all built
 from the chosen candidate in
 [../../unbc-20261101/candidate/](../../unbc-20261101/candidate/README.md):
