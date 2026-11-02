@@ -393,3 +393,193 @@ test("doorway spurs are removed so the trunk refits straight, and a terminal tha
       kept.routeDetails("f", to),
     );
 });
+
+/** Proper crossing or non-adjacent contact between two segments of one path. */
+const selfContacts = (path: readonly CorridorXY[]) => {
+  const orient = (a: CorridorXY, b: CorridorXY, c: CorridorXY) =>
+    Math.sign((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
+  const contacts: [number, number][] = [];
+  for (let i = 0; i + 1 < path.length; i++)
+    for (let j = i + 2; j + 1 < path.length; j++) {
+      const [a, b] = [path[i], path[i + 1]],
+        [c, d] = [path[j], path[j + 1]];
+      if (
+        orient(a, b, c) * orient(a, b, d) <= 0 &&
+        orient(c, d, a) * orient(c, d, b) <= 0
+      )
+        contacts.push([i, j]);
+    }
+  return contacts;
+};
+
+const crossedDoorNormalTerminals = [
+  {
+    id: "a",
+    point: [10, 1] as CorridorXY,
+    approachDirection: [1, 1] as CorridorXY,
+  },
+  {
+    id: "b",
+    point: [13, 1] as CorridorXY,
+    approachDirection: [-1, 1] as CorridorXY,
+  },
+];
+
+test("crossing doorway-normal approaches are rejected against the combined axis network", () => {
+  // External review fixture: each doorway-normal branch is supported on its
+  // own, but a -> (13, 4) and b -> (10, 4) cross at (11.5, 2.5) before their
+  // hallway joins.
+  const corridor = rect(0, 0, 40, 8);
+  const check = clearance(nativeRationalOverlay("union", [[corridor]]));
+  const terminals = crossedDoorNormalTerminals;
+  const before = JSON.stringify(terminals);
+  const build = (shapedApproaches: boolean) =>
+    createCorridorCenterline([corridor], terminals, check, {
+      shapedApproaches,
+      requiredEdges: [{ from: "a", to: "b" }],
+    });
+  const legacy = build(false);
+  assert.deepEqual(legacy.routeDetails("a", "b")!.points, [
+    [10, 1],
+    [10, 4],
+    [13, 4],
+    [13, 1],
+  ]);
+  assert.deepEqual(legacy.statistics().approachTopologyConflicts, []);
+  const shaped = build(true);
+  const route = shaped.routeDetails("a", "b")!;
+  assert.ok(route);
+  const statistics = shaped.statistics();
+  assert.deepEqual(statistics.approachTopologyConflicts, []);
+  assert.equal(shaped.networkApproachConflicts().size, 0);
+  assert.equal(statistics.straightAxisTerminals, 2);
+  assert.equal(statistics.axisApproachRepair.conflicts, 1);
+  assert.ok(statistics.axisApproachRepair.changedTerminals >= 1);
+  assert.deepEqual(statistics.approachTopology!.finalConflicts, []);
+  // Fixed original endpoints and exact native footprint support.
+  assert.deepEqual(route.points[0], terminals[0].point);
+  assert.deepEqual(route.points.at(-1), terminals[1].point);
+  assert.ok(check(route.points));
+  const [first, last] = route.hallwayJoins;
+  assert.ok(check(route.points.slice(0, first + 1)));
+  assert.ok(check(route.points.slice(first, last + 1)));
+  assert.ok(check(route.points.slice(last).toReversed()));
+  assert.deepEqual(selfContacts(route.points), []);
+  assert.notDeepEqual(route.points, [
+    [10, 1],
+    [13, 4],
+    [10, 4],
+    [13, 1],
+  ]);
+  // The first approach keeps its clean doorway-normal branch; the second,
+  // whose doorway-normal branch would cross it, takes its next supported
+  // proposal and meets it at a shared junction on the axis.
+  assert.deepEqual(route.points, [
+    [10, 1],
+    [13, 4],
+    [13, 1],
+  ]);
+  assert.equal(JSON.stringify(terminals), before);
+});
+
+test("crossing approaches in a shared chain network are rebuilt with the next restriction", () => {
+  // A T junction has no straight axis; the chain network's crossing branches
+  // are found in the complete final topology and rebuilt.
+  const ring: CorridorXY[] = [
+    [0, 0],
+    [40, 0],
+    [40, 8],
+    [24, 8],
+    [24, 30],
+    [16, 30],
+    [16, 8],
+    [0, 8],
+  ];
+  const check = clearance(nativeRationalOverlay("union", [[ring]]));
+  const terminals = [
+    {
+      id: "a",
+      point: [6, 1] as CorridorXY,
+      approachDirection: [1, 1] as CorridorXY,
+    },
+    {
+      id: "b",
+      point: [9, 1] as CorridorXY,
+      approachDirection: [-1, 1] as CorridorXY,
+    },
+  ];
+  const network = createCorridorCenterline([ring], terminals, check, {
+    requiredEdges: [{ from: "a", to: "b" }],
+  });
+  const route = network.routeDetails("a", "b")!;
+  assert.ok(route);
+  const statistics = network.statistics();
+  assert.equal(statistics.straightAxisTerminals, 0);
+  assert.deepEqual(statistics.approachTopology!.initialConflicts, [
+    JSON.stringify(["a", "b"]),
+  ]);
+  assert.deepEqual(statistics.approachTopology!.legacyConflicts, []);
+  assert.deepEqual(statistics.approachTopology!.finalConflicts, []);
+  assert.equal(statistics.approachTopology!.result, "shaped-restricted");
+  assert.deepEqual(statistics.approachTopologyConflicts, []);
+  assert.equal(network.networkApproachConflicts().size, 0);
+  assert.deepEqual(route.points[0], terminals[0].point);
+  assert.deepEqual(route.points.at(-1), terminals[1].point);
+  assert.ok(check(route.points));
+  assert.deepEqual(selfContacts(route.points), []);
+});
+
+test("well-separated doorway-normal approaches are still shaped", () => {
+  // Positive controls: the same doorway normals with room between them keep
+  // their straight doorway-normal branches, on the axis and in a chain network.
+  const corridor = rect(0, 0, 40, 8);
+  const check = clearance(nativeRationalOverlay("union", [[corridor]]));
+  const terminals = [
+    crossedDoorNormalTerminals[0],
+    { ...crossedDoorNormalTerminals[1], point: [30, 1] as CorridorXY },
+  ];
+  const axis = createCorridorCenterline([corridor], terminals, check, {
+    requiredEdges: [{ from: "a", to: "b" }],
+  });
+  assert.deepEqual(axis.routeDetails("a", "b")!.points, [
+    [10, 1],
+    [13, 4],
+    [27, 4],
+    [30, 1],
+  ]);
+  const axisStatistics = axis.statistics();
+  assert.equal(axisStatistics.straightAxisTerminals, 2);
+  assert.equal(axisStatistics.axisApproachRepair.conflicts, 0);
+  assert.equal(axisStatistics.approachTopology!.result, "shaped");
+  assert.equal(axisStatistics.approachTopology!.networksBuilt, 1);
+  const ring: CorridorXY[] = [
+    [0, 0],
+    [40, 0],
+    [40, 8],
+    [24, 8],
+    [24, 30],
+    [16, 30],
+    [16, 8],
+    [0, 8],
+  ];
+  const junction = clearance(nativeRationalOverlay("union", [[ring]]));
+  const chain = createCorridorCenterline(
+    [ring],
+    [{ ...terminals[0], point: [6, 1] as CorridorXY }, terminals[1]],
+    junction,
+    { requiredEdges: [{ from: "a", to: "b" }] },
+  );
+  const route = chain.routeDetails("a", "b")!;
+  assert.equal(chain.statistics().approachTopology!.result, "shaped");
+  assert.deepEqual(chain.statistics().approachTopologyConflicts, []);
+  // Both doorway-normal branches: 45 degrees from each door to the trunk.
+  assert.deepEqual(route.points.slice(0, 2), [
+    [6, 1],
+    [9, 4],
+  ]);
+  assert.deepEqual(route.points.slice(-2), [
+    [27, 4],
+    [30, 1],
+  ]);
+  assert.ok(junction(route.points));
+});

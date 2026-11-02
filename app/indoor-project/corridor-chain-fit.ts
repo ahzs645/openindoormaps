@@ -248,6 +248,26 @@ export function corridorChainTopologyConflicts(
   ].sort((a, b) => a - b);
 }
 
+/** The same inspection as `corridorChainTopologyConflicts`, reported as the
+ * offending input index pairs `[i, j]` with `i < j`, sorted. A pair is listed
+ * once however many contacts it has. */
+export function corridorChainTopologyConflictPairs(
+  input: readonly CorridorFitChain[],
+): [number, number][] {
+  const pairs = new Set<string>();
+  findCorridorChainTopologyConflicts(
+    input,
+    input.map((chain) => chain.points),
+    (contact) => {
+      pairs.add(contact.pair);
+      return false;
+    },
+  );
+  return [...pairs]
+    .map((pair) => pair.split(":").map(Number) as [number, number])
+    .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+}
+
 /** Fit a complete set together, before journey-specific routing or emission.
  * Original graph-node identities qualify endpoint contact; coincident numeric
  * coordinates alone cannot invent a junction. Every final segment needs the

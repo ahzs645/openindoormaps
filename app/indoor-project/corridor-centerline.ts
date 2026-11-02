@@ -6,6 +6,8 @@ import { proposeStraightCorridorAxis } from "./corridor-straight-axis";
 import {
   fitCheckedCorridorChains,
   corridorChainTopologyConflicts,
+  corridorChainTopologyConflictPairs,
+  type CorridorFitChain,
 } from "./corridor-chain-fit";
 import { CORRIDOR_COMPILER_PARAMETERS } from "./corridor-routing-parameters";
 import {
@@ -70,31 +72,221 @@ export function composeCorridorCenterlineRoute(
   return { points, hallwayJoins: [first, last] };
 }
 
+export type CorridorCenterlineOptions = {
+  spacingFeet?: number;
+  maxSites?: number;
+  maxAttachments?: number;
+  requiredEdges?: readonly CorridorAttachmentRequirement[];
+  maxDeviationFeet?: number;
+  /** See CorridorCompilerParameters.shapedApproaches. */
+  shapedApproaches?: boolean;
+  /** See CorridorCompilerParameters.slideJoins. */
+  slideJoins?: boolean;
+};
+
+/** Shaped-approach restriction of one terminal: 0 offers every shaped
+ * proposal, 1 withholds the doorway-normal branch, 2 offers only the legacy
+ * approach proposals in their legacy order. */
+type ApproachRestriction = 0 | 1 | 2;
+
+/** How the complete-network approach topology acceptance was met. Conflict
+ * keys are those of `conflictKey`; `legacyConflicts` is only computed when
+ * the first shaped network has a conflict. */
+type ApproachTopologyReport = {
+  networksBuilt: number;
+  initialConflicts: string[];
+  legacyConflicts: string[] | null;
+  finalConflicts: string[];
+  restrictedTerminals: { id: string; restriction: number }[];
+  result: "shaped" | "shaped-restricted" | "legacy-network";
+};
+
+/** Rebuilds allowed while restricting the terminals of new approach
+ * topology conflicts, before the legacy network is returned instead. */
+const MAX_APPROACH_TOPOLOGY_ROUNDS = 4;
+
+/** Identity of an approach topology conflict that can be compared between
+ * two networks of the same terminals: the two terminal identities of crossing
+ * or touching approaches, or one terminal and `null` for an approach that meets
+ * shared (core or axis) geometry without a shared junction. */
+const conflictKey = (first: string, second: string | null) =>
+  JSON.stringify(second === null ? [first, null] : [first, second].sort());
+
+/** Approach-involving conflicts of a complete topology, by conflict key. */
+function approachConflictKeys(
+  topology: readonly (CorridorFitChain & { terminal?: string })[],
+) {
+  const keys = new Map<string, string[]>();
+  for (const [i, j] of corridorChainTopologyConflictPairs(topology)) {
+    const a = topology[i].terminal,
+      b = topology[j].terminal;
+    if (a === undefined && b === undefined) continue;
+    const key =
+      a !== undefined && b !== undefined
+        ? conflictKey(a, b)
+        : conflictKey((a ?? b)!, null);
+    keys.set(
+      key,
+      [a, b].filter((id): id is string => id !== undefined),
+    );
+  }
+  return keys;
+}
+
 /** A sampled boundary Voronoi graph proposes shared corridor lanes. Neither
  * triangulation nor numerical containment supplies physical authority. Every
  * used core segment and each original terminal approach must pass the caller's
  * continuous clearance predicate; failures leave the existing solver available.
  * Auxiliary vertices never replace or identify original source graph nodes.
+ *
+ * With shaped approaches, the complete network's topology is an acceptance
+ * condition: each approach is selected independently, so two individually
+ * supported approaches may cross or touch each other (or the shared lanes)
+ * without a shared junction. Such a network is not returned when the legacy
+ * network does not have the same conflict. The terminals of a new conflict
+ * are rebuilt with the next restriction (no doorway-normal branch, then the
+ * legacy proposals), every proposal again passing the same exact support; if
+ * new conflicts remain, the legacy network itself is returned. Comparison is
+ * over the whole network (every attached terminal and shared lane), which is
+ * stricter than the per-route `approachTopologyConflicts` statistic.
  */
 export function createCorridorCenterline(
   rings: CorridorXY[][],
   terminals: readonly CorridorCenterlineTerminal[],
   supported: (path: CorridorXY[], terminalId?: string) => boolean,
-  options: {
-    spacingFeet?: number;
-    maxSites?: number;
-    maxAttachments?: number;
-    requiredEdges?: readonly CorridorAttachmentRequirement[];
-    maxDeviationFeet?: number;
-    /** See CorridorCompilerParameters.shapedApproaches. */
-    shapedApproaches?: boolean;
-    /** See CorridorCompilerParameters.slideJoins. */
-    slideJoins?: boolean;
-  } = {},
+  options: CorridorCenterlineOptions = {},
+) {
+  const shaped =
+    options.shapedApproaches ?? CORRIDOR_CENTERLINE_PARAMETERS.shapedApproaches;
+  const legacyBuild = () =>
+    buildCorridorCenterline(
+      rings,
+      terminals,
+      memoized,
+      { ...options, shapedApproaches: false },
+      new Map(),
+    );
+  // Exact terminal support is a pure predicate of (path, terminal). Rebuilds
+  // reuse its answers; shared-lane checks are passed through unchanged.
+  const memo = new Map<string, boolean>();
+  const memoized = (path: CorridorXY[], terminalId?: string) => {
+    if (terminalId === undefined || !shaped) return supported(path, terminalId);
+    const key = `${terminalId}\u0000${path.flat().join(",")}`;
+    let valid = memo.get(key);
+    if (valid === undefined) {
+      valid = supported(path, terminalId);
+      if (memo.size < 1_000_000) memo.set(key, valid);
+    }
+    return valid;
+  };
+  if (!shaped) {
+    const network = legacyBuild();
+    const statistics = network.statistics;
+    return {
+      ...network,
+      statistics: () => ({
+        ...statistics(),
+        approachTopology: null as ApproachTopologyReport | null,
+      }),
+    };
+  }
+  const restrictions = new Map<string, ApproachRestriction>();
+  let network = buildCorridorCenterline(
+    rings,
+    terminals,
+    memoized,
+    options,
+    restrictions,
+  );
+  const initialConflicts = network.networkApproachConflicts();
+  const report: ApproachTopologyReport = {
+    networksBuilt: 1,
+    initialConflicts: [...initialConflicts.keys()].sort(),
+    legacyConflicts: null,
+    finalConflicts: [...initialConflicts.keys()].sort(),
+    restrictedTerminals: [],
+    result: "shaped",
+  };
+  const finish = (
+    chosen: typeof network,
+    result: (typeof report)["result"],
+  ) => {
+    report.result = result;
+    report.finalConflicts = [
+      ...chosen.networkApproachConflicts().keys(),
+    ].sort();
+    report.restrictedTerminals = [...restrictions]
+      .filter(([, level]) => level > 0)
+      .map(([id, restriction]) => ({ id, restriction }))
+      .sort((a, b) => a.id.localeCompare(b.id));
+    const statistics = chosen.statistics;
+    return {
+      ...chosen,
+      statistics: () => ({
+        ...statistics(),
+        approachTopology: structuredClone(
+          report,
+        ) as ApproachTopologyReport | null,
+      }),
+    };
+  };
+  if (initialConflicts.size === 0) return finish(network, "shaped");
+  const legacy = legacyBuild();
+  report.networksBuilt++;
+  const legacyConflicts = legacy.networkApproachConflicts();
+  report.legacyConflicts = [...legacyConflicts.keys()].sort();
+  for (let round = 0; ; round++) {
+    const conflicts = network.networkApproachConflicts();
+    const added = [...conflicts].filter(([key]) => !legacyConflicts.has(key));
+    if (added.length === 0)
+      return finish(network, round === 0 ? "shaped" : "shaped-restricted");
+    if (round >= MAX_APPROACH_TOPOLOGY_ROUNDS) break;
+    let restricted = false;
+    for (const id of new Set(added.flatMap(([, ids]) => ids))) {
+      const level = restrictions.get(id) ?? 0;
+      if (level >= 2) continue;
+      restrictions.set(id, (level + 1) as ApproachRestriction);
+      restricted = true;
+    }
+    if (!restricted) break;
+    network = buildCorridorCenterline(
+      rings,
+      terminals,
+      memoized,
+      options,
+      restrictions,
+    );
+    report.networksBuilt++;
+  }
+  return finish(legacy, "legacy-network");
+}
+
+function buildCorridorCenterline(
+  rings: CorridorXY[][],
+  terminals: readonly CorridorCenterlineTerminal[],
+  supported: (path: CorridorXY[], terminalId?: string) => boolean,
+  options: CorridorCenterlineOptions,
+  restrictions: ReadonlyMap<string, ApproachRestriction>,
 ) {
   terminals = [...terminals].sort((a, b) => a.id.localeCompare(b.id));
   const shaped =
     options.shapedApproaches ?? CORRIDOR_CENTERLINE_PARAMETERS.shapedApproaches;
+  /** The terminal's approach proposals to one receiving segment, after its
+   * topology restriction. Every proposal still needs the exact checks. */
+  const approachProposals = (
+    terminal: CorridorCenterlineTerminal,
+    a: CorridorXY,
+    b: CorridorXY,
+  ) => {
+    const level = shaped ? (restrictions.get(terminal.id) ?? 0) : 2;
+    const proposals = corridorTerminalApproachProposals(terminal, a, b, {
+      shaped: level < 2,
+      maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
+    });
+    return level === 1
+      ? proposals.filter((proposal) => proposal.shape !== "door-normal")
+      : proposals;
+  };
   const slideJoins =
     options.slideJoins ?? CORRIDOR_CENTERLINE_PARAMETERS.slideJoins;
   const maxAttachments =
@@ -251,7 +443,10 @@ export function createCorridorCenterline(
       // perpendicular branch even if it is not among the nearest projections.
       let firstEdge = -1,
         firstT = MAX_SHARED_CORRIDOR_APPROACH_FEET;
-      if (terminal.approachDirection)
+      if (
+        terminal.approachDirection &&
+        (restrictions.get(terminal.id) ?? 0) === 0
+      )
         for (const [edge, [a, b]] of coreEdges.entries()) {
           const hit = corridorDoorNormalHit(
             terminal.point,
@@ -276,11 +471,10 @@ export function createCorridorCenterline(
       for (const edge of ordered) {
         if (!coreSupported(edge)) continue;
         const [a, b] = coreEdges[edge];
-        const proposals = corridorTerminalApproachProposals(
+        const proposals = approachProposals(
           terminal,
           vertices[a],
           vertices[b],
-          { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
         ).filter(
           (proposal) =>
             DMath.hypot(
@@ -611,10 +805,7 @@ export function createCorridorCenterline(
                 },
               ]
             : []),
-          ...corridorTerminalApproachProposals(terminal, a, b, {
-            shaped,
-            maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
-          }).filter(
+          ...approachProposals(terminal, a, b).filter(
             (option) =>
               DMath.hypot(
                 option.point[0] - terminal.point[0],
@@ -1070,6 +1261,14 @@ export function createCorridorCenterline(
         cost: number;
       };
       const placements = new Map<string, Placement>();
+      // Branches that stay where they are during this attempt.
+      const fixedBranches = [...joins].flatMap(([, join]) =>
+        moving(join.vertex)
+          ? []
+          : join.approach
+              .slice(1)
+              .map((q, k) => [join.approach[k], q] as const),
+      );
       let added = false;
       for (const [vertex, move] of movable) {
         if (!moving(vertex)) continue;
@@ -1140,12 +1339,7 @@ export function createCorridorCenterline(
           for (const { trunk, segment, a, b, distance } of ranked) {
             const bound = Math.min(best?.cost ?? Infinity, limit);
             if (distance >= bound) break;
-            for (const option of corridorTerminalApproachProposals(
-              terminal,
-              a,
-              b,
-              { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
-            )) {
+            for (const option of approachProposals(terminal, a, b)) {
               if (option.cost > bound) continue;
               // A moved spur terminal must gain a clean branch.
               if (
@@ -1174,6 +1368,24 @@ export function createCorridorCenterline(
                   .slice(1)
                   .some((q, k) =>
                     coreSegments.some(([u, v]) =>
+                      segmentsCross(option.path[k], q, u, v),
+                    ),
+                  )
+              )
+                continue;
+              // Nor another terminal's branch (kept or already placed): two
+              // branches cannot cross without a shared junction.
+              const branches = [
+                ...fixedBranches,
+                ...[...placements.values()].flatMap(({ approach }) =>
+                  approach.slice(1).map((q, k) => [approach[k], q] as const),
+                ),
+              ];
+              if (
+                option.path
+                  .slice(1)
+                  .some((q, k) =>
+                    branches.some(([u, v]) =>
                       segmentsCross(option.path[k], q, u, v),
                     ),
                   )
@@ -1298,6 +1510,11 @@ export function createCorridorCenterline(
   const usedTerminals = new Set<string>();
   const straightAxis = exceeded ? null : proposeStraightCorridorAxis(rings);
   const straightApproaches = new Map<string, CorridorXY[]>();
+  /** Shaped axis proposals (in order) and the legacy candidates per terminal. */
+  const axisOptions = new Map<
+    string,
+    { paths: CorridorXY[][]; legacy: CorridorXY[][] }
+  >();
   if (straightAxis)
     for (const terminal of terminals) {
       const point = straightAxis.project(terminal.point);
@@ -1308,37 +1525,6 @@ export function createCorridorCenterline(
         ) > MAX_SHARED_CORRIDOR_APPROACH_FEET
       )
         continue;
-      if (shaped) {
-        // A local piece of the axis around the projection; the legacy
-        // straight and elbow candidates keep the exact axis projection.
-        const [ux, uy] = straightAxis.direction,
-          reach = 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET;
-        const approach = corridorTerminalApproachProposals(
-          terminal,
-          [point[0] - ux * reach, point[1] - uy * reach],
-          [point[0] + ux * reach, point[1] + uy * reach],
-          { shaped, maxFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET },
-        )
-          .map((option) =>
-            option.shape === "straight" || option.shape === "elbow"
-              ? [...option.path.slice(0, -1), point]
-              : option.path,
-          )
-          .filter(
-            (path) =>
-              DMath.hypot(
-                path.at(-1)![0] - terminal.point[0],
-                path.at(-1)![1] - terminal.point[1],
-              ) <= MAX_SHARED_CORRIDOR_APPROACH_FEET,
-          )
-          .find((path) => supported(path, terminal.id));
-        if (approach)
-          straightApproaches.set(
-            terminal.id,
-            approach.map((p): CorridorXY => [...p]),
-          );
-        continue;
-      }
       const candidates: CorridorXY[][] = [[terminal.point, point]];
       if (terminal.approachDirection) {
         const [nx, ny] = terminal.approachDirection,
@@ -1354,27 +1540,143 @@ export function createCorridorCenterline(
               point,
             ]);
       }
+      if (shaped) {
+        // A local piece of the axis around the projection; the legacy
+        // straight and elbow candidates keep the exact axis projection.
+        const [ux, uy] = straightAxis.direction,
+          reach = 2 * MAX_SHARED_CORRIDOR_APPROACH_FEET;
+        const approach = approachProposals(
+          terminal,
+          [point[0] - ux * reach, point[1] - uy * reach],
+          [point[0] + ux * reach, point[1] + uy * reach],
+        )
+          .map((option) =>
+            option.shape === "straight" || option.shape === "elbow"
+              ? [...option.path.slice(0, -1), point]
+              : option.path,
+          )
+          .filter(
+            (path) =>
+              DMath.hypot(
+                path.at(-1)![0] - terminal.point[0],
+                path.at(-1)![1] - terminal.point[1],
+              ) <= MAX_SHARED_CORRIDOR_APPROACH_FEET,
+          );
+        axisOptions.set(terminal.id, { paths: approach, legacy: candidates });
+        const chosen = approach.find((path) => supported(path, terminal.id));
+        if (chosen)
+          straightApproaches.set(
+            terminal.id,
+            chosen.map((p): CorridorXY => [...p]),
+          );
+        continue;
+      }
       const approach = candidates.find((p) => supported(p, terminal.id));
       if (approach) straightApproaches.set(terminal.id, approach);
     }
   const pointKey = (point: CorridorXY) => `${point[0]},${point[1]}`;
-  const orderedAxisJoins = [
-    ...new Map(
-      [...straightApproaches.values()].map((path) => [
-        pointKey(path.at(-1)!),
-        path.at(-1)!,
-      ]),
-    ).values(),
-  ].sort((a, b) => {
-    // Order along the axis itself: coordinate order is ambiguous for joins
-    // that differ only by rounding on a near-vertical axis.
-    if (shaped && straightAxis) {
-      const [ux, uy] = straightAxis.direction;
-      const along = (p: CorridorXY) => p[0] * ux + p[1] * uy;
-      return along(a) - along(b) || a[0] - b[0] || a[1] - b[1];
+  const orderAxisJoins = (paths: Iterable<CorridorXY[]>) =>
+    [
+      ...new Map(
+        [...paths].map((path) => [pointKey(path.at(-1)!), path.at(-1)!]),
+      ).values(),
+    ].sort((a, b) => {
+      // Order along the axis itself: coordinate order is ambiguous for joins
+      // that differ only by rounding on a near-vertical axis.
+      if (shaped && straightAxis) {
+        const [ux, uy] = straightAxis.direction;
+        const along = (p: CorridorXY) => p[0] * ux + p[1] * uy;
+        return along(a) - along(b) || a[0] - b[0] || a[1] - b[1];
+      }
+      return a[0] - b[0] || a[1] - b[1];
+    });
+  /** The complete axis network of one approach assignment: every axis
+   * segment between consecutive joins and every terminal approach. */
+  const axisTopology = (approaches: ReadonlyMap<string, CorridorXY[]>) => {
+    const joins = orderAxisJoins(approaches.values());
+    const positions = new Map(
+      joins.map((point, index) => [pointKey(point), index]),
+    );
+    return [
+      ...joins.slice(1).map((point, index) => ({
+        id: `axis:${index}`,
+        from: `axis-node:${index}`,
+        to: `axis-node:${index + 1}`,
+        points: [joins[index], point],
+      })),
+      ...[...approaches]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([id, path]) => ({
+          id: `approach:${id}`,
+          terminal: id,
+          from: `terminal:${id}`,
+          to: `axis-node:${positions.get(pointKey(path.at(-1)!))!}`,
+          points: path,
+        })),
+    ];
+  };
+  // Each axis approach above was chosen on its own. Evaluate the proposals
+  // against the combined axis network: a proposal that crosses or touches
+  // another approach or the axis without a shared junction is rejected, the
+  // next supported proposal is tried, and otherwise the terminal keeps its
+  // legacy approach. The result has no approach conflict the legacy
+  // approaches do not have.
+  const axisRepair = { conflicts: 0, changedTerminals: 0 };
+  if (shaped && straightAxis && straightApproaches.size > 0) {
+    const greedy = approachConflictKeys(axisTopology(straightApproaches));
+    axisRepair.conflicts = greedy.size;
+    if (greedy.size > 0) {
+      const legacy = new Map<string, CorridorXY[]>();
+      for (const terminal of terminals) {
+        const path = axisOptions
+          .get(terminal.id)
+          ?.legacy.find((path) => supported(path, terminal.id));
+        if (path) legacy.set(terminal.id, path);
+      }
+      const baseline = approachConflictKeys(axisTopology(legacy));
+      if ([...greedy.keys()].some((key) => !baseline.has(key))) {
+        let assignment = new Map(legacy),
+          current = baseline;
+        const same = (a: readonly CorridorXY[], b: readonly CorridorXY[]) =>
+          a.length === b.length &&
+          a.every((p, i) => p[0] === b[i][0] && p[1] === b[i][1]);
+        for (const terminal of terminals) {
+          const kept = legacy.get(terminal.id);
+          for (const path of axisOptions.get(terminal.id)?.paths ?? []) {
+            // Proposals after the legacy approach are not cleaner.
+            if (kept && same(path, kept)) break;
+            if (!supported(path, terminal.id)) continue;
+            const trial = new Map(assignment).set(terminal.id, path);
+            const keys = approachConflictKeys(axisTopology(trial));
+            if (
+              [...keys.keys()].every((key) => current.has(key)) &&
+              ![...keys.values()].some((ids) => ids.includes(terminal.id))
+            ) {
+              assignment = trial;
+              current = keys;
+              break;
+            }
+          }
+        }
+        for (const terminal of terminals) {
+          const before = straightApproaches.get(terminal.id),
+            after = assignment.get(terminal.id);
+          if ((before || after) && (!before || !after || !same(before, after)))
+            axisRepair.changedTerminals++;
+        }
+        straightApproaches.clear();
+        for (const terminal of terminals) {
+          const path = assignment.get(terminal.id);
+          if (path)
+            straightApproaches.set(
+              terminal.id,
+              path.map((p): CorridorXY => [...p]),
+            );
+        }
+      }
     }
-    return a[0] - b[0] || a[1] - b[1];
-  });
+  }
+  const orderedAxisJoins = orderAxisJoins(straightApproaches.values());
   const axisPositions = new Map(
     orderedAxisJoins.map((point, index) => [pointKey(point), index]),
   );
@@ -1558,7 +1860,39 @@ export function createCorridorCenterline(
       (index) => topology[index].id,
     );
   };
+  /** Approach-involving conflicts of the complete network that routes use:
+   * every attached terminal's approach and every shared lane, whether or not
+   * a route has used it yet. */
+  const networkApproachConflicts = () =>
+    approachConflictKeys(
+      useStraightAxis
+        ? axisTopology(straightApproaches)
+        : [
+            ...chains.flatMap((chain, index) =>
+              chain.points
+                ? [
+                    {
+                      id: `core:${index}`,
+                      from: chain.from as string | number,
+                      to: chain.to as string | number,
+                      points: chain.points,
+                    },
+                  ]
+                : [],
+            ),
+            ...[...joins]
+              .sort(([a], [b]) => a.localeCompare(b))
+              .map(([id, join]) => ({
+                id: `approach:${id}`,
+                terminal: id,
+                from: `terminal:${id}` as string | number,
+                to: join.vertex as string | number,
+                points: join.approach,
+              })),
+          ],
+    );
   return {
+    networkApproachConflicts,
     vertices,
     coreEdges,
     joins,
@@ -1613,6 +1947,7 @@ export function createCorridorCenterline(
       joinSliding: { ...sliding },
       straightAxisProposed: !!straightAxis,
       straightAxisTerminals: useStraightAxis ? straightApproaches.size : 0,
+      axisApproachRepair: { ...axisRepair },
     }),
   };
 }
