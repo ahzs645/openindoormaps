@@ -7,6 +7,7 @@
 # 3. admit-published-visitor-plans.ts  (independent re-export; writes
 #                                   published-visitor-plan-receipts.ts)
 set -eu
+# HEAVY_LOCK overrides the shared heavy-job lock file.
 repo=$1 candidate=$2 progressive=$3 manifest=$4 work=$5
 supervise="python3 $repo/docs/continuation/unbc-20261030/connections/run-supervised.py"
 mkdir -p "$work"
@@ -15,7 +16,7 @@ step() {
   local name=$1
   shift
   [ -f "$work/$name.done" ] && return 0
-  TZ=UTC flock /home/user/unbc-work/agents-heavy.lock $supervise \
+  TZ=UTC flock "${HEAVY_LOCK:-/home/user/unbc-work/heavy2.lock}" $supervise \
     --log "$work/$name.log" --memory-log "$work/$name.memory.jsonl" \
     --execution-report "$work/$name.execution.json" --timeout-seconds 10800 \
     -- "$@"

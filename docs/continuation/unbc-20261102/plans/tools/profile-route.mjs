@@ -230,13 +230,11 @@ cdp.on(async (msg) => {
             { expression: workerProbe },
             child,
           );
-          await cdp
-            .send("Network.enable", {}, child)
-            .catch((error) =>
-              mark(`${kind}-worker-${n}:network-unavailable`, {
-                error: String(error),
-              }),
-            );
+          await cdp.send("Network.enable", {}, child).catch((error) =>
+            mark(`${kind}-worker-${n}:network-unavailable`, {
+              error: String(error),
+            }),
+          );
           if (profileMatch && new RegExp(profileMatch).test(targetInfo.title)) {
             await cdp.send("Profiler.enable", {}, child);
             await cdp.send(

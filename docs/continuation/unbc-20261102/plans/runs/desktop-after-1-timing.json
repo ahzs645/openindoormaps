@@ -1,0 +1,342 @@
+{
+  "appUrl": "http://127.0.0.1:42818/openindoormaps/",
+  "manifestUrl": "http://127.0.0.1:42818/data/unbc/manifest.json",
+  "mode": "desktop",
+  "label": "after-1",
+  "results": [
+    {
+      "name": "corridor-default",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "transit": false,
+      "statusText": "121 m",
+      "requestToRouteShownSeconds": 14.19,
+      "requestToFloorReadySeconds": 19.156,
+      "stepCount": 1
+    },
+    {
+      "name": "office-transit",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "transit": true,
+      "statusText": "186 m",
+      "requestToRouteShownSeconds": 4.616,
+      "requestToFloorReadySeconds": 5.221,
+      "stepCount": 1
+    }
+  ],
+  "memory": {
+    "rendererPeakRssBytes": 2768220160,
+    "allProcessesPeakRssBytes": 3549360128,
+    "heapPeak": {
+      "page-1": {
+        "usedBytes": 234876296,
+        "totalBytes": 299073536
+      },
+      "route-1": {
+        "usedBytes": 490360880,
+        "totalBytes": 551899136
+      }
+    }
+  },
+  "loadAverage": "2.78 1.79 1.38 1/242 26942",
+  "profiles": [],
+  "log": [
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 0.214,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 0.215,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "navigate",
+      "seconds": 0.216
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 0.553,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 0.555,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 1.394,
+      "state": "drawing"
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-requested",
+      "seconds": 3.787,
+      "path": "ce282b88b05d80264da152b6926d83ae1d700408faaa94526d157cf70b127d19.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-downloaded",
+      "seconds": 4.25,
+      "path": "ce282b88b05d80264da152b6926d83ae1d700408faaa94526d157cf70b127d19.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-requested",
+      "seconds": 4.938,
+      "path": "b3bc600c90b7b12e9038ea7e145ffbfaceb9f2ddbe2a5dc1bb97dfdd3c39ce3c.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-downloaded",
+      "seconds": 6.301,
+      "path": "b3bc600c90b7b12e9038ea7e145ffbfaceb9f2ddbe2a5dc1bb97dfdd3c39ce3c.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 11.695,
+      "state": "ready"
+    },
+    {
+      "mode": "desktop",
+      "stage": "initial-floor-ready",
+      "seconds": 12.552
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:created",
+      "seconds": 12.846,
+      "sinceRequest": 0.049
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:request",
+      "seconds": 12.847,
+      "sinceRequest": 0.05,
+      "prepareOnly": false,
+      "withDelivery": true,
+      "start": "rm-694-2b971ef6dc47",
+      "end": "rm-694-43988ffdc334"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 12.847,
+      "sinceRequest": 0.05,
+      "text": "Loading and checking directions…"
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:requested",
+      "seconds": 12.856,
+      "sinceRequest": 0.059
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:attached",
+      "seconds": 12.868,
+      "sinceRequest": 0.071
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:download",
+      "seconds": 12.92,
+      "sinceRequest": 0.123,
+      "path": "/",
+      "encodedBytes": 196
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 13.11,
+      "sinceRequest": 0.313,
+      "path": "assets/645cac6b6016c08283b04abf79d457cea7f8d85674c4cc86b229274830ba746b.part",
+      "encodedBytes": 16777423
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 13.323,
+      "sinceRequest": 0.526,
+      "path": "assets/9cb7d2104d604364b30038d6c45baf92e3adfcf788baef712fc82bc7a8fadc6a.part",
+      "encodedBytes": 16777423
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 13.513,
+      "sinceRequest": 0.716,
+      "path": "assets/32baa949a49722a99cd9cc210cdfbdb04da9d40936d65da07002b9eafd9daafc.part",
+      "encodedBytes": 3549241
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:idb-put",
+      "seconds": 14.571,
+      "sinceRequest": 1.774,
+      "key": "c4c3ea4f6ed2398f"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:download",
+      "seconds": 17.981,
+      "sinceRequest": 5.184,
+      "path": "assets/native-exact-geos-CC-sGt0L.wasm",
+      "encodedBytes": 1068594
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:directions-cache-downloaded",
+      "seconds": 18.087,
+      "sinceRequest": 5.29,
+      "path": "unbc-routing/dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38.json.gz",
+      "encodedBytes": 8205979
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:directions-cache-admitted",
+      "seconds": 21.243,
+      "sinceRequest": 8.446,
+      "key": "dec83a467f07fdf1"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:response",
+      "seconds": 25.56,
+      "sinceRequest": 12.763,
+      "kind": "route",
+      "requestId": 3,
+      "distanceMetres": 120.96094511314197,
+      "stepCount": 12
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 25.599,
+      "sinceRequest": 12.802,
+      "text": "121 m"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 25.599,
+      "sinceRequest": 12.802,
+      "state": "drawing"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 26.984,
+      "sinceRequest": 14.187,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:route-shown",
+      "seconds": 26.987,
+      "sinceRequest": 14.19
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-requested",
+      "seconds": 27.004,
+      "sinceRequest": 14.207,
+      "path": "fe078265ef65b472e64d53bc2e75e8aad7080602f84506e9338beb54de113a98.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "page:plan-downloaded",
+      "seconds": 27.548,
+      "sinceRequest": 14.751,
+      "path": "fe078265ef65b472e64d53bc2e75e8aad7080602f84506e9338beb54de113a98.json.gz"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 27.873,
+      "sinceRequest": 15.076,
+      "state": "drawing"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 31.447,
+      "sinceRequest": 18.65,
+      "state": "ready"
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:floor-ready",
+      "seconds": 31.953,
+      "sinceRequest": 19.156
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 32.216,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:request",
+      "seconds": 32.993,
+      "sinceRequest": 0.059,
+      "prepareOnly": false,
+      "withDelivery": false,
+      "start": "rm-694-072a835d76b9",
+      "end": "rm-694-0179b206bb5d"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 32.994,
+      "sinceRequest": 0.06,
+      "text": "Loading and checking directions…"
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:requested",
+      "seconds": 33.002,
+      "sinceRequest": 0.068
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:response",
+      "seconds": 37.242,
+      "sinceRequest": 4.308,
+      "kind": "route",
+      "requestId": 4,
+      "distanceMetres": 186.35046353940766,
+      "stepCount": 19
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 37.245,
+      "sinceRequest": 4.311,
+      "text": "186 m"
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:route-shown",
+      "seconds": 37.55,
+      "sinceRequest": 4.616
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:floor-ready",
+      "seconds": 38.155,
+      "sinceRequest": 5.221
+    }
+  ]
+}

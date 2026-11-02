@@ -12,7 +12,7 @@ for run in 1 2; do
     label="$prefix-$run"
     [ -f "$out/$mode-$label-timing.json" ] && continue
     rm -f "$out/$mode-$label-progress.jsonl"
-    TZ=UTC flock /home/user/unbc-work/agents-heavy.lock \
+    TZ=UTC flock "${HEAVY_LOCK:-/home/user/unbc-work/heavy2.lock}" \
       timeout 1800 node "$here/profile-route.mjs" "$base/openindoormaps/" \
       "$base/data/unbc/manifest.json" "$out" "$mode" "$label" \
       --port=$((9400 + run)) "$@" >"$out/$mode-$label.log" 2>&1

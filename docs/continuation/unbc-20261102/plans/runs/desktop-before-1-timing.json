@@ -1,0 +1,700 @@
+{
+  "appUrl": "http://127.0.0.1:42817/openindoormaps/",
+  "manifestUrl": "http://127.0.0.1:42817/data/unbc/manifest.json",
+  "mode": "desktop",
+  "label": "before-1",
+  "results": [
+    {
+      "name": "corridor-default",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "transit": false,
+      "statusText": "121 m",
+      "requestToRouteShownSeconds": 14.616,
+      "requestToFloorReadySeconds": 63.458,
+      "stepCount": 1
+    },
+    {
+      "name": "office-transit",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "transit": true,
+      "statusText": "186 m",
+      "requestToRouteShownSeconds": 17.488,
+      "requestToFloorReadySeconds": 18.878,
+      "stepCount": 1
+    }
+  ],
+  "memory": {
+    "rendererPeakRssBytes": 3439718400,
+    "allProcessesPeakRssBytes": 4222349312,
+    "heapPeak": {
+      "page-1": {
+        "usedBytes": 431285512,
+        "totalBytes": 498843648
+      },
+      "route-1": {
+        "usedBytes": 462602300,
+        "totalBytes": 521756672
+      },
+      "floor-1": {
+        "usedBytes": 290230564,
+        "totalBytes": 347078656
+      },
+      "route-2": {
+        "usedBytes": 492389972,
+        "totalBytes": 542228480
+      }
+    }
+  },
+  "loadAverage": "1.82 1.42 1.27 1/245 14991",
+  "profiles": [],
+  "log": [
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 0.365,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 0.367,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "navigate",
+      "seconds": 0.369
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 1.03,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 1.032,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 2.403,
+      "state": "drawing"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 9.132,
+      "state": "ready"
+    },
+    {
+      "mode": "desktop",
+      "stage": "initial-floor-ready",
+      "seconds": 10.204
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:created",
+      "seconds": 10.572,
+      "sinceRequest": 0.046
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:request",
+      "seconds": 10.572,
+      "sinceRequest": 0.046,
+      "prepareOnly": false,
+      "withDelivery": true,
+      "start": "rm-694-2b971ef6dc47",
+      "end": "rm-694-43988ffdc334"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 10.573,
+      "sinceRequest": 0.047,
+      "text": "Loading and checking directions…"
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:requested",
+      "seconds": 10.577,
+      "sinceRequest": 0.051
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:attached",
+      "seconds": 10.587,
+      "sinceRequest": 0.061
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:download",
+      "seconds": 10.858,
+      "sinceRequest": 0.332,
+      "path": "/",
+      "encodedBytes": 196
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 11.097,
+      "sinceRequest": 0.571,
+      "path": "assets/645cac6b6016c08283b04abf79d457cea7f8d85674c4cc86b229274830ba746b.part",
+      "encodedBytes": 16777423
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 11.295,
+      "sinceRequest": 0.769,
+      "path": "assets/9cb7d2104d604364b30038d6c45baf92e3adfcf788baef712fc82bc7a8fadc6a.part",
+      "encodedBytes": 16777423
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:routing-part-downloaded",
+      "seconds": 11.523,
+      "sinceRequest": 0.997,
+      "path": "assets/32baa949a49722a99cd9cc210cdfbdb04da9d40936d65da07002b9eafd9daafc.part",
+      "encodedBytes": 3549241
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:idb-put",
+      "seconds": 12.521,
+      "sinceRequest": 1.995,
+      "key": "c4c3ea4f6ed2398f"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:download",
+      "seconds": 16.515,
+      "sinceRequest": 5.989,
+      "path": "assets/native-exact-geos-CC-sGt0L.wasm",
+      "encodedBytes": 1068594
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:directions-cache-downloaded",
+      "seconds": 17.067,
+      "sinceRequest": 6.541,
+      "path": "unbc-routing/dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38.json.gz",
+      "encodedBytes": 8205979
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:directions-cache-admitted",
+      "seconds": 20.214,
+      "sinceRequest": 9.688,
+      "key": "dec83a467f07fdf1"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:response",
+      "seconds": 24.623,
+      "sinceRequest": 14.097,
+      "kind": "route",
+      "requestId": 3,
+      "distanceMetres": 120.96094511314197,
+      "stepCount": 12
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 24.634,
+      "sinceRequest": 14.108,
+      "text": "121 m"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 25.138,
+      "sinceRequest": 14.612,
+      "state": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:route-shown",
+      "seconds": 25.142,
+      "sinceRequest": 14.616
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 25.539,
+      "sinceRequest": 15.013,
+      "state": "drawing"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:terminate",
+      "seconds": 27.236,
+      "sinceRequest": 16.71
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-1:detached",
+      "seconds": 27.24,
+      "sinceRequest": 16.714
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:created",
+      "seconds": 33.869,
+      "sinceRequest": 23.343
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:request",
+      "seconds": 33.87,
+      "sinceRequest": 23.344,
+      "prepareOnly": false,
+      "withDelivery": false,
+      "scopeId": "scope-108bcc72447362"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:attached",
+      "seconds": 33.882,
+      "sinceRequest": 23.356
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 33.924,
+      "sinceRequest": 23.398,
+      "path": "/",
+      "encodedBytes": 195
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 33.956,
+      "sinceRequest": 23.43,
+      "path": "assets/ece4add0ba5f61bedd9a0c2a089ca1ab8b20a04ecb99e1a56ce9022c888f8106.gz",
+      "encodedBytes": 1209068
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.021,
+      "sinceRequest": 23.495,
+      "key": "c65a2a0cf74667be"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 34.144,
+      "sinceRequest": 23.618,
+      "path": "assets/6c0a5484930f6dee99644b69806dce7fb3a7e7ce8a097d6b987b0f12729b6d76.gz",
+      "encodedBytes": 501484
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.163,
+      "sinceRequest": 23.637,
+      "key": "6c0a5484930f6dee"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 34.37,
+      "sinceRequest": 23.844,
+      "path": "assets/31468f5e854f0684a68fd97fc7456b985cf7da0acf84fd6a0b1f328074ae561c.gz",
+      "encodedBytes": 263150
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.382,
+      "sinceRequest": 23.856,
+      "key": "31468f5e854f0684"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 34.519,
+      "sinceRequest": 23.993,
+      "path": "assets/eb19c134d7475081a1ad47181b26e212db7c89bb32f78ba0d525dad23ddce590.gz",
+      "encodedBytes": 265881
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.526,
+      "sinceRequest": 24,
+      "key": "eb19c134d7475081"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 34.678,
+      "sinceRequest": 24.152,
+      "path": "assets/e09a96b9b490b274f4dda77219f273b2e0cd3cde8a34111882a5791bb9d0a7df.gz",
+      "encodedBytes": 217633
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.683,
+      "sinceRequest": 24.157,
+      "key": "e09a96b9b490b274"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 34.855,
+      "sinceRequest": 24.329,
+      "path": "assets/102f440095001fee0bfc67b08d3fa5ca7f27f8ae87a0e90c6d56c53e8ae5cb70.gz",
+      "encodedBytes": 798535
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 34.887,
+      "sinceRequest": 24.361,
+      "key": "102f440095001fee"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 35.079,
+      "sinceRequest": 24.553,
+      "path": "assets/813bcfb671dd2119ce94eabad6b85c376e8c843cdb37253841b30d7eb2be1cb0.gz",
+      "encodedBytes": 882341
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 35.12,
+      "sinceRequest": 24.594,
+      "key": "813bcfb671dd2119"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 35.328,
+      "sinceRequest": 24.802,
+      "path": "assets/26074f5b3cb9bafc7b9dbc1e5228051653185e46b781807a1ac047e7f5def43d.gz",
+      "encodedBytes": 545764
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 35.346,
+      "sinceRequest": 24.82,
+      "key": "26074f5b3cb9bafc"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 35.508,
+      "sinceRequest": 24.982,
+      "path": "assets/8582cb8ae8f37a975dcf5400b5db4a753de69884560a804ea6b99c42478fbefe.gz",
+      "encodedBytes": 426646
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 35.527,
+      "sinceRequest": 25.001,
+      "key": "8582cb8ae8f37a97"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 35.7,
+      "sinceRequest": 25.174,
+      "path": "assets/401f74602a476c1a722a12a39fdd3df182627839af186d4f74b5e57a21cc2177.gz",
+      "encodedBytes": 415171
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 35.718,
+      "sinceRequest": 25.192,
+      "key": "401f74602a476c1a"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 35.909,
+      "sinceRequest": 25.383,
+      "path": "assets/ad964ccd624abcc0ba1743158a59a7a5d71d1eddde40168b48fd918d33d55f00.gz",
+      "encodedBytes": 529378
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 35.934,
+      "sinceRequest": 25.408,
+      "key": "ad964ccd624abcc0"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.095,
+      "sinceRequest": 25.569,
+      "path": "assets/01052e7fc5fdebf572b1ecb703960797b526359fdf50769fa83e86bba7703035.gz",
+      "encodedBytes": 556484
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 36.112,
+      "sinceRequest": 25.586,
+      "key": "01052e7fc5fdebf5"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.289,
+      "sinceRequest": 25.763,
+      "path": "assets/75adb47ef49825406ecc1a35604cc1acdc3fce271ecf2cf266b7a4ad77a9b85a.gz",
+      "encodedBytes": 311866
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 36.301,
+      "sinceRequest": 25.775,
+      "key": "75adb47ef4982540"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.442,
+      "sinceRequest": 25.916,
+      "path": "assets/9ea35f179ca594c717f75577b1fe7f67ab10f1ea16ccaa4f04c6f4d9d61d4375.gz",
+      "encodedBytes": 261061
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 36.453,
+      "sinceRequest": 25.927,
+      "key": "9ea35f179ca594c7"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.616,
+      "sinceRequest": 26.09,
+      "path": "assets/5067e2039eb6ee2decc29b8aea3d793348a36d6137d14be06aae588df832318a.gz",
+      "encodedBytes": 481733
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 36.636,
+      "sinceRequest": 26.11,
+      "key": "5067e2039eb6ee2d"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.804,
+      "sinceRequest": 26.278,
+      "path": "assets/0d93ddf4597c2e53c07b6f9fd90e169093a291ff4d3ef59e3a5a0028a65dad28.gz",
+      "encodedBytes": 597055
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 36.829,
+      "sinceRequest": 26.303,
+      "key": "0d93ddf4597c2e53"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 36.986,
+      "sinceRequest": 26.46,
+      "path": "assets/c987955b17fc66c1350d33aa7e1090cb90b71c7b7d33cbff5be1ac79999574e2.gz",
+      "encodedBytes": 383828
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 37.003,
+      "sinceRequest": 26.477,
+      "key": "c987955b17fc66c1"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 37.167,
+      "sinceRequest": 26.641,
+      "path": "assets/c40b89871225a1235a4141974bb08ef54eb6bfab3d609dc3dddbd0792d055531.gz",
+      "encodedBytes": 478031
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 37.196,
+      "sinceRequest": 26.67,
+      "key": "c40b89871225a123"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 37.384,
+      "sinceRequest": 26.858,
+      "path": "assets/6c100ba100d91ec2265a8253c7ba03e3e1d23cef45d1fe4db525b4fd4f5059c5.gz",
+      "encodedBytes": 889225
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 37.41,
+      "sinceRequest": 26.884,
+      "key": "6c100ba100d91ec2"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:download",
+      "seconds": 37.58,
+      "sinceRequest": 27.054,
+      "path": "assets/d9d6841f9226c19ff2b5329b8daa92b7b20e3e3487e631d1b8512cb7aa968868.gz",
+      "encodedBytes": 252362
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:idb-put",
+      "seconds": 37.592,
+      "sinceRequest": 27.066,
+      "key": "d9d6841f9226c19f"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:response",
+      "seconds": 65.699,
+      "sinceRequest": 55.173,
+      "kind": "detail"
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:terminate",
+      "seconds": 65.699,
+      "sinceRequest": 55.173
+    },
+    {
+      "mode": "desktop",
+      "stage": "floor-worker-1:detached",
+      "seconds": 65.703,
+      "sinceRequest": 55.177
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:render-status",
+      "seconds": 73.376,
+      "sinceRequest": 62.85,
+      "state": "ready"
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default:floor-ready",
+      "seconds": 73.984,
+      "sinceRequest": 63.458
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 74.313,
+      "text": ""
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:created",
+      "seconds": 76.161,
+      "sinceRequest": 0.028
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:request",
+      "seconds": 76.162,
+      "sinceRequest": 0.029,
+      "prepareOnly": false,
+      "withDelivery": true,
+      "start": "rm-694-072a835d76b9",
+      "end": "rm-694-0179b206bb5d"
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 76.162,
+      "sinceRequest": 0.029,
+      "text": "Loading and checking directions…"
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:requested",
+      "seconds": 76.172,
+      "sinceRequest": 0.039
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:attached",
+      "seconds": 76.179,
+      "sinceRequest": 0.046
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:download",
+      "seconds": 76.226,
+      "sinceRequest": 0.093,
+      "path": "/",
+      "encodedBytes": 0
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:download",
+      "seconds": 80.879,
+      "sinceRequest": 4.746,
+      "path": "assets/native-exact-geos-CC-sGt0L.wasm",
+      "encodedBytes": 0
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:directions-cache-admitted",
+      "seconds": 84.273,
+      "sinceRequest": 8.14,
+      "key": "dec83a467f07fdf1"
+    },
+    {
+      "mode": "desktop",
+      "stage": "route-worker-2:response",
+      "seconds": 92.69,
+      "sinceRequest": 16.557,
+      "kind": "route",
+      "requestId": 6,
+      "distanceMetres": 186.35046353940766,
+      "stepCount": 19
+    },
+    {
+      "mode": "desktop",
+      "stage": "dom:route-status",
+      "seconds": 92.708,
+      "sinceRequest": 16.575,
+      "text": "186 m"
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:route-shown",
+      "seconds": 93.621,
+      "sinceRequest": 17.488
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit:floor-ready",
+      "seconds": 95.011,
+      "sinceRequest": 18.878
+    }
+  ]
+}

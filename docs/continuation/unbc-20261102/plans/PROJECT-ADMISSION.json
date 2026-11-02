@@ -1,0 +1,274 @@
+{
+  "format": "published-project-floor-admission-v1",
+  "passed": true,
+  "admission": "progressive-floors",
+  "packageSha256": "1a127847520e43a05662ee7006f07ff3152bca34eb8444d8fb41b41e90593f03",
+  "packageBytes": 247315603,
+  "sourceFormat": "reviter-project",
+  "entries": {
+    "review/companions.bin": {
+      "bytes": 88626822,
+      "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a"
+    },
+    "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": {
+      "bytes": 70336512,
+      "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178"
+    },
+    "gis/reference-points.json": {
+      "bytes": 602,
+      "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5"
+    },
+    "manifest.json": {
+      "bytes": 1024,
+      "sha256": "b1a1e4598ccee61fbfc3328d7489633bba9f47c6e4fc95359efa8e1fa09d0fdf"
+    },
+    "model/scene.glb": {
+      "bytes": 52216228,
+      "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab"
+    },
+    "floors/rooms.json": {
+      "bytes": 82337708,
+      "sha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+    },
+    "viewer/indoor.json": {
+      "bytes": 301764686,
+      "sha256": "0477dca5e1fb7adab791c9f9aea35899e5bce8655ec84c0b88f946712fcfb037"
+    }
+  },
+  "visitorPackage": {
+    "sha256": "199d4996181e2a66a75fbb0fd0ed7d07e70aa08c75843f721d15a0e080ed62c0",
+    "bytes": 55371478
+  },
+  "datasetSha256": "39e9fed5dde728cb42fd3511614e1d3236bc28c6cb11bdfd14532c989f2be008",
+  "source": {
+    "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+  },
+  "engineSha256": "9ee1cb8c29a02ce5f2954d4e58b050799854e25157991ee30bbdd46ed4d47a46",
+  "engineModules": 213,
+  "engineSourceUnchanged": true,
+  "progressiveManifestFileSha256": "84450df2df84fd8f5de3274aa2b2a719d3e5fa8a9a3ed0961e728dcd01eddb72",
+  "progressiveRevisionSha256": "bdea9eb57567763d86792f3029e824c0d90b86a0308e2c1574454fd3d61486e4",
+  "routingProjectionSha256": "c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+  "normalImports": [
+    {
+      "phase": "source-import",
+      "packageSha256": "1a127847520e43a05662ee7006f07ff3152bca34eb8444d8fb41b41e90593f03",
+      "packageBytes": 247315603,
+      "stages": [
+        {
+          "stage": "archive",
+          "elapsedMs": 0.042419999997946434
+        },
+        {
+          "stage": "checksums",
+          "elapsedMs": 2778.336604
+        },
+        {
+          "stage": "decode",
+          "elapsedMs": 4093.0200909999985
+        },
+        {
+          "stage": "companions",
+          "elapsedMs": 13845.840818999997
+        },
+        {
+          "stage": "geometry",
+          "elapsedMs": 54449.483573000005
+        },
+        {
+          "stage": "materials",
+          "elapsedMs": 321507.702624
+        },
+        {
+          "stage": "routes",
+          "elapsedMs": 326869.81615900004
+        },
+        {
+          "stage": "mapping",
+          "elapsedMs": 326874.311044
+        },
+        {
+          "stage": "reviews",
+          "elapsedMs": 644708.589394
+        },
+        {
+          "stage": "patches",
+          "elapsedMs": 892388.346193
+        },
+        {
+          "stage": "identity",
+          "elapsedMs": 940320.254084
+        },
+        {
+          "stage": "scene",
+          "elapsedMs": 940338.15426
+        },
+        {
+          "stage": "transfer",
+          "elapsedMs": 940339.22288
+        }
+      ],
+      "elapsedMs": 940532.1237890001
+    },
+    {
+      "phase": "visitor-import",
+      "packageSha256": "199d4996181e2a66a75fbb0fd0ed7d07e70aa08c75843f721d15a0e080ed62c0",
+      "packageBytes": 55371478,
+      "stages": [
+        {
+          "stage": "archive",
+          "elapsedMs": 0.04062999994494021
+        },
+        {
+          "stage": "checksums",
+          "elapsedMs": 1849.4468360000756
+        },
+        {
+          "stage": "decode",
+          "elapsedMs": 2522.7519770001527
+        },
+        {
+          "stage": "geometry",
+          "elapsedMs": 7874.7203410000075
+        },
+        {
+          "stage": "materials",
+          "elapsedMs": 289014.811186
+        },
+        {
+          "stage": "routes",
+          "elapsedMs": 295885.79558000015
+        },
+        {
+          "stage": "mapping",
+          "elapsedMs": 295891.96638200013
+        },
+        {
+          "stage": "identity",
+          "elapsedMs": 595487.7632390002
+        },
+        {
+          "stage": "transfer",
+          "elapsedMs": 601977.6378130002
+        }
+      ],
+      "elapsedMs": 602027.0671900001
+    }
+  ],
+  "delivery": {
+    "assets": 124,
+    "representations": 248,
+    "storedBytes": 187627083,
+    "exactCodecRoundTrips": true
+  },
+  "scopes": [
+    {
+      "scopeId": "scope-ae9ece9f8afddac04668ec38f3b9f83d5fe48dc1ca2f4a8b2836db6b96f59144",
+      "label": "Floor 1 · Main floor",
+      "levelIds": [
+        1450417,
+        311,
+        1487816
+      ],
+      "bindingSha256": "ae9ece9f8afddac04668ec38f3b9f83d5fe48dc1ca2f4a8b2836db6b96f59144",
+      "pooledJsonSha256": "a632566e85b014c61a2a390551f10856e754da2f0aacf0337c222b756c6fb7c9",
+      "logicalJsonSha256": "b39d93a046400240c26b0270041fcbab2a608bb83f5b91d0e2669bf1474cffd9",
+      "logicalJsonBytes": 375432595,
+      "establishedDecoderMs": 82203,
+      "admittedDecoderMs": 6569,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-fb6a8fbd6b72cc8a8be44185bd083589c56431967ad1a31b625b50b9e094585d",
+      "label": "Basement",
+      "levelIds": [
+        2295121
+      ],
+      "bindingSha256": "fb6a8fbd6b72cc8a8be44185bd083589c56431967ad1a31b625b50b9e094585d",
+      "pooledJsonSha256": "86733221308a1e85a3e0eb5eac1c957fe696d482c859cf03647138121d038f62",
+      "logicalJsonSha256": "ad3203224265f0a7afaf74432241d5d9405fa31c23ba4de14e644d6bebfdc04d",
+      "logicalJsonBytes": 7970427,
+      "establishedDecoderMs": 1193,
+      "admittedDecoderMs": 125,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-d2e63d166c7a865503e5050c2da3b5808717b892c3a3e1182566477aa34945a4",
+      "label": "Floor 1",
+      "levelIds": [
+        1450417,
+        311,
+        1487816,
+        1425915
+      ],
+      "bindingSha256": "d2e63d166c7a865503e5050c2da3b5808717b892c3a3e1182566477aa34945a4",
+      "pooledJsonSha256": "ac26eb916428c664edeb5602b624946bdd2ce55349dff6b7cb72e1956f0b3094",
+      "logicalJsonSha256": "b2a21bc23ab534e9b93a5402fc23adb4f4929c398be3d35a2c1d0f6a18d66f13",
+      "logicalJsonBytes": 384612945,
+      "establishedDecoderMs": 81209,
+      "admittedDecoderMs": 7156,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-9ea027a7cd61b9a0cc777917c8b7b4f96b502b16e844d519e7aa11a848c3a167",
+      "label": "Floor 1 · Floor 1.5",
+      "levelIds": [
+        1425915
+      ],
+      "bindingSha256": "9ea027a7cd61b9a0cc777917c8b7b4f96b502b16e844d519e7aa11a848c3a167",
+      "pooledJsonSha256": "ee1ca308fcc61e51af2883d5427751cad498717d80f68b954471f92f90c5ccf0",
+      "logicalJsonSha256": "7ccd440dc64f67b7ffcc0e8a96c9f4f639bc4e5c2322f8edc1bb66d091767405",
+      "logicalJsonBytes": 18812658,
+      "establishedDecoderMs": 3690,
+      "admittedDecoderMs": 656,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-108bcc72447362600ce537f6448c06c5c9f9380e941a7c889d7d8b552b6a9f00",
+      "label": "Floor 2",
+      "levelIds": [
+        694
+      ],
+      "bindingSha256": "108bcc72447362600ce537f6448c06c5c9f9380e941a7c889d7d8b552b6a9f00",
+      "pooledJsonSha256": "a0867cbc9b7ffc2f2801e5457d7ebe27f411c39d75920f66562808f2fec2076e",
+      "logicalJsonSha256": "3bf863f67a96be488b830c037321a40f266b4238bb56f6915fb72d9f659ed419",
+      "logicalJsonBytes": 190263722,
+      "establishedDecoderMs": 30079,
+      "admittedDecoderMs": 4179,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-b3da038cf69025c683025aab2b9025284c6112abf936a99781e716f740e773c2",
+      "label": "Floor 3",
+      "levelIds": [
+        400176,
+        1487353
+      ],
+      "bindingSha256": "b3da038cf69025c683025aab2b9025284c6112abf936a99781e716f740e773c2",
+      "pooledJsonSha256": "cf08dbcc4af4cbfdc2331c95563fef67b85c3d1c09cb9a7b93e4c4b92a153ad7",
+      "logicalJsonSha256": "3f2551df70be3b5f87e6f5789fe8cb9adc1edd4e221b8834f054625d8a6f77c7",
+      "logicalJsonBytes": 146472858,
+      "establishedDecoderMs": 20036,
+      "admittedDecoderMs": 3018,
+      "establishedAndAdmittedLogicalEqual": true
+    },
+    {
+      "scopeId": "scope-45eeee5dcbec7d2ffccf5cbac975d694ee21c2cade7e4ce0f62b2365c99711bc",
+      "label": "Floor 4",
+      "levelIds": [
+        402367
+      ],
+      "bindingSha256": "45eeee5dcbec7d2ffccf5cbac975d694ee21c2cade7e4ce0f62b2365c99711bc",
+      "pooledJsonSha256": "2282f24449089ef56fc4a4789ba4803b14a06e8d98a1210244ddaa7a7b4ccc46",
+      "logicalJsonSha256": "d3de6f2f0c013cb12d7bea6d2bc2cdff0215a625885812d47ca2e239861e526a",
+      "logicalJsonBytes": 118528607,
+      "establishedDecoderMs": 16910,
+      "admittedDecoderMs": 2260,
+      "establishedAndAdmittedLogicalEqual": true
+    }
+  ],
+  "elapsedMs": 2482804,
+  "nodePeakRssBytes": 5066698752
+}
