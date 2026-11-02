@@ -45,6 +45,10 @@ import { progressiveRouteSummary } from "../../app/indoor-project/progressive-ro
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import { projectPlaceDisplayName } from "../../app/indoor-project/visitor-metadata";
 import { checkRouteResult, type RouteCase } from "./pathway-candidate-audit";
+import {
+  parseExtraRouteCases,
+  routeCaseCalculatorOptions,
+} from "./published-route-extra-cases";
 const [input, expected, output, ...optional] = process.argv.slice(2);
 if (
   !input ||
@@ -59,7 +63,7 @@ if (
   )
 )
   throw new Error(
-    "Usage: export-published-route-hydration.ts COMPLETE.json EXPECTED-SHA256 EMPTY-OUTPUT-DIRECTORY [--cases EXTRA-ROUTE-CASES.json]",
+    "Usage: export-published-route-hydration.ts COMPLETE.json EXPECTED-SHA256 EMPTY-OUTPUT-DIRECTORY [--cases EXTRA-ROUTE-CASES.json] (a case may carry options: { endpointMode, allowOtherRoomTransit })",
   );
 const root = path.resolve(import.meta.dirname, "../.."),
   out = path.resolve(output);
@@ -78,61 +82,9 @@ if (extraCasesPath) {
     "Extra route cases must be a bounded nonempty JSON file",
   );
   extraCasesBytes = await fs.readFile(extraCasesPath);
-  assert(
-    extraCasesBytes.length > 0 && extraCasesBytes.length <= 1024 * 1024,
-    "Actual extra route case bytes exceed their JSON parse bound",
-  );
-  extraCases = JSON.parse(extraCasesBytes.toString()) as RouteCase[];
-  assert(
-    Array.isArray(extraCases) &&
-      extraCases.length > 0 &&
-      extraCases.length <= 128,
-  );
-  for (const c of extraCases) {
-    assert(c && typeof c === "object" && !Array.isArray(c));
-    assert(
-      Object.keys(c).every((key) =>
-        [
-          "name",
-          "start",
-          "end",
-          "mode",
-          "expect",
-          "intendedEdgeId",
-          "forbiddenEdgeIds",
-        ].includes(key),
-      ),
-      "Unknown extra route-case field",
-    );
-    for (const key of ["name", "start", "end"] as const)
-      assert(
-        typeof c[key] === "string" &&
-          c[key].length > 0 &&
-          c[key].length <= 2000,
-      );
-    assert(c.mode === "public" || c.mode === "accessible");
-    assert(
-      c.expect === undefined || c.expect === "route" || c.expect === "blocked",
-    );
-    if (c.intendedEdgeId !== undefined) {
-      assert(
-        typeof c.intendedEdgeId === "string" && c.intendedEdgeId.length > 0,
-      );
-      assert.equal(
-        c.expect,
-        "route",
-        "An intended positive edge must require an actual route",
-      );
-    }
-    if (c.forbiddenEdgeIds !== undefined)
-      assert(
-        Array.isArray(c.forbiddenEdgeIds) &&
-          c.forbiddenEdgeIds.every(
-            (id) => typeof id === "string" && id.length > 0,
-          ) &&
-          new Set(c.forbiddenEdgeIds).size === c.forbiddenEdgeIds.length,
-      );
-  }
+  // Optional explicit endpointMode/allowOtherRoomTransit options are recorded
+  // with the case; the access profile is `mode`.
+  extraCases = parseExtraRouteCases(extraCasesBytes);
 }
 const binding = writePublishedRouteRuntimeBinding(root);
 assert.equal(
@@ -260,7 +212,12 @@ for (const c of extraCases) {
 }
 const originals = resolved.map((c) => {
   const began = performance.now();
-  const result = run(() => calculate(c.start, c.end, c.mode));
+  const options = routeCaseCalculatorOptions(c);
+  const result = run(() =>
+    options === undefined
+      ? calculate(c.start, c.end, c.mode)
+      : calculate(c.start, c.end, c.mode, options),
+  );
   if (extraCases.includes(c))
     assert.deepEqual(
       run(() => checkRouteResult(data, c, result)).errors,

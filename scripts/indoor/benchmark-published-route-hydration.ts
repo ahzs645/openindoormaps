@@ -222,6 +222,7 @@ if (mode === "candidate") {
       from: c.start,
       to: c.end,
       mode: c.mode,
+      ...(c.options ? { options: c.options } : {}),
     });
     originals.push({ id: "fresh:" + c.name, result: freshResults[i] });
   }
@@ -253,7 +254,9 @@ assert(
 const rows = [];
 try {
   for (const c of cases) {
-    const selectedInside = insideOnly && c.id.startsWith("fresh:");
+    // Explicit case options always win over the inside-only benchmark switch.
+    const selectedInside =
+      insideOnly && c.id.startsWith("fresh:") && c.options === undefined;
     const began = performance.now();
     const request = client.request(
       data,

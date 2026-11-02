@@ -635,6 +635,11 @@ export type RouteCase = {
   expect?: "route" | "blocked";
   intendedEdgeId?: string;
   forbiddenEdgeIds?: string[];
+  /** Explicit visitor options; absent means the calculator's legacy defaults. */
+  options?: {
+    endpointMode: "inside" | "hallway";
+    allowOtherRoomTransit: boolean;
+  };
 };
 export function connectorCases(data: IndoorDataset) {
   const byKey = new Map(data.records.map((r) => [r.key, r])),
@@ -689,8 +694,16 @@ export function checkRouteResult(
     expected = reachableProjectDestinations(graph, test.start).has(test.end),
     start = data.records.find((r) => r.key === test.start),
     end = data.records.find((r) => r.key === test.end),
-    route = value.route;
-  if (!!route !== expected) errors.push("graph-vs-calculator-availability");
+    route = value.route,
+    // The graph check models unrestricted inside arrival. A request that
+    // refuses other-room transit or asks for hallway arrival may refuse a
+    // graph-reachable place, but must never route to an unreachable one.
+    restricted =
+      test.options !== undefined &&
+      (test.options.allowOtherRoomTransit === false ||
+        test.options.endpointMode === "hallway");
+  if (restricted ? !!route && !expected : !!route !== expected)
+    errors.push("graph-vs-calculator-availability");
   if (
     (test.expect === "route" && !route) ||
     (test.expect === "blocked" && route)
@@ -698,9 +711,11 @@ export function checkRouteResult(
     errors.push("explicit-route-expectation");
   let instructionCount = 0;
   if (route) {
+    // A hallway-arrival route ends at the rooms' hallway doorways instead.
     if (
-      route.nodeIds[0] !== start?.arrivalNodeId ||
-      route.nodeIds.at(-1) !== end?.arrivalNodeId
+      test.options?.endpointMode !== "hallway" &&
+      (route.nodeIds[0] !== start?.arrivalNodeId ||
+        route.nodeIds.at(-1) !== end?.arrivalNodeId)
     )
       errors.push("original-arrival-mismatch");
     for (let i = 0; i < route.edges.length; i++) {

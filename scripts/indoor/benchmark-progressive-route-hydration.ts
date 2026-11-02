@@ -197,7 +197,17 @@ assert.equal(cases[0].name, "main-forward", "Cold Main must be first");
 try {
   for (const [i, c] of cases.entries()) {
     const began = performance.now(),
-      request = client.request(base, manifest, c.start, c.end, c.mode);
+      // A case with explicit options was calculated normally under exactly
+      // those options; a legacy case keeps the worker's own defaults.
+      request = client.request(
+        base,
+        manifest,
+        c.start,
+        c.end,
+        c.mode,
+        {},
+        c.options ?? {},
+      );
     let timer: ReturnType<typeof setTimeout> | undefined;
     const result = await Promise.race([
       request.promise,
@@ -209,7 +219,7 @@ try {
       }),
     ]).finally(() => clearTimeout(timer));
     const expected = originals[i];
-    if (expected.arrivals) {
+    if (expected.arrivals && c.options === undefined) {
       const { hallway: _hallway, ...inside } = expected.arrivals;
       expected.arrivals = inside;
     }
