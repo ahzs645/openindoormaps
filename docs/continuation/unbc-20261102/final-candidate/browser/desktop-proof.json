@@ -1,0 +1,600 @@
+{
+  "format": "asserted-visitor-browser-proof-v1",
+  "passed": true,
+  "appUrl": "http://127.0.0.1:42911/openindoormaps/",
+  "manifestUrl": "http://127.0.0.1:42911/data/unbc/manifest.json",
+  "mode": "desktop",
+  "expectedRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+  "failures": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:42911/data/unbc/assets/60615142b61c67cf692142d171cfec69f7ec54d302c73332fa977fcc2c934ed9.br",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "results": [
+    {
+      "label": "0810-default-08-264-to-10-2006",
+      "from": "rm-694-01803a06bb62",
+      "to": "rm-694-d302635a3d75",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "84 m",
+      "shownMetres": 84,
+      "stepTotal": 15,
+      "firstInstruction": "Leave 08-264 · Signout Equip Storage and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 2677
+      },
+      "timing": {
+        "requestToStatusSeconds": 13.585100000001491,
+        "requestToFloorReadySeconds": 57.08690000000224,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.014300000000745059,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 13.585100000001491,
+          "status": "84 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 13.90060000000149,
+          "status": "84 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 15.258199999999254,
+          "status": "84 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 57.08690000000224,
+          "status": "84 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-366-to-06-364",
+      "from": "rm-1487353-c8d3e4ebb513",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "21 m",
+      "shownMetres": 21,
+      "stepTotal": 7,
+      "firstInstruction": "Leave 06-366 · Lounge and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 2020
+      },
+      "timing": {
+        "requestToStatusSeconds": 9.828699999999255,
+        "requestToFloorReadySeconds": 46.33479999999702,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.038,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 9.828699999999255,
+          "status": "21 m",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 10.63829999999702,
+          "status": "21 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 39.131699999999256,
+          "status": "21 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 39.583699999999254,
+          "status": "21 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 46.33479999999702,
+          "status": "21 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "refused",
+      "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+      "shownMetres": null,
+      "stepTotal": 0,
+      "firstInstruction": null,
+      "routeLinePixels": {
+        "before": 0,
+        "after": 0
+      },
+      "timing": {
+        "requestToStatusSeconds": 7.306199999999255,
+        "requestToFloorReadySeconds": 7.306199999999255,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.04160000000149012,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 7.306199999999255,
+          "status": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-transit-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": true,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "47 m",
+      "shownMetres": 47,
+      "stepTotal": 9,
+      "firstInstruction": "Leave 06-376 · Open Work Area and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 3063
+      },
+      "timing": {
+        "requestToStatusSeconds": 3.0053000000007453,
+        "requestToFloorReadySeconds": 3.0053000000007453,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.04360000000149011,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 3.0053000000007453,
+          "status": "47 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-stepfree-06-388-to-06-364",
+      "from": "rm-1487353-c75375ebb3cc",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "accessible"
+      },
+      "expect": "refused",
+      "statusText": "No confirmed step-free route is available between these places.",
+      "shownMetres": null,
+      "stepTotal": 0,
+      "firstInstruction": null,
+      "routeLinePixels": {
+        "before": 0,
+        "after": 0
+      },
+      "timing": {
+        "requestToStatusSeconds": 0.062099999997764825,
+        "requestToFloorReadySeconds": 0.062099999997764825,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.015799999997019767,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 0.062099999997764825,
+          "status": "No confirmed step-free route is available between these places.",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "corridor-default-04-204-to-08-267",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "121 m",
+      "shownMetres": 121,
+      "stepTotal": 12,
+      "firstInstruction": "Leave 04-204 · Corridor and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 1852
+      },
+      "timing": {
+        "requestToStatusSeconds": 3.5817000000029804,
+        "requestToFloorReadySeconds": 46.324,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.04770000000298023,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 3.5817000000029804,
+          "status": "121 m",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 4.069800000000745,
+          "status": "121 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 38.19030000000075,
+          "status": "121 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 38.67120000000298,
+          "status": "121 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 46.324,
+          "status": "121 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "office-transit-04-255-to-08-272",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": true,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "186 m",
+      "shownMetres": 186,
+      "stepTotal": 19,
+      "firstInstruction": "Leave 04-255 · Research Office and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 2519
+      },
+      "timing": {
+        "requestToStatusSeconds": 15.857,
+        "requestToFloorReadySeconds": 15.857,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.015399999998509883,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 15.857,
+          "status": "186 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-388-to-06-364",
+      "from": "rm-1487353-c75375ebb3cc",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "statusText": "34 m",
+      "shownMetres": 34,
+      "stepTotal": 6,
+      "firstInstruction": "Leave 06-388 · Vestibule and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 2623
+      },
+      "timing": {
+        "requestToStatusSeconds": 1.1095,
+        "requestToFloorReadySeconds": 31.945300000000746,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.03410000000149012,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 1.1095,
+          "status": "34 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 26.664900000002234,
+          "status": "34 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 27.106900000002234,
+          "status": "34 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 31.945300000000746,
+          "status": "34 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    }
+  ],
+  "log": [
+    {
+      "mode": "desktop",
+      "stage": "floor-ready",
+      "seconds": 7.164
+    },
+    {
+      "mode": "desktop",
+      "stage": "manifest",
+      "seconds": 7.179,
+      "fetchedRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+      "manifestResponses": [
+        {
+          "status": 200,
+          "sha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+          "revisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9"
+        },
+        {
+          "status": 200,
+          "sha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+          "revisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9"
+        }
+      ]
+    },
+    {
+      "mode": "desktop",
+      "stage": "0810-default-08-264-to-10-2006:requested",
+      "seconds": 7.671
+    },
+    {
+      "mode": "desktop",
+      "stage": "0810-default-08-264-to-10-2006:shown",
+      "seconds": 68.567,
+      "statusText": "84 m",
+      "stepTotal": 15,
+      "routeLinePixels": 2677,
+      "timing": {
+        "requestToStatusSeconds": 13.585100000001491,
+        "requestToFloorReadySeconds": 57.08690000000224,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-366-to-06-364:requested",
+      "seconds": 70.566
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-366-to-06-364:shown",
+      "seconds": 120.129,
+      "statusText": "21 m",
+      "stepTotal": 7,
+      "routeLinePixels": 2020,
+      "timing": {
+        "requestToStatusSeconds": 9.828699999999255,
+        "requestToFloorReadySeconds": 46.33479999999702,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-376-to-06-364:requested",
+      "seconds": 122.355
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-376-to-06-364:shown",
+      "seconds": 193.171,
+      "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+      "stepTotal": 0,
+      "routeLinePixels": 0,
+      "timing": {
+        "requestToStatusSeconds": 7.306199999999255,
+        "requestToFloorReadySeconds": 7.306199999999255,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-transit-06-376-to-06-364:requested",
+      "seconds": 193.758
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-transit-06-376-to-06-364:shown",
+      "seconds": 200.977,
+      "statusText": "47 m",
+      "stepTotal": 9,
+      "routeLinePixels": 3063,
+      "timing": {
+        "requestToStatusSeconds": 3.0053000000007453,
+        "requestToFloorReadySeconds": 3.0053000000007453,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-stepfree-06-388-to-06-364:requested",
+      "seconds": 202.785
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-stepfree-06-388-to-06-364:shown",
+      "seconds": 266.27,
+      "statusText": "No confirmed step-free route is available between these places.",
+      "stepTotal": 0,
+      "routeLinePixels": 0,
+      "timing": {
+        "requestToStatusSeconds": 0.062099999997764825,
+        "requestToFloorReadySeconds": 0.062099999997764825,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default-04-204-to-08-267:requested",
+      "seconds": 266.848
+    },
+    {
+      "mode": "desktop",
+      "stage": "corridor-default-04-204-to-08-267:shown",
+      "seconds": 316.402,
+      "statusText": "121 m",
+      "stepTotal": 12,
+      "routeLinePixels": 1852,
+      "timing": {
+        "requestToStatusSeconds": 3.5817000000029804,
+        "requestToFloorReadySeconds": 46.324,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit-04-255-to-08-272:requested",
+      "seconds": 318.838
+    },
+    {
+      "mode": "desktop",
+      "stage": "office-transit-04-255-to-08-272:shown",
+      "seconds": 338.108,
+      "statusText": "186 m",
+      "stepTotal": 19,
+      "routeLinePixels": 2519,
+      "timing": {
+        "requestToStatusSeconds": 15.857,
+        "requestToFloorReadySeconds": 15.857,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-388-to-06-364:requested",
+      "seconds": 339.961
+    },
+    {
+      "mode": "desktop",
+      "stage": "island-default-06-388-to-06-364:shown",
+      "seconds": 375.543,
+      "statusText": "34 m",
+      "stepTotal": 6,
+      "routeLinePixels": 2623,
+      "timing": {
+        "requestToStatusSeconds": 1.1095,
+        "requestToFloorReadySeconds": 31.945300000000746,
+        "note": "Page clock: request = Get directions click; status = final route-status text; floor ready = render status ready with no floor-loading notice (held 3 s)."
+      },
+      "passed": true
+    }
+  ]
+}

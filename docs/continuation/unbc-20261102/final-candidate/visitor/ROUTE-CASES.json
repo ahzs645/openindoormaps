@@ -1,0 +1,119 @@
+[
+  {
+    "name": "main-forward",
+    "start": "rm-311-ac6ce9426f1c",
+    "end": "rm-311-4030ea304744",
+    "mode": "public"
+  },
+  {
+    "name": "main-reverse",
+    "start": "rm-311-4030ea304744",
+    "end": "rm-311-ac6ce9426f1c",
+    "mode": "public"
+  },
+  {
+    "name": "floor1",
+    "start": "rm-1450417-dbcd6929f085",
+    "end": "rm-1450417-dbab6729f069",
+    "mode": "public"
+  },
+  {
+    "name": "floor3",
+    "start": "rm-400176-969baec4c053",
+    "end": "rm-400176-9683a6c4c03f",
+    "mode": "public"
+  },
+  {
+    "name": "unavailable",
+    "start": "rm-694-01803a06bb62",
+    "end": "rm-694-d302635a3d75",
+    "mode": "public"
+  },
+  {
+    "name": "lift-up",
+    "start": "rm-311-4170374a7ea7",
+    "end": "rm-694-b5dfde9d939a",
+    "mode": "public"
+  },
+  {
+    "name": "lift-down",
+    "start": "rm-694-b5dfde9d939a",
+    "end": "rm-311-4170374a7ea7",
+    "mode": "public"
+  },
+  {
+    "name": "ramp-forward",
+    "start": "rm-311-86e02816d8fe",
+    "end": "rm-1487816-1a09473066a2",
+    "mode": "public"
+  },
+  {
+    "name": "ramp-reverse",
+    "start": "rm-1487816-1a09473066a2",
+    "end": "rm-311-86e02816d8fe",
+    "mode": "public"
+  },
+  {
+    "name": "stepfree-refusal",
+    "start": "rm-311-86e02816d8fe",
+    "end": "rm-1487816-1a09473066a2",
+    "mode": "accessible"
+  },
+  {
+    "name": "corridor-default-04-204-08-267",
+    "start": "rm-694-2b971ef6dc47",
+    "end": "rm-694-43988ffdc334",
+    "mode": "public",
+    "expect": "route",
+    "intendedEdgeId": "door:694:2311764",
+    "options": {
+      "endpointMode": "inside",
+      "allowOtherRoomTransit": false
+    }
+  },
+  {
+    "name": "island-06-388-06-364",
+    "start": "rm-1487353-c75375ebb3cc",
+    "end": "rm-1487353-c8cc98ebb50c",
+    "mode": "public",
+    "expect": "route",
+    "intendedEdgeId": "reviewed-link:door:1487353:1780077:0|door:1487353:1779222:0",
+    "options": {
+      "endpointMode": "inside",
+      "allowOtherRoomTransit": false
+    }
+  },
+  {
+    "name": "office-04-255-08-272-transit",
+    "start": "rm-694-072a835d76b9",
+    "end": "rm-694-0179b206bb5d",
+    "mode": "public",
+    "expect": "route",
+    "options": {
+      "endpointMode": "inside",
+      "allowOtherRoomTransit": true
+    }
+  },
+  {
+    "name": "visitor-default-08-264-10-2006",
+    "start": "rm-694-01803a06bb62",
+    "end": "rm-694-d302635a3d75",
+    "mode": "public",
+    "expect": "route",
+    "options": {
+      "endpointMode": "inside",
+      "allowOtherRoomTransit": false
+    }
+  },
+  {
+    "name": "hallway-arrival-08-264-10-2006",
+    "start": "rm-694-01803a06bb62",
+    "end": "rm-694-d302635a3d75",
+    "mode": "public",
+    "expect": "blocked",
+    "options": {
+      "endpointMode": "hallway",
+      "allowOtherRoomTransit": false
+    }
+  }
+]
