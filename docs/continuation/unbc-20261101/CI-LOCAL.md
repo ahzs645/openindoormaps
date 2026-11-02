@@ -17,3 +17,13 @@ On Node 22 the production-worker parity test cannot load its worker
 (`Cannot find module …/heavy-worker-schedule`), on this branch and on the
 unmodified base alike; on Node 24 it passes. Release checks should use
 Node 24.19.0 as the repository documents.
+
+## Branch CI added
+
+`.github/workflows/indoor-checks.yml` now runs the same check steps on every
+non-`main` push, pull request or manual dispatch, without configuring or
+deploying Pages. It adds `corridor-terminal-approach`, the progressive delivery
+and published-directions tests (54 / 54 pass locally on Node 24.19.0) and a
+`campus-map` job that runs the self-contained hard-rule verifier, the
+wall-shortcut regression and the floor-selection race test on the committed
+map (all pass locally).

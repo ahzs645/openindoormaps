@@ -1,0 +1,86 @@
+name: Indoor checks
+
+# Runs the deploy workflow's check steps on every branch and pull request,
+# without configuring or deploying Pages, plus the campus map verifiers.
+on:
+  push:
+    branches-ignore: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indoor-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  routing:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: openindoormaps
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: openindoormaps
+      - name: Check out sibling compiler for parity tests
+        uses: actions/checkout@v7
+        with:
+          repository: ahzs645/reviter
+          path: reviter
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: openindoormaps/package-lock.json
+      - run: npm ci
+      - name: Install sibling compiler dependencies
+        run: npm ci --prefix ../reviter
+      - name: Check prepared-project types
+        run: npx tsc -p tsconfig.indoor-project.json
+      - name: Check routing and worker lifecycle
+        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts tests/unit/route-worker-calculation.test.ts tests/unit/visitor-route-efficiency.test.ts tests/unit/deterministic-math.test.ts
+      - name: Check shared pathways and candidate checkpoints
+        run: >-
+          node --import tsx --test --test-concurrency=2
+          tests/unit/corridor-centerline.test.ts
+          tests/unit/corridor-chain-fit.test.ts
+          tests/unit/corridor-guide-support.test.ts
+          tests/unit/corridor-terminal-attachments.test.ts
+          tests/unit/corridor-terminal-approach.test.ts
+          tests/unit/corridor-candidate-checkpoints.test.ts
+          tests/unit/shared-corridor-composition.test.ts
+          tests/unit/shared-corridor-routing.test.ts
+          tests/unit/shared-corridor-route-parity.test.ts
+      - name: Check progressive delivery and published directions
+        run: >-
+          node --import tsx --test --test-concurrency=2
+          tests/unit/progressive-native-digest.test.ts
+          tests/unit/progressive-delivery.test.ts
+          tests/unit/progressive-visitor-client.test.ts
+          tests/unit/published-routing-hydration.test.ts
+      - name: Build static app
+        run: npm run build:pages
+      - name: Install browser
+        run: npx playwright install --with-deps chromium
+      - name: Test hosted routes and project import
+        run: npm run test:pages
+
+  campus-map:
+    runs-on: ubuntu-24.04
+    defaults:
+      run:
+        working-directory: docs/continuation/unbc-20261031/campus/map
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Hard wall and hole rule on all four floors
+        run: python3 regularize/verify.py . --output "$RUNNER_TEMP/verify.json"
+      - name: Wall-shortcut regression
+        run: python3 regularize/regression-wall-shortcut.py
+      - name: Floor-selection race
+        run: node tests/floor-selection-race.test.mjs
