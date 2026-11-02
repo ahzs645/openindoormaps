@@ -72,6 +72,10 @@ the expected "No hallway-only route" refusal (47 m with transit), 06-388 →
 06-364 step-free the expected refusal, 04-204 → 08-267 121 m, 04-255 → 08-272
 186 m and 06-388 → 06-364 34 m.
 
+These saved proofs ran before checked 2D plans and lazy plan loading. The same
+8 journeys on the final application, with timings and identities in one
+report, are in [../final-proof/](../final-proof/README.md).
+
 ## Timings with checked 2D plans ([SPLIT.json](SPLIT.json))
 
 Same collector as [../plans/](../plans/README.md), 2 cold runs each, on a

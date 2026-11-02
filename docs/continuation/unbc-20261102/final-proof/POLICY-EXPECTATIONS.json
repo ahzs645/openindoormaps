@@ -1,0 +1,1212 @@
+{
+ "format": "explicit-policy-expectations-v1",
+ "casesSha256": "8d847f81736ef2f2f43820321fc5d03326675ef0ed79c5fc97634136649dfaab",
+ "note": "Expected outcome per case of POLICY-CASES.json; see tools/write-policy-expectations.py for the sources.",
+ "toleranceMetres": 0.01,
+ "expectations": [
+  {
+   "id": "08-264-to-10-2006:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 83.948,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/README.md: inside arrival, 83.948 m both ways through door 1499373"
+  },
+  {
+   "id": "10-2006-to-08-264:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 83.948,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/README.md: inside arrival, 83.948 m both ways through door 1499373"
+  },
+  {
+   "id": "08-267-to-10-2066:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "10-2066-to-08-267:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "08-264-to-10-2006:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 83.948,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/README.md: inside arrival, 83.948 m both ways through door 1499373"
+  },
+  {
+   "id": "10-2006-to-08-264:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 83.948,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/README.md: inside arrival, 83.948 m both ways through door 1499373"
+  },
+  {
+   "id": "08-267-to-10-2066:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "10-2066-to-08-267:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "08-264-to-10-2006:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: hallway arrival, no transit: refused (hallways)"
+  },
+  {
+   "id": "10-2006-to-08-264:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: hallway arrival, no transit: refused (hallways)"
+  },
+  {
+   "id": "08-267-to-10-2066:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "10-2066-to-08-267:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "08-264-to-10-2006:hallway:transit:public",
+   "expect": "route",
+   "distanceMetres": 73.05,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": false,
+   "source": "final-candidate/README.md: hallway arrival with transit, 73.050 m ending at the hallway side of the door"
+  },
+  {
+   "id": "10-2006-to-08-264:hallway:transit:public",
+   "expect": "route",
+   "distanceMetres": 73.05,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": false,
+   "source": "final-candidate/README.md: hallway arrival with transit, 73.050 m ending at the hallway side of the door"
+  },
+  {
+   "id": "08-267-to-10-2066:hallway:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "10-2066-to-08-267:hallway:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.019,
+   "toleranceMetres": 0.01,
+   "source": "final-candidate/README.md: 08-267 <-> 10-2066, all four walking settings 34.019 m"
+  },
+  {
+   "id": "08-264-to-10-2006:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2006-to-08-264:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-267-to-10-2066:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2066-to-08-267:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-264-to-10-2006:inside:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2006-to-08-264:inside:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-267-to-10-2066:inside:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2066-to-08-267:inside:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-264-to-10-2006:hallway:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2006-to-08-264:hallway:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-267-to-10-2066:hallway:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2066-to-08-267:hallway:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-264-to-10-2006:hallway:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2006-to-08-264:hallway:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "08-267-to-10-2066:hallway:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "10-2066-to-08-267:hallway:transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-366-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-366:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-366-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-366:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-366-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-366:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.01,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-366-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-366:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-368-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-368:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-368-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-368:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-368-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-368:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 19.86,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-368-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-368:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-370-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 35.255,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-370:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 35.255,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-370-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 35.255,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-370:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 35.255,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-370-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 32.67,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-370:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 32.67,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-370-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-370:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-372-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-372:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-372-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 40.559,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-372:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 40.559,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-372-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-372:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-372-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-372:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-374-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-374:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-374-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 47.161,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-374:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 47.161,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-374-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-374:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-374-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-374:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-376-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-376:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-376-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 47.39,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-376:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 47.39,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-376-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-376:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-376-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-376:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-378-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-378:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-378-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 57.514,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-378:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 57.514,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-378-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-378:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-378-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-378:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-380-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-380:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-380-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 53.979,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-380:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 53.979,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-380-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-380:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-380-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-380:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-382-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-382:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-382-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 54.96,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-382:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 54.96,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-382-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-382:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-382-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-382:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-384-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-384:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-384-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 50.307,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-384:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 50.267,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-384-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-384:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-384-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-384:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-386-to-06-364:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-386:inside:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-386-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 43.896,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-386:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 43.896,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-386-to-06-364:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-364-to-06-386:hallway:no-transit:public",
+   "expect": "refusal",
+   "refusalConstraint": "hallways",
+   "source": "final-candidate/README.md: 06-372 to 06-386 are reachable only through another room (hallways)"
+  },
+  {
+   "id": "06-386-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-386:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-388-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-388:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "final-candidate/browser/JOURNEYS.json / final-candidate/README.md: routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-388-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-388:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-388-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-388:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 34.356,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-388-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-388:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-390-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 36.35,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-390:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 36.35,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-390-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 36.35,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-390:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 36.35,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-390-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 26.141,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-390:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 26.141,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-390-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-390:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-392-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 27.276,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-392:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 27.276,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-392-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 27.276,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-392:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 27.276,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-392-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 20.778,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-392:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 20.778,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-392-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-392:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-397-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 24.441,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-397:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 24.443,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-397-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 24.441,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-397:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 24.443,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-397-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.12,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-397:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 21.12,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-397-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-397:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-398-to-06-364:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 22.902,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-398:inside:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 22.902,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-398-to-06-364:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 22.902,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-398:inside:transit:public",
+   "expect": "route",
+   "distanceMetres": 22.902,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-398-to-06-364:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 20.968,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-364-to-06-398:hallway:no-transit:public",
+   "expect": "route",
+   "distanceMetres": 20.968,
+   "toleranceMetres": 0.01,
+   "requiredEdgeUsed": true,
+   "source": "distance pinned from final-candidate/policy/POLICY-MATRIX.json.gz; outcome from final-candidate/README.md; routed island journeys use reviewed link 1780077 -> 1779222"
+  },
+  {
+   "id": "06-398-to-06-364:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  },
+  {
+   "id": "06-364-to-06-398:inside:no-transit:accessible",
+   "expect": "refusal",
+   "refusalBlockerKinds": [
+    "step-free"
+   ],
+   "source": "final-candidate/README.md: every step-free setting is refused (links on the witness path are step-free unconfirmed)"
+  }
+ ]
+}

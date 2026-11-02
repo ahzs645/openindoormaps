@@ -1,0 +1,905 @@
+{
+ "format": "final-visitor-proof-report-v1",
+ "passed": true,
+ "problems": [],
+ "scope": {
+  "browserJourneys": 8,
+  "browserRuns": [
+   "desktop run1",
+   "desktop run2",
+   "mobile run1",
+   "mobile run2"
+  ],
+  "policyCases": 160,
+  "policyCaseShape": "18 room pairs (08-264/10-2006, 08-267/10-2066 and 16 former 06-388 island rooms with 06-364) x both directions x policies (8 for the two Floor 2 pairs, 4 for each island pair) = 160 cases",
+  "notCovered": [
+   "physical phones: mobile is Chromium with Playwright iPhone 13 emulation (viewport, DPR 3, touch, UA), software GL",
+   "production hosting and CDN: a local python http.server on a shared 4-core / 16 GB host",
+   "routes other than the 8 browser journeys and the 160 matrix cases"
+  ]
+ },
+ "identity": {
+  "format": "final-proof-identity-v1",
+  "collectedAt": "2026-11-02T22:22:42.223Z",
+  "appCommit": "233bee9185c04bd24f2e53167662b9a850c41835",
+  "appLastChangedCommit": "5766e6262a56f222e101698647454f24faead8cd",
+  "appSourcesMatchCommit": true,
+  "reviterCommit": "2e7875d3209785ea287296a1520eb9851011b50a",
+  "reviterPinnedInCi": "2e7875d3209785ea287296a1520eb9851011b50a",
+  "candidateSha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+  "visitorSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+  "manifestRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+  "manifestFileSha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+  "routingDatasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+  "directionsCarrier": {
+   "receiptId": "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+   "sha256": "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687",
+   "bytes": 8205761,
+   "url": "/data/unbc-routing/3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz"
+  },
+  "planReceipts": [
+   {
+    "id": "exact-native-2d-scope-461f0105c3d7347162a8b8edad822a9a1b81d24fdcbb318249f6fbc7caf71d0c",
+    "scopeId": "scope-461f0105c3d7347162a8b8edad822a9a1b81d24fdcbb318249f6fbc7caf71d0c",
+    "compressedSha256": "530b833bc0103546ecc3ddb67505e1cd0b86a78c5fb2d4034d41538bba4e3168",
+    "compressedBytes": 251814,
+    "url": "/data/unbc-plans/530b833bc0103546ecc3ddb67505e1cd0b86a78c5fb2d4034d41538bba4e3168.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-7c4ad619ed9f82f34055e998a47131f8a272508f94c38a366761a3953804cea5",
+    "scopeId": "scope-7c4ad619ed9f82f34055e998a47131f8a272508f94c38a366761a3953804cea5",
+    "compressedSha256": "e0cc256546836fc22083331ef181bcb3c4089205de19a55c9025b4e4892e9935",
+    "compressedBytes": 93099,
+    "url": "/data/unbc-plans/e0cc256546836fc22083331ef181bcb3c4089205de19a55c9025b4e4892e9935.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-73e754661a019da79cf1002f56a1255023e61462b6ebc4cc6db21eaac0eac54c",
+    "scopeId": "scope-73e754661a019da79cf1002f56a1255023e61462b6ebc4cc6db21eaac0eac54c",
+    "compressedSha256": "c73820b1c93edb22ea593c6baf7fab2af45debbd380896f7caeab477d8b4f462",
+    "compressedBytes": 5241893,
+    "url": "/data/unbc-plans/c73820b1c93edb22ea593c6baf7fab2af45debbd380896f7caeab477d8b4f462.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-ea2884e5eca4101c2d43b9c177f095ae091df6501bed99a6baa4304857612531",
+    "scopeId": "scope-ea2884e5eca4101c2d43b9c177f095ae091df6501bed99a6baa4304857612531",
+    "compressedSha256": "afb5d4ede1d2823a1a99273f9f5ca3f7eb26164935ad933fc59044525d7e0762",
+    "compressedBytes": 340234,
+    "url": "/data/unbc-plans/afb5d4ede1d2823a1a99273f9f5ca3f7eb26164935ad933fc59044525d7e0762.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-8a0e8988fe2171167591d6c8c91922420aef1adc1d8fd6443f267a1f65bbbf39",
+    "scopeId": "scope-8a0e8988fe2171167591d6c8c91922420aef1adc1d8fd6443f267a1f65bbbf39",
+    "compressedSha256": "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda",
+    "compressedBytes": 2842301,
+    "url": "/data/unbc-plans/0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-348d9b22b2772949eff71a7a45a4c3943d95088bc81abd936041513e81135c3d",
+    "scopeId": "scope-348d9b22b2772949eff71a7a45a4c3943d95088bc81abd936041513e81135c3d",
+    "compressedSha256": "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152",
+    "compressedBytes": 2149792,
+    "url": "/data/unbc-plans/14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+   },
+   {
+    "id": "exact-native-2d-scope-b55ec721d39599178ddd4829e1f4e06a92a6f785e4f3d06081f6deaeeae91d96",
+    "scopeId": "scope-b55ec721d39599178ddd4829e1f4e06a92a6f785e4f3d06081f6deaeeae91d96",
+    "compressedSha256": "06efebc20f71efafc06bbe00516a58bacaae3994a199e3e80272ba76cef1c6c7",
+    "compressedBytes": 1692945,
+    "url": "/data/unbc-plans/06efebc20f71efafc06bbe00516a58bacaae3994a199e3e80272ba76cef1c6c7.json.gz"
+   }
+  ],
+  "projectReceiptId": "unbc-progressive-floors-32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+  "bindings": {
+   "preparedDisplayEngineSha256": "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+   "publishedRouteRuntimeSha256": "49f1e88b3468b14c4b144cb9eb51f10cbb5dc8da714526de02b28863965a1247",
+   "publishedVisitorPlanRuntimeSha256": "4705ec62859acf01d17265435d0638a5405d385250bf66acacb7d0daddd0bac2"
+  },
+  "build": {
+   "indexHtmlSha256": "37d9c81ad47a1be9d973ef626be185a2989a59fe6ed4fabe1b57641c53ba5d0b",
+   "assetsFiles": 77,
+   "assetsListSha256": "47d7fd5bace71658e20fc5e1345b7c007755fefac48204569288899d029ca15f",
+   "assetsListRule": "sha256 of the sorted lines '<sha256>  <path relative to build/assets>' plus a final newline",
+   "buildTree": {
+    "files": 115,
+    "sha256": "442a52e49112797df64c354565d68dc9be9eeb6dc49222bf948e2bdbc32fd11c"
+   }
+  },
+  "host": {
+   "cpus": 4,
+   "memoryBytes": 16872808448,
+   "loadAverageAtCollection": "1.00 1.19 0.66 2/129 2845",
+   "kernel": "6.18.44-fc-v185",
+   "node": "v24.19.0"
+  }
+ },
+ "browserVersions": [
+  "153.0.8010.12"
+ ],
+ "emulation": {
+  "desktop": "Chromium 1440x900",
+  "mobile": "Playwright devices['iPhone 13'] in Chromium (viewport, DPR 3, touch, mobile UA); not a physical phone"
+ },
+ "runs": [
+  {
+   "mode": "desktop",
+   "run": "run1",
+   "passed": true,
+   "loadAverageAtStart": "1.18 1.21 0.69 1/117 2993",
+   "loadAverageAtEnd": "1.56 1.22 0.80 5/238 3829",
+   "initialFloorReadySeconds": 6.313,
+   "pageErrors": 0,
+   "consoleErrors": 0,
+   "failedRequests": 1,
+   "routingCarrierRequests": [
+    "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz"
+   ],
+   "planCarrierRequests": [
+    "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz",
+    "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+   ]
+  },
+  {
+   "mode": "desktop",
+   "run": "run2",
+   "passed": true,
+   "loadAverageAtStart": "1.12 1.12 1.01 1/129 7269",
+   "loadAverageAtEnd": "1.65 1.18 1.04 1/231 8016",
+   "initialFloorReadySeconds": 6.048,
+   "pageErrors": 0,
+   "consoleErrors": 0,
+   "failedRequests": 1,
+   "routingCarrierRequests": [
+    "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz"
+   ],
+   "planCarrierRequests": [
+    "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz",
+    "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+   ]
+  },
+  {
+   "mode": "mobile",
+   "run": "run1",
+   "passed": true,
+   "loadAverageAtStart": "1.32 1.27 0.91 1/126 4821",
+   "loadAverageAtEnd": "0.87 1.02 0.88 2/241 5866",
+   "initialFloorReadySeconds": 5.778,
+   "pageErrors": 0,
+   "consoleErrors": 0,
+   "failedRequests": 1,
+   "routingCarrierRequests": [
+    "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz"
+   ],
+   "planCarrierRequests": [
+    "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz",
+    "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+   ]
+  },
+  {
+   "mode": "mobile",
+   "run": "run2",
+   "passed": true,
+   "loadAverageAtStart": "1.58 1.19 1.05 2/130 8096",
+   "loadAverageAtEnd": "1.23 1.09 1.03 2/237 9088",
+   "initialFloorReadySeconds": 4.962,
+   "pageErrors": 0,
+   "consoleErrors": 0,
+   "failedRequests": 1,
+   "routingCarrierRequests": [
+    "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz"
+   ],
+   "planCarrierRequests": [
+    "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz",
+    "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+   ]
+  }
+ ],
+ "journeys": [
+  {
+   "label": "0810-default-08-264-to-10-2006",
+   "from": "rm-694-01803a06bb62",
+   "to": "rm-694-d302635a3d75",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 83.948,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "84 m",
+     "shownMetres": 84,
+     "stepTotal": 15,
+     "requestToStatusSeconds": 16.485,
+     "requestToRoutePaintSeconds": 20.712,
+     "routePaintNotBeforeSeconds": 20.02,
+     "requestToFloorReadySeconds": 20.678,
+     "routeLinePixels": 2678,
+     "buttonDisabledSeconds": 0.011,
+     "loadAverageAtRequest": "1.61 1.30 0.73 1/226 3173",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "84 m",
+     "shownMetres": 84,
+     "stepTotal": 15,
+     "requestToStatusSeconds": 12.032,
+     "requestToRoutePaintSeconds": 16.567,
+     "routePaintNotBeforeSeconds": 16.056,
+     "requestToFloorReadySeconds": 16.526,
+     "routeLinePixels": 2678,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "1.43 1.19 1.03 1/234 7436",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "84 m",
+     "shownMetres": 84,
+     "stepTotal": 15,
+     "requestToStatusSeconds": 14.537,
+     "requestToRoutePaintSeconds": 18.752,
+     "routePaintNotBeforeSeconds": 18.206,
+     "requestToFloorReadySeconds": 18.982,
+     "routeLinePixels": 11352,
+     "buttonDisabledSeconds": 0.013,
+     "loadAverageAtRequest": "1.53 1.32 0.93 2/234 5034",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "84 m",
+     "shownMetres": 84,
+     "stepTotal": 15,
+     "requestToStatusSeconds": 12.267,
+     "requestToRoutePaintSeconds": 15.72,
+     "routePaintNotBeforeSeconds": 15.152,
+     "requestToFloorReadySeconds": 15.846,
+     "routeLinePixels": 11352,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "1.94 1.27 1.07 2/233 8284",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "island-default-06-366-to-06-364",
+   "from": "rm-1487353-c8d3e4ebb513",
+   "to": "rm-1487353-c8cc98ebb50c",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 21.01,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "21 m",
+     "shownMetres": 21,
+     "stepTotal": 7,
+     "requestToStatusSeconds": 1.734,
+     "requestToRoutePaintSeconds": 8.644,
+     "routePaintNotBeforeSeconds": 7.726,
+     "requestToFloorReadySeconds": 8.339,
+     "routeLinePixels": 2020,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "1.51 1.31 0.75 2/229 3252",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "21 m",
+     "shownMetres": 21,
+     "stepTotal": 7,
+     "requestToStatusSeconds": 1.362,
+     "requestToRoutePaintSeconds": 5.004,
+     "routePaintNotBeforeSeconds": 3.667,
+     "requestToFloorReadySeconds": 5.217,
+     "routeLinePixels": 2020,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "1.66 1.26 1.05 2/238 7501",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "21 m",
+     "shownMetres": 21,
+     "stepTotal": 7,
+     "requestToStatusSeconds": 1.622,
+     "requestToRoutePaintSeconds": 4.869,
+     "routePaintNotBeforeSeconds": 3.858,
+     "requestToFloorReadySeconds": 5.407,
+     "routeLinePixels": 7646,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "1.73 1.39 0.96 1/236 5133",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "21 m",
+     "shownMetres": 21,
+     "stepTotal": 7,
+     "requestToStatusSeconds": 1.341,
+     "requestToRoutePaintSeconds": 3.604,
+     "routePaintNotBeforeSeconds": 3.026,
+     "requestToFloorReadySeconds": 3.673,
+     "routeLinePixels": 7646,
+     "buttonDisabledSeconds": 0.009,
+     "loadAverageAtRequest": "2.19 1.36 1.11 1/234 8464",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "island-default-06-376-to-06-364",
+   "from": "rm-1487353-c015ccebb019",
+   "to": "rm-1487353-c8cc98ebb50c",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "public"
+   },
+   "expect": "refused",
+   "expectedDistanceMetres": null,
+   "toleranceMetres": null,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.038,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.038,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "2.39 1.52 0.83 5/226 3282",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.034,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.034,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.009,
+     "loadAverageAtRequest": "1.48 1.23 1.05 1/234 7529",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.031,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.031,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "1.69 1.39 0.97 1/235 5178",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.061,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.061,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.005,
+     "loadAverageAtRequest": "2.00 1.35 1.11 3/245 8540",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "island-transit-06-376-to-06-364",
+   "from": "rm-1487353-c015ccebb019",
+   "to": "rm-1487353-c8cc98ebb50c",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 47.39,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "47 m",
+     "shownMetres": 47,
+     "stepTotal": 9,
+     "requestToStatusSeconds": 1.423,
+     "requestToRoutePaintSeconds": 2.452,
+     "routePaintNotBeforeSeconds": 0.87,
+     "requestToFloorReadySeconds": 1.423,
+     "routeLinePixels": 3063,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "0.81 1.22 0.77 7/240 3512",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "47 m",
+     "shownMetres": 47,
+     "stepTotal": 9,
+     "requestToStatusSeconds": 1.026,
+     "requestToRoutePaintSeconds": 1.685,
+     "routePaintNotBeforeSeconds": 0.647,
+     "requestToFloorReadySeconds": 1.026,
+     "routeLinePixels": 3063,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.69 1.05 0.99 1/235 7769",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "47 m",
+     "shownMetres": 47,
+     "stepTotal": 9,
+     "requestToStatusSeconds": 1.115,
+     "requestToRoutePaintSeconds": 1.243,
+     "routePaintNotBeforeSeconds": 0.75,
+     "requestToFloorReadySeconds": 1.115,
+     "routeLinePixels": 7045,
+     "buttonDisabledSeconds": 0.009,
+     "loadAverageAtRequest": "0.67 1.15 0.91 1/238 5495",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "47 m",
+     "shownMetres": 47,
+     "stepTotal": 9,
+     "requestToStatusSeconds": 0.97,
+     "requestToRoutePaintSeconds": 1.136,
+     "routePaintNotBeforeSeconds": 0.779,
+     "requestToFloorReadySeconds": 0.97,
+     "routeLinePixels": 7045,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.78 1.12 1.04 1/231 8898",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "island-stepfree-06-388-to-06-364",
+   "from": "rm-1487353-c75375ebb3cc",
+   "to": "rm-1487353-c8cc98ebb50c",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "accessible"
+   },
+   "expect": "refused",
+   "expectedDistanceMetres": null,
+   "toleranceMetres": null,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No confirmed step-free route is available between these places.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.052,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.052,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.82 1.22 0.77 4/234 3597",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No confirmed step-free route is available between these places.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.065,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.065,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.009,
+     "loadAverageAtRequest": "1.04 1.11 1.02 1/237 7801",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No confirmed step-free route is available between these places.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.067,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.067,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.62 1.13 0.90 1/242 5549",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "refused",
+     "statusText": "No confirmed step-free route is available between these places.",
+     "shownMetres": null,
+     "stepTotal": 0,
+     "requestToStatusSeconds": 0.05,
+     "requestToRoutePaintSeconds": null,
+     "routePaintNotBeforeSeconds": null,
+     "requestToFloorReadySeconds": 0.05,
+     "routeLinePixels": 0,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.72 1.10 1.03 1/236 8929",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "corridor-default-04-204-to-08-267",
+   "from": "rm-694-2b971ef6dc47",
+   "to": "rm-694-43988ffdc334",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 120.961,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "121 m",
+     "shownMetres": 121,
+     "stepTotal": 12,
+     "requestToStatusSeconds": 3.009,
+     "requestToRoutePaintSeconds": 6.333,
+     "routePaintNotBeforeSeconds": 4.387,
+     "requestToFloorReadySeconds": 8.486,
+     "routeLinePixels": 1852,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "0.28 0.98 0.71 1/237 3764",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "121 m",
+     "shownMetres": 121,
+     "stepTotal": 12,
+     "requestToStatusSeconds": 2.839,
+     "requestToRoutePaintSeconds": 6.381,
+     "routePaintNotBeforeSeconds": 4.296,
+     "requestToFloorReadySeconds": 8.292,
+     "routeLinePixels": 1852,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.50 0.95 0.96 2/230 7960",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "121 m",
+     "shownMetres": 121,
+     "stepTotal": 12,
+     "requestToStatusSeconds": 3.041,
+     "requestToRoutePaintSeconds": 5.157,
+     "routePaintNotBeforeSeconds": 3.437,
+     "requestToFloorReadySeconds": 8.118,
+     "routeLinePixels": 5985,
+     "buttonDisabledSeconds": 0.005,
+     "loadAverageAtRequest": "0.21 0.90 0.84 1/239 5683",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "121 m",
+     "shownMetres": 121,
+     "stepTotal": 12,
+     "requestToStatusSeconds": 2.729,
+     "requestToRoutePaintSeconds": 5.825,
+     "routePaintNotBeforeSeconds": 3.105,
+     "requestToFloorReadySeconds": 7.285,
+     "routeLinePixels": 5985,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "0.79 1.01 1.00 1/234 9046",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "office-transit-04-255-to-08-272",
+   "from": "rm-694-072a835d76b9",
+   "to": "rm-694-0179b206bb5d",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": true,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 186.35,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "186 m",
+     "shownMetres": 186,
+     "stepTotal": 19,
+     "requestToStatusSeconds": 4.575,
+     "requestToRoutePaintSeconds": 5.463,
+     "routePaintNotBeforeSeconds": 4.872,
+     "requestToFloorReadySeconds": 4.575,
+     "routeLinePixels": 2517,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "0.87 1.08 0.75 5/239 3795",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "186 m",
+     "shownMetres": 186,
+     "stepTotal": 19,
+     "requestToStatusSeconds": 4.631,
+     "requestToRoutePaintSeconds": 5.075,
+     "routePaintNotBeforeSeconds": 4.186,
+     "requestToFloorReadySeconds": 4.631,
+     "routeLinePixels": 2517,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "0.91 1.02 0.99 2/234 7979",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "186 m",
+     "shownMetres": 186,
+     "stepTotal": 19,
+     "requestToStatusSeconds": 4.551,
+     "requestToRoutePaintSeconds": 4.886,
+     "routePaintNotBeforeSeconds": 4.623,
+     "requestToFloorReadySeconds": 4.551,
+     "routeLinePixels": 7979,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "0.91 1.04 0.89 1/241 5742",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "186 m",
+     "shownMetres": 186,
+     "stepTotal": 19,
+     "requestToStatusSeconds": 4.13,
+     "requestToRoutePaintSeconds": 4.617,
+     "routePaintNotBeforeSeconds": 4.384,
+     "requestToFloorReadySeconds": 4.13,
+     "routeLinePixels": 7979,
+     "buttonDisabledSeconds": 0.005,
+     "loadAverageAtRequest": "0.74 0.99 1.00 1/234 9066",
+     "problems": []
+    }
+   ]
+  },
+  {
+   "label": "island-default-06-388-to-06-364",
+   "from": "rm-1487353-c75375ebb3cc",
+   "to": "rm-1487353-c8cc98ebb50c",
+   "options": {
+    "endpointMode": "inside",
+    "allowOtherRoomTransit": false,
+    "profile": "public"
+   },
+   "expect": "route",
+   "expectedDistanceMetres": 34.356,
+   "toleranceMetres": 1,
+   "runs": [
+    {
+     "mode": "desktop",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "34 m",
+     "shownMetres": 34,
+     "stepTotal": 6,
+     "requestToStatusSeconds": 1.299,
+     "requestToRoutePaintSeconds": 4.633,
+     "routePaintNotBeforeSeconds": 3.525,
+     "requestToFloorReadySeconds": 5.496,
+     "routeLinePixels": 2621,
+     "buttonDisabledSeconds": 0.006,
+     "loadAverageAtRequest": "1.28 1.16 0.78 2/238 3812",
+     "problems": []
+    },
+    {
+     "mode": "desktop",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "34 m",
+     "shownMetres": 34,
+     "stepTotal": 6,
+     "requestToStatusSeconds": 1.328,
+     "requestToRoutePaintSeconds": 3.956,
+     "routePaintNotBeforeSeconds": 3.008,
+     "requestToFloorReadySeconds": 6.332,
+     "routeLinePixels": 2621,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "1.24 1.08 1.01 3/231 7983",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run1",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "34 m",
+     "shownMetres": 34,
+     "stepTotal": 6,
+     "requestToStatusSeconds": 1.462,
+     "requestToRoutePaintSeconds": 3.285,
+     "routePaintNotBeforeSeconds": 1.761,
+     "requestToFloorReadySeconds": 5.374,
+     "routeLinePixels": 7439,
+     "buttonDisabledSeconds": 0.007,
+     "loadAverageAtRequest": "0.84 1.02 0.88 1/238 5783",
+     "problems": []
+    },
+    {
+     "mode": "mobile",
+     "run": "run2",
+     "passed": true,
+     "outcome": "route",
+     "statusText": "34 m",
+     "shownMetres": 34,
+     "stepTotal": 6,
+     "requestToStatusSeconds": 1.277,
+     "requestToRoutePaintSeconds": 3.345,
+     "routePaintNotBeforeSeconds": 2.167,
+     "requestToFloorReadySeconds": 4.15,
+     "routeLinePixels": 7439,
+     "buttonDisabledSeconds": 0.008,
+     "loadAverageAtRequest": "1.34 1.11 1.04 1/233 9081",
+     "problems": []
+    }
+   ]
+  }
+ ],
+ "policyMatrix": {
+  "file": "POLICY-MATRIX.json.gz",
+  "format": "explicit-policy-route-matrix-v2",
+  "passed": true,
+  "complete": true,
+  "allAgree": true,
+  "allExpectationsMet": true,
+  "agreementRule": "allAgree: every case has both outcomes, no error, and identical availability, edge id count, edge ids, door edge ids, required-edge use, distance, whole diagnostic, arrival choices, reachable count, step count, complete-value hash, step hash and summary hash (explicit-policy-matrix-checks.ts AGREEMENT_FIELDS).",
+  "expectationRule": "allExpectationsMet: the normal AND the worker outcome of every case meet its expectation (route: distance within tolerance, edges, steps, required-edge use; refusal: no route, diagnostic constraint or blocker kinds).",
+  "identity": {
+   "inputSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+   "datasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+   "casesSha256": "8d847f81736ef2f2f43820321fc5d03326675ef0ed79c5fc97634136649dfaab",
+   "manifestRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+   "manifestSha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+   "receiptId": "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+   "carrierSha256": "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687",
+   "runtimeSha256": "49f1e88b3468b14c4b144cb9eb51f10cbb5dc8da714526de02b28863965a1247",
+   "engineSha256": "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+   "expectationsSha256": "8691e5837782cc2a8ad4efc63ade49029190f6defe987a56721544593c00c5c5"
+  },
+  "counts": {
+   "cases": 160,
+   "normalDone": 160,
+   "workerDone": 160,
+   "workerErrors": 0,
+   "agree": 160,
+   "expectationsMet": 160,
+   "expectedRoutes": 78,
+   "expectedRefusals": 82
+  },
+  "failures": [],
+  "workerRuns": [
+   {
+    "starts": 1,
+    "heapLimits": [
+     855638016
+    ],
+    "bundleSha256": "2012e8d5d58bfc49ce8db3246ab1747248f9135a4be476e6dd5f4f4b27806d84",
+    "compiledReceipt": true
+   }
+  ]
+ }
+}

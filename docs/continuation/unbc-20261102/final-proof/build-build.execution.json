@@ -1,0 +1,33 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "node",
+    "--max-old-space-size=3072",
+    "--import",
+    "tsx",
+    "node_modules/vite/bin/vite.js",
+    "build",
+    "--configLoader",
+    "native",
+    "--mode",
+    "pages",
+    "--outDir",
+    "/home/user/unbc-work/finalproof/root/build"
+  ],
+  "workingDirectory": "/home/user/wt-final-proof",
+  "startedAt": "2026-11-02T22:17:03.445119+00:00",
+  "finishedAt": "2026-11-02T22:18:03.884663+00:00",
+  "seconds": 60.33191046799999,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 2353944,
+  "kernelChildUserSeconds": 35.570271,
+  "kernelChildSystemSeconds": 19.635102,
+  "cgroupLimitBytes": null,
+  "sampledSharedCgroupPeakBytes": 0,
+  "sampleIntervalSeconds": 1,
+  "samples": 61,
+  "cgroupEventDeltas": {},
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}
