@@ -1,0 +1,119 @@
+{
+  "format": "master-reproduction-v1",
+  "input": {
+    "path": "UNBC.master.reviter.zip (canonical October 22 master)",
+    "sha256": "d4d36d188dd635cae7d4225abdb1a3707eed6427180e072f64fc59f4ea006dfc"
+  },
+  "command": [
+    "node",
+    "--max-old-space-size=6144",
+    "--import",
+    "tsx",
+    "scripts/indoor/add-reviewed-circulation-link.ts",
+    "/home/user/unbc-work/output/UNBC.master.reviter.zip",
+    "/home/user/unbc-work/master-repro/master.zip",
+    "--from",
+    "door:1487353:1780077:0",
+    "--to",
+    "door:1487353:1779222:0",
+    "--source",
+    "docs/continuation/unbc-20261031/campus/README.md",
+    "--decision-id",
+    "06-388-island-missing-approach",
+    "--summary",
+    "Connected door 1780077 (06-366 Lounge to 06-364 Corridor) has no walking approach on its 06-364 portal, isolating 06-388 Vestibule and 15 other rooms. Join that portal to the neighbouring 06-364 portal of door 1779222 (6.46 ft) inside native cell 994."
+  ],
+  "sourceRevision": "6acc5ca301024c48f25b7fab43bbe444113856e6",
+  "original": {
+    "sha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+    "bytes": 247210604,
+    "entries": {
+      "review/companions.bin": {
+        "bytes": 88626822,
+        "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": {
+        "bytes": 70336512,
+        "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "gis/reference-points.json": {
+        "bytes": 602,
+        "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "model/scene.glb": {
+        "bytes": 52216228,
+        "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "floors/rooms.json": {
+        "bytes": 82337708,
+        "sha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "viewer/indoor.json": {
+        "bytes": 300495592,
+        "sha256": "4ec28525916876fb9073dc163c2f0887be93f34d5e996bd00d44fc5d88721b2a",
+        "zipTime": "2026-11-01T08:49:56"
+      },
+      "manifest.json": {
+        "bytes": 1199,
+        "sha256": "b4fefef5709d41f5bdbdc660ed8a68d79d6a29b6f8209627727fa6e6506cf6d7",
+        "zipTime": "2026-11-01T08:49:56"
+      }
+    }
+  },
+  "reproduced": {
+    "sha256": "4d4cbcd6e0a75ac9bc83b95747ae81bfc1d002e5975101c5e14e15e8fd907ee5",
+    "bytes": 247210606,
+    "entries": {
+      "review/companions.bin": {
+        "bytes": 88626822,
+        "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+        "zipTime": "2026-11-02T08:46:02"
+      },
+      "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": {
+        "bytes": 70336512,
+        "sha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "zipTime": "2026-11-02T08:46:04"
+      },
+      "gis/reference-points.json": {
+        "bytes": 602,
+        "sha256": "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        "zipTime": "2026-11-02T08:46:04"
+      },
+      "model/scene.glb": {
+        "bytes": 52216228,
+        "sha256": "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        "zipTime": "2026-11-02T08:46:04"
+      },
+      "floors/rooms.json": {
+        "bytes": 82337708,
+        "sha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
+        "zipTime": "2026-11-02T08:46:04"
+      },
+      "viewer/indoor.json": {
+        "bytes": 300495592,
+        "sha256": "4ec28525916876fb9073dc163c2f0887be93f34d5e996bd00d44fc5d88721b2a",
+        "zipTime": "2026-11-02T08:46:04"
+      },
+      "manifest.json": {
+        "bytes": 1199,
+        "sha256": "d0be8d6278f6e6d440717e122fc6f8c694c70e06ee7cdf2acc0c2e66023c3e62",
+        "zipTime": "2026-11-02T08:46:04"
+      }
+    }
+  },
+  "execution": {
+    "seconds": 5179.237047629,
+    "exitCode": 0,
+    "kernelMaxChildRssKiB": 5987500,
+    "startedAt": "2026-11-02T07:19:46.612443+00:00",
+    "finishedAt": "2026-11-02T08:46:05.849607+00:00"
+  },
+  "entriesWithDifferentContent": ["manifest.json"],
+  "manifestFieldsDiffering": ["createdAt"],
+  "contentIdenticalExceptManifestCreatedAt": true
+}
