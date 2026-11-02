@@ -63,6 +63,13 @@ jobs:
           tests/unit/progressive-delivery.test.ts
           tests/unit/progressive-visitor-client.test.ts
           tests/unit/published-routing-hydration.test.ts
+          tests/unit/published-route-extra-cases.test.ts
+          tests/unit/admit-published-project.test.ts
+          tests/unit/published-project.test.ts
+          tests/unit/published-project-scope.test.ts
+          tests/unit/published-floor-decoder.test.ts
+          tests/unit/published-visitor-plan.test.ts
+          tests/unit/published-visitor-plan-labels.test.ts
       - name: Build static app
         run: npm run build:pages
       - name: Install browser

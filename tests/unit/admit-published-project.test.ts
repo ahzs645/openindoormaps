@@ -35,6 +35,7 @@ const evaluate = (source: string) =>
   new Function(
     source
       .replace(/^import type .*$/m, "")
+      .replace("Object.freeze<PublishedProjectReceipt[]>(", "Object.freeze(")
       .replace(
         /export const PUBLISHED_PROJECT_RECEIPTS: readonly PublishedProjectReceipt\[\] =/,
         "const receipts =",
