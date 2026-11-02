@@ -27,3 +27,6 @@ and published-directions tests (54 / 54 pass locally on Node 24.19.0) and a
 `campus-map` job that runs the self-contained hard-rule verifier, the
 wall-shortcut regression and the floor-selection race test on the committed
 map (all pass locally).
+
+The first full run on GitHub passed both jobs, including the hosted browser
+tests: [Indoor checks run 3](https://github.com/ahzs645/openindoormaps/actions/runs/41382656724).
