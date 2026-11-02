@@ -3,13 +3,13 @@ import type { PublishedRouteCellReceipt } from "./published-route-cells";
 export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[] =
   Object.freeze([
     {
-      id: "fresh-candidate-native-routing-c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+      id: "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
       datasetSha256:
-        "c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+        "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
       engineSha256:
-        "9ee1cb8c29a02ce5f2954d4e58b050799854e25157991ee30bbdd46ed4d47a46",
+        "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
       runtimeSha256:
-        "807394c13939cc54aed3aef23ad7e001975842846352a417e9cd08372dfa9d0a",
+        "49f1e88b3468b14c4b144cb9eb51f10cbb5dc8da714526de02b28863965a1247",
       source: {
         modelFileName:
           "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
@@ -19,12 +19,12 @@ export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[]
           "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
       },
       logicalSha256:
-        "f05660d71282bb14af910c8e5d9344902800806ac8bed6edf5c97a41f7f04107",
+        "d3b3009cc61a8e4382303b252801918a7531048e06fd3eb190075c3e62bbce4e",
       logicalBytes: 35_217_787,
       compressedSha256:
-        "dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38",
-      compressedBytes: 8_205_781,
-      url: "/data/unbc-routing/dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38.json.gz",
+        "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687",
+      compressedBytes: 8_205_761,
+      url: "/data/unbc-routing/3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz",
     },
     {
       id: "fresh-candidate-native-routing-0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
