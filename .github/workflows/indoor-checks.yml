@@ -80,8 +80,11 @@ jobs:
           node-version: 24
       - name: Hard wall and hole rule on all four floors
         run: python3 regularize/verify.py . --output "$RUNNER_TEMP/verify.json"
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
       - name: Install NumPy for the regularizer
-        run: python3 -m pip install --user numpy
+        run: python3 -m pip install numpy
       - name: Wall-shortcut regression
         run: python3 regularize/regression-wall-shortcut.py
       - name: Floor-selection race
