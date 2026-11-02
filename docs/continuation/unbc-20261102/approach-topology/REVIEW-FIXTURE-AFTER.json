@@ -1,0 +1,73 @@
+{
+  "head": "6acc5ca301024c48f25b7fab43bbe444113856e6",
+  "scope": "Synthetic production-generator output; not an assertion of an actual campus occurrence or wall crossing",
+  "units": "feet",
+  "corridor": [
+    [0, 0],
+    [40, 0],
+    [40, 8],
+    [0, 8]
+  ],
+  "terminals": [
+    {
+      "id": "a",
+      "point": [10, 1],
+      "approachDirection": [1, 1]
+    },
+    {
+      "id": "b",
+      "point": [13, 1],
+      "approachDirection": [-1, 1]
+    }
+  ],
+  "legacy": {
+    "shapedApproaches": false,
+    "route": {
+      "points": [
+        [10, 1],
+        [10, 4],
+        [13, 4],
+        [13, 1]
+      ],
+      "hallwayJoins": [1, 2]
+    },
+    "nativeFootprintSupported": true,
+    "originalEndpointsPreserved": true,
+    "approachTopologyConflicts": [],
+    "straightAxisTerminals": 2,
+    "joinSliding": {
+      "throughJoins": 0,
+      "spurJoins": 0,
+      "slidTerminals": 0,
+      "removedSpurs": 0,
+      "protectedJoins": 0,
+      "fitAttempts": 0,
+      "retained": null
+    }
+  },
+  "shaped": {
+    "shapedApproaches": true,
+    "route": {
+      "points": [
+        [10, 1],
+        [13, 4],
+        [13, 1]
+      ],
+      "hallwayJoins": [1, 1]
+    },
+    "nativeFootprintSupported": true,
+    "originalEndpointsPreserved": true,
+    "approachTopologyConflicts": [],
+    "straightAxisTerminals": 2,
+    "joinSliding": {
+      "throughJoins": 0,
+      "spurJoins": 0,
+      "slidTerminals": 0,
+      "removedSpurs": 0,
+      "protectedJoins": 0,
+      "fitAttempts": 0,
+      "retained": null
+    }
+  },
+  "newTopologyConflictObserved": false
+}
