@@ -26,6 +26,7 @@ import type {
 } from "../../app/indoor-project/progressive-delivery";
 
 import { progressivePlaceLabel } from "../../app/pages/progressive-instruction-preview";
+import { ROOM_DETAIL_START } from "../../app/indoor-project/zoom-presentation";
 
 const manifestUrl =
   process.env.PROGRESSIVE_PLAN_MANIFEST_URL ??
@@ -45,6 +46,38 @@ const ready = async (page: Page) => {
     { timeout: 180_000 },
   );
 };
+/** A drawn map at any zoom: the opening overview or a checked plan. */
+const opened = (page: Page) =>
+  expect(page.getByTestId("visitor-render-status")).toHaveAttribute(
+    "data-state",
+    "ready",
+    { timeout: 180_000 },
+  );
+/** The opening view draws the overview; no floor plan is shown or loaded. */
+const openedOverview = async (page: Page) => {
+  await opened(page);
+  await expect(page.locator(".visitor-map")).toHaveAttribute(
+    "data-floor-plan",
+    "false",
+  );
+};
+/** Zoom with the map control past the room-detail threshold. */
+async function zoomToDetail(page: Page) {
+  const map = page.locator(".visitor-map");
+  for (
+    let click = 0;
+    click < 6 &&
+    Number(await map.getAttribute("data-zoom")) < ROOM_DETAIL_START;
+    click++
+  ) {
+    const before = (await map.getAttribute("data-zoom"))!;
+    await page.getByRole("button", { name: "Zoom in", exact: true }).click();
+    await expect(map).not.toHaveAttribute("data-zoom", before);
+  }
+  expect(Number(await map.getAttribute("data-zoom"))).toBeGreaterThanOrEqual(
+    ROOM_DETAIL_START,
+  );
+}
 async function source() {
   const response = await fetch(manifestUrl!);
   expect(response.ok).toBe(true);
@@ -278,7 +311,20 @@ for (const mobile of [false, true])
     await page.goto(
       `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
     );
+    const planUrls = new Set(
+      receipts.map((receipt) => new URL(receipt.url, manifestUrl!).href),
+    );
+    // The opening overview loads no floor plan; zooming to room detail does.
+    await openedOverview(page);
+    expect(requests.filter((url) => planUrls.has(url))).toEqual([]);
+    await zoomToDetail(page);
     await ready(page);
+    const opening = receipts.find(
+      (receipt) => receipt.scopeId === manifest.defaultScopeId,
+    )!;
+    expect(requests.includes(new URL(opening.url, manifestUrl!).href)).toBe(
+      true,
+    );
     await expect
       .poll(
         () =>
@@ -358,16 +404,13 @@ for (const mobile of [false, true])
     await page.route(`${mapDirectory}**`, (route) =>
       route.abort("internetdisconnected"),
     );
-    const planUrls = new Set(
-      receipts.map((receipt) => new URL(receipt.url, manifestUrl!).href),
-    );
     for (const url of planUrls)
       await page.route(url, (route) => route.abort("internetdisconnected"));
     const beforeCachedOpen = requests.length;
     await page
       .getByRole("button", { name: "Open saved map", exact: true })
       .click();
-    await ready(page);
+    await opened(page);
     await expect(
       page.getByText("Using the saved map revision.", { exact: true }),
     ).toBeVisible();
@@ -421,6 +464,8 @@ test("actual compact plan rejects a corrupt carrier and retries the checked floo
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
+  await openedOverview(page);
+  await zoomToDetail(page);
   await expect(page.getByRole("alert")).toContainText("checksum", {
     timeout: 180_000,
   });
@@ -465,7 +510,7 @@ test("actual selected-floor 3D retry retains the chosen journey", async ({
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   await page.getByLabel("Floor", { exact: true }).selectOption(scope.id);
   await ready(page);
   await page.getByText("Directions", { exact: true }).click();
@@ -561,7 +606,7 @@ test("actual same-floor duplicate endpoints can be compared on the map without c
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   const scopeBefore = await page
     .getByLabel("Floor", { exact: true })
     .inputValue();
@@ -659,7 +704,7 @@ test("actual compact neighboring room can be picked from the genuine plan", asyn
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   const start = shell.records.find(
     (record) =>
       record.number === (process.env.PROGRESSIVE_ROUTE_START ?? "05-136"),
@@ -761,7 +806,7 @@ test("actual compact explicit 3D round trip returns to the checked 2D floor", as
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   const small = [...receipts]
     .filter((receipt) => receipt.scopeId !== manifest.defaultScopeId)
     .sort((a, b) => a.logicalBytes - b.logicalBytes)[0];
@@ -816,6 +861,8 @@ test("actual original connector markers preserve icons and honest picks without 
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
+  await openedOverview(page);
+  await zoomToDetail(page);
   await ready(page);
   await expectOriginalMarkers(page, plan);
   const named = markers.find(
@@ -951,6 +998,8 @@ test("actual original connector styling keeps readable blue circular icons and a
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
+  await openedOverview(page);
+  await zoomToDetail(page);
   await ready(page);
   await expectOriginalMarkers(page, plan);
   await locateNearMarker(page, named, shell, plan.levelIds);
@@ -1037,7 +1086,7 @@ test("actual complete map download reopens the app, glyphs and full/shared floor
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   const completion = page.getByTestId("offline-status");
   // The first download must precede real app-worker registration. Blocking
   // service workers in the context would invalidate the later offline checks.
@@ -1202,7 +1251,7 @@ test("actual complete map download reopens the app, glyphs and full/shared floor
     navigation?.fromServiceWorker(),
     "The cold app navigation must come from the saved app worker",
   ).toBe(true);
-  await ready(page);
+  await opened(page);
   await expect(
     page.getByText("Using the saved map revision.", { exact: true }),
   ).toBeVisible();
@@ -1322,7 +1371,7 @@ test("actual compact walking route remains visibly above the checked plan", asyn
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   const start = shell.records.find(
     (r) => r.number === (process.env.PROGRESSIVE_ROUTE_START ?? "05-136"),
   )!;
@@ -1562,7 +1611,7 @@ test("actual compact walking route remains visibly above the checked plan", asyn
     .textContent();
   const reloadStarted = Date.now();
   await page.reload({ waitUntil: "domcontentloaded" });
-  await ready(page);
+  await openedOverview(page);
   const reloadElapsedMs = Date.now() - reloadStarted;
   await expect(from).toHaveValue(start.key);
   await expect(to).toHaveValue(end.key);
@@ -1623,7 +1672,7 @@ test("actual step-free preference refuses an unconfirmed ramp and clears the wal
   await page.goto(
     `${appUrl}#/projects/visitor?manifest=${encodeURIComponent(manifestUrl!)}`,
   );
-  await ready(page);
+  await openedOverview(page);
   await page.getByText("Directions", { exact: true }).click();
   await page.getByLabel("From", { exact: true }).selectOption(startKey);
   await page.getByLabel("To", { exact: true }).selectOption(endKey);
@@ -1934,7 +1983,7 @@ test("actual repaired 03/05/169 directions match fresh normal outputs on mobile"
     });
     if (c.mode === "accessible") query.set("accessible", "1");
     await page.goto(`${appUrl}#/projects/visitor?${query}`);
-    await ready(page);
+    await openedOverview(page);
     await expect(page.getByLabel("From", { exact: true })).toHaveValue(c.start);
     await expect(page.getByLabel("To", { exact: true })).toHaveValue(c.end);
     await expect(
@@ -2173,7 +2222,7 @@ test("actual root entry opens the published visitor map without query parameters
   expect(browserManifest.provenance.enginePreparationSha256).toBe(
     PREPARED_DISPLAY_ENGINE_SHA256,
   );
-  await ready(page);
+  await openedOverview(page);
   await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
     manifest.defaultScopeId,
   );

@@ -66,6 +66,7 @@ import {
   saveBuildingOverview,
 } from "~/indoor-project/building-overview";
 import { ROOM_DETAIL_START } from "~/indoor-project/zoom-presentation";
+import { visitorPlanWanted } from "./progressive-visitor-plan-demand";
 import { geographicPoint, type ProjectRoute } from "~/indoor-project/routing";
 import type { IndoorDataset } from "~/indoor-project/contract";
 import type {
@@ -382,6 +383,9 @@ export default function ProgressiveVisitorPage() {
   const [zoom, setZoom] = useState(17);
   const [fitVersion, setFitVersion] = useState(0);
   const [requestedDetailScope, setRequestedDetailScope] = useState("");
+  // The floor the visitor asked to be shown (route focus, located place or
+  // chosen floor). Its checked 2D plan loads without waiting for a zoom.
+  const [shownScope, setShownScope] = useState("");
   const [locked, setLocked] = useState(loadBuildingOverview);
   const [mode, setMode] = useState("2d");
   const [planState, setPlanState] = useState<PlanState>();
@@ -473,6 +477,7 @@ export default function ProgressiveVisitorPage() {
       setScopeFailure(undefined);
       setCurrent(undefined);
       setPlanState(undefined);
+      setShownScope("");
       setMapChoices([]);
       setRoute(null);
       setSteps([]);
@@ -590,7 +595,10 @@ export default function ProgressiveVisitorPage() {
     [routes],
   );
   const detail = !locked && zoom >= ROOM_DETAIL_START;
-  const scopeKey = `${client?.manifest.revisionSha256 ?? ""}:${scopeId}`;
+  const keyForScope = (id: string) =>
+    `${client?.manifest.revisionSha256 ?? ""}:${id}`;
+  const scopeKey = keyForScope(scopeId);
+  const showScope = (id: string) => setShownScope(keyForScope(id));
   useEffect(() => {
     setMapChoices([]);
     setMapNotice("");
@@ -598,12 +606,20 @@ export default function ProgressiveVisitorPage() {
   const selectedScope = client?.manifest.scopes.find(
     (scope) => scope.id === scopeId,
   );
-  const planWanted =
-    !locked &&
-    mode === "2d" &&
-    !!client &&
-    !!selectedScope &&
-    !!publishedVisitorPlanReceipt(client.manifest, selectedScope);
+  // The opening view draws the overview only; a floor's plan is fetched once
+  // its detail is wanted (zoom, route focus, located place or chosen floor).
+  const planWanted = visitorPlanWanted({
+    scopeKey,
+    admitted:
+      !!client &&
+      !!selectedScope &&
+      !!publishedVisitorPlanReceipt(client.manifest, selectedScope),
+    locked,
+    mode,
+    detail,
+    requestedDetailScope,
+    shownScope,
+  });
   const currentPlan = planState?.scopeKey === scopeKey ? planState : undefined;
   const visiblePlan =
     planWanted && currentPlan?.status === "ready"
@@ -865,6 +881,7 @@ export default function ProgressiveVisitorPage() {
     }
     setMapNotice("");
     if (preview.scope.id !== scopeId) setScopeId(preview.scope.id);
+    showScope(preview.scope.id);
     setFocus(preview.position);
   };
   const previewStep = (index: number) => {
@@ -882,6 +899,7 @@ export default function ProgressiveVisitorPage() {
       return;
     }
     setScopeId(scope.id);
+    showScope(scope.id);
     setMapNotice("");
     setSelected(key);
     setMapChoices([]);
@@ -1177,6 +1195,7 @@ export default function ProgressiveVisitorPage() {
                 value={scopeId}
                 onChange={(event) => {
                   setScopeId(event.target.value);
+                  showScope(event.target.value);
                   setSelected("");
                   setMapChoices([]);
                   setFocus(undefined);
