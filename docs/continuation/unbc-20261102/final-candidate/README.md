@@ -86,9 +86,7 @@ shared host (load average 3.5–6.2). Seconds after "Get directions" for
 | Floor ready after page load          | 12.3–14.8  | 12.4–18.0  | 5.9–10.2                                    |
 | Peak renderer RSS                    | 2.8–2.9 GB | 3.0–3.5 GB | 3.2 GB                                      |
 
-No page errors. The route worker stays resident in 2D. Opening the page is
-slower because the default floor's plan loads at startup; see
-[../lazy-plan/](../lazy-plan/) for the follow-up.
+No page errors. The route worker stays resident in 2D. The slower page open was fixed by loading the opening floor's plan only when its detail is wanted ([../lazy-plan/](../lazy-plan/README.md)): first floor 7.1–8.2 s, first route with floor ready 18.1–23.1 s, later routes 5.1–6.6 s.
 
 ## Rebuild
 
