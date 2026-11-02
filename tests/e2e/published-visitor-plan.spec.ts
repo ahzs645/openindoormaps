@@ -61,22 +61,24 @@ const openedOverview = async (page: Page) => {
     "false",
   );
 };
-/** Zoom with the map control past the room-detail threshold. */
+/** Zoom with the map control past the room-detail threshold. data-zoom is
+ * rounded, so "17.50" may still be below it. A plan being drawn can hold the
+ * main thread, so a zoom step may take a while to be reported. */
 async function zoomToDetail(page: Page) {
   const map = page.locator(".visitor-map");
+  const zoom = async () => Number(await map.getAttribute("data-zoom"));
   for (
     let click = 0;
-    click < 6 &&
-    Number(await map.getAttribute("data-zoom")) < ROOM_DETAIL_START;
+    click < 6 && (await zoom()) <= ROOM_DETAIL_START;
     click++
   ) {
     const before = (await map.getAttribute("data-zoom"))!;
     await page.getByRole("button", { name: "Zoom in", exact: true }).click();
-    await expect(map).not.toHaveAttribute("data-zoom", before);
+    await expect(map).not.toHaveAttribute("data-zoom", before, {
+      timeout: 60_000,
+    });
   }
-  expect(Number(await map.getAttribute("data-zoom"))).toBeGreaterThanOrEqual(
-    ROOM_DETAIL_START,
-  );
+  expect(await zoom()).toBeGreaterThan(ROOM_DETAIL_START);
 }
 async function source() {
   const response = await fetch(manifestUrl!);
@@ -636,6 +638,29 @@ test("actual same-floor duplicate endpoints can be compared on the map without c
   await page.screenshot({
     path: test.info().outputPath("duplicate-start-source-focus.png"),
   });
+  // The opening overview loaded no plan; showing the start loads only its
+  // floor's checked plan (and a shared delta's base floor).
+  const planUrls = new Set(
+    receipts.map((receipt) => new URL(receipt.url, manifestUrl!).href),
+  );
+  const shown = receipts.find((receipt) => receipt.scopeId === scopeBefore)!;
+  const shownPlans = new Set(
+    [shown, ...receipts]
+      .filter(
+        (receipt) =>
+          receipt === shown || receipt.scopeId === shown.delta?.baseScopeId,
+      )
+      .map((receipt) => new URL(receipt.url, manifestUrl!).href),
+  );
+  expect(
+    requests.slice(0, beforeFocus).filter((url) => planUrls.has(url)),
+  ).toEqual([]);
+  expect(
+    requests
+      .slice(beforeFocus)
+      .filter((url) => planUrls.has(url) && !shownPlans.has(url)),
+  ).toEqual([]);
+  const beforeSecondFocus = requests.length;
   await page
     .getByRole("button", { name: "Show destination on map", exact: true })
     .click();
@@ -652,14 +677,12 @@ test("actual same-floor duplicate endpoints can be compared on the map without c
   await expect(page.getByLabel("Floor", { exact: true })).toHaveValue(
     scopeBefore,
   );
-  const planUrls = new Set(
-    receipts.map((receipt) => new URL(receipt.url, manifestUrl!).href),
-  );
   const unexpected = requests
     .slice(beforeFocus)
     .filter(
-      (url) =>
-        planUrls.has(url) ||
+      (url, index) =>
+        (planUrls.has(url) &&
+          (beforeFocus + index >= beforeSecondFocus || !shownPlans.has(url))) ||
         [
           "overview",
           "presentation-context",
