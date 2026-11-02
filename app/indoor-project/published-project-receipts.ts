@@ -3,7 +3,7 @@ import type { PublishedProjectReceipt } from "./published-project";
 // Publication trust root: generated from the successful full normal importer.
 // Remote manifests and ZIP files cannot add or alter these approved records.
 export const PUBLISHED_PROJECT_RECEIPTS: readonly PublishedProjectReceipt[] =
-  Object.freeze([
+  Object.freeze<PublishedProjectReceipt[]>([
     {
       id: "unbc-visitor-09d35032a47d4cde544207c5a83f28c061750dfdaf2b32e07f042362c164658a",
       packageSha256:
@@ -96,5 +96,66 @@ export const PUBLISHED_PROJECT_RECEIPTS: readonly PublishedProjectReceipt[] =
       validationReportSha256:
         "a90b1ae9b47dfae7275544d568685f921550e1644c065bfbb8fa6d64f934afd7",
       validationElapsedMs: 632_996,
+    },
+    {
+      id: "unbc-progressive-floors-32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+      packageSha256:
+        "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+      packageBytes: 247_315_464,
+      validatorSha256:
+        "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+      datasetSha256:
+        "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+      source: {
+        modelFileName:
+          "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        modelSha256:
+          "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        roomsSha256:
+          "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
+      },
+      entries: {
+        "review/companions.bin": {
+          bytes: 88_626_822,
+          sha256:
+            "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+        },
+        "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": {
+          bytes: 70_336_512,
+          sha256:
+            "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        },
+        "gis/reference-points.json": {
+          bytes: 602,
+          sha256:
+            "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        },
+        "manifest.json": {
+          bytes: 1024,
+          sha256:
+            "248aa9910db262565db8768c7b3eda46c15f9c43ef65c3dc5df881a6283f5683",
+        },
+        "model/scene.glb": {
+          bytes: 52_216_228,
+          sha256:
+            "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        },
+        "floors/rooms.json": {
+          bytes: 82_337_708,
+          sha256:
+            "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
+        },
+        "viewer/indoor.json": {
+          bytes: 301_763_195,
+          sha256:
+            "ebdb851cbffb42585d46cebbc91fbe899c3b2a24702ae4b9f6bda1f1b7b79bfa",
+        },
+      },
+      progressiveRevisionSha256:
+        "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+      validationReportSha256:
+        "bf9db5b0f6009bf50ae36186493092ca68d76524bc6f6b42cd313dbb29ed1be5",
+      validationElapsedMs: 1_557_016,
+      admission: "progressive-floors",
     },
   ]);

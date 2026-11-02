@@ -1,0 +1,30 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "scripts/indoor/admit-published-visitor-plans.ts",
+    "/home/user/unbc-work/final/progressive",
+    "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+    "/home/user/unbc-work/final/plans/candidate-plans",
+    "/home/user/unbc-work/final/plans/plan-admission.json",
+    "--verifier-heap-mib=8192"
+  ],
+  "workingDirectory": "/home/user/wt-merge-check",
+  "startedAt": "2026-11-02T14:05:21.625975+00:00",
+  "finishedAt": "2026-11-02T14:06:23.664103+00:00",
+  "seconds": 62.038132319001306,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 1579864,
+  "kernelChildUserSeconds": 74.576892,
+  "kernelChildSystemSeconds": 4.225567,
+  "cgroupLimitBytes": null,
+  "sampledSharedCgroupPeakBytes": 0,
+  "sampleIntervalSeconds": 1,
+  "samples": 63,
+  "cgroupEventDeltas": {},
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}
