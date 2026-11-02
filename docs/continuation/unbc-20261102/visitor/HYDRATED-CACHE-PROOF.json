@@ -1,0 +1,307 @@
+{
+  "format": "fresh-published-routing-hydration-proof-v1",
+  "passed": true,
+  "inputSha256": "39e9fed5dde728cb42fd3511614e1d3236bc28c6cb11bdfd14532c989f2be008",
+  "datasetSha256": "c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+  "runtimeSha256": "807394c13939cc54aed3aef23ad7e001975842846352a417e9cd08372dfa9d0a",
+  "engineSha256": "9ee1cb8c29a02ce5f2954d4e58b050799854e25157991ee30bbdd46ed4d47a46",
+  "receipt": {
+    "id": "fresh-candidate-native-routing-c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+    "datasetSha256": "c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1",
+    "engineSha256": "9ee1cb8c29a02ce5f2954d4e58b050799854e25157991ee30bbdd46ed4d47a46",
+    "source": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+    },
+    "logicalSha256": "f05660d71282bb14af910c8e5d9344902800806ac8bed6edf5c97a41f7f04107",
+    "logicalBytes": 35217787,
+    "compressedSha256": "dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38",
+    "compressedBytes": 8205781,
+    "url": "/data/candidate-routing/dec83a467f07fdf12fa3b3d3bbb29b858acec5d594c94f13e25a07d3aab5bb38.json.gz",
+    "runtimeSha256": "807394c13939cc54aed3aef23ad7e001975842846352a417e9cd08372dfa9d0a"
+  },
+  "sourceDatasetUnchanged": true,
+  "normalPhysicalValidationRepeated": true,
+  "originalFacesChecked": 5327,
+  "materialCutsChecked": 8,
+  "freshNormalRouteCases": 13,
+  "extraRouteCases": {
+    "path": "/home/user/unbc-work/vp/cases.json",
+    "bytes": 545,
+    "sha256": "26ceae64850c603447ee6208c9e78fc357aaf0bf4685b48cb325925f530ec056",
+    "count": 3
+  },
+  "routeCasesSha256": "5cd2d96a0932bedf8eae5df2084408818191c9c9ed5f8f78c74a5e30161b2d9c",
+  "normalRouteResultsSha256": "42f7884d3fb3351a54333bbf5418ed36f50a7c178cfdb0ab34d6e1b22d8b5047",
+  "normalProgressiveRouteResultsSha256": "7025e0497293559e50068c47ff1a32204d77b665b6aa3b498933525de263bbed",
+  "actualRouteParityCases": 0,
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "phases": [
+    {
+      "name": "loaded",
+      "seconds": 11.573178732,
+      "value": {
+        "datasetSha256": "c4c3ea4f6ed2398f1ccecdb9b6152681eac0aa307cfdfc87406be06f30d5b7c1"
+      }
+    },
+    {
+      "name": "normal-validation",
+      "seconds": 125.279181865
+    },
+    {
+      "name": "complete-normal-physical-graphs-and-supported-cells",
+      "seconds": 463.065798014
+    },
+    {
+      "name": "all-original-exact-faces-parity",
+      "seconds": 464.32848101400003,
+      "value": 5327
+    },
+    {
+      "name": "all-native-level-material-cuts-parity",
+      "seconds": 471.19863069,
+      "value": 8
+    },
+    {
+      "name": "normal-route",
+      "seconds": 564.6407160480001,
+      "value": {
+        "name": "main-forward",
+        "seconds": 93.436507216,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 636.2041000260001,
+      "value": {
+        "name": "main-reverse",
+        "seconds": 71.56313329799997,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 637.782648302,
+      "value": {
+        "name": "floor1",
+        "seconds": 1.578331373999943,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 639.1615929070001,
+      "value": {
+        "name": "floor3",
+        "seconds": 1.3787083850000053,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 645.601099186,
+      "value": {
+        "name": "unavailable",
+        "seconds": 6.439061096000019,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 650.2015510630001,
+      "value": {
+        "name": "lift-up",
+        "seconds": 4.600088607999962,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 654.863715772,
+      "value": {
+        "name": "lift-down",
+        "seconds": 4.661964172999957,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 655.517302498,
+      "value": {
+        "name": "ramp-forward",
+        "seconds": 0.6533948749999982,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 656.1307057680001,
+      "value": {
+        "name": "ramp-reverse",
+        "seconds": 0.6132555459999712,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 656.2922521810001,
+      "value": {
+        "name": "stepfree-refusal",
+        "seconds": 0.16135886500007474,
+        "available": false
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 662.147985852,
+      "value": {
+        "name": "corridor-default-04-204-08-267",
+        "seconds": 5.855573180999956,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 664.1110842510001,
+      "value": {
+        "name": "island-06-388-06-364",
+        "seconds": 1.9629666089999955,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 677.7384842030001,
+      "value": {
+        "name": "office-04-255-08-272",
+        "seconds": 13.627226651999983,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-derived-source-checksums",
+      "seconds": 677.7700206200001,
+      "value": {
+        "preparedRoutingKey": "90e7d4922fa629a6c225cf72e75742822e26719448ad4baea0044645e2daf4e5",
+        "resolvedRouteGeometryKey": "native-circulation-sha256-v1:37159b7d7d69920d5e3787415e93bcd79be6b5edbd9cb731618c831952bd5d5a"
+      }
+    },
+    {
+      "name": "normal-access-zone-geometry",
+      "seconds": 677.7813569260001,
+      "value": {
+        "accepted": 1,
+        "issues": 0
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 872.257572499,
+      "value": {
+        "completed": 100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 873.992217761,
+      "value": {
+        "completed": 200,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 875.464130978,
+      "value": {
+        "completed": 300,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 877.493074662,
+      "value": {
+        "completed": 400,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 881.7779144880001,
+      "value": {
+        "completed": 500,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 893.627174605,
+      "value": {
+        "completed": 600,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 909.8694564400001,
+      "value": {
+        "completed": 700,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 916.821041693,
+      "value": {
+        "completed": 800,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 928.9925552050001,
+      "value": {
+        "completed": 900,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 934.7618373170001,
+      "value": {
+        "completed": 1000,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 944.174717698,
+      "value": {
+        "completed": 1100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 955.0515726870001,
+      "value": {
+        "completed": 1188,
+        "total": 1188
+      }
+    },
+    {
+      "name": "all-source-cell-support-tiles-parity",
+      "seconds": 959.6471926050001,
+      "value": {
+        "parents": 1188,
+        "nonempty": 3458,
+        "empty": 699,
+        "coordinates": 70224
+      }
+    }
+  ]
+}
