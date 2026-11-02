@@ -71,6 +71,7 @@ jobs:
           tests/unit/published-visitor-plan.test.ts
           tests/unit/published-visitor-plan-labels.test.ts
           tests/unit/progressive-visitor-plan-demand.test.ts
+          tests/unit/explicit-policy-matrix-checks.test.ts
       - name: Build static app
         run: npm run build:pages
       - name: Install browser

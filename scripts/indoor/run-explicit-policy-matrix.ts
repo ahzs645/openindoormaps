@@ -18,9 +18,16 @@
  * finished case to OUTPUT.progress.jsonl and skips cases already recorded under
  * the same identity, so an interrupted stage can simply be restarted.
  *
+ * The report stage passes only when every case is complete, the two outcomes
+ * agree on EVERY recorded comparison field (explicit-policy-matrix-checks.ts),
+ * and both meet the case's expected outcome from EXPECTATIONS.json (route with
+ * distance ± tolerance and required-edge use, or refusal with its constraint
+ * or blocker kinds). Otherwise it still writes OUTPUT.json and exits 1.
+ *
  * Usage:
  *   run-explicit-policy-matrix.ts VISITOR.json EXPECTED-SHA256 CASES.json OUTPUT.json \
- *     --stage worker|normal|report --publication MANIFEST-DIRECTORY --carrier CARRIER.json.gz
+ *     --stage worker|normal|report --publication MANIFEST-DIRECTORY --carrier CARRIER.json.gz \
+ *     [--expectations EXPECTATIONS.json]   (required for --stage report)
  *
  * CASES.json: [{ name, start, end, profile: "public"|"accessible",
  *   endpointMode: "inside"|"hallway", allowOtherRoomTransit: boolean,
@@ -48,6 +55,12 @@ import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepare
 import { progressiveRouteOptions } from "../../app/indoor-project/progressive-route-options";
 import { publishedRouteRuntimeBinding } from "./published-route-runtime-binding";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import {
+  checkPolicyExpectations,
+  expectationProblems,
+  policyAgreement,
+  type PolicyOutcome,
+} from "./explicit-policy-matrix-checks";
 
 type Profile = "public" | "accessible";
 export type ExplicitPolicyCase = {
@@ -61,34 +74,7 @@ export type ExplicitPolicyCase = {
   requiredEdgeId?: string;
   expect?: "route" | "blocked";
 };
-type Outcome = {
-  available: boolean;
-  error?: string;
-  seconds: number;
-  distanceMetres?: number;
-  edgeIdCount?: number;
-  edgeIds?: string[];
-  doorEdgeIds?: string[];
-  requiredEdgeUsed?: boolean;
-  diagnostic?: {
-    kind: string;
-    constraint?: string;
-    message: string;
-    blockers: { kind: string; edgeId?: string; roomKey?: string }[];
-    sourceEdgeIdCount: number;
-    requiredEdgeInWitness?: boolean;
-    reviewRoomKey?: string;
-    reviewEdgeId?: string;
-  };
-  arrivalChoices?: string[];
-  reachableCount?: number;
-  stepCount: number;
-  valueSha256: string;
-  stepsSha256: string;
-  summarySha256: string;
-  /** Normal stage only: why a refusal happened, from the diagnostic witness. */
-  explanation?: unknown;
-};
+type Outcome = PolicyOutcome;
 
 export const caseId = (c: ExplicitPolicyCase) =>
   [
@@ -222,7 +208,8 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const [input, expected, casesPath, output] = args;
   const stage = flag("stage"),
     publication = flag("publication"),
-    carrier = flag("carrier");
+    carrier = flag("carrier"),
+    expectationsPath = flag("expectations");
   if (
     !input ||
     !/^[a-f0-9]{64}$/.test(expected ?? "") ||
@@ -230,7 +217,8 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     !output ||
     !["worker", "normal", "report"].includes(stage ?? "") ||
     !publication ||
-    !carrier
+    !carrier ||
+    (stage === "report" && !expectationsPath)
   )
     throw new Error("See usage in the file header.");
   const root = path.resolve(import.meta.dirname, "../.."),
@@ -613,52 +601,59 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   }
 
   if (stage === "report") {
+    const expectationsBytes = await fs.readFile(expectationsPath!),
+      expectations = checkPolicyExpectations(
+        JSON.parse(expectationsBytes.toString()),
+        cases.map(caseId),
+        identity.casesSha256,
+      );
     const normal = done("normal"),
       worker = done("worker");
     const rows = cases.map((c) => {
       const id = caseId(c),
         n = normal.get(id),
-        w = worker.get(id);
-      const agreement =
-        n && w && !w.error
-          ? {
-              sameAvailability: n.available === w.available,
-              sameEdgeIds: json(n.edgeIds ?? []) === json(w.edgeIds ?? []),
-              sameDistance: n.distanceMetres === w.distanceMetres,
-              sameDiagnosticMessage:
-                n.diagnostic?.message === w.diagnostic?.message,
-              sameCompleteValue: n.valueSha256 === w.valueSha256,
-              sameSteps: n.stepsSha256 === w.stepsSha256,
-              sameSummary: n.summarySha256 === w.summarySha256,
-            }
-          : undefined;
+        w = worker.get(id),
+        expectation = expectations.get(id)!;
+      const { agreement, agrees, problems } = policyAgreement(n, w);
+      const expectationProblemList = [
+        ...expectationProblems(expectation, n).map((p) => `normal: ${p}`),
+        ...expectationProblems(expectation, w).map((p) => `worker: ${p}`),
+      ];
       return {
         id,
         ...c,
         normal: n,
         worker: w,
         agreement,
-        agrees:
-          !!agreement &&
-          agreement.sameAvailability &&
-          agreement.sameEdgeIds &&
-          agreement.sameDistance,
-        expectationMet:
-          c.expect === undefined || !n
-            ? undefined
-            : (c.expect === "route") === n.available,
+        agrees,
+        agreementProblems: problems,
+        expectation,
+        expectationMet: expectationProblemList.length === 0,
+        expectationProblems: expectationProblemList,
       };
     });
-    const complete = rows.every((r) => r.normal && r.worker);
+    const complete = rows.every((r) => r.normal && r.worker),
+      allAgree = complete && rows.every((r) => r.agrees),
+      allExpectationsMet = complete && rows.every((r) => r.expectationMet),
+      passed = allAgree && allExpectationsMet;
     await fs.writeFile(
       out,
       JSON.stringify(
         {
-          format: "explicit-policy-route-matrix-v1",
+          format: "explicit-policy-route-matrix-v2",
           generatedAt: new Date().toISOString(),
+          passed,
           complete,
-          allAgree: complete && rows.every((r) => r.agrees),
-          identity,
+          allAgree,
+          allExpectationsMet,
+          agreementRule:
+            "allAgree: every case has both outcomes, no error, and identical availability, edge id count, edge ids, door edge ids, required-edge use, distance, whole diagnostic, arrival choices, reachable count, step count, complete-value hash, step hash and summary hash (explicit-policy-matrix-checks.ts AGREEMENT_FIELDS).",
+          expectationRule:
+            "allExpectationsMet: the normal AND the worker outcome of every case meet its expectation (route: distance within tolerance, edges, steps, required-edge use; refusal: no route, diagnostic constraint or blocker kinds).",
+          identity: {
+            ...identity,
+            expectationsSha256: sha(expectationsBytes),
+          },
           options:
             "Both sides receive { endpointMode, allowOtherRoomTransit, preferHallways: true }, as progressive-route.worker.ts passes them; profile is the access mode.",
           normalCalculator:
@@ -668,19 +663,36 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
           workerRuns: progress
             .filter((l) => l.stage === "worker-meta")
             .map((l) => l.row),
+          normalRuns: progress
+            .filter((l) => l.stage === "normal-meta")
+            .map((l) => l.row),
           counts: {
             cases: rows.length,
             normalDone: rows.filter((r) => r.normal).length,
             workerDone: rows.filter((r) => r.worker).length,
             workerErrors: rows.filter((r) => r.worker?.error).length,
             agree: rows.filter((r) => r.agrees).length,
+            expectationsMet: rows.filter((r) => r.expectationMet).length,
+            expectedRoutes: rows.filter((r) => r.expectation.expect === "route")
+              .length,
+            expectedRefusals: rows.filter(
+              (r) => r.expectation.expect === "refusal",
+            ).length,
           },
+          failures: rows
+            .filter((r) => !r.agrees || !r.expectationMet)
+            .map((r) => ({
+              id: r.id,
+              agreementProblems: r.agreementProblems,
+              expectationProblems: r.expectationProblems,
+            })),
           rows,
         },
         null,
         1,
       ),
     );
-    log({ wrote: out, complete });
+    log({ wrote: out, complete, allAgree, allExpectationsMet, passed });
+    if (!passed) process.exitCode = 1;
   }
 }
