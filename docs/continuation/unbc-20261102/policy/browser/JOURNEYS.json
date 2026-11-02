@@ -1,0 +1,64 @@
+{
+  "expectedRevisionSha256": "bdea9eb57567763d86792f3029e824c0d90b86a0308e2c1574454fd3d61486e4",
+  "note": "Expected outcomes come from the explicit-policy matrix (POLICY-MATRIX.json). The visitor always requests inside arrival.",
+  "journeys": [
+    {
+      "label": "0810-default-08-264-to-10-2006",
+      "from": "rm-694-01803a06bb62",
+      "to": "rm-694-d302635a3d75",
+      "profile": "public",
+      "allowOtherRoomTransit": false,
+      "expect": "route",
+      "distanceMetres": 83.948,
+      "toleranceMetres": 1
+    },
+    {
+      "label": "island-default-06-366-to-06-364",
+      "from": "rm-1487353-c8d3e4ebb513",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "profile": "public",
+      "allowOtherRoomTransit": false,
+      "expect": "route",
+      "distanceMetres": 21.01,
+      "toleranceMetres": 1
+    },
+    {
+      "label": "island-default-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "profile": "public",
+      "allowOtherRoomTransit": false,
+      "expect": "refused",
+      "refusalText": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+    },
+    {
+      "label": "island-transit-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "profile": "public",
+      "allowOtherRoomTransit": true,
+      "expect": "route",
+      "distanceMetres": 47.39,
+      "toleranceMetres": 1
+    },
+    {
+      "label": "island-stepfree-06-388-to-06-364",
+      "from": "rm-1487353-c75375ebb3cc",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "profile": "accessible",
+      "allowOtherRoomTransit": false,
+      "expect": "refused",
+      "refusalText": "No confirmed step-free route is available between these places."
+    },
+    {
+      "label": "corridor-default-04-204-to-08-267",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "profile": "public",
+      "allowOtherRoomTransit": false,
+      "expect": "route",
+      "distanceMetres": 120.961,
+      "toleranceMetres": 1
+    }
+  ]
+}
