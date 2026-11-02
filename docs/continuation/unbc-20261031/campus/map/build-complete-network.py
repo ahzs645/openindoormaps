@@ -45,6 +45,10 @@ for x, y, e, q in xs:
     den += x * x + y * y
 a, b = na / den, nb / den
 c, dd = se - a * sx + b * sy, sn - b * sx - a * sy
+if __import__("os").environ.get("MAP_FRAME"):
+    # Pinned display frame shared with build-native-floors.py.
+    _fr = __import__("json").load(open(__import__("os").environ["MAP_FRAME"]))
+    a, b, c, dd = _fr["a"], _fr["b"], _fr["c"], _fr["dd"]
 
 
 def line(pts):

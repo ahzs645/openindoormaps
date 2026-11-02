@@ -23,6 +23,11 @@ def load_fit(preview):
         na += x * e + y * q; nb += x * q - y * e; den += x * x + y * y
     a, b = na / den, nb / den
     c, dd = se - a * sx + b * sy, sn - b * sx - a * sy
+    if os.environ.get("MAP_FRAME"):
+        # Pinned display frame (see build-native-floors.py): stable coordinates
+        # across candidates whose guide polylines differ.
+        fr = json.load(open(os.environ["MAP_FRAME"]))
+        a, b, c, dd = fr["a"], fr["b"], fr["c"], fr["dd"]
 
     def line(pts):
         return [v for p in pts for v in (round((a * p[0] - b * p[1] + c) * 10), round((b * p[0] + a * p[1] + dd) * 10))]

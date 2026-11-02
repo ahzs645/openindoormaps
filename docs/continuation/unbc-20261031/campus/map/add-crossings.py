@@ -20,6 +20,10 @@ for x, y, e, q in xs:
     x, y, e, q = x - sx, y - sy, e - se, q - sn
     na += x * e + y * q; nb += x * q - y * e; den += x * x + y * y
 a, b = na / den, nb / den; c, dd = se - a * sx + b * sy, sn - b * sx - a * sy
+if __import__("os").environ.get("MAP_FRAME"):
+    # Pinned display frame shared with build-native-floors.py.
+    _fr = __import__("json").load(open(__import__("os").environ["MAP_FRAME"]))
+    a, b, c, dd = _fr["a"], _fr["b"], _fr["c"], _fr["dd"]
 line = lambda pts: [v for p in pts for v in (round((a * p[0] - b * p[1] + c) * 10), round((b * p[0] + a * p[1] + dd) * 10))]
 node_level = {nd["id"]: nd.get("levelId") for nd in g["nodes"]}
 node_pt = {nd["id"]: nd["pointFeet"] for nd in g["nodes"]}

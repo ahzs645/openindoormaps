@@ -25,7 +25,7 @@ walks redrawn, 0 wall/hole overlaps in changed lines, 490 flagged original walks
 kept unmodified, independent verifier PASS. Routes, distances and acceptance
 never use it.
 
-What the hard check guarantees: no *changed* schematic line introduces a
+What the hard check guarantees: no _changed_ schematic line introduces a
 forbidden contact under the declared display predicate (positive-length overlap
 with a native wall footprint outside the closed footprints of that wall's own
 doors, or with a cell hole no other cell covers, outside every door footprint;
@@ -83,12 +83,32 @@ are older than the current page.
 
 ## Limits
 
-* The schematic layer is legibility only. It is not physical-clearance,
+- The schematic layer is legibility only. It is not physical-clearance,
   ownership, accessibility or route qualification.
-* The flagged-original list is measured in this drawing's fitted,
+- The flagged-original list is measured in this drawing's fitted,
   decimetre-rounded coordinates with a strict host-wall door rule. It includes
   116 accepted guides that the compiler accepted under its own native-feet
   support predicate; those need native re-measurement before being called
   compiler defects. The schematic check covers changed lines only.
-* Floor 0 is not shown. Gateway texts other than the 04-08 link are hand-written
+- Floor 0 is not shown. Gateway texts other than the 04-08 link are hand-written
   door evidence summaries without distances.
+
+## November 2 rebuild for the final candidate
+
+The floors now show the final candidate (`32c395e1…`: master `6e7971f8…`,
+catalog `1c3011ff…` from the compiler that rejects crossed door approaches;
+see `docs/continuation/unbc-20261102/final-candidate/`). The rebuild uses the
+corrected exact verifier and `enforce-verifier.py` (0 lines restored, 0 flags
+added).
+
+Map coordinates are now pinned to one display frame,
+[regularize/MAP-FRAME.json](regularize/MAP-FRAME.json) (the similarity fit
+of the previous chosen candidate). Set `MAP_FRAME=regularize/MAP-FRAME.json`
+for `build-native-floors.py`, `build-complete-network.py`, `add-crossings.py`
+and `regularize/fit.py`. Without it, each builder fits the frame from the
+current candidate's exported guide polylines, so a candidate with different
+guides moves every coordinate by about 1 dm. That would break comparisons
+between maps and the pinned Campus Floor 3 line in
+`regression-door-clipping.py`. In the pinned frame the source-contact flags
+are unchanged from the previous candidate: 490 lines (116 accepted guides,
+374 saved walks), with 0 new hard-rule violations.

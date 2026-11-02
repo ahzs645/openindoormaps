@@ -51,6 +51,19 @@ for x, y, e, q in xs:
 a, b = na / den, nb / den
 c, dd = se - a * sx + b * sy, sn - b * sx - a * sy
 resid = max(math.hypot(a * x - b * y + c - e, b * x + a * y + dd - q) for x, y, e, q in xs)
+FRAME = os.environ.get("MAP_FRAME")
+if FRAME:
+    # Pinned display frame: keeps map coordinates stable across candidates whose
+    # guide polylines (and so the fitted pair mean) differ. Report the residual
+    # of this candidate's pairs under the pinned frame.
+    fr = json.load(open(FRAME))
+    a, b, c, dd = fr["a"], fr["b"], fr["c"], fr["dd"]
+    lat0, lon0 = fr["lat0"], fr["lon0"]
+    mx = 111320.0 * math.cos(math.radians(lat0))
+    xs = [(p[0], p[1], (p[2] - lon0) * mx, (p[3] - lat0) * my) for p in pairs]
+    resid = max(math.hypot(a * x - b * y + c - e, b * x + a * y + dd - q) for x, y, e, q in xs)
+elif os.environ.get("MAP_FRAME_OUT"):
+    json.dump({"a": a, "b": b, "c": c, "dd": dd, "lat0": lat0, "lon0": lon0, "pairs": n}, open(os.environ["MAP_FRAME_OUT"], "w"))
 
 
 def tf(p):
