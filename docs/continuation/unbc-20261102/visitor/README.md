@@ -23,8 +23,11 @@ candidate. The campus map artifact draws the same candidate.
    ([PROGRESSIVE-EXECUTION.json](PROGRESSIVE-EXECUTION.json),
    [PROGRESSIVE-EXPORT-SUMMARY.json](PROGRESSIVE-EXPORT-SUMMARY.json)).
 2. **Hydrated cache** (`export-published-route-hydration.ts`, normal physical
-   validation repeated, 5,327 original faces, 13 route cases including
-   [EXTRA-CASES.json](EXTRA-CASES.json)): passed in 980 s, peak RSS 4.7 GB
+   validation repeated, 5,327 original faces, 13 normal-calculator route
+   cases including [EXTRA-CASES.json](EXTRA-CASES.json)): passed in 980 s, peak
+   RSS 4.7 GB. These are normal-calculator results with the publisher's default
+   options, not hydrated-worker parity cases (the proof records
+   `actualRouteParityCases: 0`)
    ([HYDRATED-CACHE-PROOF.json](HYDRATED-CACHE-PROOF.json),
    [HYDRATED-CACHE-RECEIPT.json](HYDRATED-CACHE-RECEIPT.json)).
 3. **Receipt admitted.** The receipt (transport URL changed to
@@ -51,25 +54,33 @@ candidate. The campus map artifact draws the same candidate.
 
 The October 18 case named `unavailable` (08-264 → 10-2006) returns 83.948 m
 under this publisher's calculator, as it did for the earlier 46-guide
-hydration. The name is historical; the visitor's default hallway-only
-setting is what refuses the Building 08–10 Floor 2 journey (see
-[../../unbc-20261101/connections/](../../unbc-20261101/connections/)).
+hydration. **Correction (review of `6acc5ca`):** an earlier version of this
+paragraph said the visitor's default refuses this journey. The visitor
+actually requests inside arrival with no transit through other rooms; the
+refusal in [../../unbc-20261101/connections/](../../unbc-20261101/connections/)
+was for hallway arrival with no transit, a different request. Explicit-policy
+results on this visitor are in [../policy/](../policy/).
 
 ### Browser timings (seconds from the request until the route is shown and the floor is ready)
 
-| Journey                            | Setting               | Desktop      | Mobile       |
-| ---------------------------------- | --------------------- | ------------ | ------------ |
-| Floor ready after page load        | —                     | 7.0          | 6.1          |
-| 04-204 Corridor → 08-267 Corridor  | default, hallway-only | 60.0 (121 m) | 56.1 (121 m) |
-| 04-255 → 08-272                    | through other rooms   | 20.0 (186 m) | 17.6 (186 m) |
-| 06-388 Vestibule → 06-364 Corridor | default               | 32.8 (34 m)  | 35.1 (34 m)  |
+| Journey                            | Setting             | Desktop      | Mobile       |
+| ---------------------------------- | ------------------- | ------------ | ------------ |
+| Floor ready after page load        | —                   | 7.0          | 6.1          |
+| 04-204 Corridor → 08-267 Corridor  | visitor default     | 60.0 (121 m) | 56.1 (121 m) |
+| 04-255 → 08-272                    | through other rooms | 20.0 (186 m) | 17.6 (186 m) |
+| 06-388 Vestibule → 06-364 Corridor | default             | 32.8 (34 m)  | 35.1 (34 m)  |
 
-The first-route figure includes the detailed-floor preparation in the floor
-worker (about 40 s, measured in
-[../../unbc-20261101/latency/](../../unbc-20261101/latency/README.md)), not
-only routing. It is down from 86 s on October 31, but it is still outside the
-October 22 cold-start targets, so first-route latency is still open. The route
-worker and the cache are no longer the main cost.
+The first-route figure includes detailed-floor preparation, not only routing.
+It is down from 86 s on October 31 but still outside the October 22 cold-start
+targets, so first-route latency is still open. The split between route result,
+first paint and floor preparation was measured only on the earlier 46-guide
+candidate ([../../unbc-20261101/latency/](../../unbc-20261101/latency/README.md):
+route status about 11 s, about 40 s floor preparation); this collector does
+not timestamp them separately, so that split is not established for this
+candidate. It also accepts refusal text as completion and does not fail on
+page errors; the saved runs show the expected 121 m, 186 m and 34 m and no
+page errors. A separately timed, asserting collector is in
+[../plans/](../plans/) and [../policy/](../policy/).
 
 ## Reproduce
 

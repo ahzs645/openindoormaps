@@ -1,188 +1,139 @@
 {
- "format": "proposed-source-review-v1",
- "status": "PROPOSED_NOT_APPLIED",
- "door": 2315416,
- "levelId": 400176,
- "levelName": "Floor 3",
- "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
- "inputs": {
-  "graph-compact.json": "3191adf5f2c9f6ed94c8a9b3b9336feaef2fbc6a32eb96d50bbd99b898675e1f",
-  "walls-native.json (visitor walls, derived)": "72ad4b4f7220c0bc5f1491a1925bc04cf1ed9aed8ba86f22aee147fc7ccd2f3b",
-  "native-cell-owner-audit.json": "13fbe34e9b69d1a228e6bd346de4c5e8fb3a1b5fc6585ac552cbe1aa8b24fc27",
-  "level-400176.json": "dc22119f6552bb4967fef6a179d369c831ca89373442eb20dbac9cdc182e0dea"
- },
- "savedDoor": {
-  "state": "unmatched",
-  "roomKeys": [
-   "rm-400176-a4b94b10b2f8"
-  ],
-  "pointFeet": [
-   30.612502027737193,
-   528.5495338272797
-  ],
-  "normalFeet": [
-   -1,
-   0
-  ],
-  "footprintFeet": [
-   [
-    32.25292197524376,
-    526.6952031186182
-   ],
-   [
-    32.25292197524376,
-    530.4038645359411
-   ],
-   [
-    28.972082080230628,
-    530.4038645359411
-   ],
-   [
-    28.972082080230628,
-    526.6952031186182
-   ]
-  ],
-  "hostWallNativeElementId": 2315413,
-  "note": "The Oct 21 reviewed curtain aperture (link-4-8-curtain-doors-20261021) is already reflected: the footprint spans the 3.2808 ft host band x 28.972..32.253."
- },
- "roomsJsonRecords": {
-  "navigation.doorLinks[] (append)": {
-   "doorId": 2315416,
-   "levelId": 400176,
-   "rooms": [
-    "rm-400176-a4b94b10b2f8",
-    "rm-400176-e6668d178587"
-   ]
+  "format": "proposed-source-review-v1",
+  "status": "PROPOSED_NOT_APPLIED",
+  "door": 2315416,
+  "levelId": 400176,
+  "levelName": "Floor 3",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "inputs": {
+    "graph-compact.json": "3191adf5f2c9f6ed94c8a9b3b9336feaef2fbc6a32eb96d50bbd99b898675e1f",
+    "walls-native.json (visitor walls, derived)": "72ad4b4f7220c0bc5f1491a1925bc04cf1ed9aed8ba86f22aee147fc7ccd2f3b",
+    "native-cell-owner-audit.json": "13fbe34e9b69d1a228e6bd346de4c5e8fb3a1b5fc6585ac552cbe1aa8b24fc27",
+    "level-400176.json": "dc22119f6552bb4967fef6a179d369c831ca89373442eb20dbac9cdc182e0dea"
   },
-  "roomLabels": {
-   "rm-400176-a4b94b10b2f8": "08-360 Link (circulation, access unknown)",
-   "rm-400176-e6668d178587": "08-316 Corridor (circulation, access unknown)"
-  }
- },
- "parseValidation": "room-directory.ts:207 requires integer doorId/levelId, two distinct keys, each an existing non-deleted annotation with levelId 400176, and a unique levelId:doorId. Both keys are level-400176 records in the derived graph; confirm against the master rooms.json before applying.",
- "compilerAcceptance": {
-  "legacyMatcher": {
-   "08-360 Link": {
-    "outlineDistanceFeet": 1.6404,
-    "nearestBoundaryPoint": [
-     28.9721,
-     528.5495
-    ],
-    "dxFeet": 1.6404,
-    "dyFeet": 0.0,
-    "envelope": [
-     2.2404,
-     2.4543
-    ],
-    "passes": true
-   },
-   "08-316 Corridor": {
-    "outlineDistanceFeet": 4.8523,
-    "nearestBoundaryPoint": [
-     35.4648,
-     528.5495
-    ],
-    "dxFeet": 4.8523,
-    "dyFeet": 0.0,
-    "envelope": [
-     2.2404,
-     2.4543
-    ],
-    "passes": false
-   },
-   "verdict": "A doorLinks record ALONE IS NOT SUFFICIENT: reviewedDoorPortal (directory-navigation.ts) only accepts rooms returned by doorCandidates (outline <= 2 ft and within the footprint envelope + 0.6 ft). 08-316 Corridor is 4.85 ft away, so the link resolves to no portal and the door stays unmatched (now with an explicit review)."
-  },
-  "nativeCellMatcher": {
-   "audit": {
-    "flags": [
-     "owner-gap-over-2ft(2.96)"
-    ],
-    "door": 2315416,
-    "id": "door:400176:2315416",
-    "levelId": 400176,
+  "savedDoor": {
     "state": "unmatched",
-    "category": "unmatched:new-native-pair",
-    "existingOwners": [
-     "08-360 Link"
+    "roomKeys": ["rm-400176-a4b94b10b2f8"],
+    "pointFeet": [30.612502027737193, 528.5495338272797],
+    "normalFeet": [-1, 0],
+    "footprintFeet": [
+      [32.25292197524376, 526.6952031186182],
+      [32.25292197524376, 530.4038645359411],
+      [28.972082080230628, 530.4038645359411],
+      [28.972082080230628, 526.6952031186182]
     ],
-    "existingKeys": [
-     "rm-400176-a4b94b10b2f8"
-    ],
-    "nativeKind": "native-pair",
-    "nativeOwners": [
-     "08-360 Link",
-     "08-316 Corridor"
-    ],
-    "nativeKeys": [
-     "rm-400176-a4b94b10b2f8",
-     "rm-400176-e6668d178587"
-    ],
-    "sides": [
-     {
-      "cell": "native-cell:24.278215:826",
-      "stepFeet": 0.25,
-      "owner": "08-316 Corridor",
-      "ownerGapFeet": 2.962
-     },
-     {
-      "cell": "native-cell:24.278215:816",
-      "stepFeet": 0.25,
-      "owner": "08-360 Link",
-      "ownerGapFeet": 0
-     }
-    ]
-   },
-   "verdict": "With the opt-in native-cell matcher (Reviter branch claude/native-cell-owner-matcher), the native side owners are 08-360 Link (cell 816, inside its outline) and 08-316 Corridor (cell 826, 2.962 ft from the probe). doorCandidates then includes 08-316 and this doorLinks record validates; in the default fill-only policy the door would also be filled without the link. Flag: owner gap > 2 ft in a merged 17-room cell."
-  }
- },
- "evidence": {
-  "buildingSideNativeCell": {
-   "id": "native-cell:24.278215:826",
-   "roomCount": 17,
-   "nearestOwnersFromProbe": [
-    {
-     "room": "08-316 Corridor",
-     "key": "rm-400176-e6668d178587",
-     "gapFeet": 2.962
-    },
-    {
-     "room": "08-314 Office",
-     "key": "rm-400176-e69d6d1785b6",
-     "gapFeet": 5.866
-    },
-    {
-     "room": "08-310 Corridor",
-     "key": "rm-400176-e699851785b2",
-     "gapFeet": 15.643
-    },
-    {
-     "room": "08-315 Office",
-     "key": "rm-400176-e663a5178585",
-     "gapFeet": 19.133
-    },
-    {
-     "room": "08-313 Office",
-     "key": "rm-400176-e65fc1178581",
-     "gapFeet": 26.434
-    },
-    {
-     "room": "08-309 Office",
-     "key": "rm-400176-e64ec1178573",
-     "gapFeet": 27.004
-    }
-   ],
-   "probeFeet": [
-    32.5029,
-    528.5495
-   ]
+    "hostWallNativeElementId": 2315413,
+    "note": "The Oct 21 reviewed curtain aperture (link-4-8-curtain-doors-20261021) is already reflected: the footprint spans the 3.2808 ft host band x 28.972..32.253."
   },
-  "unlabelledStrip": "Between the curtain host east face x=32.253 and the drawn 08-316 Corridor west edge x~35.465 (y over the door 526.695..530.404) no room outline exists; the native wall-bounded cell 826 covers it."
- },
- "alternativeOutlineReview": "Instead of relying on the native matcher, a room-outline review of 08-316 Corridor (annotation polygonFeet) extending its west edge to the host face x=32.25292197524376 over at least y 526.6952..530.4039 would make 08-316 a legacy candidate (outline distance 1.64 ft <= 2; dx 1.64 <= 2.24). That is a room-review decision: it needs the source owner to confirm the strip is 08-316 Corridor (not 08-305 Corridor or an unnamed vestibule) from drawings/site.",
- "notConfirmed": [
-  "Whether the door is normally open and public (on site).",
-  "Which named space owns the 3.2 ft strip east of the curtain wall.",
-  "Walking approaches on both portals; compiler support replay; regenerated master; affected route acceptance."
- ],
- "unchanged": "No source, owner, access, door or geometry was edited."
+  "roomsJsonRecords": {
+    "navigation.doorLinks[] (append)": {
+      "doorId": 2315416,
+      "levelId": 400176,
+      "rooms": ["rm-400176-a4b94b10b2f8", "rm-400176-e6668d178587"]
+    },
+    "roomLabels": {
+      "rm-400176-a4b94b10b2f8": "08-360 Link (circulation, access unknown)",
+      "rm-400176-e6668d178587": "08-316 Corridor (circulation, access unknown)"
+    }
+  },
+  "parseValidation": "room-directory.ts:207 requires integer doorId/levelId, two distinct keys, each an existing non-deleted annotation with levelId 400176, and a unique levelId:doorId. Both keys are level-400176 records in the derived graph; confirm against the master rooms.json before applying.",
+  "compilerAcceptance": {
+    "legacyMatcher": {
+      "08-360 Link": {
+        "outlineDistanceFeet": 1.6404,
+        "nearestBoundaryPoint": [28.9721, 528.5495],
+        "dxFeet": 1.6404,
+        "dyFeet": 0.0,
+        "envelope": [2.2404, 2.4543],
+        "passes": true
+      },
+      "08-316 Corridor": {
+        "outlineDistanceFeet": 4.8523,
+        "nearestBoundaryPoint": [35.4648, 528.5495],
+        "dxFeet": 4.8523,
+        "dyFeet": 0.0,
+        "envelope": [2.2404, 2.4543],
+        "passes": false
+      },
+      "verdict": "A doorLinks record ALONE IS NOT SUFFICIENT: reviewedDoorPortal (directory-navigation.ts) only accepts rooms returned by doorCandidates (outline <= 2 ft and within the footprint envelope + 0.6 ft). 08-316 Corridor is 4.85 ft away, so the link resolves to no portal and the door stays unmatched (now with an explicit review)."
+    },
+    "nativeCellMatcher": {
+      "audit": {
+        "flags": ["owner-gap-over-2ft(2.96)"],
+        "door": 2315416,
+        "id": "door:400176:2315416",
+        "levelId": 400176,
+        "state": "unmatched",
+        "category": "unmatched:new-native-pair",
+        "existingOwners": ["08-360 Link"],
+        "existingKeys": ["rm-400176-a4b94b10b2f8"],
+        "nativeKind": "native-pair",
+        "nativeOwners": ["08-360 Link", "08-316 Corridor"],
+        "nativeKeys": ["rm-400176-a4b94b10b2f8", "rm-400176-e6668d178587"],
+        "sides": [
+          {
+            "cell": "native-cell:24.278215:826",
+            "stepFeet": 0.25,
+            "owner": "08-316 Corridor",
+            "ownerGapFeet": 2.962
+          },
+          {
+            "cell": "native-cell:24.278215:816",
+            "stepFeet": 0.25,
+            "owner": "08-360 Link",
+            "ownerGapFeet": 0
+          }
+        ]
+      },
+      "verdict": "With the opt-in native-cell matcher (Reviter branch claude/native-cell-owner-matcher), the native side owners are 08-360 Link (cell 816, inside its outline) and 08-316 Corridor (cell 826, 2.962 ft from the probe). doorCandidates then includes 08-316 and this doorLinks record validates; in the default fill-only policy the door would also be filled without the link. Flag: owner gap > 2 ft in a merged 17-room cell.",
+      "correction20261102": "Stale: this verdict predates the 2 ft default (NATIVE_DOOR_OWNER_MAX_GAP_FEET, Reviter 7f83240). The 2.962 ft gap exceeds it, so the default native matcher does NOT fill 08-316 Corridor for this door. Do not raise the global limit for this door; resolve whether the unlabelled strip belongs to 08-316 Corridor, 08-305 Corridor or an unnamed vestibule by source review first (see alternativeOutlineReview), then replay the aperture and both approaches."
+    }
+  },
+  "evidence": {
+    "buildingSideNativeCell": {
+      "id": "native-cell:24.278215:826",
+      "roomCount": 17,
+      "nearestOwnersFromProbe": [
+        {
+          "room": "08-316 Corridor",
+          "key": "rm-400176-e6668d178587",
+          "gapFeet": 2.962
+        },
+        {
+          "room": "08-314 Office",
+          "key": "rm-400176-e69d6d1785b6",
+          "gapFeet": 5.866
+        },
+        {
+          "room": "08-310 Corridor",
+          "key": "rm-400176-e699851785b2",
+          "gapFeet": 15.643
+        },
+        {
+          "room": "08-315 Office",
+          "key": "rm-400176-e663a5178585",
+          "gapFeet": 19.133
+        },
+        {
+          "room": "08-313 Office",
+          "key": "rm-400176-e65fc1178581",
+          "gapFeet": 26.434
+        },
+        {
+          "room": "08-309 Office",
+          "key": "rm-400176-e64ec1178573",
+          "gapFeet": 27.004
+        }
+      ],
+      "probeFeet": [32.5029, 528.5495]
+    },
+    "unlabelledStrip": "Between the curtain host east face x=32.253 and the drawn 08-316 Corridor west edge x~35.465 (y over the door 526.695..530.404) no room outline exists; the native wall-bounded cell 826 covers it."
+  },
+  "alternativeOutlineReview": "Instead of relying on the native matcher, a room-outline review of 08-316 Corridor (annotation polygonFeet) extending its west edge to the host face x=32.25292197524376 over at least y 526.6952..530.4039 would make 08-316 a legacy candidate (outline distance 1.64 ft <= 2; dx 1.64 <= 2.24). That is a room-review decision: it needs the source owner to confirm the strip is 08-316 Corridor (not 08-305 Corridor or an unnamed vestibule) from drawings/site.",
+  "notConfirmed": [
+    "Whether the door is normally open and public (on site).",
+    "Which named space owns the 3.2 ft strip east of the curtain wall.",
+    "Walking approaches on both portals; compiler support replay; regenerated master; affected route acceptance."
+  ],
+  "unchanged": "No source, owner, access, door or geometry was edited."
 }
