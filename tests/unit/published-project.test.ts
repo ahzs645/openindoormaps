@@ -231,3 +231,27 @@ test("inconsistent checked inventories, entry hashes and source identities fail 
     /identity/,
   );
 });
+test("a progressive-floors admission never becomes a package fast import", async () => {
+  const f = fixture();
+  // Same exact bytes and entries, but generated as a floors-only admission:
+  // the package must take the ordinary full importer (no receipt, no throw).
+  const floors: PublishedProjectReceipt = {
+    ...structuredClone(f.receipt),
+    admission: "progressive-floors",
+  };
+  const stages: string[] = [];
+  assert.equal(
+    await tryReadPublishedProject(f.bytes, (p) => stages.push(p.stage), {
+      ...f.policy,
+      receipts: [floors],
+    }),
+    undefined,
+  );
+  assert.deepEqual(stages, []);
+  // An ordinary package receipt alongside it still admits the package.
+  const result = await tryReadPublishedProject(f.bytes, undefined, {
+    ...f.policy,
+    receipts: [floors, f.receipt],
+  });
+  assert.equal(result?.receipt, f.receipt);
+});

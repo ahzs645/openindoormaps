@@ -76,6 +76,37 @@ test("unlisted/stale publications cannot skip the established decoder", async ()
   );
   assert.equal(reads, 0);
 });
+test("a progressive-floors admission admits only its exact revision", async () => {
+  const { manifest, logical } = preparedDeliveryFixture();
+  const scope = manifest.scopes[0];
+  const expected = await decodeProgressiveFloor(
+    manifest,
+    scope,
+    async (id) => logical.get(id)!,
+  );
+  const floors = pinned(manifest).map((r) => ({
+    ...r,
+    admission: "progressive-floors" as const,
+  }));
+  const read = async (asset: (typeof manifest.assets)[string]) =>
+    gzipSync(logical.get(asset.id)!, { level: 6, mtime: 0 });
+  assert.deepEqual(
+    await decodePublishedProgressiveFloor(manifest, scope, read, floors),
+    expected,
+  );
+  for (const changed of [
+    { progressiveRevisionSha256: "0".repeat(64) },
+    { datasetSha256: "0".repeat(64) },
+    { packageSha256: "0".repeat(64) },
+    { validatorSha256: "0".repeat(64) },
+  ])
+    assert.equal(
+      await decodePublishedProgressiveFloor(manifest, scope, read, [
+        { ...floors[0], ...changed },
+      ]),
+      undefined,
+    );
+});
 test("admitted floor transport still rejects changed bytes and a scope from another revision", async () => {
   const { manifest, logical } = preparedDeliveryFixture();
   await assert.rejects(
