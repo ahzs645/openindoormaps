@@ -1,0 +1,2247 @@
+From 2e121309619669cbfe2b264b199ac01ea46c8e9f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 3 Nov 2026 01:49:48 +0000
+Subject: [PATCH] feat(indoor): straight corridor runs between real junctions
+ with right-angle door branches
+
+The shared-corridor compiler now decomposes each checked network into runs
+(lanes joined through vertices whose straightest continuation deflects by
+less than 30 degrees; short destination spurs and terminal joins do not split
+a run) and, longest first, fits each run with one straight centre line, or up
+to eight straight pieces, through its cross-section midpoints
+(corridor-run-fit.ts). Junctions on the run are projected onto the fit and
+every door branch of the run is proposed again against it, preferring a
+branch that meets the run within 10 degrees of a right angle; the join slides
+along the run. A branch that cannot be proposed again keeps its exact checked
+approach and join with one short lane piece to the run.
+
+A run is replaced only if every new run piece, every changed neighbouring
+lane piece and every moved door branch passes the same exact support, the
+complete network gains no topology contact (identified by the e826098
+approach-conflict key and the exact rational contact location, via the new
+corridorChainTopologyContacts), and no required original edge's shared-lane
+route grows by more than 15 % plus 3 ft. Otherwise that run keeps its checked geometry and the next run is
+tried. Loops, islands and genuine corners are kept; original terminals,
+endpoints, ownership and access are unchanged; legacy networks are untouched.
+
+- prepareSharedCorridorRouting: if a cell's legacy fallback guides (from
+  another network) cross its straight-run guides more than the guides
+  compiled without straight runs, the cell is compiled without straight runs
+  (report.straightRunsWithdrawn).
+- New compiler parameter straightRuns (default on, bound in checkpoints);
+  compile-corridor-candidates.ts --without-straight-runs reproduces the
+  previous compiler as a separate experiment.
+- statistics().straightRuns reports fitted/kept runs by reason, pieces,
+  moved junctions, re-proposed, perpendicular and kept door branches.
+- Tests: a branched hall with side corridors, a corner, a lobby island loop
+  and door recesses (straight hall, perpendicular branches, kept corner,
+  both island lanes, support, endpoints, determinism); a door branch that
+  cannot be re-proposed; a run whose straight proposal fails support while
+  its neighbours are fitted; topology contacts. The join-sliding test
+  isolates sliding.
+- Regenerate the prepared-display, published-route-runtime and visitor-plan
+  runtime bindings, whose module closures include the compiler.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01F5YScMjv2Mnt4v2xjsTFru
+---
+ .github/workflows/indoor-checks.yml           |    1 +
+ app/indoor-project/corridor-centerline.ts     |   52 +
+ app/indoor-project/corridor-chain-fit.ts      |   27 +
+ .../corridor-routing-parameters.ts            |    5 +
+ app/indoor-project/corridor-run-fit.ts        | 1265 +++++++++++++++++
+ .../prepare-corridor-routing.ts               |  109 +-
+ .../prepared-display-engine-binding.ts        |    2 +-
+ .../published-route-runtime-binding.ts        |    2 +-
+ .../published-visitor-plan-runtime-binding.ts |    2 +-
+ scripts/indoor/compile-corridor-candidates.ts |    9 +-
+ scripts/indoor/corridor-candidates.md         |   34 +
+ tests/unit/corridor-chain-fit.test.ts         |   45 +
+ tests/unit/corridor-run-fit.test.ts           |  276 ++++
+ tests/unit/corridor-run-fixture.ts            |  113 ++
+ tests/unit/corridor-terminal-approach.test.ts |    4 +
+ 15 files changed, 1929 insertions(+), 17 deletions(-)
+ create mode 100644 app/indoor-project/corridor-run-fit.ts
+ create mode 100644 tests/unit/corridor-run-fit.test.ts
+ create mode 100644 tests/unit/corridor-run-fixture.ts
+
+diff --git a/.github/workflows/indoor-checks.yml b/.github/workflows/indoor-checks.yml
+index 907d83f..9288846 100644
+--- a/.github/workflows/indoor-checks.yml
++++ b/.github/workflows/indoor-checks.yml
+@@ -52,6 +52,7 @@ jobs:
+           tests/unit/corridor-guide-support.test.ts
+           tests/unit/corridor-terminal-attachments.test.ts
+           tests/unit/corridor-terminal-approach.test.ts
++          tests/unit/corridor-run-fit.test.ts
+           tests/unit/corridor-candidate-checkpoints.test.ts
+           tests/unit/shared-corridor-composition.test.ts
+           tests/unit/shared-corridor-routing.test.ts
+diff --git a/app/indoor-project/corridor-centerline.ts b/app/indoor-project/corridor-centerline.ts
+index 8bfc992..8eb9185 100644
+--- a/app/indoor-project/corridor-centerline.ts
++++ b/app/indoor-project/corridor-centerline.ts
+@@ -3,6 +3,10 @@ import * as DMath from "./deterministic-math";
+ import { createRingPointQuery } from "./ring-point-query";
+ import { MAX_SHARED_CORRIDOR_APPROACH_FEET } from "./shared-corridor-guides";
+ import { proposeStraightCorridorAxis } from "./corridor-straight-axis";
++import {
++  fitCorridorRuns,
++  type CorridorRunFitStatistics,
++} from "./corridor-run-fit";
+ import {
+   fitCheckedCorridorChains,
+   corridorChainTopologyConflicts,
+@@ -82,6 +86,8 @@ export type CorridorCenterlineOptions = {
+   shapedApproaches?: boolean;
+   /** See CorridorCompilerParameters.slideJoins. */
+   slideJoins?: boolean;
++  /** See CorridorCompilerParameters.straightRuns. */
++  straightRuns?: boolean;
+ };
+ 
+ /** Shaped-approach restriction of one terminal: 0 offers every shaped
+@@ -1095,6 +1101,51 @@ function buildCorridorCenterline(
+     retained: null as string | null,
+   };
+   if (shaped && slideJoins) slideTerminalJoins();
++  const straightRuns =
++    options.straightRuns ?? CORRIDOR_CENTERLINE_PARAMETERS.straightRuns;
++  const runFit: CorridorRunFitStatistics | null =
++    shaped && straightRuns ? fitStraightRuns() : null;
++  /** Straight corridor runs between real junctions, with door branches
++   * re-proposed at right angles (corridor-run-fit.ts). Each run is accepted
++   * only with exact support for every changed lane piece and door branch and
++   * no new conflict on the complete network; otherwise it keeps its current
++   * checked geometry. Terminals keep their checked component. */
++  function fitStraightRuns() {
++    const result = fitCorridorRuns({
++      rings,
++      vertices,
++      chains: chains.flatMap((chain) =>
++        chain.points
++          ? [{ from: chain.from, to: chain.to, points: chain.points }]
++          : [],
++      ),
++      joins,
++      terminals,
++      supported,
++      proposals: approachProposals,
++      maxApproachFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
++      requiredEdges: options.requiredEdges,
++    });
++    if (!result.changed) return result.statistics;
++    for (let i = vertices.length; i < result.vertices.length; i++)
++      vertices.push(result.vertices[i]);
++    joins.clear();
++    for (const [id, join] of result.joins) joins.set(id, join);
++    installChains([
++      ...result.chains.map(
++        (chain): Chain => ({
++          from: chain.from,
++          to: chain.to,
++          raw: chain.points,
++          checked: true,
++          points: chain.points,
++          length: pathLength(chain.points),
++        }),
++      ),
++      ...chains.filter((chain) => !chain.points),
++    ]);
++    return result.statistics;
++  }
+   /** Terminal joins pin the shared trunk: a pass-through join splits it into
+    * separately fitted pieces, and a join at the end of a short sampled spur
+    * keeps a junction (and its kink) on the trunk. Refit each trunk through
+@@ -1945,6 +1996,7 @@ function buildCorridorCenterline(
+       attachedTerminals: useStraightAxis ? straightApproaches.size : joins.size,
+       missingTerminals: useStraightAxis ? 0 : missing.length,
+       joinSliding: { ...sliding },
++      straightRuns: runFit ? structuredClone(runFit) : null,
+       straightAxisProposed: !!straightAxis,
+       straightAxisTerminals: useStraightAxis ? straightApproaches.size : 0,
+       axisApproachRepair: { ...axisRepair },
+diff --git a/app/indoor-project/corridor-chain-fit.ts b/app/indoor-project/corridor-chain-fit.ts
+index 8c28328..6de18ba 100644
+--- a/app/indoor-project/corridor-chain-fit.ts
++++ b/app/indoor-project/corridor-chain-fit.ts
+@@ -268,6 +268,33 @@ export function corridorChainTopologyConflictPairs(
+     .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+ }
+ 
++/** The same inspection as `corridorChainTopologyConflicts`, reported per
++ * contact: the offending input index pair `[i, j]` (`i < j`) and the exact
++ * rational contact location (a point, or the ends of a collinear overlap). */
++export function corridorChainTopologyContacts(
++  input: readonly CorridorFitChain[],
++): { pair: [number, number]; at: string }[] {
++  const contacts = new Map<string, { pair: [number, number]; at: string }>();
++  findCorridorChainTopologyConflicts(
++    input,
++    input.map((chain) => chain.points),
++    (contact) => {
++      if (!contacts.has(contact.key))
++        contacts.set(contact.key, {
++          pair: contact.pair.split(":").map(Number) as [number, number],
++          at: `${pointKey(contact.start)}:${pointKey(contact.end)}`,
++        });
++      return false;
++    },
++  );
++  return [...contacts.values()].sort(
++    (a, b) =>
++      a.pair[0] - b.pair[0] ||
++      a.pair[1] - b.pair[1] ||
++      (a.at < b.at ? -1 : a.at > b.at ? 1 : 0),
++  );
++}
++
+ /** Fit a complete set together, before journey-specific routing or emission.
+  * Original graph-node identities qualify endpoint contact; coincident numeric
+  * coordinates alone cannot invent a junction. Every final segment needs the
+diff --git a/app/indoor-project/corridor-routing-parameters.ts b/app/indoor-project/corridor-routing-parameters.ts
+index 65f0d03..b4da702 100644
+--- a/app/indoor-project/corridor-routing-parameters.ts
++++ b/app/indoor-project/corridor-routing-parameters.ts
+@@ -13,6 +13,10 @@ export type CorridorCompilerParameters = {
+   /** With shaped approaches: refit trunks through pass-through terminal
+    * joins and reattach those terminals under the same exact checks. */
+   slideJoins: boolean;
++  /** With shaped approaches: fit straight corridor runs between real
++   * junctions and re-propose their door branches at right angles, run by
++   * run, under the same exact checks and complete-network topology. */
++  straightRuns: boolean;
+ };
+ 
+ export const CORRIDOR_COMPILER_PARAMETERS: Readonly<CorridorCompilerParameters> =
+@@ -23,4 +27,5 @@ export const CORRIDOR_COMPILER_PARAMETERS: Readonly<CorridorCompilerParameters>
+     maxDeviationFeet: 0.75,
+     shapedApproaches: true,
+     slideJoins: true,
++    straightRuns: true,
+   });
+diff --git a/app/indoor-project/corridor-run-fit.ts b/app/indoor-project/corridor-run-fit.ts
+new file mode 100644
+index 0000000..15e3af5
+--- /dev/null
++++ b/app/indoor-project/corridor-run-fit.ts
+@@ -0,0 +1,1265 @@
++import * as DMath from "./deterministic-math";
++import type { CorridorXY } from "./corridor-centerline";
++import { corridorChainTopologyContacts } from "./corridor-chain-fit";
++import {
++  corridorSegmentProjection,
++  type CorridorApproachProposal,
++} from "./corridor-terminal-approach";
++
++/** Drawing thresholds of the straight-run pass. They only choose which
++ * proposals are made; every proposal still needs the caller's exact support
++ * and the complete-network topology check. */
++export const CORRIDOR_RUN_FIT = Object.freeze({
++  /** A run continues through a vertex whose straightest pair of lanes
++   * deflects by less than this. Larger deflections are genuine corners. */
++  passThroughDegrees: 30,
++  /** Lane heading at a vertex: towards the point this far along the lane. */
++  directionFeet: 4,
++  /** A dead-end lane no longer than this whose end only receives door
++   * branches is a destination branch: it never splits or ends a run. */
++  spurFeet: 12,
++  minRunFeet: 6,
++  /** Cross sections every `sampleFeet`, none within `endClearanceFeet` of a
++   * run end, and none wider than `maxSectionFeet` on either side. */
++  sampleFeet: 2,
++  endClearanceFeet: 2,
++  maxSectionFeet: 20,
++  /** A straight piece is proposed only if every retained cross-section
++   * midpoint lies within this of it, and every current lane vertex within
++   * `rawToleranceFeet`. Otherwise the piece is split (few-segment fit). */
++  midpointToleranceFeet: 1,
++  rawToleranceFeet: 2.5,
++  minPieceFeet: 8,
++  /** Up to 2^maxDepth straight pieces per run section. */
++  maxDepth: 3,
++  /** No junction or run end moves further than this. */
++  maxShiftFeet: 3,
++  /** A run is kept if it lengthens a required route by more than this. */
++  detourRatio: 1.15,
++  detourFeet: 3,
++  /** A branch meeting a run within this of 90 degrees is perpendicular. */
++  perpendicularDegrees: 10,
++});
++
++export type CorridorRunChain = {
++  from: number;
++  to: number;
++  points: CorridorXY[];
++};
++export type CorridorRunJoin = { vertex: number; approach: CorridorXY[] };
++export type CorridorRunTerminal = {
++  id: string;
++  point: CorridorXY;
++  approachDirection?: CorridorXY;
++};
++
++export type CorridorRunFitStatistics = {
++  strokes: number;
++  cycles: number;
++  shortRuns: number;
++  candidateRuns: number;
++  fittedRuns: number;
++  unchangedRuns: number;
++  keptRuns: Record<string, number>;
++  straightPieces: number;
++  pieceHistogram: Record<string, number>;
++  movedVertices: number;
++  removedStations: number;
++  removedSpurs: number;
++  trimmedEnds: number;
++  reattachedTerminals: number;
++  perpendicularBranches: number;
++  keptBranches: number;
++};
++
++/** Sine of the smallest bend placed at a line intersection (2 degrees). */
++const MIN_BEND_SINE = 0.034_899_496_702_500_97;
++/** Points of a terminal approach (terminal, at most one elbow, join). */
++const MAX_APPROACH_POINTS = 3;
++/** Exact checks spent on one door branch before its run is kept. */
++const MAX_BRANCH_PROPOSALS = 12;
++const same = (a: CorridorXY, b: CorridorXY) => a[0] === b[0] && a[1] === b[1];
++const copy = (p: CorridorXY): CorridorXY => [p[0], p[1]];
++const length = (path: readonly CorridorXY[]) =>
++  path
++    .slice(1)
++    .reduce(
++      (sum, p, i) => sum + DMath.hypot(p[0] - path[i][0], p[1] - path[i][1]),
++      0,
++    );
++const cross = (a: CorridorXY, b: CorridorXY) => a[0] * b[1] - a[1] * b[0];
++/** Point and unit tangent `distance` along a polyline (clamped). */
++function along(path: readonly CorridorXY[], distance: number) {
++  let travelled = 0;
++  for (let i = 1; i < path.length; i++) {
++    const a = path[i - 1],
++      b = path[i];
++    const step = DMath.hypot(b[0] - a[0], b[1] - a[1]);
++    if (step === 0) continue;
++    const tangent: CorridorXY = [(b[0] - a[0]) / step, (b[1] - a[1]) / step];
++    if (travelled + step >= distance || i === path.length - 1) {
++      const t = Math.max(0, Math.min(1, (distance - travelled) / step));
++      return {
++        point: [
++          a[0] + t * (b[0] - a[0]),
++          a[1] + t * (b[1] - a[1]),
++        ] as CorridorXY,
++        tangent,
++      };
++    }
++    travelled += step;
++  }
++  return null;
++}
++/** Interior crossing of two segments by more than a micro-foot on both
++ * sides. A join computed on a receiving segment can sit a rounding error past
++ * it; such contacts (and any real touch) are left to the exact topology
++ * check of the complete network, which every accepted run passes. */
++const segmentsCross = (
++  p: CorridorXY,
++  q: CorridorXY,
++  a: CorridorXY,
++  b: CorridorXY,
++) => {
++  const d = (u: CorridorXY, v: CorridorXY, w: CorridorXY) =>
++    (v[0] - u[0]) * (w[1] - u[1]) - (v[1] - u[1]) * (w[0] - u[0]);
++  const margin = (u: CorridorXY, v: CorridorXY) =>
++    1e-6 * DMath.hypot(v[0] - u[0], v[1] - u[1]);
++  const m = margin(a, b),
++    n = margin(p, q);
++  const dp = d(a, b, p),
++    dq = d(a, b, q),
++    da = d(p, q, a),
++    db = d(p, q, b);
++  return (
++    dp * dq < 0 &&
++    da * db < 0 &&
++    Math.min(Math.abs(dp), Math.abs(dq)) > m &&
++    Math.min(Math.abs(da), Math.abs(db)) > n
++  );
++};
++const conflictKey = (first: string, second: string | null) =>
++  JSON.stringify(second === null ? [first, null] : [first, second].sort());
++
++type Line = { origin: CorridorXY; direction: CorridorXY };
++const project = (line: Line, p: CorridorXY): CorridorXY => {
++  const t =
++    (p[0] - line.origin[0]) * line.direction[0] +
++    (p[1] - line.origin[1]) * line.direction[1];
++  return [
++    line.origin[0] + t * line.direction[0],
++    line.origin[1] + t * line.direction[1],
++  ];
++};
++const offset = (line: Line, p: CorridorXY) =>
++  Math.abs(
++    cross(line.direction, [p[0] - line.origin[0], p[1] - line.origin[1]]),
++  );
++/** Principal direction of points about `center`. */
++function principal(points: readonly CorridorXY[], center: CorridorXY) {
++  let xx = 0,
++    xy = 0,
++    yy = 0;
++  for (const p of points) {
++    const x = p[0] - center[0],
++      y = p[1] - center[1];
++    xx += x * x;
++    xy += x * y;
++    yy += y * y;
++  }
++  if (xx === 0 && yy === 0) return null;
++  const angle = 0.5 * DMath.atan2(2 * xy, xx - yy);
++  return [DMath.cos(angle), DMath.sin(angle)] as CorridorXY;
++}
++
++/** Straight corridor runs between real junctions.
++ *
++ * The checked shared network is decomposed into runs: lanes joined through
++ * vertices where the straightest continuation deflects by less than
++ * `passThroughDegrees`. Short dead-end lanes that only receive door branches
++ * (destination branches) neither split nor end a run, and terminal joins on a
++ * run are not junctions. Each run is fitted with one straight line (or a few
++ * straight pieces) through its cross-section midpoints, constrained through
++ * any vertex an earlier run already placed; genuine corners end runs, and
++ * every lane, island side and loop is kept (a run is never merged with a
++ * parallel lane). Junctions on the run are projected onto the fit, and every
++ * door branch of the run is re-proposed against the fitted run, preferring a
++ * branch that meets it at a right angle (the join slides along the run).
++ *
++ * This is a proposal per run. A run is replaced only if every new run piece
++ * and every changed neighbouring lane piece passes `supported`, every moved
++ * door branch passes `supported(path, terminalId)`, and the complete network
++ * (every lane and door branch) gains no topology conflict. Otherwise that run
++ * keeps its current checked geometry and the next run is tried. Original
++ * terminals and their positions are never changed.
++ */
++export function fitCorridorRuns(input: {
++  rings: readonly (readonly CorridorXY[])[];
++  vertices: readonly CorridorXY[];
++  chains: readonly CorridorRunChain[];
++  joins: ReadonlyMap<string, CorridorRunJoin>;
++  terminals: readonly CorridorRunTerminal[];
++  supported: (path: CorridorXY[], terminalId?: string) => boolean;
++  proposals: (
++    terminal: CorridorRunTerminal,
++    a: CorridorXY,
++    b: CorridorXY,
++  ) => CorridorApproachProposal[];
++  maxApproachFeet: number;
++  /** Original edges whose terminals must stay connected; a run may not
++   * lengthen their shared-lane route beyond `detourRatio`/`detourFeet`. */
++  requiredEdges?: readonly { from: string; to: string }[];
++}) {
++  const P = CORRIDOR_RUN_FIT;
++  const vertices = input.vertices.map(copy);
++  type Chain = CorridorRunChain;
++  const live = new Set<Chain>(
++    input.chains.map((chain) => ({
++      from: chain.from,
++      to: chain.to,
++      points: chain.points.map(copy),
++    })),
++  );
++  const joins = new Map(
++    [...input.joins]
++      .sort(([a], [b]) => a.localeCompare(b))
++      .map(([id, join]) => [
++        id,
++        { vertex: join.vertex, approach: join.approach.map(copy) },
++      ]),
++  );
++  const terminalById = new Map(input.terminals.map((t) => [t.id, t]));
++  const statistics: CorridorRunFitStatistics = {
++    strokes: 0,
++    cycles: 0,
++    shortRuns: 0,
++    candidateRuns: 0,
++    fittedRuns: 0,
++    unchangedRuns: 0,
++    keptRuns: {},
++    straightPieces: 0,
++    pieceHistogram: {},
++    movedVertices: 0,
++    removedStations: 0,
++    removedSpurs: 0,
++    trimmedEnds: 0,
++    reattachedTerminals: 0,
++    perpendicularBranches: 0,
++    keptBranches: 0,
++  };
++  const keep = (reason: string) => {
++    statistics.keptRuns[reason] = (statistics.keptRuns[reason] ?? 0) + 1;
++  };
++
++  const ringSegments: [CorridorXY, CorridorXY][] = input.rings.flatMap((ring) =>
++    ring.map(
++      (a, i) => [a, ring[(i + 1) % ring.length]] as [CorridorXY, CorridorXY],
++    ),
++  );
++  const incidence = () => {
++    const map = new Map<number, Chain[]>();
++    for (const chain of live) {
++      for (const vertex of chain.from === chain.to
++        ? [chain.from]
++        : [chain.from, chain.to]) {
++        const list = map.get(vertex) ?? [];
++        list.push(chain);
++        map.set(vertex, list);
++      }
++    }
++    return map;
++  };
++  const joinsAt = () => {
++    const map = new Map<number, string[]>();
++    for (const [id, join] of joins) {
++      const list = map.get(join.vertex) ?? [];
++      list.push(id);
++      map.set(join.vertex, list);
++    }
++    return map;
++  };
++  const oriented = (chain: Chain, from: number) =>
++    chain.from === from ? chain.points : chain.points.toReversed();
++  /** Unit heading leaving `from` along the chain, or null if degenerate. */
++  const heading = (chain: Chain, from: number) => {
++    const points = oriented(chain, from);
++    const total = length(points);
++    if (!(total > 0)) return null;
++    const target = along(points, Math.min(P.directionFeet, total))!.point;
++    const dx = target[0] - points[0][0],
++      dy = target[1] - points[0][1],
++      size = DMath.hypot(dx, dy);
++    return size > 0 ? ([dx / size, dy / size] as CorridorXY) : null;
++  };
++
++  // Vertices of a self-loop or an explicit zero-length lane keep their place.
++  const pinned = new Set<number>();
++  for (const chain of live)
++    if (chain.from === chain.to || length(chain.points) === 0)
++      pinned.add(chain.from).add(chain.to);
++
++  /** The dead-end vertex of a destination branch, or undefined. */
++  const spurEnd = (
++    chain: Chain,
++    degree: Map<number, Chain[]>,
++    receiving: Map<number, string[]>,
++  ) => {
++    if (chain.from === chain.to || length(chain.points) > P.spurFeet) return;
++    for (const [end, base] of [
++      [chain.to, chain.from],
++      [chain.from, chain.to],
++    ])
++      if (
++        degree.get(end)!.length === 1 &&
++        receiving.has(end) &&
++        degree.get(base)!.length >= 3
++      )
++        return end;
++    return;
++  };
++
++  // Decompose the current network into strokes (runs).
++  type Step = { chain: Chain; forward: boolean };
++  const strokes: { steps: Step[]; cycle: boolean; raw: number }[] = [];
++  {
++    const degree = incidence(),
++      receiving = joinsAt();
++    const eligible = (chain: Chain) =>
++      chain.from !== chain.to &&
++      length(chain.points) > 0 &&
++      spurEnd(chain, degree, receiving) === undefined;
++    const chainList = [...live];
++    const index = new Map(chainList.map((chain, i) => [chain, i]));
++    const link = new Map<string, [number, 0 | 1]>();
++    const vertexOrder = [...degree.keys()].sort((a, b) => a - b);
++    const limit = DMath.cos((P.passThroughDegrees * Math.PI) / 180);
++    for (const vertex of vertexOrder) {
++      if (pinned.has(vertex)) continue;
++      const ends = degree
++        .get(vertex)!
++        .filter(eligible)
++        .flatMap((chain) => {
++          const h = heading(chain, vertex);
++          const which: 0 | 1 = chain.from === vertex ? 0 : 1;
++          return h ? [{ chain: index.get(chain)!, which, h }] : [];
++        });
++      const pairs: { score: number; x: number; y: number }[] = [];
++      for (let x = 0; x < ends.length; x++)
++        for (let y = x + 1; y < ends.length; y++) {
++          // Straight continuation: opposite headings.
++          const score =
++            ends[x].h[0] * ends[y].h[0] + ends[x].h[1] * ends[y].h[1];
++          if (score <= -limit) pairs.push({ score, x, y });
++        }
++      pairs.sort((a, b) => a.score - b.score || a.x - b.x || a.y - b.y);
++      const taken = new Set<number>();
++      for (const { x, y } of pairs) {
++        if (taken.has(x) || taken.has(y)) continue;
++        taken.add(x).add(y);
++        const a = ends[x],
++          b = ends[y];
++        link.set(`${a.chain}:${a.which}`, [b.chain, b.which]);
++        link.set(`${b.chain}:${b.which}`, [a.chain, a.which]);
++      }
++    }
++    const seen = new Set<number>();
++    for (let start = 0; start < chainList.length; start++) {
++      if (seen.has(start) || !eligible(chainList[start])) continue;
++      // Walk back to one end of the stroke.
++      let current = start,
++        end: 0 | 1 = 0,
++        cycle = false;
++      const visited = new Set([start]);
++      for (;;) {
++        const next = link.get(`${current}:${end}`);
++        if (!next) break;
++        if (visited.has(next[0])) {
++          cycle = true;
++          break;
++        }
++        visited.add(next[0]);
++        current = next[0];
++        end = (1 - next[1]) as 0 | 1;
++      }
++      const steps: Step[] = [];
++      let c = current,
++        w: 0 | 1 = end;
++      for (;;) {
++        seen.add(c);
++        // Entering at end w, leaving through 1 - w.
++        steps.push({ chain: chainList[c], forward: w === 0 });
++        const next = link.get(`${c}:${1 - w}`);
++        if (!next || seen.has(next[0])) break;
++        c = next[0];
++        w = next[1];
++      }
++      strokes.push({
++        steps,
++        cycle,
++        raw: steps.reduce((sum, step) => sum + length(step.chain.points), 0),
++      });
++    }
++    // Vertices where another stroke passes straight through are placed by
++    // that stroke: a run ending there (a T stem) keeps them fixed.
++  }
++  statistics.strokes = strokes.length;
++  const order = strokes
++    .map((stroke, i) => ({ stroke, i }))
++    .sort((a, b) => b.stroke.raw - a.stroke.raw || a.i - b.i);
++
++  const placed = new Set<number>();
++  const topologyKeys = () => {
++    const items = [
++      ...[...live].map((chain, i) => ({
++        id: `core:${i}`,
++        from: chain.from as string | number,
++        to: chain.to as string | number,
++        points: chain.points,
++      })),
++      ...[...joins].map(([id, join]) => ({
++        id: `approach:${id}`,
++        terminal: id,
++        from: `terminal:${id}` as string | number,
++        to: join.vertex as string | number,
++        points: join.approach,
++      })),
++    ];
++    // A contact is identified by its approach-conflict key (as in the
++    // complete-network acceptance) and its exact location: a run may keep a
++    // contact the checked network already had, never add or move one.
++    const keys = new Set<string>();
++    for (const { pair, at } of corridorChainTopologyContacts(items)) {
++      const a = (items[pair[0]] as { terminal?: string }).terminal,
++        b = (items[pair[1]] as { terminal?: string }).terminal;
++      const key =
++        a === undefined && b === undefined
++          ? "core"
++          : a !== undefined && b !== undefined
++            ? conflictKey(a, b)
++            : conflictKey((a ?? b)!, null);
++      keys.add(`${key}@${at}`);
++    }
++    return keys;
++  };
++  let topology = topologyKeys();
++
++  /** Cross-section midpoints of a run piece (its lane geometry). */
++  const midpoints = (poly: readonly CorridorXY[]) => {
++    const total = length(poly);
++    const samples: { point: CorridorXY; width: number }[] = [];
++    const first = Math.min(P.endClearanceFeet, total / 2),
++      last = Math.max(total - P.endClearanceFeet, total / 2);
++    for (let s = first; s <= last + 1e-9; s += P.sampleFeet) {
++      const at = along(poly, s);
++      if (!at) continue;
++      const p = at.point,
++        n: CorridorXY = [-at.tangent[1], at.tangent[0]];
++      let plus = Infinity,
++        minus = -Infinity;
++      for (const [a, b] of ringSegments) {
++        const e: CorridorXY = [b[0] - a[0], b[1] - a[1]];
++        const denominator = cross(n, e);
++        if (denominator === 0) continue;
++        const w: CorridorXY = [a[0] - p[0], a[1] - p[1]];
++        const u = cross(w, n) / denominator;
++        if (u < 0 || u > 1) continue;
++        const t = cross(w, e) / denominator;
++        if (t > 1e-9 && t < plus) plus = t;
++        if (t < -1e-9 && t > minus) minus = t;
++      }
++      if (plus > P.maxSectionFeet || -minus > P.maxSectionFeet) continue;
++      const middle = (plus + minus) / 2;
++      samples.push({
++        point: [p[0] + middle * n[0], p[1] + middle * n[1]],
++        width: plus - minus,
++      });
++    }
++    if (samples.length === 0) return [];
++    // Side openings and door recesses widen a section; drop them.
++    const widths = samples.map((s) => s.width).sort((a, b) => a - b);
++    const median = widths[Math.floor((widths.length - 1) / 2)];
++    return samples
++      .filter((s) => s.width <= median * 1.2 + 0.25)
++      .map((s) => s.point);
++  };
++
++  /** Few-segment straight fit of one run section between two vertices. */
++  const fitPiece = (
++    poly: CorridorXY[],
++    startFixed: boolean,
++    endFixed: boolean,
++    depth: number,
++  ): CorridorXY[] | null => {
++    const start = poly[0],
++      end = poly.at(-1)!;
++    const chord: CorridorXY = [end[0] - start[0], end[1] - start[1]];
++    const chordLength = DMath.hypot(chord[0], chord[1]);
++    if (!(chordLength > 0)) return null;
++    let samples = midpoints(poly);
++    // Too short for cross sections: the chord, checked against the lane.
++    const short = samples.length < 3;
++    if (short) samples = [];
++    let line: Line | null = null;
++    if ((startFixed && endFixed) || short)
++      line = {
++        origin: start,
++        direction: [chord[0] / chordLength, chord[1] / chordLength],
++      };
++    else if (samples.length >= 2 || startFixed || endFixed) {
++      const center: CorridorXY = startFixed
++        ? start
++        : endFixed
++          ? end
++          : [
++              samples.reduce((sum, p) => sum + p[0], 0) / samples.length,
++              samples.reduce((sum, p) => sum + p[1], 0) / samples.length,
++            ];
++      const direction = principal(
++        samples.length > 0 ? samples : [start, end],
++        center,
++      );
++      if (direction) line = { origin: center, direction };
++    }
++    const split = () => {
++      if (depth >= P.maxDepth || length(poly) < 2 * P.minPieceFeet) return null;
++      // Split at the lane vertex farthest from the fitted line (or the
++      // chord), away from the ends.
++      const reference: Line = line ?? {
++        origin: start,
++        direction: [chord[0] / chordLength, chord[1] / chordLength],
++      };
++      let best = -1,
++        worst = 0,
++        travelled = 0;
++      const total = length(poly);
++      for (let i = 1; i < poly.length - 1; i++) {
++        travelled += DMath.hypot(
++          poly[i][0] - poly[i - 1][0],
++          poly[i][1] - poly[i - 1][1],
++        );
++        if (
++          travelled < P.minPieceFeet / 2 ||
++          total - travelled < P.minPieceFeet / 2
++        )
++          continue;
++        const deviation = offset(reference, poly[i]);
++        if (deviation > worst) {
++          worst = deviation;
++          best = i;
++        }
++      }
++      if (best < 0) return null;
++      // Both halves are fitted with a free end at the split; they meet at
++      // the intersection of their lines (a bend), or, when nearly parallel,
++      // through one short connecting piece (a jog).
++      const left = fitPiece(
++        poly.slice(0, best + 1),
++        startFixed,
++        false,
++        depth + 1,
++      );
++      if (!left) return null;
++      const right = fitPiece(poly.slice(best), false, endFixed, depth + 1);
++      if (!right) return null;
++      const a = left.at(-2)!,
++        b = left.at(-1)!,
++        c = right[0],
++        d = right[1];
++      const u: CorridorXY = [b[0] - a[0], b[1] - a[1]],
++        v: CorridorXY = [d[0] - c[0], d[1] - c[1]];
++      const denominator = cross(u, v);
++      const sine =
++        Math.abs(denominator) /
++        (DMath.hypot(u[0], u[1]) * DMath.hypot(v[0], v[1]));
++      if (sine >= MIN_BEND_SINE) {
++        const t = cross([c[0] - a[0], c[1] - a[1]], v) / denominator;
++        const corner: CorridorXY = [a[0] + t * u[0], a[1] + t * u[1]];
++        const shift = DMath.hypot(
++          corner[0] - poly[best][0],
++          corner[1] - poly[best][1],
++        );
++        // The corner must lie ahead of both outer pieces.
++        if (
++          shift <= P.maxShiftFeet &&
++          t > 0 &&
++          (d[0] - corner[0]) * v[0] + (d[1] - corner[1]) * v[1] > 0
++        )
++          return [...left.slice(0, -1), corner, ...right.slice(1)];
++      }
++      if (same(b, c)) return [...left, ...right.slice(1)];
++      return [...left, ...right];
++    };
++    if (!line) return split();
++    // Orient along the run.
++    if (line.direction[0] * chord[0] + line.direction[1] * chord[1] < 0)
++      line.direction = [-line.direction[0], -line.direction[1]];
++    const aligned =
++      (line.direction[0] * chord[0] + line.direction[1] * chord[1]) /
++        chordLength >=
++      DMath.cos((P.passThroughDegrees * Math.PI) / 180);
++    const fits =
++      aligned &&
++      samples.every((p) => offset(line!, p) <= P.midpointToleranceFeet) &&
++      poly.slice(1, -1).every((p) => offset(line!, p) <= P.rawToleranceFeet);
++    if (!fits) return split();
++    const a = startFixed ? copy(start) : project(line, start),
++      b = endFixed ? copy(end) : project(line, end);
++    if (same(a, b)) return null;
++    return [a, b];
++  };
++
++  /** Projection of p on polyline q: segment, fraction, point, distance. */
++  const onPolyline = (q: readonly CorridorXY[], p: CorridorXY, from = 0) => {
++    let best: {
++      segment: number;
++      fraction: number;
++      point: CorridorXY;
++      distance: number;
++    } | null = null;
++    for (let k = from; k < q.length - 1; k++) {
++      const projection = corridorSegmentProjection(p, q[k], q[k + 1]);
++      if (!projection) continue;
++      const distance = DMath.hypot(
++        projection.point[0] - p[0],
++        projection.point[1] - p[1],
++      );
++      if (!best || distance < best.distance)
++        best = { segment: k, ...projection, distance };
++    }
++    return best;
++  };
++  const position = (segment: number, fraction: number, q: CorridorXY[]) =>
++    fraction === 1 && segment < q.length - 2
++      ? { segment: segment + 1, fraction: 0 }
++      : { segment, fraction };
++  const sinPerpendicular = DMath.sin((P.perpendicularDegrees * Math.PI) / 180);
++  const perpendicular = (
++    path: readonly CorridorXY[],
++    a: CorridorXY,
++    b: CorridorXY,
++  ) => {
++    let i = path.length - 1;
++    while (i > 0 && same(path[i - 1], path[i])) i--;
++    if (i === 0) return true;
++    const u: CorridorXY = [
++        path[i][0] - path[i - 1][0],
++        path[i][1] - path[i - 1][1],
++      ],
++      v: CorridorXY = [b[0] - a[0], b[1] - a[1]];
++    const lu = DMath.hypot(u[0], u[1]),
++      lv = DMath.hypot(v[0], v[1]);
++    return Math.abs(u[0] * v[0] + u[1] * v[1]) <= sinPerpendicular * lu * lv;
++  };
++  const shapeOrder: Record<string, number> = {
++    "door-normal": 0,
++    straight: 1,
++    "projected-elbow": 2,
++    elbow: 3,
++  };
++
++  /** Shared-lane route lengths of the required edges touching `ids`. */
++  const requiredLengths = (ids: ReadonlySet<string>) => {
++    const edges = (input.requiredEdges ?? []).filter(
++      (edge) => ids.has(edge.from) || ids.has(edge.to),
++    );
++    const result = new Map<string, number>();
++    if (edges.length === 0) return result;
++    const adjacency = new Map<number, { to: number; length: number }[]>();
++    const link = (a: number, b: number, length: number) => {
++      for (const [x, y] of [
++        [a, b],
++        [b, a],
++      ]) {
++        const list = adjacency.get(x) ?? [];
++        list.push({ to: y, length });
++        adjacency.set(x, list);
++      }
++    };
++    for (const chain of live) link(chain.from, chain.to, length(chain.points));
++    const sources = [...new Set(edges.map((edge) => edge.from))].sort();
++    for (const source of sources) {
++      const start = joins.get(source);
++      const distances = new Map<number, number>();
++      if (start) {
++        // Small networks: a plain label-correcting search is enough.
++        distances.set(start.vertex, length(start.approach));
++        const queue = [start.vertex];
++        while (queue.length > 0) {
++          let best = 0;
++          for (let i = 1; i < queue.length; i++)
++            if (distances.get(queue[i])! < distances.get(queue[best])!)
++              best = i;
++          const vertex = queue.splice(best, 1)[0];
++          const base = distances.get(vertex)!;
++          for (const { to, length: step } of adjacency.get(vertex) ?? []) {
++            if (base + step < (distances.get(to) ?? Infinity)) {
++              distances.set(to, base + step);
++              queue.push(to);
++            }
++          }
++        }
++      }
++      for (const edge of edges) {
++        if (edge.from !== source) continue;
++        const end = joins.get(edge.to);
++        const value =
++          end && distances.has(end.vertex)
++            ? distances.get(end.vertex)! + length(end.approach)
++            : Infinity;
++        result.set(`${edge.from}\u0000${edge.to}`, value);
++      }
++    }
++    return result;
++  };
++
++  let changed = false;
++  for (const { stroke } of order) {
++    if (stroke.cycle) {
++      statistics.cycles++;
++      continue;
++    }
++    if (stroke.raw < P.minRunFeet) {
++      statistics.shortRuns++;
++      continue;
++    }
++    statistics.candidateRuns++;
++    const degree = incidence(),
++      receiving = joinsAt();
++    // Current vertex sequence and lane polyline of the run.
++    const sequence: number[] = [];
++    const raw: CorridorXY[] = [];
++    const rawIndex: number[] = [];
++    let broken = false;
++    for (const { chain, forward } of stroke.steps) {
++      if (!live.has(chain)) {
++        broken = true;
++        break;
++      }
++      const from = forward ? chain.from : chain.to,
++        to = forward ? chain.to : chain.from;
++      if (sequence.length === 0) {
++        sequence.push(from);
++        raw.push(copy(vertices[from]));
++        rawIndex.push(0);
++      } else if (sequence.at(-1) !== from) {
++        broken = true;
++        break;
++      }
++      const points = forward ? chain.points : chain.points.toReversed();
++      for (const p of points.slice(1))
++        if (!same(p, raw.at(-1)!)) raw.push(copy(p));
++      sequence.push(to);
++      rawIndex.push(raw.length - 1);
++    }
++    if (broken || new Set(sequence).size !== sequence.length) {
++      keep("not-simple");
++      continue;
++    }
++    const runChains = new Set(stroke.steps.map((step) => step.chain));
++    const last = sequence.length - 1;
++    // Placed vertices, pinned vertices and a run end where another run passes
++    // straight through stay fixed.
++    const passing = (vertex: number) => {
++      const lanes = (degree.get(vertex) ?? []).filter(
++        (chain) =>
++          !runChains.has(chain) &&
++          spurEnd(chain, degree, receiving) === undefined,
++      );
++      return lanes.length >= 2;
++    };
++    const fixed = sequence.map(
++      (vertex, i) =>
++        placed.has(vertex) ||
++        pinned.has(vertex) ||
++        ((i === 0 || i === last) && passing(vertex)),
++    );
++    // Fit each section between fixed vertices.
++    const cuts = [
++      0,
++      ...sequence.flatMap((_, i) => (i > 0 && i < last && fixed[i] ? [i] : [])),
++      last,
++    ];
++    let line: CorridorXY[] | null = [];
++    for (let s = 1; s < cuts.length && line; s++) {
++      const piece = fitPiece(
++        raw.slice(rawIndex[cuts[s - 1]], rawIndex[cuts[s]] + 1),
++        fixed[cuts[s - 1]],
++        fixed[cuts[s]],
++        0,
++      );
++      line = piece
++        ? [...line, ...(line.length > 0 ? piece.slice(1) : piece)]
++        : null;
++    }
++    if (
++      !line ||
++      line.length < 2 ||
++      line.some((p, i) => i > 0 && same(p, line![i - 1]))
++    ) {
++      keep("no-straight-fit");
++      continue;
++    }
++    const q = line;
++    // Place the run's vertices on the fit.
++    type Cut = {
++      segment: number;
++      fraction: number;
++      point: CorridorXY;
++      vertex: number;
++      station?: number;
++    };
++    const stationCuts: Cut[] = [];
++    let failed: string | null = null;
++    let previous = 0;
++    const removedStations = new Set<number>();
++    const spurs = new Set<Chain>();
++    const moved = new Map<number, CorridorXY>();
++    for (let i = 0; i <= last && !failed; i++) {
++      const vertex = sequence[i];
++      let at: { segment: number; fraction: number; point: CorridorXY };
++      if (i === 0) at = { segment: 0, fraction: 0, point: copy(q[0]) };
++      else if (i === last)
++        at = { segment: q.length - 2, fraction: 1, point: copy(q.at(-1)!) };
++      else if (fixed[i]) {
++        const k = q.findIndex(
++          (p, j) => j >= previous && same(p, vertices[vertex]),
++        );
++        if (k === -1) {
++          failed = "fixed-vertex-off-fit";
++          break;
++        }
++        at = {
++          ...position(Math.max(0, k - 1), k === 0 ? 0 : 1, q),
++          point: copy(q[k]),
++        };
++      } else {
++        const projection = onPolyline(q, vertices[vertex], previous);
++        if (!projection) {
++          failed = "projection";
++          break;
++        }
++        at = {
++          ...position(projection.segment, projection.fraction, q),
++          point: projection.point,
++        };
++      }
++      const shift = DMath.hypot(
++        at.point[0] - vertices[vertex][0],
++        at.point[1] - vertices[vertex][1],
++      );
++      if (shift > P.maxShiftFeet) {
++        failed = "shift";
++        break;
++      }
++      const prior = stationCuts.at(-1);
++      if (
++        prior &&
++        (at.segment < prior.segment ||
++          (at.segment === prior.segment && at.fraction < prior.fraction))
++      ) {
++        failed = "order";
++        break;
++      }
++      previous = at.segment;
++      // Destination branches at a vertex that changes are re-proposed.
++      if (shift > 0 || (i > 0 && i < last && !fixed[i]))
++        for (const chain of degree.get(vertex) ?? [])
++          if (
++            !runChains.has(chain) &&
++            spurEnd(chain, degree, receiving) !== undefined
++          )
++            spurs.add(chain);
++      const others = (degree.get(vertex) ?? []).filter(
++        (chain) => !runChains.has(chain) && !spurs.has(chain),
++      );
++      if (i > 0 && i < last && !fixed[i] && others.length === 0) {
++        removedStations.add(vertex);
++        continue;
++      }
++      if (shift > 0) moved.set(vertex, at.point);
++      stationCuts.push({ ...at, vertex, station: i });
++    }
++    if (failed) {
++      keep(failed);
++      continue;
++    }
++    // Door branches to re-propose: at removed or moved run vertices and at
++    // the ends of removed destination branches.
++    const spurEnds = new Set(
++      [...spurs].map((chain) => spurEnd(chain, degree, receiving)!),
++    );
++    const reattach = [
++      ...new Set(
++        [...removedStations, ...moved.keys(), ...spurEnds].flatMap(
++          (vertex) => receiving.get(vertex) ?? [],
++        ),
++      ),
++    ].sort();
++    // Neighbouring lanes follow their moved end vertices.
++    const neighbours = new Map<Chain, CorridorXY[]>();
++    for (const [vertex, point] of moved)
++      for (const chain of degree.get(vertex) ?? []) {
++        if (runChains.has(chain) || spurs.has(chain)) continue;
++        const points = (neighbours.get(chain) ?? chain.points).map(copy);
++        if (chain.from === vertex) points[0] = copy(point);
++        if (chain.to === vertex) points[points.length - 1] = copy(point);
++        neighbours.set(chain, points);
++      }
++    const fixedBranches = [...joins].flatMap(([id, join]) =>
++      reattach.includes(id)
++        ? []
++        : join.approach.slice(1).map((b, k) => [join.approach[k], b] as const),
++    );
++    const lanePoints = (chain: Chain) => neighbours.get(chain) ?? chain.points;
++    const segmentsOf = (points: readonly CorridorXY[]) =>
++      points.slice(1).map((b, k) => [points[k], b] as const);
++    const obstacles = [
++      ...[...live].flatMap((chain) =>
++        runChains.has(chain) || spurs.has(chain)
++          ? []
++          : segmentsOf(lanePoints(chain)),
++      ),
++      ...fixedBranches,
++      ...segmentsOf(q),
++    ];
++    const placements = new Map<
++      string,
++      {
++        segment: number;
++        fraction: number;
++        point: CorridorXY;
++        path: CorridorXY[];
++        /** Old join to `point`, when the checked branch is kept. */
++        connector?: CorridorXY[];
++      }
++    >();
++    for (const id of reattach) {
++      const terminal = terminalById.get(id)!;
++      const candidates: {
++        rank: number;
++        cost: number;
++        order: number;
++        segment: number;
++        proposal: CorridorApproachProposal;
++      }[] = [];
++      for (let k = 0; k < q.length - 1; k++)
++        for (const proposal of input.proposals(terminal, q[k], q[k + 1])) {
++          if (
++            DMath.hypot(
++              proposal.point[0] - terminal.point[0],
++              proposal.point[1] - terminal.point[1],
++            ) > input.maxApproachFeet
++          )
++            continue;
++          candidates.push({
++            rank: perpendicular(proposal.path, q[k], q[k + 1]) ? 0 : 1,
++            cost: proposal.cost,
++            order: shapeOrder[proposal.shape] ?? 4,
++            segment: k,
++            proposal,
++          });
++        }
++      candidates.sort(
++        (a, b) =>
++          a.rank - b.rank ||
++          a.cost - b.cost ||
++          a.order - b.order ||
++          a.segment - b.segment,
++      );
++      const blocking = [
++        ...obstacles,
++        ...[...placements.values()].flatMap(({ path, connector }) => [
++          ...segmentsOf(path),
++          ...(connector ? segmentsOf(connector) : []),
++        ]),
++      ];
++      const clear = (path: readonly CorridorXY[]) =>
++        !path
++          .slice(1)
++          .some((b, k) =>
++            blocking.some(([u, v]) => segmentsCross(path[k], b, u, v)),
++          );
++      let chosen: {
++        segment: number;
++        fraction: number;
++        point: CorridorXY;
++        path: CorridorXY[];
++        connector?: CorridorXY[];
++      } | null = null;
++      for (const candidate of candidates
++        .filter((c) => c.proposal.path.length <= MAX_APPROACH_POINTS)
++        .slice(0, MAX_BRANCH_PROPOSALS)) {
++        const path = candidate.proposal.path;
++        if (!clear(path) || !input.supported(path, id)) continue;
++        chosen = {
++          ...position(candidate.segment, candidate.proposal.fraction, q),
++          point: copy(candidate.proposal.point),
++          path: path.map(copy),
++        };
++        if (candidate.rank === 0) statistics.perpendicularBranches++;
++        break;
++      }
++      if (!chosen) {
++        // Keep the checked branch and its join; one short lane piece connects
++        // that join to the fitted run.
++        const old = joins.get(id)!.approach;
++        const end = old.at(-1)!;
++        // A checked branch that already crosses the fitted run ends there.
++        for (let j = 0; j < old.length - 1 && !chosen; j++)
++          for (let k = 0; k < q.length - 1 && !chosen; k++) {
++            const a = q[k],
++              b = q[k + 1];
++            if (!segmentsCross(old[j], old[j + 1], a, b)) continue;
++            const e: CorridorXY = [b[0] - a[0], b[1] - a[1]],
++              d: CorridorXY = [
++                old[j + 1][0] - old[j][0],
++                old[j + 1][1] - old[j][1],
++              ];
++            const fraction =
++              cross([old[j][0] - a[0], old[j][1] - a[1]], d) / cross(e, d);
++            const point: CorridorXY = [
++              a[0] + fraction * e[0],
++              a[1] + fraction * e[1],
++            ];
++            const path = [...old.slice(0, j + 1).map(copy), point];
++            // A prefix of the checked branch: only its support is rechecked;
++            // its contacts are judged by the complete-network topology.
++            if (input.supported(path, id)) {
++              chosen = {
++                ...position(k, fraction, q),
++                point,
++                path,
++              };
++              statistics.keptBranches++;
++            }
++          }
++        const projection = chosen ? null : onPolyline(q, end);
++        if (projection && projection.distance <= P.spurFeet) {
++          const connector: CorridorXY[] = [copy(end), projection.point];
++          const shared = [...placements.values()].find(
++            (p) => p.connector && same(p.connector[0], end),
++          );
++          if (
++            same(end, projection.point) ||
++            !!shared ||
++            (clear(connector) && input.supported(connector))
++          ) {
++            chosen = {
++              ...position(projection.segment, projection.fraction, q),
++              point: copy(projection.point),
++              path: old.map(copy),
++              ...(same(end, projection.point) ? {} : { connector }),
++            };
++            statistics.keptBranches++;
++          }
++        }
++      }
++      if (!chosen) {
++        failed = "door-branch";
++        break;
++      }
++      placements.set(id, chosen);
++    }
++    if (failed) {
++      keep(failed);
++      continue;
++    }
++    // Trim a run end that no longer receives anything.
++    const allCuts: Cut[] = [...stationCuts];
++    const nextVertex = vertices.length;
++    const newVertices: CorridorXY[] = [];
++    const vertexFor = (point: CorridorXY) => {
++      const existing = allCuts.find((cut) => same(cut.point, point));
++      return existing?.vertex;
++    };
++    for (const [, placement] of [...placements].sort(([a], [b]) =>
++      a.localeCompare(b),
++    )) {
++      if (vertexFor(placement.point) !== undefined) continue;
++      allCuts.push({
++        segment: placement.segment,
++        fraction: placement.fraction,
++        point: placement.point,
++        vertex: nextVertex + newVertices.length,
++      });
++      newVertices.push(copy(placement.point));
++    }
++    allCuts.sort(
++      (a, b) =>
++        a.segment - b.segment ||
++        a.fraction - b.fraction ||
++        (a.station ?? Infinity) - (b.station ?? Infinity),
++    );
++    // Distinct vertices may not coincide.
++    if (
++      allCuts.some((cut, i) => i > 0 && same(cut.point, allCuts[i - 1].point))
++    ) {
++      keep("coincident-junctions");
++      continue;
++    }
++    const usedAt = (cut: Cut) =>
++      [...placements.values()].some((p) => same(p.point, cut.point)) ||
++      (receiving.get(cut.vertex) ?? []).some((id) => !reattach.includes(id)) ||
++      (degree.get(cut.vertex) ?? []).some(
++        (chain) => !runChains.has(chain) && !spurs.has(chain),
++      );
++    let trimmed = 0;
++    while (
++      allCuts.length > 2 &&
++      allCuts[0].station === 0 &&
++      !usedAt(allCuts[0])
++    ) {
++      allCuts.shift();
++      trimmed++;
++    }
++    while (
++      allCuts.length > 2 &&
++      allCuts.at(-1)!.station === last &&
++      !usedAt(allCuts.at(-1)!)
++    ) {
++      allCuts.pop();
++      trimmed++;
++    }
++    // A station vertex keeps its identity unless it moved.
++    const remap = new Map<number, number>();
++    for (const cut of allCuts)
++      if (cut.station !== undefined && moved.has(cut.vertex)) {
++        const id = nextVertex + newVertices.length;
++        newVertices.push(copy(cut.point));
++        remap.set(cut.vertex, id);
++      }
++    const idOf = (vertex: number) => remap.get(vertex) ?? vertex;
++    const pieces: Chain[] = [];
++    for (let i = 1; i < allCuts.length; i++) {
++      const a = allCuts[i - 1],
++        b = allCuts[i];
++      const points: CorridorXY[] = [copy(a.point)];
++      for (let k = a.segment + 1; k <= b.segment; k++)
++        if (!same(q[k], points.at(-1)!) && !same(q[k], b.point))
++          points.push(copy(q[k]));
++      points.push(copy(b.point));
++      pieces.push({ from: idOf(a.vertex), to: idOf(b.vertex), points });
++    }
++    // Kept branches: their old join becomes a new dead-end vertex.
++    const connectorEnds = new Map<string, number>();
++    for (const [, placement] of [...placements].sort(([a], [b]) =>
++      a.localeCompare(b),
++    )) {
++      if (!placement.connector) continue;
++      const key = `${placement.connector[0][0]},${placement.connector[0][1]}`;
++      if (connectorEnds.has(key)) continue;
++      const vertex = nextVertex + newVertices.length;
++      newVertices.push(copy(placement.connector[0]));
++      connectorEnds.set(key, vertex);
++      pieces.push({
++        from: vertex,
++        to: idOf(vertexFor(placement.point)!),
++        points: placement.connector.map(copy),
++      });
++    }
++    const piecesSupported = pieces.every((piece) =>
++      piece.points
++        .slice(1)
++        .every((p, k) => input.supported([piece.points[k], p])),
++    );
++    if (!piecesSupported) {
++      keep("unsupported-run");
++      continue;
++    }
++    const neighboursSupported = [...neighbours].every(([chain, points]) => {
++      const changedSegments = points
++        .slice(1)
++        .map((p, k) => [points[k], p] as [CorridorXY, CorridorXY])
++        .filter(
++          ([a, b], k) =>
++            !same(a, chain.points[k]) || !same(b, chain.points[k + 1]),
++        );
++      return changedSegments.every((segment) => input.supported(segment));
++    });
++    if (!neighboursSupported) {
++      keep("unsupported-neighbour");
++      continue;
++    }
++    const affected = new Set(placements.keys());
++    const beforeLengths = requiredLengths(affected);
++    // Trial network for the topology acceptance.
++    const saved = {
++      live: [...live],
++      chains: new Map(
++        [...live].map((chain) => [chain, { ...chain, points: chain.points }]),
++      ),
++      joins: new Map(joins),
++      vertices: vertices.length,
++    };
++    vertices.push(...newVertices);
++    for (const chain of runChains) live.delete(chain);
++    for (const chain of spurs) live.delete(chain);
++    for (const [chain, points] of neighbours) {
++      chain.points = points;
++      chain.from = idOf(chain.from);
++      chain.to = idOf(chain.to);
++    }
++    for (const piece of pieces) live.add(piece);
++    const cutVertex = (point: CorridorXY) =>
++      idOf(allCuts.find((cut) => same(cut.point, point))!.vertex);
++    for (const [id, placement] of placements)
++      joins.set(id, {
++        vertex: placement.connector
++          ? connectorEnds.get(
++              `${placement.connector[0][0]},${placement.connector[0][1]}`,
++            )!
++          : cutVertex(placement.point),
++        approach: placement.path,
++      });
++    // Keep the joins map in identity order.
++    const ordered = [...joins].sort(([a], [b]) => a.localeCompare(b));
++    joins.clear();
++    for (const [id, join] of ordered) joins.set(id, join);
++    // Re-order live lanes deterministically (old lanes first, then pieces).
++    const after = topologyKeys();
++    const afterLengths = requiredLengths(affected);
++    const detour = [...beforeLengths].some(
++      ([key, value]) =>
++        afterLengths.get(key)! > value * P.detourRatio + P.detourFeet,
++    );
++    const accepted = !detour && [...after].every((key) => topology.has(key));
++    if (!accepted) {
++      vertices.length = saved.vertices;
++      live.clear();
++      for (const chain of saved.live) {
++        Object.assign(chain, saved.chains.get(chain));
++        live.add(chain);
++      }
++      joins.clear();
++      for (const [id, join] of saved.joins) joins.set(id, join);
++      keep(detour ? "detour" : "topology");
++      continue;
++    }
++    topology = after;
++    changed = true;
++    const unchanged =
++      pieces.length === stroke.steps.length &&
++      moved.size === 0 &&
++      removedStations.size === 0 &&
++      spurs.size === 0 &&
++      placements.size === 0;
++    if (unchanged) statistics.unchangedRuns++;
++    statistics.fittedRuns++;
++    statistics.straightPieces += q.length - 1;
++    statistics.pieceHistogram[String(q.length - 1)] =
++      (statistics.pieceHistogram[String(q.length - 1)] ?? 0) + 1;
++    statistics.movedVertices += moved.size;
++    statistics.removedStations += removedStations.size;
++    statistics.removedSpurs += spurs.size;
++    statistics.trimmedEnds += trimmed;
++    statistics.reattachedTerminals += placements.size;
++    for (const piece of pieces) placed.add(piece.from).add(piece.to);
++  }
++  return {
++    changed,
++    vertices,
++    chains: [...live],
++    joins,
++    statistics,
++  };
++}
+diff --git a/app/indoor-project/prepare-corridor-routing.ts b/app/indoor-project/prepare-corridor-routing.ts
+index 706689e..d550376 100644
+--- a/app/indoor-project/prepare-corridor-routing.ts
++++ b/app/indoor-project/prepare-corridor-routing.ts
+@@ -45,12 +45,62 @@ export type CorridorCellCompilation = {
+   /** Guides whose shaped-approach network was refused and which therefore
+    * use the legacy approach network's checked geometry (same exact checks). */
+   legacyApproachFallbackEdgeIds?: string[];
++  /** Straight runs were withdrawn for this cell: with them, its legacy
++   * fallback guides crossed more of its other guides. */
++  straightRunsWithdrawn?: boolean;
+   legacyNetworks?: ReturnType<
+     ReturnType<typeof createCorridorCenterline>["statistics"]
+   >[];
+   seconds: number;
+ };
+ 
++/** Interior crossings (by more than a micro-foot) between the legacy
++ * fallback guides and the other guides of one cell: a drawing diagnostic. */
++function fallbackGuideCrossings(result: {
++  outcomes: {
++    edge: { id: string };
++    resolved: { ok: boolean; pointsFeet?: [number, number, number][] };
++  }[];
++  fallbackIds: readonly string[];
++}) {
++  const fallback = new Set(result.fallbackIds);
++  type Segment = [number, number, number, number];
++  const segments = (points: [number, number, number][]) =>
++    points
++      .slice(1)
++      .map((b, i): Segment => [points[i][0], points[i][1], b[0], b[1]]);
++  const own: Segment[] = [],
++    other: Segment[] = [];
++  for (const { edge, resolved } of result.outcomes)
++    if (resolved.ok && resolved.pointsFeet)
++      (fallback.has(edge.id) ? own : other).push(
++        ...segments(resolved.pointsFeet),
++      );
++  const side = (a: number[], b: number[], c: number[]) =>
++    (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
++  const crosses = (s: Segment, t: Segment) => {
++    const p = [s[0], s[1]],
++      q = [s[2], s[3]],
++      a = [t[0], t[1]],
++      b = [t[2], t[3]];
++    const m = 1e-6 * Math.hypot(b[0] - a[0], b[1] - a[1]),
++      n = 1e-6 * Math.hypot(q[0] - p[0], q[1] - p[1]);
++    const dp = side(a, b, p),
++      dq = side(a, b, q),
++      da = side(p, q, a),
++      db = side(p, q, b);
++    return (
++      dp * dq < 0 &&
++      da * db < 0 &&
++      Math.min(Math.abs(dp), Math.abs(dq)) > m &&
++      Math.min(Math.abs(da), Math.abs(db)) > n
++    );
++  };
++  let count = 0;
++  for (const s of own) for (const t of other) if (crosses(s, t)) count++;
++  return count;
++}
++
+ /** `data` is a privately cloned routing-worker snapshot. Source geometry and
+  * existing graph links are never edited. The current independent physical cell
+  * and own door halves qualify a two-foot planar guide; runtime crossing/access
+@@ -155,15 +205,19 @@ export async function prepareSharedCorridorRouting(
+         };
+       });
+       const proposalRings = nativeExactPartsForProposals(physical);
+-      const build = (shapedApproaches: boolean) =>
++      const build = (
++        shapedApproaches: boolean,
++        straightRuns = parameters.straightRuns,
++      ) =>
+         proposalRings.map((rings) =>
+           createCorridorCenterline(rings, terminals, support.supported, {
+             ...parameters,
+             shapedApproaches,
++            straightRuns,
+             requiredEdges: edges,
+           }),
+         );
+-      const networks = build(parameters.shapedApproaches);
++      let networks = build(parameters.shapedApproaches);
+       // Built only if a shaped network refuses an edge. Its geometry is the
+       // unchanged legacy proposal and passes the same final checks below.
+       let legacy: typeof networks | null = null;
+@@ -219,16 +273,45 @@ export async function prepareSharedCorridorRouting(
+           return { ok: false, reason: "original-terminal-mismatch" } as const;
+         return { ok: true, candidate, pointsFeet } as const;
+       };
+-      for (const edge of edges) {
+-        let resolved = resolve(networks, edge);
+-        if (!resolved.ok && parameters.shapedApproaches) {
+-          legacy ??= build(false);
+-          const fallback = resolve(legacy, edge);
+-          if (fallback.ok) {
+-            resolved = fallback;
+-            (report.legacyApproachFallbackEdgeIds ??= []).push(edge.id);
++      const resolveAll = (primary: typeof networks) => {
++        const fallbackIds: string[] = [];
++        const outcomes = edges.map((edge) => {
++          let resolved = resolve(primary, edge);
++          if (!resolved.ok && parameters.shapedApproaches) {
++            legacy ??= build(false);
++            const fallback = resolve(legacy, edge);
++            if (fallback.ok) {
++              resolved = fallback;
++              fallbackIds.push(edge.id);
++            }
++          }
++          return { edge, resolved };
++        });
++        return { outcomes, fallbackIds };
++      };
++      let result = resolveAll(networks);
++      // Guides from the legacy fallback come from another network. If they
++      // cross the straight-run guides, compile the cell again without
++      // straight runs (the previous compiler) and keep whichever crosses less.
++      if (
++        parameters.shapedApproaches &&
++        parameters.straightRuns &&
++        result.fallbackIds.length > 0
++      ) {
++        const current = fallbackGuideCrossings(result);
++        if (current > 0) {
++          const plainNetworks = build(true, false);
++          const plain = resolveAll(plainNetworks);
++          if (fallbackGuideCrossings(plain) < current) {
++            networks = plainNetworks;
++            result = plain;
++            report.straightRunsWithdrawn = true;
+           }
+         }
++      }
++      if (result.fallbackIds.length > 0)
++        report.legacyApproachFallbackEdgeIds = result.fallbackIds;
++      for (const { edge, resolved } of result.outcomes) {
+         if (!resolved.ok) {
+           report.refusedEdges.push({
+             edgeId: edge.id,
+@@ -250,8 +333,10 @@ export async function prepareSharedCorridorRouting(
+         report.compiledEdges++;
+       }
+       report.networks = networks.map((network) => network.statistics());
+-      if (legacy)
+-        report.legacyNetworks = legacy.map((network) => network.statistics());
++      // Assigned inside resolveAll; TypeScript cannot see that.
++      const built = legacy as typeof networks | null;
++      if (built)
++        report.legacyNetworks = built.map((network) => network.statistics());
+     });
+     report.seconds = (performance.now() - started) / 1000;
+     reports.push(report);
+diff --git a/app/indoor-project/prepared-display-engine-binding.ts b/app/indoor-project/prepared-display-engine-binding.ts
+index 683fc5b..afe8973 100644
+--- a/app/indoor-project/prepared-display-engine-binding.ts
++++ b/app/indoor-project/prepared-display-engine-binding.ts
+@@ -1,4 +1,4 @@
+ // Generated from the complete local preparation module graph and dependency lock.
+ // Refresh through Vite or scripts/indoor/prepared-display-engine-binding.ts.
+ export const PREPARED_DISPLAY_ENGINE_SHA256 =
+-  "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334";
++  "18b7fc26361b61c12786df95b3bd30d7d154b388a004fecbbce972600b4bd7df";
+diff --git a/app/indoor-project/published-route-runtime-binding.ts b/app/indoor-project/published-route-runtime-binding.ts
+index 2595a02..0acca0f 100644
+--- a/app/indoor-project/published-route-runtime-binding.ts
++++ b/app/indoor-project/published-route-runtime-binding.ts
+@@ -1,3 +1,3 @@
+ // Generated from the actual route worker/validator module closure and lock.
+ export const PUBLISHED_ROUTE_RUNTIME_SHA256 =
+-  "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399";
++  "a160c7b8fbba6b46b5009857c3461e5b78413da69f7bb2144d28d2374944974f";
+diff --git a/app/indoor-project/published-visitor-plan-runtime-binding.ts b/app/indoor-project/published-visitor-plan-runtime-binding.ts
+index 12dd915..5b6026b 100644
+--- a/app/indoor-project/published-visitor-plan-runtime-binding.ts
++++ b/app/indoor-project/published-visitor-plan-runtime-binding.ts
+@@ -1,3 +1,3 @@
+ // Generated from the actual plan projection/loader/renderer closure and lock.
+ export const PUBLISHED_VISITOR_PLAN_RUNTIME_SHA256 =
+-  "4705ec62859acf01d17265435d0638a5405d385250bf66acacb7d0daddd0bac2";
++  "79b06f9f77e1c3ba061bd48c401d9c956198a26fe45822ead7276418dbb6dedc";
+diff --git a/scripts/indoor/compile-corridor-candidates.ts b/scripts/indoor/compile-corridor-candidates.ts
+index f2ea7b2..98b6010 100644
+--- a/scripts/indoor/compile-corridor-candidates.ts
++++ b/scripts/indoor/compile-corridor-candidates.ts
+@@ -27,7 +27,7 @@ import {
+ } from "./lib/corridor-candidate-checkpoints";
+ 
+ const usage =
+-  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--legacy-approaches] [--resume | --merge candidate-directory ...]";
++  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--legacy-approaches] [--without-straight-runs] [--resume | --merge candidate-directory ...]";
+ const [input, output, ...args] = process.argv.slice(2);
+ if (!input || !output) throw new Error(usage);
+ const selectedIds: string[] = [],
+@@ -35,7 +35,8 @@ const selectedIds: string[] = [],
+ let resume = false;
+ const parameters = { ...CORRIDOR_COMPILER_PARAMETERS };
+ let deviationSpecified = false,
+-  legacyApproaches = false;
++  legacyApproaches = false,
++  withoutRuns = false;
+ for (let i = 0; i < args.length; i++) {
+   const flag = args[i];
+   if (flag === "--resume" && !resume) resume = true;
+@@ -44,6 +45,10 @@ for (let i = 0; i < args.length; i++) {
+     // terminal approach proposals. It is bound in every checkpoint.
+     parameters.shapedApproaches = false;
+     legacyApproaches = true;
++  } else if (flag === "--without-straight-runs" && !withoutRuns) {
++    // The previous compiler's networks, separately bound in every checkpoint.
++    parameters.straightRuns = false;
++    withoutRuns = true;
+   } else if (
+     flag === "--max-deviation-feet" &&
+     !deviationSpecified &&
+diff --git a/scripts/indoor/corridor-candidates.md b/scripts/indoor/corridor-candidates.md
+index 08125ce..22ec7d2 100644
+--- a/scripts/indoor/corridor-candidates.md
++++ b/scripts/indoor/corridor-candidates.md
+@@ -80,3 +80,37 @@ zigzag reversals (a turn over 120 degrees with an adjacent leg of at most two
+ metres, split into approach/join and core), approach elbows, core dead ends and
+ dead ends at arrival points. These are descriptive drawing diagnostics, never
+ physical predicates or route acceptance.
++
++## Straight corridor runs
++
++`straightRuns` (default on, with shaped approaches) runs after join sliding
++(`app/indoor-project/corridor-run-fit.ts`). The checked network is decomposed
++into runs: lanes joined through vertices whose straightest continuation
++deflects by less than 30 degrees. Short dead-end lanes that only receive door
++branches do not split or end a run, and terminal joins on a run are not
++junctions. Longest run first, each run is fitted with one straight line (or up
++to eight straight pieces, split at its largest deviation) through its
++cross-section midpoints; a vertex an earlier run placed, and a run end where
++another run passes straight through, stay fixed. Junctions on the run are
++projected onto the fit, and every door branch of the run is proposed again
++against the fitted run, preferring one that meets it within 10 degrees of a
++right angle (the join slides along the run). A branch that cannot be proposed
++again keeps its exact checked approach and join, with one short lane piece to
++the run.
++
++A run is replaced only if every new run piece, every changed neighbouring
++lane piece and every moved door branch passes the same exact support, the
++complete network (all lanes and door branches) gains no topology contact (a
++contact is identified by its approach-conflict key and its exact rational
++location, so a run may keep a contact the network already had but never add
++or move one),
++and no required original edge's shared-lane route grows by more than 15 % plus
++3 ft. Otherwise that run keeps its checked geometry and the next run is tried.
++Loops, islands and genuine corners stay; terminals, endpoints and ownership are
++unchanged. `--without-straight-runs` reproduces the previous compiler as a
++separately bound experiment. Each network's `statistics().straightRuns` records
++fitted and kept runs (by reason), pieces, moved junctions, re-proposed and
++perpendicular door branches. If a cell needs legacy fallback guides (built
++from another network) and they cross its straight-run guides more than they
++cross the guides compiled without straight runs, the cell is compiled without
++straight runs and its report records `straightRunsWithdrawn`.
+diff --git a/tests/unit/corridor-chain-fit.test.ts b/tests/unit/corridor-chain-fit.test.ts
+index 364adad..7367aef 100644
+--- a/tests/unit/corridor-chain-fit.test.ts
++++ b/tests/unit/corridor-chain-fit.test.ts
+@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
+ import test from "node:test";
+ import {
+   corridorChainTopologyConflicts,
++  corridorChainTopologyContacts,
+   fitCheckedCorridorChains,
+   type CorridorChainPoint,
+   type CorridorFitChain,
+@@ -520,3 +521,47 @@ test("a previous overlap cannot authorize a larger new overlap between the same
+   assert.ok(result.statistics.retainedOriginalContacts > 0);
+   assert.ok(result.statistics.newTopologyContacts > 0);
+ });
++
++test("topology contacts report each offending pair with its exact location", () => {
++  const input: CorridorFitChain[] = [
++    {
++      id: "a",
++      from: "p",
++      to: "q",
++      points: [
++        [0, 0],
++        [4, 4],
++      ],
++    },
++    {
++      id: "b",
++      from: "r",
++      to: "s",
++      points: [
++        [0, 4],
++        [4, 0],
++      ],
++    },
++    // Shares node q with a: an allowed endpoint touch.
++    {
++      id: "c",
++      from: "q",
++      to: "t",
++      points: [
++        [4, 4],
++        [8, 4],
++      ],
++    },
++  ];
++  const contacts = corridorChainTopologyContacts(input);
++  assert.equal(contacts.length, 1);
++  assert.deepEqual(contacts[0].pair, [0, 1]);
++  // The crossing at (2, 2), in exact rational form.
++  assert.equal(contacts[0].at, "2/1,2/1:2/1,2/1");
++  const moved = structuredClone(input);
++  moved[1].points = [
++    [0, 4],
++    [5, 0],
++  ];
++  assert.notEqual(corridorChainTopologyContacts(moved)[0].at, contacts[0].at);
++});
+diff --git a/tests/unit/corridor-run-fit.test.ts b/tests/unit/corridor-run-fit.test.ts
+new file mode 100644
+index 0000000..e537564
+--- /dev/null
++++ b/tests/unit/corridor-run-fit.test.ts
+@@ -0,0 +1,276 @@
++import test from "node:test";
++import assert from "node:assert/strict";
++import {
++  createCorridorCenterline,
++  type CorridorXY,
++} from "../../app/indoor-project/corridor-centerline";
++import {
++  branchedCorridorFixture,
++  clearance,
++  rect,
++  type FixtureTerminal,
++} from "./corridor-run-fixture";
++
++const turn = (a: CorridorXY, b: CorridorXY, c: CorridorXY) => {
++  const u = [b[0] - a[0], b[1] - a[1]],
++    v = [c[0] - b[0], c[1] - b[1]];
++  return (
++    (Math.abs(
++      Math.atan2(u[0] * v[1] - u[1] * v[0], u[0] * v[0] + u[1] * v[1]),
++    ) *
++      180) /
++    Math.PI
++  );
++};
++const turns = (path: readonly CorridorXY[]) =>
++  path
++    .filter(
++      (p, i) => i === 0 || p[0] !== path[i - 1][0] || p[1] !== path[i - 1][1],
++    )
++    .flatMap((c, i, all) => (i >= 2 ? [turn(all[i - 2], all[i - 1], c)] : []));
++/** Angle (0-90) between the last leg of a door branch and the x axis. */
++const angleToHall = (approach: readonly CorridorXY[]) => {
++  const a = approach.at(-2)!,
++    b = approach.at(-1)!;
++  const degrees =
++    (Math.abs(Math.atan2(b[1] - a[1], b[0] - a[0])) * 180) / Math.PI;
++  return Math.min(degrees, 180 - degrees);
++};
++
++const hallDoors = (terminals: readonly FixtureTerminal[]) =>
++  terminals.filter((t) => /^[sn]\d+$/.test(t.id));
++
++function build(
++  fixture: ReturnType<typeof branchedCorridorFixture>,
++  options: { straightRuns?: boolean } = {},
++  supported?: (path: CorridorXY[], terminal?: string) => boolean,
++  terminals: readonly FixtureTerminal[] = fixture.terminals,
++) {
++  const check = clearance(fixture.parts);
++  return createCorridorCenterline(
++    fixture.rings,
++    terminals,
++    supported ?? ((path) => check(path)),
++    {
++      ...options,
++      requiredEdges: fixture.terminals
++        .slice(1)
++        .map((t) => ({ from: fixture.terminals[0].id, to: t.id })),
++    },
++  );
++}
++
++test("a branched hall becomes straight runs between real junctions with perpendicular door branches", () => {
++  const fixture = branchedCorridorFixture();
++  const before = JSON.stringify(fixture.terminals);
++  const check = clearance(fixture.parts);
++  const control = build(fixture, { straightRuns: false });
++  const network = build(fixture);
++  const runs = network.statistics().straightRuns!;
++  assert.ok(runs.fittedRuns >= 3, JSON.stringify(runs));
++  assert.equal(network.statistics().missingTerminals, 0);
++  // Every route: exact support and the original terminals as endpoints.
++  let bendsAfter = 0,
++    bendsBefore = 0;
++  for (const a of fixture.terminals)
++    for (const b of fixture.terminals) {
++      if (a.id >= b.id) continue;
++      const route = network.routeDetails(a.id, b.id)!;
++      assert.ok(route, `${a.id} -> ${b.id}`);
++      assert.ok(check(route.points), `${a.id} -> ${b.id} support`);
++      assert.deepEqual(route.points[0], a.point);
++      assert.deepEqual(route.points.at(-1), b.point);
++      // Original terminal approaches keep at most one elbow (checkpoint rule).
++      assert.ok(route.hallwayJoins[0] <= 2);
++      assert.ok(route.points.length - 1 - route.hallwayJoins[1] <= 2);
++      assert.deepEqual(network.route(b.id, a.id), route.points.toReversed());
++      const core = (r: typeof route) =>
++        r.points.slice(r.hallwayJoins[0], r.hallwayJoins[1] + 1);
++      bendsAfter += turns(core(route)).filter((t) => t > 5).length;
++      bendsBefore += turns(core(control.routeDetails(a.id, b.id)!)).filter(
++        (t) => t > 5,
++      ).length;
++    }
++  assert.ok(bendsAfter < bendsBefore, `${bendsAfter} < ${bendsBefore}`);
++  // The main hall is one straight centre line through its junctions, and
++  // every hall door meets it at a right angle.
++  const doors = hallDoors(fixture.terminals);
++  const west = doors.find((t) => t.id === "s12")!,
++    east = doors.find((t) => t.id === "s104")!;
++  const hall = network.routeDetails(west.id, east.id)!;
++  const lane = hall.points.slice(
++    hall.hallwayJoins[0],
++    hall.hallwayJoins[1] + 1,
++  );
++  assert.ok(
++    turns(lane).every((t) => t < 0.5),
++    JSON.stringify(lane),
++  );
++  assert.ok(lane.every((p) => Math.abs(p[1] - 4) <= 0.35));
++  let perpendicular = 0;
++  for (const door of doors) {
++    const route = network.routeDetails(
++      door.id,
++      west.id === door.id ? east.id : west.id,
++    )!;
++    const approach = route.points.slice(0, route.hallwayJoins[0] + 1);
++    if (Math.abs(90 - angleToHall(approach)) <= 10) perpendicular++;
++    // The join is on the fitted hall line.
++    assert.ok(Math.abs(approach.at(-1)![1] - 4) <= 0.35);
++  }
++  assert.equal(perpendicular, doors.length);
++  // A genuine corner is kept: one bend near (116, 4), straight elsewhere.
++  const corner = network.routeDetails(west.id, "corner")!;
++  const cornerLane = corner.points.slice(
++    corner.hallwayJoins[0],
++    corner.hallwayJoins[1] + 1,
++  );
++  const cornerTurns = turns(cornerLane);
++  assert.equal(cornerTurns.filter((t) => t > 30).length, 1);
++  assert.ok(cornerTurns.filter((t) => t <= 30).every((t) => t < 0.5));
++  const bend = cornerLane.find(
++    (_p, i) =>
++      i > 0 &&
++      i < cornerLane.length - 1 &&
++      turn(cornerLane[i - 1], cornerLane[i], cornerLane[i + 1]) > 30,
++  )!;
++  assert.ok(Math.abs(bend[0] - 116) <= 1 && Math.abs(bend[1] - 4) <= 1);
++  // Side corridors stay connected through their junctions.
++  for (const side of ["up", "down"]) {
++    const route = network.routeDetails(west.id, side)!;
++    assert.ok(route && check(route.points));
++  }
++  assert.equal(JSON.stringify(fixture.terminals), before);
++  // Deterministic in terminal order.
++  const reversed = build(
++    fixture,
++    {},
++    undefined,
++    fixture.terminals.toReversed(),
++  );
++  assert.deepEqual(reversed.routeDetails(west.id, "corner"), corner);
++});
++
++test("both lanes around the lobby island survive run fitting; a blocked side uses the other", () => {
++  const unblocked = branchedCorridorFixture();
++  const network = build(unblocked);
++  const side = (route: CorridorXY[]) =>
++    route.slice(1).flatMap((b, i) => {
++      const a = route[i];
++      if (Math.min(a[0], b[0]) > -23 || Math.max(a[0], b[0]) < -23) return [];
++      if (a[0] === b[0]) return [a[1], b[1]];
++      return [a[1] + ((b[1] - a[1]) * (-23 - a[0])) / (b[0] - a[0])];
++    });
++  // Each lobby door uses its own side of the island: the loop is kept.
++  const north = side(network.route("lobby-n", "s12")!),
++    south = side(network.route("lobby-s", "s12")!);
++  assert.ok(north.length > 0 && north.every((y) => y > 8));
++  assert.ok(south.length > 0 && south.every((y) => y < 0));
++  for (const blockTop of [true, false]) {
++    const fixture = branchedCorridorFixture([
++      rect(-31, blockTop ? 8 : -8, 16, 8),
++    ]);
++    const blocked = build(fixture);
++    const path = blocked.route("lobby-w", "s12")!;
++    assert.ok(path);
++    assert.ok(clearance(fixture.parts)(path));
++    const crossing = side(path);
++    assert.ok(crossing.length > 0);
++    assert.ok(crossing.every((y) => (blockTop ? y < 0 : y > 8)));
++    assert.deepEqual(
++      path[0],
++      fixture.terminals.find((t) => t.id === "lobby-w")!.point,
++    );
++  }
++});
++
++test("a door branch that cannot be re-proposed keeps its exact checked branch on a straightened run", () => {
++  const fixture = branchedCorridorFixture();
++  const check = clearance(fixture.parts);
++  const control = build(fixture, { straightRuns: false });
++  // Only the already chosen branch of door "up" is supported.
++  const chosen = JSON.stringify(control.joins.get("up")!.approach);
++  const strict = (path: CorridorXY[], terminal?: string) =>
++    check(path) && (terminal !== "up" || JSON.stringify(path) === chosen);
++  const network = build(fixture, {}, strict);
++  const runs = network.statistics().straightRuns!;
++  assert.ok(runs.keptBranches >= 1, JSON.stringify(runs));
++  assert.ok(runs.fittedRuns >= 3);
++  const route = network.routeDetails("s12", "up")!;
++  assert.ok(check(route.points));
++  assert.equal(
++    JSON.stringify(route.points.slice(route.hallwayJoins[1]).toReversed()),
++    chosen,
++  );
++  // The hall is still one straight line.
++  const hall = network.routeDetails("s12", "s104")!;
++  const lane = hall.points.slice(
++    hall.hallwayJoins[0],
++    hall.hallwayJoins[1] + 1,
++  );
++  assert.ok(turns(lane).every((t) => t < 0.5));
++});
++
++test("a run whose straight proposal fails exact support keeps its checked geometry; neighbouring runs are still fitted", () => {
++  const fixture = branchedCorridorFixture();
++  const check = clearance(fixture.parts);
++  // Every lane piece the unfitted network checked stays supported; any new
++  // lane piece lying wholly inside the main hall is refused (a hard hall).
++  const checked = new Set<string>();
++  const control = build(fixture, { straightRuns: false }, (path, terminal) => {
++    const valid = check(path);
++    if (valid && terminal === undefined) checked.add(JSON.stringify(path));
++    return valid;
++  });
++  const inHall = (p: CorridorXY) =>
++    p[0] > 0 && p[0] < 112 && p[1] >= 0 && p[1] <= 8;
++  const hard = (path: CorridorXY[], terminal?: string) =>
++    check(path) &&
++    (terminal !== undefined ||
++      checked.has(JSON.stringify(path)) ||
++      !path.every(inHall));
++  const network = build(fixture, {}, hard);
++  const runs = network.statistics().straightRuns!;
++  assert.ok((runs.keptRuns["unsupported-run"] ?? 0) >= 1, JSON.stringify(runs));
++  assert.ok(runs.fittedRuns >= 2, JSON.stringify(runs));
++  // The hall and its door branches are exactly the checked ones.
++  for (const [a, b] of [
++    ["s12", "s104"],
++    ["n17", "corner"],
++  ])
++    assert.deepEqual(network.routeDetails(a, b), control.routeDetails(a, b));
++  // The side corridors are straight from their hall junction to their door.
++  for (const side of ["up", "down"]) {
++    const route = network.routeDetails("s12", side)!;
++    assert.ok(check(route.points));
++    const lane = route.points.slice(
++      route.hallwayJoins[0],
++      route.hallwayJoins[1] + 1,
++    );
++    const junction = lane.findLastIndex((p) => Math.abs(p[1] - 4) <= 3);
++    const corridor = lane.slice(junction);
++    assert.ok(corridor.length >= 2, JSON.stringify(lane));
++    assert.ok(
++      turns(corridor).every((t) => t < 0.5),
++      JSON.stringify(lane),
++    );
++    const [a, b] = [corridor[0], corridor.at(-1)!];
++    assert.ok(Math.abs(b[0] - a[0]) < 0.05 * Math.abs(b[1] - a[1]));
++  }
++});
++
++test("run fitting is off with legacy approaches and when disabled", () => {
++  const fixture = branchedCorridorFixture();
++  assert.equal(
++    build(fixture, { straightRuns: false }).statistics().straightRuns,
++    null,
++  );
++  const check = clearance(fixture.parts);
++  const legacy = createCorridorCenterline(
++    fixture.rings,
++    fixture.terminals,
++    (path) => check(path),
++    { shapedApproaches: false },
++  );
++  assert.equal(legacy.statistics().straightRuns ?? null, null);
++});
+diff --git a/tests/unit/corridor-run-fixture.ts b/tests/unit/corridor-run-fixture.ts
+new file mode 100644
+index 0000000..3adf43f
+--- /dev/null
++++ b/tests/unit/corridor-run-fixture.ts
+@@ -0,0 +1,113 @@
++import type { CorridorXY } from "../../app/indoor-project/corridor-centerline";
++import {
++  nativeRationalOverlay,
++  type NativeRationalParts,
++} from "../../app/indoor-project/native-rational-overlay";
++import {
++  nativeExactPartsForProposals,
++  nativeRationalFootprintSupported,
++  nativeRationalPathSupported,
++} from "../../app/indoor-project/native-exact-planar-topology";
++
++export const rect = (
++  x: number,
++  y: number,
++  w: number,
++  h: number,
++): CorridorXY[] => [
++  [x, y],
++  [x + w, y],
++  [x + w, y + h],
++  [x, y + h],
++];
++
++/** Exact two-foot strip support against native-style rational parts. */
++export function clearance(parts: NativeRationalParts) {
++  return (path: CorridorXY[]) =>
++    path.slice(1).every((b, i) => {
++      const a = path[i],
++        dx = b[0] - a[0],
++        dy = b[1] - a[1],
++        length = Math.hypot(dx, dy);
++      if (length === 0) return nativeRationalPathSupported([a, b], parts);
++      const nx = -dy / length,
++        ny = dx / length;
++      const footprint = nativeRationalOverlay("union", [
++        [
++          [
++            [a[0] + nx, a[1] + ny],
++            [b[0] + nx, b[1] + ny],
++            [b[0] - nx, b[1] - ny],
++            [a[0] - nx, a[1] - ny],
++          ],
++        ],
++      ]);
++      return nativeRationalFootprintSupported(footprint, parts);
++    });
++}
++
++export type FixtureTerminal = {
++  id: string;
++  point: CorridorXY;
++  approachDirection?: CorridorXY;
++};
++
++/** A branched corridor component: a 120 ft main hall (centre y = 4) with door
++ * recesses on both walls, a side corridor up at x = 40-47, a side corridor
++ * down at x = 80-87, a genuine corner at the east end (up to y = 40), and a
++ * lobby at the west end with an island (a loop around an obstacle). */
++export function branchedCorridorFixture(blocked: CorridorXY[][] = []) {
++  const doors: FixtureTerminal[] = [];
++  const pieces: CorridorXY[][][] = [
++    [rect(0, 0, 120, 8)],
++    [rect(40, 8, 7, 30)],
++    [rect(80, -30, 7, 30)],
++    [rect(112, 8, 8, 32)],
++    [rect(-40, -8, 40, 24)],
++  ];
++  const bottom = [12, 24, 31, 55, 66, 72, 95, 104];
++  const top = [17, 28, 60, 70, 99];
++  for (const x of bottom) {
++    pieces.push([rect(x - 1.5, -1, 3, 1)]);
++    doors.push({
++      id: `s${x}`,
++      point: [x, -0.5],
++      approachDirection: [0, 1],
++    });
++  }
++  for (const x of top) {
++    pieces.push([rect(x - 1.5, 8, 3, 1)]);
++    doors.push({ id: `n${x}`, point: [x, 8.5], approachDirection: [0, -1] });
++  }
++  // Doors in the side corridors, the corner corridor and the lobby.
++  pieces.push([rect(47, 24.5, 1, 3)]);
++  doors.push({ id: "up", point: [47.5, 26], approachDirection: [-1, 0] });
++  pieces.push([rect(79, -20.5, 1, 3)]);
++  doors.push({ id: "down", point: [79.5, -19], approachDirection: [1, 0] });
++  pieces.push([rect(114.5, 40, 3, 1)]);
++  doors.push({ id: "corner", point: [116, 40.5], approachDirection: [0, -1] });
++  pieces.push([rect(-26, 16, 3, 1)]);
++  doors.push({
++    id: "lobby-n",
++    point: [-24.5, 16.5],
++    approachDirection: [0, -1],
++  });
++  pieces.push([rect(-26, -9, 3, 1)]);
++  doors.push({
++    id: "lobby-s",
++    point: [-24.5, -8.5],
++    approachDirection: [0, 1],
++  });
++  pieces.push([rect(-41, 2.5, 1, 3)]);
++  doors.push({ id: "lobby-w", point: [-40.5, 4], approachDirection: [1, 0] });
++  const island = rect(-30, 0, 14, 8);
++  const union = nativeRationalOverlay("union", pieces);
++  const parts = nativeRationalOverlay("difference", union, [
++    [island],
++    ...blocked.map((ring) => [ring]),
++  ]);
++  const rings = nativeExactPartsForProposals(
++    nativeRationalOverlay("difference", union, [[island]]),
++  )[0];
++  return { parts, rings, terminals: doors, island };
++}
+diff --git a/tests/unit/corridor-terminal-approach.test.ts b/tests/unit/corridor-terminal-approach.test.ts
+index 7a6d620..b7991ac 100644
+--- a/tests/unit/corridor-terminal-approach.test.ts
++++ b/tests/unit/corridor-terminal-approach.test.ts
+@@ -338,10 +338,12 @@ test("doorway spurs are removed so the trunk refits straight, and a terminal tha
+   };
+   const fixed = createCorridorCenterline(rings, terminals, (p) => check(p), {
+     slideJoins: false,
++    straightRuns: false,
+     requiredEdges,
+   });
+   const slid = createCorridorCenterline(rings, terminals, (p) => check(p), {
+     slideJoins: true,
++    straightRuns: false,
+     requiredEdges,
+   });
+   const statistics = slid.statistics().joinSliding;
+@@ -380,10 +382,12 @@ test("doorway spurs are removed so the trunk refits straight, and a terminal tha
+     terminal ? chosen.has(JSON.stringify(path)) && check(path) : check(path);
+   const kept = createCorridorCenterline(rings, terminals, strict, {
+     slideJoins: false,
++    straightRuns: false,
+     requiredEdges,
+   });
+   const retained = createCorridorCenterline(rings, terminals, strict, {
+     slideJoins: true,
++    straightRuns: false,
+     requiredEdges,
+   });
+   assert.equal(retained.statistics().joinSliding.slidTerminals, 0);
+-- 
+2.43.0
+

@@ -1,0 +1,853 @@
+{
+ "format": "corridor-runs-metrics-v1",
+ "status": "drawing diagnostics only; no route acceptance, progressive export or hydration was run",
+ "compilerCommit": "2e12130",
+ "compilerBinding": "28d08f55ed32e0239dcb2bb43efb247f8f0f9d3f6fd8023c1b8893f0cf72aa1c",
+ "input": {
+  "inputZipSha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "sourceGeometryKey": "90e7d4922fa629a6c225cf72e75742822e26719448ad4baea0044645e2daf4e5",
+  "resolverVersion": "native-walking-guides-4"
+ },
+ "catalogs": {
+  "before": {
+   "path": "docs/continuation/unbc-20261102/final-candidate/PREPARED-ROUTING.json (= /home/user/unbc-work/topology/compile/prepared-routing.json)",
+   "sha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "guides": 2728
+  },
+  "after": {
+   "path": "/home/user/unbc-work/corridor-runs/compile/prepared-routing.json",
+   "sha256": "b7f8198e50326e36b889511e94fb26d31209f41cdb45bca658eb886bb4798010",
+   "guides": 2728
+  }
+ },
+ "guides": {
+  "before": 2728,
+  "after": 2728,
+  "lost": 0,
+  "gained": 0,
+  "changed": 1967,
+  "cellsWithChangedGuides": 59,
+  "refusedEdges": {
+   "before": 156,
+   "after": 156
+  },
+  "legacyApproachFallbackEdges": {
+   "before": 6,
+   "after": 6
+  },
+  "straightRunsWithdrawnCells": [
+   "native-cell:14.435696:729"
+  ],
+  "approachTopologyResults": {
+   "shaped": 108,
+   "shaped-restricted": 1
+  }
+ },
+ "straightRuns": {
+  "totals": {
+   "strokes": 638,
+   "cycles": 0,
+   "shortRuns": 154,
+   "candidateRuns": 484,
+   "fittedRuns": 368,
+   "unchangedRuns": 90,
+   "straightPieces": 551,
+   "movedVertices": 320,
+   "removedStations": 871,
+   "removedSpurs": 28,
+   "trimmedEnds": 42,
+   "reattachedTerminals": 1178,
+   "perpendicularBranches": 1184,
+   "keptBranches": 40
+  },
+  "keptRunsByReason": {
+   "detour": 17,
+   "no-straight-fit": 49,
+   "door-branch": 4,
+   "shift": 13,
+   "topology": 20,
+   "unsupported-run": 11,
+   "not-simple": 2
+  },
+  "piecesPerFittedRun": {
+   "1": 271,
+   "2": 51,
+   "3": 18,
+   "4": 19,
+   "5": 6,
+   "6": 3
+  }
+ },
+ "compileComparison": {
+  "matchedGuideShape": {
+   "baseline": {
+    "coreVertices": 8798,
+    "coreBendsOverFiveDegrees": 2304,
+    "coreLengthFeet": 30359.64298584266,
+    "guideBendsOverFiveDegrees": 7843,
+    "zigzagReversals": 225,
+    "approachOrJoinZigzagReversals": 187,
+    "coreZigzagReversals": 38,
+    "approachElbows": 342
+   },
+   "candidate": {
+    "coreVertices": 8621,
+    "coreBendsOverFiveDegrees": 1906,
+    "coreLengthFeet": 30220.96853955669,
+    "guideBendsOverFiveDegrees": 7453,
+    "zigzagReversals": 166,
+    "approachOrJoinZigzagReversals": 130,
+    "coreZigzagReversals": 36,
+    "approachElbows": 259
+   }
+  },
+  "acceptedNetworkStubEnds": {
+   "baseline": {
+    "coreVertices": 8798,
+    "coreLengthFeet": 30359.64298584261,
+    "guideBendsOverFiveDegrees": 7843,
+    "zigzagReversals": 225,
+    "approachOrJoinZigzagReversals": 187,
+    "coreBendsOverFiveDegrees": 2304,
+    "approachElbows": 342,
+    "coreDeadEnds": 545,
+    "arrivalStubEnds": 202,
+    "acceptedGuides": 2728,
+    "coreZigzagReversals": 38
+   },
+   "candidate": {
+    "coreVertices": 8621,
+    "coreLengthFeet": 30220.968539556645,
+    "guideBendsOverFiveDegrees": 7453,
+    "zigzagReversals": 166,
+    "approachOrJoinZigzagReversals": 130,
+    "coreBendsOverFiveDegrees": 1906,
+    "coreDeadEnds": 533,
+    "arrivalStubEnds": 200,
+    "acceptedGuides": 2728,
+    "approachElbows": 259,
+    "coreZigzagReversals": 36
+   }
+  }
+ },
+ "compileExecution": {
+  "seconds": 1734.1098166840002,
+  "exitCode": 0,
+  "kernelMaxChildRssKiB": 3757688,
+  "startedAt": "2026-11-03T02:33:31.393133+00:00",
+  "finishedAt": "2026-11-03T03:02:25.502948+00:00"
+ },
+ "referenceComparison": {
+  "definitions": "tools/reference-comparison/navgraph.py and measure.py (same definitions as docs/continuation/unbc-20261102/reference-comparison/METRICS.json); measured by tools/reference-comparison/measure_ours.py. venue = whole drawn walking network of the four visitor floors (accepted guides plus saved walks and door crossings); guidesOnly = the accepted shared-corridor guide lines alone.",
+  "floors": "docs/continuation/unbc-20261031/campus/map/floors",
+  "graph": "/home/user/unbc-work/cand-final/graph-full.json",
+  "frame": "/home/user/unbc-work/cand-final/frame-1a127847.json",
+  "before": {
+   "path": "docs/continuation/unbc-20261102/final-candidate/PREPARED-ROUTING.json",
+   "sha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "guides": 2728,
+   "acceptedGuideNetLinesWithoutGuide": 0,
+   "venue": {
+    "drawnUnion": {
+     "spineTurnsOver5DegPer100m": 36.0,
+     "spineStraightRunShare": 0.365,
+     "spineStrokeLengthM": {
+      "p10": 0.485,
+      "p25": 1.272,
+      "p50": 3.624,
+      "p75": 8.323,
+      "p90": 15.31,
+      "n": 2009,
+      "mean": 6.372
+     },
+     "spineJogsPer100m": 3.84,
+     "branchAttachmentAngleDeg": {
+      "p10": 9.159,
+      "p25": 36.035,
+      "p50": 75.127,
+      "p75": 86.113,
+      "p90": 89.38,
+      "n": 1545,
+      "mean": 60.705
+     },
+     "branchAttachmentWithin10DegOf90": 0.42,
+     "branchAttachmentWithin5DegOf90": 0.287,
+     "zigzagsAll": 80,
+     "crossingsWithoutJunction": 163,
+     "bareDeadEnds": 519,
+     "bareDeadEndStubsUnder0_5m": 489,
+     "junctionsPer100m": 18.6,
+     "loopsPer100m": 5.99,
+     "nodes": 13336,
+     "lengthM": 17387.2
+    },
+    "asStoredZigzags": 2348,
+    "asStoredZigzagsPer100m": 8.819
+   },
+   "guidesOnly": {
+    "drawnUnion": {
+     "spineTurnsOver5DegPer100m": 19.13,
+     "spineStraightRunShare": 0.514,
+     "spineStrokeLengthM": {
+      "p10": 0.436,
+      "p25": 1.206,
+      "p50": 3.748,
+      "p75": 9.172,
+      "p90": 16.38,
+      "n": 497,
+      "mean": 7.207
+     },
+     "spineJogsPer100m": 1.45,
+     "branchAttachmentAngleDeg": {
+      "p10": 12.992,
+      "p25": 57.678,
+      "p50": 81.529,
+      "p75": 88.994,
+      "p90": 90.0,
+      "n": 1632,
+      "mean": 67.9
+     },
+     "branchAttachmentWithin10DegOf90": 0.535,
+     "branchAttachmentWithin5DegOf90": 0.406,
+     "zigzagsAll": 19,
+     "crossingsWithoutJunction": 4,
+     "bareDeadEnds": 51,
+     "bareDeadEndStubsUnder0_5m": 19,
+     "junctionsPer100m": 25.75,
+     "loopsPer100m": 1.39,
+     "nodes": 4706,
+     "lengthM": 5911.4
+    },
+    "asStoredZigzags": 772
+   },
+   "floors": {
+    "campus-floor-1": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 32.3,
+      "spineStraightRunShare": 0.405,
+      "spineStrokeLengthM": {
+       "p10": 0.5,
+       "p25": 1.237,
+       "p50": 3.423,
+       "p75": 8.697,
+       "p90": 16.802,
+       "n": 689,
+       "mean": 6.702
+      },
+      "spineJogsPer100m": 3.36,
+      "branchAttachmentAngleDeg": {
+       "p10": 6.902,
+       "p25": 36.967,
+       "p50": 75.233,
+       "p75": 86.477,
+       "p90": 89.673,
+       "n": 506,
+       "mean": 60.739
+      },
+      "branchAttachmentWithin10DegOf90": 0.437,
+      "branchAttachmentWithin5DegOf90": 0.324,
+      "zigzagsAll": 37,
+      "crossingsWithoutJunction": 70,
+      "bareDeadEnds": 152,
+      "bareDeadEndStubsUnder0_5m": 143,
+      "junctionsPer100m": 17.1,
+      "loopsPer100m": 5.62,
+      "nodes": 4381,
+      "lengthM": 6251.1
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 21.87,
+      "spineStraightRunShare": 0.464,
+      "spineStrokeLengthM": {
+       "p10": 0.504,
+       "p25": 1.627,
+       "p50": 3.956,
+       "p75": 8.733,
+       "p90": 16.458,
+       "n": 196,
+       "mean": 7.419
+      },
+      "spineJogsPer100m": 1.79,
+      "branchAttachmentAngleDeg": {
+       "p10": 13.89,
+       "p25": 54.844,
+       "p50": 81.616,
+       "p75": 89.54,
+       "p90": 90.0,
+       "n": 564,
+       "mean": 67.721
+      },
+      "branchAttachmentWithin10DegOf90": 0.537,
+      "branchAttachmentWithin5DegOf90": 0.418,
+      "zigzagsAll": 6,
+      "crossingsWithoutJunction": 1,
+      "bareDeadEnds": 22,
+      "bareDeadEndStubsUnder0_5m": 9,
+      "junctionsPer100m": 24.6,
+      "loopsPer100m": 1.58,
+      "nodes": 1696,
+      "lengthM": 2284.2
+     }
+    },
+    "floor-2": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 37.59,
+      "spineStraightRunShare": 0.309,
+      "spineStrokeLengthM": {
+       "p10": 0.435,
+       "p25": 1.313,
+       "p50": 3.633,
+       "p75": 7.814,
+       "p90": 14.363,
+       "n": 589,
+       "mean": 5.955
+      },
+      "spineJogsPer100m": 3.96,
+      "branchAttachmentAngleDeg": {
+       "p10": 8.928,
+       "p25": 34.981,
+       "p50": 76.134,
+       "p75": 86.301,
+       "p90": 89.039,
+       "n": 419,
+       "mean": 60.052
+      },
+      "branchAttachmentWithin10DegOf90": 0.427,
+      "branchAttachmentWithin5DegOf90": 0.279,
+      "zigzagsAll": 18,
+      "crossingsWithoutJunction": 61,
+      "bareDeadEnds": 140,
+      "bareDeadEndStubsUnder0_5m": 130,
+      "junctionsPer100m": 19.64,
+      "loopsPer100m": 6.55,
+      "nodes": 3677,
+      "lengthM": 4668.8
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 18.74,
+      "spineStraightRunShare": 0.471,
+      "spineStrokeLengthM": {
+       "p10": 0.236,
+       "p25": 0.996,
+       "p50": 3.633,
+       "p75": 7.763,
+       "p90": 14.162,
+       "n": 153,
+       "mean": 5.966
+      },
+      "spineJogsPer100m": 0.66,
+      "branchAttachmentAngleDeg": {
+       "p10": 10.533,
+       "p25": 52.298,
+       "p50": 80.495,
+       "p75": 88.27,
+       "p90": 90.0,
+       "n": 431,
+       "mean": 66.521
+      },
+      "branchAttachmentWithin10DegOf90": 0.506,
+      "branchAttachmentWithin5DegOf90": 0.381,
+      "zigzagsAll": 5,
+      "crossingsWithoutJunction": 3,
+      "bareDeadEnds": 13,
+      "bareDeadEndStubsUnder0_5m": 5,
+      "junctionsPer100m": 25.54,
+      "loopsPer100m": 1.85,
+      "nodes": 1265,
+      "lengthM": 1565.9
+     }
+    },
+    "campus-floor-3": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 37.22,
+      "spineStraightRunShare": 0.356,
+      "spineStrokeLengthM": {
+       "p10": 0.459,
+       "p25": 1.221,
+       "p50": 3.909,
+       "p75": 7.843,
+       "p90": 14.319,
+       "n": 396,
+       "mean": 6.293
+      },
+      "spineJogsPer100m": 3.93,
+      "branchAttachmentAngleDeg": {
+       "p10": 10.049,
+       "p25": 39.797,
+       "p50": 74.542,
+       "p75": 85.687,
+       "p90": 88.851,
+       "n": 325,
+       "mean": 61.942
+      },
+      "branchAttachmentWithin10DegOf90": 0.418,
+      "branchAttachmentWithin5DegOf90": 0.268,
+      "zigzagsAll": 13,
+      "crossingsWithoutJunction": 23,
+      "bareDeadEnds": 116,
+      "bareDeadEndStubsUnder0_5m": 110,
+      "junctionsPer100m": 19.49,
+      "loopsPer100m": 6.13,
+      "nodes": 2759,
+      "lengthM": 3443.4
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 16.46,
+      "spineStraightRunShare": 0.603,
+      "spineStrokeLengthM": {
+       "p10": 0.551,
+       "p25": 1.564,
+       "p50": 5.316,
+       "p75": 12.632,
+       "p90": 24.171,
+       "n": 71,
+       "mean": 9.504
+      },
+      "spineJogsPer100m": 1.48,
+      "branchAttachmentAngleDeg": {
+       "p10": 16.534,
+       "p25": 65.946,
+       "p50": 81.554,
+       "p75": 88.751,
+       "p90": 90.0,
+       "n": 321,
+       "mean": 69.099
+      },
+      "branchAttachmentWithin10DegOf90": 0.545,
+      "branchAttachmentWithin5DegOf90": 0.427,
+      "zigzagsAll": 7,
+      "crossingsWithoutJunction": 0,
+      "bareDeadEnds": 10,
+      "bareDeadEndStubsUnder0_5m": 3,
+      "junctionsPer100m": 24.53,
+      "loopsPer100m": 0.87,
+      "nodes": 951,
+      "lengthM": 1149.8
+     }
+    },
+    "floor-4": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 40.03,
+      "spineStraightRunShare": 0.371,
+      "spineStrokeLengthM": {
+       "p10": 0.544,
+       "p25": 1.377,
+       "p50": 3.658,
+       "p75": 9.766,
+       "p90": 15.543,
+       "n": 335,
+       "mean": 6.521
+      },
+      "spineJogsPer100m": 4.58,
+      "branchAttachmentAngleDeg": {
+       "p10": 13.798,
+       "p25": 45.255,
+       "p50": 76.444,
+       "p75": 85.773,
+       "p90": 89.395,
+       "n": 295,
+       "mean": 63.391
+      },
+      "branchAttachmentWithin10DegOf90": 0.42,
+      "branchAttachmentWithin5DegOf90": 0.285,
+      "zigzagsAll": 12,
+      "crossingsWithoutJunction": 9,
+      "bareDeadEnds": 111,
+      "bareDeadEndStubsUnder0_5m": 106,
+      "junctionsPer100m": 19.08,
+      "loopsPer100m": 5.75,
+      "nodes": 2519,
+      "lengthM": 3024.0
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 15.75,
+      "spineStraightRunShare": 0.604,
+      "spineStrokeLengthM": {
+       "p10": 0.551,
+       "p25": 1.201,
+       "p50": 2.509,
+       "p75": 9.932,
+       "p90": 15.916,
+       "n": 77,
+       "mean": 7.013
+      },
+      "spineJogsPer100m": 1.85,
+      "branchAttachmentAngleDeg": {
+       "p10": 17.027,
+       "p25": 61.379,
+       "p50": 81.832,
+       "p75": 89.006,
+       "p90": 90.0,
+       "n": 316,
+       "mean": 68.94
+      },
+      "branchAttachmentWithin10DegOf90": 0.544,
+      "branchAttachmentWithin5DegOf90": 0.399,
+      "zigzagsAll": 1,
+      "crossingsWithoutJunction": 0,
+      "bareDeadEnds": 6,
+      "bareDeadEndStubsUnder0_5m": 2,
+      "junctionsPer100m": 30.5,
+      "loopsPer100m": 0.77,
+      "nodes": 794,
+      "lengthM": 911.4
+     }
+    }
+   }
+  },
+  "after": {
+   "path": "/home/user/unbc-work/corridor-runs/compile/prepared-routing.json",
+   "sha256": "b7f8198e50326e36b889511e94fb26d31209f41cdb45bca658eb886bb4798010",
+   "guides": 2728,
+   "acceptedGuideNetLinesWithoutGuide": 0,
+   "venue": {
+    "drawnUnion": {
+     "spineTurnsOver5DegPer100m": 34.75,
+     "spineStraightRunShare": 0.407,
+     "spineStrokeLengthM": {
+      "p10": 0.473,
+      "p25": 1.291,
+      "p50": 3.634,
+      "p75": 8.321,
+      "p90": 15.495,
+      "n": 1989,
+      "mean": 6.449
+     },
+     "spineJogsPer100m": 4.0,
+     "branchAttachmentAngleDeg": {
+      "p10": 8.111,
+      "p25": 34.769,
+      "p50": 77.338,
+      "p75": 87.918,
+      "p90": 90.0,
+      "n": 1562,
+      "mean": 61.568
+     },
+     "branchAttachmentWithin10DegOf90": 0.471,
+     "branchAttachmentWithin5DegOf90": 0.36,
+     "zigzagsAll": 78,
+     "crossingsWithoutJunction": 160,
+     "bareDeadEnds": 514,
+     "bareDeadEndStubsUnder0_5m": 485,
+     "junctionsPer100m": 18.92,
+     "loopsPer100m": 6.02,
+     "nodes": 13182,
+     "lengthM": 17402.8
+    },
+    "asStoredZigzags": 2296,
+    "asStoredZigzagsPer100m": 8.622
+   },
+   "guidesOnly": {
+    "drawnUnion": {
+     "spineTurnsOver5DegPer100m": 12.96,
+     "spineStraightRunShare": 0.634,
+     "spineStrokeLengthM": {
+      "p10": 0.432,
+      "p25": 1.21,
+      "p50": 3.729,
+      "p75": 9.598,
+      "p90": 17.214,
+      "n": 482,
+      "mean": 7.476
+     },
+     "spineJogsPer100m": 1.05,
+     "branchAttachmentAngleDeg": {
+      "p10": 12.019,
+      "p25": 64.688,
+      "p50": 89.878,
+      "p75": 90.0,
+      "p90": 90.0,
+      "n": 1658,
+      "mean": 71.036
+     },
+     "branchAttachmentWithin10DegOf90": 0.648,
+     "branchAttachmentWithin5DegOf90": 0.6,
+     "zigzagsAll": 23,
+     "crossingsWithoutJunction": 5,
+     "bareDeadEnds": 46,
+     "bareDeadEndStubsUnder0_5m": 14,
+     "junctionsPer100m": 26.71,
+     "loopsPer100m": 1.42,
+     "nodes": 4551,
+     "lengthM": 5926.0
+    },
+    "asStoredZigzags": 719
+   },
+   "floors": {
+    "campus-floor-1": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 30.68,
+      "spineStraightRunShare": 0.441,
+      "spineStrokeLengthM": {
+       "p10": 0.545,
+       "p25": 1.272,
+       "p50": 3.551,
+       "p75": 8.723,
+       "p90": 16.517,
+       "n": 685,
+       "mean": 6.765
+      },
+      "spineJogsPer100m": 3.35,
+      "branchAttachmentAngleDeg": {
+       "p10": 4.93,
+       "p25": 34.138,
+       "p50": 78.302,
+       "p75": 88.713,
+       "p90": 90.0,
+       "n": 508,
+       "mean": 61.785
+      },
+      "branchAttachmentWithin10DegOf90": 0.492,
+      "branchAttachmentWithin5DegOf90": 0.39,
+      "zigzagsAll": 35,
+      "crossingsWithoutJunction": 66,
+      "bareDeadEnds": 149,
+      "bareDeadEndStubsUnder0_5m": 140,
+      "junctionsPer100m": 17.35,
+      "loopsPer100m": 5.68,
+      "nodes": 4337,
+      "lengthM": 6263.4
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 15.43,
+      "spineStraightRunShare": 0.564,
+      "spineStrokeLengthM": {
+       "p10": 0.469,
+       "p25": 1.402,
+       "p50": 3.975,
+       "p75": 8.774,
+       "p90": 16.617,
+       "n": 200,
+       "mean": 7.325
+      },
+      "spineJogsPer100m": 1.16,
+      "branchAttachmentAngleDeg": {
+       "p10": 10.726,
+       "p25": 62.346,
+       "p50": 89.649,
+       "p75": 90.0,
+       "p90": 90.0,
+       "n": 572,
+       "mean": 70.911
+      },
+      "branchAttachmentWithin10DegOf90": 0.643,
+      "branchAttachmentWithin5DegOf90": 0.589,
+      "zigzagsAll": 8,
+      "crossingsWithoutJunction": 1,
+      "bareDeadEnds": 20,
+      "bareDeadEndStubsUnder0_5m": 7,
+      "junctionsPer100m": 25.51,
+      "loopsPer100m": 1.74,
+      "nodes": 1652,
+      "lengthM": 2297.1
+     }
+    },
+    "floor-2": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 35.87,
+      "spineStraightRunShare": 0.362,
+      "spineStrokeLengthM": {
+       "p10": 0.441,
+       "p25": 1.38,
+       "p50": 3.633,
+       "p75": 7.814,
+       "p90": 14.933,
+       "n": 573,
+       "mean": 6.127
+      },
+      "spineJogsPer100m": 4.16,
+      "branchAttachmentAngleDeg": {
+       "p10": 8.132,
+       "p25": 34.893,
+       "p50": 77.568,
+       "p75": 87.88,
+       "p90": 89.966,
+       "n": 425,
+       "mean": 61.1
+      },
+      "branchAttachmentWithin10DegOf90": 0.464,
+      "branchAttachmentWithin5DegOf90": 0.344,
+      "zigzagsAll": 16,
+      "crossingsWithoutJunction": 62,
+      "bareDeadEnds": 139,
+      "bareDeadEndStubsUnder0_5m": 129,
+      "junctionsPer100m": 19.95,
+      "loopsPer100m": 6.47,
+      "nodes": 3619,
+      "lengthM": 4670.6
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 12.35,
+      "spineStraightRunShare": 0.617,
+      "spineStrokeLengthM": {
+       "p10": 0.397,
+       "p25": 1.076,
+       "p50": 3.66,
+       "p75": 7.772,
+       "p90": 16.763,
+       "n": 138,
+       "mean": 6.631
+      },
+      "spineJogsPer100m": 0.77,
+      "branchAttachmentAngleDeg": {
+       "p10": 11.061,
+       "p25": 59.943,
+       "p50": 89.137,
+       "p75": 90.0,
+       "p90": 90.0,
+       "n": 436,
+       "mean": 69.744
+      },
+      "branchAttachmentWithin10DegOf90": 0.617,
+      "branchAttachmentWithin5DegOf90": 0.573,
+      "zigzagsAll": 5,
+      "crossingsWithoutJunction": 3,
+      "bareDeadEnds": 11,
+      "bareDeadEndStubsUnder0_5m": 3,
+      "junctionsPer100m": 26.44,
+      "loopsPer100m": 1.79,
+      "nodes": 1206,
+      "lengthM": 1565.9
+     }
+    },
+    "campus-floor-3": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 36.51,
+      "spineStraightRunShare": 0.399,
+      "spineStrokeLengthM": {
+       "p10": 0.401,
+       "p25": 1.196,
+       "p50": 3.848,
+       "p75": 7.821,
+       "p90": 13.874,
+       "n": 396,
+       "mean": 6.296
+      },
+      "spineJogsPer100m": 4.41,
+      "branchAttachmentAngleDeg": {
+       "p10": 8.996,
+       "p25": 40.591,
+       "p50": 78.022,
+       "p75": 87.735,
+       "p90": 90.0,
+       "n": 331,
+       "mean": 63.272
+      },
+      "branchAttachmentWithin10DegOf90": 0.477,
+      "branchAttachmentWithin5DegOf90": 0.356,
+      "zigzagsAll": 13,
+      "crossingsWithoutJunction": 22,
+      "bareDeadEnds": 114,
+      "bareDeadEndStubsUnder0_5m": 109,
+      "junctionsPer100m": 19.83,
+      "loopsPer100m": 6.16,
+      "nodes": 2733,
+      "lengthM": 3443.6
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 10.37,
+      "spineStraightRunShare": 0.742,
+      "spineStrokeLengthM": {
+       "p10": 0.446,
+       "p25": 1.582,
+       "p50": 5.449,
+       "p75": 13.668,
+       "p90": 28.153,
+       "n": 70,
+       "mean": 9.643
+      },
+      "spineJogsPer100m": 1.33,
+      "branchAttachmentAngleDeg": {
+       "p10": 13.572,
+       "p25": 69.788,
+       "p50": 89.933,
+       "p75": 90.0,
+       "p90": 90.0,
+       "n": 327,
+       "mean": 72.37
+      },
+      "branchAttachmentWithin10DegOf90": 0.679,
+      "branchAttachmentWithin5DegOf90": 0.627,
+      "zigzagsAll": 9,
+      "crossingsWithoutJunction": 1,
+      "bareDeadEnds": 8,
+      "bareDeadEndStubsUnder0_5m": 2,
+      "junctionsPer100m": 25.64,
+      "loopsPer100m": 0.87,
+      "nodes": 925,
+      "lengthM": 1150.3
+     }
+    },
+    "floor-4": {
+     "drawnUnion": {
+      "spineTurnsOver5DegPer100m": 39.53,
+      "spineStraightRunShare": 0.407,
+      "spineStrokeLengthM": {
+       "p10": 0.484,
+       "p25": 1.364,
+       "p50": 3.551,
+       "p75": 9.617,
+       "p90": 16.131,
+       "n": 335,
+       "mean": 6.535
+      },
+      "spineJogsPer100m": 4.98,
+      "branchAttachmentAngleDeg": {
+       "p10": 12.182,
+       "p25": 42.708,
+       "p50": 76.804,
+       "p75": 87.268,
+       "p90": 89.89,
+       "n": 298,
+       "mean": 63.287
+      },
+      "branchAttachmentWithin10DegOf90": 0.456,
+      "branchAttachmentWithin5DegOf90": 0.346,
+      "zigzagsAll": 14,
+      "crossingsWithoutJunction": 10,
+      "bareDeadEnds": 112,
+      "bareDeadEndStubsUnder0_5m": 107,
+      "junctionsPer100m": 19.54,
+      "loopsPer100m": 5.85,
+      "nodes": 2493,
+      "lengthM": 3025.2
+     },
+     "guidesOnly": {
+      "spineTurnsOver5DegPer100m": 10.58,
+      "spineStraightRunShare": 0.715,
+      "spineStrokeLengthM": {
+       "p10": 0.583,
+       "p25": 1.223,
+       "p50": 2.699,
+       "p75": 9.867,
+       "p90": 16.128,
+       "n": 74,
+       "mean": 7.412
+      },
+      "spineJogsPer100m": 0.91,
+      "branchAttachmentAngleDeg": {
+       "p10": 12.408,
+       "p25": 66.824,
+       "p50": 90.0,
+       "p75": 90.0,
+       "p90": 90.0,
+       "n": 323,
+       "mean": 71.6
+      },
+      "branchAttachmentWithin10DegOf90": 0.659,
+      "branchAttachmentWithin5DegOf90": 0.625,
+      "zigzagsAll": 1,
+      "crossingsWithoutJunction": 0,
+      "bareDeadEnds": 7,
+      "bareDeadEndStubsUnder0_5m": 2,
+      "junctionsPer100m": 31.56,
+      "loopsPer100m": 0.66,
+      "nodes": 768,
+      "lengthM": 912.7
+     }
+    }
+   }
+  }
+ }
+}
