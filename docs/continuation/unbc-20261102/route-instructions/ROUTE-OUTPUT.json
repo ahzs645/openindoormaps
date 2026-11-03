@@ -1,0 +1,5734 @@
+{
+ "inputSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+ "routeRuntimeSha256": {
+  "before": "49f1e88b3468b14c4b144cb9eb51f10cbb5dc8da714526de02b28863965a1247",
+  "after": "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399"
+ },
+ "invariants": {
+  "sameRouteOrRefusalForEveryCase": true,
+  "sameRoutedEdgeSequenceForEveryRoute": true,
+  "sameRefusalMessages": true,
+  "samePreferenceCost": true,
+  "reportedDistanceChangeM": {
+   "min": -1.299,
+   "max": 0.0
+  }
+ },
+ "journeys": {
+  "0810-default-08-264-to-10-2006": {
+   "before": {
+    "available": true,
+    "steps": 15,
+    "stepsPer100m": 17.87,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 08-264 \u00b7 Signout Equip Storage and head straight",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Bear right",
+     "Bear left",
+     "Bear right",
+     "Bear right",
+     "Bear right",
+     "Bear left",
+     "Head straight",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Arrive at 10-2006 \u00b7 Office"
+    ],
+    "reportedDistanceM": 83.948,
+    "drawnLengthM": 83.948,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 26,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 19,
+    "jogs": 2,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   },
+   "after": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 08-264 \u00b7 Signout Equip Storage and head straight",
+     "Turn right",
+     "Bear right",
+     "Continue into building 10",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Arrive at 10-2006 \u00b7 Office"
+    ],
+    "reportedDistanceM": 83.435,
+    "drawnLengthM": 83.435,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 21,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 15,
+    "jogs": 1,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   }
+  },
+  "island-default-06-366-to-06-364": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-366 \u00b7 Lounge and head straight",
+     "Bear left",
+     "Bear left",
+     "Bear right",
+     "Turn left",
+     "Turn right",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-366 \u00b7 Lounge and head straight",
+     "Bear left",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   }
+  },
+  "island-default-06-376-to-06-364": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "island-transit-06-376-to-06-364": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 18.99,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-376 \u00b7 Open Work Area and head straight",
+     "Turn left",
+     "Bear right",
+     "Bear left",
+     "Turn right",
+     "Bear right",
+     "Turn left",
+     "Turn right",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772174,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "e99de28bddb59676db1288857c8f9dcc41c8328eddcfea6002e9c09a5bfa3412"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 8.44,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-376 \u00b7 Open Work Area and head straight",
+     "Turn left",
+     "Turn right",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772174,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "e99de28bddb59676db1288857c8f9dcc41c8328eddcfea6002e9c09a5bfa3412"
+   }
+  },
+  "island-stepfree-06-388-to-06-364": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "corridor-default-04-204-to-08-267": {
+   "before": {
+    "available": true,
+    "steps": 12,
+    "stepsPer100m": 9.92,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 5,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 04-204 \u00b7 Corridor and head straight",
+     "Turn right",
+     "Bear right",
+     "Bear left",
+     "Bear left",
+     "Bear left",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Turn left",
+     "Bear left",
+     "Arrive at 08-267 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 120.961,
+    "drawnLengthM": 120.961,
+    "routedEdgeLengthM": 136.382,
+    "preferenceCost": 136.38196374094727,
+    "segments": 54,
+    "segmentsUnder2m": 37,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 27,
+    "jogs": 5,
+    "edgeIdsSha256": "5714aa98cd7224df05decfe34007882a46b8020b86ce87611c4f88f76c74666f"
+   },
+   "after": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 5.84,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 04-204 \u00b7 Corridor and head straight",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Continue into building 08",
+     "Turn left",
+     "Arrive at 08-267 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 119.954,
+    "drawnLengthM": 119.954,
+    "routedEdgeLengthM": 136.382,
+    "preferenceCost": 136.38196374094727,
+    "segments": 49,
+    "segmentsUnder2m": 32,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 23,
+    "jogs": 2,
+    "edgeIdsSha256": "5714aa98cd7224df05decfe34007882a46b8020b86ce87611c4f88f76c74666f"
+   }
+  },
+  "office-transit-04-255-to-08-272": {
+   "before": {
+    "available": true,
+    "steps": 19,
+    "stepsPer100m": 10.2,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 11,
+     "bear": 5,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 04-255 \u00b7 Research Office and head straight",
+     "Turn right",
+     "Turn left",
+     "Turn left",
+     "Turn right",
+     "Turn left",
+     "Head straight",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Turn left",
+     "Bear left",
+     "Bear right",
+     "Bear left",
+     "Bear right",
+     "Turn left",
+     "Bear left",
+     "Turn right",
+     "Arrive at 08-272 \u00b7 Equipment Storage"
+    ],
+    "reportedDistanceM": 186.35,
+    "drawnLengthM": 186.35,
+    "routedEdgeLengthM": 219.34,
+    "preferenceCost": 343.42311450954844,
+    "segments": 50,
+    "segmentsUnder2m": 30,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 34,
+    "jogs": 6,
+    "edgeIdsSha256": "8027e69cf071a980a92cc72ede8e28e28e3a1dbe357bad7d2ad743d2e9714c76"
+   },
+   "after": {
+    "available": true,
+    "steps": 10,
+    "stepsPer100m": 5.4,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 04-255 \u00b7 Research Office and head straight",
+     "Turn left",
+     "Continue through 04-259",
+     "Turn right",
+     "Turn left",
+     "Turn right",
+     "Continue into building 08",
+     "Turn left",
+     "Turn left",
+     "Arrive at 08-272 \u00b7 Equipment Storage"
+    ],
+    "reportedDistanceM": 185.051,
+    "drawnLengthM": 185.051,
+    "routedEdgeLengthM": 219.34,
+    "preferenceCost": 343.42311450954844,
+    "segments": 44,
+    "segmentsUnder2m": 24,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 29,
+    "jogs": 4,
+    "edgeIdsSha256": "8027e69cf071a980a92cc72ede8e28e28e3a1dbe357bad7d2ad743d2e9714c76"
+   }
+  },
+  "island-default-06-388-to-06-364": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-388 \u00b7 Vestibule and head straight",
+     "Turn left",
+     "Bear right",
+     "Turn left",
+     "Turn right",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.73,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "messages": [
+     "Leave 06-388 \u00b7 Vestibule and head straight",
+     "Bear left",
+     "Arrive at 06-364 \u00b7 Corridor"
+    ],
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   }
+  }
+ },
+ "policyCases": {
+  "before": {
+   "cases": 160,
+   "routed": 78,
+   "refused": 82,
+   "steps": 665,
+   "stepsPer100mMedian": 26.46,
+   "stepsPer100mMax": 35.25,
+   "stepsPer100mOverall": 23.54,
+   "bearSteps": 246,
+   "turnSteps": 249,
+   "segments": 1234,
+   "segmentsUnder2m": 931,
+   "exactRetracePairs": 4,
+   "reversalsOver150": 4,
+   "zigzags": 70,
+   "bendsOver5": 980,
+   "jogs": 48,
+   "drawnLengthM": 2825.14,
+   "routedEdgeLengthM": 3134.15
+  },
+  "after": {
+   "cases": 160,
+   "routed": 78,
+   "refused": 82,
+   "steps": 292,
+   "stepsPer100mMedian": 11.06,
+   "stepsPer100mMax": 17.59,
+   "stepsPer100mOverall": 10.39,
+   "bearSteps": 21,
+   "turnSteps": 87,
+   "segments": 1093,
+   "segmentsUnder2m": 790,
+   "exactRetracePairs": 4,
+   "reversalsOver150": 4,
+   "zigzags": 70,
+   "bendsOver5": 867,
+   "jogs": 41,
+   "drawnLengthM": 2809.79,
+   "routedEdgeLengthM": 3134.15
+  }
+ },
+ "policyCaseRows": {
+  "08-264-to-10-2006:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 15,
+    "stepsPer100m": 17.87,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.948,
+    "drawnLengthM": 83.948,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 26,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 19,
+    "jogs": 2,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   },
+   "after": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.435,
+    "drawnLengthM": 83.435,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 21,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 15,
+    "jogs": 1,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   }
+  },
+  "10-2006-to-08-264:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 14,
+    "stepsPer100m": 16.68,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.948,
+    "drawnLengthM": 83.948,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751672,
+    "segments": 26,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 19,
+    "jogs": 2,
+    "edgeIdsSha256": "d12c5a77ceba44bd8361aa3ee3f3c58df5b9e64f4b39c25b300ab31dd41fdf1e"
+   },
+   "after": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.435,
+    "drawnLengthM": 83.435,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751672,
+    "segments": 21,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 15,
+    "jogs": 1,
+    "edgeIdsSha256": "d12c5a77ceba44bd8361aa3ee3f3c58df5b9e64f4b39c25b300ab31dd41fdf1e"
+   }
+  },
+  "08-267-to-10-2066:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   }
+  },
+  "10-2066-to-08-267:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   }
+  },
+  "08-264-to-10-2006:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 15,
+    "stepsPer100m": 17.87,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.948,
+    "drawnLengthM": 83.948,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 26,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 19,
+    "jogs": 2,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   },
+   "after": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.435,
+    "drawnLengthM": 83.435,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751669,
+    "segments": 21,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 15,
+    "jogs": 1,
+    "edgeIdsSha256": "e7dca7424d0f893fb88af76490f3f45d52e203d879d16bfba8b9ec76327d85f8"
+   }
+  },
+  "10-2006-to-08-264:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 14,
+    "stepsPer100m": 16.68,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.948,
+    "drawnLengthM": 83.948,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751672,
+    "segments": 26,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 19,
+    "jogs": 2,
+    "edgeIdsSha256": "d12c5a77ceba44bd8361aa3ee3f3c58df5b9e64f4b39c25b300ab31dd41fdf1e"
+   },
+   "after": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 83.435,
+    "drawnLengthM": 83.435,
+    "routedEdgeLengthM": 96.514,
+    "preferenceCost": 96.51373952751672,
+    "segments": 21,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 15,
+    "jogs": 1,
+    "edgeIdsSha256": "d12c5a77ceba44bd8361aa3ee3f3c58df5b9e64f4b39c25b300ab31dd41fdf1e"
+   }
+  },
+  "08-267-to-10-2066:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   }
+  },
+  "10-2066-to-08-267:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   }
+  },
+  "08-264-to-10-2006:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "10-2006-to-08-264:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "08-267-to-10-2066:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   }
+  },
+  "10-2066-to-08-267:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   }
+  },
+  "08-264-to-10-2006:hallway:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 15.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 73.05,
+    "drawnLengthM": 73.05,
+    "routedEdgeLengthM": 85.991,
+    "preferenceCost": 85.99079034610568,
+    "segments": 19,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 13,
+    "jogs": 2,
+    "edgeIdsSha256": "277dcfe5c49dd1497395aed25c1428bdebe7d38ffe6e2bbdc301b4cdd50a50ab"
+   },
+   "after": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 8.27,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 72.538,
+    "drawnLengthM": 72.538,
+    "routedEdgeLengthM": 85.991,
+    "preferenceCost": 85.99079034610568,
+    "segments": 14,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "277dcfe5c49dd1497395aed25c1428bdebe7d38ffe6e2bbdc301b4cdd50a50ab"
+   }
+  },
+  "10-2006-to-08-264:hallway:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 12,
+    "stepsPer100m": 16.43,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 73.05,
+    "drawnLengthM": 73.05,
+    "routedEdgeLengthM": 85.991,
+    "preferenceCost": 85.99079034610568,
+    "segments": 19,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 13,
+    "jogs": 2,
+    "edgeIdsSha256": "7a11e72ad4bc807d75378cfcf7fe28f1783639e88075438afdfda867feb6a91c"
+   },
+   "after": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 9.65,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 72.538,
+    "drawnLengthM": 72.538,
+    "routedEdgeLengthM": 85.991,
+    "preferenceCost": 85.99079034610568,
+    "segments": 14,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "7a11e72ad4bc807d75378cfcf7fe28f1783639e88075438afdfda867feb6a91c"
+   }
+  },
+  "08-267-to-10-2066:hallway:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822908,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "24f3fa3751e4f1b3079b3400f684b3f5614559e88049c401277c73ccbfc7844e"
+   }
+  },
+  "10-2066-to-08-267:hallway:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 26.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 6,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.019,
+    "drawnLengthM": 34.019,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 17,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 1,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 33.506,
+    "drawnLengthM": 33.506,
+    "routedEdgeLengthM": 37.987,
+    "preferenceCost": 37.98712228822909,
+    "segments": 12,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 0,
+    "bendsOver5": 8,
+    "jogs": 1,
+    "edgeIdsSha256": "02fb567648bbd3b4a7ef17762a172d92565bc2e6ba4e95cdbe9363b13c3aeaa5"
+   }
+  },
+  "08-264-to-10-2006:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2006-to-08-264:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-267-to-10-2066:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2066-to-08-267:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-264-to-10-2006:inside:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2006-to-08-264:inside:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-267-to-10-2066:inside:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2066-to-08-267:inside:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-264-to-10-2006:hallway:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2006-to-08-264:hallway:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-267-to-10-2066:hallway:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2066-to-08-267:hallway:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-264-to-10-2006:hallway:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2006-to-08-264:hallway:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "08-267-to-10-2066:hallway:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "10-2066-to-08-267:hallway:transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-366-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   }
+  },
+  "06-364-to-06-366:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   }
+  },
+  "06-366-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   }
+  },
+  "06-364-to-06-366:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   }
+  },
+  "06-366-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246002,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e29e4ada1929274491a5cc0530e85ed3d826a7e3636bc872e5f4aa3bd45a5967"
+   }
+  },
+  "06-364-to-06-366:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.32,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.01,
+    "drawnLengthM": 21.01,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 13,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 9.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.85,
+    "drawnLengthM": 20.85,
+    "routedEdgeLengthM": 24.147,
+    "preferenceCost": 24.146739233246006,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "e6da4cc743006c137b5b74859df2e9d10a0395b31498c59eafd0798a49a2fb16"
+   }
+  },
+  "06-366-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-366:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-368-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   }
+  },
+  "06-364-to-06-368:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   }
+  },
+  "06-368-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   }
+  },
+  "06-364-to-06-368:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   }
+  },
+  "06-368-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "8cb10177c8bba3af50bd52d1c3f491d50042951aae86d3d6966738ac5ba57ec4"
+   }
+  },
+  "06-364-to-06-368:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 35.25,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.86,
+    "drawnLengthM": 19.86,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 15.23,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 19.701,
+    "drawnLengthM": 19.701,
+    "routedEdgeLengthM": 18.521,
+    "preferenceCost": 18.52054261733267,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "909d220f024683141214e75eaba75fe73685c992c2598b7b859591b610e9720d"
+   }
+  },
+  "06-368-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-368:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-370-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 22.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.941503541311974,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "b4385232a76b87aba245bf2b84b2815096117a1c81e06fdec1c6070b65cfa052"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.51,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.941503541311974,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "b4385232a76b87aba245bf2b84b2815096117a1c81e06fdec1c6070b65cfa052"
+   }
+  },
+  "06-364-to-06-370:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 22.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.94150354131198,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "4553dfa95e431a820d199c41eeee6b5a613fd0a0c443864c45a55361bc755b41"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 5.67,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.94150354131198,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "4553dfa95e431a820d199c41eeee6b5a613fd0a0c443864c45a55361bc755b41"
+   }
+  },
+  "06-370-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 22.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.941503541311974,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "b4385232a76b87aba245bf2b84b2815096117a1c81e06fdec1c6070b65cfa052"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.51,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.941503541311974,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "b4385232a76b87aba245bf2b84b2815096117a1c81e06fdec1c6070b65cfa052"
+   }
+  },
+  "06-364-to-06-370:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 22.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.94150354131198,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "4553dfa95e431a820d199c41eeee6b5a613fd0a0c443864c45a55361bc755b41"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 5.67,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.255,
+    "drawnLengthM": 35.255,
+    "routedEdgeLengthM": 40.942,
+    "preferenceCost": 40.94150354131198,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "4553dfa95e431a820d199c41eeee6b5a613fd0a0c443864c45a55361bc755b41"
+   }
+  },
+  "06-370-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 18.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 32.67,
+    "drawnLengthM": 32.67,
+    "routedEdgeLengthM": 38.287,
+    "preferenceCost": 38.286553680820205,
+    "segments": 8,
+    "segmentsUnder2m": 6,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 6,
+    "jogs": 0,
+    "edgeIdsSha256": "045165ba09a988456ac059c6cb96b9eb43a3d9551b4b8af39c2c1d14aafbec94"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 9.18,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 32.67,
+    "drawnLengthM": 32.67,
+    "routedEdgeLengthM": 38.287,
+    "preferenceCost": 38.286553680820205,
+    "segments": 8,
+    "segmentsUnder2m": 6,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 6,
+    "jogs": 0,
+    "edgeIdsSha256": "045165ba09a988456ac059c6cb96b9eb43a3d9551b4b8af39c2c1d14aafbec94"
+   }
+  },
+  "06-364-to-06-370:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 18.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 32.67,
+    "drawnLengthM": 32.67,
+    "routedEdgeLengthM": 38.287,
+    "preferenceCost": 38.28655368082021,
+    "segments": 8,
+    "segmentsUnder2m": 6,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 6,
+    "jogs": 0,
+    "edgeIdsSha256": "2ee03ae6137683c4a851220cdcb685f533a936f87bd80e43cdfc4b87bcdc143e"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 6.12,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 32.67,
+    "drawnLengthM": 32.67,
+    "routedEdgeLengthM": 38.287,
+    "preferenceCost": 38.28655368082021,
+    "segments": 8,
+    "segmentsUnder2m": 6,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 6,
+    "jogs": 0,
+    "edgeIdsSha256": "2ee03ae6137683c4a851220cdcb685f533a936f87bd80e43cdfc4b87bcdc143e"
+   }
+  },
+  "06-370-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-370:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-372-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-372:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-372-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 19.72,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 40.559,
+    "drawnLengthM": 40.559,
+    "routedEdgeLengthM": 46.33,
+    "preferenceCost": 70.46069627755392,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "cb1c39e5aaf48fb3c42defc0a3e585003ffd4b55109b2ad28551c23f476a29d1"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 7.4,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 40.559,
+    "drawnLengthM": 40.559,
+    "routedEdgeLengthM": 46.33,
+    "preferenceCost": 70.46069627755392,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "cb1c39e5aaf48fb3c42defc0a3e585003ffd4b55109b2ad28551c23f476a29d1"
+   }
+  },
+  "06-364-to-06-372:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 19.72,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 40.559,
+    "drawnLengthM": 40.559,
+    "routedEdgeLengthM": 46.33,
+    "preferenceCost": 70.46069627755392,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "7b8bb9ff54eeffec03cfcedf863ad033330d42c448ea3d98675cc278eaee14e2"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 9.86,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 40.559,
+    "drawnLengthM": 40.559,
+    "routedEdgeLengthM": 46.33,
+    "preferenceCost": 70.46069627755392,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "7b8bb9ff54eeffec03cfcedf863ad033330d42c448ea3d98675cc278eaee14e2"
+   }
+  },
+  "06-372-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-372:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-372-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-372:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-374-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-374:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-374-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 12,
+    "stepsPer100m": 25.44,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 7,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.161,
+    "drawnLengthM": 47.161,
+    "routedEdgeLengthM": 53.425,
+    "preferenceCost": 91.3196684601985,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "1b7d98341ef0e69e496ad5130aa3fdf724c4b88024c24855d4b138445957fda2"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 8.48,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.161,
+    "drawnLengthM": 47.161,
+    "routedEdgeLengthM": 53.425,
+    "preferenceCost": 91.3196684601985,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "1b7d98341ef0e69e496ad5130aa3fdf724c4b88024c24855d4b138445957fda2"
+   }
+  },
+  "06-364-to-06-374:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 12,
+    "stepsPer100m": 25.44,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 7,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.161,
+    "drawnLengthM": 47.161,
+    "routedEdgeLengthM": 53.425,
+    "preferenceCost": 91.3196684601985,
+    "segments": 15,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 2,
+    "edgeIdsSha256": "8cc4afa32cd04e356567577ce6753ba3118dd13f614039d7eebb58f44dce21ec"
+   },
+   "after": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 12.72,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.161,
+    "drawnLengthM": 47.161,
+    "routedEdgeLengthM": 53.425,
+    "preferenceCost": 91.3196684601985,
+    "segments": 15,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 2,
+    "edgeIdsSha256": "8cc4afa32cd04e356567577ce6753ba3118dd13f614039d7eebb58f44dce21ec"
+   }
+  },
+  "06-374-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-374:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-374-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-374:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-376-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-376:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-376-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 18.99,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772174,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "e99de28bddb59676db1288857c8f9dcc41c8328eddcfea6002e9c09a5bfa3412"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 8.44,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772174,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "e99de28bddb59676db1288857c8f9dcc41c8328eddcfea6002e9c09a5bfa3412"
+   }
+  },
+  "06-364-to-06-376:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 18.99,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772175,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "fdb5d888c5a0b164e3653f866a866f1c95ef458b0e15e8ddae9570bf9d30947d"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 10.55,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 47.389,
+    "drawnLengthM": 47.389,
+    "routedEdgeLengthM": 55.967,
+    "preferenceCost": 94.86721143772175,
+    "segments": 11,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 1,
+    "edgeIdsSha256": "fdb5d888c5a0b164e3653f866a866f1c95ef458b0e15e8ddae9570bf9d30947d"
+   }
+  },
+  "06-376-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-376:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-376-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-376:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-378-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-378:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-378-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 19.13,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 57.514,
+    "drawnLengthM": 57.514,
+    "routedEdgeLengthM": 63.674,
+    "preferenceCost": 132.7451163955453,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "3469dd121dbe591361bb72eca4b37e94003c8acbb039407e01c6f14b38bd0dd8"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 8.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 57.514,
+    "drawnLengthM": 57.514,
+    "routedEdgeLengthM": 63.674,
+    "preferenceCost": 132.7451163955453,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "3469dd121dbe591361bb72eca4b37e94003c8acbb039407e01c6f14b38bd0dd8"
+   }
+  },
+  "06-364-to-06-378:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 10,
+    "stepsPer100m": 17.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 57.514,
+    "drawnLengthM": 57.514,
+    "routedEdgeLengthM": 63.674,
+    "preferenceCost": 132.74511639554527,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "b27f577e33d98ff8d7c595f5a509153ec5734ca234f76ca701fb9b97ec47b034"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 8.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 57.514,
+    "drawnLengthM": 57.514,
+    "routedEdgeLengthM": 63.674,
+    "preferenceCost": 132.74511639554527,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "b27f577e33d98ff8d7c595f5a509153ec5734ca234f76ca701fb9b97ec47b034"
+   }
+  },
+  "06-378-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-378:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-378-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-378:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-380-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-380:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-380-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 16.67,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 53.979,
+    "drawnLengthM": 53.979,
+    "routedEdgeLengthM": 60.614,
+    "preferenceCost": 127.59531431960558,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "11266d71cc685b483daabcb602ce30fbf14f462817314e4f2283fc8ad3980798"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 9.26,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 53.979,
+    "drawnLengthM": 53.979,
+    "routedEdgeLengthM": 60.614,
+    "preferenceCost": 127.59531431960558,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "11266d71cc685b483daabcb602ce30fbf14f462817314e4f2283fc8ad3980798"
+   }
+  },
+  "06-364-to-06-380:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 16.67,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 53.979,
+    "drawnLengthM": 53.979,
+    "routedEdgeLengthM": 60.614,
+    "preferenceCost": 127.59531431960558,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "6d922a8918f48f8eaeef99c48ab9440e60429cf54528923274ced5a4a9f6e670"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 9.26,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 53.979,
+    "drawnLengthM": 53.979,
+    "routedEdgeLengthM": 60.614,
+    "preferenceCost": 127.59531431960558,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "6d922a8918f48f8eaeef99c48ab9440e60429cf54528923274ced5a4a9f6e670"
+   }
+  },
+  "06-380-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-380:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-380-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-380:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-382-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-382:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-382-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 20.01,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 54.96,
+    "drawnLengthM": 54.96,
+    "routedEdgeLengthM": 61.551,
+    "preferenceCost": 119.81987829143564,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "ff7e49743a8754b10c19f3f5c815337a5296991358466dad75be5442e45f14e6"
+   },
+   "after": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 12.74,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 54.96,
+    "drawnLengthM": 54.96,
+    "routedEdgeLengthM": 61.551,
+    "preferenceCost": 119.81987829143564,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "ff7e49743a8754b10c19f3f5c815337a5296991358466dad75be5442e45f14e6"
+   }
+  },
+  "06-364-to-06-382:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 10,
+    "stepsPer100m": 18.2,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 54.96,
+    "drawnLengthM": 54.96,
+    "routedEdgeLengthM": 61.551,
+    "preferenceCost": 119.81987829143566,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "cd9308825958b5a7f841ca1c72e49723eb6a3909faf00d0284deb689e18ef853"
+   },
+   "after": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 10.92,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 54.96,
+    "drawnLengthM": 54.96,
+    "routedEdgeLengthM": 61.551,
+    "preferenceCost": 119.81987829143566,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 2,
+    "edgeIdsSha256": "cd9308825958b5a7f841ca1c72e49723eb6a3909faf00d0284deb689e18ef853"
+   }
+  },
+  "06-382-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-382:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-382-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-382:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-384-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-384:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-384-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 21.87,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 50.307,
+    "drawnLengthM": 50.307,
+    "routedEdgeLengthM": 55.883,
+    "preferenceCost": 95.73390254038368,
+    "segments": 24,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 2,
+    "reversalsOver150": 2,
+    "zigzags": 4,
+    "bendsOver5": 22,
+    "jogs": 0,
+    "edgeIdsSha256": "1127f97156b3dc1f8ece8513ce77c3e3ebee8ae6bf8ac1d41581e52a3aeced4c"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 9.94,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 50.307,
+    "drawnLengthM": 50.307,
+    "routedEdgeLengthM": 55.883,
+    "preferenceCost": 95.73390254038368,
+    "segments": 24,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 2,
+    "reversalsOver150": 2,
+    "zigzags": 4,
+    "bendsOver5": 22,
+    "jogs": 0,
+    "edgeIdsSha256": "1127f97156b3dc1f8ece8513ce77c3e3ebee8ae6bf8ac1d41581e52a3aeced4c"
+   }
+  },
+  "06-364-to-06-384:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 21.88,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 50.267,
+    "drawnLengthM": 50.267,
+    "routedEdgeLengthM": 55.883,
+    "preferenceCost": 95.73390254038368,
+    "segments": 26,
+    "segmentsUnder2m": 20,
+    "exactRetracePairs": 2,
+    "reversalsOver150": 2,
+    "zigzags": 4,
+    "bendsOver5": 24,
+    "jogs": 0,
+    "edgeIdsSha256": "f44e762db94c96741968b7747e61fb33aca32269ccf28c01124ea5d60e0a3f4c"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 9.95,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 50.267,
+    "drawnLengthM": 50.267,
+    "routedEdgeLengthM": 55.883,
+    "preferenceCost": 95.73390254038368,
+    "segments": 26,
+    "segmentsUnder2m": 20,
+    "exactRetracePairs": 2,
+    "reversalsOver150": 2,
+    "zigzags": 4,
+    "bendsOver5": 24,
+    "jogs": 0,
+    "edgeIdsSha256": "f44e762db94c96741968b7747e61fb33aca32269ccf28c01124ea5d60e0a3f4c"
+   }
+  },
+  "06-384-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-384:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-384-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-384:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-386-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-386:inside:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-386-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 25.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 43.896,
+    "drawnLengthM": 43.896,
+    "routedEdgeLengthM": 49.873,
+    "preferenceCost": 84.6314461982185,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "a2bbdeb32d75ab01c6fca50a2971064187fa9114e157c2cc60dd5999e4c44364"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 11.39,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 43.896,
+    "drawnLengthM": 43.896,
+    "routedEdgeLengthM": 49.873,
+    "preferenceCost": 84.6314461982185,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "a2bbdeb32d75ab01c6fca50a2971064187fa9114e157c2cc60dd5999e4c44364"
+   }
+  },
+  "06-364-to-06-386:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 11,
+    "stepsPer100m": 25.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 6,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 43.896,
+    "drawnLengthM": 43.896,
+    "routedEdgeLengthM": 49.873,
+    "preferenceCost": 84.6314461982185,
+    "segments": 15,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 2,
+    "edgeIdsSha256": "f1938d1febbb8ca06257600619eb066f103c9ddcc406804a7dc9542976e153ef"
+   },
+   "after": {
+    "available": true,
+    "steps": 5,
+    "stepsPer100m": 11.47,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 1,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 43.58,
+    "drawnLengthM": 43.58,
+    "routedEdgeLengthM": 49.873,
+    "preferenceCost": 84.6314461982185,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 1,
+    "edgeIdsSha256": "f1938d1febbb8ca06257600619eb066f103c9ddcc406804a7dc9542976e153ef"
+   }
+  },
+  "06-386-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-364-to-06-386:hallway:no-transit:public": {
+   "before": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   },
+   "after": {
+    "available": false,
+    "message": "No hallway-only route is available. You can allow paths through other rooms in Directions."
+   }
+  },
+  "06-386-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-386:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-388-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.73,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   }
+  },
+  "06-364-to-06-388:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 5.82,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   }
+  },
+  "06-388-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.73,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   }
+  },
+  "06-364-to-06-388:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 5.82,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   }
+  },
+  "06-388-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.73,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785028,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "893c73f97add8603814b719c3adffd3e182d69a3de9d77b8495a160de1b5b655"
+   }
+  },
+  "06-364-to-06-388:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 6,
+    "stepsPer100m": 17.46,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 5.82,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 34.356,
+    "drawnLengthM": 34.356,
+    "routedEdgeLengthM": 40.076,
+    "preferenceCost": 40.07552080785029,
+    "segments": 11,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "bf5e0d079dde24bfbf8c307dbccc5aaf8d85a014b3916eadba3e38166dd46001"
+   }
+  },
+  "06-388-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-388:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-390-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 24.76,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 36.35,
+    "drawnLengthM": 36.35,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.509927279504296,
+    "segments": 18,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "93fcced1c55996cf1e3079eaee451f22f481e636859cba0cb61c9b1225e76fb5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.15,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.865,
+    "drawnLengthM": 35.865,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.509927279504296,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "93fcced1c55996cf1e3079eaee451f22f481e636859cba0cb61c9b1225e76fb5"
+   }
+  },
+  "06-364-to-06-390:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 10,
+    "stepsPer100m": 27.51,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 36.35,
+    "drawnLengthM": 36.35,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.5099272795043,
+    "segments": 18,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "b6c96e0dd446eea0bb172f3b8c79393245cdd8c1651123adc6fa2b2f887b4630"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.36,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.865,
+    "drawnLengthM": 35.865,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.5099272795043,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 11,
+    "jogs": 0,
+    "edgeIdsSha256": "b6c96e0dd446eea0bb172f3b8c79393245cdd8c1651123adc6fa2b2f887b4630"
+   }
+  },
+  "06-390-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 9,
+    "stepsPer100m": 24.76,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 36.35,
+    "drawnLengthM": 36.35,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.509927279504296,
+    "segments": 18,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "93fcced1c55996cf1e3079eaee451f22f481e636859cba0cb61c9b1225e76fb5"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 11.15,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.865,
+    "drawnLengthM": 35.865,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.509927279504296,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 10,
+    "jogs": 0,
+    "edgeIdsSha256": "93fcced1c55996cf1e3079eaee451f22f481e636859cba0cb61c9b1225e76fb5"
+   }
+  },
+  "06-364-to-06-390:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 10,
+    "stepsPer100m": 27.51,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 5,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 36.35,
+    "drawnLengthM": 36.35,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.5099272795043,
+    "segments": 18,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "b6c96e0dd446eea0bb172f3b8c79393245cdd8c1651123adc6fa2b2f887b4630"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 8.36,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 35.865,
+    "drawnLengthM": 35.865,
+    "routedEdgeLengthM": 38.51,
+    "preferenceCost": 38.5099272795043,
+    "segments": 14,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 11,
+    "jogs": 0,
+    "edgeIdsSha256": "b6c96e0dd446eea0bb172f3b8c79393245cdd8c1651123adc6fa2b2f887b4630"
+   }
+  },
+  "06-390-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 26.78,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 26.141,
+    "drawnLengthM": 26.141,
+    "routedEdgeLengthM": 29.333,
+    "preferenceCost": 29.333106355247665,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 11,
+    "jogs": 0,
+    "edgeIdsSha256": "2b2bd8c3e3dacd90b0ead6cb2086d1262c2f47c2bbdd9fd57fb8de0ad2930c72"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 7.8,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 25.656,
+    "drawnLengthM": 25.656,
+    "routedEdgeLengthM": 29.333,
+    "preferenceCost": 29.333106355247665,
+    "segments": 10,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "2b2bd8c3e3dacd90b0ead6cb2086d1262c2f47c2bbdd9fd57fb8de0ad2930c72"
+   }
+  },
+  "06-364-to-06-390:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 26.78,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 26.141,
+    "drawnLengthM": 26.141,
+    "routedEdgeLengthM": 29.333,
+    "preferenceCost": 29.333106355247665,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 11,
+    "jogs": 0,
+    "edgeIdsSha256": "825fc64062846253594d54d47030cc4163694d8da84ecfbb87b764ceb6e77155"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 7.8,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 25.656,
+    "drawnLengthM": 25.656,
+    "routedEdgeLengthM": 29.333,
+    "preferenceCost": 29.333106355247665,
+    "segments": 10,
+    "segmentsUnder2m": 7,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "825fc64062846253594d54d47030cc4163694d8da84ecfbb87b764ceb6e77155"
+   }
+  },
+  "06-390-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-390:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-392-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 29.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 4,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.276,
+    "drawnLengthM": 27.276,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "00ef15444ea6af6bdcf60e04054f7eb1568b29c459f5e3583dd14e6e70f741d9"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 11.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.116,
+    "drawnLengthM": 27.116,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 15,
+    "segmentsUnder2m": 11,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "00ef15444ea6af6bdcf60e04054f7eb1568b29c459f5e3583dd14e6e70f741d9"
+   }
+  },
+  "06-364-to-06-392:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 29.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 4,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.276,
+    "drawnLengthM": 27.276,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "4a8af05d66abccdb7d22a09572a6e1831ca108dbad87b53fd12cf89821a0ba30"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 11.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.116,
+    "drawnLengthM": 27.116,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 15,
+    "segmentsUnder2m": 11,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "4a8af05d66abccdb7d22a09572a6e1831ca108dbad87b53fd12cf89821a0ba30"
+   }
+  },
+  "06-392-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 29.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 4,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.276,
+    "drawnLengthM": 27.276,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "00ef15444ea6af6bdcf60e04054f7eb1568b29c459f5e3583dd14e6e70f741d9"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 11.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.116,
+    "drawnLengthM": 27.116,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 15,
+    "segmentsUnder2m": 11,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "00ef15444ea6af6bdcf60e04054f7eb1568b29c459f5e3583dd14e6e70f741d9"
+   }
+  },
+  "06-364-to-06-392:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 29.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 4,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.276,
+    "drawnLengthM": 27.276,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 16,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "4a8af05d66abccdb7d22a09572a6e1831ca108dbad87b53fd12cf89821a0ba30"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 11.06,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 27.116,
+    "drawnLengthM": 27.116,
+    "routedEdgeLengthM": 28.889,
+    "preferenceCost": 28.889472297460756,
+    "segments": 15,
+    "segmentsUnder2m": 11,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "4a8af05d66abccdb7d22a09572a6e1831ca108dbad87b53fd12cf89821a0ba30"
+   }
+  },
+  "06-392-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.778,
+    "drawnLengthM": 20.778,
+    "routedEdgeLengthM": 23.67,
+    "preferenceCost": 23.66960229564566,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "dba94bd36c975e75e11d39dedbb5f69aa5d3d6aaa817597de56b7664e55bf16d"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.55,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 1,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.618,
+    "drawnLengthM": 20.618,
+    "routedEdgeLengthM": 23.67,
+    "preferenceCost": 23.66960229564566,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "dba94bd36c975e75e11d39dedbb5f69aa5d3d6aaa817597de56b7664e55bf16d"
+   }
+  },
+  "06-364-to-06-392:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.69,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 3,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.778,
+    "drawnLengthM": 20.778,
+    "routedEdgeLengthM": 23.67,
+    "preferenceCost": 23.66960229564566,
+    "segments": 12,
+    "segmentsUnder2m": 9,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 9,
+    "jogs": 0,
+    "edgeIdsSha256": "ab499eaf2267b1cc63a6f3bd90b91580f7491ebfae9e9fdb6d91f30aff9dcf12"
+   },
+   "after": {
+    "available": true,
+    "steps": 2,
+    "stepsPer100m": 9.7,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 0,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.618,
+    "drawnLengthM": 20.618,
+    "routedEdgeLengthM": 23.67,
+    "preferenceCost": 23.66960229564566,
+    "segments": 11,
+    "segmentsUnder2m": 8,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 8,
+    "jogs": 0,
+    "edgeIdsSha256": "ab499eaf2267b1cc63a6f3bd90b91580f7491ebfae9e9fdb6d91f30aff9dcf12"
+   }
+  },
+  "06-392-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-392:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-397-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 28.64,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.441,
+    "drawnLengthM": 24.441,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 21,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 2,
+    "edgeIdsSha256": "e8bf422031b6e20df2d206bccfe74b49b5dc4f7dcafd4d63220e8004a640bcf3"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 12.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.256,
+    "drawnLengthM": 24.256,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 18,
+    "segmentsUnder2m": 15,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "e8bf422031b6e20df2d206bccfe74b49b5dc4f7dcafd4d63220e8004a640bcf3"
+   }
+  },
+  "06-364-to-06-397:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 28.64,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.443,
+    "drawnLengthM": 24.443,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 21,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 2,
+    "edgeIdsSha256": "4e5d46f60f074d13408590a06070efef623b32a8c2aaa48c55e4fc5eb7f6912b"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 12.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.258,
+    "drawnLengthM": 24.258,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 18,
+    "segmentsUnder2m": 15,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "4e5d46f60f074d13408590a06070efef623b32a8c2aaa48c55e4fc5eb7f6912b"
+   }
+  },
+  "06-397-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 28.64,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.441,
+    "drawnLengthM": 24.441,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 21,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 2,
+    "edgeIdsSha256": "e8bf422031b6e20df2d206bccfe74b49b5dc4f7dcafd4d63220e8004a640bcf3"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 12.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.256,
+    "drawnLengthM": 24.256,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 18,
+    "segmentsUnder2m": 15,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "e8bf422031b6e20df2d206bccfe74b49b5dc4f7dcafd4d63220e8004a640bcf3"
+   }
+  },
+  "06-364-to-06-397:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 28.64,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.443,
+    "drawnLengthM": 24.443,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 21,
+    "segmentsUnder2m": 18,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 2,
+    "edgeIdsSha256": "4e5d46f60f074d13408590a06070efef623b32a8c2aaa48c55e4fc5eb7f6912b"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 12.37,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 24.258,
+    "drawnLengthM": 24.258,
+    "routedEdgeLengthM": 23.616,
+    "preferenceCost": 23.6164918415608,
+    "segments": 18,
+    "segmentsUnder2m": 15,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 1,
+    "edgeIdsSha256": "4e5d46f60f074d13408590a06070efef623b32a8c2aaa48c55e4fc5eb7f6912b"
+   }
+  },
+  "06-397-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.14,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.12,
+    "drawnLengthM": 21.12,
+    "routedEdgeLengthM": 20.086,
+    "preferenceCost": 20.085895740120904,
+    "segments": 17,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "33af98b6766655930bb15c29d8474f117aa1019f45454689916cc97b32effd74"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.934,
+    "drawnLengthM": 20.934,
+    "routedEdgeLengthM": 20.086,
+    "preferenceCost": 20.085895740120904,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "33af98b6766655930bb15c29d8474f117aa1019f45454689916cc97b32effd74"
+   }
+  },
+  "06-364-to-06-397:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.14,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 21.12,
+    "drawnLengthM": 21.12,
+    "routedEdgeLengthM": 20.086,
+    "preferenceCost": 20.085895740120904,
+    "segments": 17,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 14,
+    "jogs": 0,
+    "edgeIdsSha256": "3ca62a38a1bcceab131b2bd96c76dff61d5963829657cd3515fd6438678f76e2"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.33,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.934,
+    "drawnLengthM": 20.934,
+    "routedEdgeLengthM": 20.086,
+    "preferenceCost": 20.085895740120904,
+    "segments": 15,
+    "segmentsUnder2m": 12,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "3ca62a38a1bcceab131b2bd96c76dff61d5963829657cd3515fd6438678f76e2"
+   }
+  },
+  "06-397-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-397:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-398-to-06-364:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 34.93,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.902,
+    "drawnLengthM": 22.902,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 20,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 0,
+    "edgeIdsSha256": "90ff239cfbb59391532a6f723af7999f4950350606018847c96af41b33d18dc4"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 17.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.742,
+    "drawnLengthM": 22.742,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 18,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 16,
+    "jogs": 1,
+    "edgeIdsSha256": "90ff239cfbb59391532a6f723af7999f4950350606018847c96af41b33d18dc4"
+   }
+  },
+  "06-364-to-06-398:inside:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 34.93,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.902,
+    "drawnLengthM": 22.902,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 20,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 0,
+    "edgeIdsSha256": "779c1055490ada20eb7e77d5694bf91e11118c03a01cc3f465510d0c66476a61"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 13.19,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.742,
+    "drawnLengthM": 22.742,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 18,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 16,
+    "jogs": 1,
+    "edgeIdsSha256": "779c1055490ada20eb7e77d5694bf91e11118c03a01cc3f465510d0c66476a61"
+   }
+  },
+  "06-398-to-06-364:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 34.93,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.902,
+    "drawnLengthM": 22.902,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 20,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 0,
+    "edgeIdsSha256": "90ff239cfbb59391532a6f723af7999f4950350606018847c96af41b33d18dc4"
+   },
+   "after": {
+    "available": true,
+    "steps": 4,
+    "stepsPer100m": 17.59,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 2,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.742,
+    "drawnLengthM": 22.742,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 18,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 16,
+    "jogs": 1,
+    "edgeIdsSha256": "90ff239cfbb59391532a6f723af7999f4950350606018847c96af41b33d18dc4"
+   }
+  },
+  "06-364-to-06-398:inside:transit:public": {
+   "before": {
+    "available": true,
+    "steps": 8,
+    "stepsPer100m": 34.93,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 4,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.902,
+    "drawnLengthM": 22.902,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 20,
+    "segmentsUnder2m": 17,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 17,
+    "jogs": 0,
+    "edgeIdsSha256": "779c1055490ada20eb7e77d5694bf91e11118c03a01cc3f465510d0c66476a61"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 13.19,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 22.742,
+    "drawnLengthM": 22.742,
+    "routedEdgeLengthM": 22.291,
+    "preferenceCost": 22.290984851955553,
+    "segments": 18,
+    "segmentsUnder2m": 14,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 16,
+    "jogs": 1,
+    "edgeIdsSha256": "779c1055490ada20eb7e77d5694bf91e11118c03a01cc3f465510d0c66476a61"
+   }
+  },
+  "06-398-to-06-364:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.38,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.968,
+    "drawnLengthM": 20.968,
+    "routedEdgeLengthM": 20.689,
+    "preferenceCost": 20.688731013297016,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "42e581c7c9e825bf251ce44f739f6610827c3ab206f9c48515a502f72950c655"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.42,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.808,
+    "drawnLengthM": 20.808,
+    "routedEdgeLengthM": 20.689,
+    "preferenceCost": 20.688731013297016,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "42e581c7c9e825bf251ce44f739f6610827c3ab206f9c48515a502f72950c655"
+   }
+  },
+  "06-364-to-06-398:hallway:no-transit:public": {
+   "before": {
+    "available": true,
+    "steps": 7,
+    "stepsPer100m": 33.38,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 3,
+     "bear": 2,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.968,
+    "drawnLengthM": 20.968,
+    "routedEdgeLengthM": 20.689,
+    "preferenceCost": 20.688731013297016,
+    "segments": 16,
+    "segmentsUnder2m": 13,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 13,
+    "jogs": 0,
+    "edgeIdsSha256": "e6b0fa84e521bb7cf468741c3a6030c93ddcc202063f5c4ca02751b7772ac4e5"
+   },
+   "after": {
+    "available": true,
+    "steps": 3,
+    "stepsPer100m": 14.42,
+    "stepKinds": {
+     "depart": 1,
+     "turn": 1,
+     "bear": 0,
+     "around": 0,
+     "straight": 0,
+     "building-change": 0,
+     "floor-change": 0,
+     "arrive": 1
+    },
+    "reportedDistanceM": 20.808,
+    "drawnLengthM": 20.808,
+    "routedEdgeLengthM": 20.689,
+    "preferenceCost": 20.688731013297016,
+    "segments": 14,
+    "segmentsUnder2m": 10,
+    "exactRetracePairs": 0,
+    "reversalsOver150": 0,
+    "zigzags": 1,
+    "bendsOver5": 12,
+    "jogs": 0,
+    "edgeIdsSha256": "e6b0fa84e521bb7cf468741c3a6030c93ddcc202063f5c4ca02751b7772ac4e5"
+   }
+  },
+  "06-398-to-06-364:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  },
+  "06-364-to-06-398:inside:no-transit:accessible": {
+   "before": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   },
+   "after": {
+    "available": false,
+    "message": "No confirmed step-free route connects these locations. Stairs and unverified connections are excluded; try Public review or check the route in source review."
+   }
+  }
+ }
+}
