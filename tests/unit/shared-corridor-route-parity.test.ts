@@ -206,7 +206,19 @@ test("shared routes retain the stored overlay trunk in compact and long halls, t
     const snapshot = JSON.stringify(data);
     const stored = [...preparedWalkingGuides(data).values()];
     assert.equal(stored.length, 2);
-    const expected = composeSharedCorridorGuide([...stored[0], ...stored[1]]);
+    // The stored guide's near out-and-back hook (10, y) -> (11, y') ->
+    // (10.5, y) is drawn by the overlay but removed from the route line: its
+    // shortcut passes the exact two-foot support (route-line-cleanup.ts).
+    // Every other stored vertex and both edges stay.
+    const hookTip = stored[0][3];
+    const expected = composeSharedCorridorGuide([
+      ...stored[0],
+      ...stored[1],
+    ]).filter((p) => JSON.stringify(p) !== JSON.stringify(hookTip));
+    assert.equal(
+      expected.length,
+      composeSharedCorridorGuide([...stored[0], ...stored[1]]).length - 1,
+    );
     // Exercise the JSON package round trip before the worker projection.
     // eslint-disable-next-line unicorn/prefer-structured-clone
     const workerData = JSON.parse(
@@ -239,8 +251,8 @@ test("shared routes retain the stored overlay trunk in compact and long halls, t
       const drawn = overlay.features.flatMap((feature) =>
         feature.properties?.pointsFeet ? [feature.properties.pointsFeet] : [],
       );
-      // The three noncollinear hook segments are the regression: prior runtime
-      // fitting erased these from routes while the overlay retained them.
+      // The overlay (the stored network) still draws the hook segments; only
+      // the composed route line drops them, under the exact support check.
       for (const [a, b] of [
         [stored[0][2], stored[0][3]],
         [stored[0][3], stored[0][4]],

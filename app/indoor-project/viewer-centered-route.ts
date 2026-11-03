@@ -39,6 +39,7 @@ import type { IndoorDataset, IndoorEdge } from "./contract";
 import { createDoorPassageQuery } from "./route-passages";
 import { routeLanes } from "./viewer-route-lanes";
 import { curvedCorridorPath } from "./curved-route";
+import { cleanRouteLine } from "./route-line-cleanup";
 import polygonClipping from "polygon-clipping";
 import type { MultiPolygon } from "polygon-clipping";
 import {
@@ -688,6 +689,7 @@ function refine(
   preparedGuide?: XYZ[],
   fixedAnchors = false,
   preferSharedGuide = false,
+  protectedPointsFeet: readonly XYZ[] = [],
 ): RoutePath {
   // Accessibility confirmations apply to the saved edge geometry. The caller
   // preserves that geometry for the confirmed step-free profile.
@@ -1129,6 +1131,54 @@ function refine(
       );
       return sharedSupport(points);
     };
+    // Hooks and tiny zigzags left where per-edge polylines meet are removed
+    // from the drawn line only (route-line-cleanup.ts). Each shortcut must
+    // pass this refinement's exact segment support (and, for a shared guide,
+    // the exact two-foot strip), its removed excursion and the shortcut may
+    // cross no door/opening passage, door/opening anchors and hallway stops
+    // stay, and the whole cleaned line must pass the same support and
+    // threshold/access policy again. Otherwise the composed line is kept.
+    const cleanedLine = (
+      points: XY[],
+      supportedPath: (points: XY[]) => boolean,
+    ) => {
+      const z = path.pointsFeet[0][2];
+      const anchors = [
+        ...[...edges, ...portalEdges]
+          .filter((e) => e.kind === "door" || e.kind === "opening")
+          .flatMap((e) => [e.pointsFeet[0], e.pointsFeet.at(-1)!]),
+        ...protectedPointsFeet,
+      ].filter((q) => Math.abs(q[2] - z) < 0.01);
+      const passages = (points: XY[]) =>
+        passageQuery(
+          levelId,
+          points.map((p): XYZ => [p[0], p[1], z]),
+        ).length;
+      const cleaned = cleanRouteLine(points, {
+        metresPerFoot: data.alignment.horizontalMetresPerFoot,
+        protectedIndex: (i) =>
+          anchors.some(
+            (q) =>
+              Math.abs(q[0] - points[i][0]) < 1e-9 &&
+              Math.abs(q[1] - points[i][1]) < 1e-9,
+          ),
+        shortcutSupported: (a, b) =>
+          validSegment(a, b, free) && supportedPath([a, b]),
+        excursionAllowed: (excursion) =>
+          passages(excursion) === 0 &&
+          passages([excursion[0], excursion.at(-1)!]) === 0,
+      });
+      if (
+        cleaned.removedVertices === 0 ||
+        !cleaned.points
+          .slice(1)
+          .every((p, i) => validSegment(cleaned.points[i], p, free)) ||
+        !supportedPath(cleaned.points) ||
+        !policyAllowed(cleaned.points)
+      )
+        return points;
+      return cleaned.points;
+    };
     const candidates: XY[][] = [];
     let sourceGuide = false;
     let preparedCandidate = false;
@@ -1179,7 +1229,9 @@ function refine(
           openingSpanSupported: openingSpans.length > 0 ? true : undefined,
           shape: "centered",
           sourceReason: undefined,
-          pointsFeet: guide.map((p): XYZ => [...p]),
+          pointsFeet: cleanedLine(shared, supportsShared).map(
+            (p): XYZ => [p[0], p[1], guide[0][2]],
+          ),
         };
       }
       if (!preferSharedGuide) {
@@ -1577,7 +1629,10 @@ function refine(
       shape: isCurved ? "curved" : sourceGuide ? "orthogonal" : "centered",
       curveRanges: isCurved ? curved?.ranges : undefined,
       sourceReason: undefined,
-      pointsFeet: candidates[0].map((p) => [p[0], p[1], path.pointsFeet[0][2]]),
+      pointsFeet: (isCurved
+        ? candidates[0]
+        : cleanedLine(candidates[0], () => true)
+      ).map((p) => [p[0], p[1], path.pointsFeet[0][2]]),
     };
   } catch {
     return source("centering-error");
@@ -1624,6 +1679,9 @@ export function centeredRoutePaths(
       sharedStops[i === 0 ? "start" : "end"] =
         pair[(i === 0) === !!edgeOrientations.get(edge) ? 0 : 1];
   }
+  const stopPoints = [sharedStops.start, sharedStops.end].filter(
+    (p): p is XYZ => !!p,
+  );
   const paths: RoutePath[] = [],
     groups: { edges: IndoorEdge[]; first: string; last: string }[] = [];
   const flatKind = (edge: IndoorEdge) =>
@@ -1753,6 +1811,7 @@ export function centeredRoutePaths(
         preparedGuide,
         false,
         preferSharedGuide,
+        stopPoints,
       );
     if (!canSplit) return [whole()];
     const resolved = preferSharedGuide ? undefined : whole();
@@ -1797,6 +1856,7 @@ export function centeredRoutePaths(
           preparedGuide,
           false,
           preferSharedGuide,
+          stopPoints,
         ),
       );
       run = [];

@@ -598,7 +598,15 @@ test("straightened native approach guides preserve building changes in direction
     [...new Set(steps.map((s) => s.building))],
     ["Library", "Agora"],
   );
-  assert.ok(steps.some((s) => s.building === "Agora" && s.type === "straight"));
+  // Entering another building is its own building-change step.
+  assert.ok(
+    steps.some(
+      (s) =>
+        s.building === "Agora" &&
+        s.type === "building-change" &&
+        s.buildingName === "Agora",
+    ),
+  );
   assert.equal(
     steps.filter((s) => s.type === "turn" || s.type === "floor-change").length,
     0,

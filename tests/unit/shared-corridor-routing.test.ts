@@ -726,7 +726,24 @@ test("compact vestibule routes retain the compiled shared trunk and real floor h
       const points = route.paths.flatMap((p, i) =>
         i ? p.pointsFeet.slice(1) : p.pointsFeet,
       );
-      assert.deepEqual(points, from === "A" ? expected : expected.toReversed());
+      const compiled = from === "A" ? expected : expected.toReversed();
+      if (hole)
+        // The trunk around the real floor hole is retained exactly: no
+        // shortcut over the hole passes the exact two-foot support.
+        assert.deepEqual(points, compiled);
+      else {
+        // Without the hole, the compiled trunk's 0.55 m sideways dip is a
+        // tiny zigzag whose supported shortcut drops one vertex from the
+        // drawn line (route-line-cleanup.ts); every other vertex is kept.
+        assert.equal(points.length, compiled.length - 1);
+        assert.deepEqual(points[0], compiled[0]);
+        assert.deepEqual(points.at(-1), compiled.at(-1));
+        assert.ok(
+          points.every((p) =>
+            compiled.some((q) => JSON.stringify(q) === JSON.stringify(p)),
+          ),
+        );
+      }
       if (hole) {
         assert.ok(
           points.length > 2,

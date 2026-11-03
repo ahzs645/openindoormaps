@@ -43,7 +43,7 @@ jobs:
       - name: Check prepared-project types
         run: npx tsc -p tsconfig.indoor-project.json
       - name: Check routing and worker lifecycle
-        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts tests/unit/route-worker-calculation.test.ts tests/unit/visitor-route-efficiency.test.ts tests/unit/deterministic-math.test.ts
+        run: node --import tsx --test tests/unit/deep-link.test.ts tests/unit/indoor-project.test.ts tests/unit/route-arrival.test.ts tests/unit/route-worker-client.test.ts tests/unit/ring-point-query.test.ts tests/unit/prepared-routing.test.ts tests/unit/generalized-room-geometry.test.ts tests/unit/stable-wall-geometry.test.ts tests/unit/wall-render-audit.test.ts tests/unit/stair-surround-ground.test.ts tests/unit/pinned-native-stairs.test.ts tests/unit/route-worker-calculation.test.ts tests/unit/visitor-route-efficiency.test.ts tests/unit/deterministic-math.test.ts tests/unit/navigation-steps.test.ts
       - name: Check shared pathways and candidate checkpoints
         run: >-
           node --import tsx --test --test-concurrency=2
@@ -56,6 +56,7 @@ jobs:
           tests/unit/shared-corridor-composition.test.ts
           tests/unit/shared-corridor-routing.test.ts
           tests/unit/shared-corridor-route-parity.test.ts
+          tests/unit/route-line-cleanup.test.ts
       - name: Check progressive delivery and published directions
         run: >-
           node --import tsx --test --test-concurrency=2
