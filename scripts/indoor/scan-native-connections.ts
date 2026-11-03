@@ -3,6 +3,9 @@ import { dirname, resolve } from "node:path";
 import { createHash } from "node:crypto";
 import { readIndoorProject } from "../../app/indoor-project/package";
 import { scanNativeGaps, compactGapScan } from "../../app/indoor-project/native-gap-scan";
+import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
+// Strict native material checks run inside the import; load the checked engine first.
+await initializeNativeExactGeosOverlay();
 const [input, output, max = "6", minArea = "40", level] = process.argv.slice(2);
 if (!input || !output || resolve(input) === resolve(output)) throw new Error("Usage: scan-native-connections master.zip report.json [maximum-width-feet=6] [minimum-side-area-sqft=40] [native-level-id]");
 const bytes = await readFile(input), digest = (b: Uint8Array) => createHash("sha256").update(b).digest("hex");
