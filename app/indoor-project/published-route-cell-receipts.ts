@@ -9,7 +9,7 @@ export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[]
       engineSha256:
         "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
       runtimeSha256:
-        "49f1e88b3468b14c4b144cb9eb51f10cbb5dc8da714526de02b28863965a1247",
+        "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399",
       source: {
         modelFileName:
           "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
@@ -19,12 +19,12 @@ export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[]
           "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c",
       },
       logicalSha256:
-        "d3b3009cc61a8e4382303b252801918a7531048e06fd3eb190075c3e62bbce4e",
+        "952f475249110d6cde72b8b1c9252e9c4377ca17465da1d7a5063be8ccdb95e7",
       logicalBytes: 35_217_787,
       compressedSha256:
-        "3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687",
-      compressedBytes: 8_205_761,
-      url: "/data/unbc-routing/3d27eaa50e0376bd78dc4ffa5d49d9b42f0f616964b92aaa9d19346a90e31687.json.gz",
+        "57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f",
+      compressedBytes: 8_205_762,
+      url: "/data/unbc-routing/57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f.json.gz",
     },
     {
       id: "fresh-candidate-native-routing-0762303248a9a4e23dfbe3c0b7c516fdf5d7623365a6a2d4ddc0703f55668628",
