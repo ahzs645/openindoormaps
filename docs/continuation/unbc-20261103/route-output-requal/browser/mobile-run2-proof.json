@@ -1,0 +1,841 @@
+{
+  "format": "final-visitor-browser-proof-v1",
+  "passed": true,
+  "run": "run2",
+  "mode": "mobile",
+  "emulation": "Playwright devices['iPhone 13'] in Chromium (viewport, DPR 3, touch, mobile UA); not a physical phone",
+  "appUrl": "http://127.0.0.1:42961/openindoormaps/",
+  "manifestUrl": "http://127.0.0.1:42961/data/unbc/manifest.json",
+  "browserVersion": "153.0.8010.12",
+  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
+  "identity": {
+    "format": "final-proof-identity-v1",
+    "collectedAt": "2026-11-03T00:33:28.803Z",
+    "appCommit": "a828af4cb79a2624d953a7c2e2bfc696309d66d4",
+    "appLastChangedCommit": "a828af4cb79a2624d953a7c2e2bfc696309d66d4",
+    "appSourcesMatchCommit": true,
+    "reviterCommit": "2e7875d3209785ea287296a1520eb9851011b50a",
+    "reviterPinnedInCi": "2e7875d3209785ea287296a1520eb9851011b50a",
+    "candidateSha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+    "visitorSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+    "manifestRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+    "manifestFileSha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+    "routingDatasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+    "directionsCarrier": {
+      "receiptId": "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+      "sha256": "57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f",
+      "bytes": 8205762,
+      "url": "/data/unbc-routing/57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f.json.gz"
+    },
+    "planReceipts": [
+      {
+        "id": "exact-native-2d-scope-461f0105c3d7347162a8b8edad822a9a1b81d24fdcbb318249f6fbc7caf71d0c",
+        "scopeId": "scope-461f0105c3d7347162a8b8edad822a9a1b81d24fdcbb318249f6fbc7caf71d0c",
+        "compressedSha256": "530b833bc0103546ecc3ddb67505e1cd0b86a78c5fb2d4034d41538bba4e3168",
+        "compressedBytes": 251814,
+        "url": "/data/unbc-plans/530b833bc0103546ecc3ddb67505e1cd0b86a78c5fb2d4034d41538bba4e3168.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-7c4ad619ed9f82f34055e998a47131f8a272508f94c38a366761a3953804cea5",
+        "scopeId": "scope-7c4ad619ed9f82f34055e998a47131f8a272508f94c38a366761a3953804cea5",
+        "compressedSha256": "e0cc256546836fc22083331ef181bcb3c4089205de19a55c9025b4e4892e9935",
+        "compressedBytes": 93099,
+        "url": "/data/unbc-plans/e0cc256546836fc22083331ef181bcb3c4089205de19a55c9025b4e4892e9935.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-73e754661a019da79cf1002f56a1255023e61462b6ebc4cc6db21eaac0eac54c",
+        "scopeId": "scope-73e754661a019da79cf1002f56a1255023e61462b6ebc4cc6db21eaac0eac54c",
+        "compressedSha256": "c73820b1c93edb22ea593c6baf7fab2af45debbd380896f7caeab477d8b4f462",
+        "compressedBytes": 5241893,
+        "url": "/data/unbc-plans/c73820b1c93edb22ea593c6baf7fab2af45debbd380896f7caeab477d8b4f462.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-ea2884e5eca4101c2d43b9c177f095ae091df6501bed99a6baa4304857612531",
+        "scopeId": "scope-ea2884e5eca4101c2d43b9c177f095ae091df6501bed99a6baa4304857612531",
+        "compressedSha256": "afb5d4ede1d2823a1a99273f9f5ca3f7eb26164935ad933fc59044525d7e0762",
+        "compressedBytes": 340234,
+        "url": "/data/unbc-plans/afb5d4ede1d2823a1a99273f9f5ca3f7eb26164935ad933fc59044525d7e0762.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-8a0e8988fe2171167591d6c8c91922420aef1adc1d8fd6443f267a1f65bbbf39",
+        "scopeId": "scope-8a0e8988fe2171167591d6c8c91922420aef1adc1d8fd6443f267a1f65bbbf39",
+        "compressedSha256": "0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda",
+        "compressedBytes": 2842301,
+        "url": "/data/unbc-plans/0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-348d9b22b2772949eff71a7a45a4c3943d95088bc81abd936041513e81135c3d",
+        "scopeId": "scope-348d9b22b2772949eff71a7a45a4c3943d95088bc81abd936041513e81135c3d",
+        "compressedSha256": "14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152",
+        "compressedBytes": 2149792,
+        "url": "/data/unbc-plans/14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz"
+      },
+      {
+        "id": "exact-native-2d-scope-b55ec721d39599178ddd4829e1f4e06a92a6f785e4f3d06081f6deaeeae91d96",
+        "scopeId": "scope-b55ec721d39599178ddd4829e1f4e06a92a6f785e4f3d06081f6deaeeae91d96",
+        "compressedSha256": "06efebc20f71efafc06bbe00516a58bacaae3994a199e3e80272ba76cef1c6c7",
+        "compressedBytes": 1692945,
+        "url": "/data/unbc-plans/06efebc20f71efafc06bbe00516a58bacaae3994a199e3e80272ba76cef1c6c7.json.gz"
+      }
+    ],
+    "projectReceiptId": "unbc-progressive-floors-32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+    "bindings": {
+      "preparedDisplayEngineSha256": "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+      "publishedRouteRuntimeSha256": "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399",
+      "publishedVisitorPlanRuntimeSha256": "4705ec62859acf01d17265435d0638a5405d385250bf66acacb7d0daddd0bac2"
+    },
+    "build": {
+      "indexHtmlSha256": "92c22c417ad75ee36d2ee623faa06fd4620c0e87fddce52d380c0d7f43f551b3",
+      "assetsFiles": 77,
+      "assetsListSha256": "a09b6e7b966b60e8736464e477bf0c421859a94e0573f7f6b365fadc22c5cffc",
+      "assetsListRule": "sha256 of the sorted lines '<sha256>  <path relative to build/assets>' plus a final newline",
+      "buildTree": {
+        "files": 115,
+        "sha256": "f029f257f31f139cbe2176ca3bc8b4729839bf087ac877c932c23cbe1aa927bd"
+      }
+    },
+    "host": {
+      "cpus": 4,
+      "memoryBytes": 16872808448,
+      "loadAverageAtCollection": "0.36 0.82 1.00 1/122 22663",
+      "kernel": "6.18.44-fc-v185",
+      "node": "v22.22.0"
+    }
+  },
+  "loadAverageAtStart": "0.82 0.95 1.00 1/117 23687",
+  "loadAverageAtEnd": "0.29 0.67 0.88 2/226 23897",
+  "failures": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:42961/data/unbc/assets/60615142b61c67cf692142d171cfec69f7ec54d302c73332fa977fcc2c934ed9.br",
+      "error": "net::ERR_ABORTED"
+    }
+  ],
+  "dataRequests": [
+    {
+      "path": "/data/unbc-routing/57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f.json.gz",
+      "status": 200,
+      "seconds": 12.87
+    },
+    {
+      "path": "/data/unbc-plans/0c25c5de8f5c65052507738335b42997b107ef9811fea9c50180d5e744eb3eda.json.gz",
+      "status": 200,
+      "seconds": 18.401
+    },
+    {
+      "path": "/data/unbc-plans/14e8225afeb0d7428b1cffb3d306f5e5e0f55df5935624f5e8cf7350d7ec8152.json.gz",
+      "status": 200,
+      "seconds": 27.449
+    }
+  ],
+  "results": [
+    {
+      "label": "0810-default-08-264-to-10-2006",
+      "from": "rm-694-01803a06bb62",
+      "to": "rm-694-d302635a3d75",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 83.435,
+      "toleranceMetres": 1,
+      "statusText": "83 m",
+      "outcome": "route",
+      "shownMetres": 83,
+      "stepTotal": 8,
+      "firstInstruction": "Leave 08-264 · Signout Equip Storage and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 11992,
+        "quickBefore": 0,
+        "quickMax": 307
+      },
+      "buttonDisabledSeconds": 0.007,
+      "loadAverageAtRequest": "0.92 0.97 1.00 1/224 23834",
+      "loadAverageAtEnd": "0.86 0.95 1.00 1/225 23849",
+      "timing": {
+        "requestToStatusSeconds": 11.376,
+        "requestToRoutePaintSeconds": 15.006,
+        "routePaintNotBeforeSeconds": 14.399,
+        "requestToFloorReadySeconds": 15.124,
+        "paintCaptures": 103,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.016,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 11.376,
+          "status": "83 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 11.844,
+          "status": "83 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 12.644,
+          "status": "83 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 13.875,
+          "status": "83 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 15.124,
+          "status": "83 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-366-to-06-364",
+      "from": "rm-1487353-c8d3e4ebb513",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 20.85,
+      "toleranceMetres": 1,
+      "statusText": "21 m",
+      "outcome": "route",
+      "shownMetres": 21,
+      "stepTotal": 3,
+      "firstInstruction": "Leave 06-366 · Lounge and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 7566,
+        "quickBefore": 0,
+        "quickMax": 193
+      },
+      "buttonDisabledSeconds": 0.007,
+      "loadAverageAtRequest": "0.86 0.95 1.00 2/225 23849",
+      "loadAverageAtEnd": "0.80 0.94 0.99 1/228 23854",
+      "timing": {
+        "requestToStatusSeconds": 1.493,
+        "requestToRoutePaintSeconds": 3.925,
+        "routePaintNotBeforeSeconds": 3.365,
+        "requestToFloorReadySeconds": 3.981,
+        "paintCaptures": 10,
+        "medianCaptureSeconds": 0.288,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.018,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 1.493,
+          "status": "21 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 2.128,
+          "status": "21 m",
+          "render": "",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 2.912,
+          "status": "21 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 3.981,
+          "status": "21 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "refused",
+      "expectedDistanceMetres": null,
+      "toleranceMetres": null,
+      "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+      "outcome": "refused",
+      "shownMetres": null,
+      "stepTotal": 0,
+      "firstInstruction": null,
+      "routeLinePixels": {
+        "before": 0,
+        "after": 0,
+        "quickBefore": 0,
+        "quickMax": 0
+      },
+      "buttonDisabledSeconds": 0.007,
+      "loadAverageAtRequest": "0.80 0.94 0.99 1/227 23854",
+      "loadAverageAtEnd": "0.56 0.88 0.97 1/221 23867",
+      "timing": {
+        "requestToStatusSeconds": 0.058,
+        "requestToRoutePaintSeconds": null,
+        "routePaintNotBeforeSeconds": null,
+        "requestToFloorReadySeconds": 0.058,
+        "paintCaptures": 28,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.016,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 0.058,
+          "status": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-transit-06-376-to-06-364",
+      "from": "rm-1487353-c015ccebb019",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": true,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 47.389,
+      "toleranceMetres": 1,
+      "statusText": "47 m",
+      "outcome": "route",
+      "shownMetres": 47,
+      "stepTotal": 4,
+      "firstInstruction": "Leave 06-376 · Open Work Area and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 7045,
+        "quickBefore": 0,
+        "quickMax": 176
+      },
+      "buttonDisabledSeconds": 0.007,
+      "loadAverageAtRequest": "0.56 0.88 0.97 2/221 23867",
+      "loadAverageAtEnd": "0.52 0.86 0.96 1/223 23869",
+      "timing": {
+        "requestToStatusSeconds": 0.948,
+        "requestToRoutePaintSeconds": 1.071,
+        "routePaintNotBeforeSeconds": 0.632,
+        "requestToFloorReadySeconds": 0.948,
+        "paintCaptures": 7,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.043,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 0.948,
+          "status": "47 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-stepfree-06-388-to-06-364",
+      "from": "rm-1487353-c75375ebb3cc",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "accessible"
+      },
+      "expect": "refused",
+      "expectedDistanceMetres": null,
+      "toleranceMetres": null,
+      "statusText": "No confirmed step-free route is available between these places.",
+      "outcome": "refused",
+      "shownMetres": null,
+      "stepTotal": 0,
+      "firstInstruction": null,
+      "routeLinePixels": {
+        "before": 0,
+        "after": 0,
+        "quickBefore": 0,
+        "quickMax": 0
+      },
+      "buttonDisabledSeconds": 0.006,
+      "loadAverageAtRequest": "0.52 0.86 0.96 1/223 23869",
+      "loadAverageAtEnd": "0.17 0.69 0.89 1/224 23887",
+      "timing": {
+        "requestToStatusSeconds": 0.059,
+        "requestToRoutePaintSeconds": null,
+        "routePaintNotBeforeSeconds": null,
+        "requestToFloorReadySeconds": 0.059,
+        "paintCaptures": 29,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.018,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 0.059,
+          "status": "No confirmed step-free route is available between these places.",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "corridor-default-04-204-to-08-267",
+      "from": "rm-694-2b971ef6dc47",
+      "to": "rm-694-43988ffdc334",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 119.954,
+      "toleranceMetres": 1,
+      "statusText": "120 m",
+      "outcome": "route",
+      "shownMetres": 120,
+      "stepTotal": 7,
+      "firstInstruction": "Leave 04-204 · Corridor and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 5985,
+        "quickBefore": 0,
+        "quickMax": 151
+      },
+      "buttonDisabledSeconds": 0.006,
+      "loadAverageAtRequest": "0.17 0.69 0.89 1/224 23888",
+      "loadAverageAtEnd": "0.22 0.68 0.89 5/222 23891",
+      "timing": {
+        "requestToStatusSeconds": 2.957,
+        "requestToRoutePaintSeconds": 6.07,
+        "routePaintNotBeforeSeconds": 4.356,
+        "requestToFloorReadySeconds": 7.379,
+        "paintCaptures": 23,
+        "medianCaptureSeconds": 0.017,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.046,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 2.957,
+          "status": "120 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 3.383,
+          "status": "120 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 7.379,
+          "status": "120 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "office-transit-04-255-to-08-272",
+      "from": "rm-694-072a835d76b9",
+      "to": "rm-694-0179b206bb5d",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": true,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 185.051,
+      "toleranceMetres": 1,
+      "statusText": "185 m",
+      "outcome": "route",
+      "shownMetres": 185,
+      "stepTotal": 10,
+      "firstInstruction": "Leave 04-255 · Research Office and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 7979,
+        "quickBefore": 0,
+        "quickMax": 193
+      },
+      "buttonDisabledSeconds": 0.007,
+      "loadAverageAtRequest": "0.22 0.68 0.89 1/222 23891",
+      "loadAverageAtEnd": "0.26 0.68 0.89 1/223 23892",
+      "timing": {
+        "requestToStatusSeconds": 4.418,
+        "requestToRoutePaintSeconds": 4.85,
+        "routePaintNotBeforeSeconds": 4.586,
+        "requestToFloorReadySeconds": 4.418,
+        "paintCaptures": 38,
+        "medianCaptureSeconds": 0.017,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.031,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 4.418,
+          "status": "185 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    },
+    {
+      "label": "island-default-06-388-to-06-364",
+      "from": "rm-1487353-c75375ebb3cc",
+      "to": "rm-1487353-c8cc98ebb50c",
+      "options": {
+        "endpointMode": "inside",
+        "allowOtherRoomTransit": false,
+        "profile": "public"
+      },
+      "expect": "route",
+      "expectedDistanceMetres": 34.356,
+      "toleranceMetres": 1,
+      "statusText": "34 m",
+      "outcome": "route",
+      "shownMetres": 34,
+      "stepTotal": 3,
+      "firstInstruction": "Leave 06-388 · Vestibule and head straight",
+      "routeLinePixels": {
+        "before": 0,
+        "after": 7439,
+        "quickBefore": 0,
+        "quickMax": 186
+      },
+      "buttonDisabledSeconds": 0.009,
+      "loadAverageAtRequest": "0.26 0.68 0.89 1/223 23892",
+      "loadAverageAtEnd": "0.32 0.68 0.89 1/226 23895",
+      "timing": {
+        "requestToStatusSeconds": 1.429,
+        "requestToRoutePaintSeconds": 3.461,
+        "routePaintNotBeforeSeconds": 2.325,
+        "requestToFloorReadySeconds": 4.397,
+        "paintCaptures": 7,
+        "medianCaptureSeconds": 0.036,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "statusTransitions": [
+        {
+          "afterRequestSeconds": 0.047,
+          "status": "Loading and checking directions…",
+          "render": "ready",
+          "loading": false
+        },
+        {
+          "afterRequestSeconds": 1.429,
+          "status": "34 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 1.448,
+          "status": "34 m",
+          "render": "",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 2.32,
+          "status": "34 m",
+          "render": "drawing",
+          "loading": true
+        },
+        {
+          "afterRequestSeconds": 4.397,
+          "status": "34 m",
+          "render": "ready",
+          "loading": false
+        }
+      ],
+      "problems": [],
+      "passed": true
+    }
+  ],
+  "log": [
+    {
+      "mode": "mobile",
+      "stage": "navigate",
+      "seconds": 0.006
+    },
+    {
+      "mode": "mobile",
+      "stage": "floor-ready",
+      "seconds": 5.469
+    },
+    {
+      "mode": "mobile",
+      "stage": "manifest",
+      "seconds": 5.496,
+      "fetchedRevisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+      "manifestResponses": [
+        {
+          "status": 200,
+          "sha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+          "revisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+          "packageSha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+          "datasetSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559"
+        },
+        {
+          "status": 200,
+          "sha256": "cd2c48f9505074026dea9e6078e5c38820ed52af55f3a8bb5dd2d449f0c692bb",
+          "revisionSha256": "fa6d29355ad6122174ee75294c013e0ce1a0200447836f3eafe1d57bb46723e9",
+          "packageSha256": "32c395e1af62235543e69effb91645a76111a6f37cfcf6c5bfd7e7bcd0db85dd",
+          "datasetSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559"
+        }
+      ]
+    },
+    {
+      "mode": "mobile",
+      "stage": "0810-default-08-264-to-10-2006:requested",
+      "seconds": 6.042
+    },
+    {
+      "mode": "mobile",
+      "stage": "0810-default-08-264-to-10-2006:shown",
+      "seconds": 24.495,
+      "statusText": "83 m",
+      "stepTotal": 8,
+      "routeLinePixels": 11992,
+      "timing": {
+        "requestToStatusSeconds": 11.376,
+        "requestToRoutePaintSeconds": 15.006,
+        "routePaintNotBeforeSeconds": 14.399,
+        "requestToFloorReadySeconds": 15.124,
+        "paintCaptures": 103,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-366-to-06-364:requested",
+      "seconds": 25.527
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-366-to-06-364:shown",
+      "seconds": 32.91,
+      "statusText": "21 m",
+      "stepTotal": 3,
+      "routeLinePixels": 7566,
+      "timing": {
+        "requestToStatusSeconds": 1.493,
+        "requestToRoutePaintSeconds": 3.925,
+        "routePaintNotBeforeSeconds": 3.365,
+        "requestToFloorReadySeconds": 3.981,
+        "paintCaptures": 10,
+        "medianCaptureSeconds": 0.288,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-376-to-06-364:requested",
+      "seconds": 33.979
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-376-to-06-364:shown",
+      "seconds": 97.515,
+      "statusText": "No hallway-only route is available. You can allow paths through other rooms in Directions.",
+      "stepTotal": 0,
+      "routeLinePixels": 0,
+      "timing": {
+        "requestToStatusSeconds": 0.058,
+        "requestToRoutePaintSeconds": null,
+        "routePaintNotBeforeSeconds": null,
+        "requestToFloorReadySeconds": 0.058,
+        "paintCaptures": 28,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-transit-06-376-to-06-364:requested",
+      "seconds": 98.192
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-transit-06-376-to-06-364:shown",
+      "seconds": 102.433,
+      "statusText": "47 m",
+      "stepTotal": 4,
+      "routeLinePixels": 7045,
+      "timing": {
+        "requestToStatusSeconds": 0.948,
+        "requestToRoutePaintSeconds": 1.071,
+        "routePaintNotBeforeSeconds": 0.632,
+        "requestToFloorReadySeconds": 0.948,
+        "paintCaptures": 7,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-stepfree-06-388-to-06-364:requested",
+      "seconds": 103.524
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-stepfree-06-388-to-06-364:shown",
+      "seconds": 167.174,
+      "statusText": "No confirmed step-free route is available between these places.",
+      "stepTotal": 0,
+      "routeLinePixels": 0,
+      "timing": {
+        "requestToStatusSeconds": 0.059,
+        "requestToRoutePaintSeconds": null,
+        "routePaintNotBeforeSeconds": null,
+        "requestToFloorReadySeconds": 0.059,
+        "paintCaptures": 29,
+        "medianCaptureSeconds": 0.016,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "corridor-default-04-204-to-08-267:requested",
+      "seconds": 167.939
+    },
+    {
+      "mode": "mobile",
+      "stage": "corridor-default-04-204-to-08-267:shown",
+      "seconds": 178.688,
+      "statusText": "120 m",
+      "stepTotal": 7,
+      "routeLinePixels": 5985,
+      "timing": {
+        "requestToStatusSeconds": 2.957,
+        "requestToRoutePaintSeconds": 6.07,
+        "routePaintNotBeforeSeconds": 4.356,
+        "requestToFloorReadySeconds": 7.379,
+        "paintCaptures": 23,
+        "medianCaptureSeconds": 0.017,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "office-transit-04-255-to-08-272:requested",
+      "seconds": 179.803
+    },
+    {
+      "mode": "mobile",
+      "stage": "office-transit-04-255-to-08-272:shown",
+      "seconds": 187.612,
+      "statusText": "185 m",
+      "stepTotal": 10,
+      "routeLinePixels": 7979,
+      "timing": {
+        "requestToStatusSeconds": 4.418,
+        "requestToRoutePaintSeconds": 4.85,
+        "routePaintNotBeforeSeconds": 4.586,
+        "requestToFloorReadySeconds": 4.418,
+        "paintCaptures": 38,
+        "medianCaptureSeconds": 0.017,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-388-to-06-364:requested",
+      "seconds": 188.693
+    },
+    {
+      "mode": "mobile",
+      "stage": "island-default-06-388-to-06-364:shown",
+      "seconds": 196.511,
+      "statusText": "34 m",
+      "stepTotal": 3,
+      "routeLinePixels": 7439,
+      "timing": {
+        "requestToStatusSeconds": 1.429,
+        "requestToRoutePaintSeconds": 3.461,
+        "routePaintNotBeforeSeconds": 2.325,
+        "requestToFloorReadySeconds": 4.397,
+        "paintCaptures": 7,
+        "medianCaptureSeconds": 0.036,
+        "note": "Seconds from the Get directions click (epoch clock shared by page and collector). status = final route-status text (50 ms sampler); route paint = end of the first half-scale map capture showing >= 20 route-colour pixels (routePaintNotBefore = end of the previous capture without them); floor ready = render status ready with no floor-loading notice, first sample of a state held 3 s."
+      },
+      "passed": true
+    }
+  ]
+}
