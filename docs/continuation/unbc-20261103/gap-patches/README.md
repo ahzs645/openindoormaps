@@ -19,6 +19,7 @@ was changed. Walks change only after a Reviter regeneration
 | File | What it is |
 | ---- | ---------- |
 | [OWNER-GAP-PATCHES.native-boundary-patches.json](OWNER-GAP-PATCHES.native-boundary-patches.json) | 132 patches as an `openindoormaps-native-boundary-patches` file (`native-boundary-patch-file.ts`), bound to model `8c294549…` and rooms `5060e6f9…`. All rows `proposed`. sha256 `c92b9e21…` |
+| [CONTACT-REPAIR-SUPERSESSIONS.json](CONTACT-REPAIR-SUPERSESSIONS.json) | For 67 of the patches: the applied, selection-only native selection-contact repair on the same joint (68 in all) that the patch replaces |
 | [GAP-PATCHES.json](GAP-PATCHES.json) | Authorization, every gap found (283) with class, outcome, rooms, walk edges and bodies; per-patch evidence; dropped and refused patches; the retrace preview |
 | [floor-2-owner-examples-before-after.png](floor-2-owner-examples-before-after.png) | The owner's two screenshots, before and after, in the map display frame |
 | [gap-closeups.png](gap-closeups.png) | Three gaps at 0.9 m width with their patch strips |
@@ -178,11 +179,33 @@ portal counts are in `GAP-PATCHES.json → cellPreview.pieces`.
    0.013 sq ft of its strip lies off the native floor, so it needs a source
    continuation with the 0.0002 ft contact allowance and evidence. It was not
    forced.
-4. The full selection retrace with all patches of a level
-   (`deriveExactBoundaryPatchGroupPreview`), against a baseline
-   `deriveNativeAreas`, is still running at this commit. Each Floor 1 trace
-   took 738 s. Results go to
-   `/home/user/unbc-work/gap-patches/validate/level-*.json`.
+4. **Applied selection-contact repairs on the same joints.** The first full
+   retrace (Floor 1) threw `Native selection contact repair: positive gap
+   intersects a foreign wall or column`. Earlier reviews had recorded many of
+   these same joints as `nativeSelectionContactRepairs` (`floor2-review-contact:…`,
+   `f34-contact:…`, `review-f1-proposed:…`, `mixed-native-contact:…`). Those
+   repairs are selection-only by design and never changed walking routes,
+   which is why the walks still leak there. Their replay guard runs in every
+   native trace and at the end of Reviter regeneration, and it treats the new
+   wall face as foreign material. [check-contact-conflicts.ts](tools/check-contact-conflicts.ts)
+   finds **67 patches** that sit on **68** such repairs. Among them are both
+   legs of the owner's "M" (`floor2-review-contact:1513763-1513295:full-cap:47733`
+   and `…1513764-1513295:full-cap:47739`). The physical patch is the
+   correction those provisional, `revisitRequired` contacts were waiting for.
+   So each of them is **superseded**: set to `restored`, with a note naming the
+   patch and the owner's authorization, in both the room review and the
+   dataset ([apply-gap-patches.ts](tools/apply-gap-patches.ts),
+   [CONTACT-REPAIR-SUPERSESSIONS.json](CONTACT-REPAIR-SUPERSESSIONS.json)).
+   All 68 exist and are applied in the regeneration input `d5a829e8` too. This
+   is a change to another reviewed record, so it is listed separately. To
+   decline it, drop those 67 rows and keep the other 65 patches.
+5. **Full selection retrace** (`deriveExactBoundaryPatchGroupPreview` with all
+   patches of a level and the supersessions, against a baseline
+   `deriveNativeAreas`). This runs as the first step of the regeneration chain
+   and is still running at this commit. Each Floor 1 trace took 738 s. Results go to
+   `/home/user/unbc-work/gap-patches/validate2/level-*.json`, and
+   [compare-traces.py](tools/compare-traces.py) summarizes them. The chain
+   stops before applying anything if a level fails.
 
 **Isolation check** ([cell-preview.py](tools/cell-preview.py),
 [drop-isolating.py](tools/drop-isolating.py)). Each routing cell of the map
@@ -207,19 +230,22 @@ With the final 132 patches, **no room loses all connection.** Every piece
 holding a room keeps at least one portal.
 
 Patches per floor: Floor 2: 47, Floor 4: 41, Floor 3: 32, Floor 1: 6,
-Floor 3.5: 4, Floor 1.25: 2. All are cap-to-face continuations. No aligned-cap
+Floor 3.5: 4, Floor 1.25: 2. Together they close 158 of the 169 class (a)
+gaps; one patch can close several walk crossings at one joint. All are cap-to-face continuations. No aligned-cap
 bridge survived the walk-crossing test.
 
 **Not patched:**
 
 - **(b), 23 gaps.** Partitions stop at approximate curtain/facade envelopes
-  with no precise original face on their axis. These are mostly Building 10's
-  east facade (around x ≈ 303 ft on Floors 1.25, 2 and 4) and Building 03/04
-  facades. The docs forbid treating an approximate envelope as a wall. These
-  need curtain-joint evidence (precise glass/frame members and assembly-end
-  contacts), as in the October 6 Floor 4 facade patches.
-- **(c), 2 gaps.** 07-108/07-110 and 06-244/06-278 run 3–4 ft to the next face.
-  These are openings.
+  with no precise original face on their axis. Most are on Building 03's west
+  facade (x ≈ −13 ft, Floors 3 and 4: 03-3056 to 03-3076, 03-2072/03-2073,
+  03-2094/03-2096). Others are 08-155/08-156 (Floor 1.25), 04-437/04-438 and
+  04-341, and two at Building 10's east facade (10-2534, 10-4534). The docs
+  forbid treating an approximate envelope as a wall. These need curtain-joint
+  evidence (precise glass/frame members and assembly-end contacts), as in the
+  October 6 Floor 4 facade patches.
+- **(c), 2 gaps.** 07-110 (Floor 1) and 06-240 (Floor 2) run 3–4 ft to the
+  next face. These are openings.
 - **(d), 89 gaps.** These are wall-to-column joints (13), corner joints with no
   facing cap, 1–2 ft passages, and the 35 walks that pass beside a joint. Each
   is listed with its bodies, rooms and walks in `GAP-PATCHES.json → gaps[]`.
@@ -274,14 +300,15 @@ of going idle, so a run here can be lost when the session ends. Floor and
 landing checkpoints resume a restart, but a rebuilt import snapshot
 recomputes all landings.
 
-**Status: started, queued behind the validation trace.**
-[`/home/user/unbc-work/gap-patches/regen/run-chain.sh`](#reproduce) holds the
-heavy lock and does three things:
+**Status: started.** `/home/user/unbc-work/gap-patches/regen/run-chain2.sh`
+first runs the full selection retrace (validation step 5) and stops if any
+level fails. It then calls `regen/run-chain.sh`, which holds the heavy lock
+and does three things:
 
-1. It applies the patch file to `d5a829e8` with
+1. It applies the patch file and the supersessions to `d5a829e8` with
    [apply-gap-patches.ts](tools/apply-gap-patches.ts). The steps are
-   `importNativeBoundaryPatchFile`, the same guards, then
-   `saveNativeBoundaryPatches(…, apply=true)` per row, then
+   `importNativeBoundaryPatchFile`, the contact-repair supersessions, the same
+   guards, then `saveNativeBoundaryPatches(…, apply=true)` per row, then
    `exportIndoorProject`. Output goes to `regen/inputs/master.zip`.
 2. It runs the existing scanner (90 minutes at most).
 3. It runs the unchanged October 21 `run.sh` with `NATIVE_WORKERS=1
@@ -302,7 +329,8 @@ node --max-old-space-size=10240 --import tsx \
   docs/continuation/unbc-20261103/gap-patches/tools/apply-gap-patches.ts \
   inputs/master.zip \
   docs/continuation/unbc-20261103/gap-patches/OWNER-GAP-PATCHES.native-boundary-patches.json \
-  inputs/master.patched.zip
+  inputs/master.patched.zip \
+  docs/continuation/unbc-20261103/gap-patches/CONTACT-REPAIR-SUPERSESSIONS.json
 mv inputs/master.patched.zip inputs/master.zip
 bash docs/continuation/unbc-20261021/recompile/run.sh "$WORK"
 ```
@@ -336,15 +364,16 @@ python -I $T/design-patches.py $G/cache/geometry.json gaps.json designs.json
 python -I $T/build-candidates.py $G/cache/geometry.json cand-final/graph-full.json designs.json candidates2.json
 python -I $T/drop-isolating.py cand-final-preview/data cand-final/graph-full.json candidates2.json keep2.txt dropped2.json
 python -I $T/exact-gaps.py candidates-kept.json candidates-kept-x.json
-# 3. validators and retrace preview (guards first, then traces)
-$G/run-validate.sh $G/work/candidates-kept.json
+# 3. validators: guards, contact-repair conflicts, then the retrace preview
+$G/run-validate.sh $G/work/candidates-kept.json            # guards (traces were cut short by the conflict)
+node … $T/check-contact-conflicts.ts master-0388.zip candidates-kept-x.json final-ids.txt contact-conflicts.json
 python -I $T/cell-preview.py cand-final-preview/data cand-final/graph-full.json candidates-kept-x.json cellpreview-final.json final-ids.txt
 python -I $T/summarize.py $G/work $G/validate $G/cache/geometry.json docs/continuation/unbc-20261103/gap-patches cand-final/graph-full.json
 # 4. figures
 python -I $T/draw-examples.py … floor-2.json … 08-216 10-2042
 python -I $T/draw-details.py … owner-gap:694:1513763-… owner-gap:694:1499279-… owner-gap:400176:1077652-…
-# 5. regeneration chain
-$G/regen/run-chain.sh $G/regen/OWNER-GAP-PATCHES.native-boundary-patches.json
+# 5. retrace with supersessions, then apply, scan and regenerate
+$G/regen/run-chain2.sh $G/work/candidates-kept-x.json $G/regen/OWNER-GAP-PATCHES.native-boundary-patches.json $G/regen/CONTACT-REPAIR-SUPERSESSIONS.json
 ```
 
 ## Limits
@@ -355,8 +384,8 @@ $G/regen/run-chain.sh $G/regen/OWNER-GAP-PATCHES.native-boundary-patches.json
 - The retrace preview here cuts routing cells with the patch strips. The
   authoritative after-state is the regeneration. Until that runs, no new walk,
   route distance or door approach is claimed.
-- The selection-trace comparison (step 4 of the validation) is still running
-  at this commit.
+- The selection-trace comparison (validation step 5) is still running at
+  this commit.
 - These are construction-joint corrections that the owner authorized. The
   docs call a sub-nanometre joint a numerical-topology case, and
   `nativeSelectionContactRepairs` is selection-only, so it cannot change

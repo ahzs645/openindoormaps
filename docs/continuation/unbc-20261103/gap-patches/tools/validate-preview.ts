@@ -13,16 +13,24 @@ import { preparedReviewedDoorApertures } from "../../../../../app/indoor-project
 import { deriveExactBoundaryPatchGroupPreview } from "../../../../../app/indoor-project/enclosure-proposals";
 import { deriveNativeAreas, type NativeAreaResult } from "../../../../../app/indoor-project/native-area-review";
 
-const [master, candidatesPath, out, only] = process.argv.slice(2);
+const [master, candidatesPath, out, only, supersessionsPath] = process.argv.slice(2);
 const { project, masterSha256 } = await loadProject(master, `${out}/../cache/project.v8`);
-const data = project.dataset;
+// A physical joint patch supersedes an applied selection-only contact repair
+// on the same joint: that repair is replayed as "restored" (see README).
+const supersessions: Record<string, string[]> = supersessionsPath ? JSON.parse(await readFile(supersessionsPath, "utf8")).supersessions : {};
+const restoredIds = new Set(Object.values(supersessions).flat());
+const data = restoredIds.size && project.dataset.nativeSelectionContactRepairs
+  ? { ...project.dataset, nativeSelectionContactRepairs: { ...project.dataset.nativeSelectionContactRepairs,
+      repairs: project.dataset.nativeSelectionContactRepairs.repairs.map((r) => restoredIds.has(r.id) ? { ...r, status: "restored" as const } : r) } }
+  : project.dataset;
+if (restoredIds.size) console.log(`superseding ${restoredIds.size} applied selection-contact repairs`);
 const modelSha = data.source.modelSha256;
 const all: NativeBoundaryPatch[] = JSON.parse(await readFile(candidatesPath, "utf8")).candidates.map((c: any) => c.patch);
 await mkdir(out, { recursive: true });
 validateNativeBoundaryPatches({ version: 1, patches: all }, modelSha);
 console.log(`schema: ${all.length} patches pass validateNativeBoundaryPatches`);
 const regions = (r: NativeAreaResult) => r.regions.map((g) => ({ id: g.id, roomKeys: g.roomKeys, nativeDoorIds: g.nativeDoorIds, areaSquareFeet: g.areaSquareFeet }));
-const levels = [...new Set(all.map((p) => p.levelId))].filter((l) => !only || only.split(",").map(Number).includes(l));
+const levels = [...new Set(all.map((p) => p.levelId))].filter((l) => !only || only === "all" || only.split(",").map(Number).includes(l));
 const checks: Record<number, { evidence: Record<string, string>; guard: Record<string, string>; accepted: NativeBoundaryPatch[] }> = {};
 for (const levelId of levels) {
   const patches = all.filter((p) => p.levelId === levelId);

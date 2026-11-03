@@ -186,10 +186,14 @@
   "byOutcome": {
    "not patched (class d)": 89,
    "refused by guard": 1,
-   "patched": 158,
+   "patched; supersedes selection-only contact repair mixed-native-contact": 3,
+   "patched; supersedes selection-only contact repair review-f1-proposed": 4,
    "dropped": 10,
    "not patched (class c)": 2,
-   "not patched (class b)": 23
+   "not patched (class b)": 23,
+   "patched": 91,
+   "patched; supersedes selection-only contact repair floor2-review-contact": 21,
+   "patched; supersedes selection-only contact repair f34-contact": 39
   }
  },
  "dropped": [
@@ -304,6 +308,11 @@
    "reason": "the room has no door, opening or vertical portal of its own; this gap is its only connection"
   }
  ],
+ "contactRepairSupersessions": {
+  "path": "CONTACT-REPAIR-SUPERSESSIONS.json",
+  "patches": 67,
+  "contactRepairs": 68
+ },
  "refusedByGuard": [
   {
    "patchId": "owner-gap:311:965713-968686:-29.2382:428.3442",
@@ -8059,7 +8068,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:701061-700988:16.9756:-160.0624",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair mixed-native-contact:311:701061-700988:e0fa4e215dc8",
    "rooms": [
     "03-023",
     "03-022"
@@ -8102,7 +8111,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:778414-778157:17.6706:-53.2727",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair mixed-native-contact:311:778414-778157:8b410ee13587",
    "rooms": [
     "07-253",
     "07-252",
@@ -8206,7 +8215,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:691123-689435:19.4319:-307.3052",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair review-f1-proposed:full-cap:691123-689435:311:63:556",
    "rooms": [
     "03-008",
     "03-004",
@@ -8304,7 +8313,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:691037-689435:19.4319:-249.7267",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair mixed-native-contact:311:691037-689435:3ee1bffdeb39",
    "rooms": [
     "03-006",
     "03-014",
@@ -8701,7 +8710,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:702278-294630:123.2617:-113.6943",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair review-f1-proposed:full-cap:702278-294630:311:211:1940",
    "rooms": [
     "07-505",
     "07-506A"
@@ -8750,7 +8759,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:311:751791-808061:104.4442:244.2644",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair review-f1-proposed:full-cap:751791-808061:311:164:1440",
    "rooms": [
     "05-136B",
     "05-136A"
@@ -8844,7 +8853,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:1487816:1515051-1514720:31.5567:528.3230",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair review-f1-proposed:full-cap:1515051-1514720:1487816:1:12",
    "rooms": [
     "08-114",
     "08-116"
@@ -10147,7 +10156,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1327870-1327248:-224.1274:-47.7681",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1327870-1327248:full-cap:26313",
    "rooms": [
     "06-282",
     "06-244",
@@ -10212,7 +10221,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1105389-930086:-84.5532:425.6221",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1105389-930086:full-cap:9646",
    "rooms": [
     "04-235",
     "04-234",
@@ -10306,7 +10315,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:928811-434912:-104.0414:489.0900",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:928811-434912:full-cap:9016",
    "rooms": [
     "04-224",
     "04-225"
@@ -10441,7 +10450,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1104908-1107109:-71.2921:266.9451",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1104908-1107109:full-cap:9523",
    "rooms": [
     "04-253",
     "04-254",
@@ -10490,7 +10499,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:927185-927242:-74.2842:475.9994",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:927185-927242:full-cap:8923",
    "rooms": [
     "04-219",
     "04-228"
@@ -10586,7 +10595,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1109097-1109133:-51.9745:398.8570",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1109097-1109133:full-cap:9877",
    "rooms": [
     "04-207A",
     "04-207B",
@@ -10645,7 +10654,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1109133-1008687:-51.6628:388.1451",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1109133-1008687:full-cap:9943",
    "rooms": [
     "04-207A",
     "04-207B",
@@ -10761,7 +10770,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:649979-640714:-1.5693:-297.0572",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:640832-640714:original-free-cap:5274, floor2-review-contact:649979-640714:full-cap:5651",
    "rooms": [
     "03-1092",
     "03-1091"
@@ -10859,7 +10868,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:643492-653479:25.0711:-216.3298",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:643492-653479:full-cap:5375",
    "rooms": [
     "03-1067",
     "03-1069"
@@ -10906,7 +10915,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1513284-1513282:38.9550:674.6380",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1513284-1513282:full-cap:43213",
    "rooms": [
     "08-276",
     "08-275B"
@@ -11195,7 +11204,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:708656-669301:55.0104:-187.0655",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:708656-669301:full-cap:6521",
    "rooms": [
     "03-1038A",
     "03-1005",
@@ -11274,7 +11283,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1499378-1499377:62.7185:786.4486",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1499378-1499377:original-free-cap:34573",
    "rooms": [
     "10-S201",
     "10-2064"
@@ -11368,7 +11377,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:652353-657806:75.5157:-314.7737",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:652353-657806:full-cap:5708",
    "rooms": [
     "03-1002",
     "03-1003",
@@ -11621,7 +11630,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1499304-1499332:152.6141:842.8417",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1499304-1499332:full-cap:34018",
    "rooms": [
     "10-2004",
     "10-2012"
@@ -12844,7 +12853,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:2477495-639364:80.7143:-257.3853",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:2477495-639364:full-cap:102961",
    "rooms": [
     "03-1012A",
     "03-1012",
@@ -13636,7 +13645,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1513763-1513295:95.6039:542.2989",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1513763-1513295:full-cap:47733",
    "rooms": [
     "08-234",
     "08-235",
@@ -13687,7 +13696,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1513764-1513295:100.0902:542.2989",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1513764-1513295:full-cap:47739",
    "rooms": [
     "08-234",
     "08-235",
@@ -13736,7 +13745,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1499273-1499300:118.6725:881.7021",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1499273-1499300:original-free-cap:33911",
    "rooms": [
     "10-2024",
     "10-2022"
@@ -14110,7 +14119,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1522238-1522235:260.9035:540.2776",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1522238-1522235:full-cap:51075",
    "rooms": [
     "09-380",
     "09-378",
@@ -14155,7 +14164,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1499574-1499453:246.5560:831.2220",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1499574-1499453:full-cap:35641",
    "rooms": [
     "10-2506",
     "10-2608",
@@ -14206,7 +14215,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:694:1499575-1499453:246.5560:821.6666",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair floor2-review-contact:1499575-1499453:full-cap:35644",
    "rooms": [
     "10-2506",
     "10-2608",
@@ -16110,7 +16119,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1612153-440021:-86.8465:498.6208",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1612153-440021:2-0:original-free-cap:4992",
    "rooms": [
     "04-S301",
     "04-301",
@@ -16202,7 +16211,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1617817-1616857:-51.6792:493.5716",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1617817-1616857:2-0:original-free-cap:5712",
    "rooms": [
     "04-303",
     "04-309"
@@ -17593,7 +17602,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1077022-2481352:31.2653:-297.1855",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1077022-2481352:2-0:original-free-cap:11880",
    "rooms": [
     "03-2096",
     "03-2092",
@@ -18087,7 +18096,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2255400-2255469:77.6550:772.2762",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2255400-2255469:0-2:original-free-cap:18232",
    "rooms": [
     "10-3060",
     "10-3058"
@@ -18134,7 +18143,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1505966-1505974:95.5852:542.2989",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1505966-1505974:2-0:original-free-cap:21192",
    "rooms": [
     "08-328",
     "08-327",
@@ -18185,7 +18194,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1077092-1671011:81.3309:-266.2259",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1077092-1671011:3-1:original-free-cap:21276",
    "rooms": [
     "03-2008",
     "03-2009"
@@ -18234,7 +18243,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1081822-1674808:81.9216:-156.1142",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1081822-1674808:3-1:original-free-cap:21436",
    "rooms": [
     "03-2033",
     "03-2032"
@@ -18713,7 +18722,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2026837-1505973:87.7460:505.6575",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2026837-1505973:3-1:original-free-cap:34716",
    "rooms": [
     "08-334",
     "08-336"
@@ -18809,7 +18818,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1505956-2055034:116.9405:481.4764",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1505956-2055034:1-3:original-free-cap:34772",
    "rooms": [
     "08-335",
     "08-341",
@@ -18860,7 +18869,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1505957-1505955:103.9953:491.4646",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1505957-1505955:3-1:original-free-cap:34756",
    "rooms": [
     "08-335",
     "08-341",
@@ -18909,7 +18918,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1915444-1911905:182.5815:338.7012",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1915444-1911905:1-3:original-free-cap:34928",
    "rooms": [
     "05-325",
     "05-328",
@@ -18962,7 +18971,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1914955-1911905:138.4146:268.0194",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1914955-1911905:1-3:original-free-cap:34888",
    "rooms": [
     "05-325",
     "05-328",
@@ -19011,7 +19020,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2258948-2255385:142.4430:845.5974",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2258948-2255385:1-3:original-free-cap:20656",
    "rooms": [
     "10-3024",
     "10-3014"
@@ -19103,7 +19112,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1104166-1104170:143.4455:173.0426",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1104166-1104170:3-1:original-free-cap:35324",
    "rooms": [
     "05-344",
     "05-345"
@@ -19199,7 +19208,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2255424-2255423:164.1868:850.1565",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2255424-2255423:3-1:original-free-cap:18428",
    "rooms": [
     "10-3006",
     "10-3005"
@@ -19242,7 +19251,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:1923562-513051:181.9522:166.1018",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:1923562-513051:0-2:original-free-cap:35496",
    "rooms": [
     "05-341",
     "05-342"
@@ -19291,7 +19300,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2222510-2222410:260.9284:802.1785",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2222510-2222410:0-2:original-free-cap:36224",
    "rooms": [
     "10-3548",
     "10-3550"
@@ -19338,7 +19347,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2222686-2222583:255.3647:782.6936",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2222686-2222583:0-2:original-free-cap:36264",
    "rooms": [
     "10-3558",
     "10-3556",
@@ -19389,7 +19398,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2222780-2222410:266.5410:801.7848",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2222780-2222410:2-0:original-free-cap:36288",
    "rooms": [
     "10-3558",
     "10-3556",
@@ -19442,7 +19451,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:400176:2223681-2222905:256.4161:776.2750",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:400176:2223681-2222905:2-0:original-free-cap:36408",
    "rooms": [
     "10-3570",
     "10-3568",
@@ -19638,7 +19647,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:1487353:1779071-1779220:-214.1881:-91.2151",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:1487353:1779071-1779220:2-0:original-free-cap:5040",
    "rooms": [
     "06-354",
     "06-360",
@@ -19691,7 +19700,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:1487353:1779087-1779821:-227.0580:-59.8566",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:1487353:1779087-1779821:1-3:original-free-cap:10504",
    "rooms": [
     "06-398",
     "06-397"
@@ -19789,7 +19798,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:1487353:1779112-1779114:-108.2357:-71.1954",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:1487353:1779112-1779114:3-1:original-free-cap:11684",
    "rooms": [
     "06-306",
     "06-305",
@@ -19834,7 +19843,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:1487353:1779111-1779114:-126.2317:-87.9768",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:1487353:1779111-1779114:3-1:original-free-cap:11516",
    "rooms": [
     "06-306",
     "06-305",
@@ -20131,7 +20140,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1076925-1117688:-92.5585:396.8416",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1076925-1117688:3-0:original-free-cap:2836",
    "rooms": [
     "04-417",
     "04-418",
@@ -20186,7 +20195,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1130239-1117668:-79.5423:382.5723",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1130239-1117668:2-0:original-free-cap:2904",
    "rooms": [
     "04-417",
     "04-418",
@@ -20239,7 +20248,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1117688-1083860:-83.8769:397.2517",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1117688-1083860:1-0:original-free-cap:2976",
    "rooms": [
     "04-417",
     "04-418",
@@ -22299,7 +22308,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1067656-1067456:17.4941:-246.6372",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1067656-1067456:0-3:original-free-cap:8044",
    "rooms": [
     "03-3066",
     "03-3064"
@@ -22342,7 +22351,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1069258-488512:41.1034:-116.7881",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1069258-488512:3-1:original-free-cap:11756",
    "rooms": [
     "03-3046D",
     "03-3046E"
@@ -22489,7 +22498,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:2282631-2282576:77.4870:771.9453",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:2282631-2282576:0-2:original-free-cap:13256",
    "rooms": [
     "10-4062",
     "10-4060"
@@ -22538,7 +22547,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1083952-515678:86.9555:195.3136",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1083952-515678:0-2:original-free-cap:16632",
    "rooms": [
     "05-403A",
     "05-405"
@@ -22585,7 +22594,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1504024-1504080:95.6039:542.3022",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1504024-1504080:3-0:original-free-cap:17300",
    "rooms": [
     "08-427",
     "08-426"
@@ -22634,7 +22643,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1072031-1069189:93.7740:-126.0663",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1072031-1069189:3-0:original-free-cap:17516",
    "rooms": [
     "03-3035",
     "03-3037",
@@ -22791,7 +22800,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1504098-1504079:87.7640:505.6739",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1504098-1504079:3-1:original-free-cap:18404",
    "rooms": [
     "08-431",
     "08-433",
@@ -22840,7 +22849,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1504094-1504079:87.7640:515.8346",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1504094-1504079:3-1:original-free-cap:18428",
    "rooms": [
     "08-431",
     "08-433",
@@ -22938,7 +22947,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:2282588-2282615:118.6725:881.7021",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:2282588-2282615:0-2:original-free-cap:16016",
    "rooms": [
     "10-4024",
     "10-4026"
@@ -22981,7 +22990,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:1120158-526899:123.8128:294.5527",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:1120158-526899:3-1:original-free-cap:19516",
    "rooms": [
     "05-492",
     "05-400",
@@ -23290,7 +23299,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:2227651-2229543:246.9277:831.2220",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:2227651-2229543:1-3:original-free-cap:31048",
    "rooms": [
     "10-4508",
     "10-4598"
@@ -23339,7 +23348,7 @@
    "class": "a",
    "reason": "wall end not closed against its neighbour",
    "patchId": "owner-gap:402367:2230163-2229648:274.8804:833.4590",
-   "outcome": "patched",
+   "outcome": "patched; supersedes selection-only contact repair f34-contact:402367:2230163-2229648:3-1:original-free-cap:31132",
    "rooms": [
     "10-4532",
     "10-4538"

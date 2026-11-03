@@ -31,6 +31,8 @@ gap_to_patch = {g: c["patch"]["id"] for c in cand2["candidates"] for g in c["gap
 guard_refused = {pid: msg for lv in guards.values() for pid, msg in lv["guard"].items()}
 evidence_refused = {pid: msg for lv in guards.values() for pid, msg in lv["evidence"].items() if msg != "ok"}
 dropped_ids = {d["patchId"]: d for d in dropped}
+conflicts = J(f"{val}/contact-conflicts.json")
+held = {pid: r for pid, r in conflicts.items() if r["conflict"]}
 final_ids = [pid for lv in guards.values() for pid in lv["accepted"]]
 rows = []
 for g in gaps:
@@ -39,7 +41,8 @@ for g in gaps:
     if cls == "a" and g["id"] in refused_walk:
         cls, why = "d", "the walk passes beside this joint, not through it (no crossing of the designed strip)"
     if pid:
-        outcome = ("patched" if pid in final_ids else "dropped: would isolate " + ", ".join(dropped_ids[pid]["wouldIsolate"]) if pid in dropped_ids
+        outcome = ("patched; supersedes selection-only contact repair " + ", ".join(held[pid]["nearRepairs"]) if pid in final_ids and pid in held else
+                   "patched" if pid in final_ids else "dropped: would isolate " + ", ".join(dropped_ids[pid]["wouldIsolate"]) if pid in dropped_ids
                    else "refused by guard: " + guard_refused.get(pid, evidence_refused.get(pid, "?")))
     rows.append({"gapId": g["id"], "levelId": g["levelId"], "floor": names[g["levelId"]], "class": cls, "reason": why,
                  "patchId": pid, "outcome": outcome or ("not patched (class %s)" % cls), "rooms": g["rooms"], "roomKeys": g["roomKeys"],
@@ -75,6 +78,8 @@ res = {
                   "measuredGapBands": dict(bands)},
     "summary": summary,
     "dropped": dropped,
+    "contactRepairSupersessions": {"path": "CONTACT-REPAIR-SUPERSESSIONS.json", "patches": len(held),
+                                   "contactRepairs": sum(len(v["nearRepairs"]) for v in held.values())},
     "refusedByGuard": [{"patchId": k, "message": v} for k, v in guard_refused.items()],
     "refusedByEvidence": [{"patchId": k, "message": v} for k, v in evidence_refused.items()],
     "cellPreview": {"cellsTouched": len(cellfinal["cells"]), "cellsSplit": cellfinal["separatedPairs"], "isolated": cellfinal["isolated"],
@@ -86,4 +91,10 @@ res = {
     "gaps": rows,
 }
 json.dump(res, open(f"{out}/GAP-PATCHES.json", "w"), indent=1)
+json.dump({"format": "unbc-gap-patch-contact-supersessions-v1",
+           "meaning": "Each physical joint patch replaces the listed applied, selection-only native selection-contact repair on the same joint. Its replay guard treats the new wall face as foreign material, so the repair is set to restored when the patch is applied (apply-gap-patches.ts). The repair never changed walking routes.",
+           "authorization": "project owner requested: patch accidental modelling gaps (2026-11-03)",
+           "patchFileSha256": hashlib.sha256(pf).hexdigest(),
+           "supersessions": {k: v["nearRepairs"] for k, v in held.items()},
+           "guardMessages": {k: v["message"] for k, v in held.items()}}, open(f"{out}/CONTACT-REPAIR-SUPERSESSIONS.json", "w"), indent=1)
 print(json.dumps(summary, indent=1)); print(dict(bands), len(final))
