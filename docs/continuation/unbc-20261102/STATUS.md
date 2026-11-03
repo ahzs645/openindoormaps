@@ -25,7 +25,7 @@ Status words used below:
 One candidate feeds every result below: master `6e7971f8…`, catalog
 `1c3011ff…`, candidate `32c395e1…`, visitor `6abc227a…`, manifest revision
 `fa6d2935…`, directions cache `3d27eaa5…`, and the progressive-floor and seven
-2D-plan receipts. The app is at `233bee9` with Reviter at `2e7875d`. The
+2D-plan receipts. The app is at `a828af4` (route-output change and re-admitted directions cache `57311444…`) with Reviter at `2e7875d`; the requalification is in [../unbc-20261103/route-output-requal/](../unbc-20261103/route-output-requal/README.md). The
 campus map artifact (version 9) shows the same candidate. See
 [final-candidate/](final-candidate/README.md) and the single identity report in
 [final-proof/](final-proof/README.md).
@@ -62,7 +62,9 @@ campus map artifact (version 9) shows the same candidate. See
 - Owner or site decisions: 06-207 doorway, 07-309 suite, 06-313 booth, held
   stairs, Rotunda as circulation, and shortcuts through 06-37x/38x rooms.
 - Pathway quality gaps against the reference graphs: straight runs per
-  corridor, right-angle door branches, fewer instructions, no out-and-backs.
+  corridor and right-angle door branches (compiler work). Fewer
+  instructions and a cleaner route line are done and requalified
+  ([../unbc-20261103/route-output-requal/](../unbc-20261103/route-output-requal/README.md)).
 - Real-phone measurements on a representative connection.
 - Merging to `main`, the hosted `data/unbc-full` package,
   `check-published-project.ts`, live publication and an asserted proof on the
