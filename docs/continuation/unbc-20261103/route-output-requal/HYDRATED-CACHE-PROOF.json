@@ -1,0 +1,325 @@
+{
+  "format": "fresh-published-routing-hydration-proof-v1",
+  "passed": true,
+  "inputSha256": "6abc227a4529df7e33611567273349e8b227f179cb4940eed1b30aa2e06d4559",
+  "datasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+  "runtimeSha256": "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399",
+  "engineSha256": "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+  "receipt": {
+    "id": "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+    "datasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
+    "engineSha256": "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+    "source": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "5060e6f9f5a5b32c9b4d9b770fdfe693cccacc86ff8f58b0a4eee5a72bb9a09c"
+    },
+    "logicalSha256": "952f475249110d6cde72b8b1c9252e9c4377ca17465da1d7a5063be8ccdb95e7",
+    "logicalBytes": 35217787,
+    "compressedSha256": "57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f",
+    "compressedBytes": 8205762,
+    "url": "/data/candidate-routing/57311444eecaf8abbc596ca8e8447c881b4af430b3b86ee664ef5dbf3f49ab9f.json.gz",
+    "runtimeSha256": "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399"
+  },
+  "sourceDatasetUnchanged": true,
+  "normalPhysicalValidationRepeated": true,
+  "originalFacesChecked": 5327,
+  "materialCutsChecked": 8,
+  "freshNormalRouteCases": 15,
+  "extraRouteCases": {
+    "path": "/home/user/unbc-work/final/cases.json",
+    "bytes": 1200,
+    "sha256": "7a50c135ffec95b68fef98b366493223411db47f553c8c3e90eb5a2d075143cf",
+    "count": 5
+  },
+  "routeCasesSha256": "395044891e226dd9894cd63503037344be280f282a403a930c5bd0e837b10939",
+  "normalRouteResultsSha256": "d07c0577bb94d593d9a22edfea54ecf4f063dc325bfd9f7e68335e7c677635db",
+  "normalProgressiveRouteResultsSha256": "804a254ad479cd7dd4c7305524e096aee37f78604b3662f4f0530e3eecb73bf4",
+  "actualRouteParityCases": 0,
+  "compiledTrustRootChanged": false,
+  "published": false,
+  "phases": [
+    {
+      "name": "loaded",
+      "seconds": 11.878162481,
+      "value": {
+        "datasetSha256": "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9"
+      }
+    },
+    {
+      "name": "normal-validation",
+      "seconds": 123.70593863300002
+    },
+    {
+      "name": "complete-normal-physical-graphs-and-supported-cells",
+      "seconds": 444.67792744
+    },
+    {
+      "name": "all-original-exact-faces-parity",
+      "seconds": 445.66837493400004,
+      "value": 5327
+    },
+    {
+      "name": "all-native-level-material-cuts-parity",
+      "seconds": 449.638207828,
+      "value": 8
+    },
+    {
+      "name": "normal-route",
+      "seconds": 532.195396847,
+      "value": {
+        "name": "main-forward",
+        "seconds": 82.55074421500001,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 601.8945674889999,
+      "value": {
+        "name": "main-reverse",
+        "seconds": 69.69893379299995,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 603.7787644,
+      "value": {
+        "name": "floor1",
+        "seconds": 1.8839277380000568,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 605.649971212,
+      "value": {
+        "name": "floor3",
+        "seconds": 1.8709834089999786,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 612.292265423,
+      "value": {
+        "name": "unavailable",
+        "seconds": 6.641773563999916,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 616.98676654,
+      "value": {
+        "name": "lift-up",
+        "seconds": 4.6942304360000415,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 621.550289401,
+      "value": {
+        "name": "lift-down",
+        "seconds": 4.563286240000045,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 622.1312188969999,
+      "value": {
+        "name": "ramp-forward",
+        "seconds": 0.5807514789999696,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 622.6658181969999,
+      "value": {
+        "name": "ramp-reverse",
+        "seconds": 0.5343577829999849,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 622.830949941,
+      "value": {
+        "name": "stepfree-refusal",
+        "seconds": 0.16493023100006393,
+        "available": false
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 626.133875718,
+      "value": {
+        "name": "corridor-default-04-204-08-267",
+        "seconds": 3.3027467510000568,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 627.1496666369999,
+      "value": {
+        "name": "island-06-388-06-364",
+        "seconds": 1.0156433930000057,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 634.835434355,
+      "value": {
+        "name": "office-04-255-08-272-transit",
+        "seconds": 7.685597511999891,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 639.216586808,
+      "value": {
+        "name": "visitor-default-08-264-10-2006",
+        "seconds": 4.3810170940000095,
+        "available": true
+      }
+    },
+    {
+      "name": "normal-route",
+      "seconds": 639.3323534069999,
+      "value": {
+        "name": "hallway-arrival-08-264-10-2006",
+        "seconds": 0.1156252000000095,
+        "available": false
+      }
+    },
+    {
+      "name": "normal-derived-source-checksums",
+      "seconds": 639.361175111,
+      "value": {
+        "preparedRoutingKey": "90e7d4922fa629a6c225cf72e75742822e26719448ad4baea0044645e2daf4e5",
+        "resolvedRouteGeometryKey": "native-circulation-sha256-v1:a6e50930b3ba755bf9335492c8329d6bb75b3b1467b09961ad532e25f91b5ed8"
+      }
+    },
+    {
+      "name": "normal-access-zone-geometry",
+      "seconds": 639.37281289,
+      "value": {
+        "accepted": 1,
+        "issues": 0
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 823.5401965249999,
+      "value": {
+        "completed": 100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 825.013093915,
+      "value": {
+        "completed": 200,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 826.268811265,
+      "value": {
+        "completed": 300,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 828.091334265,
+      "value": {
+        "completed": 400,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 832.000763147,
+      "value": {
+        "completed": 500,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 843.5721279769999,
+      "value": {
+        "completed": 600,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 860.3350663489999,
+      "value": {
+        "completed": 700,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 867.322057332,
+      "value": {
+        "completed": 800,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 880.526254432,
+      "value": {
+        "completed": 900,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 886.764316459,
+      "value": {
+        "completed": 1000,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 895.4951382009999,
+      "value": {
+        "completed": 1100,
+        "total": 1188
+      }
+    },
+    {
+      "name": "support-tile-geometry",
+      "seconds": 907.137540485,
+      "value": {
+        "completed": 1188,
+        "total": 1188
+      }
+    },
+    {
+      "name": "all-source-cell-support-tiles-parity",
+      "seconds": 911.741624702,
+      "value": {
+        "parents": 1188,
+        "nonempty": 3458,
+        "empty": 699,
+        "coordinates": 70224
+      }
+    }
+  ]
+}
