@@ -206,6 +206,13 @@ portal counts are in `GAP-PATCHES.json → cellPreview.pieces`.
    `/home/user/unbc-work/gap-patches/validate2/level-*.json`, and
    [compare-traces.py](tools/compare-traces.py) summarizes them. The chain
    stops before applying anything if a level fails.
+   **Floor 1 passed** with its 6 patches and the supersessions in 727 s. It
+   kept the same 1,356 regions before and after, with 0 rooms separated and
+   no new door-less region. The selection tracer already keeps these rooms
+   apart, because it applies the contact repairs and contact noding. Only the
+   routing cells leak. So this trace proves that the patches pass every
+   trace-time guard and leave selection unchanged. The routing effect is the
+   cell preview below.
 
 **Isolation check** ([cell-preview.py](tools/cell-preview.py),
 [drop-isolating.py](tools/drop-isolating.py)). Each routing cell of the map
