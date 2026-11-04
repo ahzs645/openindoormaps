@@ -307,7 +307,13 @@ of going idle, so a run here can be lost when the session ends. Floor and
 landing checkpoints resume a restart, but a rebuilt import snapshot
 recomputes all landings.
 
-**Status: started.** `/home/user/unbc-work/gap-patches/regen/run-chain2.sh`
+**Status (November 4): restarted as a source review; see
+[REGENERATION.md](REGENERATION.md).** The patched master from step 1 below is
+not a valid regeneration input. The October 21 source stays the input, and
+the checked patch rows join the reviewed source rooms. The original plan
+follows for the record.
+
+**Original plan.** `/home/user/unbc-work/gap-patches/regen/run-chain2.sh`
 first runs the full selection retrace (validation step 5) and stops if any
 level fails. It then calls `regen/run-chain.sh`, which holds the heavy lock
 and does three things:
