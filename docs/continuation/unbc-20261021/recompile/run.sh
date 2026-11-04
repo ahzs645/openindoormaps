@@ -14,6 +14,12 @@
 #     override the sizing chosen from this machine's cores and memory.
 #   NATIVE_WORKER_HEAP_MIB / LANDING_WORKER_HEAP_MIB=256..8192
 #     per-worker heap caps (default 4096).
+#   BOUNDARY_PATCH_REVIEW=patches.json APPLIED_BOUNDARY_PATCH_MASTER=applied.zip
+#   [BOUNDARY_PATCH_SUPERSESSIONS=supersessions.json]
+#     add owner-reviewed native-boundary patches as a source review. The input
+#     master stays the unchanged source; applied.zip is the project's own
+#     application of the same file to it, checked row by row
+#     (scripts/indoor/source-boundary-patch-review.ts). Unset: unchanged run.
 #   SYNC_DIR=dir   copy checkpoints there every 10 minutes and restore them
 #     at start when WORK/run/checkpoints is empty (Colab: a Drive folder).
 #   DRY_RUN=1      print the command without running it.
@@ -70,6 +76,9 @@ cmd=(node --max-old-space-size="$heap" --expose-gc --import tsx
   --source-door-standing-review "$IN/03-source-door-standing-review.json"
   --source-stair-base-standing-review "$IN/05-source-stair-base-standing-review.json"
   --door-aperture-review "$REVIEW"
+  ${BOUNDARY_PATCH_REVIEW:+--boundary-patch-review "$BOUNDARY_PATCH_REVIEW"}
+  ${APPLIED_BOUNDARY_PATCH_MASTER:+--applied-boundary-patch-master "$APPLIED_BOUNDARY_PATCH_MASTER"}
+  ${BOUNDARY_PATCH_SUPERSESSIONS:+--boundary-patch-supersessions "$BOUNDARY_PATCH_SUPERSESSIONS"}
   --validated-import-checkpoint-dir "$RUN/imports"
   --prepared-diagnostic-dir "$RUN/diagnostic")
 if [ -n "${DRY_RUN:-}" ]; then (cd "$OIM" && printf '%q ' "${cmd[@]}"; echo); exit 0; fi

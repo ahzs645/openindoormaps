@@ -15,6 +15,10 @@ import { roomsWithCheckedNativeBoundaryReviewBundle } from "./source-native-boun
 import { roomsWithCheckedSourceDoorBoundaryClosureReview } from "./source-door-boundary-closure-review";
 import { roomsWithCheckedSourceAccessDecision } from "./source-access-decision-review";
 import { roomsWithCheckedSourceDoorApertures } from "./source-door-aperture-review";
+import {
+  checkSourceBoundaryPatches,
+  roomsWithSourceBoundaryPatches,
+} from "./source-boundary-patch-review";
 import { initializeReviewedSourceSteppedStairV2Proofs } from "./source-stepped-stair-v2-review";
 import { finalizeSourceSteppedStairV2Dataset } from "./finalize-source-stepped-stair-v2";
 import { initializeOriginalDoorStandingReview } from "./source-door-standing-review";
@@ -58,7 +62,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--boundary-patch-review patches.json --applied-boundary-patch-master applied.zip [--boundary-patch-supersessions supersessions.json]] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -78,6 +82,9 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--door-boundary-closure-review",
       "--access-decision-review",
       "--door-aperture-review",
+      "--boundary-patch-review",
+      "--boundary-patch-supersessions",
+      "--applied-boundary-patch-master",
       "--source-flat-landing-review",
       "--source-stepped-stair-review",
       "--source-door-standing-review",
@@ -265,6 +272,53 @@ async function compileAndExportMaster() {
       );
   }
   const { original, before } = imported;
+  // Owner-reviewed boundary patches join the reviewed source rooms below; the
+  // source master and its prepared graph stay unchanged.
+  const boundaryPatchReviewPath = workerOptions.get("--boundary-patch-review");
+  const appliedBoundaryPatchMasterPath = workerOptions.get(
+    "--applied-boundary-patch-master",
+  );
+  const boundaryPatchSupersessionsPath = workerOptions.get(
+    "--boundary-patch-supersessions",
+  );
+  assert.equal(
+    !!boundaryPatchReviewPath,
+    !!appliedBoundaryPatchMasterPath,
+    "--boundary-patch-review and --applied-boundary-patch-master go together",
+  );
+  assert.ok(
+    !boundaryPatchSupersessionsPath || boundaryPatchReviewPath,
+    "--boundary-patch-supersessions requires --boundary-patch-review",
+  );
+  const boundaryPatchReviewBytes = boundaryPatchReviewPath
+    ? new Uint8Array(await readFile(resolve(boundaryPatchReviewPath)))
+    : undefined;
+  const boundaryPatchSupersessionBytes = boundaryPatchSupersessionsPath
+    ? new Uint8Array(await readFile(resolve(boundaryPatchSupersessionsPath)))
+    : undefined;
+  const boundaryPatchAlgorithmPath = fileURLToPath(
+    new URL("./source-boundary-patch-review.ts", import.meta.url),
+  );
+  const boundaryPatches = boundaryPatchReviewBytes
+    ? checkSourceBoundaryPatches(
+        before,
+        boundaryPatchReviewBytes,
+        boundaryPatchSupersessionBytes,
+        new Uint8Array(
+          await readFile(resolve(appliedBoundaryPatchMasterPath!)),
+        ),
+      )
+    : undefined;
+  if (boundaryPatches)
+    console.log(
+      JSON.stringify({
+        stage: "source-boundary-patches-checked",
+        rows: boundaryPatches.rows.length,
+        restoredContactRepairs:
+          boundaryPatches.receipt.restoredContactRepairIds.length,
+        appliedMasterSha256: boundaryPatches.receipt.appliedMasterSha256,
+      }),
+    );
   console.log("Reading exact-model native conversion cache");
   let nativeCacheText: string | undefined = await readFile(cachePath, "utf8");
   const nativeCacheSha256 = createHash("sha256")
@@ -499,7 +553,44 @@ async function compileAndExportMaster() {
         sourceModelSha256,
       )
     : undefined;
-  const rooms = doorApertureReplay?.rooms ?? accessReviewedRooms;
+  const apertureReviewedRooms =
+    doorApertureReplay?.rooms ?? accessReviewedRooms;
+  const rooms = boundaryPatches
+    ? roomsWithSourceBoundaryPatches(apertureReviewedRooms, boundaryPatches)
+    : apertureReviewedRooms;
+  const boundaryPatchReceiptPath = join(
+    output,
+    "source-boundary-patch-replay.json",
+  );
+  const boundaryPatchReceiptBytes = boundaryPatches
+    ? JSON.stringify(boundaryPatches.receipt, null, 2) + "\n"
+    : undefined;
+  if (boundaryPatchReceiptBytes) {
+    await mkdir(output, { recursive: true });
+    await writeFile(boundaryPatchReceiptPath, boundaryPatchReceiptBytes, {
+      flag: "wx",
+    });
+    await writeFile(
+      join(output, "source-boundary-patch-review.json"),
+      boundaryPatchReviewBytes!,
+      { flag: "wx" },
+    );
+    if (boundaryPatchSupersessionBytes)
+      await writeFile(
+        join(output, "source-boundary-patch-supersessions.json"),
+        boundaryPatchSupersessionBytes,
+        { flag: "wx" },
+      );
+    console.log(
+      JSON.stringify({
+        stage: "source-boundary-patches-added",
+        rows: boundaryPatches!.rows.length,
+        receiptSha256: createHash("sha256")
+          .update(boundaryPatchReceiptBytes)
+          .digest("hex"),
+      }),
+    );
+  }
   if (doorApertureReplay) {
     const receiptBytes =
       JSON.stringify(doorApertureReplay.receipt, null, 2) + "\n";
@@ -870,7 +961,11 @@ async function compileAndExportMaster() {
   // The compiler hashes hydrated annotations. A portable package binds the exact
   // preserved source entry, whose review companions may use archive wire storage.
   dataset.source.roomsSha256 =
-    sourceReview || drawingFloorReplay || boundaryReplay || doorBoundaryReplay
+    sourceReview ||
+    drawingFloorReplay ||
+    boundaryReplay ||
+    doorBoundaryReplay ||
+    boundaryPatches
       ? createHash("sha256")
           .update((await serializeRoomsForArchive(rooms)).rooms)
           .digest("hex")
@@ -965,7 +1060,8 @@ async function compileAndExportMaster() {
         (sourceReview ||
           drawingFloorReplay ||
           boundaryReplay ||
-          doorBoundaryReplay) &&
+          doorBoundaryReplay ||
+          boundaryPatches) &&
         path === "floors/rooms.json"
       ),
   );
@@ -1070,6 +1166,33 @@ async function compileAndExportMaster() {
               path: boundaryReviewAlgorithmPath,
               sha256: boundaryReviewAlgorithmSha256,
             },
+            physicalGuardsWaived: false,
+          },
+        }
+      : {}),
+    ...(boundaryPatches
+      ? {
+          sourceBoundaryPatchReview: {
+            path: resolve(boundaryPatchReviewPath!),
+            reviewSha256: boundaryPatches.receipt.patchFileSha256,
+            ...(boundaryPatchSupersessionsPath
+              ? {
+                  supersessionsPath: resolve(boundaryPatchSupersessionsPath),
+                  supersessionsSha256:
+                    boundaryPatches.receipt.supersessionsSha256,
+                }
+              : {}),
+            appliedMasterPath: resolve(appliedBoundaryPatchMasterPath!),
+            appliedMasterSha256: boundaryPatches.receipt.appliedMasterSha256,
+            receiptPath: boundaryPatchReceiptPath,
+            receiptSha256: createHash("sha256")
+              .update(boundaryPatchReceiptBytes!)
+              .digest("hex"),
+            algorithm: {
+              path: boundaryPatchAlgorithmPath,
+              sha256: sha(await readFile(boundaryPatchAlgorithmPath)),
+            },
+            appliedRows: boundaryPatches.rows.length,
             physicalGuardsWaived: false,
           },
         }
