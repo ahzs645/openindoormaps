@@ -209,7 +209,7 @@ four things:
    measurements put this at 1–11 min per level and 738 s for one Floor 1
    trace. **This is about 85–90 min of the 104**, and it runs on one thread.
 3. `JSON.stringify` of the 300 MB dataset: seconds.
-4. **ZIP**: fflate level 6. A measurement on a 40 MB slice of this run's
+4. **ZIP**: fflate level 6. A measurement ([`zip-bench.mjs`](zip-bench.mjs)) on a 40 MB slice of this run's
    `compiled-dataset.json` gave 1.30 s at level 6, 0.79 s at level 1, and
    0.50 s / 0.25 s with Node zlib. That is about 15 s for the roughly 435 MB of
    compressible entries. The RVT and the 88 MB review companions are already
@@ -256,8 +256,8 @@ All exact work goes through `lib/reviter/vendor/native-rational-overlay-arithmet
 Original coordinates are dyadic rationals with a power-of-two denominator and
 keep their `original` double.
 
-A micro-benchmark (`/tmp/…/scratchpad/regen/ratbench.mjs`, 4,000 campus-like
-feet coordinates) checked every fast result against the current code before
+A micro-benchmark ([`rational-bench.mjs`](rational-bench.mjs), 4,000
+campus-like feet coordinates) checked every fast result against the current code before
 timing:
 
 | Operation | Current | Fast path | Speed-up |
@@ -397,12 +397,11 @@ What already exists:
 
 What is still global:
 
-- `mergeNativeCirculationPlaneDrafts` renumbers cells and faces in global
-  elevation order (`native-cell:z:<global index>`). Changing one plane does
-  not change other planes' IDs, because the IDs are per elevation prefix but
-  the index is the running count. Since planes merge in elevation order,
-  planes **below** the changed one keep their IDs and planes **above** it
-  are renumbered.
+- `mergeNativeCirculationPlaneDrafts` numbers cells and faces with a running
+  count across planes in elevation order (`native-cell:z:<global index>`).
+  If a plane gains or loses a cell, every plane **above** it is renumbered,
+  along with every walking-branch ID and review that names those cells.
+  Planes below it keep their IDs.
 - `nativeCirculationGeometryKey`, the plane and landing snapshot bindings,
   and all global assembly guards bind the complete dataset:
   - the arrival-loss guard;
