@@ -1,0 +1,32 @@
+{
+  "format": "supervised-candidate-execution-v1",
+  "command": [
+    "env",
+    "NATIVE_WORKERS=1",
+    "LANDING_WORKERS=1",
+    "PARENT_HEAP_MIB=7168",
+    "NATIVE_WORKER_HEAP_MIB=4096",
+    "BOUNDARY_PATCH_REVIEW=/home/user/unbc-work/gap-patches/regen/OWNER-GAP-PATCHES.native-boundary-patches.json",
+    "BOUNDARY_PATCH_SUPERSESSIONS=/home/user/unbc-work/gap-patches/regen/CONTACT-REPAIR-SUPERSESSIONS.json",
+    "APPLIED_BOUNDARY_PATCH_MASTER=/home/user/unbc-work/gap-patches/regen/inputs/applied-gap-patches-73a765e9.zip",
+    "bash",
+    "/home/user/unbc-work/gap-patches/regen/openindoormaps/docs/continuation/unbc-20261021/recompile/run.sh",
+    "/home/user/unbc-work/gap-patches/regen"
+  ],
+  "workingDirectory": "/home/user/unbc-work/gap-patches/regen",
+  "startedAt": "2026-11-05T01:09:51.631641+00:00",
+  "finishedAt": "2026-11-05T15:07:16.961250+00:00",
+  "seconds": 50245.32948235,
+  "exitCode": 0,
+  "timedOut": false,
+  "interrupted": false,
+  "kernelMaxChildRssKiB": 12489160,
+  "kernelChildUserSeconds": 55194.872125,
+  "kernelChildSystemSeconds": 1268.757465,
+  "cgroupLimitBytes": null,
+  "sampledSharedCgroupPeakBytes": 0,
+  "sampleIntervalSeconds": 1,
+  "samples": 50215,
+  "cgroupEventDeltas": {},
+  "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+}
