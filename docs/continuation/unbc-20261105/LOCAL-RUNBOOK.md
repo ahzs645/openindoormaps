@@ -41,9 +41,18 @@ Join a split file with `cat NAME.part-* > NAME` and check it with
 The regeneration must run the October 21 producer code plus the patch-review
 commit. That code is on the branch `unbc-producer-20261021-gap-patches`
 (`6993c08`) of openindoormaps; Reviter is `cb140e46` (on its
-`claude/laughing-davinci-34tcj1` branch). The sliver-contact compiler fix
-will be added on top of these when it is finished; see
-[sliver-contacts/](sliver-contacts/README.md).
+`claude/laughing-davinci-34tcj1` branch). With the sliver-contact compiler fix, build the code from the base commits
+and the patch series committed in [sliver-contacts/patches/](sliver-contacts/patches/):
+openindoormaps `7c27b67` + `patches/openindoormaps/*.patch` (tree
+`87fc22ed…`) and Reviter `cb140e46` + `patches/reviter/*.patch` (tree
+`97221fa2…`), applied with `git am`. Both trees were verified to reproduce
+exactly. The fix closes the float-noise slivers (≤1e-7 ft) but not the
+float32 mesh-wall joints, so keep the 132 gap patches in the run. Nine
+doorless rooms that today connect only through a sliver (06-308,
+07-754/756, 07-758/760, 05-S301, 04-422, 06-266, 06-268, 09-384) will
+become isolated and need a door, opening review or access decision. See
+[sliver-contacts/README.md](sliver-contacts/README.md) and its Colab
+notebook `UNBC-sliver-contacts.ipynb`.
 
 ```bash
 mkdir -p ~/unbc && cd ~/unbc

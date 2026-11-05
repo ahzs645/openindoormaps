@@ -1,0 +1,427 @@
+From accdc35372bae72d5f855e6db535d0bcf88ee764 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 23:17:10 +0000
+Subject: [PATCH] fix(indoor): close numerical wall contacts in exact routing
+ cells
+
+The exact routing compiler keeps every original IEEE wall coordinate, so a
+partition that misses the neighbouring wall face by a floating-point residue
+(1e-14 ft) left a sliver that the rational overlay treated as an opening.
+nativeWalkingRegion now applies the documented native contact rule to the
+strict wall barriers before their own door aperture is cut: a wall vertex
+within 1e-7 ft of another wall's edge, strictly outside it, is inserted into
+that edge (native-routing-contact-noding.ts). No coordinate moves, nothing is
+buffered, material is only added, and gaps over 1e-7 ft, doors, openings,
+holes, columns and reviewed patch walls are untouched. The rule version is
+part of the native circulation geometry key and the private physical memo.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01F5YScMjv2Mnt4v2xjsTFru
+---
+ lib/reviter/native-circulation-geometry.ts   |   2 +
+ lib/reviter/native-circulation-links.ts      |  33 +++-
+ lib/reviter/native-routing-contact-noding.ts | 166 +++++++++++++++++++
+ tests/native-routing-contact-noding.test.ts  | 119 +++++++++++++
+ 4 files changed, 317 insertions(+), 3 deletions(-)
+ create mode 100644 lib/reviter/native-routing-contact-noding.ts
+ create mode 100644 tests/native-routing-contact-noding.test.ts
+
+diff --git a/lib/reviter/native-circulation-geometry.ts b/lib/reviter/native-circulation-geometry.ts
+index 3b2eed4..37d2075 100644
+--- a/lib/reviter/native-circulation-geometry.ts
++++ b/lib/reviter/native-circulation-geometry.ts
+@@ -47,6 +47,7 @@ import {
+ } from "./native-circulation-clearance.ts";
+ import { recoverNativeWallJunctionRepairs } from "./native-room-presentation.ts";
+ import { buildIndoorGrid } from "./indoor-grid.ts";
++import { NATIVE_ROUTING_CONTACT_NODING_VERSION } from "./native-routing-contact-noding.ts";
+ import { createNativeExactRoutingAuthority } from "./native-exact-routing-authority.ts";
+ import { refineNativeTerminalPath } from "./native-terminal-refinement.ts";
+ import { nativeTerminalRepairPairs } from "./native-terminal-repair-pairs.ts";
+@@ -147,6 +148,7 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
+               "native-door-approach-original-source-bounds-v1",
+             NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+             NATIVE_EXACT_GEOS_BINDING,
++            NATIVE_ROUTING_CONTACT_NODING_VERSION,
+             nativeConnectorAnchors(data),
+             ...(data.nativePhysicalLevels ? [data.nativePhysicalLevels] : []),
+             ...(data.nativeAccessZones ? [NATIVE_ACCESS_ZONES_VERSION, data.nativeAccessZones] : []),
+diff --git a/lib/reviter/native-circulation-links.ts b/lib/reviter/native-circulation-links.ts
+index cfecdbc..6ff1e5f 100644
+--- a/lib/reviter/native-circulation-links.ts
++++ b/lib/reviter/native-circulation-links.ts
+@@ -8,6 +8,7 @@ import { nativeWalkingFloorsWithSlabJoins } from "./native-slab-join-closures.ts
+ import { nativeAccessZonesAt, nativeAccessZoneSplit } from "./native-access-zones.ts";
+ import { nativeExactGeosOverlay } from "./native-exact-geos-overlay.ts";
+ import { nativeRoomIdentityRings } from "./native-floor-opening-ownership.ts";
++import { nativeRoutingContactNoding, NATIVE_ROUTING_CONTACT_NODING_VERSION } from "./native-routing-contact-noding.ts";
+ import { createNativeBoundaryMaterialQuery,createNativeExactBoundaryMaterialQuery } from "./native-boundary-material.ts";
+ import {
+   createNativeHostApertureQuery,
+@@ -412,6 +413,14 @@ export function nativeWalkingRegion(
+   const subtractAperture = (parts: Polygon[], opening: Polygon): Polygon[] => strictNative
+     ? proposalParts(nativeRationalOverlay("difference", exactParts(parts), [opening]))
+     : pc.difference(parts, opening) as Polygon[];
++  // Strict walls are contact-noded before their own door aperture is cut, so
++  // an aperture is never noded and the plane and portal queries agree.
++  const pendingApertures = new Set<Polygon>();
++  const cutAperture = (parts: Polygon[], opening: Polygon): Polygon[] => {
++    if (!strictNative) return subtractAperture(parts, opening);
++    parts.forEach((part) => pendingApertures.add(part));
++    return parts;
++  };
+   const originalPhysicalDoorLeaves = new Map<Polygon, { nativeElementId: number; hostNativeElementId: number | undefined }>();
+   const barriers: Polygon[] = [],
+     wallBarriers: Polygon[] = [];
+@@ -432,7 +441,7 @@ export function nativeWalkingRegion(
+             portal!.nativeElementId,
+             part.nativeElementId,
+           )
+-          ? subtractAperture([part.rings], aperture)
++          ? cutAperture([part.rings], aperture)
+           : [part.rings],
+       );
+   }
+@@ -458,7 +467,7 @@ export function nativeWalkingRegion(
+   );
+   const wallParts = (polygon: RoomPoint[], nativeId: number): Polygon[] =>
+     aperture && nativeId === portalHost
+-      ? subtractAperture([[polygon]], aperture)
++      ? cutAperture([[polygon]], aperture)
+       : [[polygon]];
+   addWalls(
+     (dataset.walls ?? [])
+@@ -635,6 +644,24 @@ export function nativeWalkingRegion(
+       ],
+     ]);
+   }
++  if (strictNative) {
++    // Exact numerical wall contacts (native-routing-contact-noding.ts). Exact
++    // reviewed boundary faces keep their rational operands and are not noded.
++    const nodable = wallBarriers.filter((part) => !exactByPolygon.has(part));
++    const noded = nativeRoutingContactNoding(nodable);
++    const replaced = new Map<Polygon, Polygon[]>();
++    nodable.forEach((part, i) => {
++      const next = noded[i]!;
++      if (pendingApertures.has(part)) replaced.set(part, subtractAperture([next], aperture!));
++      else if (next !== part) replaced.set(part, [next]);
++    });
++    if (replaced.size) {
++      const swap = (parts: Polygon[]) => parts.flatMap((part) => replaced.get(part) ?? [part]);
++      const nextBarriers = swap(barriers), nextWalls = swap(wallBarriers);
++      barriers.length = 0; barriers.push(...nextBarriers);
++      wallBarriers.length = 0; wallBarriers.push(...nextWalls);
++    }
++  }
+   let circulation: Polygon[] | undefined;
+   let identityFaces: NativeWalkingRegion["identityFaces"];
+   if (strictNative) {
+@@ -702,7 +729,7 @@ export function nativeWalkingRegion(
+     // identical original operands and policy, including exact derived repairs.
+     const freeExact = freezeNativeRationalParts(privatePhysicalMemo && privateRampVetoOnly && allowUnlabelled && !portalNode
+       ? privatePhysicalMemo([
+-          dataset.source.modelSha256, NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
++          dataset.source.modelSha256, NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION, NATIVE_ROUTING_CONTACT_NODING_VERSION,
+           sourceProfiles.map(p => [p.sourceId, p.floor]), envelopes,
+           dataset.nativeIndoorEnvelopes?.geometrySha256,
+           dataset.nativeMaterialSections?.geometrySha256,
+diff --git a/lib/reviter/native-routing-contact-noding.ts b/lib/reviter/native-routing-contact-noding.ts
+new file mode 100644
+index 0000000..2d3b778
+--- /dev/null
++++ b/lib/reviter/native-routing-contact-noding.ts
+@@ -0,0 +1,166 @@
++import * as DMath from "./deterministic-math.ts";
++import { orient2d, rational } from "./vendor/native-rational-overlay-arithmetic.mjs";
++
++type Point = [number, number];
++type Rings = Point[][];
++
++/** Binds prepared native circulation cells to this contact rule. */
++export const NATIVE_ROUTING_CONTACT_NODING_VERSION =
++  "native-routing-wall-contact-noding-v1:1e-7ft:outside-vertex-into-foreign-edge";
++export const NATIVE_ROUTING_CONTACT_FEET = 1e-7;
++
++/** The exact routing compiler keeps every original IEEE wall coordinate, so a
++ * partition whose exported end corner misses the neighbouring wall face by a
++ * floating-point residue (1e-14 ft) leaves a sliver that the rational overlay
++ * treats as a real opening. This applies the documented native contact rule
++ * (`nativeBarrierTopology`) to that exact path without coordinate reduction:
++ * a wall vertex within `contact` (1e-7 ft) of another wall's edge, strictly on
++ * that wall's outside, is inserted into that edge. Both walls then share the
++ * original vertex exactly. A corner of an end-to-end abutment projects onto the
++ * foreign end edge at its end (t = 0 or 1) and is inserted there too.
++ *
++ * - The inserted vertex is an unchanged original coordinate; no coordinate is
++ *   rounded, moved or averaged, and no wall is buffered.
++ * - Material is only ever added, and only between the original edge and
++ *   vertices at most `contact` from it, so a gap wider than `contact` cannot be
++ *   closed. Vertices inside or exactly on the other wall (overlaps and exact
++ *   contacts) change nothing, so the free region only shrinks.
++ * - Only wall bodies take part. Door leaves and thresholds, floors and their
++ *   holes, columns, fixtures, masks and reviewed patch walls are not inputs, and
++ *   door apertures are cut after noding, so no door, opening or hole is closed.
++ * - Unchanged walls are returned as the same objects.
++ */
++export function nativeRoutingContactNoding<T extends Rings>(
++  walls: readonly T[],
++  contact = NATIVE_ROUTING_CONTACT_FEET,
++): T[] {
++  if (!(contact >= 0) || contact > NATIVE_ROUTING_CONTACT_FEET)
++    throw new Error("Native routing contact noding is bounded to at most 1e-7 ft.");
++  const cell = 16;
++  type Edge = {
++    wall: number;
++    ring: number;
++    index: number;
++    a: Point;
++    b: Point;
++    interiorLeft: boolean;
++    nodes: { t: number; point: Point }[];
++  };
++  const edges: Edge[] = [],
++    buckets = new Map<string, Edge[]>(),
++    key = (x: number, y: number) => `${x}:${y}`;
++  for (const [wall, rings] of walls.entries())
++    for (const [ring, points] of rings.entries()) {
++      // Shoelace about the first vertex. Interior lies left of a positive
++      // outer ring and right of a positive hole.
++      const o = points[0];
++      let doubled = 0;
++      if (o)
++        for (let i = 1; i + 1 < points.length; i++)
++          doubled +=
++            (points[i][0] - o[0]) * (points[i + 1][1] - o[1]) -
++            (points[i + 1][0] - o[0]) * (points[i][1] - o[1]);
++      if (!(doubled !== 0) || !Number.isFinite(doubled)) continue;
++      const interiorLeft = (ring === 0) === doubled > 0;
++      for (let index = 0; index < points.length; index++) {
++        const a = points[index],
++          b = points[(index + 1) % points.length];
++        if (a[0] === b[0] && a[1] === b[1]) continue;
++        const edge: Edge = { wall, ring, index, a, b, interiorLeft, nodes: [] };
++        edges.push(edge);
++        for (
++          let x = Math.floor((Math.min(a[0], b[0]) - contact) / cell);
++          x <= Math.floor((Math.max(a[0], b[0]) + contact) / cell);
++          x++
++        )
++          for (
++            let y = Math.floor((Math.min(a[1], b[1]) - contact) / cell);
++            y <= Math.floor((Math.max(a[1], b[1]) + contact) / cell);
++            y++
++          ) {
++            const list = buckets.get(key(x, y));
++            if (list) list.push(edge);
++            else buckets.set(key(x, y), [edge]);
++          }
++      }
++    }
++  for (const [wall, rings] of walls.entries())
++    for (const points of rings)
++      for (const point of points) {
++        // One edge per foreign ring: the nearest within the bound, preferring a
++        // projection inside the closed edge span. A corner of an end-to-end
++        // abutment projects onto the foreign end edge at t = 0 or 1.
++        const best = new Map<string, { edge: Edge; t: number; distance: number; inside: boolean }>();
++        for (const edge of buckets.get(
++          key(Math.floor(point[0] / cell), Math.floor(point[1] / cell)),
++        ) ?? []) {
++          if (edge.wall === wall) continue;
++          if (
++            (point[0] === edge.a[0] && point[1] === edge.a[1]) ||
++            (point[0] === edge.b[0] && point[1] === edge.b[1])
++          )
++            continue;
++          const dx = edge.b[0] - edge.a[0],
++            dy = edge.b[1] - edge.a[1],
++            t =
++              ((point[0] - edge.a[0]) * dx + (point[1] - edge.a[1]) * dy) /
++              (dx * dx + dy * dy),
++            clamped = Math.max(0, Math.min(1, t)),
++            distance = DMath.hypot(
++              point[0] - edge.a[0] - clamped * dx,
++              point[1] - edge.a[1] - clamped * dy,
++            );
++          if (!(distance <= contact)) continue;
++          const inside = t >= 0 && t <= 1,
++            id = `${edge.wall}:${edge.ring}`,
++            previous = best.get(id);
++          if (
++            previous &&
++            (Number(previous.inside) > Number(inside) ||
++              (previous.inside === inside && previous.distance <= distance))
++          )
++            continue;
++          best.set(id, { edge, t: clamped, distance, inside });
++        }
++        for (const { edge, t } of best.values()) {
++          // Exact side of the original edge: on it is already a contact,
++          // inside it is an overlap; neither leaves a gap to close.
++          const side = orient2d(
++            rational(edge.a[0]),
++            rational(edge.a[1]),
++            rational(edge.b[0]),
++            rational(edge.b[1]),
++            rational(point[0]),
++            rational(point[1]),
++          );
++          if (side === 0) continue;
++          if (side < 0 === edge.interiorLeft) continue;
++          edge.nodes.push({ t, point });
++        }
++      }
++  const changed = new Map<string, Edge>();
++  for (const edge of edges)
++    if (edge.nodes.length) changed.set(`${edge.wall}:${edge.ring}:${edge.index}`, edge);
++  if (!changed.size) return [...walls];
++  return walls.map((rings, wall) => {
++    if (!rings.some((_, ring) => rings[ring].some((__, i) => changed.has(`${wall}:${ring}:${i}`))))
++      return rings;
++    return rings.map((points, ring) => {
++      const output: Point[] = [];
++      for (let i = 0; i < points.length; i++) {
++        const edge = changed.get(`${wall}:${ring}:${i}`);
++        const next = [
++          points[i],
++          ...(edge?.nodes
++            .sort((a, b) => a.t - b.t || a.point[0] - b.point[0] || a.point[1] - b.point[1])
++            .map((n) => n.point) ?? []),
++        ];
++        for (const p of next) {
++          const last = output.at(-1);
++          if (!last || last[0] !== p[0] || last[1] !== p[1]) output.push(p);
++        }
++      }
++      return output;
++    }) as T;
++  });
++}
+diff --git a/tests/native-routing-contact-noding.test.ts b/tests/native-routing-contact-noding.test.ts
+new file mode 100644
+index 0000000..ac476ce
+--- /dev/null
++++ b/tests/native-routing-contact-noding.test.ts
+@@ -0,0 +1,119 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {nativeRoutingContactNoding,NATIVE_ROUTING_CONTACT_NODING_VERSION} from '../lib/reviter/native-routing-contact-noding.ts';
++import {nativeRationalOverlay} from '../lib/reviter/native-rational-overlay.ts';
++import {nativeRationalPathSupported} from '../lib/reviter/native-exact-planar-topology.ts';
++import {nativeWalkingRegion} from '../lib/reviter/native-circulation-links.ts';
++import {nativeCirculationGeometryKey} from '../lib/reviter/native-circulation-geometry.ts';
++import type {IndoorDataset} from '../lib/reviter/indoor-contract.ts';
++import type {ConvertResult} from '../lib/reviter/types.ts';
++import {readFileSync} from 'node:fs';
++import {pathToFileURL} from 'node:url';
++// The runtime sibling; a worktree can point at its paired checkout instead.
++const OIM=process.env.OPENINDOORMAPS_ROOT?pathToFileURL(process.env.OPENINDOORMAPS_ROOT.replace(/\/?$/,'/')).href:new URL('../../openindoormaps/',import.meta.url).href;
++type P=[number,number];
++const rect=(x0:number,y0:number,x1:number,y1:number):P[]=>[[x0,y0],[x1,y0],[x1,y1],[x0,y1]];
++const free=(box:P[],walls:P[][][])=>nativeRationalOverlay('difference',[[box]],...walls);
++const room=rect(0,0,20,10),top=[rect(0,9.8,20,10)];
++// Partition from the floor edge up to the top wall, ending `gap` short of its face.
++const partition=(gap:number)=>[rect(10,0,10.2,9.8-gap)];
++
++test('a partition ending a floating-point residue short of a wall is closed; a measured gap stays open',()=>{
++ for(const gap of [1e-14,1e-9,5e-8]){
++  assert.equal(free(room,[top,partition(gap)]).length,1,`the ${gap} ft sliver joins both rooms before noding`);
++  const noded=nativeRoutingContactNoding([top,partition(gap)]);
++  assert.equal(free(room,noded).length,2,`${gap} ft is a numerical contact and separates the rooms`);
++  assert.equal(noded[1],noded[1]);
++  assert.equal(nativeRationalPathSupported([[5,9.8-gap/2],[15,9.8-gap/2]],free(room,noded)),false,'no walk runs over the partition end');
++ }
++ for(const gap of [1e-6,0.02]){
++  const walls=[top,partition(gap)],noded=nativeRoutingContactNoding(walls);
++  assert.deepEqual(noded,walls,`${gap} ft is a measured gap and is never closed`);
++  assert.equal(noded[0],walls[0]);assert.equal(noded[1],walls[1]);
++  assert.equal(free(room,noded).length,1);
++ }
++});
++
++test('only material is added: exact contacts and overlaps return the same walls',()=>{
++ for(const end of [9.8,9.8+1e-14,9.9]){
++  const walls=[top,[rect(10,0,10.2,end)]],noded=nativeRoutingContactNoding(walls);
++  assert.equal(noded[0],walls[0]);assert.equal(noded[1],walls[1]);
++  assert.equal(free(room,noded).length,2);
++ }
++ const walls=[top,partition(1e-14)],noded=nativeRoutingContactNoding(walls);
++ assert.equal(noded[1],walls[1],'the partition keeps its original coordinates');
++ assert.deepEqual(noded[0]![0]!.filter(p=>!walls[0]![0]!.some(q=>q[0]===p[0]&&q[1]===p[1])),[[10,9.8-1e-14],[10.2,9.8-1e-14]],'the wall gains the partition corners, unchanged');
++ assert.deepEqual(nativeRationalOverlay('difference',nativeRationalOverlay('union',walls[0]!),noded[0]!),[],'no original wall area is removed');
++});
++
++test('a door aperture beside a numerical contact stays open',()=>{
++ // Host wall with a 3 ft aperture whose jamb is flush with the partition face.
++ const box=rect(0,0,20,12),left=[rect(0,9.8,10.2,10)],right=[rect(13.2,9.8,20,10)];
++ const walls=[left,right,partition(1e-14)];
++ assert.equal(free(box,walls).length,1);
++ const noded=nativeRoutingContactNoding(walls),after=free(box,noded);
++ assert.equal(after.length,2,'the room left of the partition is closed off');
++ assert.equal(nativeRationalPathSupported([[11.7,5],[11.7,11]],after),true,'the aperture remains walkable');
++ assert.equal(nativeRationalPathSupported([[10.1,9.9],[10.1,9.9]],after),false);
++ assert.equal(noded[1],walls[1],'the far jamb is untouched');
++});
++
++test('an end-to-end corner joint is closed at its shared corners',()=>{
++ for(const gap of [1e-14,3.5e-15,6e-8]){
++  const box=rect(0,0,20,12),beam=[rect(0,9.8,10,10)],post=[rect(10+gap,0,10.2,10)];
++  assert.equal(free(box,[beam,post]).length,1);
++  assert.equal(free(box,nativeRoutingContactNoding([beam,post])).length,2,`${gap} ft corner contact`);
++ }
++ // Collinear pieces of one element, as exported for 03-2092/03-2094.
++ const box=rect(0,-1,10,2),a=[rect(0,0,4.000000000000001,1)],b=[rect(4.000000000000002,0,10,1)];
++ assert.equal(free(box,[a,b]).length,1);
++ assert.equal(free(box,nativeRoutingContactNoding([a,b])).length,2);
++});
++
++test('noding is idempotent and bounded',()=>{
++ const walls=[top,partition(1e-14),[rect(13,0,13.2,9.8-5e-8)]],once=nativeRoutingContactNoding(walls),twice=nativeRoutingContactNoding(once);
++ assert.deepEqual(twice,once);twice.forEach((w,i)=>assert.equal(w,once[i]));
++ assert.throws(()=>nativeRoutingContactNoding(walls,1e-6),/at most 1e-7/);
++ assert.throws(()=>nativeRoutingContactNoding(walls,Number.NaN),/at most 1e-7/);
++});
++
++const rec=(key:string,x0:number,x1:number)=>({key,number:key,name:key,building:'T',levelId:1,elevationFeet:0,elevationEvidence:'native floor',surfaceId:`${key}:1`,circulation:false,stair:false,walkable:true,access:'unknown',confidence:1,ringsFeet:[rect(x0,0,x1,10)],properties:{}});
++async function strictData(gap:number){
++ const {nativeIndoorEnvelopeHash}=await import('../lib/reviter/native-indoor-envelopes.ts');
++ const {nativeMaterialSectionsHash}=await import('../lib/reviter/native-material-sections.ts');
++ const sha='a'.repeat(64);
++ const envelope={version:1 as const,sourceModelSha256:sha,levels:[{levelId:1,elevationFeet:0,partsFeet:[[room]],sourceElementIds:[10,20,21],cutElevationsFeet:[4,8],evidenceSha256:'b'.repeat(64)}]};
++ const section=(id:number,parts:P[][][])=>({nativeElementId:id,categoryId:-2000011,kind:'wall' as const,baseElevationFeet:0,topElevationFeet:8,partsFeet:parts});
++ const material={version:1 as const,sourceModelSha256:sha,levels:[{levelId:1,elevationFeet:0,cutElevationFeet:.1,evidenceSha256:'c'.repeat(64),sourceElementIds:[20,21],sections:[section(20,[top]),section(21,[partition(gap)])]}]};
++ const data={source:{modelSha256:sha},nativeLevels:[{id:1,name:'A',elevationFeet:0}],records:[rec('a',0,10),rec('b',10.2,20)],nodes:[],edges:[],walls:[],doors:[],
++  alignment:{horizontalMetresPerFoot:.3048},
++  nativeIndoorEnvelopes:{...envelope,geometrySha256:await nativeIndoorEnvelopeHash(envelope)},
++  nativeMaterialSections:{...material,geometrySha256:await nativeMaterialSectionsHash(material)},
++  walkingSupport:{version:1 as const,sourceModelSha256:sha,floors:[{nativeElementId:10,elevationFeet:0,ringsFeet:[room]}]}} as unknown as IndoorDataset;
++ const floor={elementId:10,categoryId:-2000032,boundsFeet:{min:{x:0,y:0,z:-1},max:{x:20,y:10,z:0}},loops:[room.map(p=>[...p,0])]};
++ const model={elementBounds:[floor],levels:[{levelId:1,elevation:0}],nativeAssociatedLevelRelations:[],nativeHostRelations:[]} as unknown as ConvertResult;
++ return {data,model};
++}
++
++test('the exact walking region separates rooms at a numerical partition contact only',async()=>{
++ for(const [gap,faces] of [[1e-14,2],[5e-8,2],[1e-6,1],[0.02,1]] as const){
++  const {data,model}=await strictData(gap);
++  const region=nativeWalkingRegion(model,data,0,true);
++  assert.equal(region.exact!.free.length,faces,`${gap} ft`);
++  assert.equal(nativeRationalPathSupported([[5,9.8-gap/2],[15,9.8-gap/2]],region.exact!.free),faces===1);
++ }
++});
++
++test('prepared circulation geometry is bound to the contact rule in the compiler and the runtime',async()=>{
++ const {data}=await strictData(1e-14);
++ assert.match(NATIVE_ROUTING_CONTACT_NODING_VERSION,/1e-7ft/);
++ const runtime=await import(OIM+'app/indoor-project/native-routing-contact-noding.ts');
++ assert.equal(runtime.NATIVE_ROUTING_CONTACT_NODING_VERSION,NATIVE_ROUTING_CONTACT_NODING_VERSION);
++ const {nativeCirculationGeometryKey:runtimeKey}=await import(OIM+'app/indoor-project/native-circulation.ts');
++ assert.equal(runtimeKey(data),nativeCirculationGeometryKey(data),'compiler and runtime bind the same geometry');
++ const key=readFileSync(new URL('../lib/reviter/native-circulation-geometry.ts',import.meta.url),'utf8');
++ const body=key.slice(key.indexOf('export function nativeCirculationGeometryKey'));
++ assert.match(body.slice(0,body.indexOf('data.records.map')),/NATIVE_ROUTING_CONTACT_NODING_VERSION/);
++ for(const walls of [[top,partition(1e-14)],[top,partition(5e-8)],[[rect(0,9.8,10,10)],[rect(10+1e-14,0,10.2,10)]]])
++  assert.deepEqual(runtime.nativeRoutingContactNoding(walls),nativeRoutingContactNoding(walls),'identical source and runtime rule');
++});
+-- 
+2.43.0
+
