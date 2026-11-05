@@ -78,6 +78,27 @@ It ends with `Compile exit status: 0` and writes
 this host the result was master `655360527c96faaf…`. Then re-add the 06-388
 link (job B step 0).
 
+### Recommended settings
+
+From [regen-efficiency/](regen-efficiency/README.md):
+
+| Machine                            | `NATIVE_WORKERS` | `LANDING_WORKERS` | Worker heap (MiB) | `PARENT_HEAP_MIB` | Expected          |
+| ---------------------------------- | ---------------: | ----------------: | ----------------: | ----------------: | ----------------- |
+| 4 cores, 16 GB                     |                1 |                 1 |              4096 |              7168 | 14 h (measured)   |
+| 8 cores, 32 GB                     |                2 |                 3 |              4096 |              8192 | about 11.5 h      |
+| Colab Pro High-RAM, 8 cores, 50 GB |                2 |                 7 |              4096 |              8192 | about 11 h 15 min |
+
+On Colab Pro also set `SYNC_DIR` to a Drive folder so checkpoints survive a
+disconnect. Never use more than 2 floor workers or 7 landing workers: larger
+counts ran out of memory before.
+
+The faster checkpoint reuse (landings and planes reused on a rerun with
+unchanged inputs) and the new progress logging are on the Reviter branch
+`claude/regen-efficiency` and the OpenIndoorMaps branch
+`claude/regen-efficiency-oim`. They are built on the newer development code,
+not on the October 21 producer code used above, so use them only once they
+are ported and re-verified; until then run the producer code as written.
+
 ## B. Requalify a master
 
 Use a checkout of `main` (both repositories side by side, Node 24.19.0,
