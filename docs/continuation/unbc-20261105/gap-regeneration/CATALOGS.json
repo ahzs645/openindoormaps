@@ -1,0 +1,994 @@
+{
+ "format": "unbc-gap-regeneration-catalogs-v1",
+ "input": {
+  "master": "/home/user/unbc-work/gap-requal/master-gap-0388.zip",
+  "masterSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9"
+ },
+ "recommended": "current",
+ "recommendation": "Current compiler catalog 9157d27e. The straight-runs catalog loses no guides (2,726 = 2,726) but adds one guides-only crossing without a junction (4 -> 5), the same one as on master-0388: cell 917 (852 before renumbering), Campus Floor 3, legacy-fallback guide door 2262772 -> 2262854 against a run-fitted lane. The rule was: straight runs only if they lose no guides and add no crossing.",
+ "catalogs": {
+  "current": {
+   "path": "/home/user/unbc-work/gap-requal/guides/compile/prepared-routing.json",
+   "copy": "PREPARED-ROUTING.json",
+   "sha256": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+   "guides": 2726,
+   "compiler": "wt-gap-requal 306eadc (scripts/indoor/compile-corridor-candidates.ts; corridor-centerline.ts identical to approach-topology 9669621), Node 24.19.0",
+   "report": {
+    "eligibleWalkingEdges": 2882,
+    "compiledWalkingEdges": 2726,
+    "completeCompiledWalkingEdges": 2726,
+    "newGraphConnections": 0,
+    "sourceGraphAndGeometryUnchanged": true,
+    "seconds": 2937.127887056,
+    "floors": [
+     {
+      "id": "storey:2295121",
+      "name": "Floor 0",
+      "eligibleWalkingEdges": 8,
+      "compiledWalkingEdges": 8
+     },
+     {
+      "id": "storey:1450417+311+1487816",
+      "name": "Campus Floor 1",
+      "eligibleWalkingEdges": 1030,
+      "compiledWalkingEdges": 982
+     },
+     {
+      "id": "storey:694",
+      "name": "Floor 2",
+      "eligibleWalkingEdges": 781,
+      "compiledWalkingEdges": 721
+     },
+     {
+      "id": "storey:400176+1487353",
+      "name": "Campus Floor 3",
+      "eligibleWalkingEdges": 571,
+      "compiledWalkingEdges": 533
+     },
+     {
+      "id": "storey:402367",
+      "name": "Floor 4",
+      "eligibleWalkingEdges": 492,
+      "compiledWalkingEdges": 482
+     }
+    ],
+    "binding": {
+     "version": 2,
+     "inputZipSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+     "inputJsonSha256": "cca87df78892dc17068493e31c70f72903534312de7e7daba82d5d25252a34d8",
+     "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+     "sourceGeometryKey": "e6b45cf7b622b96b13075a391d2bb3a6bb3f07d182d9da5dd1ef3878e2f73f9e",
+     "compilerBinding": "8cc35a29e75010739365db312af223bd575fdceb1801a76313d386acd0b9fbb8",
+     "resolverVersion": "native-walking-guides-4",
+     "runtime": {
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "architecture": "x64",
+      "execArgv": [
+       "--max-old-space-size=8192",
+       "--import",
+       "tsx"
+      ],
+      "nodeOptions": "--use-openssl-ca"
+     },
+     "parameters": {
+      "method": "shared-corridor",
+      "constructionScope": "complete-native-physical-cell",
+      "emittedEdges": "all-eligible-original-walks",
+      "compiler": {
+       "spacingFeet": 2,
+       "maxSites": 25000,
+       "maxAttachments": 64,
+       "maxDeviationFeet": 0.75,
+       "shapedApproaches": true,
+       "slideJoins": true
+      }
+     }
+    }
+   },
+   "execution": {
+    "command": [
+     "node",
+     "--max-old-space-size=8192",
+     "--import",
+     "tsx",
+     "scripts/indoor/compile-corridor-candidates.ts",
+     "/home/user/unbc-work/gap-requal/master-gap-0388.zip",
+     "/home/user/unbc-work/gap-requal/guides/compile"
+    ],
+    "workingDirectory": "/home/user/wt-gap-requal",
+    "startedAt": "2026-11-05T17:12:12.393548+00:00",
+    "finishedAt": "2026-11-05T18:01:36.126695+00:00",
+    "seconds": 2963.733146961,
+    "exitCode": 0,
+    "kernelMaxChildRssKiB": 3709292
+   },
+   "vsFinalCandidate1c3011ff": {
+    "before": {
+     "path": "/home/user/wt-gap-requal/docs/continuation/unbc-20261102/final-candidate/PREPARED-ROUTING.json",
+     "sha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+     "guides": 2728,
+     "sourceGeometryKey": "90e7d4922fa629a6c225cf72e75742822e26719448ad4baea0044645e2daf4e5"
+    },
+    "after": {
+     "path": "guides/compile/prepared-routing.json",
+     "sha256": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+     "guides": 2726,
+     "sourceGeometryKey": "e6b45cf7b622b96b13075a391d2bb3a6bb3f07d182d9da5dd1ef3878e2f73f9e"
+    },
+    "counts": {
+     "same": 2701,
+     "changed": 22,
+     "gained: new walk": 3,
+     "lost: walk removed by regeneration": 5
+    },
+    "differencesInPatchedCells": 27,
+    "differencesOutsidePatchedCellsNote": "the 3 rows listed are the 3 new walks (no before cell); all sit in patched-cell rooms",
+    "rows": [
+     {
+      "key": "walk:arrival:rm-311-aac849f5ed34|door:311:706369:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:0.000000:180:walk:arrival:rm-311-aac849f5ed34|door:311:706369:0",
+      "afterEdgeId": "native-cell:0.000000:180:walk:arrival:rm-311-aac849f5ed34|door:311:706369:0",
+      "beforeCellPatches": [
+       "owner-gap:311:691037-689435:19.4319:-249.7267"
+      ],
+      "roomsChangedInVerification": [
+       "rm-311-aabdc9f5ed2b",
+       "rm-311-aac849f5ed34"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-400176-409188ec17db|door:400176:2112568:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:24.278215:801:walk:arrival:rm-400176-409188ec17db|door:400176:2112568:1",
+      "afterEdgeId": "native-cell:24.278215:854:walk:arrival:rm-400176-409188ec17db|door:400176:2112568:1",
+      "beforeCellPatches": [
+       "owner-gap:400176:1612153-440021:-86.8465:498.6208"
+      ],
+      "roomsChangedInVerification": [
+       "rm-400176-408e02ec17d8"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-400176-409188ec17db|door:400176:2112621:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:24.278215:801:walk:arrival:rm-400176-409188ec17db|door:400176:2112621:0",
+      "afterEdgeId": "native-cell:24.278215:854:walk:arrival:rm-400176-409188ec17db|door:400176:2112621:0",
+      "beforeCellPatches": [
+       "owner-gap:400176:1612153-440021:-86.8465:498.6208"
+      ],
+      "roomsChangedInVerification": [
+       "rm-400176-408e02ec17d8"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0b30ff58296a|door:694:1352555:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0b30ff58296a|door:694:1352555:0",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0b30ff58296a|door:694:1352555:0",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+      "status": "gained: new walk",
+      "beforeEdgeId": null,
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0b30ff58296a|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+      "beforeCellPatches": [],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0e0ad8ab64e9|door:694:1328017:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0e0ad8ab64e9|door:694:1328017:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0e0ad8ab64e9|door:694:1328017:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0e0ebcab64ec|arrival:rm-694-b17d7fe3d57c",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0e0ebcab64ec|arrival:rm-694-b17d7fe3d57c",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0e0ebcab64ec|arrival:rm-694-b17d7fe3d57c",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "status": "gained: new walk",
+      "beforeEdgeId": null,
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-0e0ebcab64ec|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "beforeCellPatches": [],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-240576583727|door:694:1378055:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-240576583727|door:694:1378055:0",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-240576583727|door:694:1378055:0",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-2408fa58372a|door:694:1378055:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-2408fa58372a|door:694:1378055:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-2408fa58372a|door:694:1378055:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-a9d5716badc1|door:694:2124777:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:573:walk:arrival:rm-694-a9d5716badc1|door:694:2124777:1",
+      "afterEdgeId": "native-cell:14.435696:592:walk:arrival:rm-694-a9d5716badc1|door:694:2124777:1",
+      "beforeCellPatches": [
+       "owner-gap:694:2123611-435663:-72.0532:494.9561"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-a9d5716badc1"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1:1",
+      "status": "lost: walk removed by regeneration",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-0e0ad8ab64e9:rm-694-0e0ebcab64ec:10:1:1",
+      "afterEdgeId": null,
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964",
+       "rm-694-0b3aff582973"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "status": "lost: walk removed by regeneration",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "afterEdgeId": null,
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964",
+       "rm-694-0b3aff582973"
+      ]
+     },
+     {
+      "key": "walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "status": "gained: new walk",
+      "beforeEdgeId": null,
+      "afterEdgeId": "native-cell:14.435696:530:walk:arrival:rm-694-b17d7fe3d57c|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "beforeCellPatches": [],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:311:706556:1|door:311:706608:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:0.000000:180:walk:door:311:706556:1|door:311:706608:1",
+      "afterEdgeId": "native-cell:0.000000:180:walk:door:311:706556:1|door:311:706608:1",
+      "beforeCellPatches": [
+       "owner-gap:311:691037-689435:19.4319:-249.7267"
+      ],
+      "roomsChangedInVerification": [
+       "rm-311-aabdc9f5ed2b",
+       "rm-311-aac849f5ed34"
+      ]
+     },
+     {
+      "key": "walk:door:311:706556:1|door:311:731278:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:0.000000:180:walk:door:311:706556:1|door:311:731278:0",
+      "afterEdgeId": "native-cell:0.000000:180:walk:door:311:706556:1|door:311:731278:0",
+      "beforeCellPatches": [
+       "owner-gap:311:691037-689435:19.4319:-249.7267"
+      ],
+      "roomsChangedInVerification": [
+       "rm-311-aabdc9f5ed2b",
+       "rm-311-aac849f5ed34"
+      ]
+     },
+     {
+      "key": "walk:door:400176:2112568:1|door:400176:2112621:0",
+      "status": "lost: walk removed by regeneration",
+      "beforeEdgeId": "native-cell:24.278215:801:walk:door:400176:2112568:1|door:400176:2112621:0",
+      "afterEdgeId": null,
+      "beforeCellPatches": [
+       "owner-gap:400176:1612153-440021:-86.8465:498.6208"
+      ],
+      "roomsChangedInVerification": [
+       "rm-400176-408e02ec17d8",
+       "rm-400176-b24e426325b2"
+      ]
+     },
+     {
+      "key": "walk:door:402367:1121163:1|door:402367:1127056:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:34.120735:1130:walk:door:402367:1121163:1|door:402367:1127056:1",
+      "afterEdgeId": "native-cell:34.120735:1242:walk:door:402367:1121163:1|door:402367:1127056:1",
+      "beforeCellPatches": [
+       "owner-gap:402367:1120158-526899:123.8128:294.5527"
+      ],
+      "roomsChangedInVerification": [
+       "rm-402367-e82f165e092c",
+       "rm-402367-f2a73b5e0f9e"
+      ]
+     },
+     {
+      "key": "walk:door:694:1328019:1|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "status": "lost: walk removed by regeneration",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1328019:1|opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1",
+      "afterEdgeId": null,
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964",
+       "rm-694-0b3aff582973"
+      ]
+     },
+     {
+      "key": "walk:door:694:1328019:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1328019:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:door:694:1328019:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:694:1328384:0|door:694:1328385:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1328384:0|door:694:1328385:0",
+      "afterEdgeId": "native-cell:14.435696:530:walk:door:694:1328384:0|door:694:1328385:0",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:694:1352555:0|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0",
+      "status": "lost: walk removed by regeneration",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1352555:0|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:0",
+      "afterEdgeId": null,
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964",
+       "rm-694-0b3aff582973"
+      ]
+     },
+     {
+      "key": "walk:door:694:1352748:0|door:694:1370705:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1352748:0|door:694:1370705:0",
+      "afterEdgeId": "native-cell:14.435696:530:walk:door:694:1352748:0|door:694:1370705:0",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:694:1378055:1|door:694:1378208:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1378055:1|door:694:1378208:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:door:694:1378055:1|door:694:1378208:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:694:1378055:1|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:door:694:1378055:1|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:door:694:1378055:1|opening:recovered-circulation-seam:rm-694-0b30ff58296a:rm-694-2408fa58372a:1:2:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     },
+     {
+      "key": "walk:door:694:677358:0|door:694:678988:0",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:631:walk:door:694:677358:0|door:694:678988:0",
+      "afterEdgeId": "native-cell:14.435696:651:walk:door:694:677358:0|door:694:678988:0",
+      "beforeCellPatches": [
+       "owner-gap:694:708656-669301:55.0104:-187.0655"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-634bc404f221",
+       "rm-694-6f4aa3eafa7e",
+       "rm-694-91df31e3a385",
+       "rm-694-91eca9e3a390",
+       "rm-694-91f3b5e3a397",
+       "rm-694-91f6b9e3a399",
+       "rm-694-a3a573e3adb7",
+       "rm-694-a3a8f7e3adba",
+       "rm-694-a3ac7fe3adbd",
+       "rm-694-bd3586e3bc13",
+       "rm-694-bd3bf2e3bc18",
+       "rm-694-c74dabe3c232"
+      ]
+     },
+     {
+      "key": "walk:opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "status": "changed",
+      "beforeEdgeId": "native-cell:14.435696:522:walk:opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "afterEdgeId": "native-cell:14.435696:530:walk:opening:recovered-circulation-seam:rm-694-0e0ebcab64ec:rm-694-b17d7fe3d57c:13:62:1|opening:recovered-circulation-seam:rm-694-2408fa58372a:rm-694-b17d7fe3d57c:12:10:1",
+      "beforeCellPatches": [
+       "owner-gap:694:1327870-1327248:-224.1274:-47.7681"
+      ],
+      "roomsChangedInVerification": [
+       "rm-694-0b29f3582964"
+      ]
+     }
+    ]
+   },
+   "guideOnlyCrossings": {
+    "path": "guides/compile/prepared-routing.json",
+    "sha256": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+    "guides": 2726,
+    "guidesWithoutGraphEdge": [],
+    "crossingsWithoutJunction": 4,
+    "floors": {
+     "campus-floor-1": {
+      "guides": 982,
+      "crossingsWithoutJunction": 1,
+      "crossings": [
+       {
+        "pointDisplay": [
+         53.52,
+         40.839
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522207:1|door:1450417:1522209:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0129
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522209:0|door:1450417:1964247:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522209:0|opening:recovered-circulation-seam:rm-1450417-dba13529f060:rm-1450417-dbab6729f069:8:12:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0129
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1964247:1|opening:recovered-circulation-seam:rm-1450417-dba13529f060:rm-1450417-dbab6729f069:8:12:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         }
+        ]
+       }
+      ]
+     },
+     "floor-2": {
+      "guides": 721,
+      "crossingsWithoutJunction": 3,
+      "crossings": [
+       {
+        "pointDisplay": [
+         56.612,
+         -40.285
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1884871:0|opening:recovered-circulation-seam:rm-694-1ae8378c89a4:rm-694-64382117d7ea:12:10:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0284
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1895901:1|opening:recovered-circulation-seam:rm-694-6412a117d7ca:rm-694-64382117d7ea:0:10:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0271
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1895901:1|opening:recovered-circulation-seam:rm-694-6412a117d7ca:rm-694-64382117d7ea:0:10:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0271
+         }
+        ]
+       },
+       {
+        "pointDisplay": [
+         24.174,
+         -47.049
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64382117d7ea|opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64382117d7ea:7:113:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1869965:0|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         }
+        ]
+       },
+       {
+        "pointDisplay": [
+         24.848,
+         -47.237
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64382117d7ea|opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64382117d7ea:7:113:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0003
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1869965:0|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         }
+        ]
+       }
+      ]
+     },
+     "campus-floor-3": {
+      "guides": 533,
+      "crossingsWithoutJunction": 0,
+      "crossings": []
+     },
+     "floor-4": {
+      "guides": 482,
+      "crossingsWithoutJunction": 0,
+      "crossings": []
+     }
+    }
+   }
+  },
+  "straightRuns": {
+   "path": "/home/user/unbc-work/gap-requal/guides-straight/compile/prepared-routing.json",
+   "sha256": "e30c004023410e39770e19ce8f1567a84df55a633c347b913ca4546c71f9923d",
+   "guides": 2726,
+   "compiler": "scratch worktree /home/user/unbc-work/gap-requal/wt-straight-runs: 306eadc + git am corridor-runs-code.patch (detached a3bbd4d), Node 24.19.0",
+   "report": {
+    "eligibleWalkingEdges": 2882,
+    "compiledWalkingEdges": 2726,
+    "completeCompiledWalkingEdges": 2726,
+    "newGraphConnections": 0,
+    "sourceGraphAndGeometryUnchanged": true,
+    "seconds": 3091.7986370300005,
+    "floors": [
+     {
+      "id": "storey:2295121",
+      "name": "Floor 0",
+      "eligibleWalkingEdges": 8,
+      "compiledWalkingEdges": 8
+     },
+     {
+      "id": "storey:1450417+311+1487816",
+      "name": "Campus Floor 1",
+      "eligibleWalkingEdges": 1030,
+      "compiledWalkingEdges": 982
+     },
+     {
+      "id": "storey:694",
+      "name": "Floor 2",
+      "eligibleWalkingEdges": 781,
+      "compiledWalkingEdges": 721
+     },
+     {
+      "id": "storey:400176+1487353",
+      "name": "Campus Floor 3",
+      "eligibleWalkingEdges": 571,
+      "compiledWalkingEdges": 533
+     },
+     {
+      "id": "storey:402367",
+      "name": "Floor 4",
+      "eligibleWalkingEdges": 492,
+      "compiledWalkingEdges": 482
+     }
+    ],
+    "binding": {
+     "version": 2,
+     "inputZipSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+     "inputJsonSha256": "cca87df78892dc17068493e31c70f72903534312de7e7daba82d5d25252a34d8",
+     "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+     "sourceGeometryKey": "e6b45cf7b622b96b13075a391d2bb3a6bb3f07d182d9da5dd1ef3878e2f73f9e",
+     "compilerBinding": "28d08f55ed32e0239dcb2bb43efb247f8f0f9d3f6fd8023c1b8893f0cf72aa1c",
+     "resolverVersion": "native-walking-guides-4",
+     "runtime": {
+      "node": "v24.19.0",
+      "v8": "13.6.233.17-node.51",
+      "platform": "linux",
+      "architecture": "x64",
+      "execArgv": [
+       "--max-old-space-size=8192",
+       "--import",
+       "tsx"
+      ],
+      "nodeOptions": "--use-openssl-ca"
+     },
+     "parameters": {
+      "method": "shared-corridor",
+      "constructionScope": "complete-native-physical-cell",
+      "emittedEdges": "all-eligible-original-walks",
+      "compiler": {
+       "spacingFeet": 2,
+       "maxSites": 25000,
+       "maxAttachments": 64,
+       "maxDeviationFeet": 0.75,
+       "shapedApproaches": true,
+       "slideJoins": true,
+       "straightRuns": true
+      }
+     }
+    }
+   },
+   "execution": {
+    "command": [
+     "node",
+     "--max-old-space-size=8192",
+     "--import",
+     "tsx",
+     "scripts/indoor/compile-corridor-candidates.ts",
+     "/home/user/unbc-work/gap-requal/master-gap-0388.zip",
+     "/home/user/unbc-work/gap-requal/guides-straight/compile"
+    ],
+    "workingDirectory": "/home/user/unbc-work/gap-requal/wt-straight-runs",
+    "startedAt": "2026-11-05T18:01:36.199140+00:00",
+    "finishedAt": "2026-11-05T18:53:31.080932+00:00",
+    "seconds": 3114.8817782449987,
+    "exitCode": 0,
+    "kernelMaxChildRssKiB": 3717620
+   },
+   "vsCurrent": {
+    "lostGuides": [],
+    "gainedGuideIds": [],
+    "matchedGuides": 2726,
+    "changedGuides": 1967,
+    "matchedGuideShape": {
+     "baseline": {
+      "coreVertices": 8792,
+      "coreBendsOverFiveDegrees": 2303,
+      "coreLengthFeet": 30368.98416143516,
+      "guideBendsOverFiveDegrees": 7838,
+      "zigzagReversals": 225,
+      "approachOrJoinZigzagReversals": 187,
+      "coreZigzagReversals": 38,
+      "approachElbows": 342
+     },
+     "candidate": {
+      "coreVertices": 8615,
+      "coreBendsOverFiveDegrees": 1905,
+      "coreLengthFeet": 30230.309715149193,
+      "guideBendsOverFiveDegrees": 7448,
+      "zigzagReversals": 166,
+      "approachOrJoinZigzagReversals": 130,
+      "coreZigzagReversals": 36,
+      "approachElbows": 259
+     }
+    },
+    "acceptedNetworkStubEnds": {
+     "baseline": {
+      "coreVertices": 8792,
+      "coreLengthFeet": 30368.984161435117,
+      "guideBendsOverFiveDegrees": 7838,
+      "zigzagReversals": 225,
+      "approachOrJoinZigzagReversals": 187,
+      "coreBendsOverFiveDegrees": 2303,
+      "approachElbows": 342,
+      "coreDeadEnds": 545,
+      "arrivalStubEnds": 201,
+      "acceptedGuides": 2726,
+      "coreZigzagReversals": 38
+     },
+     "candidate": {
+      "coreVertices": 8615,
+      "coreLengthFeet": 30230.30971514915,
+      "guideBendsOverFiveDegrees": 7448,
+      "zigzagReversals": 166,
+      "approachOrJoinZigzagReversals": 130,
+      "coreBendsOverFiveDegrees": 1905,
+      "coreDeadEnds": 533,
+      "arrivalStubEnds": 199,
+      "acceptedGuides": 2726,
+      "approachElbows": 259,
+      "coreZigzagReversals": 36
+     }
+    }
+   },
+   "vsPreviousStraightCatalogb7f8198e": {
+    "before": {
+     "path": "/home/user/wt-gap-requal/docs/continuation/unbc-20261103/corridor-runs/PREPARED-ROUTING.json",
+     "sha256": "b7f8198e50326e36b889511e94fb26d31209f41cdb45bca658eb886bb4798010",
+     "guides": 2728,
+     "sourceGeometryKey": "90e7d4922fa629a6c225cf72e75742822e26719448ad4baea0044645e2daf4e5"
+    },
+    "after": {
+     "path": "guides-straight/compile/prepared-routing.json",
+     "sha256": "e30c004023410e39770e19ce8f1567a84df55a633c347b913ca4546c71f9923d",
+     "guides": 2726,
+     "sourceGeometryKey": "e6b45cf7b622b96b13075a391d2bb3a6bb3f07d182d9da5dd1ef3878e2f73f9e"
+    },
+    "counts": {
+     "same": 2701,
+     "changed": 22,
+     "gained: new walk": 3,
+     "lost: walk removed by regeneration": 5
+    },
+    "differencesInPatchedCells": 27
+   },
+   "guideOnlyCrossings": {
+    "path": "guides-straight/compile/prepared-routing.json",
+    "sha256": "e30c004023410e39770e19ce8f1567a84df55a633c347b913ca4546c71f9923d",
+    "guides": 2726,
+    "guidesWithoutGraphEdge": [],
+    "crossingsWithoutJunction": 5,
+    "floors": {
+     "campus-floor-1": {
+      "guides": 982,
+      "crossingsWithoutJunction": 1,
+      "crossings": [
+       {
+        "pointDisplay": [
+         53.52,
+         40.839
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522207:1|door:1450417:1522209:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0129
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522209:0|door:1450417:1964247:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1522209:0|opening:recovered-circulation-seam:rm-1450417-dba13529f060:rm-1450417-dbab6729f069:8:12:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0129
+         },
+         {
+          "edgeId": "native-cell:-3.280840:14:walk:door:1450417:1964247:1|opening:recovered-circulation-seam:rm-1450417-dba13529f060:rm-1450417-dbab6729f069:8:12:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         }
+        ]
+       }
+      ]
+     },
+     "floor-2": {
+      "guides": 721,
+      "crossingsWithoutJunction": 3,
+      "crossings": [
+       {
+        "pointDisplay": [
+         56.612,
+         -40.285
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1884871:0|opening:recovered-circulation-seam:rm-694-1ae8378c89a4:rm-694-64382117d7ea:12:10:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0284
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1895901:1|opening:recovered-circulation-seam:rm-694-6412a117d7ca:rm-694-64382117d7ea:0:10:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0271
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1895901:1|opening:recovered-circulation-seam:rm-694-6412a117d7ca:rm-694-64382117d7ea:0:10:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0271
+         }
+        ]
+       },
+       {
+        "pointDisplay": [
+         24.174,
+         -47.049
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64382117d7ea|opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64382117d7ea:7:113:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1869965:0|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0001
+         }
+        ]
+       },
+       {
+        "pointDisplay": [
+         24.848,
+         -47.237
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64209917d7d6|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:arrival:rm-694-64382117d7ea|opening:recovered-circulation-seam:rm-694-5d3cfd297df4:rm-694-64382117d7ea:7:113:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0003
+         },
+         {
+          "edgeId": "native-cell:14.435696:679:walk:door:694:1869965:0|opening:recovered-circulation-seam:rm-694-64209917d7d6:rm-694-64382117d7ea:5:1:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0
+         }
+        ]
+       }
+      ]
+     },
+     "campus-floor-3": {
+      "guides": 533,
+      "crossingsWithoutJunction": 1,
+      "crossings": [
+       {
+        "pointDisplay": [
+         -35.778,
+         130.298
+        ],
+        "guides": [
+         {
+          "edgeId": "native-cell:24.278215:917:walk:door:400176:2262772:0|door:400176:2262854:0",
+          "kind": "shared-corridor",
+          "distanceM": 0.0003
+         },
+         {
+          "edgeId": "native-cell:24.278215:917:walk:door:400176:2262772:0|door:400176:2262984:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.0002
+         },
+         {
+          "edgeId": "native-cell:24.278215:917:walk:door:400176:2262854:0|door:400176:2262984:1",
+          "kind": "shared-corridor",
+          "distanceM": 0.1843
+         }
+        ]
+       }
+      ]
+     },
+     "floor-4": {
+      "guides": 482,
+      "crossingsWithoutJunction": 0,
+      "crossings": []
+     }
+    }
+   },
+   "newCrossings": [
+    "Campus Floor 3, cell native-cell:24.278215:917 (852 on master-0388): doors 2262772/2262854"
+   ]
+  }
+ },
+ "crossingMethod": {
+  "tool": "tools/guide-crossings.py (navgraph.planarize + proper_crossings of tools/reference-comparison, guides only, display frame frame-1a127847)",
+  "control": {
+   "graph": "master-0388",
+   "1c3011ff": 4,
+   "b7f8198e": 5,
+   "note": "reproduces the November 3 METRICS.json guidesOnly crossingsWithoutJunction (4 and 5)"
+  }
+ }
+}

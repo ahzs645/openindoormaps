@@ -1,0 +1,146 @@
+{
+ "format": "unbc-gap-regeneration-link-result-v1",
+ "decision": "needed: on the regenerated master 65536052 door 1780077's 06-364 portal (door:1487353:1780077:0) still has no walk, and 06-388 Vestibule plus 15 other rooms are a 16-arrival component outside the 1,695-arrival main network, exactly as on the run-1 master",
+ "checkOnly": {
+  "status": "LINK_REPLAY_PASSED_NOT_EXPORTED",
+  "inputSha256": "655360527c96faafc5197722563509d50060dc9cdbd46c65ce77087eb023bb5f",
+  "support": {
+   "ok": true,
+   "roomKeys": [
+    "rm-1487353-c8cc98ebb50c"
+   ],
+   "lengthFeet": 6.462197768561429
+  },
+  "appliedLinks": [
+   "ramp:1643796:upper|door:311:1951047:0",
+   "door:1487816:1630256:1|door:1487816:2018182:1",
+   "door:1487353:1780077:0|door:1487353:1779222:0"
+  ],
+  "execution": {
+   "format": "supervised-candidate-execution-v1",
+   "command": [
+    "node",
+    "--max-old-space-size=6144",
+    "--import",
+    "tsx",
+    "scripts/indoor/add-reviewed-circulation-link.ts",
+    "/home/user/unbc-work/gap-patches/regen/run/output/UNBC.master.reviter.zip",
+    "--check-only",
+    "--from",
+    "door:1487353:1780077:0",
+    "--to",
+    "door:1487353:1779222:0",
+    "--source",
+    "docs/continuation/unbc-20261031/campus/README.md",
+    "--decision-id",
+    "06-388-island-missing-approach",
+    "--summary",
+    "Connected door 1780077 (06-366 Lounge to 06-364 Corridor) has no walking approach on its 06-364 portal, isolating 06-388 Vestibule and 15 other rooms. Join that portal to the neighbouring 06-364 portal of door 1779222 (6.46 ft) inside native cell 994.",
+    "--notes",
+    "Re-added unchanged on the gap-patch regeneration master 65536052 (November 5, 2026). The regeneration renumbered native cells; the same 06-364 corridor cell is native cell 1077 there."
+   ],
+   "workingDirectory": "/home/user/wt-gap-requal",
+   "startedAt": "2026-11-05T15:13:42.598354+00:00",
+   "finishedAt": "2026-11-05T15:32:50.424685+00:00",
+   "seconds": 1147.8263259550004,
+   "exitCode": 0,
+   "timedOut": false,
+   "interrupted": false,
+   "kernelMaxChildRssKiB": 4199444,
+   "kernelChildUserSeconds": 1366.811112,
+   "kernelChildSystemSeconds": 28.691781,
+   "cgroupLimitBytes": null,
+   "sampledSharedCgroupPeakBytes": 0,
+   "sampleIntervalSeconds": 1,
+   "samples": 1148,
+   "cgroupEventDeltas": {},
+   "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+  }
+ },
+ "export": {
+  "status": "LINK_ADDED_GUIDES_AND_ACCEPTANCE_REQUIRED",
+  "inputSha256": "655360527c96faafc5197722563509d50060dc9cdbd46c65ce77087eb023bb5f",
+  "outputSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+  "outputBytes": 247314898,
+  "link": {
+   "id": "door:1487353:1780077:0|door:1487353:1779222:0",
+   "fromNodeId": "door:1487353:1780077:0",
+   "toNodeId": "door:1487353:1779222:0",
+   "pointsFeet": [
+    [
+     -225.60249587611554,
+     -79.4756954419866,
+     29.855643044619423
+    ],
+    [
+     -222.20785202508426,
+     -84.97445831418393,
+     29.855643044619423
+    ]
+   ],
+   "decision": {
+    "source": "docs/continuation/unbc-20261031/campus/README.md",
+    "id": "06-388-island-missing-approach",
+    "summary": "Connected door 1780077 (06-366 Lounge to 06-364 Corridor) has no walking approach on its 06-364 portal, isolating 06-388 Vestibule and 15 other rooms. Join that portal to the neighbouring 06-364 portal of door 1779222 (6.46 ft) inside native cell 994."
+   },
+   "notes": "Re-added unchanged on the gap-patch regeneration master 65536052 (November 5, 2026). The regeneration renumbered native cells; the same 06-364 corridor cell is native cell 1077 there."
+  },
+  "support": {
+   "ok": true,
+   "roomKeys": [
+    "rm-1487353-c8cc98ebb50c"
+   ],
+   "lengthFeet": 6.462197768561429
+  },
+  "appliedLinks": [
+   "ramp:1643796:upper|door:311:1951047:0",
+   "door:1487816:1630256:1|door:1487816:2018182:1",
+   "door:1487353:1780077:0|door:1487353:1779222:0"
+  ],
+  "execution": {
+   "format": "supervised-candidate-execution-v1",
+   "command": [
+    "node",
+    "--max-old-space-size=6144",
+    "--import",
+    "tsx",
+    "scripts/indoor/add-reviewed-circulation-link.ts",
+    "/home/user/unbc-work/gap-patches/regen/run/output/UNBC.master.reviter.zip",
+    "/home/user/unbc-work/gap-requal/master-gap-0388.zip",
+    "--from",
+    "door:1487353:1780077:0",
+    "--to",
+    "door:1487353:1779222:0",
+    "--source",
+    "docs/continuation/unbc-20261031/campus/README.md",
+    "--decision-id",
+    "06-388-island-missing-approach",
+    "--summary",
+    "Connected door 1780077 (06-366 Lounge to 06-364 Corridor) has no walking approach on its 06-364 portal, isolating 06-388 Vestibule and 15 other rooms. Join that portal to the neighbouring 06-364 portal of door 1779222 (6.46 ft) inside native cell 994.",
+    "--notes",
+    "Re-added unchanged on the gap-patch regeneration master 65536052 (November 5, 2026). The regeneration renumbered native cells; the same 06-364 corridor cell is native cell 1077 there."
+   ],
+   "workingDirectory": "/home/user/wt-gap-requal",
+   "startedAt": "2026-11-05T15:32:50.514577+00:00",
+   "finishedAt": "2026-11-05T17:12:11.699371+00:00",
+   "seconds": 5961.184769364001,
+   "exitCode": 0,
+   "timedOut": false,
+   "interrupted": false,
+   "kernelMaxChildRssKiB": 6095068,
+   "kernelChildUserSeconds": 7429.440689,
+   "kernelChildSystemSeconds": 144.575238,
+   "cgroupLimitBytes": null,
+   "sampledSharedCgroupPeakBytes": 0,
+   "sampleIntervalSeconds": 1,
+   "samples": 5958,
+   "cgroupEventDeltas": {},
+   "measurementScope": "Linux child ru_maxrss after wait() is KiB. Shared task cgroup measurements include other processes and cache. No per-PID /proc reading is used as child RSS evidence."
+  }
+ },
+ "afterExport": {
+  "largestComponentArrivals": 1711,
+  "06-388/06-364/06-366 in largest component": true,
+  "datasetDifferenceFromRegeneratedMaster": "only the reviewed-link edge, reviewedCirculationLinks, source.roomsSha256 and nativeExploreMapping.datasetGeometrySha256 (the same four keys that differ between master-0388 and the run-1 master)"
+ }
+}

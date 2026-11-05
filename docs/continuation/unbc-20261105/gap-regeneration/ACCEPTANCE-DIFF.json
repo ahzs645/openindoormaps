@@ -1,0 +1,3726 @@
+{
+ "format": "unbc-gap-regeneration-acceptance-diff-v1",
+ "summary": "Acceptance on master ae70cc07 with catalog 9157d27e PASSES: 33/33 cases, 16 available, 17 expected refusals, production worker 33/33 PASS, 0 failures. Every case has the same availability, required-edge and required-door verification, shared-path count and route edge sequence (walks compared by end nodes) as the final-candidate acceptance. 13 available cases report shorter distances (0.106 to 1.299 m). A control run of the same code on master-0388 with catalog 1c3011ff gives exactly the same 33 results as the gap master (every distance equal), so all 13 distance changes come from the code change since the final-candidate acceptance (the November 3 route-output change), not from the gap patches. No acceptance route used a walk through a patched gap, before or after.",
+ "acceptance": {
+  "master": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+  "catalog": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+  "report": "acceptance/REPORT.json",
+  "execution": {
+   "command": [
+    "node",
+    "--max-old-space-size=4096",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/home/user/unbc-work/gap-requal/master-gap-0388.zip",
+    "/home/user/unbc-work/gap-requal/guides/compile/prepared-routing.json",
+    "/home/user/wt-gap-requal/docs/continuation/unbc-20261031/ROUTE-CASES-CAMPUS-0388.json",
+    "/home/user/unbc-work/gap-requal/accept"
+   ],
+   "workingDirectory": "/home/user/wt-gap-requal",
+   "startedAt": "2026-11-05T18:53:31.152673+00:00",
+   "finishedAt": "2026-11-05T19:38:18.809349+00:00",
+   "seconds": 2687.656663551992,
+   "exitCode": 0,
+   "kernelMaxChildRssKiB": 5696392
+  }
+ },
+ "control": {
+  "purpose": "separate code effects from data effects: current code (306eadc, Node v22.22.0) on the final-candidate inputs",
+  "master": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+  "catalog": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+  "status": "PASS",
+  "failures": [],
+  "archiveSha256": "9e67c7a77d97542d9f09a10c7e1d64935e7fd57d42bdb00f84c9e84f310717cc",
+  "report": "/home/user/unbc-work/gap-requal/accept-control/report.json",
+  "execution": {
+   "command": [
+    "node",
+    "--max-old-space-size=4096",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/home/user/unbc-work/master-0388.zip",
+    "/home/user/wt-gap-requal/docs/continuation/unbc-20261102/final-candidate/PREPARED-ROUTING.json",
+    "/home/user/wt-gap-requal/docs/continuation/unbc-20261031/ROUTE-CASES-CAMPUS-0388.json",
+    "/home/user/unbc-work/gap-requal/accept-control"
+   ],
+   "workingDirectory": "/home/user/wt-gap-requal",
+   "startedAt": "2026-11-05T19:38:56.166215+00:00",
+   "finishedAt": "2026-11-05T20:24:00.838128+00:00",
+   "seconds": 2704.6719066489895,
+   "exitCode": 0,
+   "kernelMaxChildRssKiB": 5666624
+  }
+ },
+ "routeEdgesAndGuides": "All 327 route edge uses of the 33 cases are identical between master-0388 and ae70cc07 except the native cell number in walk ids; every guide on those routes is byte-identical between 1c3011ff and 9157d27e.",
+ "gapVsFinalCandidate": {
+  "format": "unbc-acceptance-diff-v1",
+  "before": {
+   "path": "/home/user/wt-gap-requal/docs/continuation/unbc-20261102/final-candidate/acceptance/REPORT.json",
+   "status": "PASS",
+   "sourceMasterSha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+   "guideSha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "after": {
+   "path": "accept/report.json",
+   "status": "PASS",
+   "sourceMasterSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+   "guideSha256": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "unchangedCases": 20,
+  "changedCases": [
+   "door-2311764:08-216-to-08-260",
+   "link-4-8:walking-other-room-transit",
+   "link-4-8:return-walking-other-room-transit",
+   "door-2311764:08-216-to-08-260:reverse",
+   "link-4-8:corridor:04-204-to-08-267:hallway-only",
+   "link-4-8:corridor:08-267-to-04-204:hallway-only",
+   "link-4-8:corridor:04-237-to-08-205:hallway-only",
+   "link-4-8:corridor:08-205-to-04-237:hallway-only",
+   "door-2311764:08-216-to-08-260:inside",
+   "link-4-8:walking-other-room-transit:inside",
+   "link-4-8:return-walking-other-room-transit:inside",
+   "door-2311764:08-216-to-08-260:reverse:inside",
+   "06-388-island:06-366-to-06-364:inside"
+  ],
+  "cases": [
+   {
+    "id": "door-2311764:08-216-to-08-260",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.9800348962684815,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 177.32857548460785,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 176.02917635538097,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.2993991292268845,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 176.71817653123836,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 175.4187774020115,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.299399129226856,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.9800348962684815,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:hallway-only",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 120.96094511314197,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099046,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.0066307121515194,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:strict-step-free",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:hallway-only",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 120.96094511314195,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099043,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.0066307121515194,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:strict-step-free",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:hallway-only",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.96537108936113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.85962949266275,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.10574159669837968,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:strict-step-free",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:hallway-only",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.80834825542479,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.70260665872641,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.10574159669837968,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:strict-step-free",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:inside",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.081871586798325,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 186.35046353940766,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 185.05106441018077,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.2993991292268845,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 185.74006458603816,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 184.4406654568113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.299399129226856,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse:inside",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.081871586798325,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:hallway",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-364-to-06-388:hallway",
+    "from": "06-364",
+    "to": "06-388",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-366-to-06-364:inside",
+    "from": "06-366",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 21.009940598087418,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 20.85027782004616,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.15966277804125895,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "06-388-island:06-370-to-06-364:inside:transit",
+    "from": "06-370",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:strict-step-free",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   }
+  ]
+ },
+ "gapVsControl": {
+  "format": "unbc-acceptance-diff-v1",
+  "before": {
+   "path": "accept-control/report.json",
+   "status": "PASS",
+   "sourceMasterSha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+   "guideSha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "after": {
+   "path": "accept/report.json",
+   "status": "PASS",
+   "sourceMasterSha256": "ae70cc07e5d03aa3cf281573c0be55f1e8ecc57442c121e380f3f90a433959a9",
+   "guideSha256": "9157d27ec639c3f8026cc3e1134a6b039c9bd74ebcdaa8c4a3bdbd21ee6c7691",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "unchangedCases": 33,
+  "changedCases": [],
+  "cases": [
+   {
+    "id": "door-2311764:08-216-to-08-260",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 176.02917635538097,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 176.02917635538097,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 175.4187774020115,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 175.4187774020115,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:hallway-only",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 119.95431440099046,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099046,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:strict-step-free",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:hallway-only",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 119.95431440099043,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099043,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:strict-step-free",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:hallway-only",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.85962949266275,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.85962949266275,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:strict-step-free",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:hallway-only",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.70260665872641,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.70260665872641,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:strict-step-free",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:inside",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 185.05106441018077,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 185.05106441018077,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 184.4406654568113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 184.4406654568113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse:inside",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:hallway",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-364-to-06-388:hallway",
+    "from": "06-364",
+    "to": "06-388",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-366-to-06-364:inside",
+    "from": "06-366",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 20.85027782004616,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 20.85027782004616,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-370-to-06-364:inside:transit",
+    "from": "06-370",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:strict-step-free",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   }
+  ]
+ },
+ "controlVsFinalCandidate": {
+  "format": "unbc-acceptance-diff-v1",
+  "before": {
+   "path": "/home/user/wt-gap-requal/docs/continuation/unbc-20261102/final-candidate/acceptance/REPORT.json",
+   "status": "PASS",
+   "sourceMasterSha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+   "guideSha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "after": {
+   "path": "accept-control/report.json",
+   "status": "PASS",
+   "sourceMasterSha256": "6e7971f8917dafa639afa2e1523a5b1ad48aac55ef5d9db9827162335c47f903",
+   "guideSha256": "1c3011ffbda15b1f38dd0ecaee52bbbd39f3133622c3d76cff16fb87c2f4487c",
+   "available": 16,
+   "cases": 33,
+   "failures": []
+  },
+  "unchangedCases": 20,
+  "changedCases": [
+   "door-2311764:08-216-to-08-260",
+   "link-4-8:walking-other-room-transit",
+   "link-4-8:return-walking-other-room-transit",
+   "door-2311764:08-216-to-08-260:reverse",
+   "link-4-8:corridor:04-204-to-08-267:hallway-only",
+   "link-4-8:corridor:08-267-to-04-204:hallway-only",
+   "link-4-8:corridor:04-237-to-08-205:hallway-only",
+   "link-4-8:corridor:08-205-to-04-237:hallway-only",
+   "door-2311764:08-216-to-08-260:inside",
+   "link-4-8:walking-other-room-transit:inside",
+   "link-4-8:return-walking-other-room-transit:inside",
+   "door-2311764:08-216-to-08-260:reverse:inside",
+   "06-388-island:06-366-to-06-364:inside"
+  ],
+  "cases": [
+   {
+    "id": "door-2311764:08-216-to-08-260",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.9800348962684815,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 177.32857548460785,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 176.02917635538097,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.2993991292268845,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 176.71817653123836,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 175.4187774020115,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 41
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.299399129226856,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.538642964996182,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.9800348962684815,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:hallway-only",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 120.96094511314197,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099046,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.0066307121515194,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:04-204-to-08-267:strict-step-free",
+    "from": "04-204",
+    "to": "08-267",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:hallway-only",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 120.96094511314195,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 119.95431440099043,
+     "sharedPaths": 4,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 28
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.0066307121515194,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:08-267-to-04-204:strict-step-free",
+    "from": "08-267",
+    "to": "04-204",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:hallway-only",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.96537108936113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.85962949266275,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.10574159669837968,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:04-237-to-08-205:strict-step-free",
+    "from": "04-237",
+    "to": "08-205",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:hallway-only",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 117.80834825542479,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 117.70260665872641,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 26
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.10574159669837968,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:corridor:08-205-to-04-237:strict-step-free",
+    "from": "08-205",
+    "to": "04-237",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:inside",
+    "from": "08-216",
+    "to": "08-260",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.081871586798325,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:walking-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 186.35046353940766,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 185.05106441018077,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.2993991292268845,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:return-walking-other-room-transit:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 185.74006458603816,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 184.4406654568113,
+     "sharedPaths": 3,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 45
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.299399129226856,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:inside",
+    "from": "04-255",
+    "to": "08-272",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "door-2311764:08-216-to-08-260:reverse:inside",
+    "from": "08-260",
+    "to": "08-216",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 12.518677861264663,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 11.436806274466338,
+     "sharedPaths": 2,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": true,
+     "workerStatus": "PASS",
+     "edges": 3
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -1.081871586798325,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "link-4-8:walking-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-hallway-only:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "link-4-8:strict-step-free-other-room-transit:reverse:inside",
+    "from": "08-272",
+    "to": "04-255",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:hallway",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594044,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-364-to-06-388:hallway",
+    "from": "06-364",
+    "to": "06-388",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 34.35554225594045,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-366-to-06-364:inside",
+    "from": "06-366",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 21.009940598087418,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 20.85027782004616,
+     "sharedPaths": 1,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 5
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": -0.15966277804125895,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": false
+   },
+   {
+    "id": "06-388-island:06-370-to-06-364:inside:transit",
+    "from": "06-370",
+    "to": "06-364",
+    "mode": "public",
+    "options": {
+     "allowOtherRoomTransit": true,
+     "endpointMode": "inside"
+    },
+    "expected": true,
+    "before": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "after": {
+     "available": true,
+     "distanceMetres": 35.254926912748864,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": true,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 10
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": 0.0,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   },
+   {
+    "id": "06-388-island:06-388-to-06-364:strict-step-free",
+    "from": "06-388",
+    "to": "06-364",
+    "mode": "accessible",
+    "options": {
+     "allowOtherRoomTransit": false,
+     "endpointMode": "hallway"
+    },
+    "expected": false,
+    "before": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "after": {
+     "available": false,
+     "distanceMetres": null,
+     "sharedPaths": 0,
+     "requiredSourceEdgesVerified": false,
+     "requiredNativeDoorVerified": false,
+     "workerStatus": "PASS",
+     "edges": 0
+    },
+    "sameAvailability": true,
+    "distanceDeltaMetres": null,
+    "sameEdgeKeys": true,
+    "edgeKeysOnlyBefore": [],
+    "edgeKeysOnlyAfter": [],
+    "beforeWalksThroughPatchedGaps": {},
+    "unchanged": true
+   }
+  ]
+ }
+}
