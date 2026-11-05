@@ -1,0 +1,304 @@
+From bdef4a6781b3084d351a47bbc57a8524e8953562 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 23:17:10 +0000
+Subject: [PATCH 2/2] fix(indoor): bind native circulation geometry to the
+ routing contact rule
+
+Mirror of Reviter's native-routing-contact-noding.ts (1e-7 ft numerical wall
+contacts in exact routing cells). Its version joins the native circulation
+geometry key, so circulation compiled before the rule is stale. Runtime
+bindings regenerated with their writer scripts.
+
+Claude-Session: https://claude.ai/code/session_01F5YScMjv2Mnt4v2xjsTFru
+---
+ app/indoor-project/native-circulation.ts      |   2 +
+ .../native-routing-contact-noding.ts          | 166 ++++++++++++++++++
+ .../prepared-display-engine-binding.ts        |   2 +-
+ .../published-route-runtime-binding.ts        |   2 +-
+ .../published-visitor-plan-runtime-binding.ts |   2 +-
+ .../native-routing-contact-noding.test.ts     |  52 ++++++
+ 6 files changed, 223 insertions(+), 3 deletions(-)
+ create mode 100644 app/indoor-project/native-routing-contact-noding.ts
+ create mode 100644 tests/unit/native-routing-contact-noding.test.ts
+
+diff --git a/app/indoor-project/native-circulation.ts b/app/indoor-project/native-circulation.ts
+index 6f5deb3..49180ab 100644
+--- a/app/indoor-project/native-circulation.ts
++++ b/app/indoor-project/native-circulation.ts
+@@ -24,6 +24,7 @@ import type { IndoorDataset, IndoorRecord } from "./contract";
+ import { nativeConnectorAnchors } from "./native-connector-anchors";
+ import { createNativeIndoorEnvelopeIndex } from "./native-indoor-envelopes";
+ import { NATIVE_BARRIER_TOPOLOGY_VERSION } from "./native-barrier-topology";
++import { NATIVE_ROUTING_CONTACT_NODING_VERSION } from "./native-routing-contact-noding";
+ import { NATIVE_ACCESS_ZONES_VERSION } from "./native-access-zones";
+ import { nativeRoutingAccessZonesAt } from "./native-routing-access-zones";
+ import {
+@@ -408,6 +409,7 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
+               "native-door-approach-original-source-bounds-v1",
+               NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+               NATIVE_EXACT_GEOS_BINDING,
++              NATIVE_ROUTING_CONTACT_NODING_VERSION,
+               nativeConnectorAnchors(data),
+               ...(data.nativePhysicalLevels ? [data.nativePhysicalLevels] : []),
+               ...(data.nativeAccessZones
+diff --git a/app/indoor-project/native-routing-contact-noding.ts b/app/indoor-project/native-routing-contact-noding.ts
+new file mode 100644
+index 0000000..a78d157
+--- /dev/null
++++ b/app/indoor-project/native-routing-contact-noding.ts
+@@ -0,0 +1,166 @@
++import * as DMath from "./deterministic-math";
++import { orient2d, rational } from "./vendor/native-rational-overlay-arithmetic.mjs";
++
++type Point = [number, number];
++type Rings = Point[][];
++
++/** Binds prepared native circulation cells to this contact rule. */
++export const NATIVE_ROUTING_CONTACT_NODING_VERSION =
++  "native-routing-wall-contact-noding-v1:1e-7ft:outside-vertex-into-foreign-edge";
++export const NATIVE_ROUTING_CONTACT_FEET = 1e-7;
++
++/** The exact routing compiler keeps every original IEEE wall coordinate, so a
++ * partition whose exported end corner misses the neighbouring wall face by a
++ * floating-point residue (1e-14 ft) leaves a sliver that the rational overlay
++ * treats as a real opening. This applies the documented native contact rule
++ * (`nativeBarrierTopology`) to that exact path without coordinate reduction:
++ * a wall vertex within `contact` (1e-7 ft) of another wall's edge, strictly on
++ * that wall's outside, is inserted into that edge. Both walls then share the
++ * original vertex exactly. A corner of an end-to-end abutment projects onto the
++ * foreign end edge at its end (t = 0 or 1) and is inserted there too.
++ *
++ * - The inserted vertex is an unchanged original coordinate; no coordinate is
++ *   rounded, moved or averaged, and no wall is buffered.
++ * - Material is only ever added, and only between the original edge and
++ *   vertices at most `contact` from it, so a gap wider than `contact` cannot be
++ *   closed. Vertices inside or exactly on the other wall (overlaps and exact
++ *   contacts) change nothing, so the free region only shrinks.
++ * - Only wall bodies take part. Door leaves and thresholds, floors and their
++ *   holes, columns, fixtures, masks and reviewed patch walls are not inputs, and
++ *   door apertures are cut after noding, so no door, opening or hole is closed.
++ * - Unchanged walls are returned as the same objects.
++ */
++export function nativeRoutingContactNoding<T extends Rings>(
++  walls: readonly T[],
++  contact = NATIVE_ROUTING_CONTACT_FEET,
++): T[] {
++  if (!(contact >= 0) || contact > NATIVE_ROUTING_CONTACT_FEET)
++    throw new Error("Native routing contact noding is bounded to at most 1e-7 ft.");
++  const cell = 16;
++  type Edge = {
++    wall: number;
++    ring: number;
++    index: number;
++    a: Point;
++    b: Point;
++    interiorLeft: boolean;
++    nodes: { t: number; point: Point }[];
++  };
++  const edges: Edge[] = [],
++    buckets = new Map<string, Edge[]>(),
++    key = (x: number, y: number) => `${x}:${y}`;
++  for (const [wall, rings] of walls.entries())
++    for (const [ring, points] of rings.entries()) {
++      // Shoelace about the first vertex. Interior lies left of a positive
++      // outer ring and right of a positive hole.
++      const o = points[0];
++      let doubled = 0;
++      if (o)
++        for (let i = 1; i + 1 < points.length; i++)
++          doubled +=
++            (points[i][0] - o[0]) * (points[i + 1][1] - o[1]) -
++            (points[i + 1][0] - o[0]) * (points[i][1] - o[1]);
++      if (!(doubled !== 0) || !Number.isFinite(doubled)) continue;
++      const interiorLeft = (ring === 0) === doubled > 0;
++      for (let index = 0; index < points.length; index++) {
++        const a = points[index],
++          b = points[(index + 1) % points.length];
++        if (a[0] === b[0] && a[1] === b[1]) continue;
++        const edge: Edge = { wall, ring, index, a, b, interiorLeft, nodes: [] };
++        edges.push(edge);
++        for (
++          let x = Math.floor((Math.min(a[0], b[0]) - contact) / cell);
++          x <= Math.floor((Math.max(a[0], b[0]) + contact) / cell);
++          x++
++        )
++          for (
++            let y = Math.floor((Math.min(a[1], b[1]) - contact) / cell);
++            y <= Math.floor((Math.max(a[1], b[1]) + contact) / cell);
++            y++
++          ) {
++            const list = buckets.get(key(x, y));
++            if (list) list.push(edge);
++            else buckets.set(key(x, y), [edge]);
++          }
++      }
++    }
++  for (const [wall, rings] of walls.entries())
++    for (const points of rings)
++      for (const point of points) {
++        // One edge per foreign ring: the nearest within the bound, preferring a
++        // projection inside the closed edge span. A corner of an end-to-end
++        // abutment projects onto the foreign end edge at t = 0 or 1.
++        const best = new Map<string, { edge: Edge; t: number; distance: number; inside: boolean }>();
++        for (const edge of buckets.get(
++          key(Math.floor(point[0] / cell), Math.floor(point[1] / cell)),
++        ) ?? []) {
++          if (edge.wall === wall) continue;
++          if (
++            (point[0] === edge.a[0] && point[1] === edge.a[1]) ||
++            (point[0] === edge.b[0] && point[1] === edge.b[1])
++          )
++            continue;
++          const dx = edge.b[0] - edge.a[0],
++            dy = edge.b[1] - edge.a[1],
++            t =
++              ((point[0] - edge.a[0]) * dx + (point[1] - edge.a[1]) * dy) /
++              (dx * dx + dy * dy),
++            clamped = Math.max(0, Math.min(1, t)),
++            distance = DMath.hypot(
++              point[0] - edge.a[0] - clamped * dx,
++              point[1] - edge.a[1] - clamped * dy,
++            );
++          if (!(distance <= contact)) continue;
++          const inside = t >= 0 && t <= 1,
++            id = `${edge.wall}:${edge.ring}`,
++            previous = best.get(id);
++          if (
++            previous &&
++            (Number(previous.inside) > Number(inside) ||
++              (previous.inside === inside && previous.distance <= distance))
++          )
++            continue;
++          best.set(id, { edge, t: clamped, distance, inside });
++        }
++        for (const { edge, t } of best.values()) {
++          // Exact side of the original edge: on it is already a contact,
++          // inside it is an overlap; neither leaves a gap to close.
++          const side = orient2d(
++            rational(edge.a[0]),
++            rational(edge.a[1]),
++            rational(edge.b[0]),
++            rational(edge.b[1]),
++            rational(point[0]),
++            rational(point[1]),
++          );
++          if (side === 0) continue;
++          if (side < 0 === edge.interiorLeft) continue;
++          edge.nodes.push({ t, point });
++        }
++      }
++  const changed = new Map<string, Edge>();
++  for (const edge of edges)
++    if (edge.nodes.length) changed.set(`${edge.wall}:${edge.ring}:${edge.index}`, edge);
++  if (!changed.size) return [...walls];
++  return walls.map((rings, wall) => {
++    if (!rings.some((_, ring) => rings[ring].some((__, i) => changed.has(`${wall}:${ring}:${i}`))))
++      return rings;
++    return rings.map((points, ring) => {
++      const output: Point[] = [];
++      for (let i = 0; i < points.length; i++) {
++        const edge = changed.get(`${wall}:${ring}:${i}`);
++        const next = [
++          points[i],
++          ...(edge?.nodes
++            .sort((a, b) => a.t - b.t || a.point[0] - b.point[0] || a.point[1] - b.point[1])
++            .map((n) => n.point) ?? []),
++        ];
++        for (const p of next) {
++          const last = output.at(-1);
++          if (!last || last[0] !== p[0] || last[1] !== p[1]) output.push(p);
++        }
++      }
++      return output;
++    }) as T;
++  });
++}
+diff --git a/app/indoor-project/prepared-display-engine-binding.ts b/app/indoor-project/prepared-display-engine-binding.ts
+index 52e1d62..2aa5b97 100644
+--- a/app/indoor-project/prepared-display-engine-binding.ts
++++ b/app/indoor-project/prepared-display-engine-binding.ts
+@@ -1,4 +1,4 @@
+ // Generated from the complete local preparation module graph and dependency lock.
+ // Refresh through Vite or scripts/indoor/prepared-display-engine-binding.ts.
+ export const PREPARED_DISPLAY_ENGINE_SHA256 =
+-  "469c764e60d9c7414e72f1e81c6623c6dd458130f6c219feb3899c49632e1ec4";
++  "35af5e9a7da379a42686d624d5aced36550f122433042b299dd8fc22b8e205c0";
+diff --git a/app/indoor-project/published-route-runtime-binding.ts b/app/indoor-project/published-route-runtime-binding.ts
+index 14698d7..4d5f6aa 100644
+--- a/app/indoor-project/published-route-runtime-binding.ts
++++ b/app/indoor-project/published-route-runtime-binding.ts
+@@ -1,3 +1,3 @@
+ // Generated from the actual route worker/validator module closure and lock.
+ export const PUBLISHED_ROUTE_RUNTIME_SHA256 =
+-  "1dbb7ca74c07a4b6285de8e58dd71c3bff25b8091177fc7cc642ca3bcdd7544a";
++  "88f5ee42203806c34e531519326d9fd95081cdbba7adef30816b4da428e18373";
+diff --git a/app/indoor-project/published-visitor-plan-runtime-binding.ts b/app/indoor-project/published-visitor-plan-runtime-binding.ts
+index 8934a4c..48c248c 100644
+--- a/app/indoor-project/published-visitor-plan-runtime-binding.ts
++++ b/app/indoor-project/published-visitor-plan-runtime-binding.ts
+@@ -1,3 +1,3 @@
+ // Generated from the actual plan projection/loader/renderer closure and lock.
+ export const PUBLISHED_VISITOR_PLAN_RUNTIME_SHA256 =
+-  "55b0a61d1d4ff68e54b3c66b655c74ec98e7ee35535ed4e0bb282926311ab437";
++  "c0565296d8dc8d1e40d0a856700d48d7b2127e298a846877212ef0451d290c38";
+diff --git a/tests/unit/native-routing-contact-noding.test.ts b/tests/unit/native-routing-contact-noding.test.ts
+new file mode 100644
+index 0000000..c7119d3
+--- /dev/null
++++ b/tests/unit/native-routing-contact-noding.test.ts
+@@ -0,0 +1,52 @@
++import assert from "node:assert/strict";
++import test from "node:test";
++import {
++  NATIVE_ROUTING_CONTACT_NODING_VERSION,
++  nativeRoutingContactNoding,
++} from "../../app/indoor-project/native-routing-contact-noding.ts";
++import { nativeRationalOverlay } from "../../app/indoor-project/native-rational-overlay.ts";
++import { nativeRationalPathSupported } from "../../app/indoor-project/native-exact-planar-topology.ts";
++
++type P = [number, number];
++const rect = (x0: number, y0: number, x1: number, y1: number): P[] => [
++  [x0, y0],
++  [x1, y0],
++  [x1, y1],
++  [x0, y1],
++];
++const room = rect(0, 0, 20, 10),
++  top = [rect(0, 9.8, 20, 10)],
++  partition = (gap: number) => [rect(10, 0, 10.2, 9.8 - gap)];
++const free = (box: P[], walls: P[][][]) =>
++  nativeRationalOverlay("difference", [[box]], ...walls.map((wall) => [wall]));
++
++test("runtime mirror closes numerical partition contacts only", () => {
++  assert.match(NATIVE_ROUTING_CONTACT_NODING_VERSION, /1e-7ft/);
++  for (const gap of [1e-14, 1e-9, 5e-8]) {
++    assert.equal(free(room, [top, partition(gap)]).length, 1);
++    const after = free(room, nativeRoutingContactNoding([top, partition(gap)]));
++    assert.equal(after.length, 2, `${gap} ft`);
++    assert.equal(
++      nativeRationalPathSupported([[5, 9.8 - gap / 2], [15, 9.8 - gap / 2]], after),
++      false,
++    );
++  }
++  for (const gap of [1e-6, 0.02]) {
++    const walls = [top, partition(gap)],
++      noded = nativeRoutingContactNoding(walls);
++    assert.equal(noded[0], walls[0]);
++    assert.equal(noded[1], walls[1]);
++  }
++});
++
++test("runtime mirror keeps a door aperture open and is idempotent", () => {
++  const box = rect(0, 0, 20, 12),
++    walls = [[rect(0, 9.8, 10.2, 10)], [rect(13.2, 9.8, 20, 10)], partition(1e-14)];
++  const once = nativeRoutingContactNoding(walls),
++    after = free(box, once);
++  assert.equal(after.length, 2);
++  assert.equal(nativeRationalPathSupported([[11.7, 5], [11.7, 11]], after), true);
++  const twice = nativeRoutingContactNoding(once);
++  twice.forEach((w, i) => assert.equal(w, once[i]));
++  assert.throws(() => nativeRoutingContactNoding(walls, 1e-6), /at most 1e-7/);
++});
+-- 
+2.43.0
+
