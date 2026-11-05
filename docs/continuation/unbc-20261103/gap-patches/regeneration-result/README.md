@@ -13,12 +13,14 @@ source review; see [../REGENERATION.md](../REGENERATION.md)).
 Lossless source assets and identical master/viewer data are recorded in
 [regeneration.json](regeneration.json).
 
-| Walking graph                     | Before patches | After patches |
-| --------------------------------- | -------------: | ------------: |
-| Connected components              |             49 |            25 |
-| Arrivals in the largest component |          1,549 |         1,703 |
-| Routable arrivals                 |          1,740 |         1,763 |
-| Unmatched doors                   |            287 |           281 |
+**Correction (verification on November 5):** the before/after figures in
+`regeneration.json` (components 49 → 25, largest component 1,549 → 1,703
+arrivals) describe the regeneration's own internal stages and are identical
+in the run-1 regeneration without patches; they are not an effect of the
+patches. Compared with the run-1 master, the patches close the patched strips
+(no walk crosses any of them), separate 234 rooms in the cells they cut, and
+break no door connection; the main network is unchanged. See
+[../../../unbc-20261105/gap-regeneration/](../../../unbc-20261105/gap-regeneration/README.md).
 
 The patches were checked against the project's own application of the same
 file (`73a765e9…`) before compiling
