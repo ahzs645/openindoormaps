@@ -202,11 +202,14 @@ export async function nativeExploreDatasetGeometrySha256(
 export async function compileNativeExploreMapping(
   data: IndoorDataset,
   datasetGeometrySha256: string,
+  /** Reporting only (CLI exports); never affects the mapping. */
+  onLevel?: (levelId: number, index: number, total: number) => void,
 ): Promise<PublishedNativeExploreMapping> {
   validateNativePhysicalLevels(data);
   const levels: PublishedNativeExploreMapping["levels"] = [],
     unavailableLevelIds: number[] = [];
-  for (const level of data.nativeLevels) {
+  for (const [index, level] of data.nativeLevels.entries()) {
+    onLevel?.(level.id, index, data.nativeLevels.length);
     if (
       !data.walkingSupport?.floors.some(
         (f) => Math.abs(f.elevationFeet - level.elevationFeet) < 0.15,
@@ -266,6 +269,7 @@ export async function compileNativeExploreMapping(
 export async function publishNativeExploreMapping(
   data: IndoorDataset,
   visitorData: IndoorDataset,
+  onProgress?: (message: string) => void,
 ): Promise<PublishedNativeExploreMapping | undefined> {
   if (
     data.walkingSupport?.sourceModelSha256 !== data.source.modelSha256 ||
@@ -320,6 +324,7 @@ export async function publishNativeExploreMapping(
       (!(data.nativeIndoorEnvelopes && data.nativeMaterialSections) ||
         data.nativeExploreMapping.version === 3)
     ) {
+      onProgress?.("explore mapping: validating the current mapping");
       await validatePublishedNativeExploreMapping(data);
       const copy = structuredClone(data.nativeExploreMapping);
       if (copy.version === 1) {
@@ -342,7 +347,8 @@ export async function publishNativeExploreMapping(
   }
   if (typeof Worker === "undefined")
     return bindVisitorMapping(
-      await compileNativeExploreMapping(data, datasetGeometrySha256),
+      await compileNativeExploreMapping(data, datasetGeometrySha256, onProgress &&
+        ((levelId, index, total) => onProgress(`explore mapping: deriving native areas · level ${index + 1}/${total} · #${levelId}`))),
     );
   const mapping = await new Promise<PublishedNativeExploreMapping>(
     (resolve, reject) => {
