@@ -1,0 +1,189 @@
+{
+ "format": "unbc-sliver-contact-cell-check-v1",
+ "rule": "native-routing-wall-contact-noding-v1:1e-7ft:outside-vertex-into-foreign-edge@diagnostic-contact-0.00001",
+ "cells": [
+  {
+   "cell": "native-cell:14.435696:602",
+   "elevationFeet": 14.435695538057743,
+   "savedFaceParts": 1,
+   "nodedWallsNearCell": 36,
+   "pieces": [
+    {
+     "piece": 0,
+     "areaSqFt": 921.5867125109053,
+     "nodes": [
+      "door:694:2125178:1 (04-204/04-207)",
+      "door:694:2125349:1 (04-207A/04-207)",
+      "arrival 04-207",
+      "door:694:2125373:1 (04-207B/04-207)"
+     ]
+    },
+    {
+     "piece": 1,
+     "areaSqFt": 674.7415477470004,
+     "nodes": [
+      "door:694:2125761:1 (04-204/04-206)",
+      "door:694:2125693:0 (04-206/04-205)",
+      "arrival 04-206"
+     ]
+    },
+    {
+     "piece": 2,
+     "areaSqFt": 450.1336955904908,
+     "nodes": [
+      "arrival 04-208",
+      "door:694:1111116:1 (04-237/04-208)"
+     ]
+    },
+    {
+     "piece": 3,
+     "areaSqFt": 1.2017244443995878e-7,
+     "nodes": []
+    },
+    {
+     "piece": 4,
+     "areaSqFt": 1.4551915228366852e-11,
+     "nodes": []
+    },
+    {
+     "piece": 5,
+     "areaSqFt": 9.384515197345536,
+     "nodes": []
+    },
+    {
+     "piece": 6,
+     "areaSqFt": 2.411115204424277,
+     "nodes": []
+    },
+    {
+     "piece": 7,
+     "areaSqFt": 8.694135069918957,
+     "nodes": []
+    },
+    {
+     "piece": 8,
+     "areaSqFt": 407.6053997470017,
+     "nodes": []
+    },
+    {
+     "piece": 9,
+     "areaSqFt": 6.927114852855084,
+     "nodes": []
+    },
+    {
+     "piece": 10,
+     "areaSqFt": 6.927114852857812,
+     "nodes": []
+    }
+   ],
+   "nodesOutsidePieces": [],
+   "walks": [
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca26ff3b4975|door:694:1111116:1",
+     "from": "arrival 04-208",
+     "to": "door:694:1111116:1 (04-237/04-208)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:door:694:2125693:0|door:694:2125761:1",
+     "from": "door:694:2125761:1 (04-204/04-206)",
+     "to": "door:694:2125693:0 (04-206/04-205)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:door:694:2125178:1|door:694:2125349:1",
+     "from": "door:694:2125178:1 (04-204/04-207)",
+     "to": "door:694:2125349:1 (04-207A/04-207)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca34873b4981|door:694:2125693:0",
+     "from": "door:694:2125693:0 (04-206/04-205)",
+     "to": "arrival 04-206",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca37fd3b4984|door:694:2125349:1",
+     "from": "door:694:2125349:1 (04-207A/04-207)",
+     "to": "arrival 04-207",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca37fd3b4984|door:694:2125178:1",
+     "from": "arrival 04-207",
+     "to": "door:694:2125178:1 (04-204/04-207)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:door:694:2125349:1|door:694:2125373:1",
+     "from": "door:694:2125373:1 (04-207B/04-207)",
+     "to": "door:694:2125349:1 (04-207A/04-207)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca34873b4981|door:694:2125761:1",
+     "from": "door:694:2125761:1 (04-204/04-206)",
+     "to": "arrival 04-206",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:arrival:rm-694-ca37fd3b4984|door:694:2125373:1",
+     "from": "door:694:2125373:1 (04-207B/04-207)",
+     "to": "arrival 04-207",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:602:walk:door:694:2125373:1|door:694:2125761:1",
+     "from": "door:694:2125761:1 (04-204/04-206)",
+     "to": "door:694:2125373:1 (04-207B/04-207)",
+     "stillSupported": false
+    }
+   ]
+  },
+  {
+   "cell": "native-cell:14.435696:690",
+   "elevationFeet": 14.435695538057743,
+   "savedFaceParts": 1,
+   "nodedWallsNearCell": 4,
+   "pieces": [
+    {
+     "piece": 0,
+     "areaSqFt": 122.70840332911757,
+     "nodes": [
+      "arrival 03-1012A",
+      "door:694:664208:0 (03-1012A/03-1013)"
+     ]
+    },
+    {
+     "piece": 1,
+     "areaSqFt": 138.37862236883302,
+     "nodes": [
+      "door:694:664250:1 (03-1013A/03-1018)",
+      "arrival 03-1018"
+     ]
+    }
+   ],
+   "nodesOutsidePieces": [],
+   "walks": [
+    {
+     "walk": "native-cell:14.435696:690:walk:arrival:rm-694-91afbde3a35d|door:694:664208:0",
+     "from": "arrival 03-1012A",
+     "to": "door:694:664208:0 (03-1012A/03-1013)",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:690:walk:arrival:rm-694-c633afe3c143|door:694:664250:1",
+     "from": "door:694:664250:1 (03-1013A/03-1018)",
+     "to": "arrival 03-1018",
+     "stillSupported": true
+    },
+    {
+     "walk": "native-cell:14.435696:690:walk:arrival:rm-694-91afbde3a35d|door:694:664250:1",
+     "from": "arrival 03-1012A",
+     "to": "door:694:664250:1 (03-1013A/03-1018)",
+     "stillSupported": false
+    }
+   ]
+  }
+ ]
+}
