@@ -1050,7 +1050,9 @@ async function compileAndExportMaster() {
   );
   const rebuilt = { ...before, rooms, dataset };
   console.time("Export master");
-  const masterBytes = await exportIndoorProject(rebuilt);
+  const masterBytes = await exportIndoorProject(rebuilt, (message) =>
+    console.log(`Export master · ${message}`),
+  );
   console.timeEnd("Export master");
   const assets = Object.keys(before.files).filter(
     (path) =>

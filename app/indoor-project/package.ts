@@ -738,7 +738,10 @@ export async function attachPreparedDisplayArchiveToPackage(
 }
 export async function exportIndoorProject(
   project: IndoorProject,
+  /** Reporting only (CLI regeneration); the archive is unchanged. */
+  onProgress?: (message: string) => void,
 ): Promise<Uint8Array> {
+  onProgress?.("validating source reviews and native material evidence");
   if (isViewerProject(project))
     throw new Error(
       "A campus viewer package cannot regenerate a source project. Use the full reviewed master ZIP.",
@@ -785,6 +788,7 @@ export async function exportIndoorProject(
     validateReviewPins(project.rooms.reviewPins, project.dataset);
   if (project.rooms.mapEdits !== undefined)
     validateMapEdits(project.rooms.mapEdits, project.dataset);
+  onProgress?.("serializing rooms and review companions");
   const serialized = await serializeRoomsForArchive(project.rooms),
     rooms = serialized.rooms,
     manifest = structuredClone(project.manifest) as ArchiveManifest,
@@ -809,11 +813,13 @@ export async function exportIndoorProject(
   dataset.nativeExploreMapping = await publishNativeExploreMapping(
     dataset,
     dataset,
+    onProgress,
   );
   const preparedDisplay = currentPreparedDisplayArchive(
     editorVisitorDataset({ ...project, dataset }),
     project.preparedDisplay,
   );
+  onProgress?.("serializing the routing dataset");
   const indoor = strToU8(JSON.stringify(dataset));
   manifest.indoor = {
     path: "viewer/indoor.json",
@@ -837,6 +843,7 @@ export async function exportIndoorProject(
   files["floors/rooms.json"] = rooms;
   files["viewer/indoor.json"] = indoor;
   files["manifest.json"] = strToU8(JSON.stringify(manifest, null, 2));
+  onProgress?.("compressing the archive");
   return new Promise((resolve, reject) =>
     zip(files, { level: 6 }, (err, bytes) =>
       err ? reject(err) : resolve(bytes),
