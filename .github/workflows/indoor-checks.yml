@@ -1,10 +1,8 @@
 name: Indoor checks
 
-# Runs the deploy workflow's check steps on every branch and pull request,
+# Runs feature validation on pull requests and deliberate manual runs,
 # without configuring or deploying Pages, plus the campus map verifiers.
 on:
-  push:
-    branches-ignore: [main]
   pull_request:
   workflow_dispatch:
 
