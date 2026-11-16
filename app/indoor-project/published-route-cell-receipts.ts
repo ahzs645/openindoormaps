@@ -3,6 +3,30 @@ import type { PublishedRouteCellReceipt } from "./published-route-cells";
 export const PUBLISHED_ROUTE_CELL_RECEIPTS: readonly PublishedRouteCellReceipt[] =
   Object.freeze([
     {
+      id: "fresh-candidate-native-routing-9cfa394e2e96a2584f688ce8c3ec6e255c9282e47956f365d84bd36ba22d8e6d",
+      datasetSha256:
+        "9cfa394e2e96a2584f688ce8c3ec6e255c9282e47956f365d84bd36ba22d8e6d",
+      engineSha256:
+        "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+      runtimeSha256:
+        "6d62e8aef73ff4769778b4cfb6b49e6d47e1238f0226374b31f5045323bf1399",
+      source: {
+        modelFileName:
+          "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        modelSha256:
+          "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        roomsSha256:
+          "bacc413990dde73d10372e0b76e52fa3a344cdb99f3eebed6cb84320882a6aab",
+      },
+      logicalSha256:
+        "b8d738f1c0b16797b432f50a80e5882f5da1bcbb009be395976cfbc89edfafd6",
+      logicalBytes: 35_238_009,
+      compressedSha256:
+        "d74e1a33b077003b7e02365b2e91739cf23187d3711a933d91080367bda90c47",
+      compressedBytes: 8_237_383,
+      url: "/data/unbc-routing/d74e1a33b077003b7e02365b2e91739cf23187d3711a933d91080367bda90c47.json.gz",
+    },
+    {
       id: "fresh-candidate-native-routing-4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",
       datasetSha256:
         "4d1b5452d2171e9f502a2b779fdb111ffaca1e4306cc3229866120c23ac6d2b9",

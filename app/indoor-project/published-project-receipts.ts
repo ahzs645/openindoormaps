@@ -158,4 +158,65 @@ export const PUBLISHED_PROJECT_RECEIPTS: readonly PublishedProjectReceipt[] =
       validationElapsedMs: 1_557_016,
       admission: "progressive-floors",
     },
+    {
+      id: "unbc-progressive-floors-0da7e8b43ec2ae690242950929114d41ad33b7f2cff1e0b7eff89d6da66d2c08",
+      packageSha256:
+        "0da7e8b43ec2ae690242950929114d41ad33b7f2cff1e0b7eff89d6da66d2c08",
+      packageBytes: 247_419_669,
+      validatorSha256:
+        "4a0a354a86cb48f5dbcd20d11480cb527a5b3429afc516e5cf660020380ba334",
+      datasetSha256:
+        "256ca7c5618b5a4e5c7abef221315e27e992c4869c73d275b88afa456ea6c69d",
+      source: {
+        modelFileName:
+          "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+        modelSha256:
+          "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        roomsSha256:
+          "bacc413990dde73d10372e0b76e52fa3a344cdb99f3eebed6cb84320882a6aab",
+      },
+      entries: {
+        "review/companions.bin": {
+          bytes: 88_626_822,
+          sha256:
+            "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+        },
+        "model/UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt": {
+          bytes: 70_336_512,
+          sha256:
+            "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        },
+        "gis/reference-points.json": {
+          bytes: 602,
+          sha256:
+            "c4a341aa16898c3154791428b8d593c897dfed5e6fdca8751a051eb7129320f5",
+        },
+        "manifest.json": {
+          bytes: 1024,
+          sha256:
+            "a765b245d23804725e5967abc6213a74478adf8c20be4ba0edeab7a0a7108deb",
+        },
+        "model/scene.glb": {
+          bytes: 52_216_228,
+          sha256:
+            "deec7a3a545141e69f68840e878a74cf40e86da2e6466319cb68429ef3ebbaab",
+        },
+        "floors/rooms.json": {
+          bytes: 82_556_526,
+          sha256:
+            "bacc413990dde73d10372e0b76e52fa3a344cdb99f3eebed6cb84320882a6aab",
+        },
+        "viewer/indoor.json": {
+          bytes: 302_048_886,
+          sha256:
+            "11f9de0d1a7a4165e6566e107d0c03653fb07174a0bfee85de2cec1ac6f51174",
+        },
+      },
+      progressiveRevisionSha256:
+        "744ba1acbbdd82936a3c6d11835e59d5dea906cea3524babc6fe4ccfec3c14b1",
+      validationReportSha256:
+        "9589b1f3479f74557829955673f1c779a86a6545eb7620019ef0fa3814a2fb8d",
+      validationElapsedMs: 457_610,
+      admission: "progressive-floors",
+    },
   ]);
