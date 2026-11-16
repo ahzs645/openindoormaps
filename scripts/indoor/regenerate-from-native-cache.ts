@@ -15,6 +15,7 @@ import { roomsWithCheckedNativeBoundaryReviewBundle } from "./source-native-boun
 import { roomsWithCheckedSourceDoorBoundaryClosureReview } from "./source-door-boundary-closure-review";
 import { roomsWithCheckedSourceAccessDecision } from "./source-access-decision-review";
 import { roomsWithCheckedSourceDoorApertures } from "./source-door-aperture-review";
+import { checkSourceNativeDoorOwnerReview } from "./source-native-door-owner-review";
 import {
   checkSourceBoundaryPatches,
   roomsWithSourceBoundaryPatches,
@@ -33,6 +34,7 @@ import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { serialize } from "node:v8";
+import { writeFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 const { join, resolve } = path;
@@ -62,7 +64,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--boundary-patch-review patches.json --applied-boundary-patch-master applied.zip [--boundary-patch-supersessions supersessions.json]] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--native-door-owner-review review.json] [--boundary-patch-review patches.json --applied-boundary-patch-master applied.zip [--boundary-patch-supersessions supersessions.json]] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -82,6 +84,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--door-boundary-closure-review",
       "--access-decision-review",
       "--door-aperture-review",
+      "--native-door-owner-review",
       "--boundary-patch-review",
       "--boundary-patch-supersessions",
       "--applied-boundary-patch-master",
@@ -613,6 +616,77 @@ async function compileAndExportMaster() {
       }),
     );
   }
+  // Door-scoped native-cell owner review: only the listed doors, decided from
+  // the native cells inside the compile. The source rooms are not changed.
+  const nativeDoorOwnerPath = workerOptions.get("--native-door-owner-review");
+  const nativeDoorOwnerBytes = nativeDoorOwnerPath
+    ? await readFile(resolve(nativeDoorOwnerPath))
+    : undefined;
+  const nativeDoorOwnerCheck = nativeDoorOwnerBytes
+    ? checkSourceNativeDoorOwnerReview(
+        rooms,
+        JSON.parse(nativeDoorOwnerBytes.toString("utf8")),
+        sourceModelSha256,
+        cache.nativeModel,
+        nativeDoorOwnerBytes,
+      )
+    : undefined;
+  const nativeDoorOwnerReceiptPath = join(
+    output,
+    "source-native-door-owner-replay.json",
+  );
+  let nativeDoorOwnerReceiptSha256: string | undefined;
+  if (nativeDoorOwnerCheck) {
+    await mkdir(output, { recursive: true });
+    await writeFile(
+      join(output, "source-native-door-owner-review.json"),
+      nativeDoorOwnerBytes!,
+      { flag: "wx" },
+    );
+    console.log(
+      JSON.stringify({
+        stage: "source-native-door-owner-review-checked",
+        doors: nativeDoorOwnerCheck.decisions.length,
+      }),
+    );
+  }
+  const nativeDoorOwnerReview = nativeDoorOwnerCheck
+    ? {
+        decisions: nativeDoorOwnerCheck.decisions,
+        onEvidence: (
+          evidence: Parameters<typeof nativeDoorOwnerCheck.onEvidence>[0],
+        ) => {
+          if (!evidence.accepted) {
+            console.log(
+              JSON.stringify({
+                stage: "source-native-door-owner-refused",
+                evidence,
+              }),
+            );
+            return;
+          }
+          nativeDoorOwnerCheck.onEvidence(evidence);
+          if (!nativeDoorOwnerCheck.complete()) return;
+          // Written as soon as the last listed door is applied, so the
+          // evidence survives a failure in a later compile stage.
+          const receiptBytes =
+            JSON.stringify(nativeDoorOwnerCheck.receipt(), null, 2) + "\n";
+          writeFileSync(nativeDoorOwnerReceiptPath, receiptBytes, {
+            flag: "wx",
+          });
+          nativeDoorOwnerReceiptSha256 = createHash("sha256")
+            .update(receiptBytes)
+            .digest("hex");
+          console.log(
+            JSON.stringify({
+              stage: "source-native-door-owners-applied",
+              doors: nativeDoorOwnerCheck.decisions.length,
+              receiptSha256: nativeDoorOwnerReceiptSha256,
+            }),
+          );
+        },
+      }
+    : undefined;
   const sourceRooms = JSON.stringify(rooms);
   if (sourceFlatLandingReview) {
     const originalModelBytes = before.files[original.manifest.model.path];
@@ -781,8 +855,14 @@ async function compileAndExportMaster() {
       originalStairBaseDerivedStandings: sourceStairBaseStandings?.proofs,
       nativeCirculationCompiler,
       nativeLandingApproaches,
+      ...(nativeDoorOwnerReview ? { nativeDoorOwnerReview } : {}),
     },
   );
+  if (nativeDoorOwnerCheck)
+    assert.ok(
+      nativeDoorOwnerCheck.complete() && nativeDoorOwnerReceiptSha256,
+      "Every listed native door owner must be applied by the compile",
+    );
   sourceDoorStandings?.assertUnchanged();
   await assertSourceStairBaseStandingUnchanged();
   if (sourceStairBaseStandings) {
@@ -1194,6 +1274,23 @@ async function compileAndExportMaster() {
             },
             appliedRows: boundaryPatches.rows.length,
             physicalGuardsWaived: false,
+          },
+        }
+      : {}),
+    ...(nativeDoorOwnerCheck
+      ? {
+          sourceNativeDoorOwnerReview: {
+            path: resolve(nativeDoorOwnerPath!),
+            reviewSha256: sha(nativeDoorOwnerBytes!),
+            receiptPath: nativeDoorOwnerReceiptPath,
+            receiptSha256: nativeDoorOwnerReceiptSha256,
+            appliedDoors: nativeDoorOwnerCheck.decisions.map((d) => ({
+              levelId: d.levelId,
+              nativeDoorId: d.nativeDoorId,
+              roomKeys: d.roomKeys,
+            })),
+            sourceRoomsChanged: false,
+            accessOrAccessibilityGranted: false,
           },
         }
       : {}),

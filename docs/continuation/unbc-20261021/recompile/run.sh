@@ -20,6 +20,10 @@
 #     master stays the unchanged source; applied.zip is the project's own
 #     application of the same file to it, checked row by row
 #     (scripts/indoor/source-boundary-patch-review.ts). Unset: unchanged run.
+#   NATIVE_DOOR_OWNER_REVIEW=review.json
+#     connect an explicitly listed set of native doors by native-cell
+#     ownership (scripts/indoor/source-native-door-owner-review.ts). Every
+#     other door is matched as before. Unset: unchanged run.
 #   SYNC_DIR=dir   copy checkpoints there every 10 minutes and restore them
 #     at start when WORK/run/checkpoints is empty (Colab: a Drive folder).
 #   DRY_RUN=1      print the command without running it.
@@ -79,6 +83,7 @@ cmd=(node --max-old-space-size="$heap" --expose-gc --import tsx
   ${BOUNDARY_PATCH_REVIEW:+--boundary-patch-review "$BOUNDARY_PATCH_REVIEW"}
   ${APPLIED_BOUNDARY_PATCH_MASTER:+--applied-boundary-patch-master "$APPLIED_BOUNDARY_PATCH_MASTER"}
   ${BOUNDARY_PATCH_SUPERSESSIONS:+--boundary-patch-supersessions "$BOUNDARY_PATCH_SUPERSESSIONS"}
+  ${NATIVE_DOOR_OWNER_REVIEW:+--native-door-owner-review "$NATIVE_DOOR_OWNER_REVIEW"}
   --validated-import-checkpoint-dir "$RUN/imports"
   --prepared-diagnostic-dir "$RUN/diagnostic")
 if [ -n "${DRY_RUN:-}" ]; then (cd "$OIM" && printf '%q ' "${cmd[@]}"; echo); exit 0; fi
