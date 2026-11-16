@@ -223,7 +223,7 @@ const LAYERS = [
   { key: "schematic", label: "Schematic drawing — display only, not route-accepted", color: "--schematic", cls: "dash", on: false, note: "Opt-in redrawing for legibility; routes never use it." },
   { key: "sourceDefects", label: "Display contacts to review", color: "--warn", on: false, note: "Original walks that overlap a wall or hole away from doors in this drawing's coordinates (display-coordinate contacts for review, not proven native defects)." },
 ];
-const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {}, showToken: 0, loading: new Map() };
+const state = { floors: [], index: null, cur: null, data: {}, view: { s: 1, x: 0, y: 0 }, sel: null, layers: {}, showToken: 0, loading: new Map(), pendingFit: null };
 LAYERS.forEach((l) => (state.layers[l.key] = l.on));
 const $ = (id) => document.querySelector(`#${id}`);
 const canvas = $("map"), ctx = canvas.getContext("2d");
@@ -288,10 +288,16 @@ function resize() {
   const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
   canvas.width = Math.max(1, Math.round(r.width * dpr));
   canvas.height = Math.max(1, Math.round(r.height * dpr));
-  draw();
+  // A fit requested while the canvas had no usable size is applied now.
+  if (state.pendingFit) fit(...state.pendingFit); else draw();
 }
 function fit(bounds, pad = 24) {
   const r = canvas.getBoundingClientRect();
+  // Before layout (a hidden or very small pane) the box is narrower than the
+  // padding, which would give a negative scale and a blank map. Keep the
+  // request and fit when the canvas is next resized.
+  if (r.width <= pad * 2 || r.height <= pad * 2) { state.pendingFit = [bounds, pad]; return; }
+  state.pendingFit = null;
   const [x0, y0, x1, y1] = bounds;
   const s = Math.min((r.width - pad * 2) / Math.max(1, x1 - x0), (r.height - pad * 2) / Math.max(1, y1 - y0));
   state.view = { s, x: r.width / 2 - ((x0 + x1) / 2) * s, y: r.height / 2 - ((y0 + y1) / 2) * s };
@@ -660,6 +666,8 @@ canvas.addEventListener("pointercancel", end);
 canvas.addEventListener("pointerleave", () => ($("hover").style.display = "none"));
 canvas.addEventListener("wheel", (e) => { e.preventDefault(); zoomAt(Math.exp(-e.deltaY * 0.0015), e.offsetX, e.offsetY); }, { passive: false });
 window.addEventListener("resize", resize);
+// The canvas can change size without a window resize (a pane that opens or is unhidden).
+if (typeof ResizeObserver === "function") new ResizeObserver(resize).observe(canvas);
 window.addEventListener("hashchange", () => { const id = location.hash.slice(1); if (state.floors.some((f) => f.id === id)) show(id); });
 new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 (async () => {
