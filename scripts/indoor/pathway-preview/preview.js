@@ -59,7 +59,13 @@
       minY = Math.min(minY, -point[1]);
       maxY = Math.max(maxY, -point[1]);
     }
-    const aspect = svg.clientWidth / Math.max(svg.clientHeight, 1);
+    // Opened in a hidden or unsized pane the box is 0 wide, which made the
+    // view box NaN/Infinity for good. Fit to a nominal shape and fit again
+    // once the SVG has a real size.
+    state.fitPending = !(svg.clientWidth > 0 && svg.clientHeight > 0);
+    const aspect = state.fitPending
+      ? 4 / 3
+      : svg.clientWidth / svg.clientHeight;
     const h = Math.max(
         25,
         (maxY - minY) * 1.16,
@@ -375,6 +381,10 @@
     }
   });
   new ResizeObserver(() => {
+    if (state.fitPending) {
+      if (svg.clientWidth > 0 && svg.clientHeight > 0) fitLevel();
+      return;
+    }
     const [x, y, w, h] = state.view;
     const nextW = (h * svg.clientWidth) / Math.max(svg.clientHeight, 1);
     setView([x + (w - nextW) / 2, y, nextW, h]);
