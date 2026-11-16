@@ -34,10 +34,21 @@ Exact arithmetic was then profiled on 132 real cells: 84 % of overlay and path
 time was in `native-rational-overlay-arithmetic.mjs` and 57 % in its Euclid
 `gcd`. V8 BigInt multiplication and comparison match GMP; only gcd lagged (11x).
 
-The candidate module is uncommitted in `~/github/exact-arith/` (branches
-`claude/exact-arith-speed` off the efficiency branches): a Rust gcd compiled to
-2.8 KB of WebAssembly with a Lehmer fallback, Knuth/GMP-style add and multiply,
-and floating-point filters for `compare` and `orient2d`.
+The candidate module is committed on the pushed branch
+`claude/exact-arith-speed` in both repositories (one commit on top of the
+efficiency branches): a Rust gcd compiled to 2.8 KB of WebAssembly with a Lehmer
+fallback, Knuth/GMP-style add and multiply, and floating-point filters for
+`compare` and `orient2d`. It is not on `main`: the Lehmer fallback picks its
+shift with `Math.log2`, which Reviter's `tests/deterministic-math.test.ts`
+rejects in compiler geometry modules.
+
+Reviter's efficiency branch (`claude/regen-efficiency`) was merged to its `main`
+on November 16. The OpenIndoorMaps branch `claude/regen-efficiency-oim` was not:
+its progress-reporting commit edits `package.ts` and `native-explore-mapping.ts`,
+which are inside all three runtime binding closures, so merging it changes the
+display-engine, route-runtime and visitor-plan fingerprints. The published
+receipts are bound to the current fingerprints and would need the usual
+re-admission before that commit can be deployed from `main`.
 
 Two full campus compiles on the same G4, 1 floor and 1 landing worker, same
 inputs, both up to the arrival preservation gate:
