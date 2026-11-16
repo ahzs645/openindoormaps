@@ -71,7 +71,7 @@ export async function bindPrivateImportCheckpoint(
     path.join(sourceRoot, "lib/reviter/vendor/native-exact-geos/native-exact-geos.wasm"),
     ...[root, sourceRoot].flatMap((r) => [path.join(r, "package.json"), path.join(r, "package-lock.json")]),
   ];
-  extras.push(require.resolve("@esbuild/linux-x64/bin/esbuild"));
+  extras.push(require.resolve(`@esbuild/linux-${process.arch}/bin/esbuild`));
   for (const match of execFileSync("ldd", [process.execPath], { encoding: "utf8" })
     .matchAll(/(?:=>\s*)?(\/[^\s(]+)\s*\(/g)) extras.push(match[1]!);
   const paths = [...new Set([
