@@ -14,6 +14,41 @@ rule now runs in the compiler's exact walking region. Locally it closes
 apart, which is above the 1e-7 ft bound. The 132 owner patches stay in the
 run.
 
+## November 6 correction: rule removed from the geometry key
+
+The first two Colab attempts failed in the opening import, before any compile
+work. The rule version was part of `nativeCirculationGeometryKey`, so the
+October 21 source master's circulation counted as stale and `readIndoorProject`
+refused it: first `Missing, stale or invalid exact native topology.`, then
+`Invalid floor or accessibility relationship for edge …`. No local check had
+imported a source master under the new key.
+
+Patches `0003` and `r0002` take the rule out of the key in both repositories.
+The rule stays versioned in the compiler's private physical memo and through the
+module hashes in the regeneration receipts. The published runtime fingerprints
+return to their earlier values. The trade-off: a master compiled before the rule
+is no longer flagged stale by the key. **Apply the same removal before using
+`patches/dev/`**, which still adds the rule to the key.
+
+## November 6: run reached the arrival gate and stopped
+
+With the corrected patches the compile reached its preservation gates and
+refused the result: `Existing physically admitted arrival connections must
+survive regeneration`, for one room, **09-S302 Stair**
+(`rm-694-e4108d414276`, access `unknown`). **No master was produced.**
+
+- The rule splits its cell 839 (156 sq ft) into 51 and 105 sq ft pieces. In a
+  local replay the arrival and the stair landing stay in the same piece and
+  their walk remains supported, but the compile creates no arrival for the room.
+  Why it is not re-derived is not established.
+- Its stair edge `stair:1972504:…` is disabled before and after, so the room's
+  old connection led to a stair that no route uses.
+- Ten rooms lost arrivals compared with `ae70cc07`. The earlier forecast of
+  warnings holds for the others; the gate accepts them because their original
+  approaches were independently refused. 09-S302 was not forecast.
+- The gate's only exception is a reviewed `staff` access decision. It needs an
+  owner decision or a compiler fix, not a bypass.
+
 ## The change
 
 | Repository | Where | Commit |
@@ -185,8 +220,8 @@ git clone https://github.com/ahzs645/reviter.git && git -C reviter checkout --de
 P=/path/to/sliver-contacts   # this folder: patches/, plus the gap-patch files below
 git -C openindoormaps am "$P"/patches/openindoormaps/*.patch
 git -C reviter am "$P"/patches/reviter/*.patch
-test "$(git -C openindoormaps rev-parse HEAD^{tree})" = 87fc22edf9c8b61908f58cb88e5297264c9c93dc
-test "$(git -C reviter rev-parse HEAD^{tree})" = 97221fa2b861212e197d97ddce2edfac1c410d40
+test "$(git -C openindoormaps rev-parse HEAD^{tree})" = f767294a1f91194758cc01af093809f039d4df1e
+test "$(git -C reviter rev-parse HEAD^{tree})" = 062d5a0acfdd50596f24c5297696f3109d6eb3eb
 (cd reviter && npm ci) && (cd openindoormaps && HUSKY=0 PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm ci)
 sudo mkdir -p /workspace/scratch && sudo chown "$USER" /workspace/scratch
 R=openindoormaps/docs/continuation/unbc-20261021/recompile
@@ -212,8 +247,8 @@ October 21 notebook with three changes: a new Drive folder, the patches
 applied, and the gap-patch review passed to `run.sh`.
 
 1. Upload to **MyDrive/UNBC-sliver-contacts/upload/**:
-   - the three patch files from [patches/](patches/), keeping the `r0001-`
-     name for the Reviter one;
+   - the five patch files from [patches/](patches/), keeping the `r000N-`
+     names for the Reviter ones;
    - `OWNER-GAP-PATCHES.native-boundary-patches.json`;
    - `CONTACT-REPAIR-SUPERSESSIONS.json`;
    - `applied-gap-patches-73a765e9.zip`.

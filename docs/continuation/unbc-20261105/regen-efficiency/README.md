@@ -23,6 +23,44 @@ Evidence:
 The supervisor's memory log for this run holds only timestamps, with no RSS
 samples, so it cannot attribute memory to stages.
 
+## November 6 measurements on Colab G4
+
+The rebuild is CPU only, so Colab machines were compared with
+[rational-bench.mjs](rational-bench.mjs) on Node 22.22 (Euclid reduction, lower
+is faster): G4 4.5 ms (48 CPUs, 176 GB, 10.05 units/h), this Mac's M4 Pro 6.2 ms,
+TPU v5e1 7.6 ms (24 CPUs, 47 GB, 3.09 units/h), L4 13.9 ms, CPU High-RAM 15.2 ms.
+
+Exact arithmetic was then profiled on 132 real cells: 84 % of overlay and path
+time was in `native-rational-overlay-arithmetic.mjs` and 57 % in its Euclid
+`gcd`. V8 BigInt multiplication and comparison match GMP; only gcd lagged (11x).
+
+The candidate module is uncommitted in `~/github/exact-arith/` (branches
+`claude/exact-arith-speed` off the efficiency branches): a Rust gcd compiled to
+2.8 KB of WebAssembly with a Lehmer fallback, Knuth/GMP-style add and multiply,
+and floating-point filters for `compare` and `orient2d`.
+
+Two full campus compiles on the same G4, 1 floor and 1 landing worker, same
+inputs, both up to the arrival preservation gate:
+
+| Stage | Old arithmetic | New arithmetic |
+| --- | ---: | ---: |
+| Review replays | 7 min 15 s | 8 min 19 s |
+| Interiors, walls, doors | 11 min 1 s | 7 min 14 s |
+| Ramps and landings | 68 min 56 s | 26 min 56 s |
+| Presentation and planes | 20 min 10 s | 11 min 14 s |
+| Cell routes | 32 min 42 s | 17 min 26 s |
+| Final replay | 26 min 39 s | 11 min 26 s |
+| **Start to gate** | **2 h 49 min** (import reused) | **1 h 26 min** (including a 7 min import) |
+
+A value-by-value comparison of the two saved compile states visited 11,802,992
+values with **0 differences**. Their bytes differ by 7,001 B through V8 number
+storage. Export was not reached, so export timing and byte identity of a master
+are unmeasured. Logs and the comparison script are in
+`MyDrive/UNBC-sliver-contacts/arithmetic-equivalence-20261106/`.
+
+Multi-worker runs on G4 failed with `ERR_WORKER_OUT_OF_MEMORY` at both 4096 and
+8192 MiB; the cause is not established. One floor and one landing worker pass.
+
 ## Stage-by-stage time
 
 | Stage | This host, Nov 5 (1+1 workers) | Colab, Oct 21 (8 cores, 2 floor + 7 landing workers) | Threads |

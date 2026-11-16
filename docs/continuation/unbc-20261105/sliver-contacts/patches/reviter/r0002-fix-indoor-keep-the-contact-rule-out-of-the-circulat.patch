@@ -1,0 +1,66 @@
+From 04d4f16eae4bf1644ca7072ea89c4160299ff1c8 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Thu, 5 Nov 2026 20:29:40 -0700
+Subject: [PATCH] fix(indoor): keep the contact rule out of the circulation
+ geometry key
+
+A regeneration starts by importing a master compiled before the rule. With the
+rule in the key that master's circulation is stale, and the import refuses its
+walk edges. The rule stays versioned in the compiler's private physical memo
+and in the module hashes of the regeneration receipts.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ lib/reviter/native-circulation-geometry.ts  | 2 --
+ tests/native-routing-contact-noding.test.ts | 8 ++++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/lib/reviter/native-circulation-geometry.ts b/lib/reviter/native-circulation-geometry.ts
+index 37d2075..3b2eed4 100644
+--- a/lib/reviter/native-circulation-geometry.ts
++++ b/lib/reviter/native-circulation-geometry.ts
+@@ -47,7 +47,6 @@ import {
+ } from "./native-circulation-clearance.ts";
+ import { recoverNativeWallJunctionRepairs } from "./native-room-presentation.ts";
+ import { buildIndoorGrid } from "./indoor-grid.ts";
+-import { NATIVE_ROUTING_CONTACT_NODING_VERSION } from "./native-routing-contact-noding.ts";
+ import { createNativeExactRoutingAuthority } from "./native-exact-routing-authority.ts";
+ import { refineNativeTerminalPath } from "./native-terminal-refinement.ts";
+ import { nativeTerminalRepairPairs } from "./native-terminal-repair-pairs.ts";
+@@ -148,7 +147,6 @@ export function nativeCirculationGeometryKey(data: IndoorDataset): string {
+               "native-door-approach-original-source-bounds-v1",
+             NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+             NATIVE_EXACT_GEOS_BINDING,
+-            NATIVE_ROUTING_CONTACT_NODING_VERSION,
+             nativeConnectorAnchors(data),
+             ...(data.nativePhysicalLevels ? [data.nativePhysicalLevels] : []),
+             ...(data.nativeAccessZones ? [NATIVE_ACCESS_ZONES_VERSION, data.nativeAccessZones] : []),
+diff --git a/tests/native-routing-contact-noding.test.ts b/tests/native-routing-contact-noding.test.ts
+index ac476ce..72aef74 100644
+--- a/tests/native-routing-contact-noding.test.ts
++++ b/tests/native-routing-contact-noding.test.ts
+@@ -104,7 +104,7 @@ test('the exact walking region separates rooms at a numerical partition contact
+  }
+ });
+ 
+-test('prepared circulation geometry is bound to the contact rule in the compiler and the runtime',async()=>{
++test('the contact rule is versioned in the compiler memo and shared with the runtime, and older masters stay importable',async()=>{
+  const {data}=await strictData(1e-14);
+  assert.match(NATIVE_ROUTING_CONTACT_NODING_VERSION,/1e-7ft/);
+  const runtime=await import(OIM+'app/indoor-project/native-routing-contact-noding.ts');
+@@ -113,7 +113,11 @@ test('prepared circulation geometry is bound to the contact rule in the compiler
+  assert.equal(runtimeKey(data),nativeCirculationGeometryKey(data),'compiler and runtime bind the same geometry');
+  const key=readFileSync(new URL('../lib/reviter/native-circulation-geometry.ts',import.meta.url),'utf8');
+  const body=key.slice(key.indexOf('export function nativeCirculationGeometryKey'));
+- assert.match(body.slice(0,body.indexOf('data.records.map')),/NATIVE_ROUTING_CONTACT_NODING_VERSION/);
++ // The geometry key must not name the rule: a regeneration starts by importing a
++ // master compiled before it, and a stale key refuses that master's walk edges.
++ assert.doesNotMatch(body.slice(0,body.indexOf('data.records.map')),/NATIVE_ROUTING_CONTACT_NODING_VERSION/);
++ const links=readFileSync(new URL('../lib/reviter/native-circulation-links.ts',import.meta.url),'utf8');
++ assert.match(links,/NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION, NATIVE_ROUTING_CONTACT_NODING_VERSION/);
+  for(const walls of [[top,partition(1e-14)],[top,partition(5e-8)],[[rect(0,9.8,10,10)],[rect(10+1e-14,0,10.2,10)]]])
+   assert.deepEqual(runtime.nativeRoutingContactNoding(walls),nativeRoutingContactNoding(walls),'identical source and runtime rule');
+ });
+-- 
+2.54.0 (Apple Git-157)
+

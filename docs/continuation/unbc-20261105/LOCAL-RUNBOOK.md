@@ -43,9 +43,9 @@ commit. That code is on the branch `unbc-producer-20261021-gap-patches`
 (`6993c08`) of openindoormaps; Reviter is `cb140e46` (on its
 `claude/laughing-davinci-34tcj1` branch). With the sliver-contact compiler fix, build the code from the base commits
 and the patch series committed in [sliver-contacts/patches/](sliver-contacts/patches/):
-openindoormaps `7c27b67` + `patches/openindoormaps/*.patch` (tree
-`87fc22ed…`) and Reviter `cb140e46` + `patches/reviter/*.patch` (tree
-`97221fa2…`), applied with `git am`. Both trees were verified to reproduce
+openindoormaps `7c27b67` + `patches/openindoormaps/*.patch` (3 patches, tree
+`f767294a…`) and Reviter `cb140e46` + `patches/reviter/*.patch` (2 patches, tree
+`062d5a0a…`), applied with `git am`. Both trees were verified to reproduce
 exactly. The fix closes the float-noise slivers (≤1e-7 ft) but not the
 float32 mesh-wall joints, so keep the 132 gap patches in the run. Nine
 doorless rooms that today connect only through a sliver (06-308,
@@ -96,10 +96,19 @@ From [regen-efficiency/](regen-efficiency/README.md):
 | 4 cores, 16 GB                     |                1 |                 1 |              4096 |              7168 | 14 h (measured)   |
 | 8 cores, 32 GB                     |                2 |                 3 |              4096 |              8192 | about 11.5 h      |
 | Colab Pro High-RAM, 8 cores, 50 GB |                2 |                 7 |              4096 |              8192 | about 11 h 15 min |
+| Colab G4, 48 cores, 176 GB (`--gpu G4`, 10 units/h) |                1 |                 1 |              4096 |              8192 | see the note below |
 
 On Colab Pro also set `SYNC_DIR` to a Drive folder so checkpoints survive a
 disconnect. Never use more than 2 floor workers or 7 landing workers: larger
 counts ran out of memory before.
+**With the gap patches, use 1 floor worker and 1 landing worker.** On
+November 6, on Colab G4 (48 cores, 176 GB), landing workers ran out of memory
+with 7 workers at both 4096 MiB (about 3 minutes in) and 8192 MiB (under a
+minute). October's 12-core runs failed the same way at 8 GB. The cause is not
+established; the multi-worker rows above predate the gap patches. Do not pass
+`*_WORKER_HEAP_MIB` with one worker: the workers then run inside the main process.
+The rebuild is CPU only; G4 is chosen for its CPU (machine speed test in
+[regen-efficiency/](regen-efficiency/README.md)).
 
 The faster checkpoint reuse (landings and planes reused on a rerun with
 unchanged inputs) and the new progress logging are on the Reviter branch
