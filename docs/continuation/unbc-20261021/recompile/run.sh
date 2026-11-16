@@ -26,7 +26,7 @@
 set -euo pipefail
 WORK=$(cd "${1:?usage: run.sh WORK}" && pwd -P)
 OIM=$WORK/openindoormaps IN=$WORK/inputs RUN=$WORK/run
-REVIEW=$OIM/docs/continuation/unbc-20261021/link-doors/DOOR-APERTURE-REVIEW.json
+REVIEW=${REVIEW:-$OIM/docs/continuation/unbc-20261021/link-doors/DOOR-APERTURE-REVIEW.json}
 
 for d in "$OIM" "$WORK/reviter" "$IN"; do [ -d "$d" ] || { echo "Missing $d" >&2; exit 1; }; done
 node -e 'const [a,b]=process.versions.node.split(".").map(Number);if(a<22||(a===22&&b<15))throw Error("Node 22.15 or newer is required, found "+process.version)'
