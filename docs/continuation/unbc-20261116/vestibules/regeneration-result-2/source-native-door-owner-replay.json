@@ -1,0 +1,216 @@
+{
+  "format": "checked-source-native-door-owner-review-v1",
+  "id": "vestibule-native-door-owners-20261116",
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "reviewSha256": "16a9ea8a6889ba5dc7144f70857fe010701d52f6003ee2ae8de791742176a964",
+  "reviewFileSha256": "4cd902137e37e3815767fec29cd0ce8cb6aabbc22c87cde3a66d6e4105e62466",
+  "sourceRoomsSha256": "1ce17b255c0ed94006a08019d4b83d0ec3d8d9133c4b528647068ca299ab2323",
+  "sourceRoomsChanged": false,
+  "rule": {
+    "matcher": "native-cell",
+    "stepsFeet": [
+      0.25,
+      0.5,
+      1,
+      1.5
+    ],
+    "maxOwnerGapFeet": 2,
+    "cells": "Exact native free floor of the door's plane minus every door threshold, named by the majority rule; computed in the compile at door matching."
+  },
+  "doors": [
+    {
+      "levelId": 311,
+      "nativeDoorId": 621887,
+      "listedRoomKeys": [
+        "rm-311-3f5ed3792618",
+        "rm-311-3f6fcd792626"
+      ],
+      "notes": "07-309 Vestibule to 07-305 Office, native host 621883. Derived from native cells only. Side against the door normal: the vestibule's own cell, outline 0.823 ft from the probe. Side along the normal: a merged native cell that holds 07-305 Office, 07-306A Office and 07-304 Corridor; 07-305 is the nearest room in it, 0.550 ft from the probe, and the other two outlines are more than 6 ft from the door, so the rule picks 07-305. That the door opens into 07-305 and not 07-306A rests on the registered outlines only. Legacy matcher: unmatched, no candidate. Known limit, not changed by this review: the campus notes record this suite as cut off by an unmodelled area between doors 1732467 and 1715768, so this door joins the vestibule to the suite and does not by itself put the vestibule on the public walking network. Door operation and public access not confirmed on site.",
+      "elevationFeet": 0,
+      "doorPointFeet": [
+        153.65954123927213,
+        -84.69659449654993
+      ],
+      "doorNormalFeet": [
+        4.7835102343385546e-15,
+        1
+      ],
+      "doorFootprintFeet": [
+        [
+          152.17414097680492,
+          -84.73826116321655
+        ],
+        [
+          155.1449415017393,
+          -84.73826116321656
+        ],
+        [
+          155.1449415017393,
+          -84.65492782988332
+        ],
+        [
+          152.17414097680492,
+          -84.6549278298833
+        ]
+      ],
+      "beforeReview": {
+        "state": "unmatched",
+        "candidates": []
+      },
+      "nativeSides": [
+        {
+          "side": "against-normal",
+          "cellId": "native-door-owner-cell:0.000000:941",
+          "cellRoomKeys": [
+            "rm-311-3f5ed3792618"
+          ],
+          "cellBoundsFeet": [
+            148.00747431013824,
+            -92.02927166190426,
+            155.39100449386524,
+            -84.94265748867589
+          ],
+          "stepFeet": 0.25,
+          "probeFeet": [
+            153.65954123927213,
+            -84.98826116321655
+          ],
+          "owner": "rm-311-3f5ed3792618",
+          "ownerGapFeet": 0.8225697705784044
+        },
+        {
+          "side": "along-normal",
+          "cellId": "native-door-owner-cell:0.000000:914",
+          "cellRoomKeys": [
+            "rm-311-3f6fcd792626",
+            "rm-311-47e9b7792ae6",
+            "rm-311-47f103792aec"
+          ],
+          "cellBoundsFeet": [
+            136.20629320777596,
+            -84.45053150442395,
+            159.48385226289412,
+            -40.346300795771995
+          ],
+          "stepFeet": 0.25,
+          "probeFeet": [
+            153.65954123927213,
+            -84.40492782988332
+          ],
+          "owner": "rm-311-3f6fcd792626",
+          "ownerGapFeet": 0.5499903906122938
+        }
+      ],
+      "appliedRoomKeys": [
+        "rm-311-3f5ed3792618",
+        "rm-311-3f6fcd792626"
+      ],
+      "portalFromFeet": [
+        153.53669140908218,
+        -85.80224296825952
+      ],
+      "portalToFeet": [
+        153.65954123927213,
+        -83.85493743927103
+      ]
+    },
+    {
+      "levelId": 1487353,
+      "nativeDoorId": 1779388,
+      "listedRoomKeys": [
+        "rm-1487353-4e2c5cd7875d",
+        "rm-1487353-4e224ad78755"
+      ],
+      "notes": "06-313 Soundproof Vestibule to 06-314 Projection, native host 1779384. Derived from native cells only. Side against the door normal: the vestibule's own cell, probe inside its outline (gap 0 ft). Side along the normal: the projection room's own cell, outline 1.367 ft from the probe. Legacy matcher: unmatched, the vestibule is the only candidate. Known limit, not changed by this review: the vestibule's other door 1779387 opens onto no native cell, so this door joins the projection room to the vestibule only; how the booth is reached is still an owner decision. Door operation and public access not confirmed on site.",
+      "elevationFeet": 29.855643044619423,
+      "doorPointFeet": [
+        -163.37023675029488,
+        -32.191887735764745
+      ],
+      "doorNormalFeet": [
+        -0.9994993253965037,
+        0.03164014114908863
+      ],
+      "doorFootprintFeet": [
+        [
+          -163.0950505926967,
+          -33.8681005684955
+        ],
+        [
+          -162.98958345553308,
+          -30.536436150507143
+        ],
+        [
+          -163.64542290789305,
+          -30.515674903033986
+        ],
+        [
+          -163.75089004505668,
+          -33.847339321022346
+        ]
+      ],
+      "beforeReview": {
+        "state": "unmatched",
+        "candidates": [
+          "rm-1487353-4e2c5cd7875d"
+        ]
+      },
+      "nativeSides": [
+        {
+          "side": "against-normal",
+          "cellId": "native-door-owner-cell:29.855643:80",
+          "cellRoomKeys": [
+            "rm-1487353-4e2c5cd7875d"
+          ],
+          "cellBoundsFeet": [
+            -163.32520763650734,
+            -38.85973982807352,
+            -158.08325500003298,
+            -30.44965055932757
+          ],
+          "stepFeet": 0.25,
+          "probeFeet": [
+            -162.79244219276578,
+            -32.21017839478859
+          ],
+          "owner": "rm-1487353-4e2c5cd7875d",
+          "ownerGapFeet": 0
+        },
+        {
+          "side": "along-normal",
+          "cellId": "native-door-owner-cell:29.855643:69",
+          "cellRoomKeys": [
+            "rm-1487353-4e224ad78755"
+          ],
+          "cellBoundsFeet": [
+            -186.80100283541515,
+            -41.30833195490559,
+            -163.56106558280717,
+            -30.3504089163
+          ],
+          "stepFeet": 0.25,
+          "probeFeet": [
+            -163.94803130782398,
+            -32.1735970767409
+          ],
+          "owner": "rm-1487353-4e224ad78755",
+          "ownerGapFeet": 1.366871025511951
+        }
+      ],
+      "appliedRoomKeys": [
+        "rm-1487353-4e2c5cd7875d",
+        "rm-1487353-4e224ad78755"
+      ],
+      "portalFromFeet": [
+        -163.04235064656115,
+        -32.20227041846244
+      ],
+      "portalToFeet": [
+        -164.8003259454683,
+        -33.30417933201074
+      ]
+    }
+  ],
+  "onlyListedDoorsChanged": true,
+  "accessOrAccessibilityGranted": false
+}
