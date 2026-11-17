@@ -20,10 +20,16 @@ compared with it directly. Only the code changes:
 What the branch holds on top of `main`:
 
 - openindoormaps: `0fc7afd`, `7c06daf` (the door-scoped owner review, from
-  `unbc/producer-native-door-owners`), `57bb801` (export progress lines),
-  `2adae9b` (faster exact arithmetic), and the arithmetic correction below.
+  `unbc/producer-native-door-owners`), `386748f` (export progress lines),
+  `c5cef94` (faster exact arithmetic) and `aca2f54` (the correction below).
 - Reviter: `9bb1739` (r0004, door-scoped owner review in the compile),
-  `0101686` (faster exact arithmetic), and the same correction.
+  `f6576a2` (faster exact arithmetic) and `fd6d770` (the same correction).
+
+**Commits to run** (code only; later commits on the branch are documents):
+
+```sh
+bash /content/upload/setup.sh aca2f549407920d33110333752a08b87e0c2321b fd6d77073a880064dc77229c83a69b6d49ac790d
+```
 
 **Arithmetic correction.** The faster arithmetic (D10) failed three
 openindoormaps tests when moved onto `main`:
@@ -56,10 +62,8 @@ arithmetic, plus a faster link step (about 21 instead of 33 minutes).
    `applied-gap-patches-73a765e9.zip` to `/content/upload/` (in Drive under
    `UNBC-sliver-contacts/upload`; split into 24 MB parts and join on the VM,
    as in the November 17 handoff).
-2. Copy this folder to `/content/upload/` and run
-   `bash /content/upload/setup.sh OIM_SHA REVITER_SHA` with the two branch
-   commits named in the commit message that added this folder (or the branch
-   heads at the time of the run; write them down).
+2. Copy this folder to `/content/upload/` and run the `setup.sh` line under
+   "Commits to run" above.
 3. `python3 -I /content/upload/launch.py`. Watch `/content/unbc/run.out` and
    download `compile-result-*.tar.gz` as soon as it appears.
 4. `bash /content/upload/jobb.sh main1 /content/unbc/run/output/UNBC.master.reviter.zip`,
