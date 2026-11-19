@@ -23,3 +23,48 @@ For a focused iteration on staircase changes, use the audit directory containing
     python campus-network/build.py --stairs-only --audit-dir /path/to/audit --output-dir /path/to/new-stair-reports
 
 For a new release, rebuild the graph with the application worker and compare directional reachability and policy before publishing the atlas. The full production workflow also uses Node, a browser, and the staged test fixtures recorded in the continuation kit.
+
+## Compare recorded route geometry
+
+`render-route-review.py` creates fixed-scale route figures from the released
+atlas's floor geometry and actual worker replies. It requires Python and
+Matplotlib. The input replies use the continuation kit's
+`browser-measurements.json.gz` schema (`datasetSha256`, `runtimeSha256`, and
+`rows` containing `a`, `b`, `mode`, `metres`, `paths`, `departure`, and `arrival`).
+
+```sh
+python tools/unbc-atlas/render-route-review.py \
+  --atlas /path/to/baseline/campus-network.html \
+  --before /path/to/browser-measurements.json.gz \
+  --after /path/to/candidate-worker-replies.json \
+  --output /path/to/route-review
+```
+
+The renderer never smooths or fits route coordinates. Both panels use the same
+extent. The old shared overview network is omitted so it cannot be mistaken for
+a rebuilt candidate network. The receipt records input hashes, runtime/dataset
+identities, figure hashes, route distances and turns within each displayed crop.
+Use `--case building-10` (or another name shown by `--help`) for a focused run.
+Omit `--after` to capture only the baseline.
+
+When a new prepared routing catalog changes the serialized dataset but leaves
+physical context unchanged, pass `--context-receipt` from the actual source
+comparison. It must contain `baselineDatasetSha256`, `candidateDatasetSha256`,
+and `physicalContext` with the compared `fields` and equal `sha256Before` and
+`sha256After`. This retains the candidate's true dataset identity. A receipt
+does not substitute for the required route and publication acceptance checks.
+
+`capture-route-review.py` additionally exercises the offline atlas's public
+hallway and walk controls with Playwright and captures the map at desktop and
+mobile widths. It requires the Python Playwright package and an installed
+Chromium (default `/usr/bin/chromium`, override with `--chromium`).
+
+```sh
+python tools/unbc-atlas/capture-route-review.py \
+  --atlas /path/to/campus-network.html --output /path/to/route-review \
+  --label baseline
+```
+
+These images document the measured route and the atlas view. They do not
+establish native-model enclosure, physical-device behavior, step-free status,
+or a newly published visitor package.

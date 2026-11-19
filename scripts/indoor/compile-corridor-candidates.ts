@@ -27,7 +27,7 @@ import {
 } from "./lib/corridor-candidate-checkpoints";
 
 const usage =
-  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--legacy-approaches] [--resume | --merge candidate-directory ...]";
+  "Usage: compile-corridor-candidates.ts visitor.zip output-directory [--cell cell-id]... [--max-deviation-feet feet] [--legacy-approaches | --straight-runs] [--resume | --merge candidate-directory ...]";
 const [input, output, ...args] = process.argv.slice(2);
 if (!input || !output) throw new Error(usage);
 const selectedIds: string[] = [],
@@ -35,7 +35,8 @@ const selectedIds: string[] = [],
 let resume = false;
 const parameters = { ...CORRIDOR_COMPILER_PARAMETERS };
 let deviationSpecified = false,
-  legacyApproaches = false;
+  legacyApproaches = false,
+  straightRunsSpecified = false;
 for (let i = 0; i < args.length; i++) {
   const flag = args[i];
   if (flag === "--resume" && !resume) resume = true;
@@ -44,6 +45,9 @@ for (let i = 0; i < args.length; i++) {
     // terminal approach proposals. It is bound in every checkpoint.
     parameters.shapedApproaches = false;
     legacyApproaches = true;
+  } else if (flag === "--straight-runs" && !straightRunsSpecified) {
+    parameters.straightRuns = true;
+    straightRunsSpecified = true;
   } else if (
     flag === "--max-deviation-feet" &&
     !deviationSpecified &&
@@ -63,6 +67,8 @@ for (let i = 0; i < args.length; i++) {
     (flag === "--cell" ? selectedIds : mergeDirectories).push(value);
   } else throw new Error(usage);
 }
+if (legacyApproaches && straightRunsSpecified)
+  throw new Error("Straight runs require shaped approaches");
 if (resume && mergeDirectories.length > 0)
   throw new Error("Choose resume or merge, not both");
 if (new Set(selectedIds).size !== selectedIds.length)

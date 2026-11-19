@@ -17,8 +17,10 @@ import { PREPARED_DISPLAY_ENGINE_SHA256 } from "../../app/indoor-project/prepare
 import { publishedRouteRuntimeBinding } from "./published-route-runtime-binding";
 import { PUBLISHED_ROUTE_RUNTIME_SHA256 } from "../../app/indoor-project/published-route-runtime-binding";
 import { createImmutableRoutingWorkerDataset } from "../../app/indoor-project/verified-routing-dataset";
+import { publishedDirectionsAsset } from "./published-directions-asset";
 
-const [input, expectedSha, publicRoot, output] = process.argv.slice(2);
+const [input, expectedSha, publicRoot, output, deploymentUrl] =
+  process.argv.slice(2);
 if (
   !input ||
   !expectedSha ||
@@ -27,7 +29,7 @@ if (
   !/^[a-f0-9]{64}$/.test(expectedSha)
 )
   throw new Error(
-    "Usage: check-published-directions-cache.ts COMPLETE-VISITOR.json EXPECTED-SHA256 PUBLIC-ROOT NEW-OUTPUT.json",
+    "Usage: check-published-directions-cache.ts COMPLETE-VISITOR.json EXPECTED-SHA256 PUBLIC-ROOT NEW-OUTPUT.json [APPLICATION-BASE-URL]",
   );
 const sha = (v: string | Uint8Array) =>
   createHash("sha256").update(v).digest("hex");
@@ -59,13 +61,12 @@ if (receipt.runtimeSha256)
     PUBLISHED_ROUTE_RUNTIME_SHA256,
     "Generated route runtime must match the final actual consumer closure",
   );
-const base = path.resolve(publicRoot),
-  asset = path.resolve(base, "." + receipt.url);
-assert(
-  asset.startsWith(base + path.sep) && receipt.url.startsWith("/data/"),
-  "Directions asset must be under the declared publication root",
+const location = publishedDirectionsAsset(
+  receipt.url,
+  publicRoot,
+  deploymentUrl,
 );
-const stored = await fs.readFile(asset);
+const stored = await fs.readFile(location.asset);
 await initializeNativeExactGeosOverlay();
 const entries = decodePublishedRouteCells(data, receipt, stored);
 assert.equal(
@@ -80,6 +81,9 @@ const report = {
   runtimeSha256: receipt.runtimeSha256,
   routingDatasetSha256: receipt.datasetSha256,
   assetUrl: receipt.url,
+  resolvedAssetUrl: location.url,
+  publicationBaseUrl: location.deploymentUrl,
+  hostedResponseVerified: false,
   assetSha256: sha(stored),
   assetBytes: stored.length,
   decodedSupportedCells: entries.size,

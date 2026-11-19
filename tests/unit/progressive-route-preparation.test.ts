@@ -118,6 +118,32 @@ test("exact publication carrier is decoded and retained without changing either 
   assert.equal(JSON.stringify(f.data), before);
 });
 
+test("Pages preparation fetches the app cache below its mount and retains the same checked bytes", async () => {
+  const f = fixture();
+  f.receipt.url = "/data/unbc-routing/checked-cache.gz";
+  const cache = new MemoryVisitorDeliveryCache();
+  const calculate = await prepareProgressiveRouteCalculator(
+    f.data,
+    {
+      baseUrl: "https://data.example.test/unbc/manifest.json",
+      applicationBase: "/openindoormaps/",
+      applicationUrl:
+        "https://maps.example.test/openindoormaps/assets/worker.js",
+      cache,
+      fetch: async (url) => {
+        assert.equal(
+          String(url),
+          "https://maps.example.test/openindoormaps/data/unbc-routing/checked-cache.gz",
+        );
+        return new Response(f.stored);
+      },
+    },
+    f.policy,
+  );
+  assert.deepEqual(await cache.getAsset(f.receipt.compressedSha256), f.stored);
+  compareProfiles(f.data, calculate);
+});
+
 test("offline verified carrier is usable, while HTTP-decoded logical bytes are not stored as compressed bytes", async () => {
   const f = fixture();
   const cached = new MemoryVisitorDeliveryCache();

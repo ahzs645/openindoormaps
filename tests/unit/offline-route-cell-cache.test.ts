@@ -385,6 +385,44 @@ test("explicit offline save retains both verified hashes and reuses exact bytes 
   );
 });
 
+test("Pages offline download saves the app-mounted carrier and reopens it without network", async () => {
+  const f = fixture();
+  f.receipt.url = "/data/unbc-routing/checked-cache.gz";
+  const options = {
+    ...f.options,
+    baseUrl: "https://data.example.test/unbc/manifest.json",
+    applicationBase: "/openindoormaps/",
+    applicationUrl: "https://maps.example.test/openindoormaps/index.html",
+    fetch: (async (url) => {
+      assert.equal(
+        String(url),
+        "https://maps.example.test/openindoormaps/data/unbc-routing/checked-cache.gz",
+      );
+      return new Response(f.stored.slice().buffer);
+    }) as typeof fetch,
+  };
+  assert.equal(
+    await saveOfflineRouteCellCache(f.manifest, options, f.policy),
+    f.receipt,
+  );
+  assert.deepEqual(
+    await f.cache.getAsset(f.receipt.compressedSha256),
+    f.stored,
+  );
+  assert.equal(
+    await saveOfflineRouteCellCache(
+      f.manifest,
+      {
+        ...options,
+        offline: true,
+        fetch: async () => assert.fail("retained cache must not fetch"),
+      },
+      f.policy,
+    ),
+    f.receipt,
+  );
+});
+
 test("exact HTTP-decoded bytes reconstruct only the publisher's checked deterministic carrier", async () => {
   const f = fixture();
   await saveOfflineRouteCellCache(

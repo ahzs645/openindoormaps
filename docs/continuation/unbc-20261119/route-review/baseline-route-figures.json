@@ -1,0 +1,150 @@
+{
+  "kind": "recorded-worker-route-review",
+  "rendererSha256": "fba2a1ba0a325e70a8112704974af5d2f51cab0d672f15fbb34736a4a7f5f01f",
+  "atlasSha256": "52fd24910518d878304e5b77495ecb5006f4b52c12172ea8f7bc62fcdd766180",
+  "baselineFileSha256": "25d3db8d0d101f8a13054781bee41f804c4ec621d9d507b8959b7755f66c6ca2",
+  "baselineRuntime": "3121b7dfc6ce392b51fe46a2dd0d6b5db94ed59a6b8caf620df2c23163765558",
+  "baselineDatasetSha256": "ecd8af21dd0d83740c5a3b5133298e52d88d71ce1c1db54c46e8642e853f66e3",
+  "figures": [
+    {
+      "image": "building-10-detail-baseline.png",
+      "origin": "10-3026",
+      "destination": "10-3060",
+      "physicalLevel": 400176,
+      "boxFeet": [
+        86.73056,
+        815.94498,
+        128.73056,
+        855.94498
+      ],
+      "detailCrop": true,
+      "measurements": [
+        {
+          "label": "Published baseline",
+          "metres": 24.93248653240073,
+          "endpointModes": [
+            "pathway",
+            "pathway"
+          ],
+          "maximumTurnDegreesInView": 165.6266187657872,
+          "turnsAtLeast145DegreesInView": 1,
+          "pathSectionsOnLevel": 9
+        }
+      ],
+      "sha256": "f08c49ea44529324eb49281d0fa0efcce95d43fc510fde7d097b348e782234b2",
+      "floorLabel": "Floor 3",
+      "pixels": [
+        1428,
+        1360
+      ],
+      "bytes": 217301
+    },
+    {
+      "image": "stair-6-landing-route-baseline.png",
+      "origin": "06-370",
+      "destination": "06-390",
+      "physicalLevel": 1487353,
+      "boxFeet": [
+        -299.7357035482912,
+        -57.6494369228621,
+        -265.417763461318,
+        -31.255171664154055
+      ],
+      "detailCrop": false,
+      "measurements": [
+        {
+          "label": "Published baseline",
+          "metres": 6.901628053674298,
+          "endpointModes": [
+            "pathway",
+            "pathway"
+          ],
+          "maximumTurnDegreesInView": 97.82546933959718,
+          "turnsAtLeast145DegreesInView": 0,
+          "pathSectionsOnLevel": 4
+        }
+      ],
+      "sha256": "a693660a8aa2a4f018cee66970113b689e393d0ee0065650ea6e08b0db8034c9",
+      "floorLabel": "Floor 3.5",
+      "pixels": [
+        1428,
+        1360
+      ],
+      "bytes": 175905
+    },
+    {
+      "image": "buildings-04-07-route-baseline.png",
+      "origin": "04-150",
+      "destination": "07-114",
+      "physicalLevel": 311,
+      "boxFeet": [
+        -103.19057445803733,
+        140.1890831026225,
+        100.86218642378331,
+        332.59328718757394
+      ],
+      "detailCrop": false,
+      "measurements": [
+        {
+          "label": "Published baseline",
+          "metres": 104.2535563505305,
+          "endpointModes": [
+            "pathway",
+            "pathway"
+          ],
+          "maximumTurnDegreesInView": 107.75636556343422,
+          "turnsAtLeast145DegreesInView": 0,
+          "pathSectionsOnLevel": 13
+        }
+      ],
+      "sha256": "0b138dc5d05e64e40a12a19fbfcd41640d411b7610f505e57f5d5d3281b58f56",
+      "floorLabel": "Floor 1",
+      "pixels": [
+        1428,
+        1360
+      ],
+      "bytes": 226195
+    },
+    {
+      "image": "building-06-bay-route-baseline.png",
+      "origin": "06-205",
+      "destination": "06-209",
+      "physicalLevel": 694,
+      "boxFeet": [
+        -140.20466747963175,
+        -79.99609988940016,
+        -99.14172774540401,
+        -50.0744023135822
+      ],
+      "detailCrop": false,
+      "measurements": [
+        {
+          "label": "Published baseline",
+          "metres": 12.309217215044635,
+          "endpointModes": [
+            "pathway",
+            "pathway"
+          ],
+          "maximumTurnDegreesInView": 132.930821793171,
+          "turnsAtLeast145DegreesInView": 0,
+          "pathSectionsOnLevel": 5
+        }
+      ],
+      "sha256": "9c4443f69e8681a0461c7c8d00601682722214b3a6e397c672e74847fd900007",
+      "floorLabel": "Floor 2",
+      "pixels": [
+        1428,
+        1360
+      ],
+      "bytes": 194057
+    }
+  ],
+  "evidenceScope": "Published baseline worker replies; exact scientific path plots, not newly captured browser screenshots or candidate acceptance.",
+  "inputs": {
+    "atlas": "UNBC-campus-walking-atlas.zip/campus-network.html",
+    "measurements": "unbc-continuation/evidence/current/browser-measurements.json.gz",
+    "sourceCommit": "d89a9355587aaa8c470a8b2796d1a5e3c84e3a65",
+    "handoff": "https://drive.google.com/drive/folders/1PdyETAWsVOPcPPC-RAOUSaJmqXEh-rWU"
+  },
+  "reproduceFromRepositoryRoot": "python tools/unbc-atlas/render-route-review.py --atlas /path/to/baseline/campus-network.html --before /path/to/unbc-continuation/evidence/current/browser-measurements.json.gz --output /path/to/route-review-baseline"
+}

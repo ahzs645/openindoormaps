@@ -8,11 +8,15 @@ import {
 import { progressiveSha256 } from "./progressive-delivery";
 import { createVerifiedProgressiveRouteCalculator } from "./progressive-route-validation";
 import {
+  publishedRouteAssetUrl,
+  type PublishedRouteAssetLocation,
+} from "./published-route-asset-url";
+import {
   IndexedDbVisitorDeliveryCache,
   type VisitorDeliveryCache,
 } from "./visitor-delivery-cache";
 
-type Options = {
+type Options = PublishedRouteAssetLocation & {
   baseUrl: string;
   offline?: boolean;
   fetch?: typeof fetch;
@@ -49,7 +53,7 @@ export async function prepareProgressiveRouteCalculator(
     let response: Response | undefined;
     try {
       response = await (options.fetch ?? fetch)(
-        new URL(receipt.url, options.baseUrl),
+        publishedRouteAssetUrl(receipt.url, options.baseUrl, options),
       );
     } catch {
       // An unavailable optional cache still needs ordinary full validation.

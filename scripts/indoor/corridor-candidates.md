@@ -19,6 +19,10 @@ node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-cand
 # join sliding) as a separately bound experiment.
 node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-c --cell native-cell:14.435696:655 --legacy-approaches
 
+# Fit complete corridor runs as an explicit candidate (default is off).
+# Resolve cell IDs from this exact input; IDs can change between rebuilds.
+node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-runs --cell native-cell:24.278215:918 --straight-runs
+
 # Merge disjoint complete-cell shards. Every requested cell must be present;
 # merge never fills a missing cell by compiling or borrowing another version.
 node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip merged --cell native-cell:14.435696:557 --cell native-cell:14.435696:655 --merge shard-557 --merge shard-655
@@ -80,3 +84,47 @@ zigzag reversals (a turn over 120 degrees with an adjacent leg of at most two
 metres, split into approach/join and core), approach elbows, core dead ends and
 dead ends at arrival points. These are descriptive drawing diagnostics, never
 physical predicates or route acceptance.
+
+## Opt-in complete corridor runs
+
+`--straight-runs` enables `straightRuns` in the bound compiler parameters. It
+is disabled by default and cannot be combined with `--legacy-approaches`.
+It is an adaptation of the held November 3 experiment to the current pipeline,
+including the later recovery, ramp-landing and doorway-station passes.
+
+The fitter follows a straight continuation through room branches and genuine
+junctions, fits corridor cross-section midpoints, and re-proposes short door
+branches against the result. Real corners end runs. Island sides and loops
+remain separate alternatives. Every changed piece and terminal approach keeps
+the existing exact two-foot support check, original terminal coordinates, and
+final edge checks. It checks detours for every required original edge, including
+journeys passing through a changed run whose own terminal branches did not move.
+
+The final **complete cell** is compared with a no-runs control after all recovery
+passes. A new or moved topology contact between different primary networks,
+legacy fallback guides, or later refined guides withdraws the whole cell's run
+proposal. Losing a previously accepted guide also withdraws it. Contacts are
+compared by original edge pair and exact rational location, including point
+touches and overlaps; a lower total crossing count cannot compensate for a new
+crossing elsewhere. This corrects the held experiment's cell-852 guard failure.
+Original terminal identities qualify endpoint contact. Coordinate coincidence
+does not create a route junction or change permissions.
+
+An unchanged checked network retains its own internal topology acceptance:
+different returned routes intentionally reuse its same corridor lanes. A guide
+changed by a later recovery pass receives a distinct origin, so that pass cannot
+borrow the topology approval of geometry it replaced. This is conservative:
+a newly aligned overlap with a legacy guide may retain the previous cell until
+the mixed network is represented and qualified together.
+
+`report.json` records `straightRunsWithdrawn`, missing guide IDs, the complete
+new-contact count, up to twenty exact contact examples, and the attempted
+network statistics. Branch statistics count accepted placements, not attempts
+subsequently withdrawn within a run. A withdrawn cell emits its complete current
+no-runs control, without a mixture of accepted and rejected run geometry.
+
+Successful local compilation is candidate evidence. To enable it for a release,
+rebuild and qualify the complete catalog, ordinary and step-free policy cases,
+journey distances/instructions, overview parity, exports, hydration, browser
+worker, and exact published receipts. Do not relabel a held catalog or the old
+November 3 measurements as the result of this current compiler.

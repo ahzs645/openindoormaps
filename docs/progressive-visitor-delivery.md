@@ -53,4 +53,33 @@ For automatic browser HTTP decoding of a cross-origin Brotli representation, sen
 
 `complete-map.offline.zip` includes the manifest, checked offline inventory and every gzip representation needed for the map, including all real routing parts for a chunked representation. It contains map data, not a separately installed application bundle or external basemap. The application also offers verified persistent asset caching and explicit complete-map download; ordinary browsing should fetch only the current overview/floor and, on first directions use, the routing dataset.
 
+### Prepared directions on a deployment path
+
+Compiled directions receipts with `/data/` URLs name files in the application's
+publication root. They resolve through the build's `BASE_URL`: for a Pages build
+at `/openindoormaps/`, `/data/unbc-routing/<hash>.json.gz` is fetched from
+`/openindoormaps/data/unbc-routing/<hash>.json.gz`. This applies to the full
+viewer worker, progressive directions and explicit offline download. An external
+map manifest does not change the application asset's origin. Explicit absolute
+or CDN receipt URLs retain their declared location.
+
+The deployment prefix is transport configuration, not part of the native source
+or carrier identity. All existing receipt, source, runtime, byte-count and checksum
+checks still apply. Missing optional online carriers retain ordinary validation;
+an explicit offline save requires the matching carrier to be downloaded and
+retained.
+
+Pass the actual application base to the post-build publication gate:
+
+```sh
+node --import tsx scripts/indoor/check-published-directions-cache.ts \
+  COMPLETE-VISITOR.json EXPECTED-SHA256 PUBLIC-ROOT NEW-REPORT.json \
+  https://ahzs645.github.io/openindoormaps/
+```
+
+The gate maps the same resolved runtime URL into `PUBLIC-ROOT` and records both
+the receipt URL and resolved deployment URL. It checks the local built artifact;
+`hostedResponseVerified: false` explicitly leaves the real hosted HTTP response
+for the normal browser/hosting check. Root deployments can omit the final URL.
+
 `export-report.json` records actual first-view and complete-map transfer sizes, all-representation hosting storage, offline ZIP size, scope coverage, route projection hash and timings. The first-view measurements include the manifest. Hosting both gzip/Brotli variants uses more storage than any one visitor downloads; optional raw identity files add the full expanded geometry again and are unnecessary for production delivery. App code, fonts, external basemap requests, decoded visitor memory and routing CPU time are separate budgets; exporter peak RSS is not a visitor-memory measurement.

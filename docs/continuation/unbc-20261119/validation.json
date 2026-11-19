@@ -1,0 +1,109 @@
+{
+  "format": "unbc-pr-validation-status-v1",
+  "reviewDate": "2026-11-19",
+  "timeZone": "America/Vancouver",
+  "status": "draft-review",
+  "publicationQualified": false,
+  "baseline": {
+    "openindoormaps": "d89a9355587aaa8c470a8b2796d1a5e3c84e3a65",
+    "reviter": "4a8fe6a8bd6b085e7725bb4ea18bb32d519e00a4",
+    "routingDatasetSha256": "ecd8af21dd0d83740c5a3b5133298e52d88d71ce1c1db54c46e8642e853f66e3"
+  },
+  "consumerBindings": {
+    "PREPARED_DISPLAY_ENGINE_SHA256": "4d8f29c8545e00855fcfa9e8353bd4809e585411a878968bde21d466c5b151d2",
+    "PUBLISHED_ROUTE_RUNTIME_SHA256": "fb041318ca53fc0a84d783160d1c5f442ddbd0d3a1f4661dfacc88058116e9f4",
+    "NATIVE_CORRIDOR_STRIP_ENGINE_SHA256": "c52fb4b99d37c4af16fb0a7986c59f2c1e6d65fcb7eef3ad79662188323a3688",
+    "PUBLISHED_VISITOR_PLAN_RUNTIME_SHA256": "98a4e807a6e0ee57160be028beaba24df0ba85c9b10db1b69daf880c00d401dd"
+  },
+  "passed": [
+    {
+      "check": "final focused regression suite",
+      "exitCode": 0,
+      "tests": 107,
+      "passed": 107,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 49518.344966,
+      "command": "node --import tsx --test --test-concurrency=1 tests/unit/published-route-asset-url.test.ts tests/unit/progressive-route-preparation.test.ts tests/unit/offline-route-cell-cache.test.ts tests/unit/corridor-run-fit.test.ts tests/unit/corridor-guide-contacts.test.ts tests/unit/corridor-chain-fit.test.ts tests/unit/corridor-centerline.test.ts tests/unit/corridor-terminal-approach.test.ts tests/unit/shared-corridor-routing.test.ts tests/unit/corridor-candidate-checkpoints.test.ts",
+      "log": "focused-tests.txt",
+      "logSha256": "196d26b31eae2ba957de4857f2f64c00d6f1fe4072b2c58a8532f764367b3d9e"
+    },
+    {
+      "check": "indoor-project TypeScript",
+      "exitCode": 0,
+      "command": "node --max-old-space-size=800 node_modules/typescript/bin/tsc -p tsconfig.indoor-project.json"
+    },
+    {
+      "check": "22 changed/new TypeScript files and their dependencies",
+      "exitCode": 0,
+      "method": "Temporary config extending repository tsconfig with explicit changed-file entry points; 850 MiB heap."
+    },
+    {
+      "check": "new diagnostic CLI TypeScript",
+      "exitCode": 0,
+      "method": "Temporary config extending repository tsconfig with scripts/indoor/replay-corridor-run-diagnostic.ts; 850 MiB heap."
+    },
+    {
+      "check": "two conservative complete-cell diagnostics",
+      "navigationAuthority": false,
+      "receipt": "corridor-runs/diagnostic-receipt.json",
+      "manifest": "corridor-runs/diagnostic-export-manifest.json",
+      "verifiedExports": 6,
+      "bothProposalsWithdrawn": true
+    },
+    {
+      "check": "corridor figure integrity negative cases",
+      "cases": 5,
+      "result": "Wrong hash, duplicate guide, duplicate source edge, empty matches and changed endpoints were refused before drawing."
+    }
+  ],
+  "incomplete": [
+    {
+      "check": "whole-repository TypeScript",
+      "exitCode": 137,
+      "heapMiB": 1200,
+      "result": "Process killed; no pass claimed."
+    },
+    {
+      "check": "Pages build",
+      "exitCode": 137,
+      "heapMiB": 900,
+      "result": "Killed during transform."
+    },
+    {
+      "check": "Pages build with two Rolldown/Rayon threads",
+      "exitCode": 137,
+      "heapMiB": 768,
+      "result": "Killed during transform."
+    },
+    {
+      "check": "ESLint of 23 changed/new TypeScript files",
+      "attempts": [
+        {
+          "heapMiB": 1000,
+          "exitCode": 137
+        },
+        {
+          "heapMiB": 700,
+          "exitCode": 134
+        }
+      ],
+      "result": "Killed or JavaScript heap exhausted; no rule diagnostics and no lint pass claimed."
+    },
+    {
+      "check": "full-source cell 918 preparation",
+      "exitCode": 137,
+      "result": "Killed before unfitted control completed."
+    },
+    {
+      "check": "fresh campus floor/cache/plan qualification and actual production-worker replay",
+      "result": "Not completed; requires complete restored source/viewer inputs and sufficient processing capacity."
+    },
+    {
+      "check": "new browser screenshots",
+      "result": "Chromium socket call denied; connected and cloud browsers could not reach workspace server. Delivered route figures are scientific plots of archived worker points."
+    }
+  ],
+  "baselineEvidenceScope": "The 1392 archived outcomes were inspected, not requalified under this PR: 653 public paths, 305 public no-path outcomes, 434 accessible no-path outcomes.",
+  "releasePrerequisites": "runtime-qualification.md"
+}

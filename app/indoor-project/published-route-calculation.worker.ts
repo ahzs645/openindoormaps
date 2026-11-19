@@ -14,6 +14,7 @@ import {
 import { IndexedDbVisitorDeliveryCache } from "./visitor-delivery-cache";
 import { progressiveSha256 } from "./progressive-delivery";
 import { createImmutableRoutingWorkerDataset } from "./verified-routing-dataset";
+import { publishedRouteAssetUrl } from "./published-route-asset-url";
 const scope = globalThis as unknown as {
   onmessage: (event: MessageEvent<RouteRequest>) => void;
   postMessage: (message: RouteResponse) => void;
@@ -53,7 +54,9 @@ async function handle(request: RouteRequest) {
         if (!bytes) {
           let response: Response | undefined;
           try {
-            response = await fetch(new URL(receipt.url, location.href));
+            response = await fetch(
+              publishedRouteAssetUrl(receipt.url, location.href),
+            );
           } catch {
             // Offline without this optional cache: retain the ordinary checks.
           }

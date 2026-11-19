@@ -4,6 +4,7 @@ import {
 } from "./raised-rotunda-plane";
 import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import { sampledCorridorRun } from "./sampled-corridor-run";
+import { compareCombinedCorridorGuides } from "./corridor-guide-contacts";
 import { straightenSharedDoorGuideBends } from "./shared-door-guide-bend";
 import { recoverCorridorRuns } from "./corridor-run-recovery";
 import { routingDoorApertures } from "./routing-apertures";
@@ -58,6 +59,17 @@ export type CorridorCellCompilation = {
   /** Guides whose shaped-approach network was refused and which therefore
    * use the legacy approach network's checked geometry (same exact checks). */
   legacyApproachFallbackEdgeIds?: string[];
+  /** Opt-in run geometry was withdrawn for the whole cell after comparing
+   * all final guides, including legacy/recovery paths, with its control. */
+  straightRunsWithdrawn?: boolean;
+  straightRunsComparison?: {
+    missingGuideIds: string[];
+    newContactCount: number;
+    newContacts: { edgeIds: [string, string]; at: string }[];
+    candidateNetworks: ReturnType<
+      ReturnType<typeof createCorridorCenterline>["statistics"]
+    >[];
+  };
   recoveredStraightRunEdgeIds?: string[];
   recoveredSampledRunEdgeIds?: string[];
   recoveredRampLandingEdgeIds?: string[];
@@ -179,249 +191,306 @@ export async function prepareSharedCorridorRouting(
         };
       });
       const proposalRings = nativeExactPartsForProposals(physical);
-      const build = (shapedApproaches: boolean) =>
-        proposalRings.map((rings) =>
-          createCorridorCenterline(rings, terminals, support.supported, {
-            ...parameters,
-            shapedApproaches,
-            requiredEdges: edges,
-          }),
-        );
-      const networks = build(parameters.shapedApproaches);
-      // Built only if a shaped network refuses an edge. Its geometry is the
-      // unchanged legacy proposal and passes the same final checks below.
-      let legacy: typeof networks | null = null;
-      const resolve = (
-        candidates: typeof networks,
-        edge: (typeof edges)[number],
-      ) => {
-        const paths = candidates
-          .flatMap((network) => {
-            const route = network.routeDetails(edge.from, edge.to);
-            return route ? [route] : [];
-          })
-          .sort(
-            (a, b) =>
-              corridorGuideLength(a.points) - corridorGuideLength(b.points),
-          );
-        const withinDistance = paths.filter(
-          ({ points: p }) =>
-            p.length >= 2 &&
-            p.length <= 10_000 &&
-            corridorGuideLength(p) <=
-              corridorGuideLength(edge.pointsFeet) * 1.15 +
-                0.6 +
-                2 * MAX_SHARED_CORRIDOR_APPROACH_FEET,
-        );
-        const candidate = withinDistance.find(({ points }) =>
-          support.edgeSupported(points, edge.from, edge.to),
-        );
-        if (!candidate)
-          return {
-            ok: false,
-            reason:
-              paths.length === 0
-                ? candidates
-                    .map((network) => network.refusalReason(edge.from, edge.to))
-                    .join(";") || "no-supported-shared-route"
-                : withinDistance.length === 0
-                  ? "guide-distance-limit"
-                  : "final-planar-width",
-          } as const;
-        // Require exact original coordinates, including physical elevation.
-        const pointsFeet = candidate.points.map(
-          (p): [number, number, number] => [p[0], p[1], cell.elevationFeet],
-        );
-        if (
-          ![0, pointsFeet.length - 1].every((i, j) =>
-            pointsFeet[i].every(
-              (v, k) =>
-                v === edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
-            ),
-          )
-        )
-          return { ok: false, reason: "original-terminal-mismatch" } as const;
-        return { ok: true, candidate, pointsFeet } as const;
-      };
-      let cellGuides: PreparedRouting["guides"] = [];
-      for (const edge of edges) {
-        let resolved = resolve(networks, edge);
-        if (!resolved.ok && parameters.shapedApproaches) {
-          legacy ??= build(false);
-          const fallback = resolve(legacy, edge);
-          if (fallback.ok) {
-            resolved = fallback;
-            (report.legacyApproachFallbackEdgeIds ??= []).push(edge.id);
-          }
-        }
-        if (!resolved.ok) {
-          report.refusedEdges.push({
-            edgeId: edge.id,
-            reason: resolved.reason,
-          });
-          continue;
-        }
-        const { candidate, pointsFeet } = resolved;
-        cellGuides.push({
-          edgeId: edge.id,
-          pointsFeet,
-          kind: "shared-corridor",
-          hallwayJoins: candidate.hallwayJoins,
-        });
-      }
-      const refused = new Set(
-        report.refusedEdges
-          .filter((r) => r.reason === "terminal-attachment")
-          .map((r) => r.edgeId),
-      );
-      const sampled = report.refusedEdges.filter(
-        (r) => r.reason === "sampled-graph-disconnection",
-      );
-      if (cellGuides.length > 0 || sampled.length > 0) {
-        const replay = (
-          edge: (typeof edges)[number],
-          guide: PreparedRouting["guides"][number],
-        ) => {
-          const p = guide.pointsFeet,
-            xy = p.map(([x, y]): [number, number] => [x, y]),
-            [a, b] = guide.hallwayJoins!;
-          const level = nodes.get(edge.from)!.levelId;
-          const crossings = (points: typeof p) =>
-            passages(level, points).map((x) => [x.edge.id, x.forward]);
-          return (
-            support.supported(xy.slice(a, b + 1)) &&
-            support.edgeSupported(xy, edge.from, edge.to) &&
-            outside(p).length === 0 &&
-            floorHoles(p).length === 0 &&
-            JSON.stringify(crossings(p)) ===
-              JSON.stringify(crossings(edge.pointsFeet)) &&
-            createNativeTransitRefinementPolicy(
-              data,
-              [edge],
-              edge.pointsFeet,
-            )(p)
-          );
+      // Each candidate/control includes every current recovery pass before
+      // mixed-network contact comparison. No partially checked cell is emitted.
+      const compileCell = (straightRuns: boolean) => {
+        const trial: CorridorCellCompilation = {
+          ...report,
+          refusedEdges: [],
+          guideIds: [],
+          networks: [],
         };
-        for (const edge of edges) {
-          if (!refused.has(edge.id)) continue;
-          const ramp = reviewedRampLanding(
-            data,
-            edge,
-            nodes.get(edge.from)!,
-            nodes.get(edge.to)!,
-            records,
+        const build = (shapedApproaches: boolean) =>
+          proposalRings.map((rings) =>
+            createCorridorCenterline(rings, terminals, support.supported, {
+              ...parameters,
+              shapedApproaches,
+              straightRuns,
+              requiredEdges: edges,
+            }),
           );
-          if (!ramp) continue;
-          const g = reviewedRampLandingGuide(
-            edge,
-            ramp,
-            cellGuides,
-            (e, g) =>
-              [311, 1487816].every(
-                (level) =>
-                  !passages(level, e.pointsFeet).length &&
-                  !passages(level, g.pointsFeet).length,
-              ) &&
-              support.edgeSupported(
-                g.pointsFeet.toReversed().map(([x, y]) => [x, y]),
-                e.to,
-                e.from,
-              ) &&
-              replay(e, g),
-          );
-          if (!g) continue;
-          cellGuides.push(g);
-          refused.delete(edge.id);
-          report.refusedEdges = report.refusedEdges.filter(
-            (e) => e.edgeId !== edge.id,
-          );
-          (report.recoveredRampLandingEdgeIds ??= []).push(edge.id);
-        }
-        const recovered = recoverCorridorRuns(
-          edges,
-          cellGuides,
-          refused,
-          (id) => {
-            const door = doorsByNode.get(id);
-            return door && apertures.get(door.id)?.normalFeet;
-          },
-          replay,
-        );
-        if (recovered.length > 0) {
-          const previous = new Set(cellGuides.map((g) => g.edgeId));
-          const additions = recovered.filter((g) => !previous.has(g.edgeId));
-          const changes = new Map(
-            recovered
-              .filter((g) => previous.has(g.edgeId))
-              .map((g) => [g.edgeId, g]),
-          );
-          if (changes.size > 0) {
-            report.alignedDoorwayStationEdgeIds = [...changes.keys()];
-            cellGuides = cellGuides.map((g) => changes.get(g.edgeId) ?? g);
-          }
-          if (additions.length > 0) {
-            const ids = new Set(additions.map((g) => g.edgeId));
-            report.recoveredStraightRunEdgeIds = [...ids];
-            report.refusedEdges = report.refusedEdges.filter(
-              (e) => !ids.has(e.edgeId),
+        const networks = build(parameters.shapedApproaches);
+        // Built only if a shaped network refuses an edge. Its geometry is the
+        // unchanged legacy proposal and passes the same final checks below.
+        let legacy: typeof networks | null = null;
+        const resolve = (
+          candidates: typeof networks,
+          edge: (typeof edges)[number],
+        ) => {
+          const paths = candidates
+            .flatMap((network, networkIndex) => {
+              const route = network.routeDetails(edge.from, edge.to);
+              return route ? [{ ...route, networkIndex }] : [];
+            })
+            .sort(
+              (a, b) =>
+                corridorGuideLength(a.points) - corridorGuideLength(b.points),
             );
-            cellGuides.push(...additions);
-          }
-        }
-        if (sampled.length > 0) {
-          const edgeById = new Map(edges.map((e) => [e.id, e]));
-          for (const row of sampled) {
-            const edge = edgeById.get(row.edgeId)!;
-            for (const network of [...networks, ...(legacy ?? [])]) {
-              if (
-                network.refusalReason(edge.from, edge.to) !==
-                "sampled-graph-disconnection"
-              )
-                continue;
-              const a = network.joins.get(edge.from),
-                b = network.joins.get(edge.to);
-              if (!a || !b) continue;
-              const guide = sampledCorridorRun(
-                edge,
-                cellGuides,
-                edgeById,
-                [a.approach, b.approach],
-                replay,
-              );
-              if (!guide) continue;
-              cellGuides.push(guide);
-              (report.recoveredSampledRunEdgeIds ??= []).push(edge.id);
-              break;
+          const withinDistance = paths.filter(
+            ({ points: p }) =>
+              p.length >= 2 &&
+              p.length <= 10_000 &&
+              corridorGuideLength(p) <=
+                corridorGuideLength(edge.pointsFeet) * 1.15 +
+                  0.6 +
+                  2 * MAX_SHARED_CORRIDOR_APPROACH_FEET,
+          );
+          const candidate = withinDistance.find(({ points }) =>
+            support.edgeSupported(points, edge.from, edge.to),
+          );
+          if (!candidate)
+            return {
+              ok: false,
+              reason:
+                paths.length === 0
+                  ? candidates
+                      .map((network) =>
+                        network.refusalReason(edge.from, edge.to),
+                      )
+                      .join(";") || "no-supported-shared-route"
+                  : withinDistance.length === 0
+                    ? "guide-distance-limit"
+                    : "final-planar-width",
+            } as const;
+          // Require exact original coordinates, including physical elevation.
+          const pointsFeet = candidate.points.map(
+            (p): [number, number, number] => [p[0], p[1], cell.elevationFeet],
+          );
+          if (
+            ![0, pointsFeet.length - 1].every((i, j) =>
+              pointsFeet[i].every(
+                (v, k) =>
+                  v === edge.pointsFeet[j ? edge.pointsFeet.length - 1 : 0][k],
+              ),
+            )
+          )
+            return { ok: false, reason: "original-terminal-mismatch" } as const;
+          return { ok: true, candidate, pointsFeet } as const;
+        };
+        let cellGuides: PreparedRouting["guides"] = [];
+        const origins = new Map<string, string>();
+        for (const edge of edges) {
+          let resolved = resolve(networks, edge);
+          let usedLegacy = false;
+          if (!resolved.ok && parameters.shapedApproaches) {
+            legacy ??= build(false);
+            const fallback = resolve(legacy, edge);
+            if (fallback.ok) {
+              resolved = fallback;
+              usedLegacy = true;
+              (trial.legacyApproachFallbackEdgeIds ??= []).push(edge.id);
             }
           }
-          const fixed = new Set(report.recoveredSampledRunEdgeIds);
-          report.refusedEdges = report.refusedEdges.filter(
-            (row) => !fixed.has(row.edgeId),
+          if (!resolved.ok) {
+            trial.refusedEdges.push({
+              edgeId: edge.id,
+              reason: resolved.reason,
+            });
+            continue;
+          }
+          const { candidate, pointsFeet } = resolved;
+          origins.set(
+            edge.id,
+            `${usedLegacy ? "legacy" : "primary"}:${candidate.networkIndex}`,
+          );
+          cellGuides.push({
+            edgeId: edge.id,
+            pointsFeet,
+            kind: "shared-corridor",
+            hallwayJoins: candidate.hallwayJoins,
+          });
+        }
+        const originalGuides = new Map(cellGuides.map((g) => [g.edgeId, g]));
+        const refused = new Set(
+          trial.refusedEdges
+            .filter((r) => r.reason === "terminal-attachment")
+            .map((r) => r.edgeId),
+        );
+        const sampled = trial.refusedEdges.filter(
+          (r) => r.reason === "sampled-graph-disconnection",
+        );
+        if (cellGuides.length > 0 || sampled.length > 0) {
+          const replay = (
+            edge: (typeof edges)[number],
+            guide: PreparedRouting["guides"][number],
+          ) => {
+            const p = guide.pointsFeet,
+              xy = p.map(([x, y]): [number, number] => [x, y]),
+              [a, b] = guide.hallwayJoins!;
+            const level = nodes.get(edge.from)!.levelId;
+            const crossings = (points: typeof p) =>
+              passages(level, points).map((x) => [x.edge.id, x.forward]);
+            return (
+              support.supported(xy.slice(a, b + 1)) &&
+              support.edgeSupported(xy, edge.from, edge.to) &&
+              outside(p).length === 0 &&
+              floorHoles(p).length === 0 &&
+              JSON.stringify(crossings(p)) ===
+                JSON.stringify(crossings(edge.pointsFeet)) &&
+              createNativeTransitRefinementPolicy(
+                data,
+                [edge],
+                edge.pointsFeet,
+              )(p)
+            );
+          };
+          for (const edge of edges) {
+            if (!refused.has(edge.id)) continue;
+            const ramp = reviewedRampLanding(
+              data,
+              edge,
+              nodes.get(edge.from)!,
+              nodes.get(edge.to)!,
+              records,
+            );
+            if (!ramp) continue;
+            const g = reviewedRampLandingGuide(
+              edge,
+              ramp,
+              cellGuides,
+              (e, g) =>
+                [311, 1487816].every(
+                  (level) =>
+                    !passages(level, e.pointsFeet).length &&
+                    !passages(level, g.pointsFeet).length,
+                ) &&
+                support.edgeSupported(
+                  g.pointsFeet.toReversed().map(([x, y]) => [x, y]),
+                  e.to,
+                  e.from,
+                ) &&
+                replay(e, g),
+            );
+            if (!g) continue;
+            cellGuides.push(g);
+            refused.delete(edge.id);
+            trial.refusedEdges = trial.refusedEdges.filter(
+              (e) => e.edgeId !== edge.id,
+            );
+            (trial.recoveredRampLandingEdgeIds ??= []).push(edge.id);
+          }
+          const recovered = recoverCorridorRuns(
+            edges,
+            cellGuides,
+            refused,
+            (id) => {
+              const door = doorsByNode.get(id);
+              return door && apertures.get(door.id)?.normalFeet;
+            },
+            replay,
+          );
+          if (recovered.length > 0) {
+            const previous = new Set(cellGuides.map((g) => g.edgeId));
+            const additions = recovered.filter((g) => !previous.has(g.edgeId));
+            const changes = new Map(
+              recovered
+                .filter((g) => previous.has(g.edgeId))
+                .map((g) => [g.edgeId, g]),
+            );
+            if (changes.size > 0) {
+              trial.alignedDoorwayStationEdgeIds = [...changes.keys()];
+              cellGuides = cellGuides.map((g) => changes.get(g.edgeId) ?? g);
+            }
+            if (additions.length > 0) {
+              const ids = new Set(additions.map((g) => g.edgeId));
+              trial.recoveredStraightRunEdgeIds = [...ids];
+              trial.refusedEdges = trial.refusedEdges.filter(
+                (e) => !ids.has(e.edgeId),
+              );
+              cellGuides.push(...additions);
+            }
+          }
+          if (sampled.length > 0) {
+            const edgeById = new Map(edges.map((e) => [e.id, e]));
+            for (const row of sampled) {
+              const edge = edgeById.get(row.edgeId)!;
+              for (const network of [...networks, ...(legacy ?? [])]) {
+                if (
+                  network.refusalReason(edge.from, edge.to) !==
+                  "sampled-graph-disconnection"
+                )
+                  continue;
+                const a = network.joins.get(edge.from),
+                  b = network.joins.get(edge.to);
+                if (!a || !b) continue;
+                const guide = sampledCorridorRun(
+                  edge,
+                  cellGuides,
+                  edgeById,
+                  [a.approach, b.approach],
+                  replay,
+                );
+                if (!guide) continue;
+                cellGuides.push(guide);
+                (trial.recoveredSampledRunEdgeIds ??= []).push(edge.id);
+                break;
+              }
+            }
+            const fixed = new Set(trial.recoveredSampledRunEdgeIds);
+            trial.refusedEdges = trial.refusedEdges.filter(
+              (row) => !fixed.has(row.edgeId),
+            );
+          }
+          cellGuides = straightenSharedDoorGuideBends(
+            edges,
+            cellGuides,
+            (id) => {
+              const door = doorsByNode.get(id);
+              return (
+                !!door &&
+                door.roomKeys.length === 2 &&
+                door.roomKeys.every((k) => {
+                  const r = records.get(k);
+                  return (
+                    r &&
+                    pathwayCirculationOwner(data, r) &&
+                    r.walkable &&
+                    !r.stair &&
+                    r.access !== "staff"
+                  );
+                })
+              );
+            },
+            replay,
           );
         }
-        cellGuides = straightenSharedDoorGuideBends(
-          edges,
-          cellGuides,
-          (id) => {
-            const door = doorsByNode.get(id);
-            return (
-              !!door &&
-              door.roomKeys.length === 2 &&
-              door.roomKeys.every((k) => {
-                const r = records.get(k);
-                return (
-                  r &&
-                  pathwayCirculationOwner(data, r) &&
-                  r.walkable &&
-                  !r.stair &&
-                  r.access !== "staff"
-                );
-              })
-            );
-          },
-          replay,
+        for (const guide of cellGuides)
+          if (originalGuides.get(guide.edgeId) !== guide)
+            origins.set(guide.edgeId, `refined:${guide.edgeId}`);
+        trial.networks = networks.map((network) => network.statistics());
+        if (legacy)
+          trial.legacyNetworks = legacy.map((network) => network.statistics());
+        return { guides: cellGuides, origins, report: trial };
+      };
+      let result = compileCell(parameters.straightRuns);
+      if (
+        parameters.straightRuns &&
+        result.report.networks.some(
+          (network) => (network.straightRuns?.fittedRuns ?? 0) > 0,
+        )
+      ) {
+        const control = compileCell(false);
+        const sourceEdges = new Map(edges.map((edge) => [edge.id, edge]));
+        const comparison = compareCombinedCorridorGuides(
+          { ...control, edges: sourceEdges },
+          { ...result, edges: sourceEdges },
         );
+        const candidateNetworks = result.report.networks;
+        const withdrawn =
+          comparison.missingGuideIds.length > 0 ||
+          comparison.newContacts.length > 0;
+        if (withdrawn) result = control;
+        result.report.straightRunsWithdrawn = withdrawn;
+        result.report.straightRunsComparison = {
+          missingGuideIds: comparison.missingGuideIds,
+          newContactCount: comparison.newContacts.length,
+          // Preserve a bounded diagnostic sample alongside the complete count.
+          newContacts: comparison.newContacts.slice(0, 20),
+          candidateNetworks,
+        };
       }
+      Object.assign(report, result.report);
+      const cellGuides = result.guides;
       for (const guide of cellGuides) {
         report.guideIds.push(guide.edgeId);
         report.compiledEdges++;
@@ -430,9 +499,6 @@ export async function prepareSharedCorridorRouting(
           report.emittedEdges++;
         }
       }
-      report.networks = networks.map((network) => network.statistics());
-      if (legacy)
-        report.legacyNetworks = legacy.map((network) => network.statistics());
     });
     report.seconds = (performance.now() - started) / 1000;
     reports.push(report);

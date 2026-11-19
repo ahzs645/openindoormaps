@@ -4,6 +4,10 @@ import { createRingPointQuery } from "./ring-point-query";
 import { MAX_SHARED_CORRIDOR_APPROACH_FEET } from "./shared-corridor-guides";
 import { proposeStraightCorridorAxis } from "./corridor-straight-axis";
 import {
+  fitCorridorRuns,
+  type CorridorRunFitStatistics,
+} from "./corridor-run-fit";
+import {
   fitCheckedCorridorChains,
   corridorChainTopologyConflicts,
   corridorChainTopologyConflictPairs,
@@ -82,6 +86,8 @@ export type CorridorCenterlineOptions = {
   shapedApproaches?: boolean;
   /** See CorridorCompilerParameters.slideJoins. */
   slideJoins?: boolean;
+  /** See CorridorCompilerParameters.straightRuns. */
+  straightRuns?: boolean;
 };
 
 /** Shaped-approach restriction of one terminal: 0 offers every shaped
@@ -1095,6 +1101,51 @@ function buildCorridorCenterline(
     retained: null as string | null,
   };
   if (shaped && slideJoins) slideTerminalJoins();
+  const straightRuns =
+    options.straightRuns ?? CORRIDOR_CENTERLINE_PARAMETERS.straightRuns;
+  const runFit: CorridorRunFitStatistics | null =
+    shaped && straightRuns ? fitStraightRuns() : null;
+  /** Straight corridor runs between real junctions, with door branches
+   * re-proposed at right angles (corridor-run-fit.ts). Each run is accepted
+   * only with exact support for every changed lane piece and door branch and
+   * no new conflict on the complete network; otherwise it keeps its current
+   * checked geometry. Terminals keep their checked component. */
+  function fitStraightRuns() {
+    const result = fitCorridorRuns({
+      rings,
+      vertices,
+      chains: chains.flatMap((chain) =>
+        chain.points
+          ? [{ from: chain.from, to: chain.to, points: chain.points }]
+          : [],
+      ),
+      joins,
+      terminals,
+      supported,
+      proposals: approachProposals,
+      maxApproachFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
+      requiredEdges: options.requiredEdges,
+    });
+    if (!result.changed) return result.statistics;
+    for (let i = vertices.length; i < result.vertices.length; i++)
+      vertices.push(result.vertices[i]);
+    joins.clear();
+    for (const [id, join] of result.joins) joins.set(id, join);
+    installChains([
+      ...result.chains.map(
+        (chain): Chain => ({
+          from: chain.from,
+          to: chain.to,
+          raw: chain.points,
+          checked: true,
+          points: chain.points,
+          length: pathLength(chain.points),
+        }),
+      ),
+      ...chains.filter((chain) => !chain.points),
+    ]);
+    return result.statistics;
+  }
   /** Terminal joins pin the shared trunk: a pass-through join splits it into
    * separately fitted pieces, and a join at the end of a short sampled spur
    * keeps a junction (and its kink) on the trunk. Refit each trunk through
@@ -1945,6 +1996,7 @@ function buildCorridorCenterline(
       attachedTerminals: useStraightAxis ? straightApproaches.size : joins.size,
       missingTerminals: useStraightAxis ? 0 : missing.length,
       joinSliding: { ...sliding },
+      straightRuns: runFit ? structuredClone(runFit) : null,
       straightAxisProposed: !!straightAxis,
       straightAxisTerminals: useStraightAxis ? straightApproaches.size : 0,
       axisApproachRepair: { ...axisRepair },
