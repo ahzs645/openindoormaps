@@ -1,3 +1,8 @@
+import {
+  checkedBayMask,
+  validBay,
+  type ReviewedOpenBay,
+} from "./reviewed-open-bay";
 import * as DMath from "./deterministic-math";
 import {
   nativeRationalOverlay,
@@ -34,6 +39,7 @@ export type ReviewedCirculationLink = {
   toNodeId: string;
   pointsFeet: P3[];
   decision: { source: string; id: string; summary: string };
+  openBay?: ReviewedOpenBay;
   notes?: string;
 };
 export type ReviewedCirculationLinks = {
@@ -83,6 +89,7 @@ export function validateReviewedCirculationLinks(
                 Math.abs(n) > 1e7,
             ),
         ) ||
+        (l.openBay !== undefined && !validBay(l.openBay)) ||
         !l.decision ||
         !text(l.decision.source, 500) ||
         !text(l.decision.id, 200) ||
@@ -255,6 +262,10 @@ export function reviewedCirculationLinkSupport(
         .map((r) => nativeRoomIdentityRings(data, r) as Rings),
     ].filter((m) => near(m as Rings));
     // Reviewed boundary patches keep their exact (rational) bodies.
+    const bay = link.openBay;
+    const bayMask = bay
+      ? checkedBayMask(data, bay, from, to, material.known)
+      : undefined;
     const patched: NativeRationalParts = data.walls
       .filter(
         (w) =>
@@ -263,7 +274,19 @@ export function reviewedCirculationLinkSupport(
           (!material.known.has(w.nativeElementId) ||
             (w.reviewPatchId && material.present.has(w.nativeElementId))),
       )
-      .flatMap((w) => boundary(w));
+      .flatMap((w) => {
+        const body = boundary(w);
+        if (
+          !bay ||
+          !bayMask ||
+          w.nativeElementId !== bay.hostWallId ||
+          w.reviewPatchId ||
+          w.approximate ||
+          JSON.stringify(w.ringsFeet) !== JSON.stringify(bay.hostRingsFeet)
+        )
+          return body;
+        return nativeRationalOverlay("difference", body, bayMask);
+      });
     const zoneParts = nativeRoutingAccessZonesAt(data, z).flatMap(
       (zone) => zone.parts,
     );

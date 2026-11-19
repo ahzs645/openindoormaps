@@ -176,7 +176,27 @@ export function projectNavigationSteps(
   destination: string,
 ): ProjectStep[] {
   const result: ProjectStep[] = [];
+  if (
+    route.paths.length === 0 &&
+    route.arrival?.mode === "pathway" &&
+    route.departure?.pathwayStop?.stopId === route.arrival.pathwayStop?.stopId
+  ) {
+    const stop = route.arrival;
+    return [
+      {
+        type: "arrive",
+        message: `You are at the hallway stop for ${destination}`,
+        distanceMeters: 0,
+        levelId: stop.levelId,
+        building: stop.building,
+        pointsFeet: [stop.pointFeet],
+        position: geographicPoint(data, stop.pointFeet),
+      },
+    ];
+  }
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
+  for (const n of route.reviewedPortalNodes ?? [])
+    if (!nodes.has(n.id)) nodes.set(n.id, n);
   // Room records are only consulted for door/opening crossings.
   const records = new Map(
     route.edges.some((e) => e.kind === "door" || e.kind === "opening")
@@ -231,11 +251,20 @@ export function projectNavigationSteps(
       let turnDirection: ProjectStep["turnDirection"] = null;
       if (!last || last.type === "arrive") {
         type = "depart";
-        message = route.departure?.hallwayCenter
-          ? `Start in the hallway center near ${departure} and head straight`
-          : route.departure?.mode === "hallway"
-            ? `Start outside ${departure} and head straight`
-            : `Leave ${departure} and head straight`;
+        message =
+          route.paths[0]?.roomCenter?.role === "departure"
+            ? "Start in " +
+              departure +
+              " on the centerline through the doors, " +
+              route.paths[0].roomCenter.attachmentMetres.toFixed(1) +
+              " m from the mapped room point"
+            : route.departure?.mode === "pathway"
+              ? `Start on the hallway pathway near ${departure}`
+              : route.departure?.hallwayCenter
+                ? `Start in the hallway center near ${departure} and head straight`
+                : route.departure?.mode === "hallway"
+                  ? `Start outside ${departure} and head straight`
+                  : `Leave ${departure} and head straight`;
       } else if (walk.curveEntry) {
         type = "straight";
         message = "Follow the curved corridor";
@@ -253,6 +282,7 @@ export function projectNavigationSteps(
         message = `Continue into building ${walk.building}`;
       } else if (
         last.type === "floor-change" ||
+        last.networkType === "raised-threshold" ||
         last.levelId !== walk.levelId
       ) {
         type = "straight";
@@ -336,6 +366,28 @@ export function projectNavigationSteps(
       lastBuilding = to.building;
       continue;
     }
+    const sill =
+      edge.kind === "door" &&
+      route.reviewedDoorSills?.find((s) => s.edgeId === edge.id);
+    if (sill) {
+      flush();
+      const millimetres = Math.round(sill.heightFeet * 304.8);
+      result.push({
+        type: "straight",
+        message: `Step over the ${millimetres} mm raised threshold.`,
+        networkType: "raised-threshold",
+        distanceMeters: edge.lengthMetres,
+        levelId: from.levelId,
+        building: from.building,
+        position: geographicPoint(data, path.pointsFeet[0]),
+        pointsFeet: path.pointsFeet.map((p) => [...p]),
+      });
+      const start = path.pointsFeet[0],
+        end = path.pointsFeet.at(-1)!;
+      heading = [end[0] - start[0], end[1] - start[1]];
+      lastBuilding = to.building;
+      continue;
+    }
     const buildingChange =
       lastBuilding !== undefined && lastBuilding !== from.building;
     lastBuilding = from.building;
@@ -386,13 +438,22 @@ export function projectNavigationSteps(
   if (last && endNode)
     result.push({
       type: "arrive",
-      message: route.arrival?.hallwayCenter
-        ? `Arrive in the hallway center near ${destination}`
-        : route.arrival?.mode === "hallway"
-          ? `Arrive outside ${destination}`
-          : route.arrival?.mode === "doorway"
-            ? `Arrive at the doorway of ${destination}`
-            : `Arrive at ${destination}`,
+      message:
+        last.roomCenter?.role === "arrival"
+          ? "Arrive on the doorway centerline in " +
+            destination +
+            ", " +
+            last.roomCenter.attachmentMetres.toFixed(1) +
+            " m from the mapped room point"
+          : route.arrival?.mode === "pathway"
+            ? `Arrive on the hallway pathway near ${destination}`
+            : route.arrival?.hallwayCenter
+              ? `Arrive in the hallway center near ${destination}`
+              : route.arrival?.mode === "hallway"
+                ? `Arrive outside ${destination}`
+                : route.arrival?.mode === "doorway"
+                  ? `Arrive at the doorway of ${destination}`
+                  : `Arrive at ${destination}`,
       distanceMeters: 0,
       levelId: route.arrival?.levelId ?? endNode.levelId,
       building: route.arrival?.building ?? endNode.building,

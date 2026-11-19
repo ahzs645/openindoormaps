@@ -29,15 +29,16 @@ const decoder = new TextDecoder("utf8", { fatal: true });
 function freezeOwnedGraph(value: IndoorDataset) {
   if (!value || value.format !== "reviter-indoor" || value.version !== 1)
     throw new Error("Directions are missing their original dataset.");
-  const pending: object[] = [value],
-    visited = new WeakSet<object>();
+  const pending: object[] = [value];
   while (pending.length > 0) {
     const current = pending.pop()!;
-    if (visited.has(current)) continue;
-    visited.add(current);
+    // A structured clone starts with mutable ordinary containers. Freezing a
+    // visited container also marks it, including aliases and cycles, without
+    // keeping a second campus-sized index of every object.
     const prototype = Object.getPrototypeOf(current);
     if (prototype !== Object.prototype && prototype !== Array.prototype)
       throw new Error("Directions require an ordinary immutable source graph.");
+    if (Object.isFrozen(current)) continue;
     for (const child of Object.values(current)) {
       if (child !== null && typeof child === "object") pending.push(child);
       else if (

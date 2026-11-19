@@ -81,7 +81,9 @@ export function validateCandidateRouteCases(
       "Unsupported route option; the verifier controls guide on/off",
     );
     assert(
-      ["inside", "hallway"].includes(item.options.endpointMode ?? ""),
+      ["inside", "hallway", "pathway"].includes(
+        item.options.endpointMode ?? "",
+      ),
       "Choose an explicit route endpoint mode",
     );
     assert.equal(
@@ -223,6 +225,78 @@ export function assertSharedCorridorRouteParity(
   }
   return {
     diagnosticParity: true as const,
+    requiredSourceEdgesVerified: !!item.requiredSourceEdgeIds?.length,
+    requiredNativeDoorVerified: item.requiredNativeDoorId !== undefined,
+  };
+}
+
+/** A saved-network journey requires its guides. The guide-off control must
+ * refuse travel, and the guide-on endpoints must equal saved core stations. */
+export function assertPathwayRoute(
+  item: CandidateRouteCase,
+  result: RouteCalculation,
+  baseline: RouteCalculation,
+  originalEdges: ReadonlyMap<string, IndoorEdge>,
+  verifyStop: (
+    stop: import("../../../app/indoor-project/shared-pathway-routing").SharedPathwayStop,
+  ) => void,
+) {
+  assert.equal(Boolean(result.route), item.expected, item.id);
+  assert.equal(baseline.route, null, "A disabled pathway atlas cannot route");
+  const route = result.route;
+  if (route) {
+    assert(route.departure?.pathwayStop && route.arrival?.pathwayStop, item.id);
+    for (const endpoint of [route.departure, route.arrival]) {
+      const stop = endpoint.pathwayStop!;
+      assert.equal(endpoint.mode, "pathway");
+      verifyStop(stop);
+      assert.deepEqual(stop.pointFeet, endpoint.pointFeet);
+    }
+    if (route.paths.length) {
+      assert.deepEqual(route.paths[0].pointsFeet[0], route.departure.pointFeet);
+      assert.deepEqual(
+        route.paths.at(-1)!.pointsFeet.at(-1),
+        route.arrival.pointFeet,
+      );
+      for (let i = 1; i < route.paths.length; i++)
+        assert.deepEqual(
+          route.paths[i - 1].pointsFeet.at(-1),
+          route.paths[i].pointsFeet[0],
+        );
+    } else {
+      assert.deepEqual(route.departure.pointFeet, route.arrival.pointFeet);
+      assert.equal(route.distanceMetres, 0);
+    }
+    for (const edge of route.edges) {
+      assert(
+        originalEdges.get(edge.id)?.enabled,
+        "Unknown or disabled pathway edge",
+      );
+      assert.deepEqual(edge, originalEdges.get(edge.id));
+    }
+    for (const id of item.requiredSourceEdgeIds ?? [])
+      assert(
+        route.edges.some((e) => e.id === id),
+        id,
+      );
+    if (item.requiredNativeDoorId !== undefined)
+      assert(
+        route.edges.some(
+          (e) =>
+            e.kind === "door" &&
+            e.nativeElementId === item.requiredNativeDoorId,
+        ),
+      );
+    if (item.requireSharedGuide)
+      assert(route.paths.some((p) => p.sharedCorridorGuideUsed));
+  } else {
+    assert.equal(result.diagnostic?.kind, "blocked");
+    assert(result.diagnostic.constraint?.startsWith("pathway"));
+  }
+  return {
+    guideOffRefusalVerified: true,
+    diagnosticParity:
+      JSON.stringify(result.diagnostic) === JSON.stringify(baseline.diagnostic),
     requiredSourceEdgesVerified: !!item.requiredSourceEdgeIds?.length,
     requiredNativeDoorVerified: item.requiredNativeDoorId !== undefined,
   };

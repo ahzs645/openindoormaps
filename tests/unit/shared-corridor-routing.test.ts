@@ -20,6 +20,8 @@ import {
   validatePreparedRouting,
   type PreparedRouting,
 } from "../../app/indoor-project/prepared-routing";
+import { createSharedPathwayNetwork } from "../../app/indoor-project/shared-pathway-routing";
+import { visitorRouteFailureMessage } from "../../app/indoor-project/visitor-route-state";
 import { findProjectRoute } from "../../app/indoor-project/viewer-routing";
 import {
   corridorGuideLength,
@@ -47,8 +49,15 @@ import {
 
 async function fixture(
   compact = false,
-  hole = false,
-  doorway: boolean | "hallway" | "vestibule" | "rotunda" = false,
+  hole: boolean | "beside-line" = false,
+  doorway:
+    | boolean
+    | "hallway"
+    | "vestibule"
+    | "rotunda"
+    | "directed-office"
+    | "directed-vestibule" = false,
+  disconnectedHub = false,
 ) {
   await initializeNativeExactGeosOverlay();
   const d = JSON.parse(
@@ -75,12 +84,19 @@ async function fixture(
   const rings = hole
     ? [
         ring,
-        [
-          [5, 3],
-          [5, 7],
-          [7, 7],
-          [7, 3],
-        ] as [number, number][],
+        (hole === "beside-line"
+          ? [
+              [20, 5.5],
+              [20, 6],
+              [20.25, 6],
+              [20.25, 5.5],
+            ]
+          : [
+              [5, 3],
+              [5, 7],
+              [7, 7],
+              [7, 3],
+            ]) as [number, number][],
       ]
     : [ring];
   d.records = ["A", "B", "C"].map((key) => ({
@@ -133,6 +149,10 @@ async function fixture(
       accessible: "yes",
     },
   ];
+  if (disconnectedHub) {
+    d.nodes.push({ ...d.nodes[1], id: "other-hub" });
+    d.edges[1].from = "other-hub";
+  }
   d.walls = [];
   d.doors = [];
   d.issues = [];
@@ -149,7 +169,7 @@ async function fixture(
       key: "room",
       number: "Room",
       name: typeof doorway === "string" ? doorway : "Room outside the hall",
-      circulation: doorway === "hallway",
+      circulation: doorway === "hallway" || doorway === "directed-vestibule",
       arrivalNodeId: undefined,
       ringsFeet: [
         [
@@ -178,6 +198,36 @@ async function fixture(
       lengthMetres: 2 * 0.3048,
     });
   }
+  if (doorway === "directed-office" || doorway === "directed-vestibule") {
+    d.walkingSupport!.floors[0].ringsFeet = [
+      [
+        [0, -10],
+        [40, -10],
+        [40, 10],
+        [0, 10],
+      ],
+    ];
+    const door = d.edges.at(-1)!;
+    door.direction = "from-to";
+    door.nativeElementId = 1;
+    d.doors = [
+      {
+        id: door.id,
+        nativeElementId: 1,
+        levelId: 1,
+        pointFeet: [4, 0],
+        normalFeet: [0, -1],
+        state: "connected",
+        roomKeys: door.roomKeys,
+        footprintFeet: [
+          [2, -0.2],
+          [6, -0.2],
+          [6, 0.2],
+          [2, 0.2],
+        ],
+      },
+    ];
+  }
   d.nativeIndoorEnvelopes = {
     version: 1,
     sourceModelSha256: d.source.modelSha256,
@@ -186,7 +236,7 @@ async function fixture(
       {
         levelId: 1,
         elevationFeet: 0,
-        partsFeet: [rings],
+        partsFeet: [d.walkingSupport.floors[0].ringsFeet],
         sourceElementIds: [1],
         cutElevationsFeet: [0.1],
         evidenceSha256: "b".repeat(64),
@@ -1006,4 +1056,273 @@ test("compact vestibule shared trunks preserve both outer hallway-center stops b
     assert.deepEqual(route.departure.hallwayCenter.doorPointFeet, start);
     assert.deepEqual(route.arrival.hallwayCenter.doorPointFeet, end);
   }
+});
+test("a public walk in one open native cell uses one straight segment and keeps the source dependencies", async () => {
+  const data = await fixture(true);
+  const worker = createWorkerRouteCalculator(data);
+  for (const [from, to] of [
+    ["A", "C"],
+    ["C", "A"],
+  ]) {
+    const options = {
+      endpointMode: "inside" as const,
+      useSharedCorridorGuides: false,
+    };
+    const route = worker(from, to, "public", options).route!;
+    assert.ok(route);
+    const first = data.nodes.find((n) => n.id === from)!.pointFeet;
+    const last = data.nodes.find((n) => n.id === to)!.pointFeet;
+    assert.deepEqual(
+      route.paths.flatMap((p) => p.pointsFeet),
+      [first, last],
+    );
+    assert.deepEqual(
+      route.edges.map((e) => e.id),
+      from === "A" ? ["AB", "BC"] : ["BC", "AB"],
+    );
+    const accessible = worker(from, to, "accessible", options).route!;
+    assert.ok(accessible.paths.every((p) => !p.centered));
+  }
+});
+
+test("a direct walk cannot cut through a native floor hole or an office beside the authorized walk", async () => {
+  const withHole = await fixture(true, true);
+  const options = {
+    endpointMode: "inside" as const,
+    useSharedCorridorGuides: false,
+  };
+  const around = createWorkerRouteCalculator(withHole)(
+    "A",
+    "C",
+    "public",
+    options,
+  ).route!;
+  assert.ok(around);
+  assert.ok(around.paths.flatMap((p) => p.pointsFeet).length > 2);
+  const besideLine = await fixture(false, "beside-line");
+  const clearsCenterOnly = createWorkerRouteCalculator(besideLine)(
+    "A",
+    "C",
+    "public",
+    options,
+  ).route!;
+  assert.ok(clearsCenterOnly);
+  assert.ok(clearsCenterOnly.paths.flatMap((p) => p.pointsFeet).length > 2);
+  const data = await fixture(false);
+  const office = {
+    ...data.records[0],
+    key: "office",
+    name: "Office",
+    circulation: false,
+    arrivalNodeId: undefined,
+    ringsFeet: [
+      [
+        [14, 4.2],
+        [18, 4.2],
+        [18, 6.2],
+        [14, 6.2],
+      ],
+    ] as [number, number][][],
+  };
+  data.records.push(office);
+  for (const edge of data.edges) edge.roomKeys.push(office.key);
+  const geometry = data.circulationGeometry!;
+  geometry.cells[0].roomKeys.push(office.key);
+  geometry.preparedRoomKeys?.push(office.key);
+  geometry.sourceGeometryKey = nativeCirculationGeometryKey(data);
+  geometry.exactTopology = encodeNativeExactTopology(
+    {
+      sourceModelSha256: data.source.modelSha256,
+      sourceGeometryKey: geometry.sourceGeometryKey,
+      kernelVersion: NATIVE_RATIONAL_OVERLAY_KERNEL_VERSION,
+    },
+    [
+      {
+        id: "hall-face",
+        parts: nativeRationalOverlay("union", [geometry.cells[0].ringsFeet]),
+      },
+    ],
+  );
+  const route = createWorkerRouteCalculator(data)("A", "C", "public", {
+    ...options,
+    allowOtherRoomTransit: false,
+  }).route!;
+  assert.ok(route);
+  assert.ok(route.paths.flatMap((p) => p.pointsFeet).length > 2);
+});
+
+test("visitor pathway starts at one published, physically checked hallway stop in every direction", async () => {
+  const { dataset } = await prepareRouting(await fixture(), {
+    method: "shared-corridor",
+  });
+  const calculate = createWorkerRouteCalculator(dataset);
+  const opts = {
+    endpointMode: "pathway",
+    allowOtherRoomTransit: false,
+  } as const;
+  const visit = (a: string, b: string) =>
+    calculate(a, b, "public", opts).route!;
+  const short = visit("A", "B"),
+    long = visit("A", "C"),
+    back = visit("C", "A");
+  assert.ok(short && long && back);
+  const points = (route: typeof long) =>
+    route.paths
+      .flatMap((p) => p.pointsFeet)
+      .filter(
+        (p, i, all) => !i || JSON.stringify(p) !== JSON.stringify(all[i - 1]),
+      );
+  assert.deepEqual(points(back).reverse(), points(long));
+  assert.deepEqual(long.departure, short.departure);
+  assert.deepEqual(long.departure, back.arrival);
+  assert.notDeepEqual(long.departure!.pointFeet, dataset.nodes[0].pointFeet);
+  assert.deepEqual(points(long).slice(0, points(short).length), points(short));
+  assert.deepEqual(
+    projectNavigationSteps(dataset, long, "A", "C")[0].pointsFeet[0],
+    long.departure!.pointFeet,
+  );
+  assert.deepEqual(
+    projectNavigationSteps(dataset, long, "A", "C").at(-1)!.pointsFeet[0],
+    long.arrival!.pointFeet,
+  );
+  assert.equal(
+    long.departure?.pathwayStop?.stopId,
+    JSON.stringify(["hall", ...long.departure!.pointFeet]),
+  );
+  assert.ok(visit("B", "B"));
+  assert.equal(visit("B", "B").distanceMetres, 0);
+  assert.equal(
+    projectNavigationSteps(dataset, visit("B", "B"), "B", "B")[0].type,
+    "arrive",
+  );
+  assert.ok(!calculate("A", "C", "accessible", opts).route);
+  assert.ok(
+    calculate("A", "C", "accessible", { endpointMode: "inside" }).route,
+  );
+});
+
+test("stale, unprepared and unsupported pathways have an explicit missing-stop result", async () => {
+  const orig = await fixture();
+  const { dataset } = await prepareRouting(orig, { method: "shared-corridor" });
+  const options = { endpointMode: "pathway" } as const;
+  const check = (data: IndoorDataset) => {
+    const c = createWorkerRouteCalculator(data)("A", "C", "public", options);
+    assert.equal(c.route, null);
+    assert.equal(c.diagnostic?.constraint, "pathway-start");
+    assert.match(
+      visitorRouteFailureMessage(c.diagnostic, "public"),
+      /No mapped hallway start/,
+    );
+    assert.ok(!c.reachable);
+  };
+  check(orig);
+  const changed = structuredClone(dataset);
+  changed.edges[0].enabled = false;
+  check(changed);
+  const poisoned = structuredClone(dataset) as IndoorDataset & {
+    preparedRouting: PreparedRouting;
+  };
+  const guide = poisoned.preparedRouting.guides.find((g) => g.edgeId === "AB")!;
+  guide.pointsFeet[guide.hallwayJoins![0]] = [1e5, 1e5, 0];
+  check(poisoned);
+  const zero = structuredClone(dataset) as IndoorDataset & {
+    preparedRouting: PreparedRouting;
+  };
+  for (const g of zero.preparedRouting.guides)
+    g.hallwayJoins![1] = g.hallwayJoins![0];
+  check(zero);
+  assert.ok(createSharedPathwayNetwork(dataset).stopForRoom("A", true));
+});
+
+test("a real one-way room door can attach a room without an interior arrival only in its admitted direction", async () => {
+  for (const type of ["directed-office", "directed-vestibule"] as const) {
+    const { dataset } = await prepareRouting(
+      await fixture(false, false, type),
+      { method: "shared-corridor" },
+    );
+    const network = createSharedPathwayNetwork(dataset);
+    assert.equal(network.stopForRoom("room", true), null);
+    const arrived = network.stopForRoom("room", false);
+    assert.equal(arrived?.entranceEdgeId, "door");
+    assert.deepEqual(
+      arrived?.pointFeet,
+      network.stopForRoom("A", false)?.pointFeet,
+    );
+    assert.ok(network.journey("C", "room", { endpointMode: "pathway" }));
+    assert.equal(
+      network.journey("room", "C", { endpointMode: "pathway" }),
+      null,
+    );
+  }
+});
+
+test("two independently admitted directory places at the same physical pathway stop need no walk", async () => {
+  const { dataset } = await prepareRouting(await fixture(true), {
+    method: "shared-corridor",
+  });
+  const data = structuredClone(dataset) as IndoorDataset & {
+    preparedRouting: PreparedRouting;
+  };
+  const points = new Map(data.nodes.map((n) => [n.id, n.pointFeet]));
+  data.preparedRouting.guides = [
+    {
+      edgeId: "AB",
+      kind: "shared-corridor",
+      hallwayJoins: [1, 2],
+      pointsFeet: [points.get("A")!, [5, 5, 0], [7, 5, 0], points.get("B")!],
+    },
+    {
+      edgeId: "BC",
+      kind: "shared-corridor",
+      hallwayJoins: [1, 2],
+      pointsFeet: [points.get("B")!, [7, 5, 0], [5, 5, 0], points.get("C")!],
+    },
+  ];
+  const calc = createWorkerRouteCalculator(data);
+  for (const [a, b] of [
+    ["A", "C"],
+    ["C", "A"],
+  ]) {
+    const route = calc(a, b, "public", { endpointMode: "pathway" }).route;
+    assert.ok(route);
+    assert.equal(
+      route.departure?.pathwayStop?.stopId,
+      route.arrival?.pathwayStop?.stopId,
+    );
+    assert.notEqual(
+      route.departure?.pathwayStop?.terminalNodeId,
+      route.arrival?.pathwayStop?.terminalNodeId,
+    );
+    assert.equal(route.distanceMetres, 0);
+    assert.equal(route.edges.length, 2);
+    assert.deepEqual(route.paths, []);
+    assert.ok(route.sourceDistanceMetres > 0);
+    assert.deepEqual(
+      projectNavigationSteps(data, route, a, b).map((s) => s.type),
+      ["arrive"],
+    );
+  }
+  const detour = structuredClone(data);
+  const guide = detour.preparedRouting.guides[1];
+  guide.pointsFeet.splice(2, 0, [7, 6, 0]);
+  guide.hallwayJoins![1]++;
+  const loop = createWorkerRouteCalculator(detour)("A", "C", "public", {
+    endpointMode: "pathway",
+  }).route;
+  assert.ok(loop && loop.distanceMetres > 0 && loop.paths.length > 0);
+  const separate = await prepareRouting(
+    await fixture(true, false, false, true),
+    { method: "shared-corridor" },
+  );
+  const islands = separate.dataset as IndoorDataset & {
+    preparedRouting: PreparedRouting;
+  };
+  islands.preparedRouting.guides = structuredClone(data.preparedRouting.guides);
+  const network = createSharedPathwayNetwork(islands);
+  assert.ok(network.stopForRoom("A", true));
+  assert.equal(
+    network.stopForRoom("A", true)?.stopId,
+    network.stopForRoom("C", false)?.stopId,
+  );
+  assert.equal(network.journey("A", "C", { endpointMode: "pathway" }), null);
 });

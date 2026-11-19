@@ -1,4 +1,9 @@
-import { createTwoFootCorridorSupport } from "./corridor-guide-support";
+import {
+  createCorridorGuideSupport,
+  createTwoFootCorridorSupport,
+} from "./corridor-guide-support";
+import { alignPairedDoors } from "./paired-door-route";
+import { corridorSegmentProjection } from "./corridor-terminal-approach";
 import type { PublishedSupportTileFactory } from "./published-support-tiles";
 import { createNativeTransitRefinementPolicy } from "./native-walk-transit-owners";
 import * as DMath from "./deterministic-math";
@@ -65,6 +70,7 @@ type WalkableArea = {
   boundaryRings?: (bounds: number[]) => XY[][];
 };
 export type RoutePath = {
+  roomCenter?: import("./paired-door-route").RoomCenterAttachment;
   edgeIds: string[];
   levelIds: number[];
   pointsFeet: XYZ[];
@@ -136,6 +142,35 @@ function walkingPathQuality(points: number[][]) {
     if (delta > (25 * Math.PI) / 180) turns++;
   }
   return { turns, distance: length(points) };
+}
+/** Move a single proved elbow along either incident leg. Compare the same
+ * proposals in either direction; a rejected shape never changes the route. */
+function shorterWalkingCorner(
+  points: XY[],
+  supported: (points: XY[]) => boolean,
+) {
+  if (points.length !== 3) return points;
+  const [a, corner, b] = points;
+  const proposals = [];
+  for (const end of [a, b]) {
+    for (let step = 1; step < 8; step++) {
+      const bend = interpolate(end, corner, step / 8);
+      const path = [a, bend, b];
+      proposals.push({ path, lengthFeet: length(path), bend });
+    }
+  }
+  proposals.sort(
+    (left, right) =>
+      left.lengthFeet - right.lengthFeet ||
+      left.bend[0] - right.bend[0] ||
+      left.bend[1] - right.bend[1],
+  );
+  const originalLength = length(points);
+  for (const proposal of proposals) {
+    if (proposal.lengthFeet >= originalLength) break;
+    if (supported(proposal.path)) return proposal.path;
+  }
+  return points;
 }
 /** Split a cleaned guide at projected source anchors. These are collinear
  * metadata boundaries, not turns or physical thresholds. Source edge groups
@@ -1179,6 +1214,98 @@ function refine(
         return points;
       return cleaned.points;
     };
+    // A single open native cell often has a raster walk between two fixed
+    // anchors. Test their actual line of sight before fitting hallway axes.
+    // At a door, retain the prepared walking lane. Its guide must advance
+    // along the chord, with the chord staying within one foot of the guide
+    // (half the checked two-foot width). Outer hallway stops stay fixed.
+    const nativeWalk = () => {
+      const cell = selectedExactParents[0];
+      if (
+        fixedAnchors ||
+        junctionOnly ||
+        guideOnly ||
+        !cell?.parts ||
+        selectedExactParents.length !== 1 ||
+        !supportedFloors?.length ||
+        originalPassages.length > 0 ||
+        path.pointsFeet.length < 3 ||
+        (start[0] === end[0] && start[1] === end[1]) ||
+        !edges.every(
+          (e) => e.kind === "walk" && e.enabled && e.nativeCellId === cell.id,
+        )
+      )
+        return;
+      return cell.parts;
+    };
+    const cell = nativeWalk();
+    const z = path.pointsFeet[0][2];
+    let walkSupport: ReturnType<typeof createCorridorGuideSupport> | undefined;
+    const checkedWalk = (points: XY[]) => {
+      if (!cell) return false;
+      try {
+        if (!walkSupport) {
+          const doors = routingCalculationValue(
+            data,
+            "native-door-approach-query",
+            () => createNativeDoorApproachQuery(data),
+          );
+          walkSupport = createCorridorGuideSupport(cell, z, edges, doors);
+        }
+        // The square at an interior corner contains the rotating two-foot body.
+        return (
+          points.slice(1).every((p, i) => validSegment(points[i], p, free)) &&
+          walkSupport.edgeSupported(points, firstId, lastId) &&
+          points.slice(1, -1).every(([x, y]) =>
+            walkSupport!.supported([
+              [x - 1, y],
+              [x + 1, y],
+            ]),
+          ) &&
+          policyAllowed(points)
+        );
+      } catch {
+        return false;
+      }
+    };
+    const keepsStops = (original: readonly (XY | XYZ)[]) =>
+      !protectedPointsFeet.some(
+        ([x, y, h]) =>
+          h === z &&
+          original.slice(1, -1).some((p) => p[0] === x && p[1] === y),
+      );
+    const directWalkSupported = (guide?: XY[]) => {
+      if (!cell) return false;
+      if (guide) {
+        if (portalEdges.length === 0) return false;
+        let fraction = 0;
+        for (const point of guide) {
+          const projected = corridorSegmentProjection(point, start, end);
+          if (
+            !projected ||
+            projected.fraction < fraction ||
+            DMath.hypot(
+              point[0] - projected.point[0],
+              point[1] - projected.point[1],
+            ) > 1
+          )
+            return false;
+          fraction = projected.fraction;
+        }
+      }
+      return keepsStops(guide ?? path.pointsFeet) && checkedWalk([start, end]);
+    };
+    if (!preferSharedGuide && directWalkSupported()) {
+      return {
+        ...path,
+        centered: true,
+        nativeFloorSupported: true,
+        nativeCirculationUsed: true,
+        shape: "centered",
+        sourceReason: undefined,
+        pointsFeet: [path.pointsFeet[0], path.pointsFeet.at(-1)!],
+      };
+    }
     const candidates: XY[][] = [];
     let sourceGuide = false;
     let preparedCandidate = false;
@@ -1229,9 +1356,10 @@ function refine(
           openingSpanSupported: openingSpans.length > 0 ? true : undefined,
           shape: "centered",
           sourceReason: undefined,
-          pointsFeet: cleanedLine(shared, supportsShared).map(
-            (p): XYZ => [p[0], p[1], guide[0][2]],
-          ),
+          pointsFeet: (directWalkSupported(shared)
+            ? [start, end]
+            : cleanedLine(shared, supportsShared)
+          ).map((p): XYZ => [p[0], p[1], guide[0][2]]),
         };
       }
       if (!preferSharedGuide) {
@@ -1619,6 +1747,13 @@ function refine(
       candidates[0].length >= path.pointsFeet.length
     )
       return source("validated-source");
+    const cleaned = isCurved
+      ? candidates[0]
+      : cleanedLine(candidates[0], () => true);
+    const walkingLine =
+      cell && !isCurved && !preferSharedGuide && keepsStops(cleaned)
+        ? shorterWalkingCorner(cleaned, checkedWalk)
+        : cleaned;
     return {
       ...path,
       centered: true,
@@ -1626,13 +1761,14 @@ function refine(
       nativeCirculationUsed: nativeSurfaces.cells.length > 0,
       preparedGuideUsed: preparedCandidate || undefined,
       openingSpanSupported: openingSpans.length > 0 ? true : undefined,
-      shape: isCurved ? "curved" : sourceGuide ? "orthogonal" : "centered",
+      shape: isCurved
+        ? "curved"
+        : sourceGuide && walkingLine === cleaned
+          ? "orthogonal"
+          : "centered",
       curveRanges: isCurved ? curved?.ranges : undefined,
       sourceReason: undefined,
-      pointsFeet: (isCurved
-        ? candidates[0]
-        : cleanedLine(candidates[0], () => true)
-      ).map((p) => [p[0], p[1], path.pointsFeet[0][2]]),
+      pointsFeet: walkingLine.map((p) => [p[0], p[1], path.pointsFeet[0][2]]),
     };
   } catch {
     return source("centering-error");
@@ -1648,6 +1784,7 @@ export function centeredRoutePaths(
   enabled = true,
   useSharedGuides = true,
   preserveHallwayStops = false,
+  directoryEndpoints?: { start: string; end: string },
 ): RoutePath[] {
   // Reviews can edit an existing ring array in place. Bounds are reusable
   // inside one synchronous resolution, never across changed geometry.
@@ -2024,6 +2161,8 @@ export function centeredRoutePaths(
     );
     if (adjusted.centered) refined[i] = adjusted;
   }
+  if (enabled)
+    alignPairedDoors(data, refined, edges, stopPoints, directoryEndpoints);
   return refined;
 }
 

@@ -1,3 +1,4 @@
+import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import type { IndoorDataset, IndoorEdge, IndoorRecord } from "./contract";
 import { nativeRoomIdentityRings } from "./native-floor-opening-ownership";
 import { nativeRationalOverlay, rational } from "./native-rational-overlay";
@@ -142,7 +143,7 @@ export function createNativeTransitRefinementPolicy(
     (r) =>
       keys.has(r.key) &&
       isProjectDestination(r) &&
-      !r.circulation &&
+      !pathwayCirculationOwner(data, r) &&
       !r.stair &&
       !hasReviewedThroughNavigation(r, data.source.modelSha256) &&
       !nativeWalkTouchesTransitRoom(data, source, r),

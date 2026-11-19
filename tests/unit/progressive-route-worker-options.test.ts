@@ -122,7 +122,7 @@ test("worker keeps explicit hallway/transit options through checked calculation"
     "b",
     "accessible",
     {
-      endpointMode: "inside",
+      endpointMode: "pathway",
       allowOtherRoomTransit: false,
       preferHallways: true,
     },

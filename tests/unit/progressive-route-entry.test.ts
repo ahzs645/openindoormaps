@@ -218,7 +218,7 @@ test("actual compact-page handler still requests checked routing for distinct id
     assert.equal(check.messages[0].end, "agora-floor-two");
     assert.equal(check.messages[0].mode, profile);
     assert.deepEqual(check.messages[0].options, {
-      endpointMode: "inside",
+      endpointMode: "pathway",
       allowOtherRoomTransit: false,
     });
     assert.deepEqual(check.starts, ["route"]);
@@ -235,7 +235,7 @@ test("actual compact-page handler carries the selected room-transit preference",
   await check.run();
   assert.equal(check.messages.length, 1);
   assert.deepEqual(check.messages[0].options, {
-    endpointMode: "inside",
+    endpointMode: "pathway",
     allowOtherRoomTransit: true,
   });
   check.dispose();

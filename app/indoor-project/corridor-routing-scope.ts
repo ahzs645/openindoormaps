@@ -1,3 +1,5 @@
+import { reviewedRampLanding } from "./raised-rotunda-plane";
+import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import type { IndoorDataset, IndoorEdge } from "./contract";
 
 /** Index the complete original source graph before selecting emitted guides.
@@ -35,7 +37,11 @@ export function indexCorridorRoutingScope(data: IndoorDataset) {
       reject("unknown-source-terminal");
       continue;
     }
-    if (a.levelId !== b.levelId || a.pointFeet[2] !== b.pointFeet[2]) {
+    if (
+      (a.levelId !== b.levelId &&
+        !reviewedRampLanding(data, edge, a, b, records)) ||
+      a.pointFeet[2] !== b.pointFeet[2]
+    ) {
       reject("different-physical-levels");
       continue;
     }
@@ -46,7 +52,12 @@ export function indexCorridorRoutingScope(data: IndoorDataset) {
     if (
       ![a, b].every((node) => {
         const owner = records.get(node.roomKey);
-        return owner?.circulation && owner.walkable && owner.access !== "staff";
+        return (
+          owner &&
+          pathwayCirculationOwner(data, owner) &&
+          owner.walkable &&
+          owner.access !== "staff"
+        );
       })
     ) {
       reject("ineligible-terminal-owner");

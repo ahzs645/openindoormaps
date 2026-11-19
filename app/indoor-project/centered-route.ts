@@ -61,6 +61,7 @@ type WalkableArea = {
   boundaryRings?: (bounds: number[]) => XY[][];
 };
 export type RoutePath = {
+  roomCenter?: import("./paired-door-route").RoomCenterAttachment;
   edgeIds: string[];
   levelIds: number[];
   pointsFeet: XYZ[];

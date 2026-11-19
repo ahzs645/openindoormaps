@@ -321,14 +321,15 @@ test(
       await writeFile(
         wrapper,
         `import { parentPort } from "node:worker_threads";
+import { tsImport } from ${JSON.stringify(import.meta.resolve("tsx/esm/api"))};
 globalThis.postMessage = (response) => parentPort.postMessage(response);
-await import(${JSON.stringify(workerEntry.href)});
+await tsImport(${JSON.stringify(workerEntry.href)}, import.meta.url);
 parentPort.on("message", data => globalThis.onmessage({ data }));
 parentPort.postMessage({ ready: true });
 `,
       );
       worker = new Worker(wrapper, {
-        execArgv: ["--import", import.meta.resolve("tsx")],
+        execArgv: [],
         resourceLimits: { maxOldGenerationSizeMb: 256 },
       });
       const [ready] = await once(worker, "message");

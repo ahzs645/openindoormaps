@@ -8,7 +8,12 @@ import type { RouteBlocker } from "./route-policy";
 export type ProjectRouteDiagnostic = {
   kind: "connected" | "missing-entrance" | "source-gap" | "blocked";
   /** A request restriction, distinct from the physical source witness. */
-  constraint?: "hallways" | "stair-exclusions";
+  constraint?:
+    | "hallways"
+    | "stair-exclusions"
+    | "pathway-start"
+    | "pathway-end"
+    | "pathway-network";
   message: string;
   blockers: RouteBlocker[];
   /** A diagnostic witness, never a route offered to the visitor. */

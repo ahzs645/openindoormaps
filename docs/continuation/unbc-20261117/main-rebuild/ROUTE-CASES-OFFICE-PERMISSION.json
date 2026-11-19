@@ -1,0 +1,160 @@
+{
+  "replace": [
+    {
+      "id": "vestibule-07-309:to-07-305:inside",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-311-3f6fcd792626",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "vestibule-07-309:from-07-305:inside",
+      "from": "rm-311-3f6fcd792626",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "vestibule-07-309:via-suite-doors-to-03-1104",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-694-70a5a7eafba5",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    }
+  ],
+  "add": [
+    {
+      "id": "office-permission:corridor-to-vestibule:inside:other-rooms-false",
+      "from": "rm-311-47f103792aec",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:vestibule-to-corridor:inside:other-rooms-false",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-311-47f103792aec",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:corridor-to-vestibule:inside:other-rooms-true",
+      "from": "rm-311-47f103792aec",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:vestibule-to-corridor:inside:other-rooms-true",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-311-47f103792aec",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:corridor-to-vestibule:hallway:other-rooms-false",
+      "from": "rm-311-47f103792aec",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:vestibule-to-corridor:hallway:other-rooms-false",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-311-47f103792aec",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": false,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:corridor-to-vestibule:hallway:other-rooms-true",
+      "from": "rm-311-47f103792aec",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:vestibule-to-corridor:hallway:other-rooms-true",
+      "from": "rm-311-3f5ed3792618",
+      "to": "rm-311-47f103792aec",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    },
+    {
+      "id": "office-permission:corridor-to-office-destination",
+      "from": "rm-311-47f103792aec",
+      "to": "rm-311-3f6fcd792626",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": true
+    },
+    {
+      "id": "office-permission:office-to-corridor",
+      "from": "rm-311-3f6fcd792626",
+      "to": "rm-311-47f103792aec",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "inside"
+      },
+      "expected": true
+    },
+    {
+      "id": "office-permission:campus-to-vestibule",
+      "from": "rm-694-70a5a7eafba5",
+      "to": "rm-311-3f5ed3792618",
+      "mode": "public",
+      "options": {
+        "allowOtherRoomTransit": true,
+        "endpointMode": "hallway"
+      },
+      "expected": false
+    }
+  ]
+}

@@ -23,10 +23,21 @@ export function publishedRouteRuntimeBinding(root: string) {
     },
   );
 }
+/** The strip certificate concerns the native strip algorithm and its complete
+ * local dependency graph, independent of unrelated rendering changes. */
+export function nativeCorridorStripBinding(root: string) {
+  return preparedDisplayEngineBinding(
+    root,
+    ["app/indoor-project/native-public-corridor-strip.ts"],
+    {
+      namespace: "public-corridor-native-strip-v1",
+    },
+  );
+}
 export function writePublishedRouteRuntimeBinding(root: string) {
   const binding = publishedRouteRuntimeBinding(root);
   const target = path.join(root, generated);
-  const source = `// Generated from the actual route worker/validator module closure and lock.\nexport const PUBLISHED_ROUTE_RUNTIME_SHA256 =\n  ${JSON.stringify(binding.sha256)};\n`;
+  const source = `// Generated from the actual route worker/validator module closure and lock.\nexport const PUBLISHED_ROUTE_RUNTIME_SHA256 =\n  ${JSON.stringify(binding.sha256)};\nexport const NATIVE_CORRIDOR_STRIP_ENGINE_SHA256 =\n  ${JSON.stringify(nativeCorridorStripBinding(root).sha256)};\n`;
   if (!existsSync(target) || readFileSync(target, "utf8") !== source)
     writeFileSync(target, source);
   return binding;

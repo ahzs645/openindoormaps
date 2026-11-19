@@ -1,7 +1,9 @@
+import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import type { IndoorDataset, IndoorRecord } from "./contract";
 import type { ProjectRoutingGraph } from "./routing-graph";
 import type { ProjectRouteArrival } from "./route-arrival";
 import { isConnectorLobbyDestination } from "./connector-arrival";
+import { routingCalculationValue } from "./routing-cache";
 import { routingDoorApertures } from "./routing-apertures";
 import { validatedOpeningSpan, openingSpanFrame } from "./opening-span";
 
@@ -14,14 +16,48 @@ export function hallwayRouteEndpoints(
   graph: ProjectRoutingGraph,
   room: IndoorRecord,
   departure: boolean,
+  pathway = false,
 ): RouteEndpoint[] {
-  if (!room.arrivalNodeId || !room.walkable || room.access === "staff")
+  if (
+    (!pathway && !room.arrivalNodeId) ||
+    !room.walkable ||
+    room.access === "staff"
+  )
     return [];
-  if (room.circulation || isConnectorLobbyDestination(data, room))
-    return [{ nodeId: room.arrivalNodeId }];
+  const own = room.arrivalNodeId ? [{ nodeId: room.arrivalNodeId }] : [];
+  if (isConnectorLobbyDestination(data, room) || (room.circulation && !pathway))
+    return own;
+  const byGraph = routingCalculationValue(
+    data,
+    "finite-hallway-entrances",
+    () =>
+      new WeakMap<
+        ProjectRoutingGraph,
+        Map<boolean, Map<string, Map<string, RouteEndpoint>>>
+      >(),
+  );
+  let byDirection = byGraph.get(graph);
+  if (!byDirection) byGraph.set(graph, (byDirection = new Map()));
+  let byRoom = byDirection.get(departure);
+  if (!byRoom)
+    byDirection.set(
+      departure,
+      (byRoom = indexEntrances(data, graph, departure)),
+    );
+  const entries = [...(byRoom.get(room.key)?.values() ?? [])];
+  return pathway
+    ? [...(room.circulation ? own : []), ...entries]
+    : [...new Map(entries.map((e) => [e.nodeId, e])).values()];
+}
+
+function indexEntrances(
+  data: IndoorDataset,
+  graph: ProjectRoutingGraph,
+  departure: boolean,
+) {
   const nodes = new Map(data.nodes.map((n) => [n.id, n]));
   const apertures = new Map(routingDoorApertures(data).map((d) => [d.id, d]));
-  const result = new Map<string, RouteEndpoint>();
+  const result = new Map<string, Map<string, RouteEndpoint>>();
   for (const [fromId, links] of graph.adjacency) {
     for (const link of links) {
       const edge = link.edge;
@@ -31,10 +67,11 @@ export function hallwayRouteEndpoints(
       if (!from || !to) continue;
       const inside = departure ? from : to,
         outside = departure ? to : from;
+      const room = graph.records.get(inside.roomKey);
       if (
-        inside.roomKey !== room.key ||
+        !room ||
         outside.roomKey === room.key ||
-        !graph.records.get(outside.roomKey)?.circulation ||
+        !pathwayCirculationOwner(data, graph.records.get(outside.roomKey)) ||
         inside.levelId !== outside.levelId ||
         Math.abs(inside.pointFeet[2] - outside.pointFeet[2]) > 0.01
       )
@@ -99,7 +136,9 @@ export function hallwayRouteEndpoints(
         );
       });
       if (!crosses) continue;
-      result.set(outside.id, {
+      let entries = result.get(room.key);
+      if (!entries) result.set(room.key, (entries = new Map()));
+      entries.set(JSON.stringify([outside.id, edge.id]), {
         nodeId: outside.id,
         entrance: {
           mode: "hallway",
@@ -111,5 +150,5 @@ export function hallwayRouteEndpoints(
       });
     }
   }
-  return [...result.values()];
+  return result;
 }

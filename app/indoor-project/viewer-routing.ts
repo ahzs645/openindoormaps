@@ -1,7 +1,7 @@
 /** Viewer route choices over the unchanged source-qualified graph.
  * This module does not validate source data or change any preparation input. */
 import * as DMath from "./deterministic-math";
-import type { IndoorDataset, IndoorEdge } from "./contract";
+import type { IndoorDataset, IndoorEdge, IndoorNode } from "./contract";
 import type { ProjectRoute as SourceProjectRoute } from "./routing";
 import type { ProjectRouteArrival } from "./route-arrival";
 import { nativeCirculationBinding } from "./native-circulation-binding";
@@ -20,6 +20,7 @@ import {
   projectLinkCost,
   type ProjectRoutingGraph,
 } from "./routing-graph";
+import { createSharedPathwayNetwork } from "./shared-pathway-routing";
 import { hallwayRouteEndpoints, type RouteEndpoint } from "./route-endpoints";
 import { centerHallwayRouteEndpoints } from "./hallway-center-endpoints";
 import {
@@ -30,6 +31,10 @@ export { projectRoutingOptionsKey } from "./routing-options";
 export type { ProjectRoutingOptions } from "./routing-options";
 export type ProjectRoute = SourceProjectRoute & {
   departure?: ProjectRouteArrival;
+  /** Native portal endpoints reconstructed for this visitor route. */
+  reviewedPortalNodes?: IndoorNode[];
+  /** Original raised thresholds on checked visitor doorway crossings. */
+  reviewedDoorSills?: { edgeId: string; heightFeet: number }[];
 };
 type ResolvedRoutes = {
   geometry: string;
@@ -82,6 +87,23 @@ const copyRoute = (route: ProjectRoute): ProjectRoute => ({
     levelIds: [...path.levelIds],
     edgeIds: [...path.edgeIds],
     pointsFeet: path.pointsFeet.map((p) => [...p] as [number, number, number]),
+    ...(path.roomCenter
+      ? {
+          roomCenter: {
+            ...path.roomCenter,
+            mappedPointFeet: [...path.roomCenter.mappedPointFeet] as [
+              number,
+              number,
+              number,
+            ],
+            centerPointFeet: [...path.roomCenter.centerPointFeet] as [
+              number,
+              number,
+              number,
+            ],
+          },
+        }
+      : {}),
     curveRanges: path.curveRanges?.map((range) => ({ ...range })),
   })),
 });
@@ -100,6 +122,13 @@ export function findProjectRoute(
   )
     return null;
   return withRoutingCalculation(data, () => {
+    if (options.endpointMode === "pathway") {
+      return createSharedPathwayNetwork(data, mode).journey(
+        startKey,
+        endKey,
+        options,
+      );
+    }
     // A budget limits optional refinement, not route availability. Only a
     // complete refusal retries with original centering and fresh link rejects.
     for (const originalCentering of [false, true]) {
@@ -353,7 +382,13 @@ function resolveProjectRoute(
   ] as const;
   const paths = originalCentering
     ? originalCenteredRoutePaths(...pathArguments)
-    : centeredRoutePaths(...pathArguments, options.endpointMode === "hallway");
+    : centeredRoutePaths(
+        ...pathArguments,
+        options.endpointMode === "hallway",
+        options.endpointMode === "hallway"
+          ? undefined
+          : { start: startKey, end: endKey },
+      );
   const outside = createIndoorExclusionQuery(data);
   const pathExclusions = (path: RoutePath) => {
     const edge =

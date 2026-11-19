@@ -20,13 +20,17 @@
 #     master stays the unchanged source; applied.zip is the project's own
 #     application of the same file to it, checked row by row
 #     (scripts/indoor/source-boundary-patch-review.ts). Unset: unchanged run.
+#   NATIVE_DOOR_OWNER_REVIEW=review.json
+#     connect an explicitly listed set of native doors by native-cell
+#     ownership (scripts/indoor/source-native-door-owner-review.ts). Every
+#     other door is matched as before. Unset: unchanged run.
 #   SYNC_DIR=dir   copy checkpoints there every 10 minutes and restore them
 #     at start when WORK/run/checkpoints is empty (Colab: a Drive folder).
 #   DRY_RUN=1      print the command without running it.
 set -euo pipefail
 WORK=$(cd "${1:?usage: run.sh WORK}" && pwd -P)
 OIM=$WORK/openindoormaps IN=$WORK/inputs RUN=$WORK/run
-REVIEW=$OIM/docs/continuation/unbc-20261021/link-doors/DOOR-APERTURE-REVIEW.json
+REVIEW=${REVIEW:-$OIM/docs/continuation/unbc-20261021/link-doors/DOOR-APERTURE-REVIEW.json}
 
 for d in "$OIM" "$WORK/reviter" "$IN"; do [ -d "$d" ] || { echo "Missing $d" >&2; exit 1; }; done
 node -e 'const [a,b]=process.versions.node.split(".").map(Number);if(a<22||(a===22&&b<15))throw Error("Node 22.15 or newer is required, found "+process.version)'
@@ -44,27 +48,24 @@ landing=${LANDING_WORKERS:-$(( spare / 5 ))}
 heap=${PARENT_HEAP_MIB:-$(( mem_gib >= 32 ? 8192 : 6144 ))}
 echo "Machine: $cores cores, $mem_gib GiB. Floor workers $native, landing workers $landing, main heap $heap MiB."
 
-# Checkpoint files are content-addressed and never change, so a copy only has
-# to add new files.
-copy() { mkdir -p "$2"; if command -v rsync >/dev/null; then rsync -a "$1/" "$2/"; else cp -an "$1/." "$2/" 2>&1 | grep -v non-portable >&2 || true; fi; }
-
-mkdir -p "$RUN/checkpoints"
-mkdir -p -m 700 "$RUN/imports"
-if [ -n "${SYNC_DIR:-}" ] && [ -z "$(ls -A "$RUN/checkpoints")" ] && [ -d "$SYNC_DIR/checkpoints" ]; then
-  echo "Restoring checkpoints from $SYNC_DIR"
-  copy "$SYNC_DIR/checkpoints" "$RUN/checkpoints"
-  if [ -d "$SYNC_DIR/imports" ]; then copy "$SYNC_DIR/imports" "$RUN/imports"; fi
-fi
-# Synced copies lose their modes; the private import data must stay owner-only.
-chmod 700 "$RUN/imports"; find "$RUN/imports" -type f -exec chmod 600 {} +
-# Output and diagnostic directories must be new; checkpoints carry the work.
-rm -rf "$RUN/output" "$RUN/diagnostic"
+# Landing journals grow under an existing name. Both copy paths refresh them.
+copy() {
+  mkdir -p "$2"
+  if command -v rsync >/dev/null; then
+    rsync -a --exclude='*.tmp-*' "$1/" "$2/"
+  else
+    python3 -I "$OIM/docs/continuation/unbc-20261021/recompile/copy-checkpoints.py" "$1" "$2"
+  fi
+}
 
 # Floor-plane workers inherit these flags. tsx alone does not resolve reviter's
 # extensionless local imports inside worker threads; reviter's resolver does.
 cmd=(node --max-old-space-size="$heap" --expose-gc --import tsx
   --import "$WORK/reviter/scripts/register-local-typescript.mjs"
   scripts/indoor/regenerate-from-native-cache.ts "$IN/master.zip" "$IN/native-cache.json" "$RUN/output"
+  ${EXPLORE_WORKERS:+--explore-workers "$EXPLORE_WORKERS"}
+  ${REVIEWED_CIRCULATION_LINKS:+--reviewed-circulation-links "$REVIEWED_CIRCULATION_LINKS"}
+  ${OFFICE_PERMISSION_REVIEW:+--office-permission-review "$OFFICE_PERMISSION_REVIEW"}
   --native-workers "$native" --native-worker-heap-mib "${NATIVE_WORKER_HEAP_MIB:-4096}" --landing-workers "$landing"
   ${LANDING_WORKER_HEAP_MIB:+--landing-worker-heap-mib "$LANDING_WORKER_HEAP_MIB"}
   --checkpoint-dir "$RUN/checkpoints"
@@ -79,9 +80,27 @@ cmd=(node --max-old-space-size="$heap" --expose-gc --import tsx
   ${BOUNDARY_PATCH_REVIEW:+--boundary-patch-review "$BOUNDARY_PATCH_REVIEW"}
   ${APPLIED_BOUNDARY_PATCH_MASTER:+--applied-boundary-patch-master "$APPLIED_BOUNDARY_PATCH_MASTER"}
   ${BOUNDARY_PATCH_SUPERSESSIONS:+--boundary-patch-supersessions "$BOUNDARY_PATCH_SUPERSESSIONS"}
+  ${NATIVE_DOOR_OWNER_REVIEW:+--native-door-owner-review "$NATIVE_DOOR_OWNER_REVIEW"}
+  ${ACCESS_DECISION_REVIEW:+--access-decision-review "$ACCESS_DECISION_REVIEW"}
+  ${INTERDOOR_PASSAGE_REVIEW:+--interdoor-passage-review "$INTERDOOR_PASSAGE_REVIEW"}
   --validated-import-checkpoint-dir "$RUN/imports"
   --prepared-diagnostic-dir "$RUN/diagnostic")
 if [ -n "${DRY_RUN:-}" ]; then (cd "$OIM" && printf '%q ' "${cmd[@]}"; echo); exit 0; fi
+
+mkdir -p "$RUN/checkpoints"
+mkdir -p -m 700 "$RUN/imports"
+if [ -n "${SYNC_DIR:-}" ]; then
+  for cache in checkpoints imports; do
+    if [ -z "$(ls -A "$RUN/$cache")" ] && [ -d "$SYNC_DIR/$cache" ]; then
+      echo "Restoring $cache from $SYNC_DIR"
+      copy "$SYNC_DIR/$cache" "$RUN/$cache"
+    fi
+  done
+fi
+# Synced copies lose their modes; the private import data must stay owner-only.
+chmod 700 "$RUN/imports"; find "$RUN/imports" -type f -exec chmod 600 {} +
+# Output and diagnostic directories must be new; checkpoints carry the work.
+rm -rf "$RUN/output" "$RUN/diagnostic"
 
 log=$RUN/compile-$(date -u +%Y%m%dT%H%M%SZ).log
 { echo "openindoormaps $(git -C "$OIM" rev-parse HEAD)"; echo "reviter $(git -C "$WORK/reviter" rev-parse HEAD)"
@@ -113,7 +132,9 @@ result=$RUN/compile-result-$(date -u +%Y%m%dT%H%M%SZ).tar.gz
 tar -czf "$result" -C "$RUN" $(cd "$RUN" && ls -d output diagnostic 2>/dev/null) "$(basename "$log")"
 sha256sum "$result" 2>/dev/null || shasum -a 256 "$result"
 if [ -n "${SYNC_DIR:-}" ]; then
-  copy "$RUN/checkpoints" "$SYNC_DIR/checkpoints"; cp "$result" "$log" "$SYNC_DIR/"
+  copy "$RUN/checkpoints" "$SYNC_DIR/checkpoints"
+  copy "$RUN/imports" "$SYNC_DIR/imports"
+  cp "$result" "$log" "$SYNC_DIR/"
   echo "Copied result and log to $SYNC_DIR"
 fi
 exit "$status"

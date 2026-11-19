@@ -1,3 +1,4 @@
+import { isHorizontalCirculationAnnotation } from "~/indoor-project/horizontal-circulation-annotations";
 import {
   loadBuildingOverview,
   saveBuildingOverview,
@@ -1613,7 +1614,12 @@ export default function IndoorProjectPage() {
       const { target, start, end } = routePickState.current;
       if (!review && !editing && target) {
         const room = data?.records.find((r) => r.key === id);
-        if (!room || !isProjectDestination(room)) return false;
+        if (
+          !room ||
+          !isProjectDestination(room) ||
+          (data && isHorizontalCirculationAnnotation(data, room))
+        )
+          return false;
         setRouteLinkNotice("");
         if (target === "start") {
           setStart(id);

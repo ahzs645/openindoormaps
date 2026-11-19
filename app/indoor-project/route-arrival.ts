@@ -8,11 +8,12 @@ import { createDoorPassageQuery } from "./route-passages";
 export type ProjectArrivalMode = "inside" | "doorway" | "hallway";
 type XYZ = [number, number, number];
 export type ProjectRouteArrival = {
-  mode: Exclude<ProjectArrivalMode, "inside">;
+  mode: Exclude<ProjectArrivalMode, "inside"> | "pathway";
+  pathwayStop?: import("./shared-pathway-routing").SharedPathwayStop;
   pointFeet: XYZ;
   levelId: number;
   building: string;
-  entranceEdgeId: string;
+  entranceEdgeId?: string;
   /** Selected hallway-center stop plus the separately retained door approach. */
   hallwayCenter?: { doorPointFeet: XYZ; approachPointsFeet: XYZ[] };
 };

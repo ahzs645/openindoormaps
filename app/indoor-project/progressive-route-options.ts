@@ -26,7 +26,7 @@ export function progressiveRouteOptions(
   const options = value as ProgressiveRouteOptions;
   routeRequestOptionsKey(options);
   return {
-    endpointMode: options.endpointMode ?? "inside",
+    endpointMode: options.endpointMode ?? "pathway",
     allowOtherRoomTransit: options.allowOtherRoomTransit ?? false,
   };
 }

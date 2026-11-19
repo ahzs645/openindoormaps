@@ -1,6 +1,7 @@
 /** Normal source import, policy-preserving guide installation and actual route
  * worker replay. Results are candidate evidence, never a published receipt.
  */
+import { createPathwayStopVerifier } from "./lib/verify-pathway-station";
 import assert from "node:assert/strict";
 import { createHash, randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
@@ -34,6 +35,7 @@ import { projectNavigationSteps } from "../../app/indoor-project/navigation-step
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
 import {
   assertSharedCorridorRouteParity,
+  assertPathwayRoute,
   validateCandidateRouteCases,
 } from "./lib/shared-corridor-acceptance";
 import {
@@ -261,6 +263,21 @@ const calculate = createWorkerRouteCalculator(data),
   }[] = [],
   rows: CurrentNormalConnectionResult[] = [],
   failures: { id: string; message: string }[] = [];
+const coreStops = new Set<string>();
+for (const guide of metadata.guides) {
+  const cell = originalEdges.get(guide.edgeId)?.nativeCellId;
+  if (!guide.hallwayJoins || !cell) continue;
+  const [first, last] = guide.hallwayJoins;
+  const core = guide.pointsFeet.slice(first, last + 1);
+  if (core.some((p) => p.some((v, i) => v !== core[0][i])))
+    for (const p of core) coreStops.add(JSON.stringify([cell, ...p]));
+}
+const verifyStop = createPathwayStopVerifier(
+  new Map(metadata.guides.map((g) => [g.edgeId, g])),
+  (id) => originalEdges.get(id)?.nativeCellId,
+  (cell, point) => coreStops.has(JSON.stringify([cell, ...point])),
+);
+const observedStops = new Map<string, string>();
 for (const item of cases) {
   at = performance.now();
   log("normal-route-start", { id: item.id });
@@ -271,12 +288,26 @@ for (const item of cases) {
         ...options,
         useSharedCorridorGuides: false,
       });
-    const parity = assertSharedCorridorRouteParity(
-      item,
-      result,
-      baseline,
-      originalEdges,
-    );
+    const pathway = item.options.endpointMode === "pathway";
+    const parity = pathway
+      ? assertPathwayRoute(item, result, baseline, originalEdges, verifyStop)
+      : assertSharedCorridorRouteParity(item, result, baseline, originalEdges);
+    if (pathway && result.route) {
+      for (const [role, room, endpoint] of [
+        ["from", item.from, result.route.departure],
+        ["to", item.to, result.route.arrival],
+      ] as const) {
+        const key = JSON.stringify([item.mode, role, room]);
+        const stop = endpoint!.pathwayStop!.stopId;
+        if (observedStops.has(key))
+          assert.equal(
+            observedStops.get(key),
+            stop,
+            "Room stop changed with destination or preference",
+          );
+        observedStops.set(key, stop);
+      }
+    }
     const instructions = result.route
       ? projectNavigationSteps(data, result.route, item.from, item.to)
       : [];
@@ -292,6 +323,8 @@ for (const item of cases) {
         result.route?.paths.filter((part) => part.sharedCorridorGuideUsed)
           .length ?? 0,
       distanceMetres: result.route?.distanceMetres,
+      pathwayStart: result.route?.departure?.pathwayStop,
+      pathwayEnd: result.route?.arrival?.pathwayStop,
       edgeIds: result.route?.edges.map((edge) => edge.id),
       diagnostic: result.diagnostic,
       baselineDiagnostic: baseline.diagnostic,

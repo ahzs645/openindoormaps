@@ -7,16 +7,19 @@ export const sameRoutePlace = (start: string, end: string) =>
 
 /** Search may show places that cannot be visitor route endpoints. These checks
  * only remove choices; an eligible endpoint still needs the normal calculator. */
-export function visitorEndpointUnavailableReason(place: {
-  access: "public" | "staff" | "unknown";
-  walkable: boolean;
-  arrivalNodeId?: string;
-}) {
+export function visitorEndpointUnavailableReason(
+  place: {
+    access: "public" | "staff" | "unknown";
+    walkable: boolean;
+    arrivalNodeId?: string;
+  },
+  endpointMode: "inside" | "pathway" = "inside",
+) {
   if (place.access === "staff")
     return "This place is restricted to staff. Visitor directions are unavailable.";
   if (!place.walkable)
     return "Visitor directions are unavailable for this non-walkable place.";
-  if (!place.arrivalNodeId)
+  if (endpointMode === "inside" && !place.arrivalNodeId)
     return "Directions are unavailable because this place has no connected entrance in this map.";
 }
 
@@ -47,6 +50,7 @@ export function visitorRouteFailureMessage(
   mode: "public" | "accessible",
   canChangeHallwayPreference = true,
 ) {
+  if (diagnostic?.constraint?.startsWith("pathway-")) return diagnostic.message;
   if (diagnostic?.kind === "missing-entrance")
     return "An entrance is unavailable for one of these places.";
   if (mode === "accessible")

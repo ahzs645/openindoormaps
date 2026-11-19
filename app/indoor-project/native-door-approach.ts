@@ -1,3 +1,4 @@
+import { matchingDoorSeams } from "./native-door-seams";
 import * as DMath from "./deterministic-math";
 import {
   nativeRationalOverlay,
@@ -376,6 +377,50 @@ export function createNativeDoorApproachQuery(data: IndoorDataset) {
             node!.pointFeet,
           );
           let exactParts = level.exactSupport!(exactHalf);
+          const envelopes = level.envelopes
+            .filter((p) => overlaps(box, p.box))
+            .map((p) => p.rings);
+          const seams = matchingDoorSeams(
+            door.footprintFeet ?? footprint,
+            envelopes,
+          );
+          if (seams.length) {
+            const owned = level.masks
+              .filter(
+                (p) =>
+                  overlaps(box, p.box) &&
+                  !p.column &&
+                  !p.repair &&
+                  p.nativeId !== undefined &&
+                  level.ownsAperture(
+                    door.hostWallNativeElementId,
+                    door.nativeElementId,
+                    p.nativeId,
+                  ),
+              )
+              .flatMap(
+                (p) =>
+                  p.exactParts ?? nativeRationalOverlay("union", [p.rings]),
+              );
+            if (owned.length) {
+              const floors = level.floors
+                .filter((p) => overlaps(box, p.box))
+                .map((p) => p.rings);
+              const supported = nativeRationalOverlay(
+                "intersection",
+                exactHalf,
+                floors,
+                seams,
+                owned,
+              );
+              if (supported.length)
+                exactParts = nativeRationalOverlay(
+                  "union",
+                  exactParts,
+                  supported,
+                );
+            }
+          }
           const exactMasks = level.masks
             .filter(
               (p) =>

@@ -351,6 +351,7 @@ function outsideExactFrozenRing(
   );
 }
 /** Exact determinant sign without intermediate canonical Rational construction. */
+export { integerOrientation as nativeExactOrientation };
 function integerOrientation(
   a: NativeRationalPoint,
   b: NativeRationalPoint,

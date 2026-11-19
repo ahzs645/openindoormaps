@@ -13,11 +13,11 @@ export type SourceAccessDecisionReview = {
   format: "source-access-decision-review-v1";
   id: string;
   sourceModelSha256: string;
-  access: "public";
+  access: "public" | "staff";
   notes: string;
   decision: { path: string; sha256: string; id: string };
   /** The reviewed staff zone that this decision depends on. */
-  requiredAccessZoneId: string;
+  requiredAccessZoneId?: string;
   bindings: {
     reviewLabel: string;
     key: string;
@@ -34,9 +34,10 @@ export type SourceAccessDecisionReceipt = {
   reviewSha256: string;
   sourceBeforeSha256: string;
   sourceAfterSha256: string;
-  requiredAccessZoneId: string;
+  requiredAccessZoneId?: string;
   changed: string[];
   alreadyApplied: string[];
+  restriction?: "staff";
   onlyAnnotationAccessChanged: true;
 };
 const digest = (value: unknown) =>
@@ -58,7 +59,10 @@ export function roomsWithCheckedSourceAccessDecision<
     "source-access-decision-review-v1",
     "An explicit source access decision is required.",
   );
-  assert.equal(review.access, "public", "Only public decisions are supported.");
+  assert.ok(
+    review.access === "public" || review.access === "staff",
+    "Unknown access decision",
+  );
   assert.ok(
     review.id?.trim() && review.notes?.trim(),
     "Decision id and notes are required.",
@@ -85,21 +89,22 @@ export function roomsWithCheckedSourceAccessDecision<
   assert.equal(new Set(labels).size, labels.length, "Duplicate review label.");
 
   const zones = rooms.nativeAccessZones;
-  assert.equal(
-    zones?.sourceModelSha256,
-    sourceModelSha256,
-    "The required reviewed access zone is missing for this model.",
-  );
-  const zone = zones!.zones.find((z) => z.id === review.requiredAccessZoneId);
-  assert.ok(
-    zone,
-    `Required access zone ${review.requiredAccessZoneId} is missing.`,
-  );
+  const zone = zones?.zones.find((z) => z.id === review.requiredAccessZoneId);
+  if (review.access === "public" || review.requiredAccessZoneId !== undefined) {
+    assert.equal(
+      zones?.sourceModelSha256,
+      sourceModelSha256,
+      "The required reviewed access zone is missing for this model.",
+    );
+    assert.ok(
+      zone,
+      `Required access zone ${review.requiredAccessZoneId} is missing.`,
+    );
+  }
   const zoneMembers = new Set([
-    ...zone.memberRoomKeys,
-    ...(zone.staffCirculationRoomKeys ?? []),
+    ...(zone?.memberRoomKeys ?? []),
+    ...(zone?.staffCirculationRoomKeys ?? []),
   ]);
-
   const before = digest(rooms);
   const annotations = structuredClone(rooms.annotations);
   const changed: string[] = [],
@@ -142,7 +147,7 @@ export function roomsWithCheckedSourceAccessDecision<
       !zoneMembers.has(room.key),
       `Area ${binding.key} belongs to the reviewed staff zone.`,
     );
-    if (room.access?.kind === "public") {
+    if (room.access?.kind === review.access) {
       alreadyApplied.push(room.key);
       continue;
     }
@@ -152,7 +157,7 @@ export function roomsWithCheckedSourceAccessDecision<
       `Area ${binding.key} already has a different reviewed access.`,
     );
     room.access = {
-      kind: "public",
+      kind: review.access,
       evidence: "user-reported",
       notes: review.notes,
     };
@@ -167,9 +172,10 @@ export function roomsWithCheckedSourceAccessDecision<
     reviewSha256: digest(review),
     sourceBeforeSha256: before,
     sourceAfterSha256: digest(next),
-    requiredAccessZoneId: zone.id,
+    ...(zone ? { requiredAccessZoneId: zone.id } : {}),
     changed,
     alreadyApplied,
+    ...(review.access === "staff" ? { restriction: review.access } : {}),
     onlyAnnotationAccessChanged: true,
   };
   return { rooms: next, receipt };

@@ -1,0 +1,386 @@
+[
+  {
+    "id": "pathway:07-304-to-07-301:public",
+    "from": "rm-311-47f103792aec",
+    "to": "rm-311-8b32069a6165",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "door:311:1732467"
+    ]
+  },
+  {
+    "id": "pathway:07-301-to-07-304:public",
+    "from": "rm-311-8b32069a6165",
+    "to": "rm-311-47f103792aec",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "door:311:1732467"
+    ]
+  },
+  {
+    "id": "pathway:06-212-to-06-218:public",
+    "from": "rm-694-0e2608ab6500",
+    "to": "rm-694-25267258381c",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-218-to-06-212:public",
+    "from": "rm-694-25267258381c",
+    "to": "rm-694-0e2608ab6500",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-220-to-06-212:public",
+    "from": "rm-694-25377258382b",
+    "to": "rm-694-0e2608ab6500",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-212-to-06-220:public",
+    "from": "rm-694-0e2608ab6500",
+    "to": "rm-694-25377258382b",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-220-to-06-218:public",
+    "from": "rm-694-25377258382b",
+    "to": "rm-694-25267258381c",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-218-to-06-220:public",
+    "from": "rm-694-25267258381c",
+    "to": "rm-694-25377258382b",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:06-207-to-06-210:public",
+    "from": "rm-694-0e3aecab6512",
+    "to": "rm-694-0e0ebcab64ec",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:confirmed-open-bay-06-207-to-06-210"
+    ]
+  },
+  {
+    "id": "pathway:06-210-to-06-207:public",
+    "from": "rm-694-0e0ebcab64ec",
+    "to": "rm-694-0e3aecab6512",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:confirmed-open-bay-06-207-to-06-210"
+    ]
+  },
+  {
+    "id": "pathway:06-207-to-06-210:accessible",
+    "from": "rm-694-0e3aecab6512",
+    "to": "rm-694-0e0ebcab64ec",
+    "mode": "accessible",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:06-220-to-06-244:public",
+    "from": "rm-694-25377258382b",
+    "to": "rm-694-0b30ff58296a",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:drawn-open-bay-06-220-to-06-244"
+    ]
+  },
+  {
+    "id": "pathway:06-244-to-06-220:public",
+    "from": "rm-694-0b30ff58296a",
+    "to": "rm-694-25377258382b",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "reviewed-link:drawn-open-bay-06-220-to-06-244"
+    ]
+  },
+  {
+    "id": "pathway:06-220-to-06-244:accessible",
+    "from": "rm-694-25377258382b",
+    "to": "rm-694-0b30ff58296a",
+    "mode": "accessible",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:07-304-to-07-309:public:other-rooms",
+    "from": "rm-311-47f103792aec",
+    "to": "rm-311-3f5ed3792618",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": true
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:07-309-to-07-304:public:other-rooms",
+    "from": "rm-311-3f5ed3792618",
+    "to": "rm-311-47f103792aec",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": true
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:06-313-to-06-210:public:other-rooms",
+    "from": "rm-1487353-4e2c5cd7875d",
+    "to": "rm-694-0e0ebcab64ec",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": true
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:07-304-to-07-301:accessible",
+    "from": "rm-311-47f103792aec",
+    "to": "rm-311-8b32069a6165",
+    "mode": "accessible",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:03-027-to-03-1104:public",
+    "from": "rm-311-a1c62ff5e800",
+    "to": "rm-694-70a5a7eafba5",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "connector:unbc-03-lift:0:1"
+    ]
+  },
+  {
+    "id": "pathway:03-1104-to-03-027:public",
+    "from": "rm-694-70a5a7eafba5",
+    "to": "rm-311-a1c62ff5e800",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "connector:unbc-03-lift:0:1"
+    ]
+  },
+  {
+    "id": "pathway:03-S201-to-03-S301:public",
+    "from": "rm-400176-561f2a7098b2",
+    "to": "rm-402367-1fc9594ffaa7",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:03-S301-to-03-S201:public",
+    "from": "rm-402367-1fc9594ffaa7",
+    "to": "rm-400176-561f2a7098b2",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": false
+  },
+  {
+    "id": "pathway:09-362-to-09-369:public",
+    "to": "rm-694-ecb63641475a",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "from": "rm-694-f3b6ef414ad9"
+  },
+  {
+    "id": "pathway:09-369-to-09-362:public",
+    "to": "rm-694-f3b6ef414ad9",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "from": "rm-694-ecb63641475a"
+  },
+  {
+    "id": "pathway:09-382-to-09-380:public",
+    "from": "rm-694-eb3636414614",
+    "to": "rm-694-eb62c641463a",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "native-cell:14.435696:766:walk:door:694:1522424:0|door:694:1970499:1",
+      "native-cell:14.435696:766:walk:door:694:1522424:0|door:694:1970535:1"
+    ]
+  },
+  {
+    "id": "pathway:09-380-to-09-382:public",
+    "from": "rm-694-eb62c641463a",
+    "to": "rm-694-eb3636414614",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredSourceEdgeIds": [
+      "native-cell:14.435696:766:walk:door:694:1522424:0|door:694:1970499:1",
+      "native-cell:14.435696:766:walk:door:694:1522424:0|door:694:1970535:1"
+    ]
+  },
+  {
+    "id": "pathway:09-382-to-09-389:public",
+    "from": "rm-694-eb3636414614",
+    "to": "rm-694-eb3336414612",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:09-389-to-09-382:public",
+    "from": "rm-694-eb3336414612",
+    "to": "rm-694-eb3636414614",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true
+  },
+  {
+    "id": "pathway:09-374-to-09-373:public",
+    "from": "rm-694-ecbd46414760",
+    "to": "rm-694-f4425f414b50",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredNativeDoorId": 1522476
+  },
+  {
+    "id": "pathway:09-373-to-09-374:public",
+    "from": "rm-694-f4425f414b50",
+    "to": "rm-694-ecbd46414760",
+    "mode": "public",
+    "options": {
+      "endpointMode": "pathway",
+      "allowOtherRoomTransit": false
+    },
+    "expected": true,
+    "requireSharedGuide": true,
+    "requiredNativeDoorId": 1522476
+  }
+]

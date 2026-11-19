@@ -1,3 +1,4 @@
+import { isHorizontalCirculationAnnotation } from "./horizontal-circulation-annotations";
 import type { ProjectRouteDiagnostic } from "./route-diagnostics";
 import {
   sameRoutePlace,
@@ -255,6 +256,7 @@ export function ProjectNavigation({
         .filter(
           (room) =>
             isProjectDestination(room) &&
+            !isHorizontalCirculationAnnotation(data, room) &&
             !isVisitorHallway(room) &&
             (showPassThroughPlaces ||
               !isPassThroughPlace(room) ||
@@ -269,6 +271,7 @@ export function ProjectNavigation({
       data.records
         .filter(
           (r) =>
+            !isHorizontalCirculationAnnotation(data, r) &&
             isPlaceSearchCandidate(r, query, showPassThroughPlaces) &&
             (!r.circulation ||
               isNamedOpenPlace(r) ||
@@ -293,7 +296,14 @@ export function ProjectNavigation({
       data.records.some((room) => room.key === start && isVisitorHallway(room))
     )
       onStart("");
-    if (data.records.some((room) => room.key === end && isVisitorHallway(room)))
+    if (
+      data.records.some(
+        (room) =>
+          room.key === end &&
+          (isVisitorHallway(room) ||
+            isHorizontalCirculationAnnotation(data, room)),
+      )
+    )
       onEnd("");
   }, [data, start, end, onStart, onEnd]);
   useEffect(() => {
@@ -302,10 +312,11 @@ export function ProjectNavigation({
       !record.stair &&
       !isRestrictedArea(record) &&
       (isVisitorHallway(record) ||
+        isHorizontalCirculationAnnotation(data, record) ||
         (!showPassThroughPlaces && isPassThroughPlace(record)))
     )
       onPick("area", "");
-  }, [showPassThroughPlaces, record, onPick]);
+  }, [data, showPassThroughPlaces, record, onPick]);
   useEffect(() => {
     setFollowing(false);
     setPlaying(false);

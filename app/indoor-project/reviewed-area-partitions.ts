@@ -613,6 +613,7 @@ export function checkReviewedAreaPartition(
   data: IndoorDataset,
   p: ReviewedAreaPartition,
   physicalGeometrySha256: string,
+  materialQuery?: Parameters<typeof nativeMaterialPlanWalls>[2],
 ): ReviewedAreaPartitionCheck {
   const errors: string[] = [];
   try {
@@ -678,11 +679,11 @@ export function checkReviewedAreaPartition(
   const walls = (
     strictNative
       ? [
-          nativeMaterialPlanWalls(data, p.levelId),
+          nativeMaterialPlanWalls(data, p.levelId, materialQuery),
           nativeMaterialPlanWalls(
             data,
             p.levelId,
-            undefined,
+            materialQuery,
             p.elevationFeet + 0.1,
           ),
         ].flat()

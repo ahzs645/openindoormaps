@@ -1,6 +1,10 @@
+import { roomsWithInterdoorPassage } from "./reviewed-interdoor-passage";
 import { nativeCirculationWalkBlockers } from "../../app/indoor-project/native-circulation";
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { initializeNativeExactGeosOverlay as initializeSourceExactGeosOverlay } from "../../../reviter/lib/reviter/native-exact-geos-overlay.ts";
+import { compileExploreLevelsInParallel } from "./parallel-explore-levels";
+import { applyOfficePermission, type ReviewedOfficePermission } from "./apply-office-permission";
+import { datasetWithReviewedLinks } from "./apply-regeneration-links";
 import { originalBlockedArrivalEvidence } from "./pathway-candidate-audit";
 import {
   bindPrivateImportCheckpoint,
@@ -15,6 +19,7 @@ import { roomsWithCheckedNativeBoundaryReviewBundle } from "./source-native-boun
 import { roomsWithCheckedSourceDoorBoundaryClosureReview } from "./source-door-boundary-closure-review";
 import { roomsWithCheckedSourceAccessDecision } from "./source-access-decision-review";
 import { roomsWithCheckedSourceDoorApertures } from "./source-door-aperture-review";
+import { checkSourceNativeDoorOwnerReview } from "./source-native-door-owner-review";
 import {
   checkSourceBoundaryPatches,
   roomsWithSourceBoundaryPatches,
@@ -33,6 +38,7 @@ import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { serialize } from "node:v8";
+import { writeFileSync } from "node:fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 const { join, resolve } = path;
@@ -62,7 +68,7 @@ import {
 const [input, nativeCache, destination, ...workerArgs] = process.argv.slice(2);
 if (!input || !nativeCache || !destination)
   throw new Error(
-    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--boundary-patch-review patches.json --applied-boundary-patch-master applied.zip [--boundary-patch-supersessions supersessions.json]] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
+    "Usage: regenerate-from-native-cache.ts master.zip native-cache.json output-directory [--explore-workers 1|2] [--reviewed-circulation-links review.json] [--office-permission-review review.json] [--native-workers 1|2] [--native-worker-heap-mib 256..8192] [--landing-workers N] [--landing-worker-heap-mib 256..8192] [--checkpoint-dir directory] [--drawing-reference-review review.json] [--refresh-drawing-floor-bindings checked] [--boundary-contact-review review.json] [--door-boundary-closure-review review.json] [--access-decision-review decision.json] [--door-aperture-review review.json] [--native-door-owner-review review.json] [--boundary-patch-review patches.json --applied-boundary-patch-master applied.zip [--boundary-patch-supersessions supersessions.json]] [--source-flat-landing-review checked] [--source-stepped-stair-review review.json] [--source-door-standing-review review.json] [--source-stair-base-standing-review review.json] [--validated-import-checkpoint-dir private-directory] [--prepared-diagnostic-dir NEW-directory]",
   );
 const workerOptions = new Map<string, string>();
 for (let i = 0; i < workerArgs.length; i += 2) {
@@ -70,6 +76,10 @@ for (let i = 0; i < workerArgs.length; i += 2) {
     value = workerArgs[i + 1];
   if (
     ![
+      "--explore-workers",
+      "--reviewed-circulation-links",
+      "--office-permission-review",
+      "--interdoor-passage-review",
       "--native-workers",
       "--native-worker-heap-mib",
       "--landing-workers",
@@ -82,6 +92,7 @@ for (let i = 0; i < workerArgs.length; i += 2) {
       "--door-boundary-closure-review",
       "--access-decision-review",
       "--door-aperture-review",
+      "--native-door-owner-review",
       "--boundary-patch-review",
       "--boundary-patch-supersessions",
       "--applied-boundary-patch-master",
@@ -100,6 +111,19 @@ for (let i = 0; i < workerArgs.length; i += 2) {
     );
   workerOptions.set(flag, value);
 }
+const exploreWorkers = workerOptions.get("--explore-workers") ?? "1";
+if (exploreWorkers !== "1" && exploreWorkers !== "2")
+  throw new Error("--explore-workers must be 1 or 2");
+const linkReviewPath = workerOptions.get("--reviewed-circulation-links");
+const linkReviewBytes = linkReviewPath
+  ? await readFile(resolve(linkReviewPath))
+  : undefined;
+const linkReview: unknown =
+  linkReviewBytes && JSON.parse(linkReviewBytes.toString("utf8"));
+const permissionPath = workerOptions.get("--office-permission-review");
+const permissionBytes = permissionPath ? await readFile(resolve(permissionPath)) : undefined;
+const permission: ReviewedOfficePermission | undefined =
+  permissionBytes && JSON.parse(permissionBytes.toString("utf8"));
 const workerCount = workerOptions.has("--native-workers")
   ? Number(workerOptions.get("--native-workers"))
   : undefined;
@@ -555,9 +579,16 @@ async function compileAndExportMaster() {
     : undefined;
   const apertureReviewedRooms =
     doorApertureReplay?.rooms ?? accessReviewedRooms;
-  const rooms = boundaryPatches
+  let rooms = boundaryPatches
     ? roomsWithSourceBoundaryPatches(apertureReviewedRooms, boundaryPatches)
     : apertureReviewedRooms;
+  const passagePath = workerOptions.get("--interdoor-passage-review");
+  if (passagePath)
+    rooms = roomsWithInterdoorPassage(
+      rooms,
+      before.dataset,
+      JSON.parse(await readFile(resolve(passagePath), "utf8")),
+    );
   const boundaryPatchReceiptPath = join(
     output,
     "source-boundary-patch-replay.json",
@@ -613,6 +644,77 @@ async function compileAndExportMaster() {
       }),
     );
   }
+  // Door-scoped native-cell owner review: only the listed doors, decided from
+  // the native cells inside the compile. The source rooms are not changed.
+  const nativeDoorOwnerPath = workerOptions.get("--native-door-owner-review");
+  const nativeDoorOwnerBytes = nativeDoorOwnerPath
+    ? await readFile(resolve(nativeDoorOwnerPath))
+    : undefined;
+  const nativeDoorOwnerCheck = nativeDoorOwnerBytes
+    ? checkSourceNativeDoorOwnerReview(
+        rooms,
+        JSON.parse(nativeDoorOwnerBytes.toString("utf8")),
+        sourceModelSha256,
+        cache.nativeModel,
+        nativeDoorOwnerBytes,
+      )
+    : undefined;
+  const nativeDoorOwnerReceiptPath = join(
+    output,
+    "source-native-door-owner-replay.json",
+  );
+  let nativeDoorOwnerReceiptSha256: string | undefined;
+  if (nativeDoorOwnerCheck) {
+    await mkdir(output, { recursive: true });
+    await writeFile(
+      join(output, "source-native-door-owner-review.json"),
+      nativeDoorOwnerBytes!,
+      { flag: "wx" },
+    );
+    console.log(
+      JSON.stringify({
+        stage: "source-native-door-owner-review-checked",
+        doors: nativeDoorOwnerCheck.decisions.length,
+      }),
+    );
+  }
+  const nativeDoorOwnerReview = nativeDoorOwnerCheck
+    ? {
+        decisions: nativeDoorOwnerCheck.decisions,
+        onEvidence: (
+          evidence: Parameters<typeof nativeDoorOwnerCheck.onEvidence>[0],
+        ) => {
+          if (!evidence.accepted) {
+            console.log(
+              JSON.stringify({
+                stage: "source-native-door-owner-refused",
+                evidence,
+              }),
+            );
+            return;
+          }
+          nativeDoorOwnerCheck.onEvidence(evidence);
+          if (!nativeDoorOwnerCheck.complete()) return;
+          // Written as soon as the last listed door is applied, so the
+          // evidence survives a failure in a later compile stage.
+          const receiptBytes =
+            JSON.stringify(nativeDoorOwnerCheck.receipt(), null, 2) + "\n";
+          writeFileSync(nativeDoorOwnerReceiptPath, receiptBytes, {
+            flag: "wx",
+          });
+          nativeDoorOwnerReceiptSha256 = createHash("sha256")
+            .update(receiptBytes)
+            .digest("hex");
+          console.log(
+            JSON.stringify({
+              stage: "source-native-door-owners-applied",
+              doors: nativeDoorOwnerCheck.decisions.length,
+              receiptSha256: nativeDoorOwnerReceiptSha256,
+            }),
+          );
+        },
+      }
+    : undefined;
   const sourceRooms = JSON.stringify(rooms);
   if (sourceFlatLandingReview) {
     const originalModelBytes = before.files[original.manifest.model.path];
@@ -781,8 +883,14 @@ async function compileAndExportMaster() {
       originalStairBaseDerivedStandings: sourceStairBaseStandings?.proofs,
       nativeCirculationCompiler,
       nativeLandingApproaches,
+      ...(nativeDoorOwnerReview ? { nativeDoorOwnerReview } : {}),
     },
   );
+  if (nativeDoorOwnerCheck)
+    assert.ok(
+      nativeDoorOwnerCheck.complete() && nativeDoorOwnerReceiptSha256,
+      "Every listed native door owner must be applied by the compile",
+    );
   sourceDoorStandings?.assertUnchanged();
   await assertSourceStairBaseStandingUnchanged();
   if (sourceStairBaseStandings) {
@@ -958,25 +1066,46 @@ async function compileAndExportMaster() {
       { flag: "wx" },
     );
   }
+  assert.equal(
+    JSON.stringify(rooms),
+    sourceRooms,
+    "Preparation must preserve source annotations, reviews and connector recipes",
+  );
+  if (linkReviewBytes) {
+    dataset = datasetWithReviewedLinks(
+      dataset,
+      linkReview,
+      rooms.boundaryReference,
+    );
+    rooms = {
+      ...rooms,
+      reviewedCirculationLinks: structuredClone(
+        dataset.reviewedCirculationLinks,
+      ),
+    };
+  }
+  if (permissionBytes) {
+    assert.ok(permission, "An office permission review must identify a source door");
+    rooms = { ...rooms };
+    applyOfficePermission(dataset, rooms, permission);
+  }
   // The compiler hashes hydrated annotations. A portable package binds the exact
   // preserved source entry, whose review companions may use archive wire storage.
   dataset.source.roomsSha256 =
+    passagePath ||
     sourceReview ||
     drawingFloorReplay ||
     boundaryReplay ||
     doorBoundaryReplay ||
-    boundaryPatches
+    boundaryPatches ||
+    linkReviewBytes ||
+    permissionBytes
       ? createHash("sha256")
           .update((await serializeRoomsForArchive(rooms)).rooms)
           .digest("hex")
       : original.manifest.floors.sha256;
   cache = undefined; // Release the decoded native model before archive workers clone buffers.
   if (globalThis.gc) globalThis.gc();
-  assert.equal(
-    JSON.stringify(rooms),
-    sourceRooms,
-    "Preparation must preserve source annotations, reviews and connector recipes",
-  );
   const missing = before.dataset.records.filter(
     (r) =>
       r.arrivalNodeId &&
@@ -990,7 +1119,9 @@ async function compileAndExportMaster() {
     );
     const regenerated = dataset.records.find((r) => r.key === record.key);
     return (
-      annotation?.access?.kind === "staff" &&
+      (annotation?.access?.kind === "staff" ||
+        (accessDecisionReplay?.receipt.changed.includes(record.key) &&
+          accessDecisionReplay.receipt.restriction === "staff")) &&
       regenerated?.access === "staff" &&
       !dataset.edges.some(
         (edge) => edge.enabled && edge.roomKeys.includes(record.key),
@@ -1050,7 +1181,11 @@ async function compileAndExportMaster() {
   );
   const rebuilt = { ...before, rooms, dataset };
   console.time("Export master");
-  const masterBytes = await exportIndoorProject(rebuilt);
+  const masterBytes = await exportIndoorProject(
+    rebuilt,
+    (message) => console.log(`Export master · ${message}`),
+    exploreWorkers === "2" ? compileExploreLevelsInParallel : undefined,
+  );
   console.timeEnd("Export master");
   const assets = Object.keys(before.files).filter(
     (path) =>
@@ -1061,7 +1196,9 @@ async function compileAndExportMaster() {
           drawingFloorReplay ||
           boundaryReplay ||
           doorBoundaryReplay ||
-          boundaryPatches) &&
+          boundaryPatches ||
+          linkReviewBytes ||
+          permissionBytes) &&
         path === "floors/rooms.json"
       ),
   );
@@ -1070,6 +1207,19 @@ async function compileAndExportMaster() {
     sha256: sha(before.files[path]),
   }));
   const summaryFacts = {
+    ...(permissionBytes && permission ? {
+      officePermissionReview: { sha256: sha(permissionBytes), excludedVisitorEdge: permission.edgeId },
+    } : {}),
+    ...(linkReviewBytes
+      ? {
+          reviewedCirculationLinkInput: {
+            sha256: sha(linkReviewBytes),
+            appliedLinkIds: dataset.reviewedCirculationLinks!.links.map(
+              (link) => link.id,
+            ),
+          },
+        }
+      : {}),
     ...(sourceStairBaseStandings
       ? {
           sourceStairBaseStandingReview: {
@@ -1194,6 +1344,23 @@ async function compileAndExportMaster() {
             },
             appliedRows: boundaryPatches.rows.length,
             physicalGuardsWaived: false,
+          },
+        }
+      : {}),
+    ...(nativeDoorOwnerCheck
+      ? {
+          sourceNativeDoorOwnerReview: {
+            path: resolve(nativeDoorOwnerPath!),
+            reviewSha256: sha(nativeDoorOwnerBytes!),
+            receiptPath: nativeDoorOwnerReceiptPath,
+            receiptSha256: nativeDoorOwnerReceiptSha256,
+            appliedDoors: nativeDoorOwnerCheck.decisions.map((d) => ({
+              levelId: d.levelId,
+              nativeDoorId: d.nativeDoorId,
+              roomKeys: d.roomKeys,
+            })),
+            sourceRoomsChanged: false,
+            accessOrAccessibilityGranted: false,
           },
         }
       : {}),

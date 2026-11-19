@@ -561,6 +561,7 @@ function nativeInputs(data: IndoorDataset, levelId: number) {
     walls,
     precise,
     floorContactPrecise,
+    query,
     doors,
     holes,
     fixtures,
@@ -571,6 +572,20 @@ export async function nativeAreaGeometrySha256(
   levelId: number,
   options?: NativeAreaOptions,
 ) {
+  return geometrySha256FromInputs(
+    data,
+    levelId,
+    options,
+    nativeInputs(data, levelId),
+  );
+}
+
+function geometrySha256FromInputs(
+  data: IndoorDataset,
+  levelId: number,
+  options: NativeAreaOptions | undefined,
+  { floors, walls, doors, holes, fixtures }: ReturnType<typeof nativeInputs>,
+) {
   if (
     data.nativeIndoorEnvelopes &&
     data.nativeMaterialSections &&
@@ -580,7 +595,6 @@ export async function nativeAreaGeometrySha256(
     if (reviewed.length > 0)
       options = { ...options, passThroughDoorIds: reviewed };
   }
-  const { floors, walls, doors, holes, fixtures } = nativeInputs(data, levelId);
   return hash(
     JSON.stringify([
       data.source.modelSha256,
@@ -707,15 +721,6 @@ export async function deriveNativeAreas(
     (options.maxGapFeet ?? 0) > 6
   )
     throw new Error("Choose a wall-gap limit between 0 and 6 feet.");
-  const {
-    floors,
-    walls,
-    precise,
-    floorContactPrecise,
-    doors,
-    holes,
-    fixtures,
-  } = nativeInputs(data, levelId);
   const savedPartitions = data.reviewedAreaPartitions?.partitions ?? [];
   if (
     options.previewPartitionIds?.some(
@@ -734,6 +739,18 @@ export async function deriveNativeAreas(
     activePartitions.length > 0
       ? await reviewedAreaPartitionEvidenceStatuses(data, activePartitions)
       : {};
+  // Keep the material query local to this synchronous pass, after the last
+  // asynchronous evidence check. A subsequent edit gets newly prepared inputs.
+  const inputs = nativeInputs(data, levelId);
+  const {
+    floors,
+    walls,
+    precise,
+    floorContactPrecise,
+    doors,
+    holes,
+    fixtures,
+  } = inputs;
   const checkedPartitionIds: string[] = [];
   const logicalPartitionEvidenceTests: NonNullable<
     NativeAreaResult["logicalPartitionEvidenceTests"]
@@ -747,6 +764,7 @@ export async function deriveNativeAreas(
       data,
       p,
       partitionEvidence[p.id]!.digest,
+      inputs.query,
     );
     if (!check.valid) {
       const warning = `Area boundary ${p.label || p.id} needs review: ${check.errors.join(" ")}`;
@@ -862,7 +880,10 @@ export async function deriveNativeAreas(
     (l) => l.id === levelId,
   )!.elevationFeet;
   const ownsAperture = createNativeHostApertureQuery(
-    createNativeRoutingMaterialQuery(data)(elevation, elevation + 4),
+    (inputs.query ?? createNativeRoutingMaterialQuery(data))(
+      elevation,
+      elevation + 4,
+    ),
   );
   const apertureMasks = (w: IndoorDataset["walls"][number]): Rings[] => {
     if (w.kind !== "wall" || w.reviewPatchId) return [];
@@ -1081,7 +1102,12 @@ export async function deriveNativeAreas(
       remaining = nativeExactPartsForProposals(remainingExact);
     }
   }
-  const geometrySha256 = await nativeAreaGeometrySha256(data, levelId, options);
+  const geometrySha256 = await geometrySha256FromInputs(
+    data,
+    levelId,
+    options,
+    inputs,
+  );
   // Rooms are labelled on the physical level carrying their native floor;
   // levelId stays their directory/display identity.
   const records = nativePhysicalLevelRecords(data, levelId);

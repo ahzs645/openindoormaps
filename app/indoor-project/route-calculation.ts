@@ -1,4 +1,6 @@
 import type { IndoorDataset } from "./contract";
+import { createSharedPathwayNetwork } from "./shared-pathway-routing";
+import { withRoutingCalculation } from "./routing-cache";
 import { projectRoutingGraph } from "./routing-graph";
 import { reachableViewerDestinations } from "./viewer-route-graph";
 import { createImmutableRoutingSession } from "./routing-cache";
@@ -64,6 +66,40 @@ export function calculateRoute(
   options: RouteRequest["options"] = {},
 ): RouteCalculation {
   if (pendingBoundaryReview(data)) return pendingBoundaryResult(data, mode);
+  if (options.endpointMode === "pathway") {
+    return withRoutingCalculation(data, () => {
+      const network = createSharedPathwayNetwork(data, mode);
+      const from = network.stopForRoom(start, true);
+      const to = network.stopForRoom(end, false);
+      const route = network.journey(start, end, options);
+      if (route) return { route };
+      const room = data.records.find((r) => r.key === (!from ? start : end));
+      const label = room
+        ? [room.number, room.name].filter(Boolean).join(" ")
+        : "this place";
+      return {
+        route: null,
+        diagnostic: {
+          kind: "blocked",
+          constraint: !from
+            ? "pathway-start"
+            : !to
+              ? "pathway-end"
+              : "pathway-network",
+          message: !from
+            ? "No mapped hallway start for " + label + "."
+            : !to
+              ? "No mapped hallway stop for " + label + "."
+              : mode === "accessible"
+                ? "No confirmed step-free route connects these hallway stops."
+                : "No mapped hallway pathway connects these stops with the selected access settings.",
+          blockers: [],
+          sourceEdgeIds: [],
+          ...(!from || !to ? { reviewRoomKey: !from ? start : end } : {}),
+        },
+      };
+    });
+  }
   const entranceIssue = missingRouteEntrance(data, start, end);
   if (entranceIssue) return { route: null, diagnostic: entranceIssue };
   const route = findProjectRoute(data, start, end, mode, options);
@@ -123,7 +159,11 @@ export function createWorkerRouteCalculator(data: IndoorDataset) {
       const result = end
         ? calculateRoute(data, start, end, mode, options)
         : { route: null };
-      if (result.diagnostic?.kind === "missing-entrance") return result;
+      if (
+        options.endpointMode === "pathway" ||
+        result.diagnostic?.kind === "missing-entrance"
+      )
+        return result;
       const key = JSON.stringify([
         start,
         end,

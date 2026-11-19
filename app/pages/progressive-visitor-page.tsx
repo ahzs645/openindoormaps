@@ -1,3 +1,4 @@
+import { isHorizontalCirculationAnnotation } from "~/indoor-project/horizontal-circulation-annotations";
 import { ProgressiveOverviewLayer as OverviewLayers } from "~/indoor-project/progressive-overview-layer";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -127,6 +128,10 @@ function waitForWorkerSlot(ready: () => boolean, signal: AbortSignal) {
     });
   });
 }
+type VisitorFocus =
+  | [number, number]
+  | { scope: string; routeBounds: LngLatBounds };
+
 function Camera({
   overview,
   scopeKey,
@@ -139,7 +144,7 @@ function Camera({
   scopeKey: string;
   three: boolean;
   onZoom: (zoom: number) => void;
-  focus?: [number, number];
+  focus?: VisitorFocus;
   fitVersion: number;
 }) {
   const { map, isLoaded } = useMap();
@@ -173,9 +178,22 @@ function Camera({
       map.easeTo({ pitch: three ? 55 : 0, duration: 300 });
   }, [map, isLoaded, three]);
   useEffect(() => {
-    if (mapReady(map, isLoaded) && focus)
+    if (!mapReady(map, isLoaded) || !focus) return;
+    if (Array.isArray(focus)) {
       map.easeTo({ center: focus, zoom: 20, duration: 300 });
-  }, [map, isLoaded, focus]);
+    } else if (focus.scope === scopeKey) {
+      const canvas = map.getCanvas();
+      const padding = Math.min(
+        64,
+        Math.min(canvas.clientWidth, canvas.clientHeight) * 0.15,
+      );
+      map.fitBounds(focus.routeBounds, {
+        padding,
+        maxZoom: 19.5,
+        duration: 300,
+      });
+    }
+  }, [map, isLoaded, focus, scopeKey]);
   return null;
 }
 function RouteOverlay({
@@ -408,7 +426,7 @@ export default function ProgressiveVisitorPage() {
   const openController = useRef<AbortController>();
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState("");
-  const [focus, setFocus] = useState<[number, number]>();
+  const [focus, setFocus] = useState<VisitorFocus>();
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const directionsRef = useRef<HTMLDetailsElement>(null);
@@ -522,7 +540,14 @@ export default function ProgressiveVisitorPage() {
         const endpoint = (name: string) => {
           const key = link.get(name) ?? "";
           const place = next.shell.records.find((record) => record.key === key);
-          return place && !visitorEndpointUnavailableReason(place) ? key : "";
+          return place &&
+            (!isHorizontalCirculationAnnotation(next.shell, place) ||
+              (name === "from" &&
+                place.circulation &&
+                !!place.arrivalNodeId)) &&
+            !visitorEndpointUnavailableReason(place, "pathway")
+            ? key
+            : "";
         };
         const linkedStart = endpoint("from");
         const linkedEnd = endpoint("to");
@@ -785,8 +810,15 @@ export default function ProgressiveVisitorPage() {
     );
     return () => warmup.dispose();
   }, [client, routeIntent, routes]);
+  const roomPlaces = useMemo(
+    () =>
+      client?.shell.records.filter(
+        (record) => !isHorizontalCirculationAnnotation(client.shell, record),
+      ) ?? [],
+    [client],
+  );
   const matches = client
-    ? progressivePlaceSearchMatches(client.shell.records, client.shell, search)
+    ? progressivePlaceSearchMatches(roomPlaces, client.shell, search)
     : [];
   const selectedPlace = client?.shell.records.find(
     (record) => record.key === selected,
@@ -829,7 +861,7 @@ export default function ProgressiveVisitorPage() {
     (keys: string[]) => {
       setMapNotice("");
       const places = keys.filter((key) =>
-        client?.shell.records.some(
+        roomPlaces.some(
           (record) => record.key === key && !isVisitorHallway(record),
         ),
       );
@@ -838,17 +870,19 @@ export default function ProgressiveVisitorPage() {
         setMapChoices([]);
       } else setMapChoices(places);
     },
-    [client],
+    [roomPlaces],
   );
   const selectedUnavailable = selectedPlace
-    ? visitorEndpointUnavailableReason(selectedPlace)
+    ? client && isHorizontalCirculationAnnotation(client.shell, selectedPlace)
+      ? "This label identifies a shared passage."
+      : visitorEndpointUnavailableReason(selectedPlace, "pathway")
     : undefined;
   const endpointPlaces = useMemo(
     () =>
-      client?.shell.records.filter(
-        (record) => !visitorEndpointUnavailableReason(record),
-      ) ?? [],
-    [client],
+      roomPlaces.filter(
+        (record) => !visitorEndpointUnavailableReason(record, "pathway"),
+      ),
+    [roomPlaces],
   );
   const selectEndpoint = (target: "start" | "end") => {
     if (!selectedPlace || selectedUnavailable) return;
@@ -953,7 +987,7 @@ export default function ProgressiveVisitorPage() {
           preferHttpBrotli: client.httpBrotliEnabled,
           offline: client.offlineOnly,
         },
-        { endpointMode: "inside", allowOtherRoomTransit },
+        { endpointMode: "pathway", allowOtherRoomTransit },
       ).promise;
       if (
         requestEpoch !== routeEpoch.current ||
@@ -976,7 +1010,28 @@ export default function ProgressiveVisitorPage() {
       if (result.value.route) {
         if (journeyRef.current) journeyRef.current.open = false;
         locate(start);
-        if (result.steps[0]) focusInstruction(result.steps[0]);
+        const paths = result.value.route.paths;
+        const scope =
+          startPlace && scopeForPlace(startPlace.levelId, startPlace.building);
+        if (
+          scope &&
+          routeData &&
+          paths.length &&
+          paths.every(
+            (p) =>
+              p.levelIds.length &&
+              p.levelIds.every((level) => level === startPlace!.levelId),
+          )
+        ) {
+          const bounds = new LngLatBounds();
+          for (const path of paths)
+            for (const point of path.pointsFeet)
+              bounds.extend(geographicPoint(routeData, point));
+          if (!bounds.isEmpty())
+            setFocus({ scope: scope.id, routeBounds: bounds });
+        } else if (result.steps[0]) {
+          focusInstruction(result.steps[0]);
+        }
       }
     } catch (error) {
       if (
@@ -1431,6 +1486,15 @@ export default function ProgressiveVisitorPage() {
                     }}
                   >
                     {<option value="">Choose starting place</option>}
+                    {startPlace &&
+                      isHorizontalCirculationAnnotation(
+                        client.shell,
+                        startPlace,
+                      ) && (
+                        <option value={startPlace.key}>
+                          {progressivePlaceLabel(startPlace, client.shell)}
+                        </option>
+                      )}
                     {endpointPlaces.map((record) => (
                       <option key={record.key} value={record.key}>
                         {progressivePlaceLabel(record, client.shell)}

@@ -199,56 +199,78 @@ export async function nativeExploreDatasetGeometrySha256(
     ]),
   ]);
 }
+type ExploreLevel = PublishedNativeExploreMapping["levels"][number];
+type LevelProgress = (levelId: number, index: number, total: number) => void;
+export type ExploreLevelCompiler = (
+  data: IndoorDataset, onLevel?: LevelProgress,
+) => Promise<(ExploreLevel | undefined)[]>;
+
+export async function compileNativeExploreLevel(
+  data: IndoorDataset, level: IndoorDataset["nativeLevels"][number],
+): Promise<ExploreLevel | undefined> {
+  if (
+    !data.walkingSupport?.floors.some(
+      (f) => Math.abs(f.elevationFeet - level.elevationFeet) < 0.15,
+    )
+  ) {
+    return;
+  }
+  try {
+    const result = await deriveNativeAreas(data, level.id, {
+      mode: "connected",
+      maxGapFeet: 0,
+    });
+    return {
+      levelId: level.id,
+      ...(result.exactTopology
+        ? {
+            exactTopology: result.exactTopology,
+            displayResidualTopology: result.displayResidualTopology,
+          }
+        : {}),
+      regions: result.exactTopology
+        ? result.regions
+        : associateNativeRooms(
+            result.regions,
+            nativePhysicalLevelRecords(data, level.id),
+            data,
+          ),
+      warningCount: result.warnings.length,
+      boundaries: (data.reviewedAreaPartitions?.partitions ?? [])
+        .filter((p) => result.logicalPartitionIds?.includes(p.id))
+        .map((p) => ({
+          id: p.id,
+          label: p.label,
+          pointsFeet: structuredClone(p.pointsFeet),
+          closed: p.closed,
+        })),
+    };
+  } catch (error) {
+    // A strict compilation cannot quietly publish an incomplete campus map.
+    if (data.nativeIndoorEnvelopes && data.nativeMaterialSections)
+      throw error;
+    return;
+  }
+}
+
 export async function compileNativeExploreMapping(
   data: IndoorDataset,
   datasetGeometrySha256: string,
+  onLevel?: LevelProgress,
+  compileLevels?: ExploreLevelCompiler,
 ): Promise<PublishedNativeExploreMapping> {
   validateNativePhysicalLevels(data);
-  const levels: PublishedNativeExploreMapping["levels"] = [],
-    unavailableLevelIds: number[] = [];
-  for (const level of data.nativeLevels) {
-    if (
-      !data.walkingSupport?.floors.some(
-        (f) => Math.abs(f.elevationFeet - level.elevationFeet) < 0.15,
-      )
-    ) {
-      unavailableLevelIds.push(level.id);
-      continue;
-    }
-    try {
-      const result = await deriveNativeAreas(data, level.id, {
-        mode: "connected",
-        maxGapFeet: 0,
-      });
-      levels.push({
-        levelId: level.id,
-        ...(result.exactTopology
-          ? {
-              exactTopology: result.exactTopology,
-              displayResidualTopology: result.displayResidualTopology,
-            }
-          : {}),
-        regions: result.exactTopology
-          ? result.regions
-          : associateNativeRooms(
-              result.regions,
-              nativePhysicalLevelRecords(data, level.id),
-              data,
-            ),
-        warningCount: result.warnings.length,
-        boundaries: (data.reviewedAreaPartitions?.partitions ?? [])
-          .filter((p) => result.logicalPartitionIds?.includes(p.id))
-          .map((p) => ({
-            id: p.id,
-            label: p.label,
-            pointsFeet: structuredClone(p.pointsFeet),
-            closed: p.closed,
-          })),
-      });
-    } catch (error) {
-      // A strict compilation cannot quietly publish an incomplete campus map.
-      if (data.nativeIndoorEnvelopes && data.nativeMaterialSections)
-        throw error;
+  const levels: ExploreLevel[] = [], unavailableLevelIds: number[] = [];
+  const compiled = compileLevels ? await compileLevels(data, onLevel) : undefined;
+  if (compiled && compiled.length !== data.nativeLevels.length)
+    throw new Error("Incomplete native explore level results.");
+  for (const [index, level] of data.nativeLevels.entries()) {
+    if (!compiled) onLevel?.(level.id, index, data.nativeLevels.length);
+    const result = compiled ? compiled[index] : await compileNativeExploreLevel(data, level);
+    if (result) {
+      if (result.levelId !== level.id) throw new Error("Unexpected native explore level order.");
+      levels.push(result);
+    } else {
       unavailableLevelIds.push(level.id);
     }
   }
@@ -266,6 +288,8 @@ export async function compileNativeExploreMapping(
 export async function publishNativeExploreMapping(
   data: IndoorDataset,
   visitorData: IndoorDataset,
+  onProgress?: (message: string) => void,
+  compileLevels?: ExploreLevelCompiler,
 ): Promise<PublishedNativeExploreMapping | undefined> {
   if (
     data.walkingSupport?.sourceModelSha256 !== data.source.modelSha256 ||
@@ -320,6 +344,7 @@ export async function publishNativeExploreMapping(
       (!(data.nativeIndoorEnvelopes && data.nativeMaterialSections) ||
         data.nativeExploreMapping.version === 3)
     ) {
+      onProgress?.("explore mapping: validating the current mapping");
       await validatePublishedNativeExploreMapping(data);
       const copy = structuredClone(data.nativeExploreMapping);
       if (copy.version === 1) {
@@ -342,7 +367,8 @@ export async function publishNativeExploreMapping(
   }
   if (typeof Worker === "undefined")
     return bindVisitorMapping(
-      await compileNativeExploreMapping(data, datasetGeometrySha256),
+      await compileNativeExploreMapping(data, datasetGeometrySha256, onProgress &&
+        ((levelId, index, total) => onProgress(`explore mapping: deriving native areas · level ${index + 1}/${total} · #${levelId}`)), compileLevels),
     );
   const mapping = await new Promise<PublishedNativeExploreMapping>(
     (resolve, reject) => {

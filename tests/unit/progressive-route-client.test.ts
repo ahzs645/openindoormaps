@@ -47,7 +47,7 @@ test("routing remains lazy, reuses a checked worker revision and never posts a f
   assert.equal(initial.delivery?.manifest, manifest);
   assert.ok(!("data" in initial));
   assert.deepEqual(initial.options, {
-    endpointMode: "inside",
+    endpointMode: "pathway",
     allowOtherRoomTransit: false,
   });
   workers[0].reply({

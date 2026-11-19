@@ -1,5 +1,5 @@
 export type ProjectRoutingOptions = {
-  endpointMode?: "inside" | "hallway";
+  endpointMode?: "inside" | "hallway" | "pathway";
   preferHallways?: boolean;
   /** False refuses ordinary-room transit even when no hallway route exists. */
   allowOtherRoomTransit?: boolean;
@@ -17,7 +17,7 @@ export function projectRoutingOptionsKey(options: ProjectRoutingOptions = {}) {
     throw new Error("Invalid excluded staircase IDs.");
   if (
     options.endpointMode !== undefined &&
-    !["inside", "hallway"].includes(options.endpointMode)
+    !["inside", "hallway", "pathway"].includes(options.endpointMode)
   )
     throw new Error("Invalid route endpoint mode.");
   if (

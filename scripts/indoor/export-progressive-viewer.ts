@@ -7,7 +7,7 @@ import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
 import { copyDeclaredProgressiveAssets } from "./copy-progressive-assets";
-import { brotliCompressSync, brotliDecompressSync, constants } from "node:zlib";
+import { brotliCompressSync, brotliDecompressSync, constants, gzipSync as nativeGzipSync } from "node:zlib";
 import { gunzipSync, gzipSync, Zip, ZipPassThrough } from "fflate";
 import { readProgressiveRoutingParts } from "../../app/indoor-project/progressive-routing-parts";
 import {
@@ -72,6 +72,7 @@ export function progressiveRepresentations(
   mediaType: ProgressiveAsset["mediaType"],
   includeIdentity = false,
   includeBrotli = true,
+  canonicalGzip = true,
 ) {
   return [
     ...(includeIdentity
@@ -85,7 +86,10 @@ export function progressiveRepresentations(
       : []),
     {
       encoding: "gzip" as const,
-      bytes: gzipSync(raw, { level: 6, mtime: 0 }),
+      // The browser can reconstruct prepared chunks using this exact gzip encoder.
+      bytes: canonicalGzip
+        ? gzipSync(raw, { level: 6, mtime: 0 })
+        : new Uint8Array(nativeGzipSync(raw, { level: 6 })),
       extension: "gz",
     },
     ...(includeBrotli
@@ -367,7 +371,8 @@ export async function writeProgressiveOfflineArchive(
   });
   for (const name of paths) {
     const entry = new ZipPassThrough(name);
-    entry.mtime = new Date("1980-01-01T00:00:00Z");
+    // ZIP stores local calendar fields. A UTC epoch can be 1979 in Vancouver.
+    entry.mtime = new Date(1980, 0, 1);
     zip.add(entry);
     for await (const chunk of createReadStream(path.join(directory, name)))
       entry.push(chunk, false);
@@ -543,6 +548,7 @@ export async function exportProgressiveViewer(
       mediaType,
       options.identity ?? false,
       options.brotli ?? true,
+      kind === "prepared-chunk",
     )) {
       representations.push(
         await writeProgressiveRepresentation(directory, kind, representation),

@@ -297,3 +297,89 @@ test("floor changes, transit rooms and building changes stay steps", () => {
   );
   assert.equal(steps[2].buildingName, "B");
 });
+
+test("serialized reviewed portal endpoints preserve ordinary visitor instructions", () => {
+  const { data, route } = fixture([
+    {
+      id: "west-approach",
+      to: { id: "portal:0", room: "hall-west" },
+      points: [
+        [0, 0, 0],
+        [5, 0, 0],
+      ],
+    },
+    {
+      id: "door",
+      kind: "door",
+      to: { id: "portal:1", room: "hall-east" },
+      points: [
+        [5, 0, 0],
+        [8, 0, 0],
+      ],
+    },
+    {
+      id: "east-approach",
+      to: { id: "end", room: "end" },
+      points: [
+        [8, 0, 0],
+        [15, 5, 0],
+      ],
+    },
+  ]);
+  const reference = projectNavigationSteps(data, route, "West", "East");
+  route.reviewedPortalNodes = data.nodes.filter((n) =>
+    n.id.startsWith("portal:"),
+  );
+  data.nodes = data.nodes.filter((n) => !n.id.startsWith("portal:"));
+  const serialized: ProjectRoute = JSON.parse(JSON.stringify(route));
+  assert.deepEqual(
+    projectNavigationSteps(data, serialized, "West", "East"),
+    reference,
+  );
+  assert.ok(reference.every((s) => s.position?.every(Number.isFinite)));
+  assert.equal(reference.at(-1)?.type, "arrive");
+});
+
+test("a raised sill produces one advance notice in each direction on the same floor", () => {
+  for (const backwards of [false, true]) {
+    const points: XYZ[] = [
+      [2, 0, 0],
+      [3, 0, 0],
+      [3, 0, 0.164041994750657],
+      [3.5, 0, 0.164041994750657],
+      [3.5, 0, 0],
+      [5, 0, 0],
+    ];
+    if (backwards) points.reverse();
+    const { route, data } = fixture([
+      {
+        id: "before",
+        to: { id: "side-a", room: "hall-west" },
+        points: [[backwards ? 9 : 0, 0, 0], points[0]],
+      },
+      {
+        id: "door",
+        kind: "door",
+        to: { id: "side-b", room: "hall-east" },
+        points,
+      },
+      {
+        id: "after",
+        to: { id: "end", room: "end" },
+        points: [points.at(-1)!, [backwards ? 0 : 9, 0, 0]],
+      },
+    ]);
+    route.reviewedDoorSills = [
+      { edgeId: "door", heightFeet: 0.164041994750657 },
+    ];
+    const steps = projectNavigationSteps(data, route, "start", "end");
+    const notices = steps.filter(
+      (s) => s.message === "Step over the 50 mm raised threshold.",
+    );
+    assert.equal(notices.length, 1);
+    assert.deepEqual(notices[0].pointsFeet, points);
+    assert.equal(notices[0].networkType, "raised-threshold");
+    assert.equal(notices[0].type, "straight");
+    assert.equal(steps.at(-1)?.type, "arrive");
+  }
+});

@@ -34,9 +34,14 @@ async function handle(request: RouteRequest) {
       if (data.nativeIndoorEnvelopes) await initializeNativeExactGeosOverlay();
       const receipt = publishedRouteCellReceipt(data);
       if (receipt) {
-        const cache = new IndexedDbVisitorDeliveryCache();
+        let cache: IndexedDbVisitorDeliveryCache | undefined;
+        try {
+          cache = new IndexedDbVisitorDeliveryCache();
+        } catch {
+          // Directions can fetch the checked carrier when storage is unavailable.
+        }
         let bytes = await cache
-          .getAsset(receipt.compressedSha256)
+          ?.getAsset(receipt.compressedSha256)
           // eslint-disable-next-line unicorn/no-useless-undefined
           .catch(() => undefined);
         if (
@@ -68,7 +73,9 @@ async function handle(request: RouteRequest) {
           bytes.length === receipt.compressedBytes &&
           progressiveSha256(bytes) === receipt.compressedSha256
         )
-          await cache.putAsset(receipt.compressedSha256, bytes).catch(() => {});
+          await cache
+            ?.putAsset(receipt.compressedSha256, bytes)
+            .catch(() => {});
       } else calculate = createWorkerRouteCalculator(data);
     }
     if (!calculate)

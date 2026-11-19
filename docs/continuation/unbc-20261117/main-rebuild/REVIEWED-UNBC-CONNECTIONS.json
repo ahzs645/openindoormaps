@@ -1,0 +1,200 @@
+{
+  "version": 1,
+  "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+  "links": [
+    {
+      "id": "door:1487353:1780077:0|door:1487353:1779222:0",
+      "fromNodeId": "door:1487353:1780077:0",
+      "toNodeId": "door:1487353:1779222:0",
+      "pointsFeet": [
+        [
+          -225.60249587611554,
+          -79.4756954419866,
+          29.855643044619423
+        ],
+        [
+          -222.20785202508426,
+          -84.97445831418393,
+          29.855643044619423
+        ]
+      ],
+      "decision": {
+        "source": "docs/continuation/unbc-20261031/campus/README.md",
+        "id": "06-388-island-missing-approach",
+        "summary": "Connected door 1780077 (06-366 Lounge to 06-364 Corridor) has no walking approach on its 06-364 portal, isolating 06-388 Vestibule and 15 other rooms. Join that portal to the neighbouring 06-364 portal of door 1779222 (6.46 ft) inside native cell 994."
+      }
+    },
+    {
+      "id": "confirmed-open-bay-06-207-to-06-210",
+      "fromNodeId": "arrival:rm-694-0e3aecab6512",
+      "toNodeId": "arrival:rm-694-0e0ebcab64ec",
+      "pointsFeet": [
+        [
+          -129.52954693985396,
+          -58.73924463702474,
+          14.435695538057743
+        ],
+        [
+          -126.4681976453382,
+          -58.0744023135822,
+          14.435695538057743
+        ],
+        [
+          -124.49372715953956,
+          -59.70235483086809,
+          14.435695538057743
+        ],
+        [
+          -123.37898485625351,
+          -76.17880746423543,
+          14.435695538057743
+        ]
+      ],
+      "decision": {
+        "source": "UNBC owner map decisions D1, 2026-11-17",
+        "id": "06-207-bay",
+        "summary": "Open bay to 06-210 Corridor. The measured jamb lines are in the registered 06 Conf LVL 2 drawing."
+      },
+      "openBay": {
+        "levelId": 694,
+        "hostWallId": 1327847,
+        "hostRingsFeet": [
+          [
+            [
+              -147.61229105969272,
+              -84.92045327421215
+            ],
+            [
+              -123.55503945904344,
+              -55.73667343080699
+            ],
+            [
+              -122.79556644389858,
+              -56.36273467123854
+            ],
+            [
+              -147.6687169380292,
+              -86.53627901796688
+            ]
+          ]
+        ],
+        "drawingSha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+        "sectionId": "06 Conf LVL 2",
+        "jambs": [
+          {
+            "index": 1621,
+            "points": [
+              [
+                -124.27028388317794,
+                -56.64640499859202
+              ],
+              [
+                -123.5108721578707,
+                -57.27254058216357
+              ]
+            ]
+          },
+          {
+            "index": 1619,
+            "points": [
+              [
+                -127.45105264700699,
+                -60.504216562286764
+              ],
+              [
+                -126.6916409216999,
+                -61.130352145858204
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "drawn-open-bay-06-220-to-06-244",
+      "fromNodeId": "arrival:rm-694-25377258382b",
+      "toNodeId": "arrival:rm-694-0b30ff58296a",
+      "pointsFeet": [
+        [
+          -209.27076433299578,
+          -65.13160819759173,
+          14.435695538057743
+        ],
+        [
+          -212.7555300945232,
+          -66.37440237550683,
+          14.435695538057743
+        ],
+        [
+          -214.38348261180957,
+          -68.3488728613066,
+          14.435695538057743
+        ],
+        [
+          -203.81681826726538,
+          -91.72686519421177,
+          14.435695538057743
+        ]
+      ],
+      "decision": {
+        "source": "Registered UNBC floorplan.dwg, 06 Conf LVL 2",
+        "id": "06-220-drawn-bay",
+        "summary": "The two drawing jambs span a five-foot opening from 06-220 into 06-244 Corridor."
+      },
+      "openBay": {
+        "levelId": 694,
+        "hostWallId": 1351472,
+        "hostRingsFeet": [
+          [
+            [
+              -186.2767204134562,
+              -90.4944514771291
+            ],
+            [
+              -224.2630479027445,
+              -59.18093956407276
+            ],
+            [
+              -223.63698666231292,
+              -58.42146654892791
+            ],
+            [
+              -186.69388766609762,
+              -88.8750072564211
+            ]
+          ]
+        ],
+        "sectionId": "06 Conf LVL 2",
+        "drawingSha256": "5f2b1b7a91dab72d0a39528116cbbc1a1d74706bd7f9e41e9b7bcc7d7a8cbd44",
+        "jambs": [
+          {
+            "index": 9727,
+            "points": [
+              [
+                -211.32753277953344,
+                -68.5723161376675
+              ],
+              [
+                -211.95366836310495,
+                -69.33172786297499
+              ]
+            ]
+          },
+          {
+            "index": 10896,
+            "points": [
+              [
+                -215.18534434322765,
+                -65.39154737383832
+              ],
+              [
+                -215.8114799267995,
+                -66.15095909914604
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

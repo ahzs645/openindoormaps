@@ -1,3 +1,4 @@
+import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import { nativeDoorFloorBlockers } from "./native-door-floor-support";
 import { nativeStairRouteQualified } from "./native-source-stair";
 import { createIndoorExclusionQuery } from "./indoor-exclusions";
@@ -152,7 +153,7 @@ export function projectLinkPolicy(
     return (
       room &&
       isProjectDestination(room) &&
-      !room.circulation &&
+      !pathwayCirculationOwner(data, room) &&
       !hasReviewedThroughNavigation(room, modelSha256) &&
       !room.stair &&
       !["elevator", "escalator"].includes(edge.kind) &&

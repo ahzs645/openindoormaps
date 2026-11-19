@@ -371,7 +371,8 @@ export function prepareHeldPostcompileArchive(
     },
     output = zipSync(outputFiles, {
       level: 6,
-      mtime: new Date("1980-01-01T00:00:00Z"),
+      // ZIP stores local calendar fields. A UTC epoch can be 1979 in Vancouver.
+      mtime: new Date(1980, 0, 1),
     }),
     reread = checkedPostcompileArchive(output, postcompileHash(output));
   assert.deepEqual(Object.keys(reread.files).sort(), Object.keys(files).sort());

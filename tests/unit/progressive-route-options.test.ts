@@ -2,15 +2,15 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { progressiveRouteOptions } from "../../app/indoor-project/progressive-route-options";
 
-test("visitor requests default to inside arrival and hallway-only transit", () => {
+test("visitor requests default to the shared hallway pathway and hallway-only transit", () => {
   assert.deepEqual(progressiveRouteOptions(), {
-    endpointMode: "inside",
+    endpointMode: "pathway",
     allowOtherRoomTransit: false,
   });
 });
 
-test("both arrival modes and explicit room-transit choices are copied", () => {
-  for (const endpointMode of ["inside", "hallway"] as const)
+test("all arrival modes and explicit room-transit choices are copied", () => {
+  for (const endpointMode of ["inside", "hallway", "pathway"] as const)
     for (const allowOtherRoomTransit of [false, true]) {
       const input = { endpointMode, allowOtherRoomTransit };
       const output = progressiveRouteOptions(input);
