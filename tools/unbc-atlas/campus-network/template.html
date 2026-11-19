@@ -1,0 +1,301 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UNBC · Campus walking network</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#193932;background:#f5f5ee;font:15px/1.46 'Source Sans 3',system-ui,sans-serif}main{max-width:1500px;margin:auto;padding:24px clamp(14px,3vw,44px)}header{border-top:4px solid #205448;padding-top:13px}h1,h2,h3,p{margin:0}h1,h2,h3{font-family:Georgia,serif}h1{font-size:clamp(30px,3.4vw,48px);line-height:1.08}header p{margin:8px 0 14px}button,select{font:inherit;color:inherit;border:1px solid #aab9ad;background:#fff;border-radius:5px;padding:5px 9px}button{cursor:pointer}button[aria-pressed=true]{background:#205446;color:white}a{color:#0c6154}nav,.tools,.legend,.floorBtns{display:flex;align-items:center;flex-wrap:wrap;gap:7px 12px}nav{margin:12px 0 16px}.tools{border-top:1px solid #c4cdc1;padding-top:12px;margin-bottom:10px}.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(265px,320px);gap:12px}.mapbox,aside{background:#fff;border:1px solid #becabf;border-radius:7px;overflow:hidden}.mapbox{position:relative}.mapbox canvas{width:100%;height:clamp(420px,64vh,735px);display:block;background:#fafbf8;touch-action:none}.maptitle{padding:8px 14px;background:#edf2eb;border-bottom:1px solid #c7d2c7;display:flex;justify-content:space-between;align-items:center}.zoom button{min-width:32px;margin-left:4px}.legend{font-size:13px;color:#40584b;margin:12px 0}.key{display:inline-block;width:11px;height:11px;margin-right:4px;vertical-align:middle}.small{font-size:13px;color:#486350}.note{padding:8px 12px;border-top:1px solid #d4dcd3}.controls{padding:11px 12px}.controls label{display:block}.controls select{max-width:100%}aside h2{font-size:21px;margin-bottom:6px}.items{max-height:250px;overflow-y:auto;border-block:1px solid #d7ddd3}.items button{border:0;border-bottom:1px solid #e5e9e0;border-radius:0;width:100%;text-align:left;padding:8px 12px}.items button small{display:block;opacity:.85}#detail{padding:12px}#detail h3{font-size:19px}.floorBtns button{font-size:13px}.tbl{overflow:auto}table{border-collapse:collapse;margin:15px 0;background:white;font-size:14px}th,td{border:1px solid #c7d1c6;padding:6px 8px;text-align:center}td button{border:0;width:100%;font-variant-numeric:tabular-nums}footer{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:14px}#selectedPair{font-size:17px}.help{margin:8px 0}.badge{font-weight:600}.items button:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #bb7417;outline-offset:-2px}[hidden]{display:none!important}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.mapbox canvas{height:440px}.items{max-height:170px}.controls select{max-width:240px}main{padding-top:12px}.maptitle{flex-wrap:wrap}th,td{padding:4px}.tools{align-items:flex-end}}
+</style>
+<main><header><h1>Campus walking network</h1><p id="intro"></p></header>
+<nav aria-label="Views"><button id="mapTab" aria-pressed="true">Floor map</button><button id="matrixTab" aria-pressed="false">Building and floor connections</button></nav>
+<section id="mapPanel"><div class="tools"><label>Building <select id="building"></select></label><label>Level <select id="level"></select></label><label><input type="checkbox" id="held" checked> Held stairs</label><label><input type="checkbox" id="native"> Model stair outlines</label><label><input type="checkbox" id="rooms"> Room numbers and entrances</label></div>
+<div class="tools"><label>Hallway detail <select id="hall"><option value="">Choose an area…</option></select></label><label id="walkLabel" hidden>Tested walk <select id="walk"><option value="">Choose a trip…</option></select></label><label id="previousWalkLabel" hidden><input type="checkbox" id="previousWalk"> Overlay walk before loop cleanup</label><label id="walkFloorLabel" hidden>Trip level <select id="walkFloor"></select></label><label><input type="checkbox" id="previous"> Previous hallway drawing</label></div>
+<label>Find a connector on any floor <select id="find" style="max-width:min(100%,460px)"></select></label><div class="legend"><span><i class="key" style="background:#28755f;width:20px;height:3px"></i>Public pathway</span><span style="color:#19579c">● Lift</span><span style="color:#743bad">▲ Stair or local steps</span><span style="color:#a3540d">◆ Ramp</span><span style="color:#ae542c">○ Held stair</span><span style="color:#607480">▤ Model stair outline</span></div>
+<div class="layout"><div class="mapbox"><div class="maptitle"><strong id="mapTitle"></strong><div class="zoom"><button id="minus" aria-label="Zoom out">−</button><button id="plus" aria-label="Zoom in">+</button><button id="fit">Fit view</button></div></div><canvas id="map" aria-label="Floorplan with walking pathways and connector landings"></canvas><div class="note small"><span id="mapNote"></span><div id="rangeNote" hidden></div><div class="floorBtns" id="traceWalks" hidden></div> <a id="comparison" hidden>View the close-up comparison</a></div></div>
+<aside><div class="controls"><h2>Vertical connections</h2><label>Show <select id="kind"><option value="">All connector types</option><option>Stair</option><option>Local steps</option><option>Ramp</option><option>Lift</option></select></label><p id="listCount" class="small"></p></div><div class="items" id="items"></div><div id="detail" aria-live="polite"></div></aside></div></section>
+<section id="matrixPanel" hidden><h2>Room connections</h2><div class="tools"><label>From <select id="startRoom" style="max-width:240px"></select></label><label>To <select id="endRoom" style="max-width:240px"></select></label><button id="swap">Reverse</button></div><p id="roomResult" class="help" aria-live="polite"></p><label>Group room pairs by <select id="matrixMode"><option value="building">Building</option><option value="floor">Directory floor</option></select></label><p class="help">Each cell counts public one-way room pairs. Rows give the origin and columns give the destination. Choose a cell for an example. Trips can use intermediate buildings and levels.</p><div class="tbl"><table id="matrix"></table></div><p id="selectedPair" aria-live="polite"></p></section>
+<section id="coverage" hidden><h2>Changes by building</h2><p id="coverageNote"></p><div style="overflow:auto"><table id="coverageTable"></table></div><p><a href="room-ranges.csv" download>Room numbers by building and floor (CSV)</a> · <a href="changed-room-directions.csv" download>New and lost room directions (CSV)</a></p></section><footer><a href="all-room-directions.csv" download>All reachable room directions (CSV)</a><a href="vertical-links.csv" download>Floor-to-floor links (CSV)</a><a href="native-stair-inventory.csv" download>Native stair inventory (CSV)</a><a href="building-connections.csv" download>Building connections (CSV)</a><a href="floor-connections.csv" download>Floor connections (CSV)</a></footer></main>
+<script>
+const data=/*DATA*/, {summary,geo,levels,transfers,matrix}=data, $=id=>document.getElementById(id), canvas=$('map'),ctx=canvas.getContext('2d');
+$('intro').textContent=summary.buildings.length+' buildings · '+summary.nativeLevels+' native levels · Public walking profile';
+if(summary.allDistinctPairs){
+ const footer=document.querySelector('footer');
+ for(const [file,label] of [['all-pair-reachability.csv','Full room matrix, including disconnected directions (CSV)'],['directory-records.csv','Room key for the full matrix (CSV)']]){
+  const link=document.createElement('a');link.href=file;link.download='';link.textContent=label;footer.append(link)
+ }
+}
+if(data.coverage?.length){
+ $('coverage').hidden=false;
+ $('coverageNote').textContent='Counts are ordered room pairs, grouped by the building where the walk starts. Each direction is counted separately.';
+ const table=$('coverageTable'),hdr=table.createTHead().insertRow();
+ for(const label of ['Origin building','Directory records','Reachable directions','New','Lost']){const th=document.createElement('th');th.textContent=label;hdr.append(th)}
+ const body=table.createTBody();
+ for(const x of data.coverage){const row=body.insertRow();for(const v of [x.building,x.records,x.reachable,x.added,x.lost])row.insertCell().textContent=typeof v==='number'?v.toLocaleString('en-CA'):v}
+}
+for(const b of ['',...summary.buildings])$('building').add(new Option(b?'Building '+b:'Whole campus',b));
+for(const l of levels)$('level').add(new Option(geo[l].name,l));$('level').value=694;
+$('find').add(new Option('Choose a connector…',''));
+for(const status of ['Public','Held','Drawing only']){
+ const group=document.createElement('optgroup');group.label=status;
+ for(const t of transfers.filter(t=>t.status===status).sort((a,b)=>a.name.localeCompare(b.name))){const label=t.name+' · '+t.layers.map(l=>geo[l].name.replace('Floor ','')).join(' / ');group.append(new Option(label,t.key))}
+ $('find').append(group);
+}
+$('find').onchange=()=>{
+ const t=transfers.find(t=>t.key===$('find').value);if(!t)return;
+ building=t.b.length===1?t.b[0]:'';$('building').value=building;$('kind').value='';
+ if(t.status==='Drawing only')$('native').checked=true;if(t.status==='Held')$('held').checked=true;
+ setLevel(t.layers.includes(level)?level:t.layers[0]);choose(t)
+};
+let stairExample=null;
+let level=694,building='',selection=null,scale=1,cx=0,cy=0,hits=[],width=0,height=0,down=null;
+const nf=n=>n.toLocaleString('en-CA');
+const hallDetails={
+ ground:{image:'04-07-floor1.png',name:'04–07 · Floor 1 passage',level:311,building:'',box:[-24,247,125,337],note:'The gap in the earlier drawing is at the west end of 07-113A, where it meets 07-163.'},
+ b08:{image:'08-hall.png',name:'08 · Stair and office entrances',level:694,building:'08',box:[60,625,80,656],note:'The stair entrance has a short angled approach for wall clearance. The three nearby office branches meet their doorway walls at right angles.'},
+ coffee:{image:'10-coffee.png',name:'10 · Coffee junction',level:694,building:'10',box:[220,837,269,865],note:'The hallway passes the Coffee stop. The west branch serves 10-2514.'},
+ loop:{image:'10-loop.png',name:'10 · Floor 2 west wing',level:694,building:'10',box:[36,755,236,891],note:'The upper diagonal arm ends at office 10-2008. The hallway connection is farther along the partition.'}
+};
+if(data.coverage?.length){
+ const rotundaFloors=[[311,'1','04-124','The raised rotunda is on Floor 1.25. The public entrance from the northern washroom and Fish Tank Lab wing is still unconfirmed.'],[1487816,'1.25','04-124','This level shows the raised rotunda. Select a tested walk to see its approach from Floor 1.'],[694,'2','04-259','The rotunda functions as circulation here. The offices to the south have separate entrances.'],[400176,'3','04-329','The walking network follows the circulation around the rotunda on this level.'],[402367,'4','04-445','The public route follows the balcony beside the opening. The reviewed balcony doorway allows travel in both directions.']];
+ for(const [level,n,number,note] of rotundaFloors){
+  hallDetails['rotunda-'+n]={name:'04 · Rotunda · Floor '+n,level,building:'04',box:[-150,231,17,405],note};
+ }
+ hallDetails.ground.note='Floor 1 corridor between 07-163 and 07-113A.';
+ hallDetails.b08.note='Building 08 stair and office entrances on Floor 2.';
+ hallDetails.coffee.note='Floor 2 hallway beside Coffee and 10-2514.';
+ hallDetails.loop.note='Floor 2 hallway and the branch serving 10-2008.';
+}
+if(summary.hallwayRepairsVerified&&!data.coverage?.length){
+ hallDetails.ground.note='The public path makes one turn around the rounded wall at 07-163 and continues into 07-113A. Both directions run on Floor 1.';
+ hallDetails.loop.note='Two hallway connections complete this Floor 2 loop. Routes can go around either side. The diagonal spur still ends at 10-2008.';
+}
+for(const v of data.reviewedViews||[])hallDetails[v.id]=v;
+for(const [id,item] of Object.entries(hallDetails))$('hall').add(new Option(item.name,id));
+for(const [i,w] of data.walks.entries())$('walk').add(new Option(w.origin+' → '+w.destination+(w.gained?' · newly connected':''),i));
+$('walkLabel').hidden=!data.walks.length;
+function selectedWalk(){return $('walk').value===''?null:data.walks[Number($('walk').value)]}
+$('walk').onchange=()=>{
+ $('previousWalk').checked=false;const w=selectedWalk();if(w){
+  $('hall').value='';$('previous').checked=false;building='';$('building').value='';selection=null;setLevel(w.level)
+ }
+ refresh();fit(w?w.box:defaultBox())
+};
+$('previousWalk').onchange=()=>{refresh()};
+$('walkFloor').onchange=()=>{const w=selectedWalk();if(w?.layers){setLevel(Number($('walkFloor').value));refresh();fit(w.layers[level].box)}};
+const oldNetwork=new Map();
+function networkFor(l){
+ const g=geo[l];
+ if(!$('previous').checked)return g.network;
+ if(!oldNetwork.has(l)){
+  const additions=new Set(g.currentExtra.map(row=>JSON.stringify(row)));
+  oldNetwork.set(l,g.network.filter(row=>!additions.has(JSON.stringify(row))).concat(g.previousExtra));
+ }
+ return oldNetwork.get(l);
+}
+function frameHall(){
+ const detail=hallDetails[$('hall').value];if(!detail)return false;
+ const [x1,y1,x2,y2]=detail.box;cx=(x1+x2)/2;cy=(y1+y2)/2;
+ scale=.92*Math.min(width/(x2-x1),height/(y2-y1));draw();return true;
+}
+$('hall').onchange=()=>{
+ const d=hallDetails[$('hall').value];selection=null;$('walk').value='';
+ if(d){building=d.building;$('building').value=building;setLevel(d.level)}
+ refresh();if(!frameHall())fit(defaultBox())
+};
+$('previous').onchange=()=>{if($('previous').checked)$('walk').value='';refresh()};
+function statusLabel(t){return t.status==='Public'&&t.ends.length&&t.ends.every(e=>!e.fullIn&&!e.fullOut)?'Public flight · isolated from room stops':t.status}
+function fit(box){box=box||[-300,-550,550,700];const [a,b,c,d]=box;cx=(a+c)/2;cy=(b+d)/2;scale=Math.min(width/Math.max(c-a+22,45),height/Math.max(d-b+22,45))*.94;draw()}
+function defaultBox(){return (building&&geo[level].byBuilding[building])||geo[level].bounds}
+function pt(p){return [(p[0]-cx)*scale+width/2,(cy-p[1])*scale+height/2]}
+function line(points,close){if(!points.length)return;let [x,y]=pt(points[0]);ctx.moveTo(x,y);for(const p of points.slice(1)){[x,y]=pt(p);ctx.lineTo(x,y)}if(close)ctx.closePath()}
+function group(items,color,weight,close=false){ctx.beginPath();for(const pts of items)line(pts,close);ctx.strokeStyle=color;ctx.lineWidth=weight;ctx.stroke()}
+function visible(t){return t.layers.includes(level)&&(!building||t.b.includes(building))&&(!$('kind').value||t.type===$('kind').value)&&(t.status!=='Held'||$('held').checked)&&(t.status!=='Drawing only'||$('native').checked)}
+function shape(x,y,t,active){const size=active?7:5;ctx.beginPath();if(t.status==='Held'||t.type==='Lift')ctx.arc(x,y,size,0,2*Math.PI);else if(t.type==='Ramp'){ctx.moveTo(x,y-size-1);ctx.lineTo(x+size,y);ctx.lineTo(x,y+size+1);ctx.lineTo(x-size,y);ctx.closePath()}else{ctx.moveTo(x,y-size-1);ctx.lineTo(x+size+1,y+size);ctx.lineTo(x-size-1,y+size);ctx.closePath()}ctx.fillStyle=t.status==='Held'?'#fff7eb':t.type==='Lift'?'#19579c':t.type==='Ramp'?'#a3540d':'#743bad';ctx.fill();ctx.strokeStyle=t.status==='Held'?'#ae542c':'#fff';ctx.lineWidth=2;ctx.stroke();if(active){ctx.beginPath();ctx.arc(x,y,11,0,2*Math.PI);ctx.lineWidth=2;ctx.strokeStyle='#162e28';ctx.stroke()}}
+const stampCache=new WeakMap();
+function buildingStamps(g){
+ if(stampCache.has(g))return stampCache.get(g);
+ const groups=new Map();
+ for(const [name,xy,id] of g.labels){
+  if(!name||!id||!xy?.every(Number.isFinite))continue;
+  if(!groups.has(id))groups.set(id,[]);
+  groups.get(id).push(xy);
+ }
+ const stamps=[];
+ for(const [id,points] of groups){
+  const middle=axis=>points.map(p=>p[axis]).sort((a,b)=>a-b)[Math.floor(points.length/2)];
+  const x=middle(0),y=middle(1);
+  const score=p=>(p[0]-x)**2+(p[1]-y)**2;
+  const nearest=points.reduce((best,p)=>score(p)<score(best)?p:best);
+  stamps.push([id,nearest]);
+ }
+ stampCache.set(g,stamps);
+ return stamps;
+}
+function otherLanding(t,l){
+ if(t.status!=='Public'||!['Ramp','Local steps'].includes(t.type)||t.ends.length!==2)return;
+ const here=t.ends.find(e=>e.l===l),other=t.ends.find(e=>e.l!==l);
+ const path=t.paths[l];
+ if(!here||!other||!path?.length)return;
+ const coincides=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1])<0.04;
+ const ends=[path[0],path[path.length-1]];
+ if(!ends.some(p=>coincides(p,here.xy))||!ends.some(p=>coincides(p,other.xy)))return;
+ return other;
+}
+function drawContinuation(t){
+ const far=otherLanding(t,level);
+ if(!far)return;
+ const xy=pt(far.xy),here=pt(t.ends.find(e=>e.l===level).xy);
+ if(Math.hypot(xy[0]-here[0],xy[1]-here[1])<22||(scale<1.25&&selection!==t))return;
+ const [x,y]=xy;
+ const color=t.type==='Ramp'?'#a3540d':'#743bad';
+ ctx.save();
+ ctx.strokeStyle=color;ctx.fillStyle='#fafbf8';ctx.lineWidth=1.6;
+ ctx.beginPath();ctx.moveTo(x,y-4);ctx.lineTo(x+4,y);ctx.lineTo(x,y+4);ctx.lineTo(x-4,y);ctx.closePath();ctx.fill();ctx.stroke();
+ const direction=levels.indexOf(far.l)>levels.indexOf(level)?'↑':'↓';
+ const text=direction+' '+geo[far.l].name;
+ ctx.font='600 11px system-ui';ctx.strokeStyle='#fafbf8';ctx.lineWidth=3;
+ ctx.strokeText(text,x+7,y-5);ctx.fillStyle=color;ctx.fillText(text,x+7,y-5);
+ ctx.restore();
+ hits.push([xy,t,far.l]);
+}
+function draw(){if(!width)return;const g=geo[level];hits=[];ctx.clearRect(0,0,width,height);
+ group(g.rings.map(r=>r.map(i=>g.coords[i])), '#b9c2b7',.8,true);group(g.fallback,'#b9c2b7',.8,true);
+ group(networkFor(level).map(r=>r.slice(1)),'#28755f',Math.min(3,Math.max(1.1,scale*.65)));
+ const walk=selectedWalk();
+ if(walk){const layer=walk.layers?.[level]||walk;
+  if($('previousWalk').checked&&walk.previousWalk?.layers[level]){
+   ctx.save();ctx.setLineDash([6,4]);group(walk.previousWalk.layers[level].parts,'#ac4d2d',6);ctx.restore();
+  }
+  group(layer.parts,'#fff',4.5);group(layer.parts,'#1a5385',2.8);
+  for(const point of layer.landings||[]){const [x,y]=pt(point);ctx.beginPath();ctx.arc(x,y,5,0,2*Math.PI);ctx.fillStyle='#fff';ctx.fill();ctx.strokeStyle='#1a5385';ctx.lineWidth=2;ctx.stroke()}
+  (layer.marks||walk.ends.map((p,i)=>[i,p])).forEach(([i,p])=>{const [x,y]=pt(p);ctx.beginPath();ctx.arc(x,y,6.5,0,2*Math.PI);ctx.fillStyle=i?'#a64b22':'#1a5385';ctx.fill();ctx.strokeStyle='white';ctx.lineWidth=2;ctx.stroke()})
+ }
+ if($('native').checked)for(const [id,rings] of g.treads){group(rings,selection?.native===id?'#513376':'#758390',selection?.native===id?1.5:.8,true)}
+ if(stairExample&&selection?.stairCheck?.examples.includes(stairExample)&&stairExample.level===level){
+  group(stairExample.parts,'white',5);group(stairExample.parts,'#164d85',3);
+  const last=stairExample.parts.at(-1)?.at(-1);
+  if(last){const [x,y]=pt(last);ctx.beginPath();ctx.arc(x,y,4,0,2*Math.PI);ctx.fillStyle='white';ctx.fill();ctx.strokeStyle='#164d85';ctx.lineWidth=2;ctx.stroke()}
+ }
+ for(const terminal of selection?.stairCheck?.terminals||[]){
+  if(terminal.levels.includes(level))group(terminal.treadRings,'#753f88',2.5,true);
+ }
+ if($('rooms').checked){ctx.fillStyle='#56806c';for(const mark of g.stops){const [x,y]=pt(mark[1]);ctx.fillRect(x-1.4,y-1.4,2.8,2.8)}if(scale>1.25){ctx.fillStyle='#284333';ctx.font='11px system-ui';for(const [n,xy,b] of g.labels){if(!building||b===building){const [x,y]=pt(xy);ctx.fillText(n,x+3,y-2)}}}}
+ const markers=transfers.filter(visible).sort((a,b)=>Number(a===selection)-Number(b===selection));
+ for(const t of markers){if(t.status==='Drawing only'){if(t.footprint){const b=t.footprint;hits.push([pt([(b[0]+b[2])/2,(b[1]+b[3])/2]),t])}continue}
+  if(t.paths[level])group([t.paths[level]],t.type==='Ramp'?'#a3540d':'#743bad',t===selection?3:1.6);
+  drawContinuation(t);
+  for(const e of t.ends.filter(e=>e.l===level)){const xy=pt(e.xy);shape(...xy,t,t===selection);hits.push([xy,t])}
+ }
+ if(!building&&!selection){ctx.font='600 12px system-ui';ctx.lineWidth=3;ctx.textAlign='center';for(const [num,xy] of buildingStamps(g)){const [x,y]=pt(xy);ctx.strokeStyle='#fafbf8';ctx.strokeText(num,x,y-8);ctx.fillStyle='#2b5141';ctx.fillText(num,x,y-8)}ctx.textAlign='left'}
+}
+function setLevel(l){stairExample=null;level=Number(l);$('level').value=level;if(!geo[level].exported)$('native').checked=true}
+function localBox(t){const p=t.ends.filter(e=>e.l===level).map(e=>e.xy);if(t.paths[level])p.push(...t.paths[level]);if(!p.length&&t.footprint)return t.footprint;if(!p.length)return defaultBox();return [Math.min(...p.map(q=>q[0]))-20,Math.min(...p.map(q=>q[1]))-20,Math.max(...p.map(q=>q[0]))+20,Math.max(...p.map(q=>q[1]))+20]}
+function details(){const panel=$('detail');panel.replaceChildren();if(!selection){panel.textContent='Select a landing or a list entry to see the levels it serves.';return}
+ const t=selection;function add(tag,text){const n=document.createElement(tag);n.textContent=text;panel.append(n);return n}
+ add('h3',t.name);add('p',t.type+' · '+statusLabel(t)+' · Building '+t.b.join(' / '));if(t.native)add('p','Native element '+t.native).className='small';
+ if(t.stairCheck){
+  for(const d of t.stairCheck.directions){
+   for(const note of d.fieldNotes)add('p',note).className='help';
+   if(d.fieldNotes.length&&d.fromLevel===level){
+    const target=add('button','Show confirmed exit at '+d.toRoom+' · '+geo[d.toLevel].name);
+    target.onclick=()=>{setLevel(d.toLevel);refresh();fit(localBox(t))};
+   }
+   if(d.fromLevel===level){
+    const foot=t.stairCheck.examples?.find(ex=>ex.level===level&&ex.target==='stair foot');
+    if(foot&&!d.graphAllowsFlight){
+     add('p','Walking directions reach the foot of '+d.fromRoom+' on '+geo[level].name+'. The flight to '+geo[d.toLevel].name+' still needs a verified upper landing connection.').className='small help';
+    }else{
+     add('p',geo[d.fromLevel].name+' → '+geo[d.toLevel].name+' · '+(d.graphAllowsFlight?'flight enabled':'flight held')+' · '+nf(d.reachableOrigins)+' directory origins reach the starting landing on foot, and '+nf(d.reachableDestinations)+' destinations are reachable on foot from the far landing.').className='small help';
+    }
+   }
+  }
+  for(const ex of t.stairCheck.examples||[]){
+   if(ex.level!==level||!ex.parts.length)continue;
+   const btn=add('button','Show hallway approach from '+ex.room+' to '+ex.landing+' ('+ex.target+') · '+ex.graphMetres.toFixed(1)+' m');
+   btn.onclick=()=>{stairExample=ex;const points=ex.parts.flat();
+    fit([Math.min(...points.map(p=>p[0])),Math.min(...points.map(p=>p[1])),Math.max(...points.map(p=>p[0])),Math.max(...points.map(p=>p[1]))])};
+  }
+  for(const area of data.reviewedViews||[]){
+   if(area.nativeStair!==t.native||area.level!==level)continue;
+   const button=add('button','Show the flat hallway crossing');
+   button.onclick=()=>{$('hall').value=area.id;$('hall').onchange()};
+  }
+  for(const landing of t.stairCheck.reviewedLandings||[]){
+   if(landing.level===level)add('p',landing.room+' · '+(landing.passed?'The original landing point passed the floor-support check.':'The original landing point failed the floor-support check.')).className='small help';
+  }
+  const measured=t.stairCheck.terminals.filter(t=>t.levels.includes(level)&&t.treadRings.length);
+  if(measured.length)add('p','Purple outlines mark the measured '+[...new Set(measured.map(t=>t.side))].join(' and ')+' terminal tread on this level.').className='small';
+ }
+ if(t.reason)add('p',t.reason).className='help';
+ if(t.status==='Public'){const end=t.ends.filter(e=>e.l===level);for(const s of end)add('p',s.room+' · '+nf(s.in)+' room origins can reach this landing and '+nf(s.out)+' destinations can be reached from it without another vertical transfer.'+(s.fullIn===0&&s.fullOut===0?' This landing is isolated from all retained room stops in the public graph.':'')).className='small help'}
+ const buttons=add('div','');buttons.className='floorBtns';for(const l of t.layers){const b=document.createElement('button');b.textContent=geo[l].name;b.setAttribute('aria-pressed',String(l===level));b.onclick=()=>{setLevel(l);refresh();fit(localBox(t))};buttons.append(b)}
+}
+function choose(t){stairExample=null;$('walk').value='';$('hall').value='';selection=t;refresh();fit(localBox(t))}
+function refresh(){
+ $('find').value=selection?.key||'';const list=$('items');list.replaceChildren();const subset=transfers.filter(visible).sort((a,b)=>({Public:0,Held:1,'Drawing only':2}[a.status]-{Public:0,Held:1,'Drawing only':2}[b.status])||a.name.localeCompare(b.name));
+ $('listCount').textContent=subset.length+' shown on this level';
+ for(const t of subset){const btn=document.createElement('button');btn.setAttribute('aria-pressed',String(t===selection));btn.textContent=t.name;const meta=document.createElement('small');meta.textContent=t.type+' · '+statusLabel(t);btn.append(meta);btn.onclick=()=>choose(t);list.append(btn)}
+ $('mapTitle').textContent=(building?'Building '+building:'Whole campus')+' · '+geo[level].name;
+ const w=selectedWalk(); const floors=w?.layers?Object.keys(w.layers):[];const floorChoice=$('walkFloor');
+ $('walkFloorLabel').hidden=floors.length<2;$('previousWalkLabel').hidden=!w?.previousWalk;
+ if(floors.length>1){floorChoice.replaceChildren(...levels.filter(l=>floors.includes(String(l))).map(l=>new Option(geo[l].name,l)));floorChoice.value=level}
+ const parts=[];if(w&&floors.length>1)parts.push(w.origin+' → '+w.destination+' · '+w.metres.toFixed(1)+' m total across '+floors.length+' levels. Showing '+geo[level].name+'. Open blue circles mark vertical transfers.');else if(w)parts.push(w.origin+' → '+w.destination+' · '+w.metres.toFixed(1)+' m on '+geo[level].name+'. Blue marks the start and orange marks the destination.');if(w?.previousWalk&&$('previousWalk').checked)parts.push('Dashed rust shows the '+w.previousWalk.metres.toFixed(1)+' m walk returned before loop cleanup. Blue shows the current walk.');if(w&&Object.hasOwn(w,'stepFreeMetres'))parts.push(w.stepFreeMetres===null?'The step-free profile returned no route for this direction.':'The step-free profile returned a '+w.stepFreeMetres.toFixed(1)+' m route.');if(hallDetails[$('hall').value])parts.push(hallDetails[$('hall').value].note);if($('previous').checked)parts.push('Showing the previous hallway drawing.');if(building&&!geo[level].byBuilding[building])parts.push('This building has no located record on this level. Showing campus context.');if(!geo[level].exported)parts.push('No visitor floorplan was exported for this native level.');if(!geo[level].network.length)parts.push('No published hallway lines on this layer.');if(!parts.length)parts.push('Drag to pan. Scroll or use + and − to zoom. Step-free routing is assessed separately.');$('mapNote').textContent=parts.join(' ');
+ const rng=building&&data.roomRanges?.find(r=>r[0]===building&&Number(r[1])===level);
+ $('rangeNote').hidden=!rng;
+ if(rng)$('rangeNote').textContent=rng[3]?'Directory on this level · '+(rng[3]===rng[4]?rng[3]:rng[3]+' to '+rng[4])+' · '+rng[6]+' records.':'Directory on this level · '+rng[6]+' unnumbered records.';
+ const hall=hallDetails[$('hall').value];const traces=$('traceWalks');traces.replaceChildren();traces.hidden=!hall?.traceWalks?.length;
+ for(const i of hall?.traceWalks||[]){const w=data.walks[i],button=document.createElement('button');button.textContent=w.origin+' → '+w.destination;button.onclick=()=>{const box=hall.box,l=hall.level;$('walk').value=i;$('walk').onchange();setLevel(l);refresh();fit(box)};traces.append(button)}
+$('comparison').hidden=!hall||!!data.coverage?.length;
+ if(hall)$('comparison').href='hallway-review/figures/'+hall.image;
+ details();draw()
+}
+function size(){const r=canvas.getBoundingClientRect();width=r.width;height=r.height;if(!width)return;const pixel=Math.min(devicePixelRatio||1,2);canvas.width=width*pixel;canvas.height=height*pixel;ctx.setTransform(pixel,0,0,pixel,0,0);if(!frameHall())fit(selectedWalk()?.layers?.[level]?.box||selectedWalk()?.box||(selection?localBox(selection):defaultBox()))}
+$('building').onchange=()=>{$('hall').value='';$('walk').value='';building=$('building').value;selection=null;refresh();fit(defaultBox())};
+$('level').onchange=()=>{$('hall').value='';$('walk').value='';setLevel($('level').value);selection=null;refresh();fit(defaultBox())};
+for(const id of ['held','native','rooms','kind'])$(id).onchange=()=>{if(selection&&!visible(selection))selection=null;refresh()};
+$('fit').onclick=()=>{$('hall').value='';$('walk').value='';selection=null;refresh();fit(defaultBox())};
+function zoom(n,x=width/2,y=height/2){const old=scale;scale=Math.max(.025,Math.min(65,scale*n));cx+=(x-width/2)*(1/old-1/scale);cy-=(y-height/2)*(1/old-1/scale);draw()}
+$('plus').onclick=()=>zoom(1.6);$('minus').onclick=()=>zoom(1/1.6);
+canvas.onwheel=e=>{e.preventDefault();zoom(e.deltaY<0?1.2:1/1.2,e.offsetX,e.offsetY)};
+canvas.onpointerdown=e=>{down={x:e.clientX,y:e.clientY,cx,cy};canvas.setPointerCapture(e.pointerId)};
+canvas.onpointermove=e=>{if(down){cx=down.cx-(e.clientX-down.x)/scale;cy=down.cy+(e.clientY-down.y)/scale;draw()}};
+canvas.onpointerup=e=>{if(down&&Math.hypot(e.clientX-down.x,e.clientY-down.y)<5){const h=hits.map(([p,t,l])=>[Math.hypot(e.offsetX-p[0],e.offsetY-p[1]),t,l]).sort((a,b)=>a[0]-b[0])[0];if(h&&h[0]<12){if(h[2]!==undefined)setLevel(h[2]);choose(h[1])}}down=null};canvas.onpointercancel=()=>down=null;
+function view(isMatrix){$('matrixPanel').hidden=!isMatrix;$('mapPanel').hidden=isMatrix;$('mapTab').setAttribute('aria-pressed',String(!isMatrix));$('matrixTab').setAttribute('aria-pressed',String(isMatrix));if(!isMatrix)size()}
+$('mapTab').onclick=()=>view(false);$('matrixTab').onclick=()=>view(true);
+function matrixView(){
+const floor=$('matrixMode').value==='floor',names=floor?levels.map(l=>geo[l].name):summary.buildings,rows=floor?data.floorMatrix:matrix;
+const label=x=>floor?x:'Building '+x;
+const table=$('matrix');table.replaceChildren();$('selectedPair').textContent='';let row=table.insertRow();
+for(const txt of ['From / to',...names]){const th=document.createElement('th');th.textContent=txt;row.append(th)}
+for(const a of names){row=table.insertRow();const th=document.createElement('th');th.textContent=a;row.append(th);for(const [from,to,n,origin,destination] of rows.filter(x=>x[0]===a)){const btn=document.createElement('button');btn.textContent=nf(n);btn.setAttribute('aria-label',label(from)+' to '+to+', '+nf(n)+' room pairs');btn.onclick=()=>{$('selectedPair').textContent=label(from)+' → '+to+' · '+nf(n)+' public room pairs.'+(n?' Example trip '+origin+' → '+destination+'.':'')};row.insertCell().append(btn)}}
+}
+$('matrixMode').onchange=matrixView;matrixView();
+for(const id of ['startRoom','endRoom']){
+ const select=$(id);for(const b of summary.buildings){
+  const opt=document.createElement('optgroup');opt.label='Building '+b;
+  data.rooms.forEach((r,i)=>{if(r[2]===b)opt.append(new Option([r[0],r[1]!==r[0]?r[1]:'',r[3]].filter(Boolean).join(' · '),String(i)))});
+  select.append(opt);
+ }
+ select.onchange=roomResult;
+}
+function roomResult(){
+ const a=data.rooms[Number($('startRoom').value)],b=data.rooms[Number($('endRoom').value)];
+ const can=(s,t)=>!!s[4]&&!!t[5]&&data.reach[s[4]].includes(Number(t[5]));
+ const ab=can(a,b),ba=can(b,a);
+ $('roomResult').textContent=a===b?'Choose two different room records.':a[0]+' ↔ '+b[0]+' · '+(ab&&ba?'Reachable in both directions on the public network.':ab?'A public path exists from the first room to the second only.':ba?'A public path exists in the reverse direction only.':'No public room-to-room path in either direction.');
+}
+$('startRoom').value=String(data.rooms.findIndex(r=>r[0]==='04-125'));$('endRoom').value=String(data.rooms.findIndex(r=>r[0]==='04-306'));roomResult();
+$('swap').onclick=()=>{const a=$('startRoom').value;$('startRoom').value=$('endRoom').value;$('endRoom').value=a;roomResult()};
+function openLinkedHall(){
+ const area=location.hash.slice(1);
+ const stair=transfers.find(t=>t.stairCheck&&area==='stair-'+t.native);
+ if(stair){
+  const observed=stair.stairCheck.directions.find(d=>d.fieldNotes.length);
+  setLevel(observed?.fromLevel??stair.layers[0]);
+  $('find').value=stair.key;$('find').onchange();return
+ }
+ const i=data.walks.findIndex(w=>area==='walk-'+w.origin+'-'+w.destination);
+ if(i>=0){$('walk').value=String(i);$('walk').onchange();return}
+ if(!Object.hasOwn(hallDetails,area))return;
+ $('hall').value=area;$('hall').onchange()
+}
+refresh();new ResizeObserver(size).observe(canvas);size();
+openLinkedHall();window.addEventListener('hashchange',openLinkedHall);
+</script></html>
