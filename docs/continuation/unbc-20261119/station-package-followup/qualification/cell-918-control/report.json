@@ -1,0 +1,5333 @@
+{
+  "version": 1,
+  "algorithm": "native-walking-guides-4",
+  "parameters": {
+    "spacingFeet": 2,
+    "maxSites": 25000,
+    "maxAttachments": 64,
+    "maxDeviationFeet": 0.75,
+    "shapedApproaches": true,
+    "slideJoins": true,
+    "straightRuns": false
+  },
+  "method": "shared-corridor",
+  "walkingEdges": 5372,
+  "eligibleWalkingEdges": 79,
+  "requestedWalkingEdges": 79,
+  "completeCompiledWalkingEdges": 69,
+  "compiledWalkingEdges": 69,
+  "fallbackWalkingEdges": 5303,
+  "newGraphConnections": 0,
+  "floors": [
+    {
+      "id": "storey:2295121",
+      "name": "Floor 0",
+      "eligibleWalkingEdges": 0,
+      "compiledWalkingEdges": 0
+    },
+    {
+      "id": "storey:1450417+311+1487816",
+      "name": "Campus Floor 1",
+      "eligibleWalkingEdges": 0,
+      "compiledWalkingEdges": 0
+    },
+    {
+      "id": "storey:694",
+      "name": "Floor 2",
+      "eligibleWalkingEdges": 0,
+      "compiledWalkingEdges": 0
+    },
+    {
+      "id": "storey:400176+1487353",
+      "name": "Campus Floor 3",
+      "eligibleWalkingEdges": 79,
+      "compiledWalkingEdges": 69
+    },
+    {
+      "id": "storey:402367",
+      "name": "Floor 4",
+      "eligibleWalkingEdges": 0,
+      "compiledWalkingEdges": 0
+    }
+  ],
+  "cells": [
+    {
+      "cellId": "native-cell:24.278215:918",
+      "elevationFeet": 24.278215223097114,
+      "eligibleEdges": 79,
+      "terminalCount": 53,
+      "requestedEdges": 79,
+      "emittedEdges": 69,
+      "compiledEdges": 69,
+      "refusedEdges": [
+        {
+          "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262854:0",
+          "reason": "checked-chain-disconnection"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c46d447227c4|door:400176:2255536:1",
+          "reason": "terminal-attachment"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c5f7cc722914|door:400176:2255524:1",
+          "reason": "terminal-attachment"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2255478:0",
+          "reason": "checked-chain-disconnection"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2258494:0",
+          "reason": "checked-chain-disconnection"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261753:0",
+          "reason": "terminal-attachment"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2261753:0|door:400176:2261777:0",
+          "reason": "terminal-attachment"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2262854:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+          "reason": "checked-chain-disconnection"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263180:0",
+          "reason": "checked-chain-disconnection"
+        },
+        {
+          "edgeId": "native-cell:24.278215:918:walk:door:400176:2263074:0|door:400176:2263180:0",
+          "reason": "checked-chain-disconnection"
+        }
+      ],
+      "guideIds": [
+        "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2255475:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2263938:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-04668c83f677|door:400176:2255457:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-04668c83f677|door:400176:2255483:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-04668c83f677|door:400176:2255485:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-04668c83f677|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2255487:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2255522:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-c45fcc7227b9|door:400176:2255483:1",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-c46d447227c4|door:400176:2255535:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-c5f7cc722914|door:400176:2255523:0",
+        "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2255487:0",
+        "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2255536:0",
+        "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+        "native-cell:24.278215:918:walk:door:400176:2255456:0|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:1",
+        "native-cell:24.278215:918:walk:door:400176:2255457:1|door:400176:2255485:0",
+        "native-cell:24.278215:918:walk:door:400176:2255457:1|door:400176:2255486:0",
+        "native-cell:24.278215:918:walk:door:400176:2255457:1|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:0",
+        "native-cell:24.278215:918:walk:door:400176:2255475:0|door:400176:2255477:0",
+        "native-cell:24.278215:918:walk:door:400176:2255478:0|door:400176:2255479:0",
+        "native-cell:24.278215:918:walk:door:400176:2255478:0|door:400176:2258494:0",
+        "native-cell:24.278215:918:walk:door:400176:2255479:0|door:400176:2255524:0",
+        "native-cell:24.278215:918:walk:door:400176:2255479:0|door:400176:2258494:0",
+        "native-cell:24.278215:918:walk:door:400176:2255479:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:0",
+        "native-cell:24.278215:918:walk:door:400176:2255479:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2255483:1|door:400176:2255524:0",
+        "native-cell:24.278215:918:walk:door:400176:2255483:1|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2255483:1|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:0",
+        "native-cell:24.278215:918:walk:door:400176:2255483:1|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:1",
+        "native-cell:24.278215:918:walk:door:400176:2255485:0|door:400176:2255486:0",
+        "native-cell:24.278215:918:walk:door:400176:2255486:0|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:0",
+        "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+        "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2255520:0",
+        "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261777:0",
+        "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2261777:0",
+        "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2263938:0",
+        "native-cell:24.278215:918:walk:door:400176:2255520:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+        "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2255524:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2255536:0|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:1",
+        "native-cell:24.278215:918:walk:door:400176:2258494:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:0",
+        "native-cell:24.278215:918:walk:door:400176:2261777:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+        "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+        "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262954:1",
+        "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262984:1",
+        "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+        "native-cell:24.278215:918:walk:door:400176:2262896:0|door:400176:2262940:1",
+        "native-cell:24.278215:918:walk:door:400176:2262896:0|door:400176:2263576:0",
+        "native-cell:24.278215:918:walk:door:400176:2262940:1|door:400176:2262954:1",
+        "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263074:0",
+        "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263112:0",
+        "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263616:0",
+        "native-cell:24.278215:918:walk:door:400176:2263074:0|door:400176:2263112:0",
+        "native-cell:24.278215:918:walk:door:400176:2263112:0|door:400176:2263616:0",
+        "native-cell:24.278215:918:walk:door:400176:2263180:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "native-cell:24.278215:918:walk:door:400176:2263180:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "native-cell:24.278215:918:walk:door:400176:2263576:0|door:400176:2263616:0",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:1",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-c45fcc7227b9:4:13:1|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:1",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:0|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-0470be83f680:3:3:1",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:0|opening:recovered-circulation-seam:rm-400176-04668c83f677:rm-400176-c45fcc7227b9:6:4:1",
+        "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+      ],
+      "networks": [
+        {
+          "sites": 1056,
+          "budgetExceeded": false,
+          "proposedVertices": 1198,
+          "proposedCoreEdges": 1127,
+          "sharedChains": 47,
+          "attachmentFitting": {
+            "maxDeviationFeet": 0.75,
+            "checkedSegments": 814,
+            "originalVertices": 1775,
+            "acceptedOriginalVertices": 1185,
+            "fittedVertices": 842,
+            "acceptedChains": 414,
+            "refusedChains": 184,
+            "retainedOriginals": 3,
+            "originalContacts": 27,
+            "retainedOriginalContacts": 3,
+            "newTopologyContacts": 3
+          },
+          "attachmentFittingRefusals": [
+            {
+              "chainId": "0",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "1",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "19",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "23",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "25",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "29",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "35",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "40",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "41",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "42",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "46",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "51",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "52",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "53",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "60",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "62",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "64",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "65",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "72",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "73",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "79",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "83",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "97",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "98",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "99",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "103",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "104",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "107",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "109",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "111",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "128",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "131",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "132",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "134",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "135",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "139",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "140",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "142",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "143",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "151",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "153",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "158",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "159",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "164",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "165",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "166",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "171",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "177",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "178",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "180",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "181",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "183",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "186",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "194",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "196",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "200",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "206",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "209",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "210",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "216",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "218",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "221",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "224",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "232",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "234",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "235",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "239",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "245",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "247",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "250",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "253",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "255",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "258",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "261",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "262",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "267",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "269",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "275",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "276",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "279",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "282",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "283",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "285",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "292",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "295",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "298",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "299",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "304",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "305",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "318",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "320",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "323",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "326",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "328",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "329",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "336",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "338",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "354",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "355",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "357",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "358",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "360",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "361",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "362",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "363",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "364",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "368",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "369",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "375",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "379",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "380",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "384",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "385",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "390",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "391",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "399",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "407",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "410",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "411",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "419",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "424",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "425",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "426",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "430",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "432",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "433",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "437",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "449",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "450",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "451",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "453",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "454",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "457",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "461",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "463",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "464",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "466",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "467",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "468",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "475",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "476",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "484",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "485",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "492",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "493",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "497",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "498",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "502",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "504",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "507",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "510",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "511",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "512",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "516",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "517",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "527",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "528",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "537",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "539",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "540",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "544",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "545",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "552",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "554",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "559",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "560",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "561",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "562",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "563",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "564",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "565",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "566",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "567",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "568",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "569",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "570",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "578",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "582",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "583",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "585",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "587",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "588",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "589",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "590",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "548",
+              "reason": "intersection-retained-original"
+            },
+            {
+              "chainId": "571",
+              "reason": "intersection-retained-original"
+            },
+            {
+              "chainId": "591",
+              "reason": "intersection-retained-original"
+            }
+          ],
+          "fitting": {
+            "maxDeviationFeet": 0.75,
+            "checkedSegments": 62,
+            "originalVertices": 233,
+            "acceptedOriginalVertices": 233,
+            "fittedVertices": 119,
+            "acceptedChains": 57,
+            "refusedChains": 0,
+            "retainedOriginals": 0,
+            "originalContacts": 0,
+            "retainedOriginalContacts": 0,
+            "newTopologyContacts": 0
+          },
+          "fittingRefusals": [],
+          "approachTopologyConflicts": [],
+          "fittedChains": 47,
+          "checkedCoreEdges": 241,
+          "supportedCoreEdges": 154,
+          "attachmentChecks": 768,
+          "alternativeAttachments": 110,
+          "reattachedTerminals": 30,
+          "requiredEdges": 79,
+          "connectedRequiredEdges": 67,
+          "attachedTerminals": 50,
+          "missingTerminals": 3,
+          "joinSliding": {
+            "throughJoins": 26,
+            "spurJoins": 13,
+            "slidTerminals": 26,
+            "removedSpurs": 10,
+            "protectedJoins": 13,
+            "fitAttempts": 3,
+            "retained": null
+          },
+          "straightRuns": null,
+          "straightAxisProposed": false,
+          "straightAxisTerminals": 0,
+          "axisApproachRepair": {
+            "conflicts": 0,
+            "changedTerminals": 0
+          },
+          "approachTopology": {
+            "networksBuilt": 1,
+            "initialConflicts": [],
+            "legacyConflicts": null,
+            "finalConflicts": [],
+            "restrictedTerminals": [],
+            "result": "shaped"
+          }
+        }
+      ],
+      "seconds": 30.268836309999998,
+      "legacyApproachFallbackEdgeIds": [
+        "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262984:1",
+        "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1"
+      ],
+      "legacyNetworks": [
+        {
+          "sites": 1056,
+          "budgetExceeded": false,
+          "proposedVertices": 1181,
+          "proposedCoreEdges": 1127,
+          "sharedChains": 65,
+          "attachmentFitting": {
+            "maxDeviationFeet": 0.75,
+            "checkedSegments": 801,
+            "originalVertices": 1781,
+            "acceptedOriginalVertices": 1203,
+            "fittedVertices": 855,
+            "acceptedChains": 421,
+            "refusedChains": 183,
+            "retainedOriginals": 2,
+            "originalContacts": 27,
+            "retainedOriginalContacts": 2,
+            "newTopologyContacts": 2
+          },
+          "attachmentFittingRefusals": [
+            {
+              "chainId": "0",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "1",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "19",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "23",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "25",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "29",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "36",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "42",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "43",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "44",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "48",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "52",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "53",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "54",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "61",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "63",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "65",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "66",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "73",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "74",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "80",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "84",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "98",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "99",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "100",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "104",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "105",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "108",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "110",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "112",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "129",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "132",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "134",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "136",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "137",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "141",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "142",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "144",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "145",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "153",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "155",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "160",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "161",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "166",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "167",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "168",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "173",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "180",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "181",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "183",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "184",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "186",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "189",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "197",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "199",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "203",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "209",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "212",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "213",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "219",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "221",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "224",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "227",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "235",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "237",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "238",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "242",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "248",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "250",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "253",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "256",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "258",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "261",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "264",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "265",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "270",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "272",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "278",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "279",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "282",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "285",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "286",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "288",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "295",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "298",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "301",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "307",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "309",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "310",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "324",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "326",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "329",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "332",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "334",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "335",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "344",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "362",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "363",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "365",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "366",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "368",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "369",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "370",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "371",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "372",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "376",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "377",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "383",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "387",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "388",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "392",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "393",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "397",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "398",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "406",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "414",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "417",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "418",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "425",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "430",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "431",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "432",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "436",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "438",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "439",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "443",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "455",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "456",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "457",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "459",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "460",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "463",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "467",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "469",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "470",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "472",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "473",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "474",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "480",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "483",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "491",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "492",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "499",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "500",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "504",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "505",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "509",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "511",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "514",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "517",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "518",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "519",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "523",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "524",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "534",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "535",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "544",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "546",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "550",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "551",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "556",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "559",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "561",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "566",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "567",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "568",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "569",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "570",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "571",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "572",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "573",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "574",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "575",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "576",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "577",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "584",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "588",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "590",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "592",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "594",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "595",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "597",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "598",
+              "reason": "unsupported-chain"
+            },
+            {
+              "chainId": "554",
+              "reason": "intersection-retained-original"
+            },
+            {
+              "chainId": "578",
+              "reason": "intersection-retained-original"
+            }
+          ],
+          "fitting": {
+            "maxDeviationFeet": 0.75,
+            "checkedSegments": 73,
+            "originalVertices": 242,
+            "acceptedOriginalVertices": 242,
+            "fittedVertices": 138,
+            "acceptedChains": 65,
+            "refusedChains": 0,
+            "retainedOriginals": 0,
+            "originalContacts": 0,
+            "retainedOriginalContacts": 0,
+            "newTopologyContacts": 0
+          },
+          "fittingRefusals": [],
+          "approachTopologyConflicts": [],
+          "fittedChains": 65,
+          "checkedCoreEdges": 266,
+          "supportedCoreEdges": 156,
+          "attachmentChecks": 754,
+          "alternativeAttachments": 97,
+          "reattachedTerminals": 14,
+          "requiredEdges": 79,
+          "connectedRequiredEdges": 68,
+          "attachedTerminals": 50,
+          "missingTerminals": 3,
+          "joinSliding": {
+            "throughJoins": 0,
+            "spurJoins": 0,
+            "slidTerminals": 0,
+            "removedSpurs": 0,
+            "protectedJoins": 0,
+            "fitAttempts": 0,
+            "retained": null
+          },
+          "straightRuns": null,
+          "straightAxisProposed": false,
+          "straightAxisTerminals": 0,
+          "axisApproachRepair": {
+            "conflicts": 0,
+            "changedTerminals": 0
+          },
+          "approachTopology": null
+        }
+      ]
+    }
+  ],
+  "unavailableCellIds": [],
+  "requestedCellsOutsideInitialTargets": [],
+  "requestedEdgesOutsideInitialTargets": [],
+  "coverage": {
+    "physicalCells": 1312,
+    "initialTargetCells": 113,
+    "eligibleOriginalEdges": 2905,
+    "eligibleOriginalTerminals": 2040,
+    "circulationCells": [
+      {
+        "cellId": "native-cell:-7.217848:2",
+        "elevationFeet": -7.217847769028872,
+        "levelIds": [
+          2295121
+        ],
+        "circulationRoomKeys": [
+          "rm-2295121-398346497705",
+          "rm-2295121-7509922f7d32"
+        ],
+        "eligibleEdges": 8,
+        "originalWalkingEdges": 8,
+        "enabledWalkingEdges": 8,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:14",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "landing:ramp:1643796:lower",
+          "rm-1450417-dba13529f060",
+          "rm-1450417-dbab6729f069",
+          "rm-1450417-dbca0729f083",
+          "rm-1450417-dbcd6929f085",
+          "rm-1450417-dbd43929f08b",
+          "rm-1450417-dbde6729f094",
+          "rm-1450417-dbe24929f098",
+          "rm-1450417-f65fe5d929e4",
+          "rm-1450417-f669f7d929ed",
+          "rm-1450417-f77d65d92ad7",
+          "rm-1450417-f780e3d92ada"
+        ],
+        "eligibleEdges": 92,
+        "originalWalkingEdges": 92,
+        "enabledWalkingEdges": 92,
+        "terminalCount": 63,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:18",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-f66373d929e8"
+        ],
+        "eligibleEdges": 3,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:25",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-f779f7d92ad4"
+        ],
+        "eligibleEdges": 3,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:29",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-c0d5fc29e0f9"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:32",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-c0d28e29e0f6"
+        ],
+        "eligibleEdges": 5,
+        "originalWalkingEdges": 5,
+        "enabledWalkingEdges": 5,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:36",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-ed574ad924ac"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:39",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-dbca0729f083"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:-3.280840:40",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-ed5ad0d924af"
+        ],
+        "eligibleEdges": 4,
+        "originalWalkingEdges": 4,
+        "enabledWalkingEdges": 4,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:41",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-dbcd6929f085"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:-3.280840:50",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-d1783c29ea33"
+        ],
+        "eligibleEdges": 4,
+        "originalWalkingEdges": 9,
+        "enabledWalkingEdges": 9,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:57",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-dba51b29f064"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:60",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-1450417-db9e5929f05e"
+        ],
+        "eligibleEdges": 9,
+        "originalWalkingEdges": 9,
+        "enabledWalkingEdges": 9,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:-3.280840:9",
+        "elevationFeet": -3.2808398950131235,
+        "levelIds": [
+          311,
+          1450417
+        ],
+        "circulationRoomKeys": [
+          "rm-311-80323c0942ec"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": false,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:103",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-deadbb6f0a1c"
+        ],
+        "eligibleEdges": 20,
+        "originalWalkingEdges": 20,
+        "enabledWalkingEdges": 20,
+        "terminalCount": 13,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:109",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-1f7048f51973"
+        ],
+        "eligibleEdges": 21,
+        "originalWalkingEdges": 21,
+        "enabledWalkingEdges": 21,
+        "terminalCount": 15,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:111",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-89f2630948c0"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": false,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:113",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-deb4476f0a21"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:114",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-df4c89e6b168"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:115",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-9d6780bb1ab2"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:126",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-9375c20f96a8"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:140",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "landing:ramp:1586431:lower",
+          "rm-311-203cecddb83e"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:142",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-204072ddb841"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:148",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-0850e3c8e4ce"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:160",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-0850e3c8e4ce"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:165",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-0850e3c8e4ce"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:166",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-0850e3c8e4ce"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:180",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-aac849f5ed34"
+        ],
+        "eligibleEdges": 9,
+        "originalWalkingEdges": 13,
+        "enabledWalkingEdges": 13,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:185",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-a19a1df5e7db"
+        ],
+        "eligibleEdges": 19,
+        "originalWalkingEdges": 19,
+        "enabledWalkingEdges": 19,
+        "terminalCount": 15,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:208",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-4f50db792ebc",
+          "rm-311-a08d9ff5e6f7"
+        ],
+        "eligibleEdges": 9,
+        "originalWalkingEdges": 9,
+        "enabledWalkingEdges": 9,
+        "terminalCount": 9,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:243",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-466d127929a2"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:273",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "landing:ramp:1643796:upper",
+          "reviewed-native:pin-9"
+        ],
+        "eligibleEdges": 5,
+        "originalWalkingEdges": 5,
+        "enabledWalkingEdges": 5,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:296",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-47f103792aec"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 12,
+        "enabledWalkingEdges": 12,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:297",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "reviewed-passage:311:1732467:1715768"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:306",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-3f5ed3792618"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:321",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-96d6fcd2664c",
+          "rm-311-97e034d2672d"
+        ],
+        "eligibleEdges": 26,
+        "originalWalkingEdges": 33,
+        "enabledWalkingEdges": 33,
+        "terminalCount": 16,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:327",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-44abfe297071"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:335",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-38a4a830434f"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:337",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-4168ef4a7ea0"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:341",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-38b5a830435d"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:342",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-38b5a830435d"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:343",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-38b5a830435d"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:344",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-40344c304747",
+          "rm-311-6e11521018ff",
+          "rm-311-ce76b13ffde1"
+        ],
+        "eligibleEdges": 15,
+        "originalWalkingEdges": 23,
+        "enabledWalkingEdges": 23,
+        "terminalCount": 11,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:347",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-ce76b13ffde1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:356",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-c97808fc205b"
+        ],
+        "eligibleEdges": 11,
+        "originalWalkingEdges": 20,
+        "enabledWalkingEdges": 20,
+        "terminalCount": 7,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:376",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-3f97fc3046c3"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:378",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-3fa50c3046cd"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:0.000000:68",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "rm-311-1fbf6eddb7d4"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 18,
+        "enabledWalkingEdges": 18,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:71",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "circulation:07:311:400238:1331:17290",
+          "landing:ramp:1622190:lower",
+          "rm-311-033e0b326c5c",
+          "rm-311-04790b3025b4",
+          "rm-311-05a95d8222f3",
+          "rm-311-0850e3c8e4ce",
+          "rm-311-1f9c5af51998",
+          "rm-311-238958c8f493",
+          "rm-311-2740cc4a6fc3",
+          "rm-311-3578f4ca0bc1",
+          "rm-311-38b5a830435d",
+          "rm-311-399064f64ec1",
+          "rm-311-3a294ef64f43",
+          "rm-311-3fa50c3046cd",
+          "rm-311-403b1c30474d",
+          "rm-311-4168ef4a7ea0",
+          "rm-311-416c514a7ea3",
+          "rm-311-4170374a7ea7",
+          "rm-311-4177074a7eac",
+          "rm-311-4181394a7eb5",
+          "rm-311-44abfe297071",
+          "rm-311-4ddcbfa88cc4",
+          "rm-311-537bd6f65d6a",
+          "rm-311-539686f65d80",
+          "rm-311-57784be66f65",
+          "rm-311-5dceef297e70",
+          "rm-311-5de373297e81",
+          "rm-311-5de6f9297e84",
+          "rm-311-6ecd9309a135",
+          "rm-311-802ece0942e9",
+          "rm-311-86e02816d8fe",
+          "rm-311-86e3ac16d901",
+          "rm-311-89fd150948ca",
+          "rm-311-8a44270f914c",
+          "rm-311-8b2f269a6163",
+          "rm-311-8e1b19ddd9ef",
+          "rm-311-930f94094e0b",
+          "rm-311-9356d20f968d",
+          "rm-311-935a520f9690",
+          "rm-311-9466cb0f9774",
+          "rm-311-9b6e6b0f9af9",
+          "rm-311-9b71eb0f9afd",
+          "rm-311-a1c62ff5e800",
+          "rm-311-a61bf9a36e17",
+          "rm-311-ac6ce9426f1c",
+          "rm-311-ac7069426f1f",
+          "rm-311-c64e159a8271",
+          "rm-311-f015ce646f7a"
+        ],
+        "eligibleEdges": 450,
+        "originalWalkingEdges": 492,
+        "enabledWalkingEdges": 492,
+        "terminalCount": 267,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:0.000000:99",
+        "elevationFeet": 0,
+        "levelIds": [
+          311
+        ],
+        "circulationRoomKeys": [
+          "landing:ramp:1587605:lower",
+          "rm-311-df4c89e6b168"
+        ],
+        "eligibleEdges": 5,
+        "originalWalkingEdges": 5,
+        "enabledWalkingEdges": 5,
+        "terminalCount": 5,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:383",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          311,
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "landing:ramp:1586431:upper"
+        ],
+        "eligibleEdges": 8,
+        "originalWalkingEdges": 11,
+        "enabledWalkingEdges": 11,
+        "terminalCount": 7,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:391",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "landing:local:07:311:08:1487816:1620957:1",
+          "landing:ramp:1622190:upper"
+        ],
+        "eligibleEdges": 3,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:397",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-f7769bf50bca"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:401",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-1de56ef45078"
+        ],
+        "eligibleEdges": 16,
+        "originalWalkingEdges": 16,
+        "enabledWalkingEdges": 16,
+        "terminalCount": 13,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:415",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-1a0ccf3066a5",
+          "rm-1487816-3e4571f4120f",
+          "rm-1487816-781c56fde119",
+          "rm-1487816-800e4ffde566",
+          "rm-1487816-959fe1d830e0"
+        ],
+        "eligibleEdges": 50,
+        "originalWalkingEdges": 50,
+        "enabledWalkingEdges": 50,
+        "terminalCount": 36,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:418",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-1a09473066a2"
+        ],
+        "eligibleEdges": 4,
+        "originalWalkingEdges": 4,
+        "enabledWalkingEdges": 4,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:421",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-11a2b941dd58",
+          "rm-1487816-19466641e161",
+          "rm-1487816-1949cc41e164",
+          "rm-1487816-1950d841e16a",
+          "rm-1487816-62e57b407134",
+          "rm-1487816-9319f35b541f"
+        ],
+        "eligibleEdges": 72,
+        "originalWalkingEdges": 74,
+        "enabledWalkingEdges": 74,
+        "terminalCount": 52,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:422",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-93135f5b541a"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:437",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-ef5bf5f5075c"
+        ],
+        "eligibleEdges": 12,
+        "originalWalkingEdges": 28,
+        "enabledWalkingEdges": 28,
+        "terminalCount": 9,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:464",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-62f28b40713f"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:467",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680",
+          "rm-1487816-555ae048650d",
+          "rm-1487816-55654e486516",
+          "rm-1487816-556850486518"
+        ],
+        "eligibleEdges": 40,
+        "originalWalkingEdges": 40,
+        "enabledWalkingEdges": 40,
+        "terminalCount": 21,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:477",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-62db4b40712b"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:480",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:3.280840:481",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:3.280840:482",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-5550ce486504"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:485",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-55574e486509"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:486",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:3.280840:487",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:3.280840:488",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-38e6d6497680"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:3.280840:493",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-68b6de3fca43"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:496",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-68b37a3fca40"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:3.280840:497",
+        "elevationFeet": 3.2808398950131235,
+        "levelIds": [
+          1487816
+        ],
+        "circulationRoomKeys": [
+          "rm-1487816-5fc2a13fc51b",
+          "rm-1487816-68b09a3fca3e",
+          "rm-1487816-68bdaa3fca49",
+          "rm-1487816-cbbac047fdd9"
+        ],
+        "eligibleEdges": 91,
+        "originalWalkingEdges": 93,
+        "enabledWalkingEdges": 93,
+        "terminalCount": 58,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:531",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-0b29f3582964",
+          "rm-694-0b30ff58296a",
+          "rm-694-0e0ad8ab64e9",
+          "rm-694-0e0ebcab64ec",
+          "rm-694-240576583727",
+          "rm-694-2408fa58372a",
+          "rm-694-b17d7fe3d57c"
+        ],
+        "eligibleEdges": 44,
+        "originalWalkingEdges": 58,
+        "enabledWalkingEdges": 58,
+        "terminalCount": 32,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:537",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-25377258382b"
+        ],
+        "eligibleEdges": 4,
+        "originalWalkingEdges": 4,
+        "enabledWalkingEdges": 4,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:543",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-240576583727"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:546",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-0e3aecab6512"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:555",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-2ba828f6dc56"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:563",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-2b939bf6dc44",
+          "rm-694-2b971ef6dc47",
+          "rm-694-3399eaf6e0a1"
+        ],
+        "eligibleEdges": 57,
+        "originalWalkingEdges": 57,
+        "enabledWalkingEdges": 57,
+        "terminalCount": 40,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:569",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-8e8f6d6b9df1",
+          "rm-694-a9a5df6bad99",
+          "rm-694-a9a9606bad9c"
+        ],
+        "eligibleEdges": 21,
+        "originalWalkingEdges": 21,
+        "enabledWalkingEdges": 21,
+        "terminalCount": 15,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:570",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-0ca9e8ab63bd"
+        ],
+        "eligibleEdges": 4,
+        "originalWalkingEdges": 4,
+        "enabledWalkingEdges": 4,
+        "terminalCount": 4,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:573",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-07db835d774f",
+          "rm-694-07e5355d7757"
+        ],
+        "eligibleEdges": 21,
+        "originalWalkingEdges": 23,
+        "enabledWalkingEdges": 23,
+        "terminalCount": 18,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:589",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-0cb418ab63c6"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:593",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-a9d5716badc1"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:594",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-3399eaf6e0a1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:595",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-ca5cff3b49a3"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:599",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-07d8105d774c"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:606",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-2b971ef6dc47"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:607",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-fa60cb06b7c9"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:618",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-b39733f5f23c",
+          "rm-694-ccec9ef60065",
+          "rm-694-ccf6c8f6006e"
+        ],
+        "eligibleEdges": 16,
+        "originalWalkingEdges": 29,
+        "enabledWalkingEdges": 29,
+        "terminalCount": 13,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:620",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-484f9eec97d0",
+          "rm-694-70a223eafba2",
+          "rm-694-70a5a7eafba5"
+        ],
+        "eligibleEdges": 37,
+        "originalWalkingEdges": 45,
+        "enabledWalkingEdges": 45,
+        "terminalCount": 21,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:634",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-3fa5e106df03"
+        ],
+        "eligibleEdges": 14,
+        "originalWalkingEdges": 21,
+        "enabledWalkingEdges": 21,
+        "terminalCount": 10,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:637",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-3eff6106de76",
+          "rm-694-43988ffdc334",
+          "rm-694-439b95fdc336",
+          "rm-694-43c823fdc35c"
+        ],
+        "eligibleEdges": 41,
+        "originalWalkingEdges": 46,
+        "enabledWalkingEdges": 46,
+        "terminalCount": 29,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:638",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-3fb6e106df12"
+        ],
+        "eligibleEdges": 6,
+        "originalWalkingEdges": 6,
+        "enabledWalkingEdges": 6,
+        "terminalCount": 5,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:643",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-fa64a106b7cd"
+        ],
+        "eligibleEdges": 16,
+        "originalWalkingEdges": 20,
+        "enabledWalkingEdges": 20,
+        "terminalCount": 12,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:644",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-5051ade5319f"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 37,
+        "enabledWalkingEdges": 37,
+        "terminalCount": 0,
+        "selectionReason": "no-eligible-original-walking-edge",
+        "sharesTargetCirculationIdentity": false,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:652",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-634bc404f221",
+          "rm-694-91df31e3a385",
+          "rm-694-a3a573e3adb7"
+        ],
+        "eligibleEdges": 15,
+        "originalWalkingEdges": 77,
+        "enabledWalkingEdges": 77,
+        "terminalCount": 16,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:669",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-d308ec5a3d7b",
+          "rm-694-d30c735a3d7e",
+          "rm-694-d30ff45a3d81",
+          "rm-694-d3135e5a3d84",
+          "rm-694-d319e65a3d89",
+          "rm-694-e1f7de51288d"
+        ],
+        "eligibleEdges": 97,
+        "originalWalkingEdges": 102,
+        "enabledWalkingEdges": 102,
+        "terminalCount": 66,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:675",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-7ecf02632b2a"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:680",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-1ae8378c89a4",
+          "rm-694-54c346297935",
+          "rm-694-54c64c297937",
+          "rm-694-5d3cfd297df4",
+          "rm-694-5dfe73297e98",
+          "rm-694-6412a117d7ca",
+          "rm-694-64209917d7d6",
+          "rm-694-64272517d7db",
+          "rm-694-642e2117d7e1",
+          "rm-694-6431a517d7e4",
+          "rm-694-64382117d7ea",
+          "rm-694-a61f68a36e1a",
+          "rm-694-ae4c939d8f9e",
+          "rm-694-ae5aab9d8faa",
+          "rm-694-ae645d9d8fb2",
+          "rm-694-b5dfde9d939a"
+        ],
+        "eligibleEdges": 182,
+        "originalWalkingEdges": 216,
+        "enabledWalkingEdges": 216,
+        "terminalCount": 95,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:702",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-3b51e4fee0e4"
+        ],
+        "eligibleEdges": 13,
+        "originalWalkingEdges": 31,
+        "enabledWalkingEdges": 31,
+        "terminalCount": 11,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:737",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:694:1498827:1",
+          "walkway:10:694:1498827:11"
+        ],
+        "eligibleEdges": 7,
+        "originalWalkingEdges": 7,
+        "enabledWalkingEdges": 7,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:738",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:694:1498827:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:740",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:694:1498827:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:742",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:694:1498827:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:757",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-a61f68a36e1a"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:758",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:694:1498827:11"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:14.435696:761",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-7cf63e717e3e"
+        ],
+        "eligibleEdges": 11,
+        "originalWalkingEdges": 19,
+        "enabledWalkingEdges": 19,
+        "terminalCount": 10,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:766",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-e3da0c414247",
+          "rm-694-e3ff8d414267",
+          "rm-694-e4248d414287",
+          "rm-694-e4280d41428a",
+          "rm-694-f43edf414b4d",
+          "rm-694-f45a6f414b65",
+          "rm-694-f4645f414b6d"
+        ],
+        "eligibleEdges": 74,
+        "originalWalkingEdges": 81,
+        "enabledWalkingEdges": 81,
+        "terminalCount": 51,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:776",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-24c7c7638991",
+          "rm-694-985fc56bc655",
+          "rm-694-e774946366a3",
+          "rm-694-e7a4286366cb",
+          "rm-694-e7a7ac6366ce"
+        ],
+        "eligibleEdges": 93,
+        "originalWalkingEdges": 95,
+        "enabledWalkingEdges": 95,
+        "terminalCount": 59,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:782",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-e7a0a06366c8"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:785",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-e686b06365d8"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:14.435696:839",
+        "elevationFeet": 14.435695538057743,
+        "levelIds": [
+          694
+        ],
+        "circulationRoomKeys": [
+          "rm-694-f45a6f414b65"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1000",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1001",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1002",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1003",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1004",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1005",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1007",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1014",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1019",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1020",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:7"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1022",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1024",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:7"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1029",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:1035",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-0904d5f8f1a0",
+          "rm-400176-8520f28ccbd8",
+          "rm-400176-8f197dc4bc66",
+          "rm-400176-8f350dc4bc7e",
+          "rm-400176-9683a6c4c03f",
+          "rm-400176-969baec4c053"
+        ],
+        "eligibleEdges": 108,
+        "originalWalkingEdges": 122,
+        "enabledWalkingEdges": 122,
+        "terminalCount": 73,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:1037",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-851d748ccbd5"
+        ],
+        "eligibleEdges": 3,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:1040",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-8d2a9b8cd038"
+        ],
+        "eligibleEdges": 3,
+        "originalWalkingEdges": 3,
+        "enabledWalkingEdges": 3,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:849",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-409ef8ec17e6",
+          "rm-400176-40a286ec17ea",
+          "rm-400176-79e80cdd781b",
+          "rm-400176-79f90add7829",
+          "rm-400176-79fc94dd782c"
+        ],
+        "eligibleEdges": 73,
+        "originalWalkingEdges": 92,
+        "enabledWalkingEdges": 92,
+        "terminalCount": 52,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:855",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-409188ec17db"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 6,
+        "enabledWalkingEdges": 6,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:871",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-a4b94b10b2f8"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:884",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-458dce708f87",
+          "rm-400176-9c2fe270c099",
+          "rm-400176-9c336870c09d",
+          "rm-400176-9c47e470c0ae"
+        ],
+        "eligibleEdges": 75,
+        "originalWalkingEdges": 171,
+        "enabledWalkingEdges": 171,
+        "terminalCount": 56,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:891",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-2188e217a698",
+          "rm-400176-dd50a4178043",
+          "rm-400176-e6668d178587",
+          "rm-400176-e699851785b2",
+          "rm-400176-fd5448070a66"
+        ],
+        "eligibleEdges": 57,
+        "originalWalkingEdges": 79,
+        "enabledWalkingEdges": 79,
+        "terminalCount": 40,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:903",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-24531e7aeb10"
+        ],
+        "eligibleEdges": 17,
+        "originalWalkingEdges": 24,
+        "enabledWalkingEdges": 24,
+        "terminalCount": 11,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:918",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "eligibleEdges": 79,
+        "originalWalkingEdges": 84,
+        "enabledWalkingEdges": 84,
+        "terminalCount": 53,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:952",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4ba3c41c20c6",
+          "rm-400176-4c3d391c2149",
+          "rm-400176-4c40191c214b",
+          "rm-400176-4c46e91c2150",
+          "rm-400176-4c51191c2159",
+          "rm-400176-4c55011c215d",
+          "rm-400176-b9e01d7b63c6",
+          "rm-400176-b9e71c7b63cd",
+          "rm-400176-b9f49c7b63d8"
+        ],
+        "eligibleEdges": 79,
+        "originalWalkingEdges": 109,
+        "enabledWalkingEdges": 107,
+        "terminalCount": 50,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:956",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-958fe5fd2099"
+        ],
+        "eligibleEdges": 12,
+        "originalWalkingEdges": 27,
+        "enabledWalkingEdges": 27,
+        "terminalCount": 9,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:985",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:1",
+          "walkway:10:400176:2183541:7"
+        ],
+        "eligibleEdges": 8,
+        "originalWalkingEdges": 8,
+        "enabledWalkingEdges": 8,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:24.278215:986",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:987",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "walkway:10:400176:2183541:1"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:989",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c55011c215d"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:990",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:991",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:992",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:993",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:994",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:995",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-4c40191c214b"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:996",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:997",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:998",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:24.278215:999",
+        "elevationFeet": 24.278215223097114,
+        "levelIds": [
+          400176
+        ],
+        "circulationRoomKeys": [
+          "rm-400176-b9e01d7b63c6"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:29.855643:1069",
+        "elevationFeet": 29.855643044619423,
+        "levelIds": [
+          1487353
+        ],
+        "circulationRoomKeys": [
+          "rm-1487353-c75375ebb3cc"
+        ],
+        "eligibleEdges": 1,
+        "originalWalkingEdges": 1,
+        "enabledWalkingEdges": 1,
+        "terminalCount": 2,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:29.855643:1071",
+        "elevationFeet": 29.855643044619423,
+        "levelIds": [
+          1487353
+        ],
+        "circulationRoomKeys": [
+          "rm-1487353-6e5cbce7fec2",
+          "rm-1487353-c771fbebb3e6",
+          "rm-1487353-c8d3e4ebb513"
+        ],
+        "eligibleEdges": 20,
+        "originalWalkingEdges": 21,
+        "enabledWalkingEdges": 21,
+        "terminalCount": 14,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:29.855643:1078",
+        "elevationFeet": 29.855643044619423,
+        "levelIds": [
+          1487353
+        ],
+        "circulationRoomKeys": [
+          "rm-1487353-4d6acad786b9",
+          "rm-1487353-4e25d4d78758",
+          "rm-1487353-4e295ad7875b",
+          "rm-1487353-c8cc98ebb50c",
+          "rm-1487353-c8d07cebb510"
+        ],
+        "eligibleEdges": 35,
+        "originalWalkingEdges": 36,
+        "enabledWalkingEdges": 36,
+        "terminalCount": 24,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:29.855643:1091",
+        "elevationFeet": 29.855643044619423,
+        "levelIds": [
+          1487353
+        ],
+        "circulationRoomKeys": [
+          "rm-1487353-4d82d4d786ce"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 4,
+        "enabledWalkingEdges": 4,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1094",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-03844688998a",
+          "rm-402367-039546889998",
+          "rm-402367-133b24ba6565",
+          "rm-402367-442aa2d548ef"
+        ],
+        "eligibleEdges": 55,
+        "originalWalkingEdges": 71,
+        "enabledWalkingEdges": 71,
+        "terminalCount": 41,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1116",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-442e8ad548f3"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1137",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-06ce8688ef8a",
+          "rm-402367-321065890806",
+          "rm-402367-cc4e4867be0d",
+          "rm-402367-da2b94828d9c",
+          "rm-402367-ed740580548d"
+        ],
+        "eligibleEdges": 73,
+        "originalWalkingEdges": 165,
+        "enabledWalkingEdges": 165,
+        "terminalCount": 60,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1148",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-1f21180e87d7",
+          "rm-402367-1f249e0e87da",
+          "rm-402367-1f28040e87dd",
+          "rm-402367-22410ce4ecbc",
+          "rm-402367-72bc5d0d042b"
+        ],
+        "eligibleEdges": 75,
+        "originalWalkingEdges": 84,
+        "enabledWalkingEdges": 84,
+        "terminalCount": 47,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1173",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-41e937cad92b",
+          "rm-402367-ad6b02d433c9",
+          "rm-402367-ad6de2d433cb",
+          "rm-402367-ad71cad433cf",
+          "rm-402367-b493f3d4376a"
+        ],
+        "eligibleEdges": 80,
+        "originalWalkingEdges": 99,
+        "enabledWalkingEdges": 99,
+        "terminalCount": 57,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1207",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-69cbc20cff07"
+        ],
+        "eligibleEdges": 16,
+        "originalWalkingEdges": 27,
+        "enabledWalkingEdges": 27,
+        "terminalCount": 12,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1216",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-e869565e095e"
+        ],
+        "eligibleEdges": 5,
+        "originalWalkingEdges": 5,
+        "enabledWalkingEdges": 5,
+        "terminalCount": 5,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1222",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-e870225e0964"
+        ],
+        "eligibleEdges": 11,
+        "originalWalkingEdges": 11,
+        "enabledWalkingEdges": 11,
+        "terminalCount": 8,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1227",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-e840165e093b",
+          "rm-402367-e85b465e0952",
+          "rm-402367-e85f225e0955"
+        ],
+        "eligibleEdges": 10,
+        "originalWalkingEdges": 21,
+        "enabledWalkingEdges": 21,
+        "terminalCount": 10,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1241",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-5e5131c03aa8",
+          "rm-402367-5e540fc03aaa",
+          "rm-402367-680d6ac04079",
+          "rm-402367-e11ded5e05a0",
+          "rm-402367-e120c95e05a2",
+          "rm-402367-e82f165e092c"
+        ],
+        "eligibleEdges": 39,
+        "originalWalkingEdges": 61,
+        "enabledWalkingEdges": 61,
+        "terminalCount": 30,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1243",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-21d39ed0cbd2",
+          "rm-402367-2c07d5d0d20a",
+          "rm-402367-2c0e15d0d20f",
+          "rm-402367-2c1207d0d213"
+        ],
+        "eligibleEdges": 19,
+        "originalWalkingEdges": 19,
+        "enabledWalkingEdges": 19,
+        "terminalCount": 14,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1250",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-5c894acae86f"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1259",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-2c1207d0d213"
+        ],
+        "eligibleEdges": 0,
+        "originalWalkingEdges": 0,
+        "enabledWalkingEdges": 0,
+        "terminalCount": 0,
+        "selectionReason": "no-original-walking-edge",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": true
+      },
+      {
+        "cellId": "native-cell:34.120735:1268",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-1912beec639b",
+          "rm-402367-209455ec6787",
+          "rm-402367-2097d2ec678a",
+          "rm-402367-644f9175053f",
+          "rm-402367-64d41b7505af",
+          "rm-402367-64d7917505b2"
+        ],
+        "eligibleEdges": 101,
+        "originalWalkingEdges": 107,
+        "enabledWalkingEdges": 107,
+        "terminalCount": 65,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1274",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-179caaec625d"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      },
+      {
+        "cellId": "native-cell:34.120735:1277",
+        "elevationFeet": 34.120734908136484,
+        "levelIds": [
+          402367
+        ],
+        "circulationRoomKeys": [
+          "rm-402367-179944ec625a"
+        ],
+        "eligibleEdges": 2,
+        "originalWalkingEdges": 2,
+        "enabledWalkingEdges": 2,
+        "terminalCount": 3,
+        "selectionReason": "initial-target",
+        "sharesTargetCirculationIdentity": true,
+        "reviewRequired": false
+      }
+    ],
+    "levels": [
+      {
+        "nativeLevelId": 2295121,
+        "sourceName": "Floor 0",
+        "elevationFeet": -7.217847769028872,
+        "nativeFloorElementIds": [
+          2295333
+        ],
+        "nativeStairElementIds": [
+          2296425
+        ],
+        "annotationLevel": true,
+        "compiledCells": 8,
+        "targetCells": 1,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1450417,
+        "sourceName": "Floor 0.5",
+        "elevationFeet": -3.2808398950131235,
+        "nativeFloorElementIds": [
+          1454817,
+          1521516,
+          2071957,
+          2081596
+        ],
+        "nativeStairElementIds": [
+          1523099,
+          1644499,
+          1972504,
+          1976619,
+          2072647,
+          2075088,
+          2082097,
+          2082669,
+          2082742
+        ],
+        "annotationLevel": true,
+        "compiledCells": 60,
+        "targetCells": 10,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 311,
+        "sourceName": "Floor 1",
+        "elevationFeet": 0,
+        "nativeFloorElementIds": [
+          400238,
+          423406,
+          444577,
+          447970,
+          1593239,
+          1950094
+        ],
+        "nativeStairElementIds": [
+          1270216,
+          1271877,
+          1277881,
+          1279833,
+          1280525,
+          1293690,
+          1303394,
+          1305141,
+          1372994,
+          1460777,
+          1588220,
+          1620957,
+          1644499,
+          1693246,
+          1801478,
+          1808228,
+          1821194,
+          1842431,
+          1949419,
+          2156084,
+          2439748
+        ],
+        "annotationLevel": true,
+        "compiledCells": 315,
+        "targetCells": 23,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1487816,
+        "sourceName": "Floor 1.25",
+        "elevationFeet": 3.2808398950131235,
+        "nativeFloorElementIds": [
+          1500982,
+          1501009,
+          1501037,
+          1514723,
+          1582103,
+          2484309
+        ],
+        "nativeStairElementIds": [
+          1515631,
+          1949419,
+          1982431,
+          2024027,
+          2140032,
+          2190850,
+          2193325,
+          2193529,
+          2296425,
+          2474568
+        ],
+        "annotationLevel": true,
+        "compiledCells": 146,
+        "targetCells": 17,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1425915,
+        "sourceName": "Floor 1.5",
+        "elevationFeet": 9.84251968503937,
+        "nativeFloorElementIds": [
+          1426532,
+          1726620,
+          1759381,
+          1773943,
+          1840413,
+          1980767
+        ],
+        "nativeStairElementIds": [
+          1270216,
+          1279833,
+          1280525,
+          1429108,
+          1470884,
+          1515631,
+          1727059,
+          1728649,
+          1842431,
+          1844188,
+          1858181,
+          1861765,
+          1976619,
+          1979157,
+          2045315
+        ],
+        "annotationLevel": false,
+        "compiledCells": 0,
+        "targetCells": 0,
+        "reviewRequired": true
+      },
+      {
+        "nativeLevelId": 694,
+        "sourceName": "Floor 2",
+        "elevationFeet": 14.435695538057743,
+        "nativeFloorElementIds": [
+          400479,
+          427511,
+          490040,
+          503705,
+          1327372,
+          1468016,
+          1498750,
+          1498765,
+          1498827,
+          1513098,
+          1521608
+        ],
+        "nativeStairElementIds": [
+          1277881,
+          1293690,
+          1298202,
+          1303394,
+          1307177,
+          1372994,
+          1429108,
+          1500191,
+          1500252,
+          1500324,
+          1515631,
+          1523099,
+          1638837,
+          1689936,
+          1693246,
+          1717000,
+          1779326,
+          1779403,
+          1779473,
+          1779620,
+          1858181,
+          1861765,
+          1903824,
+          1972504,
+          1979157,
+          1982431,
+          1988738,
+          2024027,
+          2045315,
+          2046769,
+          2047572,
+          2140032,
+          2156084,
+          2160665,
+          2190850,
+          2193325,
+          2193439,
+          2193529,
+          2349441,
+          2354630,
+          2439748,
+          2474568
+        ],
+        "annotationLevel": true,
+        "compiledCells": 319,
+        "targetCells": 30,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1466293,
+        "sourceName": "Floor 2.5",
+        "elevationFeet": 19.35695538057743,
+        "nativeFloorElementIds": [],
+        "nativeStairElementIds": [],
+        "annotationLevel": false,
+        "compiledCells": 0,
+        "targetCells": 0,
+        "reviewRequired": true
+      },
+      {
+        "nativeLevelId": 400176,
+        "sourceName": "Floor 3",
+        "elevationFeet": 24.278215223097114,
+        "nativeFloorElementIds": [
+          402395,
+          437656,
+          511340,
+          1279070,
+          1473216,
+          1474096,
+          1496653,
+          1496668,
+          1505065,
+          1521899,
+          2183541
+        ],
+        "nativeStairElementIds": [
+          1295966,
+          1298202,
+          1307578,
+          1496322,
+          1498360,
+          1498457,
+          1498493,
+          1500191,
+          1500252,
+          1500288,
+          1500324,
+          1514126,
+          1638837,
+          1689936,
+          1696006,
+          1903824,
+          1988738,
+          2046769,
+          2047572,
+          2160665,
+          2161350,
+          2193439,
+          2349441,
+          2354630
+        ],
+        "annotationLevel": true,
+        "compiledCells": 218,
+        "targetCells": 13,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1487353,
+        "sourceName": "Floor 3.5",
+        "elevationFeet": 29.855643044619423,
+        "nativeFloorElementIds": [
+          1779842
+        ],
+        "nativeStairElementIds": [
+          1295966,
+          1779326,
+          1779403,
+          1779495,
+          1779620
+        ],
+        "annotationLevel": true,
+        "compiledCells": 26,
+        "targetCells": 4,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 402367,
+        "sourceName": "Floor 4",
+        "elevationFeet": 34.120734908136484,
+        "nativeFloorElementIds": [
+          405772,
+          501699,
+          515291,
+          1495537,
+          1495596,
+          1503517,
+          2183935
+        ],
+        "nativeStairElementIds": [
+          1295966,
+          1496322,
+          1496383,
+          1498360,
+          1498457,
+          1498493,
+          1500288,
+          1506328,
+          1514126,
+          1696006,
+          2161350,
+          2162706
+        ],
+        "annotationLevel": true,
+        "compiledCells": 220,
+        "targetCells": 15,
+        "reviewRequired": false
+      },
+      {
+        "nativeLevelId": 1399969,
+        "sourceName": "Floor 4.5",
+        "elevationFeet": 40.026246719160106,
+        "nativeFloorElementIds": [
+          1718155
+        ],
+        "nativeStairElementIds": [
+          1506328,
+          1717000
+        ],
+        "annotationLevel": false,
+        "compiledCells": 0,
+        "targetCells": 0,
+        "reviewRequired": true
+      },
+      {
+        "nativeLevelId": 407620,
+        "sourceName": "Floor 5",
+        "elevationFeet": 43.963254593175854,
+        "nativeFloorElementIds": [
+          407647,
+          502039,
+          530368,
+          1495187,
+          1495202,
+          1495236,
+          1502995
+        ],
+        "nativeStairElementIds": [
+          1496383,
+          1506328,
+          2162706
+        ],
+        "annotationLevel": false,
+        "compiledCells": 0,
+        "targetCells": 0,
+        "reviewRequired": true
+      }
+    ]
+  },
+  "clearance": "two-foot planar strip; headroom and accessibility status unchanged",
+  "binding": {
+    "version": 2,
+    "inputZipSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "inputJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceGeometryKey": "149f6f929bfb72c0f6b6ae76460d16437a4b7f9200095b60b6c8bf91c7271339",
+    "compilerBinding": "9aa66f3bd78368e96c9841723c51237d52940574ba16b3c5623bcd5db26f8349",
+    "resolverVersion": "native-walking-guides-4",
+    "runtime": {
+      "node": "v24.22.3",
+      "v8": "13.6.233.17-node.63",
+      "platform": "linux",
+      "architecture": "x64",
+      "execArgv": [
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "tsx"
+      ],
+      "nodeOptions": ""
+    },
+    "parameters": {
+      "method": "shared-corridor",
+      "constructionScope": "complete-native-physical-cell",
+      "emittedEdges": "all-eligible-original-walks",
+      "compiler": {
+        "spacingFeet": 2,
+        "maxSites": 25000,
+        "maxAttachments": 64,
+        "maxDeviationFeet": 0.75,
+        "shapedApproaches": true,
+        "slideJoins": true,
+        "straightRuns": false
+      }
+    }
+  },
+  "seconds": 73.82456155700001,
+  "reusedCells": 0,
+  "compiledCellsThisRun": 1,
+  "sourceGraphAndGeometryUnchanged": true,
+  "fullPackageImportPerformed": false,
+  "actualNavigationAcceptancePerformed": false
+}

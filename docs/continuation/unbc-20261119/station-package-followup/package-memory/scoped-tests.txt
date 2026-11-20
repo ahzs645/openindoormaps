@@ -1,0 +1,39 @@
+✔ large exact native materials survive bounded archive packing without coordinate changes (1892.278421ms)
+✔ legacy small material JSON and metadata are untouched (1.330862ms)
+✔ package hash covers the exact subarray and snapshots before later mutation (10.29214ms)
+✔ chunked base64 preserves every byte, offsets and final padding across chunk boundaries (42.893201ms)
+✔ base64 decoding retains atob compatibility while canonical comparison rejects alternate spelling (1.293891ms)
+✔ large base64 values never pass a whole-entry binary string through atob or btoa (162.214028ms)
+✔ native dataset entry permits the new bounded range before manifest validation (3.768798ms)
+✔ native dataset and other entry caps still reject oversized ZIP declarations (0.749662ms)
+✔ a legacy companion cannot masquerade as a bound binary archive reference (35.1146ms)
+✔ legacy review verification rejects an expanding stream masquerading as an empty companion (55.81328ms)
+✔ sibling package reader and writer verify legacy companion hashes independently of ZIP entry hashes (457.978092ms)
+✔ packed authoring evidence preserves default streams, nondefault streams, binary files and ordering exactly (101.144724ms)
+✔ legacy wire is unchanged; only exceeding rooms JSON packs review companions (127.153717ms)
+✔ packed wire refuses damaged payload, truncated stream, trailing bytes and wrong declared lengths (107.383111ms)
+✔ metadata and expansion bounds reject unsafe paths, file/count/total/header excess and raw bombs (152.723623ms)
+✔ legacy noncanonical base64 spelling is retained rather than silently normalized (46.019615ms)
+✔ binary and inline companions have identical strict compressed-stream and content validation (104.827511ms)
+✔ a hydrated companion mutated after verification is refused by both room export paths (34.564998ms)
+✔ binary archive fallback binds the exact container, hydrates evidence and excludes it from visitors (89.046299ms)
+✔ source comparison retains exact native JSON equality for plain data (18.222498ms)
+✔ exotic values retain native toJSON keys, boxed values and accessor serialization (2.336896ms)
+✔ large native arrays compare without a whole-source JSON string and reject a late mutation (248.314356ms)
+✔ independent source entry proof permits only separately checked wrapper/room/viewer changes and different ZIP encoding (7.133108ms)
+✔ source/scene/GIS/companion mutations, missing originals and undeclared extra source assets refuse (13.578964ms)
+✔ multiple individually small physical bindings fit the viewer limit without rounding (1957.365982ms)
+✔ legacy small viewer metadata remains unchanged (1.240946ms)
+✔ dataset references preserve exact logical metadata, original field order and source evidence (11.759025ms)
+✔ hydrated references and inline values never alias the mutable dataset, wire or input metadata (2.381835ms)
+✔ references require the original source and exact current physical values (1.944991ms)
+✔ reference corruption, substitutions, extra keys and changed logical metadata fail before acceptance (4.861555ms)
+✔ large unmatched inline metadata retains bounded legacy packing inside reference wire (1825.161637ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12667.865254

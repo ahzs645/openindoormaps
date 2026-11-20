@@ -1,5 +1,9 @@
 import { corridorChainTopologyContacts } from "./corridor-chain-fit";
 import type { CorridorRetainedPath } from "./corridor-run-fit";
+import {
+  verifiedCorridorJunctionContacts,
+  type CorridorRecoveredJunction,
+} from "./corridor-run-recovery";
 import type { PreparedRouting } from "./prepared-routing";
 
 export type CorridorGuideTopologyInput = {
@@ -9,6 +13,8 @@ export type CorridorGuideTopologyInput = {
    * post-compilation refinement gets its own origin; it may not borrow the
    * topology acceptance of the network it subsequently changed. */
   origins: ReadonlyMap<string, string>;
+  /** Live compiler receipts, valid only for their exact replayed guides. */
+  junctions?: readonly CorridorRecoveredJunction[];
 };
 
 export type CorridorGuideContact = {
@@ -92,8 +98,13 @@ export function compareCombinedCorridorGuides(
     .sort();
   const key = (contact: CorridorGuideContact) => JSON.stringify(contact);
   const existing = new Set(contacts(control, false).map(key));
+  const junctions = verifiedCorridorJunctionContacts(
+    candidate.junctions ?? [],
+    candidate.guides,
+    candidate.edges,
+  );
   const newContacts = contacts(candidate, true).filter(
-    (contact) => !existing.has(key(contact)),
+    (contact) => !existing.has(key(contact)) && !junctions.has(key(contact)),
   );
   return { missingGuideIds, newContacts };
 }

@@ -1,0 +1,52 @@
+{
+  "created_utc": "2026-11-20T04:42:21.824152+00:00",
+  "scope": "Small synthetic offline fixtures; no complete production source restore asserted.",
+  "python": "3.12.14",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/handoff-tools",
+    "-p",
+    "test_restore_continuation.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 13,
+  "seconds": 1.046,
+  "real_git_archive_smoke": "A temporary git archive of HEAD package.json passed describe, including commit PAX header and 0644 filtered mode; not a full-source qualification.",
+  "files": [
+    {
+      "name": "restore-continuation.py",
+      "bytes": 20840,
+      "sha256": "ab893e8e0ca721d6d03c5f38f66bf8efc06b963bf372747ad10e534cb21eb12d"
+    },
+    {
+      "name": "test_restore_continuation.py",
+      "bytes": 9664,
+      "sha256": "4e58c007bff8bb9e655895e9ae225b8b0c745d7a9daf4ef9a8eb423f775352a3"
+    },
+    {
+      "name": "continuation-manifest.schema.json",
+      "bytes": 3505,
+      "sha256": "4b5a61787485a8e45aa978dfe29c08b9a4b92cfd64ec4e617480f52006c2c1fd"
+    },
+    {
+      "name": "continuation-manifest.example.json",
+      "bytes": 1992,
+      "sha256": "1bc87b184f7c26264e57d6e7c71befd6615fec28fbbaee74f5b3ca72ff383cf4"
+    },
+    {
+      "name": "README.md",
+      "bytes": 12279,
+      "sha256": "60d23fcc6aa1eda40cfd484cc56bb226d3ca31ca73f35d3b0a02e06d4b8ac916"
+    },
+    {
+      "name": "helper-tests.txt",
+      "bytes": 1941,
+      "sha256": "635c22fbdd9cae4f5fb8e99baf6c219d33d406f16ae715b7efa33423c8ab98f9"
+    }
+  ]
+}

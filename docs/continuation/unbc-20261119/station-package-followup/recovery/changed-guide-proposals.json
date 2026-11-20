@@ -1,0 +1,445 @@
+{
+  "format": "unbc-followup-case-proposals-v1",
+  "source": {
+    "masterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "indoorJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9",
+    "contextSha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd"
+  },
+  "currentExecutedRequests": 0,
+  "navigationAuthority": false,
+  "unchanged96CaseInputs": {
+    "pr4-work/input/b10-cell918-combined-96/cases.json": "73e6da2224c2c939bb85c0d856397adea2493c9d4dd4341e7811bfc6220966c3",
+    "pr4-work/input/b10-cell918-combined-96/inventory.json": "f855c8473000edaa9ca307f2d3650fedafba4626fe005e5c1d7a3315be90dd10",
+    "pr4-work/input/b10-cell918-combined-96/provenance.json": "c58a4af9d86de3282cd51907658419809d08ff982368aa713f6b6ae67ef3f025"
+  },
+  "priorCandidateGuideSha256": "7684aa5006b2122f7d69ac0f77f53ac80e9b3f859f8cb64081363c209913e764",
+  "scope": "Candidate real-destination probes for the five guide records absent from the archived journeys. Mentioning a target guide is not evidence that a request can or will traverse it.",
+  "pathwayCorridorLimitation": "isHorizontalCirculationAnnotation classifies the two source Corridor records as horizontal labels. stopForRoom returns null for such an arrival in pathway mode. Three missing guides use the source corridor arrival node; assess actual runtime relevance instead of inventing successful reverse UI journeys.",
+  "proposals": [
+    {
+      "id": "b10-3010-3006-door-branch",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-400176-046ddc83f67e",
+          "number": "10-3010",
+          "name": "Comm",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-046ddc83f67e"
+        },
+        {
+          "key": "rm-400176-c469d07227c1",
+          "number": "10-3006",
+          "name": "Office",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-c469d07227c1"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-400176-046ddc83f67e",
+          "to": "rm-400176-c469d07227c1",
+          "mode": "public",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-c469d07227c1",
+          "to": "rm-400176-046ddc83f67e",
+          "mode": "public",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-400176-046ddc83f67e",
+          "to": "rm-400176-c469d07227c1",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-c469d07227c1",
+          "to": "rm-400176-046ddc83f67e",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Exercise actual destinations on opposite source doors 2263214 and 2255487 around the changed hallway branch.",
+      "limits": "Both records currently retain unknown access; no permission is changed. Public hallway station choice may use another guide. Accessible source doors and all target cell guides remain unknown, so these are not positive accessible expectations.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1"
+      ]
+    },
+    {
+      "id": "b10-s304-3012-seam-branch",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-400176-07c889afc4c1",
+          "number": "10-S304",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-07c889afc4c1"
+        },
+        {
+          "key": "rm-400176-0d64fd83fba7",
+          "number": "10-3012",
+          "name": "Office",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-0d64fd83fba7"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-400176-07c889afc4c1",
+          "to": "rm-400176-0d64fd83fba7",
+          "mode": "public",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-0d64fd83fba7",
+          "to": "rm-400176-07c889afc4c1",
+          "mode": "public",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-400176-07c889afc4c1",
+          "to": "rm-400176-0d64fd83fba7",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-0d64fd83fba7",
+          "to": "rm-400176-07c889afc4c1",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "pathway",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Exercise the corridor-side 2255522 doorway and opposite corridor wing near the changed seam branch.",
+      "limits": "10-S304 is a same-plane stair destination here. This proposal makes no vertical-stair claim. Target-guide use remains to be observed; existing source IDs and access decisions stay fixed.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+      ]
+    },
+    {
+      "id": "b10-3008-3010-source-arrival",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-400176-0470be83f680",
+          "number": "10-3008",
+          "name": "Corridor",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-0470be83f680"
+        },
+        {
+          "key": "rm-400176-046ddc83f67e",
+          "number": "10-3010",
+          "name": "Comm",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-046ddc83f67e"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-046ddc83f67e",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-046ddc83f67e",
+          "to": "rm-400176-0470be83f680",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-046ddc83f67e",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-046ddc83f67e",
+          "to": "rm-400176-0470be83f680",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Audit the unchanged source-arrival contract near the corridor arrival-to-door guide.",
+      "limits": "This is a separate inside-arrival audit, not proof of the public pathway UI. Horizontal corridor labels are departure-only in pathway mode; reversing a corridor-label pathway request cannot be assumed to succeed.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1"
+      ]
+    },
+    {
+      "id": "b10-3008-3018-source-arrival-seams",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-400176-0470be83f680",
+          "number": "10-3008",
+          "name": "Corridor",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-0470be83f680"
+        },
+        {
+          "key": "rm-400176-046a7683f67b",
+          "number": "10-3018",
+          "name": "Corridor",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-046a7683f67b"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-046a7683f67b",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-046a7683f67b",
+          "to": "rm-400176-0470be83f680",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-046a7683f67b",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-046a7683f67b",
+          "to": "rm-400176-0470be83f680",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Inspect which source arrival/seam alternative is actually chosen between the two original corridor owners.",
+      "limits": "Two changed guides are alternative graph edges; one successful route may exercise only one, or neither. Do not force an otherwise unused guide or fabricate an additional destination. Any unused guide remains a separately recorded geometry/coverage item.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+      ]
+    },
+    {
+      "id": "b10-3008-s304-source-arrival-seam",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-400176-0470be83f680",
+          "number": "10-3008",
+          "name": "Corridor",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-400176-0470be83f680"
+        },
+        {
+          "key": "rm-400176-07c889afc4c1",
+          "number": "10-S304",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-07c889afc4c1"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-07c889afc4c1",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-07c889afc4c1",
+          "to": "rm-400176-0470be83f680",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-400176-0470be83f680",
+          "to": "rm-400176-07c889afc4c1",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-400176-07c889afc4c1",
+          "to": "rm-400176-0470be83f680",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Additional genuine source-arrival pair to inspect the local corridor/seam/stair-door alternatives.",
+      "limits": "Same-plane source destination only. Outcome and actual guide intersection remain unmeasured; this does not count as coverage until replayed.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+      ]
+    }
+  ]
+}

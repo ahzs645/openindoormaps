@@ -1,0 +1,54 @@
+{
+  "format": "unbc-continuation-source-v1",
+  "created_utc": "REPLACE_WITH_ACTUAL_UTC_TIMESTAMP",
+  "notes": "TEMPLATE ONLY. Intentionally invalid until describe output supplies real archive identities, parts and inventories. No final commit or checksum is asserted here.",
+  "archives": [
+    {
+      "id": "openindoormaps",
+      "filename": "openindoormaps-REPLACE_WITH_FINAL_COMMIT.tar.gz",
+      "root": "openindoormaps",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_ACTUAL_ARCHIVE_SHA256",
+      "source": {
+        "repository": "https://github.com/ahzs645/openindoormaps",
+        "commit": "REPLACE_WITH_ACTUAL_FULL_COMMIT_ID"
+      },
+      "parts": [
+        {
+          "name": "REPLACE_WITH_ACTUAL_ORDERED_PART_FILENAME",
+          "bytes": 0,
+          "sha256": "REPLACE_WITH_ACTUAL_PART_SHA256"
+        }
+      ],
+      "inventory": {"files": []}
+    },
+    {
+      "id": "reviter",
+      "filename": "reviter-REPLACE_WITH_FINAL_COMMIT.tar.gz",
+      "root": "reviter",
+      "bytes": 0,
+      "sha256": "REPLACE_WITH_ACTUAL_ARCHIVE_SHA256",
+      "source": {
+        "repository": "https://github.com/ahzs645/reviter",
+        "commit": "REPLACE_WITH_ACTUAL_FULL_COMMIT_ID"
+      },
+      "parts": [
+        {
+          "name": "REPLACE_WITH_ACTUAL_ARCHIVE_FILENAME_IF_UNSPLIT",
+          "bytes": 0,
+          "sha256": "REPLACE_WITH_ACTUAL_ARCHIVE_SHA256"
+        }
+      ],
+      "inventory": {"files": []}
+    }
+  ],
+  "references": [
+    {
+      "id": "original-master-and-viewer",
+      "url": "https://drive.google.com/drive/folders/1PdyETAWsVOPcPPC-RAOUSaJmqXEh-rWU",
+      "download_automatically": false,
+      "description": "Existing original master/model and historical viewer parts. These are not duplicated in the new source handoff.",
+      "restore_note": "Use the original archive-parts.json and restore_archives.py instructions, with their recorded byte counts and hashes. This helper does not fetch or restore those reference-only files."
+    }
+  ]
+}

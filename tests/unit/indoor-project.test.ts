@@ -2992,6 +2992,26 @@ test("routing preparation preserves every source asset in master and viewer pack
       exportPreparedRoutingProject(project, edited),
       /cannot modify source/,
     );
+    const changedSource = structuredClone(prepared.dataset);
+    changedSource.source.roomsSha256 = "f".repeat(64);
+    await assert.rejects(
+      exportPreparedRoutingProject(project, changedSource),
+      /cannot modify source/,
+    );
+    // Key order is part of the previous exact JSON comparison. A different
+    // insertion order cannot silently become an allowed source rewrite.
+    const reorderedSource = structuredClone(prepared.dataset);
+    reorderedSource.source = Object.fromEntries(
+      Object.entries(reorderedSource.source).reverse(),
+    ) as typeof reorderedSource.source;
+    assert.notEqual(
+      JSON.stringify(reorderedSource.source),
+      JSON.stringify(prepared.dataset.source),
+    );
+    await assert.rejects(
+      exportPreparedRoutingProject(project, reorderedSource),
+      /cannot modify source/,
+    );
   }
 });
 

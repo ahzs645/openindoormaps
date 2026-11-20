@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-20T04:30:25.482754+00:00",
+  "finishedAt": "2026-11-20T04:32:20.642049+00:00",
+  "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+  "command": [
+    "node",
+    "--max-old-space-size=1400",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/compile-corridor-candidates.ts",
+    "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained",
+    "--cell",
+    "native-cell:24.278215:918",
+    "--straight-runs"
+  ],
+  "environmentOverrides": {
+    "NODE_OPTIONS": null
+  },
+  "exitCode": 0,
+  "seconds": 115.16114473799826,
+  "peakRssKiB": 2338328,
+  "log": "cell-918-retained-execution.log"
+}

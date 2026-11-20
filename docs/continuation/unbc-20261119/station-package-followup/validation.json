@@ -1,0 +1,393 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "UNBC PR4 doorway/package continuation",
+  "userFacingDate": "2026-11-19",
+  "timezone": "America/Vancouver",
+  "status": "DRAFT_DEVELOPMENT_CHECKPOINT_NOT_RELEASE_ACCEPTED",
+  "parentOpenIndoorMapsCommit": "86a8a9349a858c783c95c326be12cf66c3f56a87",
+  "reviterCommit": "4a8fe6a8bd6b085e7725bb4ea18bb32d519e00a4",
+  "sourceFileInventory": "qualification/qualified-source-files.json",
+  "originalMaster": {
+    "bytes": 247419905,
+    "sha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52"
+  },
+  "completeIndoor": {
+    "bytes": 302032680,
+    "sha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748"
+  },
+  "consumerBindings": [
+    {
+      "name": "prepared-display-engine-binding",
+      "sha256": "39e85d00a25e3ab6f82ed1e00b89af1e5f7faddfc5e0da83b6c023744bcad4c6",
+      "modules": 219
+    },
+    {
+      "name": "published-route-runtime-binding",
+      "sha256": "5276c47e9dce4b475d16c6c576059ca69746090a394f36c8322a79074b8dbbc9",
+      "modules": 295
+    },
+    {
+      "name": "published-visitor-plan-runtime-binding",
+      "sha256": "a35f8eeedb00d686d5448df01c18d152985b1631de0c296d96e3e9e3385a34e1",
+      "modules": 245
+    }
+  ],
+  "compilerBinding": "9aa66f3bd78368e96c9841723c51237d52940574ba16b3c5623bcd5db26f8349",
+  "focusedTests": {
+    "passed": 174,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "wholeTestSuite": false
+  },
+  "lint": {
+    "checkedContinuationTsTsxFiles": 18,
+    "errors": 0,
+    "existingWarnings": 1,
+    "wholeRepositoryLint": false
+  },
+  "geometry": {
+    "completeSourceLoaded": true,
+    "constructionScope": "complete-native-physical-cell",
+    "cell": "native-cell:24.278215:918",
+    "normalPackageImportCompleted": false,
+    "eligibleOriginalEdges": 79,
+    "originalTerminals": 53,
+    "controlGuideCount": 69,
+    "candidateGuideCount": 69,
+    "changedGuides": 8,
+    "unchangedRefusals": 10,
+    "originalGuideEndpointsPreserved": true,
+    "routingGraphEdgesAdded": 0,
+    "controlStations": 2,
+    "candidateStations": 1,
+    "controlStationSeparationMetres": 0.13605062142592286,
+    "candidateStationSeparationMetres": 0,
+    "newRawReceiptBoundContacts": 3,
+    "unapprovedNewContacts": 0,
+    "missingGuides": 0,
+    "coreBendsOver5DegreesBefore": 40,
+    "coreBendsOver5DegreesAfter": 40,
+    "actualJourneyTurnBackFixed": null,
+    "straightRunsDefault": false,
+    "comparison": "qualification/doorway-station-geometry-comparison.json"
+  },
+  "normalQualification": {
+    "schemaVersion": 1,
+    "status": "BLOCKED_BEFORE_COMPLETE_NORMAL_IMPORT",
+    "normalRun": {
+      "exitCode": -9,
+      "seconds": 53.5287564570026,
+      "peakRssKiB": 3020844,
+      "lastStageEntry": "companions",
+      "record": "b10-normal-worker-execution.log"
+    },
+    "memoryDiagnostic": {
+      "exitCode": -9,
+      "seconds": 102.15789477000362,
+      "peakRssKiB": 3021476,
+      "lastStageEntry": "geometry",
+      "companionsCompleted": true,
+      "diagnosticOnly": true,
+      "record": "b10-normal-worker-memory-diagnostic-execution.log"
+    },
+    "normalImportsCompleted": 0,
+    "candidateArchivesExported": 0,
+    "normalJourneyRequestsCompleted": 0,
+    "productionWorkerRequestsCompleted": 0,
+    "plannedCases": 96,
+    "plannedPublicCases": 48,
+    "plannedAccessibleRefusals": 48,
+    "positiveAccessibleJourneysAccepted": 0,
+    "stageNamesIndicateEntry": true,
+    "freshFloorAdmission": false,
+    "freshRoutingCacheAdmission": false,
+    "freshPlanAdmission": false,
+    "releaseAccepted": false,
+    "nextGate": "Complete unchanged normal source admission, export and actual worker replay on a host with sufficient headroom; preserve full source checks. The diagnostic preload and yield proposal are not production changes or phone-performance evidence."
+  },
+  "records": {
+    "focusedTests": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:39:44.685280+00:00",
+      "finishedAt": "2026-11-20T04:40:50.600499+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "--test-concurrency=1",
+        "tests/unit/published-route-asset-url.test.ts",
+        "tests/unit/progressive-route-preparation.test.ts",
+        "tests/unit/offline-route-cell-cache.test.ts",
+        "tests/unit/corridor-run-fit.test.ts",
+        "tests/unit/corridor-guide-contacts.test.ts",
+        "tests/unit/corridor-chain-fit.test.ts",
+        "tests/unit/corridor-centerline.test.ts",
+        "tests/unit/corridor-terminal-approach.test.ts",
+        "tests/unit/shared-corridor-routing.test.ts",
+        "tests/unit/corridor-candidate-input.test.ts",
+        "tests/unit/corridor-candidate-checkpoints.test.ts",
+        "tests/unit/native-selection-contact-compiler-parity.test.ts",
+        "tests/unit/corridor-run-recovery.test.ts",
+        "tests/unit/route-line-cleanup.test.ts",
+        "tests/unit/package-bytes.test.ts",
+        "tests/unit/same-json-data.test.ts",
+        "tests/unit/review-bundle-wire.test.ts",
+        "tests/unit/native-material-wire.test.ts",
+        "tests/unit/viewer-metadata-wire.test.ts",
+        "tests/unit/review-bundle-binding-audit.test.ts",
+        "tests/unit/source-archive-asset-proof.test.ts",
+        "tests/unit/project-package-size.test.ts"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": 0,
+      "seconds": 65.91812643300364,
+      "peakRssKiB": 431028,
+      "log": "focused-tests.log"
+    },
+    "wholeRepositoryTypes": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:37:33.380166+00:00",
+      "finishedAt": "2026-11-20T04:38:16.448057+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=2048",
+        "node_modules/typescript/bin/tsc",
+        "--noEmit"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": 0,
+      "seconds": 43.06823788400652,
+      "peakRssKiB": 1784104,
+      "log": "whole-repository-types-corrected-tests.log"
+    },
+    "changedFilesEslint": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:47:47.926306+00:00",
+      "finishedAt": "2026-11-20T04:48:00.355162+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=2048",
+        "node_modules/eslint/bin/eslint.js",
+        "--no-cache",
+        "app/indoor-project/corridor-guide-contacts.ts",
+        "app/indoor-project/corridor-run-recovery.ts",
+        "app/indoor-project/native-material-wire.ts",
+        "app/indoor-project/package-bytes.ts",
+        "app/indoor-project/package.ts",
+        "app/indoor-project/prepare-corridor-routing.ts",
+        "app/indoor-project/prepared-display-engine-binding.ts",
+        "app/indoor-project/published-route-runtime-binding.ts",
+        "app/indoor-project/published-visitor-plan-runtime-binding.ts",
+        "app/indoor-project/review-bundle-wire.ts",
+        "app/indoor-project/review-bundle.ts",
+        "app/indoor-project/same-json-data.ts",
+        "app/indoor-project/viewer-metadata-wire.ts",
+        "tests/unit/corridor-run-recovery.test.ts",
+        "tests/unit/indoor-project.test.ts",
+        "tests/unit/package-bytes.test.ts",
+        "tests/unit/review-bundle-wire.test.ts",
+        "tests/unit/same-json-data.test.ts"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": 0,
+      "seconds": 12.429190994000237,
+      "peakRssKiB": 907148,
+      "log": "changed-files-eslint.log"
+    },
+    "scopedIndoorPagesBuild": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:51:14.764152+00:00",
+      "finishedAt": "2026-11-20T04:51:34.390680+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "npm",
+        "run",
+        "build:pages"
+      ],
+      "environmentOverrides": {
+        "SITE_DEMOS": "indoor",
+        "NODE_OPTIONS": "--max-old-space-size=1000",
+        "RAYON_NUM_THREADS": "2"
+      },
+      "exitCode": 0,
+      "seconds": 19.626757373000146,
+      "peakRssKiB": 2111892,
+      "log": "indoor-pages-build.log"
+    },
+    "defaultAllVenueBuild": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:48:59.265948+00:00",
+      "finishedAt": "2026-11-20T04:49:15.624558+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "npm",
+        "run",
+        "build:pages"
+      ],
+      "environmentOverrides": {
+        "SITE_DEMOS": null,
+        "NODE_OPTIONS": "--max-old-space-size=1400",
+        "RAYON_NUM_THREADS": "2"
+      },
+      "exitCode": 137,
+      "seconds": 16.359597815993766,
+      "peakRssKiB": 3019848,
+      "log": "final-all-venue-pages-build.log"
+    },
+    "controlCompiler": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:28:22.384510+00:00",
+      "finishedAt": "2026-11-20T04:30:01.357656+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "tsx",
+        "scripts/indoor/compile-corridor-candidates.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-control",
+        "--cell",
+        "native-cell:24.278215:918"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": 0,
+      "seconds": 98.975566961999,
+      "peakRssKiB": 2453216,
+      "log": "cell-918-control-execution.log"
+    },
+    "candidateCompiler": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:30:25.482754+00:00",
+      "finishedAt": "2026-11-20T04:32:20.642049+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "tsx",
+        "scripts/indoor/compile-corridor-candidates.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained",
+        "--cell",
+        "native-cell:24.278215:918",
+        "--straight-runs"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": 0,
+      "seconds": 115.16114473799826,
+      "peakRssKiB": 2338328,
+      "log": "cell-918-retained-execution.log"
+    },
+    "normalPackageWorker": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:34:13.268022+00:00",
+      "finishedAt": "2026-11-20T04:35:06.795276+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "tsx",
+        "scripts/indoor/verify-shared-corridor-candidate.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker",
+        "--connection-inventory",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": -9,
+      "seconds": 53.5287564570026,
+      "peakRssKiB": 3020844,
+      "log": "b10-normal-worker-execution.log"
+    },
+    "diagnosticNormalPackageWorker": {
+      "schemaVersion": 1,
+      "startedAt": "2026-11-20T04:45:04.489824+00:00",
+      "finishedAt": "2026-11-20T04:46:46.645770+00:00",
+      "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/companions-profile/digest-turn-gc-preload.mjs",
+        "--import",
+        "tsx",
+        "scripts/indoor/verify-shared-corridor-candidate.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-memory-diagnostic",
+        "--connection-inventory",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+      ],
+      "environmentOverrides": {
+        "NODE_OPTIONS": null
+      },
+      "exitCode": -9,
+      "seconds": 102.15789477000362,
+      "peakRssKiB": 3021476,
+      "log": "b10-normal-worker-memory-diagnostic-execution.log"
+    }
+  },
+  "browser": {
+    "schemaVersion": 1,
+    "status": "BLOCKED_BEFORE_APP_LOAD",
+    "attemptedUrl": "http://127.0.0.1:42173/openindoormaps/",
+    "browser": "connected Chrome extension",
+    "runtimeInitialized": true,
+    "tabCreated": true,
+    "observedResult": "net::ERR_CONNECTION_REFUSED",
+    "localViteReportedReady": true,
+    "separateWorkspaceRequestAlsoRefused": true,
+    "browserJourneysCompleted": 0,
+    "mobileChecksCompleted": 0,
+    "sourceState": "during implementation; no browser acceptance claimed",
+    "previousBrowserBlocks": "The preceding checkpoint records local Chromium startup restrictions and unavailable cloud preview access. Those records are historical; this attempt establishes only the current connected-browser refusal.",
+    "requiredFollowUp": "Run the exact qualified candidate on a host reachable by the test browser, then execute normal desktop/mobile and physical acceptance."
+  },
+  "freshFloorAdmission": false,
+  "freshRouteCacheAdmission": false,
+  "freshPlanAdmission": false,
+  "sourceAccessChanges": false,
+  "originalModelChanges": false,
+  "publishedCarrierChanges": false,
+  "positiveAccessibleAcceptance": false,
+  "physicalPhoneAcceptance": false,
+  "physicalCampusAcceptance": false,
+  "experimentsNotApplied": [
+    "build-experiment/geojson-experiment.patch",
+    "package-memory/companion-diagnostics.zip: production digest task-yield proposal"
+  ],
+  "nextGates": [
+    "Complete ordinary full preserved-master import/export and actual production worker replay on a host with sufficient headroom.",
+    "Replay actual Building 10 turn-back journey and extend explicit changed-guide coverage without relaxing policy.",
+    "Independently regenerate/admit matching floors, route cache and plans, build final artifact and verify real served URLs.",
+    "Measure isolated startup; run desktop/phone/campus acceptance including positive step-free journeys and intentional refusals.",
+    "Create final paired visitor/source release and grant intended reviewer access."
+  ],
+  "note": "Current complete source restore and Drive raw-download verification are recorded after the final commit in the versioned handoff, without circular self-hashes."
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "status": "BLOCKED_BEFORE_COMPLETE_NORMAL_IMPORT",
+  "normalRun": {
+    "exitCode": -9,
+    "seconds": 53.5287564570026,
+    "peakRssKiB": 3020844,
+    "lastStageEntry": "companions",
+    "record": "b10-normal-worker-execution.log"
+  },
+  "memoryDiagnostic": {
+    "exitCode": -9,
+    "seconds": 102.15789477000362,
+    "peakRssKiB": 3021476,
+    "lastStageEntry": "geometry",
+    "companionsCompleted": true,
+    "diagnosticOnly": true,
+    "record": "b10-normal-worker-memory-diagnostic-execution.log"
+  },
+  "normalImportsCompleted": 0,
+  "candidateArchivesExported": 0,
+  "normalJourneyRequestsCompleted": 0,
+  "productionWorkerRequestsCompleted": 0,
+  "plannedCases": 96,
+  "plannedPublicCases": 48,
+  "plannedAccessibleRefusals": 48,
+  "positiveAccessibleJourneysAccepted": 0,
+  "stageNamesIndicateEntry": true,
+  "freshFloorAdmission": false,
+  "freshRoutingCacheAdmission": false,
+  "freshPlanAdmission": false,
+  "releaseAccepted": false,
+  "nextGate": "Complete unchanged normal source admission, export and actual worker replay on a host with sufficient headroom; preserve full source checks. The diagnostic preload and yield proposal are not production changes or phone-performance evidence."
+}

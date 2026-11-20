@@ -1,0 +1,40 @@
+{
+  "created_utc": "2026-11-20T04:59:57.702985+00:00",
+  "scope": "Tiny verifier and splitting tests only. No production source was packaged; no Git commits were created. Full release restore will run only against the supplied actual published commit.",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/handoff-tools",
+    "-p",
+    "test_prepare_complete_handoff.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "tests": 6,
+  "seconds": 0.037,
+  "files": [
+    {
+      "name": "prepare-complete-handoff.py",
+      "bytes": 19512,
+      "sha256": "6256ad3ddda8487f2211627d431ff44f52e0b5d870a2bd05eece1db645aecee9"
+    },
+    {
+      "name": "test_prepare_complete_handoff.py",
+      "bytes": 4894,
+      "sha256": "4552daea9ae39d6924b099ff5c8106b23c5b4d5efc9f502c5cacc315c4ebb1ec"
+    },
+    {
+      "name": "PUBLISH-COMPLETE-SOURCE.md",
+      "bytes": 6004,
+      "sha256": "9798b2541c32f4d91697a0c24e6eabe5bb8402fd29acdd499fe8612fec4e4ab3"
+    },
+    {
+      "name": "publisher-tests.txt",
+      "bytes": 1082,
+      "sha256": "90278fdc7c74b233ea97af96cf21a7e7b5980306fc18a177418f3805790b0605"
+    }
+  ]
+}

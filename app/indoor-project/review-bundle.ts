@@ -3,6 +3,11 @@ export { MAX_REVIEW_FILES, MAX_REVIEW_BYTES } from "./review-bundle-limits";
 import { deflateSync } from "fflate";
 import { boundedInflate } from "./review-bundle-inflate";
 import {
+  packageBytesSha256 as digest,
+  packageBytesBase64 as base64,
+  packageBase64Bytes,
+} from "./package-bytes";
+import {
   hasVerifiedReviewFile,
   rememberVerifiedReviewFile,
   reviewFileVerificationSnapshot,
@@ -41,24 +46,8 @@ const safePath = (p: unknown): p is string =>
   !p.includes("\\") &&
   p.split("/").every((s) => !!s && s !== "." && s !== "..") &&
   /\.(json|md|txt|log|png|jpe?g)$/i.test(p);
-const digest = async (bytes: Uint8Array) =>
-  [
-    ...new Uint8Array(
-      await crypto.subtle.digest("SHA-256", new Uint8Array(bytes).buffer),
-    ),
-  ]
-    .map((n) => n.toString(16).padStart(2, "0"))
-    .join("");
-const base64 = (bytes: Uint8Array) => {
-  let s = "";
-  for (let i = 0; i < bytes.length; i += 8192)
-    s += String.fromCharCode(...bytes.subarray(i, i + 8192));
-  return btoa(s);
-};
 export function reviewFileBytes(file: ReviewBundle["files"][number]) {
-  const bytes = Uint8Array.from(atob(file.compressedBase64), (c) =>
-    c.charCodeAt(0),
-  );
+  const bytes = packageBase64Bytes(file.compressedBase64);
   if (
     !Number.isSafeInteger(file.bytes) ||
     file.bytes < 0 ||

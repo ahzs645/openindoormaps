@@ -1,5 +1,10 @@
 import { deflateSync } from "fflate";
 import { boundedInflate } from "./review-bundle-inflate";
+import {
+  packageBytesSha256 as hash,
+  packageBytesBase64 as base64,
+  packageBase64Bytes,
+} from "./package-bytes";
 
 const FORMAT = "openindoormaps-viewer-metadata-wire";
 // A complete native campus (seal rows, material sections, envelopes) packs to
@@ -31,20 +36,6 @@ const encoder = new TextEncoder();
 const decoder = new TextDecoder("utf8", { fatal: true });
 const fail = () => {
   throw new Error("Invalid packed viewer metadata.");
-};
-const hash = async (bytes: Uint8Array) =>
-  [
-    ...new Uint8Array(
-      await crypto.subtle.digest("SHA-256", new Uint8Array(bytes).buffer),
-    ),
-  ]
-    .map((n) => n.toString(16).padStart(2, "0"))
-    .join("");
-const base64 = (bytes: Uint8Array) => {
-  let text = "";
-  for (let i = 0; i < bytes.length; i += 8192)
-    text += String.fromCodePoint(...bytes.subarray(i, i + 8192));
-  return btoa(text);
 };
 const object = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === "object" && !Array.isArray(value);
@@ -256,10 +247,7 @@ async function hydrateLegacyMetadata<T extends object>(value: T): Promise<T> {
     fail();
   let compressed: Uint8Array;
   try {
-    compressed = Uint8Array.from(
-      atob(wire.compressedBase64),
-      (c) => c.codePointAt(0) ?? 0,
-    );
+    compressed = packageBase64Bytes(wire.compressedBase64);
   } catch {
     return fail();
   }

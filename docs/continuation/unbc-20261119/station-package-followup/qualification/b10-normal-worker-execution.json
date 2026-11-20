@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-20T04:34:13.268022+00:00",
+  "finishedAt": "2026-11-20T04:35:06.795276+00:00",
+  "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+  "command": [
+    "node",
+    "--max-old-space-size=1400",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker",
+    "--connection-inventory",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+  ],
+  "environmentOverrides": {
+    "NODE_OPTIONS": null
+  },
+  "exitCode": -9,
+  "seconds": 53.5287564570026,
+  "peakRssKiB": 3020844,
+  "log": "b10-normal-worker-execution.log"
+}

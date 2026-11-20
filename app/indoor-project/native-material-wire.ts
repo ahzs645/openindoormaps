@@ -1,27 +1,18 @@
 import { deflateSync } from "fflate";
 import { boundedInflate } from "./review-bundle-inflate";
 import { verifyNativeMaterialSections } from "./native-material-sections";
+import {
+  packageBytesSha256 as hash,
+  packageBytesBase64 as base64,
+  packageBase64Bytes,
+} from "./package-bytes";
 
 const LIMIT = 64 * 1024 * 1024;
 const FORMAT = "openindoormaps-native-material-wire";
 const encoder = new TextEncoder();
-const decoder = new TextDecoder("utf-8", { fatal: true });
+const decoder = new TextDecoder("utf8", { fatal: true });
 const fail = () => {
   throw new Error("Invalid packed native material descriptor.");
-};
-const hash = async (bytes: Uint8Array) =>
-  [
-    ...new Uint8Array(
-      await crypto.subtle.digest("SHA-256", new Uint8Array(bytes).buffer),
-    ),
-  ]
-    .map((n) => n.toString(16).padStart(2, "0"))
-    .join("");
-const base64 = (bytes: Uint8Array) => {
-  let text = "";
-  for (let i = 0; i < bytes.length; i += 8192)
-    text += String.fromCharCode(...bytes.subarray(i, i + 8192));
-  return btoa(text);
 };
 
 /** Archive representation only. All in-memory geometry remains the original
@@ -77,9 +68,7 @@ export async function hydrateRoomNativeMaterials<T extends object>(
     fail();
   let compressed: Uint8Array;
   try {
-    compressed = Uint8Array.from(atob(wire.compressedBase64), (c) =>
-      c.charCodeAt(0),
-    );
+    compressed = packageBase64Bytes(wire.compressedBase64);
   } catch {
     return fail();
   }

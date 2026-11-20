@@ -10,7 +10,11 @@ import {
   type CorridorGuideTopologyInput,
 } from "./corridor-guide-contacts";
 import { straightenSharedDoorGuideBends } from "./shared-door-guide-bend";
-import { recoverCorridorRuns } from "./corridor-run-recovery";
+import {
+  recoverCorridorRuns,
+  reconcileCorridorDoorwayStations,
+  type CorridorRecoveredJunction,
+} from "./corridor-run-recovery";
 import { routingDoorApertures } from "./routing-apertures";
 import { createIndoorExclusionQuery } from "./indoor-exclusions";
 import { createNativeFloorHoleQuery } from "./walking-support";
@@ -78,6 +82,9 @@ export type CorridorCellCompilation = {
   recoveredSampledRunEdgeIds?: string[];
   recoveredRampLandingEdgeIds?: string[];
   alignedDoorwayStationEdgeIds?: string[];
+  /** Descriptive receipt only; live contact authority is bound to exact guides
+   * inside the current compilation and is not restored from this metadata. */
+  recoveredDoorwayJunctions?: CorridorRecoveredJunction[];
   legacyNetworks?: ReturnType<
     ReturnType<typeof createCorridorCenterline>["statistics"]
   >[];
@@ -282,6 +289,7 @@ export async function prepareSharedCorridorRouting(
           return { ok: true, candidate, pointsFeet } as const;
         };
         let cellGuides: PreparedRouting["guides"] = [];
+        const junctions: CorridorRecoveredJunction[] = [];
         const origins = new Map<string, string>();
         for (const edge of edges) {
           let resolved = resolve(networks, edge);
@@ -467,6 +475,43 @@ export async function prepareSharedCorridorRouting(
             },
             replay,
           );
+          if (straightRuns) {
+            // Reconcile only after every existing refinement. A recovered
+            // guide cannot borrow its former network's origin as evidence.
+            const currentOrigins = new Map(origins);
+            for (const guide of cellGuides)
+              if (originalGuides.get(guide.edgeId) !== guide)
+                currentOrigins.set(guide.edgeId, `refined:${guide.edgeId}`);
+            const reconciled = reconcileCorridorDoorwayStations(
+              edges,
+              cellGuides,
+              (id) => {
+                const door = doorsByNode.get(id);
+                return door && apertures.get(door.id)?.normalFeet;
+              },
+              replay,
+              {
+                origins: currentOrigins,
+                maxStationShiftFeet: parameters.maxDeviationFeet,
+              },
+            );
+            if (reconciled.guides.length > 0) {
+              const changes = new Map(
+                reconciled.guides.map((guide) => [guide.edgeId, guide]),
+              );
+              cellGuides = cellGuides.map(
+                (guide) => changes.get(guide.edgeId) ?? guide,
+              );
+              trial.alignedDoorwayStationEdgeIds = [
+                ...new Set([
+                  ...(trial.alignedDoorwayStationEdgeIds ?? []),
+                  ...changes.keys(),
+                ]),
+              ];
+              junctions.push(...reconciled.junctions);
+              trial.recoveredDoorwayJunctions = reconciled.junctions;
+            }
+          }
         }
         for (const guide of cellGuides)
           if (originalGuides.get(guide.edgeId) !== guide)
@@ -474,7 +519,7 @@ export async function prepareSharedCorridorRouting(
         trial.networks = networks.map((network) => network.statistics());
         if (legacy)
           trial.legacyNetworks = legacy.map((network) => network.statistics());
-        return { guides: cellGuides, origins, report: trial };
+        return { guides: cellGuides, origins, junctions, report: trial };
       };
       // Establish the complete unfitted control first. Its legacy and refined
       // guides constrain individual proposals, so a local conflict need not
@@ -488,9 +533,10 @@ export async function prepareSharedCorridorRouting(
       );
       if (
         control &&
-        result.report.networks.some(
-          (network) => (network.straightRuns?.fittedRuns ?? 0) > 0,
-        )
+        (result.junctions.length > 0 ||
+          result.report.networks.some(
+            (network) => (network.straightRuns?.fittedRuns ?? 0) > 0,
+          ))
       ) {
         const comparison = compareCombinedCorridorGuides(
           { ...control, edges: sourceEdges },

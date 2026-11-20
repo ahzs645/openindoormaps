@@ -1,0 +1,268 @@
+{
+  "format": "unbc-recovery-input-audit-v1",
+  "source": {
+    "masterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "indoorJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9",
+    "contextSha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd"
+  },
+  "analysisStartApplicationCommit": "86a8a9349a858c783c95c326be12cf66c3f56a87",
+  "reviterCommit": "4a8fe6a8bd6b085e7725bb4ea18bb32d519e00a4",
+  "finalApplicationCommit": "MUST_BE_PINNED_AFTER_ROOT_COMPLETES_AND_COMMITS_CURRENT_WORK",
+  "preservedSourceFiles": [
+    {
+      "path": "pr4-inputs/UNBC.rotunda.reviter.zip",
+      "bytes": 247419905,
+      "sha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Complete original authoring master; original members verified previously, and unchanged complete archive hashed again now."
+    },
+    {
+      "path": "pr4-inputs/master-members/viewer/indoor.json",
+      "bytes": 302032680,
+      "sha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Complete extracted original indoor member, not a reduced projection."
+    },
+    {
+      "path": "package-audit/UNBC-continue-01-workflows/input/browser-route-data.json.gz",
+      "bytes": 37004453,
+      "sha256": "4bd715b181583e7072f2eb7a2e18453f718c412abc1452a22a11c67ffa734979",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Original compact route input; recoverable from existing workflows ZIP."
+    },
+    {
+      "path": "pr4-work/input/browser-route-data.json",
+      "bytes": 200425392,
+      "sha256": "ecd8af21dd0d83740c5a3b5133298e52d88d71ce1c1db54c46e8642e853f66e3",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Stream-decompressed route input; no need to distribute this duplicate alongside its gzip."
+    },
+    {
+      "path": "pr4-work/input/corridor-source-context.json",
+      "bytes": 19413188,
+      "sha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Reproducible diagnostic source context; not a substitute for full normal import."
+    },
+    {
+      "path": "pr4-work/openindoormaps/public/data/unbc-routing/3afe11db8c36e74b147724290545c77bca4efe0d35718445271f00316611f36a.json.gz",
+      "bytes": 7210332,
+      "sha256": "3afe11db8c36e74b147724290545c77bca4efe0d35718445271f00316611f36a",
+      "verification": "streamed SHA-256 in this analysis",
+      "note": "Original issued native routing carrier, still tracked; no fresh issuance claimed."
+    }
+  ],
+  "existingRemoteInputs": [
+    {
+      "name": "UNBC-continue-checksums.json",
+      "bytes": 647,
+      "driveId": "1HHQ2vJnVMGXhrCVBm1Sm8fVu7VwyVhda",
+      "url": "https://drive.google.com/file/d/1HHQ2vJnVMGXhrCVBm1Sm8fVu7VwyVhda/view",
+      "recordedSha256": "a3096cc175fb7b68bef87ce1b7b691d68502b454868a79717dfcce124e4d189e",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-continue-01-workflows.zip",
+      "bytes": 61136838,
+      "driveId": "1nWlz18i5flk3TDPid0c5MEmqWJYWzg8y",
+      "url": "https://drive.google.com/file/d/1nWlz18i5flk3TDPid0c5MEmqWJYWzg8y/view",
+      "recordedSha256": "7023f5817e4fc19b1a658bf92870aa2797f57685f57e595a76dca376d6617f96",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-continue-04-reference-images.zip",
+      "bytes": 43568789,
+      "driveId": "1LOFRaR2lWFdWEx6dN4BW-EkFOpBvAlHU",
+      "url": "https://drive.google.com/file/d/1LOFRaR2lWFdWEx6dN4BW-EkFOpBvAlHU/view",
+      "recordedSha256": "75da33bd1bf28d74f70074653540ee524ee4ec3101cf2db84217e4e3d8a78cb8",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-continue-03-research.zip",
+      "bytes": 51602534,
+      "driveId": "1zDeGpcPSQwSCTZ38QkARL8y_WYB024Y5",
+      "url": "https://drive.google.com/file/d/1zDeGpcPSQwSCTZ38QkARL8y_WYB024Y5/view",
+      "recordedSha256": "0c7b299a3f60b38d16566e89e9da16009fbf862341a694e08a9003ccd2e885d4",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-continue-02-application.zip",
+      "bytes": 67933084,
+      "driveId": "1EVDdXVmXhiwWd-lUx6mkqw2CPlCqfc6P",
+      "url": "https://drive.google.com/file/d/1EVDdXVmXhiwWd-lUx6mkqw2CPlCqfc6P/view",
+      "recordedSha256": "6479753a9d3060f95efb4f4116cd2dac13841f1113f5a044cd2329f538d23f39",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "00 START HERE.md",
+      "bytes": 7815,
+      "driveId": "1p35qMS-n0vr-p5Lm2WeA8suOxadJwOFB",
+      "url": "https://drive.google.com/file/d/1p35qMS-n0vr-p5Lm2WeA8suOxadJwOFB/view",
+      "recordedSha256": "1a5943d11ffa11f7c4a1ec17127a4d8a67ff1164b71ae99733b0dcc692f007ce",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "restore_archives.py",
+      "bytes": 2108,
+      "driveId": "182SnvbQAtoL15cXGek2TZjsrfpy8n6vw",
+      "url": "https://drive.google.com/file/d/182SnvbQAtoL15cXGek2TZjsrfpy8n6vw/view",
+      "recordedSha256": "a0ee82cafc5bfec0386a5d670ac110224d3290f62af3a0c7cb62b09b1eac6ffe",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "archive-parts.json",
+      "bytes": 1600,
+      "driveId": "1tBWyFNoePwNePA4sAyarBiOR2bGf5wDo",
+      "url": "https://drive.google.com/file/d/1tBWyFNoePwNePA4sAyarBiOR2bGf5wDo/view",
+      "recordedSha256": "9f859198f08e042e8f681801f072d9c2f116da5b7d188b972f5f24b554c8af26",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC.rotunda.reviter.zip.part04",
+      "bytes": 11490305,
+      "driveId": "1unLnpMLLjaEFhrz_p6ujKOp23zyyJ_8G",
+      "url": "https://drive.google.com/file/d/1unLnpMLLjaEFhrz_p6ujKOp23zyyJ_8G/view",
+      "recordedSha256": "c21a16922899ccb2a3f32a5499cf71dcd4fb3f5ee487dd056d44c60d2120b1c0",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC.rotunda.reviter.zip.part03",
+      "bytes": 78643200,
+      "driveId": "1M_6Lna03NNjbOM0hRLe6CZ70Gu-WmN6J",
+      "url": "https://drive.google.com/file/d/1M_6Lna03NNjbOM0hRLe6CZ70Gu-WmN6J/view",
+      "recordedSha256": "e95ec5023409825764673f58dfbbbf4e9880b87801bc97c72dbf94bf63d9ad2a",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC.rotunda.reviter.zip.part02",
+      "bytes": 78643200,
+      "driveId": "1yIDox-yyJ_UUkTCXJ0x4OMmZw6k2ZmfY",
+      "url": "https://drive.google.com/file/d/1yIDox-yyJ_UUkTCXJ0x4OMmZw6k2ZmfY/view",
+      "recordedSha256": "5bb57f36db59c352dddb73a7040fd8cc39c04cdd8d5e13b518452ef64f8b44dc",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC.rotunda.reviter.zip.part01",
+      "bytes": 78643200,
+      "driveId": "1l5Gu7OHlkMXUJzViDZXlC-0bYTFEwi99",
+      "url": "https://drive.google.com/file/d/1l5Gu7OHlkMXUJzViDZXlC-0bYTFEwi99/view",
+      "recordedSha256": "8f9f4cc1f5a2a3242ebd67ce63b8940c83a588dde0c054658d287b6fc84927b9",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-upper-landing-viewer.zip.part03",
+      "bytes": 41039069,
+      "driveId": "1Xx9DwJg7tTQJClyUV7HAeCCyAlIcNkdG",
+      "url": "https://drive.google.com/file/d/1Xx9DwJg7tTQJClyUV7HAeCCyAlIcNkdG/view",
+      "recordedSha256": "de7f007d83391e7370bde78adc0272f1c405681be1fc68f018d69dd1ec1870bc",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-upper-landing-viewer.zip.part02",
+      "bytes": 78643200,
+      "driveId": "1wzFFOKvnC5jsow9cNn78zgQRFjjfJeGi",
+      "url": "https://drive.google.com/file/d/1wzFFOKvnC5jsow9cNn78zgQRFjjfJeGi/view",
+      "recordedSha256": "2124310a05521c77bf6a5ce1bcb4c52227dfe1611b47632b7aa64fcac2934671",
+      "readRemoteBytesInThisAnalysis": false
+    },
+    {
+      "name": "UNBC-upper-landing-viewer.zip.part01",
+      "bytes": 78643200,
+      "driveId": "1UdKNHTnXDHPzdnst6z38LKgmYIBqMN9X",
+      "url": "https://drive.google.com/file/d/1UdKNHTnXDHPzdnst6z38LKgmYIBqMN9X/view",
+      "recordedSha256": "41c2f984c12cdf1e06235d3696a1dd8f6b6f11ec517be77310450808145b7703",
+      "readRemoteBytesInThisAnalysis": false
+    }
+  ],
+  "archiveReassembly": {
+    "UNBC.rotunda.reviter.zip": {
+      "size": 247419905,
+      "sha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+      "parts": [
+        {
+          "file": "UNBC.rotunda.reviter.zip.part01",
+          "size": 78643200,
+          "sha256": "8f9f4cc1f5a2a3242ebd67ce63b8940c83a588dde0c054658d287b6fc84927b9"
+        },
+        {
+          "file": "UNBC.rotunda.reviter.zip.part02",
+          "size": 78643200,
+          "sha256": "5bb57f36db59c352dddb73a7040fd8cc39c04cdd8d5e13b518452ef64f8b44dc"
+        },
+        {
+          "file": "UNBC.rotunda.reviter.zip.part03",
+          "size": 78643200,
+          "sha256": "e95ec5023409825764673f58dfbbbf4e9880b87801bc97c72dbf94bf63d9ad2a"
+        },
+        {
+          "file": "UNBC.rotunda.reviter.zip.part04",
+          "size": 11490305,
+          "sha256": "c21a16922899ccb2a3f32a5499cf71dcd4fb3f5ee487dd056d44c60d2120b1c0"
+        }
+      ]
+    },
+    "UNBC-upper-landing-viewer.zip": {
+      "size": 198325469,
+      "sha256": "79b08d1a5848a04e7d06bf485fd80f5184dc0a8462c04d692dd153f1a20acc43",
+      "parts": [
+        {
+          "file": "UNBC-upper-landing-viewer.zip.part01",
+          "size": 78643200,
+          "sha256": "41c2f984c12cdf1e06235d3696a1dd8f6b6f11ec517be77310450808145b7703"
+        },
+        {
+          "file": "UNBC-upper-landing-viewer.zip.part02",
+          "size": 78643200,
+          "sha256": "2124310a05521c77bf6a5ce1bcb4c52227dfe1611b47632b7aa64fcac2934671"
+        },
+        {
+          "file": "UNBC-upper-landing-viewer.zip.part03",
+          "size": 41039069,
+          "sha256": "de7f007d83391e7370bde78adc0272f1c405681be1fc68f018d69dd1ec1870bc"
+        }
+      ]
+    }
+  },
+  "oldContinuationManifest": {
+    "edition": "UNBC upper-landing release",
+    "applicationCommit": "5e2df1507676d83a71c31159b700dde42f4a8aff",
+    "reviterCommit": "7088e7876992c59ae9885fd49161e35a21be1ed1",
+    "runtimeSha256": "3121b7dfc6ce392b51fe46a2dd0d6b5db94ed59a6b8caf620df2c23163765558",
+    "datasetSha256": "ecd8af21dd0d83740c5a3b5133298e52d88d71ce1c1db54c46e8642e853f66e3",
+    "datasetBytes": 200425392,
+    "cachePath": "data/unbc-routing/3afe11db8c36e74b147724290545c77bca4efe0d35718445271f00316611f36a.json.gz",
+    "cacheSha256": "3afe11db8c36e74b147724290545c77bca4efe0d35718445271f00316611f36a",
+    "browserWorkerPath": "assets/published-route-calculation.worker-DhEJDFPl.js",
+    "browserWorkerSha256": "823f36e5b4d764028750e3498f1981c6a27478eb748aa28b360f6771dedcf264",
+    "atlasSha256": "52fd24910518d878304e5b77495ecb5006f4b52c12172ea8f7bc62fcdd766180",
+    "viewerZipSha256": "79b08d1a5848a04e7d06bf485fd80f5184dc0a8462c04d692dd153f1a20acc43",
+    "baseModelZipSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "sourceFiles": {
+      "modelFileName": "UNBC Model - 2026-06-30 - FINAL (Fixed Library) (1).rvt",
+      "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+      "roomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9"
+    }
+  },
+  "currentOriginalViewerArchivePresentLocally": false,
+  "noDuplicateUploadsNeeded": [
+    "Unchanged original master: reuse its four exact existing Drive parts.",
+    "Original viewer: keep as explicitly historical reference and reuse its three existing Drive parts.",
+    "Original route gzip and archived measurements: reuse UNBC-continue-01-workflows.zip.",
+    "Tracked carrier: already included in the committed application source or original application snapshot."
+  ],
+  "newVersionNeeds": [
+    "Final committed application source plus compatible Reviter source/commit.",
+    "Fresh checksummed validation, case/proposal and source-binding receipts.",
+    "A guide clearly separating current qualified outcomes, unexecuted proposals, and historical viewer/baseline evidence.",
+    "New runtime/export artifacts only if their real current acceptance completes; otherwise label the handoff as development continuation."
+  ],
+  "limitations": [
+    "Current application checkout is shallow; an incremental Git bundle alone is not a self-contained recovery archive.",
+    "The original continuation snapshots are 5e2df150/7088e787, different from published/current commits; do not blindly apply a patch against d89a935 to those extracted snapshots.",
+    "Historical continue.py/build/routes/check-master commands enforce old worker/cache hashes. They reproduce the old edition, not the final new candidate.",
+    "A fresh native model conversion expects an exact decoded native ConvertResult cache. The browser route dataset and issued routing carrier are different artifacts and cannot substitute for it.",
+    "Archived preparation scripts under review-followup retain their original scratch-layout path assumptions; precomputed 96-case files are portable inputs, but rerunning generators needs an explicitly restored layout or reviewed path options."
+  ]
+}

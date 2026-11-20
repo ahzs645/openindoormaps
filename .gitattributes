@@ -1,2 +1,9 @@
 # Retain verbatim tool output in the checksummed UNBC evidence bundle.
 docs/continuation/unbc-20261017/pathway-repairs/**/*.log -whitespace
+# Preserve verbatim continuation command output and archived experimental patches.
+docs/continuation/unbc-20261119/station-package-followup/**/*.log -whitespace
+docs/continuation/unbc-20261119/station-package-followup/**/*.patch whitespace=-blank-at-eol
+
+# Retain the exact plotting export and verbatim saved lint output.
+docs/continuation/unbc-20261119/station-package-followup/qualification/doorway-figure/one-doorway-one-shared-station.svg whitespace=-blank-at-eol
+docs/continuation/unbc-20261119/station-package-followup/package-memory/lint.txt whitespace=-blank-at-eof

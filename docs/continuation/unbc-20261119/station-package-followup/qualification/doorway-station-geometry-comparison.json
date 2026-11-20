@@ -1,0 +1,942 @@
+{
+  "status": "fresh full-source compiler geometry comparison only",
+  "analysisScriptSha256": "1ef89bc1a2c4ebb186518b95f645114fcece2969351cdeff69060a89b02350f5",
+  "contactInspectorSha256": "3983d22659a5a1db9bd454bc4fcad8fa4ca687251cf8dd1edba69bc38e47d137",
+  "navigationAuthority": false,
+  "actualWorkerOrBrowserReplayPerformed": false,
+  "inputFiles": [
+    {
+      "path": "cell-918-control/prepared-routing.json",
+      "sha256": "283e947c94f516b8fa07e837c443b246d376e9be3d0f182040bfe5fdaafae2a2"
+    },
+    {
+      "path": "cell-918-retained/prepared-routing.json",
+      "sha256": "4aaa4b74810178432fd31ddd88bea07f0a7e07bc6043096b80d19341b8b49d98"
+    },
+    {
+      "path": "cell-918-control/report.json",
+      "sha256": "f0001da0beffed9cd9156e6ecb092f10e0774507af8778908f21c7ab2423e30f"
+    },
+    {
+      "path": "cell-918-retained/report.json",
+      "sha256": "00670834016380b4596bc6e07c7fb20b7c1429493ca850ec74154bb5f0d41aa7"
+    },
+    {
+      "path": "cell-918-control/cells/f359c65169209137e3e886bc5145429d6bb555d3da63f14558fd6ee61c0aba5f.json",
+      "sha256": "0a91f7357be642ad7f1336750acab46e57b5f34c9a52ab8df53caaebbdb16f26"
+    },
+    {
+      "path": "cell-918-retained/cells/f359c65169209137e3e886bc5145429d6bb555d3da63f14558fd6ee61c0aba5f.json",
+      "sha256": "69c7ca38048f85b09be0c8fc6cc0d0b2f0f175e1b3e598a5ce2decc773455901"
+    }
+  ],
+  "compilerBinding": "9aa66f3bd78368e96c9841723c51237d52940574ba16b3c5623bcd5db26f8349",
+  "sourceBinding": {
+    "inputZipSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "inputJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceGeometryKey": "149f6f929bfb72c0f6b6ae76460d16437a4b7f9200095b60b6c8bf91c7271339"
+  },
+  "inventory": {
+    "sameSourceScope": true,
+    "scopeSha256": "00eb3ec51cf646b881f00892b96cbd53cbf5aa5828b7c9fb736fbdd389376a79",
+    "originalEligibleEdges": 79,
+    "originalTerminalIds": 53,
+    "controlGuides": 69,
+    "candidateGuides": 69,
+    "sameGuideIds": true,
+    "changedGuideCount": 8,
+    "unchangedOriginalGuideEndpoints": true,
+    "controlRefusedEdges": [
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262854:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c46d447227c4|door:400176:2255536:1",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c5f7cc722914|door:400176:2255524:1",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2255478:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2258494:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261753:0",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2261753:0|door:400176:2261777:0",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2262854:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263180:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263074:0|door:400176:2263180:0",
+        "reason": "checked-chain-disconnection"
+      }
+    ],
+    "candidateRefusedEdges": [
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262854:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c46d447227c4|door:400176:2255536:1",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-c5f7cc722914|door:400176:2255524:1",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2255478:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2258494:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261753:0",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2261753:0|door:400176:2261777:0",
+        "reason": "terminal-attachment"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2262854:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263180:0",
+        "reason": "checked-chain-disconnection"
+      },
+      {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263074:0|door:400176:2263180:0",
+        "reason": "checked-chain-disconnection"
+      }
+    ]
+  },
+  "coreGeometry": {
+    "control": {
+      "vertices": 193,
+      "guidePathLengthFeet": 537.8996999290769,
+      "bendsOver5Degrees": 40,
+      "turnbacksAtLeast145Degrees": 0,
+      "maximumTurnDegrees": 115.5718917810962
+    },
+    "candidate": {
+      "vertices": 193,
+      "guidePathLengthFeet": 541.6168559908939,
+      "bendsOver5Degrees": 40,
+      "turnbacksAtLeast145Degrees": 0,
+      "maximumTurnDegrees": 115.57189178109687
+    }
+  },
+  "reportedProductionChecks": {
+    "sourceGraphAndGeometryUnchanged": true,
+    "straightRunsWithdrawn": false,
+    "missingGuideIds": [],
+    "unapprovedContactCount": 0,
+    "fullPackageImportPerformed": false,
+    "actualNavigationAcceptancePerformed": false
+  },
+  "junctions": [
+    {
+      "receipt": {
+        "kind": "same-original-doorway",
+        "terminalId": "door:400176:2262854:0",
+        "pointFeet": [
+          107.17454467806888,
+          836.4208410978985,
+          24.278215223097114
+        ],
+        "approachFeet": [
+          [
+            106.12384837115361,
+            837.8100733224809,
+            24.278215223097114
+          ],
+          [
+            107.17454467806888,
+            836.4208410978985,
+            24.278215223097114
+          ]
+        ],
+        "incidentGuideIds": [
+          "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+          "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1"
+        ],
+        "throughGuideIds": [
+          "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262984:1"
+        ]
+      },
+      "originalDoorPointUnchanged": true,
+      "sourceIdentityMethod": "Original IDs from declared source walk edge IDs; orientation anchored by the compiler receipt's original doorway point and exact endpoint agreement. No historical source context is used.",
+      "controlStations": [
+        [
+          107.53055100482969,
+          836.690093801764,
+          24.278215223097114
+        ],
+        [
+          107.17454467806888,
+          836.4208410978985,
+          24.278215223097114
+        ]
+      ],
+      "candidateStations": [
+        [
+          107.17454467806888,
+          836.4208410978985,
+          24.278215223097114
+        ]
+      ],
+      "stationCount": {
+        "control": 2,
+        "candidate": 1
+      },
+      "stationSeparationFeet": {
+        "control": 0.4463603065154949,
+        "candidate": 0
+      },
+      "stationSeparationMetres": {
+        "control": 0.13605062142592286,
+        "candidate": 0
+      },
+      "candidateSharedApproachFeet": [
+        [
+          106.12384837115361,
+          837.8100733224809,
+          24.278215223097114
+        ],
+        [
+          107.17454467806888,
+          836.4208410978985,
+          24.278215223097114
+        ]
+      ],
+      "candidateSharedApproachLengthMetres": 0.5309060352356386,
+      "changedMemberGuideIds": [
+        "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0"
+      ],
+      "throughGuideGeometryUnchanged": true,
+      "newRawContactCountWithinReceiptMembers": 3,
+      "newRawContactsWithinReceiptMembers": [
+        {
+          "edgeIds": [
+            "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+            "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262984:1"
+          ],
+          "at": "3770869058404325/35184372088832,7357235524010571/8796093022208:3770869058404325/35184372088832,7357235524010571/8796093022208"
+        },
+        {
+          "edgeIds": [
+            "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+            "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1"
+          ],
+          "at": "3770869058404325/35184372088832,7357235524010571/8796093022208:3770869058404325/35184372088832,7357235524010571/8796093022208"
+        },
+        {
+          "edgeIds": [
+            "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+            "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1"
+          ],
+          "at": "7467801937178913/70368744177664,7369455339887447/8796093022208:3770869058404325/35184372088832,7357235524010571/8796093022208"
+        }
+      ],
+      "note": "These exact station/shared-approach contacts are legitimate compiler-replayed junction contacts. They are distinct from the production guard's zero unapproved contacts. This analysis does not recreate live receipt authority or run a journey."
+    }
+  ],
+  "changedGuides": [
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "pointsFeet": [
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          5
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "pointsFeet": [
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          5
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          5
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            159.89566568631176,
+            845.1170331981925,
+            24.278215223097114
+          ],
+          [
+            157.7282123626411,
+            846.0578461616518,
+            24.278215223097114
+          ],
+          [
+            160.72936075356446,
+            852.971918679124,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          4
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            159.89566568631176,
+            845.1170331981925,
+            24.278215223097114
+          ],
+          [
+            157.7282123626411,
+            846.0578461616518,
+            24.278215223097114
+          ],
+          [
+            160.72936075356446,
+            852.971918679124,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          4
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            160.72936075356446,
+            852.971918679124,
+            24.278215223097114
+          ],
+          [
+            164.24146228653052,
+            852.2552438920238,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            160.72936075356446,
+            852.971918679124,
+            24.278215223097114
+          ],
+          [
+            164.24146228653052,
+            852.2552438920238,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "pointsFeet": [
+          [
+            161.34180952109492,
+            863.1489124127703,
+            24.278215223097114
+          ],
+          [
+            161.24485997461446,
+            862.6584016734004,
+            24.278215223097114
+          ],
+          [
+            158.142360590591,
+            861.0624879621331,
+            24.278215223097114
+          ],
+          [
+            156.30644895413127,
+            860.7171979626228,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          2,
+          8
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "pointsFeet": [
+          [
+            161.34180952109492,
+            863.1489124127703,
+            24.278215223097114
+          ],
+          [
+            161.24485997461446,
+            862.6584016734004,
+            24.278215223097114
+          ],
+          [
+            158.142360590591,
+            861.0624879621331,
+            24.278215223097114
+          ],
+          [
+            156.30644895413127,
+            860.7171979626228,
+            24.278215223097114
+          ],
+          [
+            155.81577084738112,
+            859.7133133678723,
+            24.278215223097114
+          ],
+          [
+            155.15640796925862,
+            858.3643144486388,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          2,
+          8
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+        "pointsFeet": [
+          [
+            108.64553539382638,
+            841.6207287201368,
+            24.278215223097114
+          ],
+          [
+            110.170614558358,
+            840.7175644695545,
+            24.278215223097114
+          ],
+          [
+            107.53055100482969,
+            836.690093801764,
+            24.278215223097114
+          ],
+          [
+            106.12384837115361,
+            837.8100733224809,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          2
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+        "pointsFeet": [
+          [
+            108.64553539382638,
+            841.6207287201368,
+            24.278215223097114
+          ],
+          [
+            110.170614558358,
+            840.7175644695545,
+            24.278215223097114
+          ],
+          [
+            107.17454467806888,
+            836.4208410978985,
+            24.278215223097114
+          ],
+          [
+            106.12384837115361,
+            837.8100733224809,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+      "before": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            153.3965000381597,
+            858.5622197916913,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      },
+      "after": {
+        "edgeId": "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            151.759493812619,
+            858.7463045798328,
+            24.278215223097114
+          ],
+          [
+            148.9113840193763,
+            859.0665805077508,
+            24.278215223097114
+          ],
+          [
+            149.6120174341198,
+            860.1883524609083,
+            24.278215223097114
+          ],
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ]
+        ],
+        "kind": "shared-corridor",
+        "hallwayJoins": [
+          1,
+          3
+        ]
+      }
+    }
+  ]
+}
