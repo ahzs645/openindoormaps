@@ -1,4 +1,6 @@
 import { verifyOpenBayDrawing } from "./reviewed-open-bay";
+import { packageBytesSha256 as hash } from "./package-bytes";
+import { sameJsonData } from "./same-json-data";
 import {
   validateNativeDoorBoundarySourceReviewEvidence,
   type NativeDoorBoundarySourceReviewEvidence,
@@ -110,7 +112,7 @@ import {
   validateReviewedCirculationLinks,
   type ReviewedCirculationLinks,
 } from "./reviewed-circulation-links";
-import type { IndoorExclusions } from "./contract";
+import type { IndoorExclusions, IndoorDataset } from "./contract";
 import { validatePreparedRouting } from "./prepared-routing";
 import { throughNavigationGeometryKey } from "./through-navigation";
 import { validateSharedStairBinding } from "./stair-display";
@@ -123,7 +125,6 @@ import {
   type Unzipped,
   type AsyncZippable,
 } from "fflate";
-import type { IndoorDataset } from "./contract";
 import { validateIndoorDataset } from "./routing";
 import {
   validateVisitorMetadata,
@@ -428,7 +429,7 @@ export type IndoorProject = {
 /** Build the material index on the first contact-wall lookup and release it
  * after this synchronous boundary check. A later import or edit starts fresh. */
 function boundaryContactWalls(data: IndoorDataset) {
-  if (!data.nativeMaterialSections) return undefined;
+  if (!data.nativeMaterialSections) return;
   let query: ReturnType<typeof createNativeRoutingMaterialQuery> | undefined;
   return (levelId: number) => {
     query ??= createNativeRoutingMaterialQuery(data);
@@ -459,17 +460,6 @@ const modelPath = (p: string) =>
   /^model\/[^/\\\u0000-\u001F]+\.(rvt|rfa|rte|rft)$/i.test(p);
 const limit = (p: string) =>
   modelPath(p) ? 512 * MB : (limits[p] ?? preparedDisplayArchiveEntryLimit(p));
-const hash = async (bytes: Uint8Array) =>
-  [
-    ...new Uint8Array(
-      await crypto.subtle.digest(
-        "SHA-256",
-        new Uint8Array(bytes).buffer as ArrayBuffer,
-      ),
-    ),
-  ]
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
 const EMPTY_ARCHIVE = new Uint8Array(0);
 export async function readIndoorProject(
   bytes: Uint8Array,
@@ -880,9 +870,9 @@ export async function exportPreparedRoutingProject(
   const sourceOnly = (value: IndoorDataset) => {
     const copy = { ...value } as IndoorDataset & { preparedRouting?: unknown };
     delete copy.preparedRouting;
-    return JSON.stringify(copy);
+    return copy;
   };
-  if (sourceOnly(dataset) !== sourceOnly(project.dataset))
+  if (!sameJsonData(sourceOnly(dataset), sourceOnly(project.dataset)))
     throw new Error(
       "Routing preparation cannot modify source data or reviews.",
     );

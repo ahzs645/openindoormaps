@@ -8,6 +8,13 @@ import {
 } from "./review-bundle";
 import { boundedInflate } from "./review-bundle-inflate";
 import {
+  packageBytesSha256 as hash,
+  packageBytesBase64 as base64,
+  packageBase64Bytes,
+  packageBase64Matches,
+  samePackageBytes,
+} from "./package-bytes";
+import {
   hasVerifiedReviewFile,
   rememberVerifiedReviewFile,
   reviewFileVerificationSnapshot,
@@ -25,30 +32,10 @@ const decoder = new TextDecoder("utf8", { fatal: true });
 const fail = () => {
   throw new Error("Invalid packed review companion container.");
 };
-const hash = async (bytes: Uint8Array) =>
-  [
-    ...new Uint8Array(
-      await crypto.subtle.digest("SHA-256", new Uint8Array(bytes).buffer),
-    ),
-  ]
-    .map((n) => n.toString(16).padStart(2, "0"))
-    .join("");
-const base64 = (bytes: Uint8Array) => {
-  let s = "";
-  for (let i = 0; i < bytes.length; i += 8192)
-    s += String.fromCodePoint(...bytes.subarray(i, i + 8192));
-  return btoa(s);
-};
 const unbase64 = (value: string) => {
   if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value)) return fail();
   try {
-    const binary = atob(value);
-    const bytes = new Uint8Array(binary.length);
-    // Avoid the iterable conversion's large temporary numeric array for
-    // packed authoring companions. atob returns one byte per character.
-    for (let i = 0; i < binary.length; i++)
-      bytes[i] = binary.codePointAt(i) ?? 0;
-    return bytes;
+    return packageBase64Bytes(value);
   } catch {
     return fail();
   }
@@ -93,9 +80,9 @@ export async function packReviewBundle(
     const compressed = unbase64(file.compressedBase64);
     const raw = boundedInflate(compressed, file.bytes);
     if ((await hash(raw)) !== file.sha256) fail();
-    const recompressed = base64(deflateSync(raw));
-    const canonical = base64(compressed);
-    const mode = recompressed === file.compressedBase64 ? "raw" : "compressed";
+    const mode = packageBase64Matches(deflateSync(raw), file.compressedBase64)
+      ? "raw"
+      : "compressed";
     const part = mode === "raw" ? raw : compressed;
     files.push({
       path: file.path,
@@ -103,7 +90,7 @@ export async function packReviewBundle(
       sha256: file.sha256,
       mode,
       storedBytes: part.length,
-      ...(canonical === file.compressedBase64
+      ...(packageBase64Matches(compressed, file.compressedBase64)
         ? {}
         : {
             base64Ending: file.compressedBase64.slice(-4),
@@ -149,7 +136,8 @@ export async function unpackReviewBundle(
     await verifyReviewBundleContent(value);
     return value as ReviewBundle | undefined;
   }
-  let wire = value as PackedReviewBundle;
+  const wire = value as PackedReviewBundle;
+  let archiveCompressed: Uint8Array | undefined;
   if ((value as PackedReviewBundleReference).storage === "archive-entry") {
     const ref = value as PackedReviewBundleReference;
     const bytes = archiveFiles?.[REVIEW_BUNDLE_ARCHIVE_PATH];
@@ -162,14 +150,7 @@ export async function unpackReviewBundle(
       (await hash(bytes)) !== ref.compressedSha256
     )
       fail();
-    wire = {
-      format: ref.format,
-      version: ref.version,
-      encoding: ref.encoding,
-      bytes: ref.bytes,
-      sha256: ref.sha256,
-      compressedBase64: base64(bytes!),
-    };
+    archiveCompressed = bytes!;
   }
   if (
     wire.version !== 1 ||
@@ -178,13 +159,27 @@ export async function unpackReviewBundle(
     wire.bytes < 4 ||
     wire.bytes > MAX_CONTAINER ||
     !/^[a-f0-9]{64}$/.test(wire.sha256) ||
-    typeof wire.compressedBase64 !== "string" ||
-    wire.compressedBase64.length > MAX_CONTAINER * 2
+    (!archiveCompressed &&
+      (typeof wire.compressedBase64 !== "string" ||
+        wire.compressedBase64.length > MAX_CONTAINER * 2))
   )
     fail();
-  const raw = boundedInflate(unbase64(wire.compressedBase64), wire.bytes);
+  // Archive entries are already bytes. Retain those exact checked bytes instead
+  // of materialising and decoding their large base64 representation.
+  const raw = boundedInflate(
+    archiveCompressed ?? unbase64(wire.compressedBase64),
+    wire.bytes,
+  );
   if ((await hash(raw)) !== wire.sha256) fail();
-  if (base64(deflateSync(raw, { level: 9 })) !== wire.compressedBase64) fail();
+  if (
+    archiveCompressed
+      ? !samePackageBytes(deflateSync(raw, { level: 9 }), archiveCompressed)
+      : !packageBase64Matches(
+          deflateSync(raw, { level: 9 }),
+          wire.compressedBase64,
+        )
+  )
+    fail();
   const headerLength = new DataView(
     raw.buffer,
     raw.byteOffset,

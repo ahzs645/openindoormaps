@@ -1,0 +1,2045 @@
+{
+  "format": "unbc-accessibility-source-prospects-v1",
+  "source": {
+    "masterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "indoorJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9",
+    "contextSha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd"
+  },
+  "status": "source-inventory-and-unexecuted-proposals",
+  "navigationAuthority": false,
+  "currentExecutedRequests": 0,
+  "sourceEdgeCounts": [
+    {
+      "kind": "door",
+      "enabled": true,
+      "accessible": "unknown",
+      "count": 1576
+    },
+    {
+      "kind": "door",
+      "enabled": false,
+      "accessible": "unknown",
+      "count": 1
+    },
+    {
+      "kind": "opening",
+      "enabled": true,
+      "accessible": "unknown",
+      "count": 200
+    },
+    {
+      "kind": "stairs",
+      "enabled": false,
+      "accessible": "no",
+      "count": 27
+    },
+    {
+      "kind": "stairs",
+      "enabled": true,
+      "accessible": "no",
+      "count": 1
+    },
+    {
+      "kind": "elevator",
+      "enabled": true,
+      "accessible": "unknown",
+      "count": 43
+    },
+    {
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "yes",
+      "count": 3
+    },
+    {
+      "kind": "opening",
+      "enabled": true,
+      "accessible": "yes",
+      "count": 1
+    },
+    {
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "unknown",
+      "count": 1
+    },
+    {
+      "kind": "local-steps",
+      "enabled": true,
+      "accessible": "no",
+      "count": 1
+    },
+    {
+      "kind": "walk",
+      "enabled": true,
+      "accessible": "unknown",
+      "count": 5315
+    },
+    {
+      "kind": "walk",
+      "enabled": true,
+      "accessible": "yes",
+      "count": 57
+    },
+    {
+      "kind": "walk",
+      "enabled": false,
+      "accessible": "unknown",
+      "count": 2
+    }
+  ],
+  "liftSourceReviewCount": 9,
+  "enabledLiftTransferEdges": 43,
+  "liftReviewAccessibleValues": {
+    "unknown": 9
+  },
+  "sourceYesEdgeCount": 61,
+  "sourceYesWeakComponentCount": 35,
+  "componentMethod": "Weak components of enabled source edges explicitly marked yes, using original node IDs only. This is a diagnostic lower-level inventory, not projectLinkPolicy evaluation, complete native geometry proof, endpoint eligibility proof or route availability.",
+  "components": [
+    {
+      "nodeIds": [
+        "arrival:rm-311-86e02816d8fe",
+        "ramp:1622190:lower",
+        "ramp:1622190:upper"
+      ],
+      "edgeIds": [
+        "ramp:1622190",
+        "walk:ramp:1622190:lower"
+      ],
+      "edgeKinds": {
+        "opening": 1,
+        "ramp": 1
+      },
+      "owners": [
+        {
+          "key": "landing:ramp:1622190:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:lower"
+        },
+        {
+          "key": "landing:ramp:1622190:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:upper"
+        },
+        {
+          "key": "rm-311-86e02816d8fe",
+          "number": "07-180",
+          "name": "Multi Purpose Circulation Space and Hall",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-311-86e02816d8fe"
+        }
+      ],
+      "arrivalNodeIds": [
+        "ramp:1622190:lower",
+        "ramp:1622190:upper",
+        "arrival:rm-311-86e02816d8fe"
+      ]
+    },
+    {
+      "nodeIds": [
+        "ramp:1586431:lower",
+        "ramp:1586431:upper"
+      ],
+      "edgeIds": [
+        "ramp:1586431"
+      ],
+      "edgeKinds": {
+        "ramp": 1
+      },
+      "owners": [
+        {
+          "key": "landing:ramp:1586431:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:lower"
+        },
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        }
+      ],
+      "arrivalNodeIds": [
+        "ramp:1586431:lower",
+        "ramp:1586431:upper"
+      ]
+    },
+    {
+      "nodeIds": [
+        "ramp:1587605:lower",
+        "ramp:1587605:upper"
+      ],
+      "edgeIds": [
+        "ramp:1587605"
+      ],
+      "edgeKinds": {
+        "ramp": 1
+      },
+      "owners": [
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        },
+        {
+          "key": "landing:ramp:1587605:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1587605:lower"
+        }
+      ],
+      "arrivalNodeIds": [
+        "ramp:1587605:lower"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-1450417-dbd81729f08f",
+        "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0"
+      ],
+      "edgeIds": [
+        "native-cell:-3.280840:61:alias:arrival:rm-1450417-dbd81729f08f|stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-1450417-dbd81729f08f",
+          "number": "09-S202",
+          "name": "Stair",
+          "building": "09",
+          "levelId": 1450417,
+          "elevationFeet": -3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-1450417-dbd81729f08f"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-1450417-dbd81729f08f"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-311-dd343f6f08db",
+        "stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae:0"
+      ],
+      "edgeIds": [
+        "native-cell:0.000000:89:alias:arrival:rm-311-dd343f6f08db|stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-311-dd343f6f08db",
+          "number": "04-S102",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-311-dd343f6f08db"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-311-dd343f6f08db"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-311-dd313b6f08d8",
+        "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:0"
+      ],
+      "edgeIds": [
+        "native-cell:0.000000:108:alias:arrival:rm-311-dd313b6f08d8|stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-311-dd313b6f08d8",
+          "number": "04-S101",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-311-dd313b6f08d8"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-311-dd313b6f08d8"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-311-8f4edaf5dd38",
+        "stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4:0"
+      ],
+      "edgeIds": [
+        "native-cell:0.000000:175:alias:arrival:rm-311-8f4edaf5dd38|stair:1693246:rm-311-8f4edaf5dd38:rm-694-ba908ff5f5b4:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-311-8f4edaf5dd38",
+          "number": "03-S001",
+          "name": "Stair",
+          "building": "03",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-311-8f4edaf5dd38"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-311-8f4edaf5dd38"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-311-0bdc6d73a3ae",
+        "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:0"
+      ],
+      "edgeIds": [
+        "native-cell:0.000000:291:alias:arrival:rm-311-0bdc6d73a3ae|stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-311-0bdc6d73a3ae",
+          "number": "05-S101",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-311-0bdc6d73a3ae"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-311-0bdc6d73a3ae"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-311-0bd5e173a3a9",
+        "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:0"
+      ],
+      "edgeIds": [
+        "native-cell:0.000000:334:alias:arrival:rm-311-0bd5e173a3a9|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-311-0bd5e173a3a9",
+          "number": "05-S103",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-311-0bd5e173a3a9"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-311-0bd5e173a3a9"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-1487816-004a60afc0d8",
+        "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:0"
+      ],
+      "edgeIds": [
+        "native-cell:3.280840:410:alias:arrival:rm-1487816-004a60afc0d8|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-1487816-004a60afc0d8",
+          "number": "10-S101",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-1487816-004a60afc0d8"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-1487816-004a60afc0d8"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-1487816-1a09473066a2",
+        "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:0"
+      ],
+      "edgeIds": [
+        "native-cell:3.280840:418:alias:arrival:rm-1487816-1a09473066a2|stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-1487816-1a09473066a2",
+          "number": "08-S101",
+          "name": "Stair",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-1487816-1a09473066a2"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-1487816-1a09473066a2"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-b17d7fe3d57c",
+        "stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3:0"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:531:alias:arrival:rm-694-b17d7fe3d57c|stair:1779403:rm-694-b17d7fe3d57c:rm-1487353-594ba11f3ad3:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-694-b17d7fe3d57c",
+          "number": "06-S204",
+          "name": "Stair 4",
+          "building": "06",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-b17d7fe3d57c"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-b17d7fe3d57c"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-33a7fdf6e0ae",
+        "stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae:1"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:567:alias:arrival:rm-694-33a7fdf6e0ae|stair:1293690:rm-311-dd343f6f08db:rm-694-33a7fdf6e0ae:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-694-33a7fdf6e0ae",
+          "number": "04-S202",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-33a7fdf6e0ae"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-33a7fdf6e0ae"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-339d4df6e0a4",
+        "stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:1",
+        "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:0"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:586:alias:arrival:rm-694-339d4df6e0a4|stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:1",
+        "native-cell:14.435696:586:alias:arrival:rm-694-339d4df6e0a4|stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:0",
+        "native-cell:14.435696:586:alias:stair:2156084:rm-311-dd313b6f08d8:rm-694-339d4df6e0a4:1|stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:0"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-694-339d4df6e0a4",
+          "number": "04-S201",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-339d4df6e0a4"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-339d4df6e0a4"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-43cb29fdc35f",
+        "stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:1",
+        "stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:0"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:637:alias:arrival:rm-694-43cb29fdc35f|stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:1",
+        "native-cell:14.435696:637:alias:arrival:rm-694-43cb29fdc35f|stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:0",
+        "native-cell:14.435696:637:alias:stair:1982431:rm-1487816-1a09473066a2:rm-694-43cb29fdc35f:1|stair:1988738:rm-694-43cb29fdc35f:rm-400176-fd57d2070a69:0"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-694-43cb29fdc35f",
+          "number": "08-S201",
+          "name": "Stair",
+          "building": "08",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-43cb29fdc35f"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-43cb29fdc35f"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-07cc11afc4c4",
+        "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:0",
+        "stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:1"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:658:alias:arrival:rm-694-07cc11afc4c4|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:0",
+        "native-cell:14.435696:658:alias:arrival:rm-694-07cc11afc4c4|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:1",
+        "native-cell:14.435696:658:alias:stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:0|stair:2474568:rm-1487816-004a60afc0d8:rm-694-07cc11afc4c4:1"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-694-07cc11afc4c4",
+          "number": "10-S201",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-07cc11afc4c4"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-07cc11afc4c4"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-ecf634619eae",
+        "stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:1"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:680:alias:arrival:rm-694-ecf634619eae|stair:1305141:rm-311-0bd5e173a3a9:rm-694-ecf634619eae:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-694-ecf634619eae",
+          "number": "05-S203",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-ecf634619eae"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-ecf634619eae"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-ecfa1a619eb2",
+        "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:0",
+        "stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:741:alias:arrival:rm-694-ecfa1a619eb2|stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:0",
+        "native-cell:14.435696:741:alias:arrival:rm-694-ecfa1a619eb2|stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1",
+        "native-cell:14.435696:741:alias:stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:0|stair:2439748:rm-311-0bdc6d73a3ae:rm-694-ecfa1a619eb2:1"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-694-ecfa1a619eb2",
+          "number": "05-S201",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-ecfa1a619eb2"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-ecfa1a619eb2"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-694-e4108d414276",
+        "stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1"
+      ],
+      "edgeIds": [
+        "native-cell:14.435696:840:alias:arrival:rm-694-e4108d414276|stair:1972504:rm-1450417-dbd81729f08f:rm-694-e4108d414276:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-694-e4108d414276",
+          "number": "09-S302",
+          "name": "Stair",
+          "building": "09",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-694-e4108d414276"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-694-e4108d414276"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-40a604ec17ed",
+        "stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e:0"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:852:alias:arrival:rm-400176-40a604ec17ed|stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-400176-40a604ec17ed",
+          "number": "04-S302",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-40a604ec17ed"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-40a604ec17ed"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-408e02ec17d8",
+        "stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1",
+        "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:855:alias:arrival:rm-400176-408e02ec17d8|stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1",
+        "native-cell:24.278215:855:alias:arrival:rm-400176-408e02ec17d8|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0",
+        "native-cell:24.278215:855:alias:stair:2160665:rm-694-339d4df6e0a4:rm-400176-408e02ec17d8:1|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:0"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-400176-408e02ec17d8",
+          "number": "04-S301",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-408e02ec17d8"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-408e02ec17d8"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-4eb8857094dd",
+        "connector:unbc-03-lift:2",
+        "stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:884:alias:arrival:rm-400176-4eb8857094dd|connector:unbc-03-lift:2",
+        "native-cell:24.278215:884:alias:arrival:rm-400176-4eb8857094dd|stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1",
+        "native-cell:24.278215:884:alias:connector:unbc-03-lift:2|stair:2349441:rm-694-484c1bec97cd:rm-400176-4eb8857094dd:1"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-400176-4eb8857094dd",
+          "number": "03-S203",
+          "name": "Stair",
+          "building": "03",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-4eb8857094dd"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-4eb8857094dd"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-561f2a7098b2",
+        "stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2:1",
+        "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:884:alias:arrival:rm-400176-561f2a7098b2|stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2:1",
+        "native-cell:24.278215:884:alias:arrival:rm-400176-561f2a7098b2|stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0",
+        "native-cell:24.278215:884:alias:stair:1689936:rm-694-ba908ff5f5b4:rm-400176-561f2a7098b2:1|stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:0"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-400176-561f2a7098b2",
+          "number": "03-S201",
+          "name": "Stair",
+          "building": "03",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-561f2a7098b2"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-561f2a7098b2"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-07c585afc4bf",
+        "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:902:alias:arrival:rm-400176-07c585afc4bf|stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "native-cell:24.278215:902:alias:arrival:rm-400176-07c585afc4bf|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "native-cell:24.278215:902:alias:arrival:rm-400176-07c585afc4bf|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1",
+        "native-cell:24.278215:902:alias:stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0",
+        "native-cell:24.278215:902:alias:stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1",
+        "native-cell:24.278215:902:alias:stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:0|stair:1500191:rm-694-07cc11afc4c4:rm-400176-07c585afc4bf:1"
+      ],
+      "edgeKinds": {
+        "walk": 6
+      },
+      "owners": [
+        {
+          "key": "rm-400176-07c585afc4bf",
+          "number": "10-S301",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-07c585afc4bf"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-07c585afc4bf"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-dd5ab817804b",
+        "stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4:0"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:906:alias:arrival:rm-400176-dd5ab817804b|stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4:0"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-400176-dd5ab817804b",
+          "number": "08-S302",
+          "name": "Stair",
+          "building": "08",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-dd5ab817804b"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-dd5ab817804b"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-4671ea1dd0fd",
+        "stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:1"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:952:alias:arrival:rm-400176-4671ea1dd0fd|stair:1903824:rm-694-ecfa1a619eb2:rm-400176-4671ea1dd0fd:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-400176-4671ea1dd0fd",
+          "number": "05-S301",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-4671ea1dd0fd"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-4671ea1dd0fd"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-f91a4f2d9cb3",
+        "stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:952:alias:arrival:rm-400176-f91a4f2d9cb3|stair:1638837:rm-694-0bed6b73a3bd:rm-400176-f91a4f2d9cb3:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-400176-f91a4f2d9cb3",
+          "number": "05-S304",
+          "name": "Stair",
+          "building": "05",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-f91a4f2d9cb3"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-f91a4f2d9cb3"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-400176-072589afc437",
+        "stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:0",
+        "stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:0"
+      ],
+      "edgeIds": [
+        "native-cell:24.278215:1062:alias:arrival:rm-400176-072589afc437|stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:0",
+        "native-cell:24.278215:1062:alias:arrival:rm-400176-072589afc437|stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:0",
+        "native-cell:24.278215:1062:alias:stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:0|stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:0"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-400176-072589afc437",
+          "number": "10-S302",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 400176,
+          "elevationFeet": 24.278215223097114,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-400176-072589afc437"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-400176-072589afc437"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-136b08ba658e",
+        "stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1104:alias:arrival:rm-402367-136b08ba658e|stair:1295966:rm-400176-40a604ec17ed:rm-402367-136b08ba658e:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-402367-136b08ba658e",
+          "number": "04-S402",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-136b08ba658e"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-136b08ba658e"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-136decba6590",
+        "stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1114:alias:arrival:rm-402367-136decba6590|stair:2161350:rm-400176-408e02ec17d8:rm-402367-136decba6590:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-402367-136decba6590",
+          "number": "04-S401",
+          "name": "Stair",
+          "building": "04",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-136decba6590"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-136decba6590"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-1fc9594ffaa7",
+        "stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1137:alias:arrival:rm-402367-1fc9594ffaa7|stair:1696006:rm-400176-561f2a7098b2:rm-402367-1fc9594ffaa7:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-402367-1fc9594ffaa7",
+          "number": "03-S301",
+          "name": "Stair",
+          "building": "03",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-1fc9594ffaa7"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-1fc9594ffaa7"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-cc4b6067be0b",
+        "connector:unbc-03-lift:3"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1137:alias:arrival:rm-402367-cc4b6067be0b|connector:unbc-03-lift:3"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-402367-cc4b6067be0b",
+          "number": "03-S303",
+          "name": "Stair",
+          "building": "03",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-cc4b6067be0b"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-cc4b6067be0b"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-721ce30d03a4",
+        "stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1163:alias:arrival:rm-402367-721ce30d03a4|stair:1514126:rm-400176-dd5ab817804b:rm-402367-721ce30d03a4:1"
+      ],
+      "edgeKinds": {
+        "walk": 1
+      },
+      "owners": [
+        {
+          "key": "rm-402367-721ce30d03a4",
+          "number": "08-S402",
+          "name": "Stair",
+          "building": "08",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-721ce30d03a4"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-721ce30d03a4"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-07d989afc4d0",
+        "stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1",
+        "stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1170:alias:arrival:rm-402367-07d989afc4d0|stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1",
+        "native-cell:34.120735:1170:alias:arrival:rm-402367-07d989afc4d0|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1",
+        "native-cell:34.120735:1170:alias:stair:1496322:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1|stair:1498360:rm-400176-07c585afc4bf:rm-402367-07d989afc4d0:1"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-402367-07d989afc4d0",
+          "number": "10-S401",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-07d989afc4d0"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-07d989afc4d0"
+      ]
+    },
+    {
+      "nodeIds": [
+        "arrival:rm-402367-073a0dafc448",
+        "stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:1",
+        "stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:1"
+      ],
+      "edgeIds": [
+        "native-cell:34.120735:1294:alias:arrival:rm-402367-073a0dafc448|stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:1",
+        "native-cell:34.120735:1294:alias:arrival:rm-402367-073a0dafc448|stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:1",
+        "native-cell:34.120735:1294:alias:stair:1498457:rm-400176-072589afc437:rm-402367-073a0dafc448:1|stair:1500288:rm-400176-072589afc437:rm-402367-073a0dafc448:1"
+      ],
+      "edgeKinds": {
+        "walk": 3
+      },
+      "owners": [
+        {
+          "key": "rm-402367-073a0dafc448",
+          "number": "10-S402",
+          "name": "Stair",
+          "building": "10",
+          "levelId": 402367,
+          "elevationFeet": 34.120734908136484,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": true,
+          "arrivalNodeId": "arrival:rm-402367-073a0dafc448"
+        }
+      ],
+      "arrivalNodeIds": [
+        "arrival:rm-402367-073a0dafc448"
+      ]
+    }
+  ],
+  "ramps": [
+    {
+      "id": "ramp:1622190",
+      "from": "ramp:1622190:lower",
+      "to": "ramp:1622190:upper",
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "yes",
+      "direction": null,
+      "roomKeys": [
+        "landing:ramp:1622190:lower",
+        "landing:ramp:1622190:upper"
+      ],
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "endpointOwners": [
+        {
+          "key": "landing:ramp:1622190:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:lower"
+        },
+        {
+          "key": "landing:ramp:1622190:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:upper"
+        }
+      ],
+      "selectedArrivalMatchesRampEndpoint": [
+        true,
+        true
+      ],
+      "savedSurfaceEvidence": {
+        "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "nativeRampId": 1622190,
+        "nativeFloorElementIds": [
+          400238,
+          1514723
+        ],
+        "certificateFields": {
+          "version": 1,
+          "halfWidthFeet": 0.5,
+          "maximumCrossfallRatio": 5.245008658505412e-07,
+          "maximumContinuousHeightJointFeet": 8.030290565841369e-08,
+          "maximumNativeJointFeet": 0.014108365580254138
+        }
+      },
+      "freshNativeValidationPerformed": false
+    },
+    {
+      "id": "ramp:1586431",
+      "from": "ramp:1586431:lower",
+      "to": "ramp:1586431:upper",
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "yes",
+      "direction": null,
+      "roomKeys": [
+        "landing:ramp:1586431:lower",
+        "landing:ramp:1586431:upper"
+      ],
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "endpointOwners": [
+        {
+          "key": "landing:ramp:1586431:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:lower"
+        },
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        }
+      ],
+      "selectedArrivalMatchesRampEndpoint": [
+        true,
+        true
+      ],
+      "savedSurfaceEvidence": {
+        "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "nativeRampId": 1586431,
+        "nativeFloorElementIds": [
+          423406,
+          1582103
+        ],
+        "certificateFields": {
+          "version": 1,
+          "halfWidthFeet": 0.5,
+          "maximumCrossfallRatio": 0.0002042758452622806,
+          "maximumContinuousHeightJointFeet": 1.1710479296970034e-07,
+          "maximumNativeJointFeet": 8.459265752794668e-07
+        }
+      },
+      "freshNativeValidationPerformed": false
+    },
+    {
+      "id": "ramp:1643796",
+      "from": "ramp:1643796:lower",
+      "to": "ramp:1643796:upper",
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "unknown",
+      "direction": null,
+      "roomKeys": [
+        "landing:ramp:1643796:lower",
+        "landing:ramp:1643796:upper"
+      ],
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "endpointOwners": [
+        {
+          "key": "landing:ramp:1643796:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "09",
+          "levelId": 1450417,
+          "elevationFeet": -3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1643796:lower"
+        },
+        {
+          "key": "landing:ramp:1643796:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1643796:upper"
+        }
+      ],
+      "selectedArrivalMatchesRampEndpoint": [
+        true,
+        true
+      ],
+      "savedSurfaceEvidence": {
+        "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "nativeRampId": 1643796,
+        "nativeFloorElementIds": [
+          1521516,
+          400238
+        ],
+        "certificateFields": {
+          "version": 1,
+          "halfWidthFeet": 0.5,
+          "maximumCrossfallRatio": 1.1075897337280382e-07,
+          "maximumContinuousHeightJointFeet": 5.537948668640191e-08,
+          "maximumNativeJointFeet": 0.0133760659786842
+        }
+      },
+      "freshNativeValidationPerformed": false
+    },
+    {
+      "id": "ramp:1587605",
+      "from": "ramp:1587605:lower",
+      "to": "ramp:1587605:upper",
+      "kind": "ramp",
+      "enabled": true,
+      "accessible": "yes",
+      "direction": null,
+      "roomKeys": [
+        "landing:ramp:1587605:lower",
+        "landing:ramp:1586431:upper"
+      ],
+      "evidence": "source-bound reviewed ramp + owner-tagged native BRep and continuously checked walking surfaces",
+      "endpointOwners": [
+        {
+          "key": "landing:ramp:1587605:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1587605:lower"
+        },
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        }
+      ],
+      "selectedArrivalMatchesRampEndpoint": [
+        true,
+        false
+      ],
+      "savedSurfaceEvidence": {
+        "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+        "nativeRampId": 1587605,
+        "nativeFloorElementIds": [
+          423406,
+          1582103
+        ],
+        "certificateFields": {
+          "version": 1,
+          "halfWidthFeet": 0.5,
+          "maximumCrossfallRatio": 0.007874549248760743,
+          "maximumContinuousHeightJointFeet": 5.4964175758023404e-08,
+          "maximumNativeJointFeet": 0
+        }
+      },
+      "freshNativeValidationPerformed": false
+    }
+  ],
+  "sameFloorLimit": "All 57 yes walk edges stay within individual source stair-room owners. They do not supply an ordinary two-room same-floor accessible acceptance by themselves. The yes opening beside ramp 1622190 supplies a better concrete source-arrival prospect.",
+  "historicalPositiveRampReceipt": {
+    "path": "pr4-work/openindoormaps/docs/unbc-native-ramp-audit.json",
+    "sha256": "3cfabf999ab545bd5cbc66e18d438be69218cbb2e652f4eaa84b1d8aa6331132",
+    "receipt": {
+      "input": "/Users/ahmadjalil/Downloads/UNBC.indoor.ramp-review.reviter.zip",
+      "output": "/Users/ahmadjalil/Downloads/UNBC.indoor.wheelchair-ramp.reviter.zip",
+      "nativeRampId": 1622190,
+      "nativeCategory": "Ramps",
+      "nativeFaces": 7,
+      "riseMetres": 1,
+      "pathMetres": 14.287120097994872,
+      "maximumSourceSlopePercent": 9.516800725290777,
+      "sourceChecks": "0.1 ft samples on native ramp/slab faces; no walls or stair treads intersect",
+      "wheelchairRoute": {
+        "from": "07-180",
+        "to": "Conference Centre ramp landing",
+        "distanceMetres": 46.27682135096195,
+        "edgeIds": [
+          "walk:ramp:1622190:lower",
+          "ramp:1622190",
+          "walk:ramp:1622190:upper"
+        ],
+        "unknownAccessibilityEdges": 0,
+        "reverseWorks": true
+      },
+      "preservedElevators": 2,
+      "otherEdgesChanged": 0
+    },
+    "currentQualification": false
+  },
+  "currentUpperRampApproach": {
+    "id": "walk:ramp:1622190:upper",
+    "from": "ramp:1622190:upper",
+    "to": "local:local:07:311:08:1487816:1620957:1",
+    "kind": "opening",
+    "enabled": true,
+    "accessible": "unknown",
+    "evidence": "Original source-owned flat local-stair landing and exact original ramp approach; complete2ft support and6ft foreign-material replay; vertical flight remains independently held; original access review is not transferred to changed current owners"
+  },
+  "proposals": [
+    {
+      "id": "step-free-same-floor-07-180-lower-landing",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-311-86e02816d8fe",
+          "number": "07-180",
+          "name": "Multi Purpose Circulation Space and Hall",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-311-86e02816d8fe"
+        },
+        {
+          "key": "landing:ramp:1622190:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:lower"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-311-86e02816d8fe",
+          "to": "landing:ramp:1622190:lower",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:lower",
+          "to": "rm-311-86e02816d8fe",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-311-86e02816d8fe",
+          "to": "landing:ramp:1622190:lower",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:lower",
+          "to": "rm-311-86e02816d8fe",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Strongest preserved same-floor accessible prospect: a single source-reviewed yes opening, with both named arrival nodes at native level 311 and elevation 0.",
+      "limits": "An explicit inside-arrival control involving a generated ramp landing; not an ordinary room-to-room pathway UI acceptance. Full native and worker checks are still required.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "walk:ramp:1622190:lower"
+      ]
+    },
+    {
+      "id": "step-free-ramp-1622190-landings",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "landing:ramp:1622190:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:lower"
+        },
+        {
+          "key": "landing:ramp:1622190:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:upper"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1622190:lower",
+          "to": "landing:ramp:1622190:upper",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:upper",
+          "to": "landing:ramp:1622190:lower",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1622190:lower",
+          "to": "landing:ramp:1622190:upper",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:upper",
+          "to": "landing:ramp:1622190:lower",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Test the exact two preserved arrival endpoints of a source-reviewed yes ramp.",
+      "limits": "The saved accessible flag and native surface certificate nominate the case; they do not replace current complete admission and runtime validation.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "ramp:1622190"
+      ]
+    },
+    {
+      "id": "step-free-07-180-ramp-1622190-upper",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-311-86e02816d8fe",
+          "number": "07-180",
+          "name": "Multi Purpose Circulation Space and Hall",
+          "building": "07",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-311-86e02816d8fe"
+        },
+        {
+          "key": "landing:ramp:1622190:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1622190:upper"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-311-86e02816d8fe",
+          "to": "landing:ramp:1622190:upper",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:upper",
+          "to": "rm-311-86e02816d8fe",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-311-86e02816d8fe",
+          "to": "landing:ramp:1622190:upper",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1622190:upper",
+          "to": "rm-311-86e02816d8fe",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Test the two-edge lower approach and ramp chain without extending through the now-unknown upper approach.",
+      "limits": "Do not reuse the older Conference Centre destination success as this case's current expected result.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "walk:ramp:1622190:lower",
+        "ramp:1622190"
+      ]
+    },
+    {
+      "id": "step-free-ramp-1586431-landings",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "landing:ramp:1586431:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:lower"
+        },
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1586431:lower",
+          "to": "landing:ramp:1586431:upper",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1586431:upper",
+          "to": "landing:ramp:1586431:lower",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1586431:lower",
+          "to": "landing:ramp:1586431:upper",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1586431:upper",
+          "to": "landing:ramp:1586431:lower",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Second preserved yes ramp whose edge endpoints match both destination arrival IDs.",
+      "limits": "Generated landing control; both ordinary native source checks and actual worker parity remain outstanding.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "ramp:1586431"
+      ]
+    },
+    {
+      "id": "ramp-1587605-arrival-owner-investigation",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "landing:ramp:1587605:lower",
+          "number": "",
+          "name": "Native ramp lower approach",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 0,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1587605:lower"
+        },
+        {
+          "key": "landing:ramp:1586431:upper",
+          "number": "",
+          "name": "Native ramp upper landing",
+          "building": "08",
+          "levelId": 1487816,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "ramp:1586431:upper"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1587605:lower",
+          "to": "landing:ramp:1586431:upper",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1586431:upper",
+          "to": "landing:ramp:1587605:lower",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "landing:ramp:1587605:lower",
+          "to": "landing:ramp:1586431:upper",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "landing:ramp:1586431:upper",
+          "to": "landing:ramp:1587605:lower",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Investigate a yes ramp with a shared upper owner record before selecting any successful endpoint expectation.",
+      "limits": "The edge ends at ramp:1587605:upper, while the owner record's selected arrival is ramp:1586431:upper. They are distinct nodes in separate yes-edge components. No connection between those identities is inferred.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "ramp:1587605"
+      ]
+    },
+    {
+      "id": "lift-04-reviewed-stops-accessibility-gap",
+      "status": "PROPOSAL_NOT_ACCEPTANCE_CASE",
+      "records": [
+        {
+          "key": "rm-311-2054e6ddb852",
+          "number": "04-124",
+          "name": "Rotunda",
+          "building": "04",
+          "levelId": 311,
+          "elevationFeet": 3.2808398950131235,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": false,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-311-2054e6ddb852"
+        },
+        {
+          "key": "rm-694-3399eaf6e0a1",
+          "number": "04-237",
+          "name": "Corridor",
+          "building": "04",
+          "levelId": 694,
+          "elevationFeet": 14.435695538057743,
+          "access": "unknown",
+          "walkable": true,
+          "circulation": true,
+          "stair": false,
+          "arrivalNodeId": "arrival:rm-694-3399eaf6e0a1"
+        }
+      ],
+      "requests": [
+        {
+          "direction": "forward",
+          "from": "rm-311-2054e6ddb852",
+          "to": "rm-694-3399eaf6e0a1",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-694-3399eaf6e0a1",
+          "to": "rm-311-2054e6ddb852",
+          "mode": "public",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "forward",
+          "from": "rm-311-2054e6ddb852",
+          "to": "rm-694-3399eaf6e0a1",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        },
+        {
+          "direction": "reverse",
+          "from": "rm-694-3399eaf6e0a1",
+          "to": "rm-311-2054e6ddb852",
+          "mode": "accessible",
+          "options": {
+            "endpointMode": "inside",
+            "allowOtherRoomTransit": false
+          },
+          "outcome": "UNDETERMINED_NOT_EXECUTED"
+        }
+      ],
+      "purpose": "Concrete two-floor public/accessible comparison using saved reviewed shaft stops 04-124 and 04-237.",
+      "limits": "Both the original connector review and its compiled edge explicitly retain unknown accessibility. The current accessible policy vetoes that edge. A positive accessible lift expectation requires new source-bound accessibility evidence, regenerated inputs and full approach validation; no flag is relaxed here.",
+      "acceptancePromotion": "Only after complete normal admission and explicit assessment of current control/candidate results. Observe actual original edge IDs, station identities and complete refusal diagnostics. No route success is inferred and no target edge is forced into the calculation.",
+      "candidateSourceEdgeIdsToObserve": [
+        "connector:unbc-04-lift:0:1"
+      ]
+    }
+  ]
+}

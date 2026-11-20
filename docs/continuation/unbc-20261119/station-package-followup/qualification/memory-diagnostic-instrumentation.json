@@ -1,0 +1,11 @@
+{
+  "diagnosticOnly": true,
+  "file": "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/companions-profile/digest-turn-gc-preload.mjs",
+  "sha256": "967b0f42a1800dbeb11c8f4a646ab239d85268be8c77912851c9fac27f2fd146",
+  "behavior": "Calls the existing native crypto.subtle.digest with identical arguments and returns its exact result. After inputs >=1 MiB or every32 calls, yields one event-loop turn and invokes the explicitly exposed CLI collector. Records memory before/after.",
+  "sourceChecksSkipped": false,
+  "sourceBytesChanged": false,
+  "productionSourceChanged": false,
+  "productionWorkerInstrumentation": false,
+  "browserPerformanceAcceptance": false
+}

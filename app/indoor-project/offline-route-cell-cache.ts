@@ -9,6 +9,10 @@ import {
   type ProgressiveManifest,
 } from "./progressive-delivery";
 import type { VisitorDeliveryCache } from "./visitor-delivery-cache";
+import {
+  publishedRouteAssetUrl,
+  type PublishedRouteAssetLocation,
+} from "./published-route-asset-url";
 
 type Policy = {
   receipts: readonly PublishedRouteCellReceipt[];
@@ -98,7 +102,7 @@ export async function verifyOfflineRouteCellCache(
  * a declared cache must be present, exact and retained before completion. */
 export async function saveOfflineRouteCellCache(
   manifest: ProgressiveManifest,
-  options: {
+  options: PublishedRouteAssetLocation & {
     baseUrl: string;
     cache: Cache;
     fetch?: typeof fetch;
@@ -112,11 +116,13 @@ export async function saveOfflineRouteCellCache(
   if (!receipt) return;
   let bytes = await options.cache.getAsset(receipt.compressedSha256);
   aborted(options.signal);
-  if (!bytes) {
+  if (bytes) {
+    bytes = checkedCarrier(receipt, bytes);
+  } else {
     if (options.offline)
       throw new Error("The offline directions cache has not been downloaded.");
     const response = await (options.fetch ?? fetch)(
-      new URL(receipt.url, options.baseUrl),
+      publishedRouteAssetUrl(receipt.url, options.baseUrl, options),
       { signal: options.signal },
     );
     if (!response.ok)
@@ -131,7 +137,7 @@ export async function saveOfflineRouteCellCache(
       ),
       true,
     );
-  } else bytes = checkedCarrier(receipt, bytes);
+  }
   aborted(options.signal);
   await options.cache.putAsset(receipt.compressedSha256, bytes);
   return verifyOfflineRouteCellCache(

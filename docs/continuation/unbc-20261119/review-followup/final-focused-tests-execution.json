@@ -1,0 +1,26 @@
+{
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/unit/published-route-asset-url.test.ts",
+    "tests/unit/progressive-route-preparation.test.ts",
+    "tests/unit/offline-route-cell-cache.test.ts",
+    "tests/unit/corridor-run-fit.test.ts",
+    "tests/unit/corridor-guide-contacts.test.ts",
+    "tests/unit/corridor-chain-fit.test.ts",
+    "tests/unit/corridor-centerline.test.ts",
+    "tests/unit/corridor-terminal-approach.test.ts",
+    "tests/unit/shared-corridor-routing.test.ts",
+    "tests/unit/corridor-candidate-input.test.ts",
+    "tests/unit/corridor-candidate-checkpoints.test.ts",
+    "tests/unit/native-selection-contact-compiler-parity.test.ts"
+  ],
+  "environment": {},
+  "siteDemosUnset": true,
+  "exitCode": 0,
+  "elapsedSeconds": 48.36664094900334,
+  "maximumResidentSetKiBCumulative": 344612
+}

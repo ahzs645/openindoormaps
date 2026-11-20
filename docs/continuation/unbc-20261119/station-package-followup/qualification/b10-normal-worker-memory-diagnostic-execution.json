@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-20T04:45:04.489824+00:00",
+  "finishedAt": "2026-11-20T04:46:46.645770+00:00",
+  "cwd": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+  "command": [
+    "node",
+    "--max-old-space-size=1400",
+    "--expose-gc",
+    "--import",
+    "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/companions-profile/digest-turn-gc-preload.mjs",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-memory-diagnostic",
+    "--connection-inventory",
+    "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+  ],
+  "environmentOverrides": {
+    "NODE_OPTIONS": null
+  },
+  "exitCode": -9,
+  "seconds": 102.15789477000362,
+  "peakRssKiB": 3021476,
+  "log": "b10-normal-worker-memory-diagnostic-execution.log"
+}

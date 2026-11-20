@@ -1,0 +1,540 @@
+{
+  "status": "source-review-copied-not-fresh-runtime-qualification",
+  "source": {
+    "masterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "indoorJsonSha256": "28140a977977564e410af86585928533c43c2ea584f6a2530b2e4c3cb531b748",
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "roomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9",
+    "contextSha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd"
+  },
+  "sourceMember": "floors/rooms.json",
+  "property": "indoorConnectors",
+  "value": {
+    "version": 1,
+    "modelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "connectors": [
+      {
+        "id": "unbc-04-lift",
+        "kind": "elevator",
+        "nativeElementId": 2103602,
+        "reviewedShaft": {
+          "pinId": "pin-e3c49bf2-b7b8-4309-b1da-2e1a986a97d1",
+          "pointFeet": [
+            -79.05536831396871,
+            372.1780205452524
+          ],
+          "wallElementIds": [
+            2103602,
+            2103657,
+            2103738,
+            2104019,
+            2104157,
+            2104207
+          ]
+        },
+        "evidence": "User-identified elevator pin-e3c49bf2-b7b8-4309-b1da-2e1a986a97d1; native shaft walls, floor slabs and distinct lobby exit anchors reviewed against the exact model. No elevator family exists in the source.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-311-2054e6ddb852",
+            "levelId": 311,
+            "nativeElementId": 1582103,
+            "pointFeet": [
+              -73.35,
+              369.7
+            ]
+          },
+          {
+            "roomKey": "rm-694-3399eaf6e0a1",
+            "levelId": 694,
+            "nativeElementId": 427511,
+            "pointFeet": [
+              -73.35,
+              369.7
+            ]
+          },
+          {
+            "roomKey": "rm-400176-79fc94dd782c",
+            "levelId": 400176,
+            "nativeElementId": 437656,
+            "pointFeet": [
+              -73.35,
+              369.7
+            ]
+          },
+          {
+            "roomKey": "rm-402367-133b24ba6565",
+            "levelId": 402367,
+            "nativeElementId": 501699,
+            "pointFeet": [
+              -73.35,
+              369.7
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-agora-conference-lift",
+        "kind": "elevator",
+        "nativeElementId": 1741869,
+        "reviewedShaft": {
+          "pinId": "pin-b1daf04e-fc46-402d-89c1-6ae01355f5d4",
+          "pointFeet": [
+            -68.60123301339843,
+            -41.79542303997869
+          ],
+          "wallElementIds": [
+            1741869,
+            1741648,
+            1741511,
+            1741580,
+            1741099,
+            1741269,
+            1333486,
+            1333415,
+            1779068,
+            1327968,
+            1779069,
+            1779070,
+            1779227,
+            1779363,
+            1778957,
+            1779600
+          ]
+        },
+        "evidence": "User-identified elevator pin-b1daf04e-fc46-402d-89c1-6ae01355f5d4; native shaft walls, floor slabs and distinct lobby exit anchors reviewed against the exact model. No elevator family exists in the source.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-311-89fd150948ca",
+            "levelId": 311,
+            "nativeElementId": 400238,
+            "pointFeet": [
+              -65.2,
+              -38.55
+            ]
+          },
+          {
+            "roomKey": "rm-694-0ca9e8ab63bd",
+            "levelId": 694,
+            "nativeElementId": 1327372,
+            "pointFeet": [
+              -72.4,
+              -45.4
+            ]
+          },
+          {
+            "roomKey": "rm-1487353-4d82d4d786ce",
+            "levelId": 1487353,
+            "nativeElementId": 1779842,
+            "pointFeet": [
+              -72.4,
+              -45.4
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-tea-lab-lift",
+        "kind": "elevator",
+        "nativeElementId": 1514920,
+        "reviewedShaft": {
+          "pinId": "pin-f9007579-4551-4499-ad76-acbc4e3bd769",
+          "pointFeet": [
+            55.36787546185344,
+            523.3773664537525
+          ],
+          "wallElementIds": [
+            1514920,
+            1514921,
+            1514922,
+            1997881,
+            1997921
+          ]
+        },
+        "evidence": "User identifies elevator at Review pin 10. Four served stops independently supported by native shaft walls, actual wall aperture and each named floor slab; roof excluded because shaft terminates below it.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-1487816-1a0ccf3066a5",
+            "levelId": 1487816,
+            "nativeElementId": 1514723,
+            "pointFeet": [
+              62.5,
+              522
+            ]
+          },
+          {
+            "roomKey": "rm-694-43c823fdc35c",
+            "levelId": 694,
+            "nativeElementId": 1513098,
+            "pointFeet": [
+              62.5,
+              522
+            ]
+          },
+          {
+            "roomKey": "rm-400176-fd5448070a66",
+            "levelId": 400176,
+            "nativeElementId": 1505065,
+            "pointFeet": [
+              62.5,
+              522
+            ]
+          },
+          {
+            "roomKey": "rm-402367-1f21180e87d7",
+            "levelId": 402367,
+            "nativeElementId": 1503517,
+            "pointFeet": [
+              62.5,
+              522
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-09-lift",
+        "kind": "elevator",
+        "nativeElementId": 1522085,
+        "reviewedShaft": {
+          "pinId": "building-09-elevator-09-218-1",
+          "pointFeet": [
+            250.83382170266418,
+            493.16533378428403
+          ],
+          "wallElementIds": [
+            1522085,
+            1522086,
+            1522087,
+            1522088,
+            1522089,
+            1522090
+          ]
+        },
+        "evidence": "User-identified 09-218-1 elevator with native shaft walls and exact lobby floor support. North opening x249.723–253.723 y497.640; physical stops at -3.281ft and 14.436ft. Roof excluded.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-1450417-dbcd6929f085",
+            "levelId": 1450417,
+            "nativeElementId": 1521516,
+            "pointFeet": [
+              251.8,
+              501
+            ],
+            "areaKey": "rm-1450417-feaef9ff66b1"
+          },
+          {
+            "roomKey": "rm-694-e4280d41428a",
+            "levelId": 694,
+            "nativeElementId": 1521608,
+            "pointFeet": [
+              251.8,
+              501
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-library-lift",
+        "kind": "elevator",
+        "nativeElementId": 1891690,
+        "reviewedShaft": {
+          "pinId": "pin-603ee7f5-b90f-4c4f-bccc-5582f1221883",
+          "pointFeet": [
+            198.86682591951455,
+            345.456919335301
+          ],
+          "wallElementIds": [
+            1891690,
+            1891602,
+            1891507,
+            1891768,
+            1891807
+          ]
+        },
+        "evidence": "User identifies elevator at Review pin 14. Five native shaft wall elements 1891690/1891602/1891507/1891768/1891807 surround the pin from 0 to 43.307ft. West lobby opening supports native floors 311,694,400176,402367 on slabs 447970/503705/511340/515291. Roof excluded: walls stop below roof slab 530368.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-311-5dceef297e70",
+            "levelId": 311,
+            "nativeElementId": 447970,
+            "pointFeet": [
+              193,
+              349
+            ]
+          },
+          {
+            "roomKey": "rm-694-ae4c939d8f9e",
+            "levelId": 694,
+            "nativeElementId": 503705,
+            "pointFeet": [
+              193,
+              349
+            ]
+          },
+          {
+            "roomKey": "rm-400176-4c46e91c2150",
+            "levelId": 400176,
+            "nativeElementId": 511340,
+            "pointFeet": [
+              193,
+              349
+            ]
+          },
+          {
+            "roomKey": "rm-402367-e120c95e05a2",
+            "levelId": 402367,
+            "nativeElementId": 515291,
+            "pointFeet": [
+              193,
+              349
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-03-lift",
+        "kind": "elevator",
+        "nativeElementId": 699418,
+        "reviewedShaft": {
+          "pinId": "pin-0821456c-cde2-4d3b-9f94-54ca10ba4268",
+          "pointFeet": [
+            62.75220270426563,
+            -163.83310201214306
+          ],
+          "wallElementIds": [
+            699418,
+            699551,
+            2416228,
+            2416308,
+            2416470
+          ]
+        },
+        "evidence": "User identifies elevator at Review pin 20. Exact native shaft wall faces and each lobby slab support four floor entrances. Building 10 east enclosure includes persisted native glass panel/frame members of curtain wall #2187195. Stops follow measured model elevations; the roof above the shaft walls is excluded.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-311-a1c62ff5e800",
+            "levelId": 311,
+            "nativeElementId": 444577,
+            "pointFeet": [
+              58,
+              -164.8
+            ]
+          },
+          {
+            "roomKey": "rm-694-70a5a7eafba5",
+            "levelId": 694,
+            "nativeElementId": 400479,
+            "pointFeet": [
+              58,
+              -164.8
+            ]
+          },
+          {
+            "roomKey": "rm-400176-4eb8857094dd",
+            "levelId": 400176,
+            "nativeElementId": 402395,
+            "pointFeet": [
+              58,
+              -164.8
+            ]
+          },
+          {
+            "roomKey": "rm-402367-cc4b6067be0b",
+            "levelId": 402367,
+            "nativeElementId": 405772,
+            "pointFeet": [
+              58,
+              -164.8
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-10-west-lift",
+        "kind": "elevator",
+        "nativeElementId": 2188293,
+        "reviewedShaft": {
+          "pinId": "pin-1dca7c8c-f83e-4455-98d0-52dcb126d099",
+          "pointFeet": [
+            168.85819582829177,
+            818.9921046343529
+          ],
+          "wallElementIds": [
+            2188293,
+            2188449,
+            2188976,
+            2189056,
+            2189712
+          ]
+        },
+        "evidence": "User identifies elevator at Review pin 21. Exact native shaft wall faces and each lobby slab support four floor entrances. Building 10 east enclosure includes persisted native glass panel/frame members of curtain wall #2187195. Stops follow measured model elevations; the roof above the shaft walls is excluded.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-1487816-38e6d6497680",
+            "levelId": 1487816,
+            "nativeElementId": 1501037,
+            "pointFeet": [
+              170.7,
+              823
+            ]
+          },
+          {
+            "roomKey": "walkway:10:694:1498827:11",
+            "levelId": 694,
+            "nativeElementId": 1498827,
+            "pointFeet": [
+              170.7,
+              823
+            ]
+          },
+          {
+            "roomKey": "walkway:10:400176:2183541:7",
+            "levelId": 400176,
+            "nativeElementId": 2183541,
+            "pointFeet": [
+              170.7,
+              823
+            ]
+          },
+          {
+            "roomKey": "rm-402367-2c1207d0d213",
+            "levelId": 402367,
+            "nativeElementId": 2183935,
+            "pointFeet": [
+              170.7,
+              823
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-10-east-lift",
+        "kind": "elevator",
+        "nativeElementId": 2184207,
+        "reviewedShaft": {
+          "pinId": "pin-5a9575f2-48e5-4937-9cb4-842fb39d24e5",
+          "pointFeet": [
+            212.02830702333688,
+            777.9964935939986
+          ],
+          "wallElementIds": [
+            2184207,
+            2184378,
+            2185054,
+            2185503,
+            2185545,
+            2186001,
+            2186374,
+            2185949,
+            2187195
+          ]
+        },
+        "evidence": "User identifies elevator at Review pin 22. Exact native shaft wall faces and each lobby slab support four floor entrances. Building 10 east enclosure includes persisted native glass panel/frame members of curtain wall #2187195. Stops follow measured model elevations; the roof above the shaft walls is excluded.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-1487816-55654e486516",
+            "levelId": 1487816,
+            "nativeElementId": 1501037,
+            "pointFeet": [
+              212,
+              773
+            ]
+          },
+          {
+            "roomKey": "walkway:10:694:1498827:1",
+            "levelId": 694,
+            "nativeElementId": 1498827,
+            "pointFeet": [
+              212,
+              773
+            ]
+          },
+          {
+            "roomKey": "walkway:10:400176:2183541:1",
+            "levelId": 400176,
+            "nativeElementId": 2183541,
+            "pointFeet": [
+              212,
+              773
+            ]
+          },
+          {
+            "roomKey": "rm-402367-2c07d5d0d20a",
+            "levelId": 402367,
+            "nativeElementId": 2183935,
+            "pointFeet": [
+              212,
+              773
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unbc-05-library-east-lift",
+        "kind": "elevator",
+        "nativeElementId": 1882068,
+        "reviewedShaft": {
+          "pinId": "2026-10-14-round12#q12.6",
+          "pointFeet": [
+            149.6,
+            185.6
+          ],
+          "wallElementIds": [
+            1882116,
+            1882068,
+            1882022,
+            1881962,
+            1882164
+          ]
+        },
+        "evidence": "Owner round 12 q12.6 ('Yes, it's a lift on Floors 1-3'): the same walled box (native walls #1882116, #1882068, #1882022, #1881962, #1882164, continuous through Floors 1-3) beside 05-142 / 05-242 / 05-342, opening west between #1882164 and #1881962. Neither the Revit model nor the earlier reviewed lifts list had it; no elevator family exists in the source. Served stops on native slabs #447970 (Floor 1), #503705 (Floor 2) and #511340 (Floor 3) at the west opening.",
+        "accessible": "unknown",
+        "direction": "both",
+        "entrances": [
+          {
+            "roomKey": "rm-311-4170374a7ea7",
+            "levelId": 311,
+            "nativeElementId": 447970,
+            "pointFeet": [
+              144.9,
+              188.6
+            ]
+          },
+          {
+            "roomKey": "rm-694-b5dfde9d939a",
+            "levelId": 694,
+            "nativeElementId": 503705,
+            "pointFeet": [
+              144.9,
+              188.6
+            ]
+          },
+          {
+            "roomKey": "rm-400176-4ba3c41c20c6",
+            "levelId": 400176,
+            "nativeElementId": 511340,
+            "pointFeet": [
+              144.9,
+              188.6
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

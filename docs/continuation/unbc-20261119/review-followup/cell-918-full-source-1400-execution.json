@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "--max-old-space-size=1400",
+    "--import",
+    "tsx",
+    "scripts/indoor/compile-corridor-candidates.ts",
+    "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "../qualification-20261120/cell-918-straight-1400",
+    "--cell",
+    "native-cell:24.278215:918",
+    "--straight-runs"
+  ],
+  "exitCode": -9,
+  "elapsedSeconds": 16.158023918993422,
+  "maximumResidentSetKiB": 2364204
+}

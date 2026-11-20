@@ -1,0 +1,19 @@
+{
+  "status": "superseded-by-focused-tests-execution.json",
+  "capture": "observed execution-tool output; stdout was not separately saved",
+  "command": [
+    "node",
+    "--import",
+    "tsx",
+    "--test",
+    "--test-concurrency=1",
+    "tests/unit/corridor-run-recovery.test.ts",
+    "tests/unit/corridor-guide-contacts.test.ts"
+  ],
+  "exitCode": 0,
+  "tests": 19,
+  "passed": 19,
+  "failed": 0,
+  "reportedDurationMilliseconds": 1205.347933,
+  "sourceHashes": null
+}

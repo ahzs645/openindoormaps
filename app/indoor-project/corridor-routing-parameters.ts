@@ -13,6 +13,11 @@ export type CorridorCompilerParameters = {
   /** With shaped approaches: refit trunks through pass-through terminal
    * joins and reattach those terminals under the same exact checks. */
   slideJoins: boolean;
+  /** Explicit compilation candidate: fit whole corridor runs through real
+   * junctions. Every proposal keeps exact support, endpoint and policy checks.
+   * The final combined cell is compared with the no-runs control before use.
+   * Leave disabled until the resulting catalog has release qualification. */
+  straightRuns: boolean;
 };
 
 export const CORRIDOR_COMPILER_PARAMETERS: Readonly<CorridorCompilerParameters> =
@@ -23,4 +28,5 @@ export const CORRIDOR_COMPILER_PARAMETERS: Readonly<CorridorCompilerParameters> 
     maxDeviationFeet: 0.75,
     shapedApproaches: true,
     slideJoins: true,
+    straightRuns: false,
   });

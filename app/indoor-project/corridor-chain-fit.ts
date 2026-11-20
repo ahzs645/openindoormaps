@@ -268,6 +268,33 @@ export function corridorChainTopologyConflictPairs(
     .sort((a, b) => a[0] - b[0] || a[1] - b[1]);
 }
 
+/** The same inspection as `corridorChainTopologyConflicts`, reported per
+ * contact: the offending input index pair `[i, j]` (`i < j`) and the exact
+ * rational contact location (a point, or the ends of a collinear overlap). */
+export function corridorChainTopologyContacts(
+  input: readonly CorridorFitChain[],
+): { pair: [number, number]; at: string }[] {
+  const contacts = new Map<string, { pair: [number, number]; at: string }>();
+  findCorridorChainTopologyConflicts(
+    input,
+    input.map((chain) => chain.points),
+    (contact) => {
+      if (!contacts.has(contact.key))
+        contacts.set(contact.key, {
+          pair: contact.pair.split(":").map(Number) as [number, number],
+          at: `${pointKey(contact.start)}:${pointKey(contact.end)}`,
+        });
+      return false;
+    },
+  );
+  return [...contacts.values()].sort(
+    (a, b) =>
+      a.pair[0] - b.pair[0] ||
+      a.pair[1] - b.pair[1] ||
+      (a.at < b.at ? -1 : a.at > b.at ? 1 : 0),
+  );
+}
+
 /** Fit a complete set together, before journey-specific routing or emission.
  * Original graph-node identities qualify endpoint contact; coincident numeric
  * coordinates alone cannot invent a junction. Every final segment needs the

@@ -1,0 +1,65 @@
+{
+  "format": "unbc-combined-archived-case-selection-v1",
+  "status": "verification-inputs-only-not-current-results",
+  "navigationAuthority": false,
+  "currentExecutedRequests": 0,
+  "source": {
+    "sourceMasterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceRoomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9"
+  },
+  "casesSha256": "73e6da2224c2c939bb85c0d856397adea2493c9d4dd4341e7811bfc6220966c3",
+  "inventorySha256": "f855c8473000edaa9ca307f2d3650fedafba4626fe005e5c1d7a3315be90dd10",
+  "generatorSha256": "34ea14083f8022760a58f6bfaa51ecf74b331bcba00eaba51b1564089307397d",
+  "unchangedSourceFiles": {
+    "pr4-work/input/b10-cell918-cases.json": "51631493e345552106a17cdabd6e0da069fd23a632bc09fa817d1fd528566f28",
+    "pr4-work/input/b10-cell918-inventory.json": "7bd7528338685219ded086c1576a0045ecc4903abbb02a1b3937dcb0f129452a",
+    "pr4-work/input/b10-cell918-case-provenance.json": "5c6da0bcdb763c0542ba1b1f3a0888459430a585e6924058c7ddb5ca450b4516",
+    "pr4-work/input/b10-cell918-changed-guides/cases.json": "67b6ccdc17ea69011bb0d86c490c35f084ebaaebd64694b91d465d48bc8a1d46",
+    "pr4-work/input/b10-cell918-changed-guides/inventory.json": "1cd294c109b71ceb64c981bb20d374548798afb1ee7c9973ca30c9f9f6ae6b1e",
+    "pr4-work/input/b10-cell918-changed-guides/provenance.json": "7f7cc7bb78dcb275a404bf2315ba433099d65ca16dde00cb3a8db8296cf06d55",
+    "pr4-work/input/b10-cell918-changed-guides/changed-guide-coverage.json": "c02288218fd702a38a538bbd1ae3392cc23dab01adffe2f5877978f707fa6ed5"
+  },
+  "composition": [
+    {
+      "caseRangeZeroBased": [
+        0,
+        27
+      ],
+      "cases": "pr4-work/input/b10-cell918-cases.json",
+      "provenance": "pr4-work/input/b10-cell918-case-provenance.json",
+      "requests": 28,
+      "pairs": 7
+    },
+    {
+      "caseRangeZeroBased": [
+        28,
+        95
+      ],
+      "cases": "pr4-work/input/b10-cell918-changed-guides/cases.json",
+      "provenance": "pr4-work/input/b10-cell918-changed-guides/provenance.json",
+      "requests": 68,
+      "pairs": 17
+    }
+  ],
+  "coverage": {
+    "pairs": 24,
+    "requests": 96,
+    "expectedPublicRoutes": 48,
+    "expectedAccessibleRefusals": 48,
+    "uniqueDestinations": 16,
+    "uniqueRequiredEdges": 32,
+    "changedGuideCount": 7,
+    "changedGuidesWithArchivedTraversal": 2,
+    "changedGuidesWithoutArchivedTraversal": 5,
+    "currentExecutedRequests": 0
+  },
+  "uncoveredChangedGuideIds": [
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+    "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+    "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+  ],
+  "expectationLimits": "Combining inputs does not execute or accept any route. Existing raw case identities, options, required edges, and historical outcome expectations are unchanged. Exact archival records remain in the two separately hashed provenance files. Five changed guides still need destination selection and fresh outcome evidence; no successful route expectations are invented for them."
+}

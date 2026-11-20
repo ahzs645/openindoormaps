@@ -1,0 +1,55 @@
+{
+  "format": "unbc-package-memory-focused-checks",
+  "version": 1,
+  "recordedAt": "2026-11-20T04:30:49.700617+00:00",
+  "repository": "/workspace/scratch/3d6560c4a7bf/pr4-work/openindoormaps",
+  "head": "86a8a9349a858c783c95c326be12cf66c3f56a87",
+  "uncommittedSourceChanges": true,
+  "productionSources": {
+    "package-bytes.ts": "9e17e3c8b3dc4fe76cfa25e247c5ae8e2f30accd1b63e8ff987b61543fd3face",
+    "same-json-data.ts": "153236037d015bcab5c12787b755df980ef41831b1bb2d14a9c755762c8903c8",
+    "package.ts": "fbef77e2dad01c5a5ab90e25fd566413c9a5d0c2bdbc588e2a2a0144f79485e2",
+    "review-bundle-wire.ts": "7c4e2685424f505c6996b9d4215f0e51a755dfe0fd899ce9a1221038e389cc38",
+    "review-bundle.ts": "833311c64a1b6e17c1ec6ee80b1923bcae146d4381b73575bddbc57e969c0bf8",
+    "native-material-wire.ts": "9ad6a665ea25d7d5d61ea8bec8d85e4ab8bf23e89f97d7478cd3f399fa3c8667",
+    "viewer-metadata-wire.ts": "57a16ffdd8e48e92c1cfa5ba9ec3953cc35aa2bbc252a3bb426a02af982ecd67"
+  },
+  "testRuns": [
+    {
+      "command": "node --import tsx --test --test-concurrency=1 tests/unit/package-bytes.test.ts tests/unit/same-json-data.test.ts tests/unit/review-bundle-wire.test.ts tests/unit/native-material-wire.test.ts tests/unit/viewer-metadata-wire.test.ts tests/unit/review-bundle-binding-audit.test.ts tests/unit/source-archive-asset-proof.test.ts tests/unit/project-package-size.test.ts",
+      "exitCode": 0,
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "durationMs": 12667.865254,
+      "stdoutPath": "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/scoped-tests.txt"
+    },
+    {
+      "command": "node --import tsx --test --test-concurrency=1 --test-name-pattern='routing preparation preserves every source asset|source comparison retains|exotic values retain|large native arrays compare' tests/unit/indoor-project.test.ts tests/unit/same-json-data.test.ts",
+      "exitCode": 0,
+      "tests": 4,
+      "passed": 4,
+      "failed": 0,
+      "durationMs": 1554.097236,
+      "stdoutPath": "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/prepared-export-tests.txt"
+    }
+  ],
+  "lint": {
+    "command": "./node_modules/.bin/eslint --no-cache app/indoor-project/package-bytes.ts app/indoor-project/same-json-data.ts app/indoor-project/package.ts app/indoor-project/review-bundle-wire.ts app/indoor-project/review-bundle.ts app/indoor-project/native-material-wire.ts app/indoor-project/viewer-metadata-wire.ts tests/unit/package-bytes.test.ts tests/unit/same-json-data.test.ts tests/unit/review-bundle-wire.test.ts tests/unit/indoor-project.test.ts",
+    "exitCode": 0,
+    "stdoutPath": "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/lint.txt",
+    "remainingWarning": "Pre-existing import/no-named-as-default in tests/unit/indoor-project.test.ts; zero errors."
+  },
+  "scope": [
+    "Exact source-byte preservation and mutation refusal in normal master/viewer prepared-routing export.",
+    "Legacy, packed and binary-entry companion parity, exact compressed stream/hash checks and corrupt-payload refusal.",
+    "Native material and viewer metadata hydration/serialization and corruption checks.",
+    "Byte view offsets, WebCrypto snapshot behavior, shared-buffer Node Buffer compatibility and bounded base64 temporary inputs.",
+    "JSON serialization parity for parsed/derived plain data, key order, numeric values, sparse arrays and native fallback for hooks/accessors/boxed values."
+  ],
+  "limitations": [
+    "These are focused correctness tests, not a measured full-size UNBC import/export/worker qualification.",
+    "No peak memory reduction is claimed from these runs; parent controls the preserved full-master run.",
+    "The JSON comparison fast path is for parsed/derived plain data; adversarial JavaScript Proxy behavior is outside that data contract."
+  ]
+}

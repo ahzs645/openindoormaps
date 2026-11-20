@@ -1,0 +1,83 @@
+--- a/vite.config.ts
++++ b/vite.config.ts
+@@ -1,7 +1,7 @@
+ import react from "@vitejs/plugin-react";
+ import { defineConfig, type Plugin } from "vite";
+-import { readFileSync } from "node:fs";
+ import { fileURLToPath } from "node:url";
++import { geojsonModule } from "./scripts/geojson-module";
+ import { writePreparedDisplayEngineBinding } from "./scripts/indoor/prepared-display-engine-binding";
+ import { writePublishedRouteRuntimeBinding } from "./scripts/indoor/published-route-runtime-binding";
+ import { writePublishedVisitorPlanRuntimeBinding } from "./scripts/indoor/published-visitor-plan-runtime-binding";
+@@ -35,11 +35,10 @@
+ function geojsonPlugin(): Plugin {
+   return {
+     name: "vite-plugin-geojson",
+-    transform(_, id) {
++    transform(source, id) {
+       if (id.endsWith(".geojson")) {
+-        const json = readFileSync(id, "utf8");
+         return {
+-          code: `export default ${json}`,
++          code: geojsonModule(source),
+           map: null,
+         };
+       }
+--- /dev/null
++++ b/scripts/geojson-module.ts
+@@ -0,0 +1,9 @@
++/** Keep large GeoJSON inputs out of the bundler's JavaScript object-literal
++ * parser. The source stays JSON, including its numeric and property semantics.
++ * This follows Vite's JSON.stringify strategy for ordinary large JSON imports. */
++export function geojsonModule(source: string): string {
++  const json = source.replace(/^\uFEFF/, "");
++  // Reject malformed source during the build, not on a visitor's first load.
++  JSON.parse(json);
++  return `export default JSON.parse(${JSON.stringify(json)});`;
++}
+--- /dev/null
++++ b/tests/unit/geojson-module.test.ts
+@@ -0,0 +1,43 @@
++import assert from "node:assert/strict";
++import { readFileSync, readdirSync } from "node:fs";
++import path from "node:path";
++import { fileURLToPath } from "node:url";
++import { runInNewContext } from "node:vm";
++import test from "node:test";
++import { geojsonModule } from "../../scripts/geojson-module";
++
++const evaluate = (source: string) =>
++  runInNewContext(geojsonModule(source).replace(/^export default /, ""), {
++    JSON,
++  });
++
++test("GeoJSON import preserves exact JSON numbers, strings and property names", () => {
++  const source =
++    '{"type":"FeatureCollection","features":[],"coordinates":[-0,1.2345678901234567,1e-300,1.7976931348623157e308],"text":"\\\"\\n\\\\🌲\u2028","__proto__":{"polluted":true},"repeated":1,"repeated":2}';
++  const actual = evaluate(source);
++  assert.deepEqual(actual, JSON.parse(source));
++  assert(Object.is(actual.coordinates[0], -0));
++  assert(Object.hasOwn(actual, "__proto__"));
++  assert.equal(Object.getPrototypeOf(actual), Object.prototype);
++});
++
++test("GeoJSON source fails at build time when malformed and accepts a UTF-8 BOM", () => {
++  assert.throws(() => geojsonModule('{"coordinates":[1,]}'), SyntaxError);
++  assert.throws(() => geojsonModule('{"notJson": undefined}'), SyntaxError);
++  assert.deepEqual(evaluate('\uFEFF{"type":"FeatureCollection","features":[]}'), {
++    type: "FeatureCollection",
++    features: [],
++  });
++});
++
++test("every shipped venue GeoJSON imports without changing its complete data", () => {
++  const directory = fileURLToPath(new URL("../../app/data/", import.meta.url));
++  const files = readdirSync(directory, { recursive: true })
++    .filter((name): name is string => typeof name === "string")
++    .filter((name) => name.endsWith(".geojson"));
++  assert(files.length > 0);
++  for (const name of files) {
++    const source = readFileSync(path.join(directory, name), "utf8");
++    assert.deepEqual(evaluate(source), JSON.parse(source), name);
++  }
++});

@@ -1,0 +1,1643 @@
+{
+  "format": "unbc-changed-guide-coverage-v1",
+  "navigationAuthority": false,
+  "status": "supplemental-inputs-not-executed",
+  "source": {
+    "sourceMasterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceRoomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9"
+  },
+  "controlGuideSha256": "283e947c94f516b8fa07e837c443b246d376e9be3d0f182040bfe5fdaafae2a2",
+  "candidateGuideSha256": "7684aa5006b2122f7d69ac0f77f53ac80e9b3f859f8cb64081363c209913e764",
+  "contextSha256": "1b6fe9515af82aa9a88de6e55310331063cf86dc686a9e8ecae7c6204e615bdd",
+  "archivedWorkerSha256": "73fbc23ff951ef09530efd439099982184fd03577d94337d511c944e58e50f14",
+  "initialSampleSha256": "51631493e345552106a17cdabd6e0da069fd23a632bc09fa817d1fd528566f28",
+  "counts": {
+    "changedGuides": 7,
+    "initial28ChangedGuidesCovered": 0,
+    "supplementalCases": 68,
+    "expectedPublicRoutes": 34,
+    "expectedAccessibleRefusals": 34,
+    "archivedChangedGuidesCovered": 2,
+    "changedGuidesWithoutArchivedTraversal": 5,
+    "currentExecutedSupplementalRequests": 0
+  },
+  "initialSelectionGap": "The earlier selector required literal 10- prefixed endpoint strings. This omitted archived requests expressed as stable rm-400176-* keys, even though their resolved records are Building 10 destinations.",
+  "uncoveredChangedGuideIds": [
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+    "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+    "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+    "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1"
+  ],
+  "matrix": [
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|door:400176:2263214:1",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "arrival:rm-400176-0470be83f680",
+        "to": "door:400176:2263214:1",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            158.31689016284986,
+            858.6788563041148,
+            24.278215223097114
+          ],
+          [
+            154.75415305401083,
+            860.9030200330926,
+            24.278215223097114
+          ],
+          [
+            151.25903862275976,
+            855.3044331477741,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 3.3910905025352784,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "arrival:rm-400176-0470be83f680",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "arrival",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              158.30570216881642,
+              858.4962862383311,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81404683957949,
+              53.894546743543174
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "door:400176:2263214:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.36124794567425,
+              855.2048334454364,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81407354707972,
+              53.89453277635709
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [
+        {
+          "edge": {
+            "id": "door:400176:2263214",
+            "from": "door:400176:2263214:0",
+            "to": "door:400176:2263214:1",
+            "kind": "door",
+            "lengthMetres": 0.46617039025507057,
+            "pointsFeet": [
+              [
+                150.5684069268304,
+                853.8969494632775,
+                24.278215223097114
+              ],
+              [
+                151.36124794567425,
+                855.2048334454364,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-046ddc83f67e",
+              "rm-400176-0470be83f680"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2263214,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2263214:0",
+                "roomKey": "rm-400176-046ddc83f67e",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  150.5684069268304,
+                  853.8969494632775,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407538581907,
+                  53.8945287312794
+                ]
+              },
+              "room": {
+                "key": "rm-400176-046ddc83f67e",
+                "number": "10-3010",
+                "name": "Comm",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2263214:1",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  151.36124794567425,
+                  855.2048334454364,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407354707972,
+                  53.89453277635709
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        }
+      ],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [],
+      "archivedTraversalCount": 0,
+      "supplementalCaseIds": [],
+      "supplementalRequiredEdgeCount": 0,
+      "currentExecutedRequests": 0,
+      "status": "NO_ARCHIVED_TRAVERSAL_NEW_EVIDENCE_REQUIRED",
+      "nextEvidence": "Select actual eligible destinations using these original node/room and door bindings. Establish current route/refusal expectations and test both directions; do not infer successful navigation from a saved guide alone."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "to": "arrival:rm-400176-0470be83f680",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ],
+          [
+            150.3029147800018,
+            859.4379337462149,
+            24.278215223097114
+          ],
+          [
+            156.41046410944017,
+            855.6250816393956,
+            24.278215223097114
+          ],
+          [
+            158.31689016284986,
+            858.6788563041148,
+            24.278215223097114
+          ],
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 3.469987470479732,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+            "roomKey": "rm-400176-046a7683f67b",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              150.19446073467984,
+              859.8245715360802,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81408475174001,
+              53.89454402860115
+            ]
+          },
+          "room": {
+            "key": "rm-400176-046a7683f67b",
+            "number": "10-3018",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "arrival:rm-400176-0470be83f680",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "arrival",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              158.30570216881642,
+              858.4962862383311,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81404683957949,
+              53.894546743543174
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [],
+      "archivedTraversalCount": 0,
+      "supplementalCaseIds": [],
+      "supplementalRequiredEdgeCount": 0,
+      "currentExecutedRequests": 0,
+      "status": "NO_ARCHIVED_TRAVERSAL_NEW_EVIDENCE_REQUIRED",
+      "nextEvidence": "Select actual eligible destinations using these original node/room and door bindings. Establish current route/refusal expectations and test both directions; do not infer successful navigation from a saved guide alone."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:arrival:rm-400176-0470be83f680|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "arrival:rm-400176-0470be83f680",
+        "to": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            158.30570216881642,
+            858.4962862383311,
+            24.278215223097114
+          ],
+          [
+            158.31689016284986,
+            858.6788563041148,
+            24.278215223097114
+          ],
+          [
+            152.71830327753133,
+            862.1739707353657,
+            24.278215223097114
+          ],
+          [
+            151.4473525752582,
+            860.1381209588864,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 2.8600835668551996,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "arrival:rm-400176-0470be83f680",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "arrival",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              158.30570216881642,
+              858.4962862383311,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81404683957949,
+              53.894546743543174
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.25051245378313,
+              860.1765887757808,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81408049743202,
+              53.894545762160504
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [],
+      "archivedTraversalCount": 0,
+      "supplementalCaseIds": [],
+      "supplementalRequiredEdgeCount": 0,
+      "currentExecutedRequests": 0,
+      "status": "NO_ARCHIVED_TRAVERSAL_NEW_EVIDENCE_REQUIRED",
+      "nextEvidence": "Select actual eligible destinations using these original node/room and door bindings. Establish current route/refusal expectations and test both directions; do not infer successful navigation from a saved guide alone."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:door:400176:2255456:0|door:400176:2263214:1",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "door:400176:2255456:0",
+        "to": "door:400176:2263214:1",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            159.89566568631176,
+            845.1170331981925,
+            24.278215223097114
+          ],
+          [
+            159.72308622029902,
+            845.0692048520013,
+            24.278215223097114
+          ],
+          [
+            161.9472499492769,
+            848.6319419608404,
+            24.278215223097114
+          ],
+          [
+            151.25903862275976,
+            855.3044331477741,
+            24.278215223097114
+          ],
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 5.218723683491726,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "door:400176:2255456:0",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              159.89566568631176,
+              845.1170331981925,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81402237186906,
+              53.894512786719126
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "door:400176:2263214:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.36124794567425,
+              855.2048334454364,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81407354707972,
+              53.89453277635709
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [
+        {
+          "edge": {
+            "id": "door:400176:2263214",
+            "from": "door:400176:2263214:0",
+            "to": "door:400176:2263214:1",
+            "kind": "door",
+            "lengthMetres": 0.46617039025507057,
+            "pointsFeet": [
+              [
+                150.5684069268304,
+                853.8969494632775,
+                24.278215223097114
+              ],
+              [
+                151.36124794567425,
+                855.2048334454364,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-046ddc83f67e",
+              "rm-400176-0470be83f680"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2263214,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2263214:0",
+                "roomKey": "rm-400176-046ddc83f67e",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  150.5684069268304,
+                  853.8969494632775,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407538581907,
+                  53.8945287312794
+                ]
+              },
+              "room": {
+                "key": "rm-400176-046ddc83f67e",
+                "number": "10-3010",
+                "name": "Comm",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2263214:1",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  151.36124794567425,
+                  855.2048334454364,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407354707972,
+                  53.89453277635709
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        },
+        {
+          "edge": {
+            "id": "door:400176:2255456",
+            "from": "door:400176:2255456:0",
+            "to": "door:400176:2255456:1",
+            "kind": "door",
+            "lengthMetres": 0.5113513368297791,
+            "pointsFeet": [
+              [
+                159.89566568631176,
+                845.1170331981925,
+                24.278215223097114
+              ],
+              [
+                160.96368146929302,
+                843.8232435612202,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-0470be83f680",
+              "rm-400176-fcc5bd10fae6"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2255456,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2255456:0",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  159.89566568631176,
+                  845.1170331981925,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81402237186906,
+                  53.894512786719126
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2255456:1",
+                "roomKey": "rm-400176-fcc5bd10fae6",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  160.96368146929302,
+                  843.8232435612202,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81401592694053,
+                  53.89451020267477
+                ]
+              },
+              "room": {
+                "key": "rm-400176-fcc5bd10fae6",
+                "number": "10-3005",
+                "name": "Office",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        }
+      ],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [
+        1048,
+        1049,
+        1052,
+        1053,
+        1056,
+        1057,
+        1060,
+        1061,
+        1064,
+        1065,
+        1068,
+        1069,
+        1072,
+        1073,
+        1076,
+        1077,
+        1080,
+        1081,
+        1084,
+        1085,
+        1088,
+        1089,
+        1092,
+        1093,
+        1096,
+        1097,
+        1100,
+        1101,
+        1104,
+        1105,
+        1108,
+        1109,
+        1112,
+        1113
+      ],
+      "archivedTraversalCount": 34,
+      "supplementalCaseIds": [
+        "baseline-row-1053-public-rm-400176-03499483f585-to-rm-400176-0353c683f58e",
+        "baseline-row-1054-public-rm-400176-0353c683f58e-to-rm-400176-03499483f585",
+        "baseline-row-1057-public-rm-400176-0353c683f58e-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1058-public-rm-400176-0d75ff83fbb6-to-rm-400176-0353c683f58e",
+        "baseline-row-1061-public-rm-400176-03499483f585-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1062-public-rm-400176-0d5eb583fba2-to-rm-400176-03499483f585",
+        "baseline-row-1065-public-rm-400176-0353c683f58e-to-rm-400176-0d729583fbb3",
+        "baseline-row-1066-public-rm-400176-0d729583fbb3-to-rm-400176-0353c683f58e",
+        "baseline-row-1069-public-rm-400176-0d5eb583fba2-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1070-public-rm-400176-0d75ff83fbb6-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1073-public-rm-400176-03499483f585-to-rm-400176-0d619783fba4",
+        "baseline-row-1074-public-rm-400176-0d619783fba4-to-rm-400176-03499483f585",
+        "baseline-row-1077-public-rm-400176-0d5eb583fba2-to-rm-400176-0d729583fbb3",
+        "baseline-row-1078-public-rm-400176-0d729583fbb3-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1081-public-rm-400176-03499483f585-to-rm-400176-035a9683f594",
+        "baseline-row-1082-public-rm-400176-035a9683f594-to-rm-400176-03499483f585",
+        "baseline-row-1085-public-rm-400176-0d619783fba4-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1086-public-rm-400176-0d75ff83fbb6-to-rm-400176-0d619783fba4",
+        "baseline-row-1089-public-rm-400176-0353c683f58e-to-rm-400176-0d6faf83fbb1",
+        "baseline-row-1090-public-rm-400176-0d6faf83fbb1-to-rm-400176-0353c683f58e",
+        "baseline-row-1093-public-rm-400176-035a9683f594-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1094-public-rm-400176-0d75ff83fbb6-to-rm-400176-035a9683f594",
+        "baseline-row-1097-public-rm-400176-0d619783fba4-to-rm-400176-0d729583fbb3",
+        "baseline-row-1098-public-rm-400176-0d729583fbb3-to-rm-400176-0d619783fba4",
+        "baseline-row-1101-public-rm-400176-0353c683f58e-to-rm-400176-fccd0110faec",
+        "baseline-row-1102-public-rm-400176-fccd0110faec-to-rm-400176-0353c683f58e",
+        "baseline-row-1105-public-rm-400176-035a9683f594-to-rm-400176-0d729583fbb3",
+        "baseline-row-1106-public-rm-400176-0d729583fbb3-to-rm-400176-035a9683f594",
+        "baseline-row-1109-public-rm-400176-0d5eb583fba2-to-rm-400176-0d6faf83fbb1",
+        "baseline-row-1110-public-rm-400176-0d6faf83fbb1-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1113-public-rm-400176-0353c683f58e-to-rm-400176-0d64fd83fba7",
+        "baseline-row-1114-public-rm-400176-0d64fd83fba7-to-rm-400176-0353c683f58e",
+        "baseline-row-1117-public-rm-400176-034c7e83f587-to-rm-400176-0353c683f58e",
+        "baseline-row-1118-public-rm-400176-0353c683f58e-to-rm-400176-034c7e83f587"
+      ],
+      "supplementalRequiredEdgeCount": 34,
+      "currentExecutedRequests": 0,
+      "status": "ARCHIVED_EXPECTATION_PREPARED_NOT_EXECUTED",
+      "nextEvidence": "Run the preserved archived requests with current normal import and production worker."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:door:400176:2255487:0|door:400176:2263214:1",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "door:400176:2263214:1",
+        "to": "door:400176:2255487:0",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            151.25903862275976,
+            855.3044331477741,
+            24.278215223097114
+          ],
+          [
+            161.9472499492769,
+            848.6319419608404,
+            24.278215223097114
+          ],
+          [
+            164.17141367825485,
+            852.1946790696795,
+            24.278215223097114
+          ],
+          [
+            164.24146228653052,
+            852.2552438920238,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 5.192363476987614,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "door:400176:2263214:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.36124794567425,
+              855.2048334454364,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81407354707972,
+              53.89453277635709
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "door:400176:2255487:0",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              164.24146228653052,
+              852.2552438920238,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.814012253341,
+              53.89453487830855
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [
+        {
+          "edge": {
+            "id": "door:400176:2255487",
+            "from": "door:400176:2255487:0",
+            "to": "door:400176:2255487:1",
+            "kind": "door",
+            "lengthMetres": 0.44206295340773805,
+            "pointsFeet": [
+              [
+                164.24146228653052,
+                852.2552438920238,
+                24.278215223097114
+              ],
+              [
+                165.65830346977583,
+                851.9453395210824,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-0470be83f680",
+              "rm-400176-c469d07227c1"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2255487,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2255487:0",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  164.24146228653052,
+                  852.2552438920238,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.814012253341,
+                  53.89453487830855
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2255487:1",
+                "roomKey": "rm-400176-c469d07227c1",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  165.65830346977583,
+                  851.9453395210824,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81400552984644,
+                  53.89453514778929
+                ]
+              },
+              "room": {
+                "key": "rm-400176-c469d07227c1",
+                "number": "10-3006",
+                "name": "Office",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        },
+        {
+          "edge": {
+            "id": "door:400176:2263214",
+            "from": "door:400176:2263214:0",
+            "to": "door:400176:2263214:1",
+            "kind": "door",
+            "lengthMetres": 0.46617039025507057,
+            "pointsFeet": [
+              [
+                150.5684069268304,
+                853.8969494632775,
+                24.278215223097114
+              ],
+              [
+                151.36124794567425,
+                855.2048334454364,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-046ddc83f67e",
+              "rm-400176-0470be83f680"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2263214,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2263214:0",
+                "roomKey": "rm-400176-046ddc83f67e",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  150.5684069268304,
+                  853.8969494632775,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407538581907,
+                  53.8945287312794
+                ]
+              },
+              "room": {
+                "key": "rm-400176-046ddc83f67e",
+                "number": "10-3010",
+                "name": "Comm",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2263214:1",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  151.36124794567425,
+                  855.2048334454364,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407354707972,
+                  53.89453277635709
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        }
+      ],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [],
+      "archivedTraversalCount": 0,
+      "supplementalCaseIds": [],
+      "supplementalRequiredEdgeCount": 0,
+      "currentExecutedRequests": 0,
+      "status": "NO_ARCHIVED_TRAVERSAL_NEW_EVIDENCE_REQUIRED",
+      "nextEvidence": "Select actual eligible destinations using these original node/room and door bindings. Establish current route/refusal expectations and test both directions; do not infer successful navigation from a saved guide alone."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:door:400176:2255522:0|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "door:400176:2255522:0",
+        "to": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            161.34180952109492,
+            863.1489124127703,
+            24.278215223097114
+          ],
+          [
+            161.1765292429643,
+            863.2595183011936,
+            24.278215223097114
+          ],
+          [
+            157.04593946057673,
+            856.6430065276354,
+            24.278215223097114
+          ],
+          [
+            151.4473525752582,
+            860.1381209588864,
+            24.278215223097114
+          ],
+          [
+            151.25051245378313,
+            860.1765887757808,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 4.51086889721268,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "door:400176:2255522:0",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              161.34180952109492,
+              863.1489124127703,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81403933628033,
+              53.894561298421614
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.25051245378313,
+              860.1765887757808,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81408049743202,
+              53.894545762160504
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [
+        {
+          "edge": {
+            "id": "door:400176:2255522",
+            "from": "door:400176:2255522:0",
+            "to": "door:400176:2255522:1",
+            "kind": "door",
+            "lengthMetres": 0.5417276040005201,
+            "pointsFeet": [
+              [
+                161.34180952109492,
+                863.1489124127703,
+                24.278215223097114
+              ],
+              [
+                161.68643055471566,
+                864.8925030136587,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-0470be83f680",
+              "rm-400176-07c889afc4c1"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2255522,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2255522:0",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  161.34180952109492,
+                  863.1489124127703,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81403933628033,
+                  53.894561298421614
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2255522:1",
+                "roomKey": "rm-400176-07c889afc4c1",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  161.68643055471566,
+                  864.8925030136587,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81404006302472,
+                  53.89456614596365
+                ]
+              },
+              "room": {
+                "key": "rm-400176-07c889afc4c1",
+                "number": "10-S304",
+                "name": "Stair",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        }
+      ],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [],
+      "archivedTraversalCount": 0,
+      "supplementalCaseIds": [],
+      "supplementalRequiredEdgeCount": 0,
+      "currentExecutedRequests": 0,
+      "status": "NO_ARCHIVED_TRAVERSAL_NEW_EVIDENCE_REQUIRED",
+      "nextEvidence": "Select actual eligible destinations using these original node/room and door bindings. Establish current route/refusal expectations and test both directions; do not infer successful navigation from a saved guide alone."
+    },
+    {
+      "edgeId": "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+      "sourceEdge": {
+        "id": "native-cell:24.278215:918:walk:door:400176:2263214:1|opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "nativeCellId": "native-cell:24.278215:918",
+        "from": "door:400176:2263214:1",
+        "to": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+        "kind": "walk",
+        "roomKeys": [
+          "rm-400176-0342cc83f580",
+          "rm-400176-0353c683f58e",
+          "rm-400176-035a9683f594",
+          "rm-400176-045fc483f671",
+          "rm-400176-04668c83f677",
+          "rm-400176-046a7683f67b",
+          "rm-400176-0470be83f680",
+          "rm-400176-0d6bcd83fbad",
+          "rm-400176-c45c487227b6",
+          "rm-400176-c45fcc7227b9",
+          "rm-400176-c46d447227c4",
+          "rm-400176-c5f7cc722914"
+        ],
+        "pointsFeet": [
+          [
+            151.36124794567425,
+            855.2048334454364,
+            24.278215223097114
+          ],
+          [
+            151.25903862275976,
+            855.3044331477741,
+            24.278215223097114
+          ],
+          [
+            152.84772700060114,
+            857.8492453683734,
+            24.278215223097114
+          ],
+          [
+            150.3029147800018,
+            859.4379337462149,
+            24.278215223097114
+          ],
+          [
+            150.19446073467984,
+            859.8245715360802,
+            24.278215223097114
+          ]
+        ],
+        "lengthMetres": 1.9946944838960685,
+        "enabled": true,
+        "accessible": "unknown",
+        "evidence": "Native floor-bound circulation cell native-cell:24.278215:918; slab profiles 1496668; walls, columns, all native doors, holes and low stair projections excluded; fixed connector coordinates preserved; body clearance/accessibility remain unverified."
+      },
+      "endpoints": [
+        {
+          "node": {
+            "id": "door:400176:2263214:1",
+            "roomKey": "rm-400176-0470be83f680",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              151.36124794567425,
+              855.2048334454364,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81407354707972,
+              53.89453277635709
+            ]
+          },
+          "room": {
+            "key": "rm-400176-0470be83f680",
+            "number": "10-3008",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        },
+        {
+          "node": {
+            "id": "opening:recovered-circulation-seam:rm-400176-046a7683f67b:rm-400176-0470be83f680:7:13:0",
+            "roomKey": "rm-400176-046a7683f67b",
+            "kind": "portal",
+            "levelId": 400176,
+            "building": "10",
+            "surfaceId": "10:400176:24.278",
+            "pointFeet": [
+              150.19446073467984,
+              859.8245715360802,
+              24.278215223097114
+            ],
+            "geographic": [
+              -122.81408475174001,
+              53.89454402860115
+            ]
+          },
+          "room": {
+            "key": "rm-400176-046a7683f67b",
+            "number": "10-3018",
+            "name": "Corridor",
+            "building": "10",
+            "levelId": 400176,
+            "access": "unknown",
+            "walkable": true
+          }
+        }
+      ],
+      "originalDoorCrossings": [
+        {
+          "edge": {
+            "id": "door:400176:2263214",
+            "from": "door:400176:2263214:0",
+            "to": "door:400176:2263214:1",
+            "kind": "door",
+            "lengthMetres": 0.46617039025507057,
+            "pointsFeet": [
+              [
+                150.5684069268304,
+                853.8969494632775,
+                24.278215223097114
+              ],
+              [
+                151.36124794567425,
+                855.2048334454364,
+                24.278215223097114
+              ]
+            ],
+            "roomKeys": [
+              "rm-400176-046ddc83f67e",
+              "rm-400176-0470be83f680"
+            ],
+            "evidence": "native-door",
+            "nativeElementId": 2263214,
+            "accessible": "unknown",
+            "enabled": true
+          },
+          "endpoints": [
+            {
+              "node": {
+                "id": "door:400176:2263214:0",
+                "roomKey": "rm-400176-046ddc83f67e",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  150.5684069268304,
+                  853.8969494632775,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407538581907,
+                  53.8945287312794
+                ]
+              },
+              "room": {
+                "key": "rm-400176-046ddc83f67e",
+                "number": "10-3010",
+                "name": "Comm",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            },
+            {
+              "node": {
+                "id": "door:400176:2263214:1",
+                "roomKey": "rm-400176-0470be83f680",
+                "kind": "portal",
+                "levelId": 400176,
+                "building": "10",
+                "surfaceId": "10:400176:24.278",
+                "pointFeet": [
+                  151.36124794567425,
+                  855.2048334454364,
+                  24.278215223097114
+                ],
+                "geographic": [
+                  -122.81407354707972,
+                  53.89453277635709
+                ]
+              },
+              "room": {
+                "key": "rm-400176-0470be83f680",
+                "number": "10-3008",
+                "name": "Corridor",
+                "building": "10",
+                "levelId": 400176,
+                "access": "unknown",
+                "walkable": true
+              }
+            }
+          ]
+        }
+      ],
+      "initial28RequiredEdgeCoverage": false,
+      "archivedWorkerRows": [
+        1048,
+        1049,
+        1052,
+        1053,
+        1056,
+        1057,
+        1060,
+        1061,
+        1064,
+        1065,
+        1068,
+        1069,
+        1072,
+        1073,
+        1076,
+        1077,
+        1080,
+        1081,
+        1084,
+        1085,
+        1088,
+        1089,
+        1092,
+        1093,
+        1096,
+        1097,
+        1100,
+        1101,
+        1104,
+        1105,
+        1108,
+        1109,
+        1112,
+        1113
+      ],
+      "archivedTraversalCount": 34,
+      "supplementalCaseIds": [
+        "baseline-row-1053-public-rm-400176-03499483f585-to-rm-400176-0353c683f58e",
+        "baseline-row-1054-public-rm-400176-0353c683f58e-to-rm-400176-03499483f585",
+        "baseline-row-1057-public-rm-400176-0353c683f58e-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1058-public-rm-400176-0d75ff83fbb6-to-rm-400176-0353c683f58e",
+        "baseline-row-1061-public-rm-400176-03499483f585-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1062-public-rm-400176-0d5eb583fba2-to-rm-400176-03499483f585",
+        "baseline-row-1065-public-rm-400176-0353c683f58e-to-rm-400176-0d729583fbb3",
+        "baseline-row-1066-public-rm-400176-0d729583fbb3-to-rm-400176-0353c683f58e",
+        "baseline-row-1069-public-rm-400176-0d5eb583fba2-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1070-public-rm-400176-0d75ff83fbb6-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1073-public-rm-400176-03499483f585-to-rm-400176-0d619783fba4",
+        "baseline-row-1074-public-rm-400176-0d619783fba4-to-rm-400176-03499483f585",
+        "baseline-row-1077-public-rm-400176-0d5eb583fba2-to-rm-400176-0d729583fbb3",
+        "baseline-row-1078-public-rm-400176-0d729583fbb3-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1081-public-rm-400176-03499483f585-to-rm-400176-035a9683f594",
+        "baseline-row-1082-public-rm-400176-035a9683f594-to-rm-400176-03499483f585",
+        "baseline-row-1085-public-rm-400176-0d619783fba4-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1086-public-rm-400176-0d75ff83fbb6-to-rm-400176-0d619783fba4",
+        "baseline-row-1089-public-rm-400176-0353c683f58e-to-rm-400176-0d6faf83fbb1",
+        "baseline-row-1090-public-rm-400176-0d6faf83fbb1-to-rm-400176-0353c683f58e",
+        "baseline-row-1093-public-rm-400176-035a9683f594-to-rm-400176-0d75ff83fbb6",
+        "baseline-row-1094-public-rm-400176-0d75ff83fbb6-to-rm-400176-035a9683f594",
+        "baseline-row-1097-public-rm-400176-0d619783fba4-to-rm-400176-0d729583fbb3",
+        "baseline-row-1098-public-rm-400176-0d729583fbb3-to-rm-400176-0d619783fba4",
+        "baseline-row-1101-public-rm-400176-0353c683f58e-to-rm-400176-fccd0110faec",
+        "baseline-row-1102-public-rm-400176-fccd0110faec-to-rm-400176-0353c683f58e",
+        "baseline-row-1105-public-rm-400176-035a9683f594-to-rm-400176-0d729583fbb3",
+        "baseline-row-1106-public-rm-400176-0d729583fbb3-to-rm-400176-035a9683f594",
+        "baseline-row-1109-public-rm-400176-0d5eb583fba2-to-rm-400176-0d6faf83fbb1",
+        "baseline-row-1110-public-rm-400176-0d6faf83fbb1-to-rm-400176-0d5eb583fba2",
+        "baseline-row-1113-public-rm-400176-0353c683f58e-to-rm-400176-0d64fd83fba7",
+        "baseline-row-1114-public-rm-400176-0d64fd83fba7-to-rm-400176-0353c683f58e",
+        "baseline-row-1117-public-rm-400176-034c7e83f587-to-rm-400176-0353c683f58e",
+        "baseline-row-1118-public-rm-400176-0353c683f58e-to-rm-400176-034c7e83f587"
+      ],
+      "supplementalRequiredEdgeCount": 34,
+      "currentExecutedRequests": 0,
+      "status": "ARCHIVED_EXPECTATION_PREPARED_NOT_EXECUTED",
+      "nextEvidence": "Run the preserved archived requests with current normal import and production worker."
+    }
+  ]
+}

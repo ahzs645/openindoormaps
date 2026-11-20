@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UNBC complete continuation source manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format", "archives"],
+  "properties": {
+    "format": {"const": "unbc-continuation-source-v1"},
+    "created_utc": {"type": "string", "format": "date-time"},
+    "notes": {"type": "string"},
+    "archives": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/archive"}},
+    "references": {"type": "array", "items": {"$ref": "#/$defs/reference"}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "filename": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\\\u0000-\\u001f]+$", "not": {"enum": [".", ".."]}},
+    "part": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "bytes", "sha256"],
+      "properties": {
+        "name": {"$ref": "#/$defs/filename"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "file": {
+      "type": "object", "additionalProperties": false,
+      "required": ["path", "bytes", "sha256", "mode"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "description": "Exact POSIX path including the archive root; no absolute paths, dot/dotdot components, backslashes or .git metadata. Further checked by the helper."},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "mode": {"type": "string", "pattern": "^0[0-7]{3}$", "description": "Expected restored regular-file permissions after Python's data filter, for example 0644 or 0755."}
+      }
+    },
+    "archive": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "filename", "root", "bytes", "sha256", "source", "parts"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "filename": {"allOf": [{"$ref": "#/$defs/filename"}, {"pattern": "\\.tar\\.gz$"}]},
+        "root": {"$ref": "#/$defs/filename"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "source": {
+          "type": "object", "additionalProperties": false,
+          "required": ["repository", "commit"],
+          "properties": {
+            "repository": {"type": "string", "pattern": "^https://"},
+            "commit": {"type": "string", "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"}
+          }
+        },
+        "parts": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/part"}, "description": "Concatenation order is this array's order, never a filename guess. An unsplit archive is its own single part."},
+        "inventory": {
+          "type": "object", "additionalProperties": false, "required": ["files"],
+          "properties": {"files": {"type": "array", "items": {"$ref": "#/$defs/file"}}}
+        }
+      }
+    },
+    "reference": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "url", "download_automatically"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "pattern": "^https://"},
+        "download_automatically": {"const": false},
+        "description": {"type": "string"},
+        "filename": {"type": "string"},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "restore_note": {"type": "string"}
+      }
+    }
+  }
+}

@@ -1,0 +1,376 @@
+{
+  "format": "unbc-companion-memory-diagnostic-summary",
+  "version": 1,
+  "recordedAt": "2026-11-20T04:50:29.605383+00:00",
+  "sourceMaster": {
+    "path": "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "sha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "member": "review/companions.bin",
+    "memberBytes": 88626822,
+    "memberSha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+    "expandedContainerBytes": 188604402,
+    "expandedContainerSha256": "6746d67473c6227cf47f75bfc1265c54a113f1ea436ff2d088a45d30181355e3"
+  },
+  "validationPreserved": [
+    "Exact native SHA-256 digests.",
+    "Existing bounded expansion and container/header bounds.",
+    "Exact whole-container fflate level-9 canonical recompression.",
+    "All 890 individual evidence file checks and exact legacy compressed representations."
+  ],
+  "profiles": [
+    {
+      "mode": "normal",
+      "seconds": 37.66076848,
+      "peakRssKiB": 952140,
+      "filesHydrated": 890,
+      "base64Characters": 118228488,
+      "sourceBaselineLoaded": false,
+      "milestones": [
+        {
+          "stage": "start",
+          "elapsedSeconds": 4.264161870000001,
+          "rssBytes": 262602752,
+          "heapUsedBytes": 39773672,
+          "externalBytes": 109283203,
+          "arrayBufferBytes": 96669263,
+          "maxRssKiB": 270668
+        },
+        {
+          "stage": "before-outer-inflate",
+          "elapsedSeconds": 4.454213868000001,
+          "rssBytes": 351469568,
+          "heapUsedBytes": 47942984,
+          "externalBytes": 109306422,
+          "arrayBufferBytes": 96669263,
+          "maxRssKiB": 343232
+        },
+        {
+          "stage": "after-outer-inflate",
+          "elapsedSeconds": 7.636834921,
+          "rssBytes": 651452416,
+          "heapUsedBytes": 33927928,
+          "externalBytes": 387711341,
+          "arrayBufferBytes": 375079470,
+          "maxRssKiB": 636184
+        },
+        {
+          "stage": "after-outer-raw-hash",
+          "elapsedSeconds": 8.311111194,
+          "rssBytes": 746143744,
+          "heapUsedBytes": 33807952,
+          "externalBytes": 299347724,
+          "arrayBufferBytes": 286715853,
+          "maxRssKiB": 820376
+        },
+        {
+          "stage": "after-canonical-recompression",
+          "elapsedSeconds": 19.00978803,
+          "rssBytes": 923615232,
+          "heapUsedBytes": 36422480,
+          "externalBytes": 571258118,
+          "arrayBufferBytes": 558626247,
+          "maxRssKiB": 901968
+        },
+        {
+          "stage": "before-files",
+          "elapsedSeconds": 19.021853467,
+          "rssBytes": 844681216,
+          "heapUsedBytes": 35240288,
+          "externalBytes": 571258118,
+          "arrayBufferBytes": 469914711,
+          "maxRssKiB": 902224
+        },
+        {
+          "stage": "bundle-validated",
+          "elapsedSeconds": 37.654113224,
+          "rssBytes": 940462080,
+          "heapUsedBytes": 212877680,
+          "externalBytes": 313679170,
+          "arrayBufferBytes": 301046659,
+          "maxRssKiB": 952140
+        },
+        {
+          "stage": "complete",
+          "elapsedSeconds": 37.660488297,
+          "rssBytes": 940462080,
+          "heapUsedBytes": 212881816,
+          "externalBytes": 313679170,
+          "arrayBufferBytes": 301046659,
+          "maxRssKiB": 952140
+        }
+      ],
+      "profile": "normal-profile.json",
+      "log": "normal-profile.log"
+    },
+    {
+      "mode": "collect",
+      "seconds": 41.831090194999994,
+      "peakRssKiB": 841468,
+      "filesHydrated": 890,
+      "base64Characters": 118228488,
+      "sourceBaselineLoaded": false,
+      "milestones": [
+        {
+          "stage": "start",
+          "elapsedSeconds": 1.728608198,
+          "rssBytes": 199643136,
+          "heapUsedBytes": 38225248,
+          "externalBytes": 101872433,
+          "arrayBufferBytes": 89257757,
+          "maxRssKiB": 238780
+        },
+        {
+          "stage": "before-outer-inflate",
+          "elapsedSeconds": 1.895392468,
+          "rssBytes": 288509952,
+          "heapUsedBytes": 38301192,
+          "externalBytes": 101895652,
+          "arrayBufferBytes": 89257757,
+          "maxRssKiB": 281748
+        },
+        {
+          "stage": "after-outer-inflate",
+          "elapsedSeconds": 5.167148157,
+          "rssBytes": 583954432,
+          "heapUsedBytes": 32802720,
+          "externalBytes": 290494766,
+          "arrayBufferBytes": 277862159,
+          "maxRssKiB": 570268
+        },
+        {
+          "stage": "after-outer-raw-hash",
+          "elapsedSeconds": 6.019962942,
+          "rssBytes": 684060672,
+          "heapUsedBytes": 32827984,
+          "externalBytes": 290494798,
+          "arrayBufferBytes": 277862159,
+          "maxRssKiB": 754460
+        },
+        {
+          "stage": "after-canonical-recompression",
+          "elapsedSeconds": 15.838285529999999,
+          "rssBytes": 684441600,
+          "heapUsedBytes": 32958176,
+          "externalBytes": 290494766,
+          "arrayBufferBytes": 277862159,
+          "maxRssKiB": 841468
+        },
+        {
+          "stage": "before-files",
+          "elapsedSeconds": 15.854206386999998,
+          "rssBytes": 684572672,
+          "heapUsedBytes": 33279736,
+          "externalBytes": 290494766,
+          "arrayBufferBytes": 277862159,
+          "maxRssKiB": 841468
+        },
+        {
+          "stage": "bundle-validated",
+          "elapsedSeconds": 41.818795255,
+          "rssBytes": 789438464,
+          "heapUsedBytes": 152367952,
+          "externalBytes": 290494766,
+          "arrayBufferBytes": 277862159,
+          "maxRssKiB": 841468
+        },
+        {
+          "stage": "complete",
+          "elapsedSeconds": 41.830773924,
+          "rssBytes": 786505728,
+          "heapUsedBytes": 152294256,
+          "externalBytes": 290494766,
+          "arrayBufferBytes": 89257757,
+          "maxRssKiB": 841468
+        }
+      ],
+      "profile": "collect-profile.json",
+      "log": "collect-profile.log"
+    },
+    {
+      "mode": "yield-collect",
+      "seconds": 42.96240943299999,
+      "peakRssKiB": 823212,
+      "filesHydrated": 890,
+      "base64Characters": 118228488,
+      "sourceBaselineLoaded": false,
+      "milestones": [
+        {
+          "stage": "start",
+          "elapsedSeconds": 1.6264918169999998,
+          "rssBytes": 217915392,
+          "heapUsedBytes": 38594032,
+          "externalBytes": 102927399,
+          "arrayBufferBytes": 90306341,
+          "maxRssKiB": 269392
+        },
+        {
+          "stage": "before-outer-inflate",
+          "elapsedSeconds": 1.912793019,
+          "rssBytes": 218132480,
+          "heapUsedBytes": 38637432,
+          "externalBytes": 102950618,
+          "arrayBufferBytes": 90306341,
+          "maxRssKiB": 299336
+        },
+        {
+          "stage": "after-outer-inflate",
+          "elapsedSeconds": 5.469111608,
+          "rssBytes": 511356928,
+          "heapUsedBytes": 33070000,
+          "externalBytes": 344196671,
+          "arrayBufferBytes": 278910743,
+          "maxRssKiB": 499372
+        },
+        {
+          "stage": "after-outer-raw-hash",
+          "elapsedSeconds": 6.4974327579999995,
+          "rssBytes": 511463424,
+          "heapUsedBytes": 33078960,
+          "externalBytes": 291549732,
+          "arrayBufferBytes": 278910743,
+          "maxRssKiB": 683564
+        },
+        {
+          "stage": "after-canonical-recompression",
+          "elapsedSeconds": 16.283237389,
+          "rssBytes": 512651264,
+          "heapUsedBytes": 33209376,
+          "externalBytes": 291549700,
+          "arrayBufferBytes": 278910743,
+          "maxRssKiB": 683564
+        },
+        {
+          "stage": "before-files",
+          "elapsedSeconds": 16.297075576,
+          "rssBytes": 512913408,
+          "heapUsedBytes": 33539816,
+          "externalBytes": 291549700,
+          "arrayBufferBytes": 278910743,
+          "maxRssKiB": 683564
+        },
+        {
+          "stage": "bundle-validated",
+          "elapsedSeconds": 42.952203981,
+          "rssBytes": 799232000,
+          "heapUsedBytes": 152488880,
+          "externalBytes": 291549732,
+          "arrayBufferBytes": 278910743,
+          "maxRssKiB": 823212
+        },
+        {
+          "stage": "complete",
+          "elapsedSeconds": 42.962132116999996,
+          "rssBytes": 798838784,
+          "heapUsedBytes": 152414824,
+          "externalBytes": 291549732,
+          "arrayBufferBytes": 90306341,
+          "maxRssKiB": 823212
+        }
+      ],
+      "profile": "yield-collect-profile.json",
+      "log": "yield-collect-profile.log"
+    }
+  ],
+  "fullNormalRuns": [
+    {
+      "executionPath": "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-execution.json",
+      "executionSha256": "81b16cceb53034b66576ed10700520284450bbd630b9b7f76b2ad371f8c5cf8a",
+      "logPath": "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-execution.log",
+      "logSha256": "767264c34e9797dddf2eb2319adf3a8931bc479af9ee4019a5e161167432c254",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "tsx",
+        "scripts/indoor/verify-shared-corridor-candidate.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker",
+        "--connection-inventory",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+      ],
+      "exitCode": -9,
+      "seconds": 53.5287564570026,
+      "peakRssKiB": 3020844,
+      "lastObservedStage": "companions",
+      "normalImportComplete": false,
+      "normalExportComplete": false,
+      "completedNormalJourneys": 0,
+      "completedWorkerJourneys": 0,
+      "acceptedJourneys": 0
+    },
+    {
+      "executionPath": "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-memory-diagnostic-execution.json",
+      "executionSha256": "96f05b82aeb17c306bedf30c001c9d79b8cbf005544e8dca15f3b4a82fc241c1",
+      "logPath": "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-memory-diagnostic-execution.log",
+      "logSha256": "64ace45be58088a6d55d7e72009f5df666bc6b8f34e6b704ab37b6331dc59be6",
+      "command": [
+        "node",
+        "--max-old-space-size=1400",
+        "--expose-gc",
+        "--import",
+        "/workspace/scratch/3d6560c4a7bf/pr4-package-memory/companions-profile/digest-turn-gc-preload.mjs",
+        "--import",
+        "tsx",
+        "scripts/indoor/verify-shared-corridor-candidate.ts",
+        "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/cell-918-retained/prepared-routing.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/cases.json",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/continuation-20261120/qualification/b10-normal-worker-memory-diagnostic",
+        "--connection-inventory",
+        "/workspace/scratch/3d6560c4a7bf/pr4-work/input/b10-cell918-combined-96/inventory.json"
+      ],
+      "exitCode": -9,
+      "seconds": 102.15789477000362,
+      "peakRssKiB": 3021476,
+      "lastObservedStage": "geometry",
+      "normalImportComplete": false,
+      "normalExportComplete": false,
+      "completedNormalJourneys": 0,
+      "completedWorkerJourneys": 0,
+      "acceptedJourneys": 0
+    }
+  ],
+  "observedNativeDigestRelease": {
+    "mode": "yield plus forced GC",
+    "digestInputBytes": 188604402,
+    "rssBeforeBytes": 699969536,
+    "rssAfterBytes": 511463424,
+    "rssDropBytes": 188506112,
+    "evidence": "yield-collect-profile.log: native-digest-turn-and-gc call2"
+  },
+  "qualification": {
+    "configuredCases": 96,
+    "acceptedJourneys": 0,
+    "normalImportComplete": false,
+    "normalExportComplete": false,
+    "browserPerformanceQualified": false,
+    "nextObservedGate": "The unchanged full normal pipeline reached geometry validation then was killed near 3 GB resident memory. The retained/transient breakdown at that next stage was not isolated."
+  },
+  "unmergedProposal": {
+    "path": "package-bytes-yield-proposal.patch",
+    "applied": false,
+    "description": "Capture byte length and yield one task after native digest for inputs at least 1 MiB; no forced collection or different checksum algorithm.",
+    "yieldOnlyStandaloneMeasured": false,
+    "productionSourceChangedByThisDiagnostic": false
+  },
+  "limits": [
+    "Standalone profiles omit the full 302 MB source dataset and original archive assets; their completion is not normal package acceptance.",
+    "Independent runs have different starting allocator/RSS states; do not treat all peak differences as a controlled estimate of one change.",
+    "The full diagnostic used both a task yield and forced GC. Yield-only behavior and browser memory/performance remain unqualified.",
+    "No accepted journeys, complete normal import, source-preserving export, or normal route-worker replay resulted from these full attempts."
+  ],
+  "excludedRedundantInput": {
+    "path": "companions.bin",
+    "bytes": 88626822,
+    "sha256": "a44aaedef303831b5311a4e04faa14e910cec09837466be6909d93e488f85f8a",
+    "reason": "Re-extract the exact named member from the preserved source master; do not copy this 88 MB duplicate into the PR or compact diagnostic archive."
+  },
+  "profiledSourceSha256": {
+    "package-bytes.ts": "9e17e3c8b3dc4fe76cfa25e247c5ae8e2f30accd1b63e8ff987b61543fd3face",
+    "review-bundle-wire.ts": "7c4e2685424f505c6996b9d4215f0e51a755dfe0fd899ce9a1221038e389cc38",
+    "review-bundle-inflate.ts": "39484a253bb6da0e1bb36880975cd512fd148255432e4d80bee563a0cd9e0dc1"
+  }
+}

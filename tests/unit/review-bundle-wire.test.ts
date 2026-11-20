@@ -9,6 +9,7 @@ import {
   serializeRoomsForArchive,
   REVIEW_BUNDLE_ARCHIVE_PATH,
   type PackedReviewBundle,
+  type PackedReviewBundleReference,
 } from "../../app/indoor-project/review-bundle-wire";
 import {
   reviewFileBytes,
@@ -58,9 +59,9 @@ function bundle(): ReviewBundle {
 function changed(
   wire: PackedReviewBundle,
   edit: (
-    header: any,
+    header: TestHeader,
     payload: Uint8Array,
-  ) => { header: any; payload?: Uint8Array },
+  ) => { header: TestHeader; payload?: Uint8Array },
 ) {
   const raw = inflateSync(Buffer.from(wire.compressedBase64, "base64"));
   const n = new DataView(raw.buffer, raw.byteOffset).getUint32(0, true);
@@ -81,6 +82,18 @@ function changed(
     compressedBase64: b64(deflateSync(bytes, { level: 9 })),
   };
 }
+type TestHeader = {
+  version: number;
+  masterSha256: string;
+  files: {
+    path: string;
+    bytes: number;
+    sha256: string;
+    mode: "raw" | "compressed";
+    storedBytes: number;
+  }[];
+  padding?: string;
+};
 test("packed authoring evidence preserves default streams, nondefault streams, binary files and ordering exactly", async () => {
   const original = bundle(),
     wire = await packReviewBundle(original),
@@ -101,15 +114,16 @@ test("packed authoring evidence preserves default streams, nondefault streams, b
 test("legacy wire is unchanged; only exceeding rooms JSON packs review companions", async () => {
   const original = bundle(),
     rooms = { annotations: [], reviewBundle: original };
+  const emptyRooms: { reviewBundle?: ReviewBundle } = {};
   assert.equal(await unpackReviewBundle(original), original);
-  assert.equal(await unpackReviewBundle(undefined), undefined);
+  assert.equal(await unpackReviewBundle(emptyRooms.reviewBundle), undefined);
   assert.deepEqual(
     await serializeRoomsWithReviewBundle(rooms),
     new TextEncoder().encode(JSON.stringify(rooms)),
   );
   // Incompressible inner stream at level zero makes legacy base64 larger than
   // the complete outer packed binary while retaining that exact stream.
-  const binary = Uint8Array.from({ length: 120000 }, (_, i) => (i * 71) % 256);
+  const binary = Uint8Array.from({ length: 120_000 }, (_, i) => (i * 71) % 256);
   rooms.reviewBundle.files = [
     {
       path: "review/source.png",
@@ -118,8 +132,8 @@ test("legacy wire is unchanged; only exceeding rooms JSON packs review companion
       compressedBase64: b64(deflateSync(binary, { level: 0 })),
     },
   ];
-  const bytes = await serializeRoomsWithReviewBundle(rooms, 12000);
-  assert(bytes.length < 12000);
+  const bytes = await serializeRoomsWithReviewBundle(rooms, 12_000);
+  assert(bytes.length < 12_000);
   const parsed = JSON.parse(new TextDecoder().decode(bytes));
   assert.deepEqual(
     await unpackReviewBundle(parsed.reviewBundle),
@@ -142,7 +156,7 @@ test("packed wire refuses damaged payload, truncated stream, trailing bytes and 
   await assert.rejects(
     unpackReviewBundle({
       ...wire,
-      compressedBase64: b64(compressed.subarray(0, compressed.length - 3)),
+      compressedBase64: b64(compressed.subarray(0, -3)),
     }),
   );
   await assert.rejects(
@@ -203,7 +217,10 @@ test("metadata and expansion bounds reject unsafe paths, file/count/total/header
   await assert.rejects(
     unpackReviewBundle(
       changed(wire, (header) => {
-        header.files = Array.from({ length: 1001 }, (_, i) => ({ ...header.files[0], path: `review/over-count-${i}.json` }));
+        header.files = Array.from({ length: 1001 }, (_, i) => ({
+          ...header.files[0],
+          path: `review/over-count-${i}.json`,
+        }));
         return { header };
       }),
     ),
@@ -245,6 +262,62 @@ test("legacy noncanonical base64 spelling is retained rather than silently norma
   );
 });
 
+test("binary and inline companions have identical strict compressed-stream and content validation", async () => {
+  const original = bundle(),
+    wire = await packReviewBundle(original);
+  const { compressedBase64, ...metadata } = wire;
+  const compressed = new Uint8Array(Buffer.from(compressedBase64, "base64"));
+  const reference = (bytes: Uint8Array): PackedReviewBundleReference => ({
+    ...metadata,
+    storage: "archive-entry",
+    path: REVIEW_BUNDLE_ARCHIVE_PATH,
+    compressedBytes: bytes.length,
+    compressedSha256: sha(bytes),
+  });
+  const hydrate = (bytes: Uint8Array, ref = reference(bytes)) =>
+    unpackReviewBundle(ref, { [REVIEW_BUNDLE_ARCHIVE_PATH]: bytes });
+  assert.deepEqual(await hydrate(compressed), await unpackReviewBundle(wire));
+  assert.deepEqual(await hydrate(compressed), original);
+  const raw = inflateSync(compressed);
+  // Both are valid DEFLATE carriers of the same raw payload, with truthful
+  // compressed checksums. Exact canonical recompression must still refuse.
+  for (const changed of [
+    deflateSync(raw, { level: 0 }),
+    new Uint8Array([...compressed, 1, 2, 3]),
+  ]) {
+    await assert.rejects(hydrate(changed), /Invalid packed review/);
+    await assert.rejects(
+      unpackReviewBundle({ ...wire, compressedBase64: b64(changed) }),
+      /Invalid packed review/,
+    );
+  }
+  await assert.rejects(
+    hydrate(compressed, { ...reference(compressed), sha256: "0".repeat(64) }),
+    /Invalid packed review/,
+  );
+  await assert.rejects(
+    hydrate(compressed, { ...reference(compressed), bytes: wire.bytes - 1 }),
+    /Invalid packed review/,
+  );
+});
+
+test("a hydrated companion mutated after verification is refused by both room export paths", async () => {
+  const restored = (await unpackReviewBundle(
+    await packReviewBundle(bundle()),
+  ))!;
+  const changed = reviewFileBytes(restored.files[0]);
+  changed[changed.length - 1] ^= 1;
+  restored.files[0].compressedBase64 = b64(deflateSync(changed));
+  await assert.rejects(
+    serializeRoomsWithReviewBundle({ reviewBundle: restored }),
+    /Invalid packed review/,
+  );
+  await assert.rejects(
+    serializeRoomsForArchive({ reviewBundle: restored }),
+    /Invalid packed review/,
+  );
+});
+
 test("binary archive fallback binds the exact container, hydrates evidence and excludes it from visitors", async () => {
   const p = await fixtureProject();
   p.rooms.reviewBundle = bundle();
@@ -274,7 +347,9 @@ test("binary archive fallback binds the exact container, hydrates evidence and e
   const d = structuredClone(p.dataset);
   d.source.roomsSha256 = sha(encoded.rooms);
   const indoor = strToU8(JSON.stringify(d)),
-    m = structuredClone(p.manifest) as any;
+    m = structuredClone(p.manifest);
+  assert.equal(m.format, "reviter-project");
+  assert(m.format === "reviter-project");
   m.floors = {
     path: "floors/rooms.json",
     bytes: encoded.rooms.length,

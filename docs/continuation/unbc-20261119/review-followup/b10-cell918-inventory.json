@@ -1,0 +1,620 @@
+{
+  "format": "connection-acceptance-inventory-v1",
+  "source": {
+    "sourceMasterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+    "sourceModelSha256": "8c294549ee667ed7aba38f1f4f3a53514dae7544af97f0157ee8187dd8702178",
+    "sourceRoomsSha256": "fa8412e7c44aa16c083cb4dd5238a533c4dfeff62f818ae855bb0968c600a5a9"
+  },
+  "casesSha256": "51631493e345552106a17cdabd6e0da069fd23a632bc09fa817d1fd528566f28",
+  "inventoryComplete": true,
+  "scope": "ONLY the seven archived Building 10 destination pairs whose recorded public paths use cell918, including each direction and both recorded profiles: 28 requests. This is the complete enumerated regression sample, not all 53 terminals, all 79 original cell edges, Building 10 connectivity, campus accessibility, or release qualification. Accessible refusals mean no qualified pathway start in that profile, not physical absence of step-free paths.",
+  "connections": [
+    {
+      "id": "b10-918-10-3066-10-3064",
+      "label": "10-3066 to 10-3064: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-0024-public-10-3066-to-10-3064",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0024-public-10-3066-to-10-3064",
+            "from": "rm-400176-c5f0d072290d",
+            "to": "rm-400176-c5e6d0722905",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2255478:0|door:400176:2255479:0",
+              "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2255478:0",
+              "native-cell:24.278215:918:walk:door:400176:2255475:0|door:400176:2255477:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-0025-public-10-3064-to-10-3066",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0025-public-10-3064-to-10-3066",
+            "from": "rm-400176-c5e6d0722905",
+            "to": "rm-400176-c5f0d072290d",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2255475:0|door:400176:2255477:0",
+              "native-cell:24.278215:918:walk:door:400176:2255477:0|door:400176:2255478:0",
+              "native-cell:24.278215:918:walk:door:400176:2255478:0|door:400176:2255479:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-0759-accessible-10-3066-to-10-3064",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0759-accessible-10-3066-to-10-3064",
+            "from": "rm-400176-c5f0d072290d",
+            "to": "rm-400176-c5e6d0722905",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-0760-accessible-10-3064-to-10-3066",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0760-accessible-10-3064-to-10-3066",
+            "from": "rm-400176-c5e6d0722905",
+            "to": "rm-400176-c5f0d072290d",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3014-10-3011",
+      "label": "10-3014 to 10-3011: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-0026-public-10-3014-to-10-3011",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0026-public-10-3014-to-10-3011",
+            "from": "rm-400176-034c7e83f587",
+            "to": "rm-400176-fcc92010fae8",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263180:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-0027-public-10-3011-to-10-3014",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0027-public-10-3011-to-10-3014",
+            "from": "rm-400176-fcc92010fae8",
+            "to": "rm-400176-034c7e83f587",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2263044:1|door:400176:2263180:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-0761-accessible-10-3014-to-10-3011",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0761-accessible-10-3014-to-10-3011",
+            "from": "rm-400176-034c7e83f587",
+            "to": "rm-400176-fcc92010fae8",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-0762-accessible-10-3011-to-10-3014",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-0762-accessible-10-3011-to-10-3014",
+            "from": "rm-400176-fcc92010fae8",
+            "to": "rm-400176-034c7e83f587",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3026-10-3060",
+      "label": "10-3026 to 10-3060: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-1207-public-10-3026-to-10-3060",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1207-public-10-3026-to-10-3060",
+            "from": "rm-400176-0353c683f58e",
+            "to": "rm-400176-0925367adb55",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262954:1",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2263938:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1208-public-10-3060-to-10-3026",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1208-public-10-3060-to-10-3026",
+            "from": "rm-400176-0925367adb55",
+            "to": "rm-400176-0353c683f58e",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262954:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1209-accessible-10-3026-to-10-3060",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1209-accessible-10-3026-to-10-3060",
+            "from": "rm-400176-0353c683f58e",
+            "to": "rm-400176-0925367adb55",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-1210-accessible-10-3060-to-10-3026",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1210-accessible-10-3060-to-10-3026",
+            "from": "rm-400176-0925367adb55",
+            "to": "rm-400176-0353c683f58e",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3030-10-S301",
+      "label": "10-3030 to 10-S301: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-1211-public-10-3030-to-10-S301",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1211-public-10-3030-to-10-S301",
+            "from": "rm-400176-0d619783fba4",
+            "to": "rm-400176-07c585afc4bf",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:door:400176:2261777:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261777:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1212-public-10-S301-to-10-3030",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1212-public-10-S301-to-10-3030",
+            "from": "rm-400176-07c585afc4bf",
+            "to": "rm-400176-0d619783fba4",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261777:0",
+              "native-cell:24.278215:918:walk:door:400176:2261777:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1213-accessible-10-3030-to-10-S301",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1213-accessible-10-3030-to-10-S301",
+            "from": "rm-400176-0d619783fba4",
+            "to": "rm-400176-07c585afc4bf",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-1214-accessible-10-S301-to-10-3030",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1214-accessible-10-S301-to-10-3030",
+            "from": "rm-400176-07c585afc4bf",
+            "to": "rm-400176-0d619783fba4",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3026-10-3032",
+      "label": "10-3026 to 10-3032: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-1215-public-10-3026-to-10-3032",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1215-public-10-3026-to-10-3032",
+            "from": "rm-400176-0353c683f58e",
+            "to": "rm-400176-035a9683f594",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262954:1",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1216-public-10-3032-to-10-3026",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1216-public-10-3032-to-10-3026",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-0353c683f58e",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:door:400176:2262854:0|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262854:0",
+              "native-cell:24.278215:918:walk:door:400176:2262772:0|door:400176:2262954:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1217-accessible-10-3026-to-10-3032",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1217-accessible-10-3026-to-10-3032",
+            "from": "rm-400176-0353c683f58e",
+            "to": "rm-400176-035a9683f594",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-1218-accessible-10-3032-to-10-3026",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1218-accessible-10-3032-to-10-3026",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-0353c683f58e",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3032-10-3060",
+      "label": "10-3032 to 10-3060: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-1219-public-10-3032-to-10-3060",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1219-public-10-3032-to-10-3060",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-0925367adb55",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2263938:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1220-public-10-3060-to-10-3032",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1220-public-10-3060-to-10-3032",
+            "from": "rm-400176-0925367adb55",
+            "to": "rm-400176-035a9683f594",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:arrival:rm-400176-045fc483f671|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|door:400176:2263938:0",
+              "native-cell:24.278215:918:walk:door:400176:2255520:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1221-accessible-10-3032-to-10-3060",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1221-accessible-10-3032-to-10-3060",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-0925367adb55",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-1222-accessible-10-3060-to-10-3032",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1222-accessible-10-3060-to-10-3032",
+            "from": "rm-400176-0925367adb55",
+            "to": "rm-400176-035a9683f594",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "b10-918-10-3032-10-S301",
+      "label": "10-3032 to 10-S301: archived hallway-station regression",
+      "evidence": "Exact November 18 baseline browser rows and recorded worker trips; expectations only. Public routes traversed native-cell:24.278215:918. Accessible counterparts recorded pathway-start refusal. The local stair label, where present, is a same-plane destination and does not assert a vertical stair connection.",
+      "requests": [
+        {
+          "id": "baseline-row-1223-public-10-3032-to-10-S301",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1223-public-10-3032-to-10-S301",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-07c585afc4bf",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:door:400176:2261777:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261777:0"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1224-public-10-S301-to-10-3032",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1224-public-10-S301-to-10-3032",
+            "from": "rm-400176-07c585afc4bf",
+            "to": "rm-400176-035a9683f594",
+            "mode": "public",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": true,
+            "requiredSourceEdgeIds": [
+              "native-cell:24.278215:918:walk:door:400176:2255519:0|door:400176:2261777:0",
+              "native-cell:24.278215:918:walk:door:400176:2261777:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0",
+              "native-cell:24.278215:918:walk:opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:0|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|opening:recovered-circulation-seam:rm-400176-045fc483f671:rm-400176-046a7683f67b:11:10:1",
+              "native-cell:24.278215:918:walk:arrival:rm-400176-046a7683f67b|door:400176:2262984:1"
+            ],
+            "requireSharedGuide": true
+          }
+        },
+        {
+          "id": "baseline-row-1225-accessible-10-3032-to-10-S301",
+          "direction": "forward",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1225-accessible-10-3032-to-10-S301",
+            "from": "rm-400176-035a9683f594",
+            "to": "rm-400176-07c585afc4bf",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        },
+        {
+          "id": "baseline-row-1226-accessible-10-S301-to-10-3032",
+          "direction": "reverse",
+          "state": "bound",
+          "routeCase": {
+            "id": "baseline-row-1226-accessible-10-S301-to-10-3032",
+            "from": "rm-400176-07c585afc4bf",
+            "to": "rm-400176-035a9683f594",
+            "mode": "accessible",
+            "options": {
+              "endpointMode": "pathway",
+              "allowOtherRoomTransit": false
+            },
+            "expected": false
+          }
+        }
+      ]
+    }
+  ]
+}
