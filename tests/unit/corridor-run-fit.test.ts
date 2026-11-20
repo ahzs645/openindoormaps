@@ -4,6 +4,9 @@ import {
   createCorridorCenterline,
   type CorridorXY,
 } from "../../app/indoor-project/corridor-centerline";
+import { fitCorridorRuns } from "../../app/indoor-project/corridor-run-fit";
+import { corridorTerminalApproachProposals } from "../../app/indoor-project/corridor-terminal-approach";
+import { compareCombinedCorridorGuides } from "../../app/indoor-project/corridor-guide-contacts";
 import {
   branchedCorridorFixture,
   clearance,
@@ -289,4 +292,308 @@ test("run fitting is off with legacy approaches and when disabled", () => {
     { shapedApproaches: false },
   );
   assert.equal(legacy.statistics().straightRuns ?? null, null);
+});
+
+/** A convex rectangle leaves at least one foot around every accepted point,
+ * so every segment's two-foot strip is supported. Original terminal joins and
+ * required pairs are included even in these small topology regressions. */
+function checkedRunFixture(vertices: CorridorXY[], links: [number, number][]) {
+  const terminals = vertices.map((point, i) => ({ id: `t${i}`, point }));
+  return {
+    rings: [rect(-20, -4, 60, 8)],
+    vertices,
+    chains: links.map(([from, to]) => ({
+      from,
+      to,
+      points: [vertices[from], vertices[to]],
+    })),
+    joins: new Map(
+      terminals.map((terminal, vertex) => [
+        terminal.id,
+        { vertex, approach: [terminal.point, terminal.point] },
+      ]),
+    ),
+    terminals,
+    requiredEdges: links.map(([from, to]) => ({
+      from: `t${from}`,
+      to: `t${to}`,
+    })),
+    supported: (path: CorridorXY[]) =>
+      path.every(([x, y]) => x >= -19 && x <= 39 && y >= -3 && y <= 3),
+    proposals: (
+      terminal: { point: CorridorXY },
+      a: CorridorXY,
+      b: CorridorXY,
+    ) =>
+      corridorTerminalApproachProposals(terminal, a, b, {
+        shaped: true,
+        maxFeet: 6,
+      }),
+    maxApproachFeet: 6,
+  };
+}
+
+test("a fitted run cannot borrow other lanes' existing contact at the same exact point", () => {
+  const input = checkedRunFixture(
+    [
+      [-10, 1],
+      [30, 1],
+      [10, -2],
+      [10, 2],
+      [8, -2],
+      [12, 2],
+    ],
+    [
+      [0, 1],
+      [2, 3],
+      [4, 5],
+    ],
+  );
+  const before = structuredClone(input.chains);
+  const joins = structuredClone(input.joins);
+  const result = fitCorridorRuns(input);
+  // The proposed main run moves from y=1 to y=0. Its contacts with the two
+  // short lanes move from (10,1) and (11,1) to (10,0), where those other lanes
+  // already cross each other. That unrelated contact cannot authorize either
+  // moved participant pair. Endpoints and detour checks alone would pass.
+  assert.equal(result.statistics.keptRuns.topology, 1);
+  assert.equal(result.statistics.fittedRuns, 0);
+  assert.equal(result.changed, false);
+  assert.deepEqual(result.chains, before);
+  assert.deepEqual(result.joins, joins);
+  assert.deepEqual(input.chains, before);
+});
+
+test("original run contacts survive removal and replacement of a terminal station", () => {
+  const input = checkedRunFixture(
+    [
+      [-10, 0],
+      [0, 0],
+      [30, 0],
+      [10, -2],
+      [10, 2],
+      [12, 0],
+      [14, 0],
+    ],
+    [
+      [0, 1],
+      [1, 2],
+      [3, 4],
+      [5, 6],
+    ],
+  );
+  const result = fitCorridorRuns(input);
+  // The two long chains are one original checked path. Replacing its station
+  // at t1 changes the live chain objects, but not its identity. Its retained
+  // crossing at (10,0) and overlap from (12,0) to (14,0) remain attributable to
+  // the same original path; neither should force all run fitting off.
+  assert.equal(result.statistics.fittedRuns, 1);
+  assert.equal(result.statistics.removedStations, 1);
+  assert.equal(result.statistics.keptRuns.topology ?? 0, 0);
+  assert.deepEqual(
+    result.joins.get("t1")!.approach,
+    input.joins.get("t1")!.approach,
+  );
+  for (const [from, to] of [
+    [3, 4],
+    [5, 6],
+  ])
+    assert.deepEqual(
+      result.chains.find((chain) => chain.from === from && chain.to === to),
+      input.chains.find((chain) => chain.from === from && chain.to === to),
+    );
+});
+
+test("an explicit shared junction remains connected when its receiving run is fitted", () => {
+  const input = checkedRunFixture(
+    [
+      [-10, 1],
+      [0, 1],
+      [30, 1],
+      [0, 2],
+    ],
+    [
+      [0, 1],
+      [1, 2],
+      [1, 3],
+    ],
+  );
+  // The T junction is an auxiliary graph node, not a destination doorway.
+  input.joins.delete("t1");
+  input.terminals = input.terminals.filter((terminal) => terminal.id !== "t1");
+  input.requiredEdges = [
+    { from: "t0", to: "t2" },
+    { from: "t0", to: "t3" },
+  ];
+  const result = fitCorridorRuns(input);
+  assert.equal(result.statistics.fittedRuns, 1);
+  assert.equal(result.statistics.keptRuns.topology ?? 0, 0);
+  assert.equal(result.joins.size, input.joins.size);
+  const reached = new Set([result.joins.get("t0")!.vertex]);
+  for (let changed = true; changed; ) {
+    changed = false;
+    for (const chain of result.chains)
+      if (reached.has(chain.from) || reached.has(chain.to))
+        for (const id of [chain.from, chain.to])
+          if (!reached.has(id)) {
+            reached.add(id);
+            changed = true;
+          }
+  }
+  for (const terminal of input.terminals) {
+    const join = result.joins.get(terminal.id)!;
+    assert.ok(reached.has(join.vertex), `${terminal.id} remains connected`);
+    assert.deepEqual(join.approach[0], terminal.point);
+  }
+});
+
+test("retained paths keep a conflicting run while an unrelated beneficial fit survives", () => {
+  const input = checkedRunFixture(
+    [
+      [-10, 1],
+      [30, 1],
+      [-10, 21],
+      [30, 21],
+    ],
+    [
+      [0, 1],
+      [2, 3],
+    ],
+  );
+  input.rings.push(rect(-20, 16, 60, 8));
+  input.chains[1].points = [
+    [-10, 21],
+    [0, 20],
+    [15, 22],
+    [30, 21],
+  ];
+  input.supported = (path) =>
+    path.every(
+      ([x, y]) =>
+        x >= -19 && x <= 39 && ((y >= -3 && y <= 3) || (y >= 17 && y <= 23)),
+    ) && path.slice(1).every((p, i) => p[1] < 10 === path[i][1] < 10);
+  const retained = {
+    id: "legacy-guide",
+    from: "legacy:a",
+    to: "legacy:b",
+    points: [
+      [10, -2],
+      [10, 2],
+    ] as CorridorXY[],
+  };
+  const before = structuredClone(input.chains);
+  const retainedBefore = structuredClone(retained);
+  const result = fitCorridorRuns({ ...input, retainedPaths: [retained] });
+  assert.equal(result.statistics.retainedPaths, 1);
+  assert.equal(result.statistics.keptRuns.topology, 1);
+  assert.equal(result.statistics.fittedRuns, 1);
+  // Moving the lower run onto y=0 would move its contact with the fixed path.
+  // The upper corridor can still shed its two real bends independently.
+  assert.deepEqual(
+    result.chains.find((chain) => chain.from === 0 && chain.to === 1),
+    before[0],
+  );
+  const route = (from: string, to: string) => {
+    const a = result.joins.get(from)!,
+      b = result.joins.get(to)!;
+    const chain = result.chains.find(
+      (c) =>
+        (c.from === a.vertex && c.to === b.vertex) ||
+        (c.to === a.vertex && c.from === b.vertex),
+    );
+    assert.ok(chain, `Connected original pair ${from} -> ${to}`);
+    const core =
+      chain.from === a.vertex ? chain.points : chain.points.toReversed();
+    return [
+      ...a.approach.slice(0, -1),
+      ...core,
+      ...b.approach.toReversed().slice(1),
+    ];
+  };
+  const upper = result.chains.find(
+    (chain) => chain.from === result.joins.get("t2")!.vertex,
+  )!;
+  assert.ok(turns(before[1].points).filter((angle) => angle > 5).length >= 2);
+  assert.ok(turns(upper.points).every((angle) => angle < 0.5));
+  for (const edge of input.requiredEdges) {
+    const points = route(edge.from, edge.to);
+    assert.deepEqual(route(edge.to, edge.from), points.toReversed());
+    assert.deepEqual(
+      points[0],
+      input.terminals.find((terminal) => terminal.id === edge.from)!.point,
+    );
+    assert.deepEqual(
+      points.at(-1),
+      input.terminals.find((terminal) => terminal.id === edge.to)!.point,
+    );
+    assert.ok(input.supported(points));
+  }
+  const sourceEdges = new Map([
+    ...input.requiredEdges.map((edge, i) => [`primary:${i}`, edge] as const),
+    [retained.id, retained] as const,
+  ]);
+  const origins = new Map([
+    ["primary:0", "primary:0"],
+    ["primary:1", "primary:0"],
+    [retained.id, "legacy:0"],
+  ]);
+  const guide = (edgeId: string, points: CorridorXY[]) => ({
+    edgeId,
+    pointsFeet: points.map(([x, y]): [number, number, number] => [x, y, 0]),
+  });
+  const control = {
+    edges: sourceEdges,
+    origins,
+    guides: [
+      ...before.map((chain, i) => guide(`primary:${i}`, chain.points)),
+      guide(retained.id, retained.points),
+    ],
+  };
+  const candidate = {
+    ...control,
+    guides: [
+      ...input.requiredEdges.map((edge, i) =>
+        guide(`primary:${i}`, route(edge.from, edge.to)),
+      ),
+      guide(retained.id, retained.points),
+    ],
+  };
+  assert.deepEqual(compareCombinedCorridorGuides(control, candidate), {
+    missingGuideIds: [],
+    newContacts: [],
+  });
+  assert.deepEqual(input.chains, before);
+  assert.deepEqual(retained, retainedBefore);
+});
+
+test("a retained path shares only its real original terminal, not a coincident point", () => {
+  const input = checkedRunFixture(
+    [
+      [-10, 1],
+      [30, 1],
+    ],
+    [[0, 1]],
+  );
+  const retained = {
+    id: "retained",
+    from: "t0",
+    to: "outside",
+    points: [
+      [-10, 1],
+      [-12, 1],
+    ] as CorridorXY[],
+  };
+  const shared = fitCorridorRuns({ ...input, retainedPaths: [retained] });
+  assert.equal(shared.statistics.fittedRuns, 1);
+  assert.deepEqual(
+    shared.joins.get("t0")!.approach[0],
+    input.terminals[0].point,
+  );
+  const coincident = fitCorridorRuns({
+    ...input,
+    retainedPaths: [{ ...retained, from: "another-original-terminal" }],
+  });
+  assert.equal(coincident.statistics.fittedRuns, 0);
+  assert.equal(coincident.statistics.keptRuns.topology, 1);
+  assert.deepEqual(coincident.chains, input.chains);
 });

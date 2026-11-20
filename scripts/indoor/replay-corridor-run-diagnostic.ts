@@ -11,6 +11,7 @@ import path from "node:path";
 import type { IndoorDataset } from "../../app/indoor-project/contract";
 import type { PreparedRouting } from "../../app/indoor-project/prepared-routing";
 import type { PublishedRouteCells } from "../../app/indoor-project/published-route-cells";
+import type { CorridorGuideTopologyInput } from "../../app/indoor-project/corridor-guide-contacts";
 
 const sha = (bytes: string | Uint8Array) =>
   createHash("sha256").update(bytes).digest("hex");
@@ -77,7 +78,7 @@ if (mode === "extract" && input && target && !output) {
   const bytes = JSON.stringify(context);
   writeFileSync(target, bytes);
   console.log(JSON.stringify({ sourceSha256, contextSha256: sha(bytes) }));
-} else if (mode === "run" && input && target && output && cellIds.length) {
+} else if (mode === "run" && input && target && output && cellIds.length > 0) {
   await run(input, target, output, cellIds);
 } else {
   throw new Error(
@@ -302,13 +303,23 @@ async function run(
           0,
         );
     const proposalRings = exact.nativeExactPartsForProposals(parts);
-    const compile = (straightRuns: boolean) => {
+    const compile = (
+      straightRuns: boolean,
+      reference?: CorridorGuideTopologyInput,
+    ) => {
       const build = (shapedApproaches: boolean) =>
-        proposalRings.map((rings) =>
+        proposalRings.map((rings, networkIndex) =>
           centerline.createCorridorCenterline(rings, terminals, support, {
             straightRuns,
             shapedApproaches,
             requiredEdges: edges,
+            retainedPaths:
+              straightRuns && shapedApproaches && reference
+                ? contact.retainedCorridorGuidePaths(
+                    reference,
+                    `primary:${networkIndex}`,
+                  )
+                : undefined,
           }),
         );
       const primary = build(true);
@@ -375,7 +386,7 @@ async function run(
     };
     const control = compile(false);
     mark("control-complete");
-    const candidate = compile(true);
+    const candidate = compile(true, { ...control, edges: byEdge });
     mark("candidate-complete");
     const guard = contact.compareCombinedCorridorGuides(
       { ...control, edges: byEdge },

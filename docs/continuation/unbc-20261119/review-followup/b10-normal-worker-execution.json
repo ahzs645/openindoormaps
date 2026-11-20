@@ -1,0 +1,19 @@
+{
+  "command": [
+    "node",
+    "--max-old-space-size=1400",
+    "--expose-gc",
+    "--import",
+    "tsx",
+    "scripts/indoor/verify-shared-corridor-candidate.ts",
+    "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+    "../qualification-final/cell-918-retained/prepared-routing.json",
+    "../input/b10-cell918-cases.json",
+    "../qualification-final/b10-normal-worker",
+    "--connection-inventory",
+    "../input/b10-cell918-inventory.json"
+  ],
+  "exitCode": -9,
+  "elapsedSeconds": 33.125536928993824,
+  "maximumResidentSetKiB": 2801344
+}

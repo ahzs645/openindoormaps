@@ -46,9 +46,7 @@ export async function prepareProgressiveRouteCalculator(
       // Storage can be unavailable without making network viewing unusable.
     }
   }
-  let bytes = await cache
-    ?.getAsset(receipt.compressedSha256)
-    .catch(() => undefined);
+  let bytes = await cache?.getAsset(receipt.compressedSha256).catch(() => {});
   if (!bytes && !options.offline) {
     let response: Response | undefined;
     try {

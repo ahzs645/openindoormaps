@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { LayerSpecification } from "maplibre-gl";
 import { useMap } from "./map";
+import { mapReady } from "./map-ready";
 
 const BUILDINGS_LAYER_ID = "basemap-3d-buildings";
 const OPENMAPTILES_SOURCE_ID = "openmaptiles";
@@ -73,14 +74,14 @@ export function Basemap3dBuildingsLayer({
 
   useEffect(() => {
     if (!enabled) return;
-    if (!isLoaded || !map) return;
+    if (!mapReady(map, isLoaded)) return;
     if (map.getLayer(BUILDINGS_LAYER_ID)) return;
     if (!hasOpenMapTilesBuildingsSource(map)) return;
 
     map.addLayer(makeBuildingsLayer(), getFirstSymbolLayerId(map));
 
     return () => {
-      if (map.getLayer(BUILDINGS_LAYER_ID)) {
+      if (mapReady(map, true) && map.getLayer(BUILDINGS_LAYER_ID)) {
         map.removeLayer(BUILDINGS_LAYER_ID);
       }
     };

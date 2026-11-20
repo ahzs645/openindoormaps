@@ -1,0 +1,118 @@
+{
+  "format": "unbc-pr4-review-followup-validation-v1",
+  "userFacingDate": "2026-11-19",
+  "sourceParentCommit": "8e676896768a52a6a2017fa009e307791fb60722",
+  "sourceBaselineCommit": "d89a9355587aaa8c470a8b2796d1a5e3c84e3a65",
+  "reviterCommit": "4a8fe6a8bd6b085e7725bb4ea18bb32d519e00a4",
+  "sourceFiles": "qualified-source-files.json",
+  "compilerBinding": "15514669361cdb5421ef294e9970cd025a3f84698b60f11f698fe590968cdca3",
+  "currentConsumers": {
+    "preparation": "22ec4eee119de1b40e6638a7ae649b74f3ec2c1629fdf8c1b0ef61607e9b0b37",
+    "route": "107eee2775594a8e9de3d7ae342a66009cc1c891fb47c5795793939f36ab8872",
+    "plan": "e754284c9614ea21f5d8863c367d78e35e7e2903cfbc823908fcf5a1a11617e0"
+  },
+  "checks": {
+    "focusedTests": {
+      "status": "PASS",
+      "passed": 124,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "execution": "final-focused-tests-execution.json",
+      "log": "final-focused-tests.txt"
+    },
+    "wholeRepositoryTypes": {
+      "status": "PASS",
+      "execution": "whole-repository-types-execution.json",
+      "log": "whole-repository-types.txt"
+    },
+    "changedFilesLint": {
+      "status": "PASS",
+      "files": 28,
+      "wholeRepositoryLint": false,
+      "execution": "changed-files-eslint-execution.json",
+      "log": "changed-files-eslint.txt"
+    },
+    "standardPagesBuild": {
+      "status": "INCOMPLETE",
+      "exitCode": 137,
+      "execution": "pages-build-after-scratch-cleanup-execution.json",
+      "log": "pages-build-after-scratch-cleanup.txt"
+    },
+    "scopedIndoorPagesBuild": {
+      "status": "PASS",
+      "scope": "SITE_DEMOS=indoor",
+      "standardAllVenueBuild": false,
+      "execution": "indoor-pages-build-execution.json",
+      "log": "indoor-pages-build.txt"
+    },
+    "completeCellControl": {
+      "status": "PASS",
+      "execution": "cell-918-control-execution.json",
+      "report": "cell-918-control/report.json"
+    },
+    "completeCellCandidate": {
+      "status": "PASS",
+      "execution": "cell-918-retained-execution.json",
+      "report": "cell-918-retained/report.json"
+    },
+    "normalImportExportWorker": {
+      "status": "INCOMPLETE",
+      "sourceImportCompleted": false,
+      "workerCasesExecuted": 0,
+      "outcome": "normal-package-worker-outcome.json"
+    },
+    "browserNavigation": {
+      "status": "BLOCKED",
+      "applicationLoaded": false,
+      "record": "browser-check.json"
+    },
+    "publishedAssetAdmission": {
+      "status": "NOT_QUALIFIED",
+      "currentMatchingPins": 0,
+      "metadataComparison": "consumer-admission-status.json"
+    },
+    "physicalPhoneAndCampus": {
+      "status": "NOT_PERFORMED"
+    }
+  },
+  "geometry": {
+    "guideCount": 69,
+    "eligibleOriginalEdges": 79,
+    "originalTerminals": 53,
+    "unchangedRefusals": 10,
+    "changedGuideValues": 7,
+    "adjustedDoorwayStations": 1,
+    "newMixedNetworkContacts": 0,
+    "missingControlGuides": 0,
+    "coreBendsBefore": 40,
+    "coreBendsAfter": 40,
+    "target165DegreeTurnbackResolved": false,
+    "summary": "One compiler-accepted doorway branch changes from 65.1918 degrees and 1.197 m to 90 degrees and 1.086 m; some complete guide paths lengthen. No fresh returned-route acceptance."
+  },
+  "straightRunsEnabledByDefault": false,
+  "publishedReceiptsRelabelled": false,
+  "sourceModelOrAccessDecisionsChanged": false,
+  "merged": false,
+  "deployed": false,
+  "releaseAcceptance": false,
+  "historicalEvidence": [
+    "Original107-test checkpoint and six-image gallery remain historical.",
+    "Browser attempt and local HTTP carrier response predate final mechanical formatting; they do not prove current runtime admission."
+  ],
+  "qualificationProcedure": "../runtime-qualification.md",
+  "nextRunCases": {
+    "input": "b10-cell918-combined-96/cases.json",
+    "inventory": "b10-cell918-combined-96/inventory.json",
+    "schemaValidation": "b10-cell918-combined-96/schema-validation.json",
+    "provenance": "b10-cell918-combined-96/provenance.json",
+    "requests": 96,
+    "pairs": 24,
+    "expectedPublicRoutes": 48,
+    "expectedAccessibleRefusals": 48,
+    "changedGuidesCovered": 2,
+    "changedGuidesTotal": 7,
+    "currentRequestsExecuted": 0,
+    "coverageMatrix": "b10-cell918-changed-guides/changed-guide-coverage.json"
+  }
+}

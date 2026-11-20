@@ -7,25 +7,25 @@ worker replay, publication receipts or venue/access review.
 
 ```sh
 # Start a new candidate directory; omitting --cell selects every current target.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-a --cell native-cell:14.435696:655
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-a --cell native-cell:14.435696:655
 
 # Resume that exact scope, source, compiler, runtime and parameter set.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-a --cell native-cell:14.435696:655 --resume
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-a --cell native-cell:14.435696:655 --resume
 
 # Compare a separately bound fitting experiment in another new directory.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-b --cell native-cell:14.435696:655 --max-deviation-feet 0.15
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-b --cell native-cell:14.435696:655 --max-deviation-feet 0.15
 
 # Reproduce the previous terminal approaches (no shaped approaches and no
 # join sliding) as a separately bound experiment.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-c --cell native-cell:14.435696:655 --legacy-approaches
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-c --cell native-cell:14.435696:655 --legacy-approaches
 
 # Fit complete corridor runs as an explicit candidate (default is off).
 # Resolve cell IDs from this exact input; IDs can change between rebuilds.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-runs --cell native-cell:24.278215:918 --straight-runs
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip candidate-runs --cell native-cell:24.278215:918 --straight-runs
 
 # Merge disjoint complete-cell shards. Every requested cell must be present;
 # merge never fills a missing cell by compiling or borrowing another version.
-node --max-old-space-size=4096 --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip merged --cell native-cell:14.435696:557 --cell native-cell:14.435696:655 --merge shard-557 --merge shard-655
+node --max-old-space-size=4096 --expose-gc --import tsx scripts/indoor/compile-corridor-candidates.ts visitor.zip merged --cell native-cell:14.435696:557 --cell native-cell:14.435696:655 --merge shard-557 --merge shard-655
 ```
 
 Use repeated `--merge DIRECTORY` arguments. The default maximum chain deviation
@@ -33,7 +33,12 @@ comes from `app/indoor-project/corridor-routing-parameters.ts`; any override is
 part of the binding. Preserve the same Node command flags when resuming or
 merging, including the heap/loader options. The compiler is sequential and reuses
 one immutable physical context, rather than cloning the whole campus into a
-worker pool.
+worker pool. The input reader verifies the original archive and all three bound
+members, then releases the ZIP, unrelated member buffers and source text before
+the next large allocation. `--expose-gc` allows collection at these boundaries;
+it changes memory scheduling only. The complete parsed dataset, all physical
+and policy fields, and the exact JSON serialization used by the mutation check
+are preserved. This does not replace native admission or normal package import.
 
 `binding.json` records exact ZIP/JSON/model/physical-policy identities, resolved
 local code and WASM dependencies, lockfile, Node/V8/platform/architecture, process
@@ -100,6 +105,21 @@ the existing exact two-foot support check, original terminal coordinates, and
 final edge checks. It checks detours for every required original edge, including
 journeys passing through a changed run whose own terminal branches did not move.
 
+The opt-in compiler builds its complete unfitted control first. Each primary
+physical part then receives every control guide outside that primary network as
+a fixed constraint: legacy fallbacks, later refinements, other physical parts,
+and guides with missing origin metadata. The constraint contains the entire
+polyline, including both terminal approaches. A run that creates or moves a
+contact with one of those paths retains its checked geometry; independent runs
+can still be fitted. The diagnostic replay uses this same retained-path selector.
+
+Internal contact identity includes both original path participants and the exact
+contact location. Original run identities survive removal or replacement of a
+doorway station and splitting into new pieces. A new connector receives a new
+identity. An unrelated pair's old contact at the same point cannot authorize a
+new crossing or overlap. Retained paths share endpoints only through their
+original source terminal identities.
+
 The final **complete cell** is compared with a no-runs control after all recovery
 passes. A new or moved topology contact between different primary networks,
 legacy fallback guides, or later refined guides withdraws the whole cell's run
@@ -114,8 +134,9 @@ An unchanged checked network retains its own internal topology acceptance:
 different returned routes intentionally reuse its same corridor lanes. A guide
 changed by a later recovery pass receives a distinct origin, so that pass cannot
 borrow the topology approval of geometry it replaced. This is conservative:
-a newly aligned overlap with a legacy guide may retain the previous cell until
-the mixed network is represented and qualified together.
+fixed control constraints may refuse a useful fit, and later candidate recovery
+can still change the mixed network. That is why the final complete-cell guard
+remains necessary after the individual run checks.
 
 `report.json` records `straightRunsWithdrawn`, missing guide IDs, the complete
 new-contact count, up to twenty exact contact examples, and the attempted

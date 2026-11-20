@@ -116,7 +116,9 @@ export async function saveOfflineRouteCellCache(
   if (!receipt) return;
   let bytes = await options.cache.getAsset(receipt.compressedSha256);
   aborted(options.signal);
-  if (!bytes) {
+  if (bytes) {
+    bytes = checkedCarrier(receipt, bytes);
+  } else {
     if (options.offline)
       throw new Error("The offline directions cache has not been downloaded.");
     const response = await (options.fetch ?? fetch)(
@@ -135,7 +137,7 @@ export async function saveOfflineRouteCellCache(
       ),
       true,
     );
-  } else bytes = checkedCarrier(receipt, bytes);
+  }
   aborted(options.signal);
   await options.cache.putAsset(receipt.compressedSha256, bytes);
   return verifyOfflineRouteCellCache(

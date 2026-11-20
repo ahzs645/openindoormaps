@@ -1,4 +1,5 @@
 import { corridorChainTopologyContacts } from "./corridor-chain-fit";
+import type { CorridorRetainedPath } from "./corridor-run-fit";
 import type { PreparedRouting } from "./prepared-routing";
 
 export type CorridorGuideTopologyInput = {
@@ -15,6 +16,30 @@ export type CorridorGuideContact = {
   /** Exact rational point, or endpoints of a collinear overlap. */
   at: string;
 };
+
+/** Keep every complete control guide outside the primary physical part being
+ * fitted, including legacy paths, later refinements and other physical parts.
+ * Full approaches and original source endpoints are part of the constraint.
+ * A missing origin is retained conservatively; it never borrows this network's
+ * own topology acceptance. */
+export function retainedCorridorGuidePaths(
+  control: CorridorGuideTopologyInput,
+  primaryOrigin: string,
+): CorridorRetainedPath[] {
+  return [...control.guides]
+    .filter((guide) => control.origins.get(guide.edgeId) !== primaryOrigin)
+    .sort((a, b) => a.edgeId.localeCompare(b.edgeId))
+    .map((guide) => {
+      const edge = control.edges.get(guide.edgeId);
+      if (!edge) throw new Error("Unknown original guide edge");
+      return {
+        id: guide.edgeId,
+        from: edge.from,
+        to: edge.to,
+        points: guide.pointsFeet.map(([x, y]): [number, number] => [x, y]),
+      };
+    });
+}
 
 /** Inspect the final guides of one complete physical cell. The shared-lane
  * routes emitted by one unchanged checked network intentionally overlap, so

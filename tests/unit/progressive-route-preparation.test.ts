@@ -219,15 +219,15 @@ test("missing optional caches use ordinary full validation, including on offline
         baseUrl,
         offline: kind === "offline",
         cache: {
-          getAsset: async () => {
-            if (kind === "storage") throw Error("unavailable storage");
-            return undefined;
+          getAsset: async (): Promise<Uint8Array | undefined> => {
+            if (kind === "storage") throw new Error("unavailable storage");
+            return;
           },
           putAsset: async () => assert.fail("missing cache write"),
         },
         fetch: async () => {
           reads++;
-          if (kind === "network") throw Error("unavailable network");
+          if (kind === "network") throw new Error("unavailable network");
           return new Response(null, { status: 404 });
         },
       },
@@ -252,9 +252,9 @@ test("a matching receipt without its carrier cannot replace full structural vali
       {
         baseUrl,
         cache: {
-          getAsset: async () => {
+          getAsset: async (): Promise<Uint8Array | undefined> => {
             reads++;
-            return undefined;
+            return;
           },
           putAsset: async () => assert.fail("missing carrier write"),
         },

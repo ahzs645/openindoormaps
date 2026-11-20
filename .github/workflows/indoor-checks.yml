@@ -28,7 +28,7 @@ jobs:
         with:
           repository: ahzs645/reviter
           # Pinned so routing results pair with a known compiler revision.
-          ref: 2e7875d3209785ea287296a1520eb9851011b50a
+          ref: 4a8fe6a8bd6b085e7725bb4ea18bb32d519e00a4
           path: reviter
       - uses: actions/setup-node@v7
         with:
@@ -47,9 +47,12 @@ jobs:
           node --import tsx --test --test-concurrency=2
           tests/unit/corridor-centerline.test.ts
           tests/unit/corridor-chain-fit.test.ts
+          tests/unit/corridor-run-fit.test.ts
+          tests/unit/corridor-guide-contacts.test.ts
           tests/unit/corridor-guide-support.test.ts
           tests/unit/corridor-terminal-attachments.test.ts
           tests/unit/corridor-terminal-approach.test.ts
+          tests/unit/corridor-candidate-input.test.ts
           tests/unit/corridor-candidate-checkpoints.test.ts
           tests/unit/shared-corridor-composition.test.ts
           tests/unit/shared-corridor-routing.test.ts
@@ -61,6 +64,9 @@ jobs:
           tests/unit/progressive-native-digest.test.ts
           tests/unit/progressive-delivery.test.ts
           tests/unit/progressive-visitor-client.test.ts
+          tests/unit/published-route-asset-url.test.ts
+          tests/unit/progressive-route-preparation.test.ts
+          tests/unit/offline-route-cell-cache.test.ts
           tests/unit/published-routing-hydration.test.ts
           tests/unit/published-route-extra-cases.test.ts
           tests/unit/admit-published-project.test.ts

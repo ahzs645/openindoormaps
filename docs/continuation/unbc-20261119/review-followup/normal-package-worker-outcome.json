@@ -1,0 +1,49 @@
+{
+  "format": "pr4-normal-package-worker-attempt-v1",
+  "status": "incomplete-process-killed",
+  "execution": {
+    "command": [
+      "node",
+      "--max-old-space-size=1400",
+      "--expose-gc",
+      "--import",
+      "tsx",
+      "scripts/indoor/verify-shared-corridor-candidate.ts",
+      "/workspace/scratch/3d6560c4a7bf/pr4-inputs/UNBC.rotunda.reviter.zip",
+      "../qualification-final/cell-918-retained/prepared-routing.json",
+      "../input/b10-cell918-cases.json",
+      "../qualification-final/b10-normal-worker",
+      "--connection-inventory",
+      "../input/b10-cell918-inventory.json"
+    ],
+    "exitCode": -9,
+    "elapsedSeconds": 33.125536928993824,
+    "maximumResidentSetKiB": 2801344
+  },
+  "lastPhaseEntry": {
+    "phase": "normal-source-import",
+    "elapsedSeconds": 20.122316578000003,
+    "stage": "companions",
+    "elapsedMs": 16468.426692,
+    "memory": {
+      "rss": 2169847808,
+      "heapTotal": 1027801088,
+      "heapUsed": 890440000,
+      "external": 1004533427,
+      "arrayBuffers": 475250996
+    },
+    "maxRSSKiB": 2708304
+  },
+  "phaseCallbacksMarkEntryNotCompletion": true,
+  "sourceMasterSha256": "8e397ddf461a5ec997269848091972a71a0e5231a5dd9c7a4d8407d285db4f52",
+  "candidateGuidesSha256": "7684aa5006b2122f7d69ac0f77f53ac80e9b3f859f8cb64081363c209913e764",
+  "casesSha256": "51631493e345552106a17cdabd6e0da069fd23a632bc09fa817d1fd528566f28",
+  "normalSourceImportCompleted": false,
+  "normalExportCompleted": false,
+  "normalRouteCasesExecuted": 0,
+  "productionWorkerStarted": false,
+  "workerRouteCasesExecuted": 0,
+  "publicationAdmissionGranted": false,
+  "published": false,
+  "inference": "SIGKILL at approximately 2.7 GiB peak RSS is consistent with the other resource-bounded process terminations in this workspace; no successful source import or worker qualification follows from this attempt."
+}

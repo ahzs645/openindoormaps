@@ -5,6 +5,7 @@ import { MAX_SHARED_CORRIDOR_APPROACH_FEET } from "./shared-corridor-guides";
 import { proposeStraightCorridorAxis } from "./corridor-straight-axis";
 import {
   fitCorridorRuns,
+  type CorridorRetainedPath,
   type CorridorRunFitStatistics,
 } from "./corridor-run-fit";
 import {
@@ -88,6 +89,9 @@ export type CorridorCenterlineOptions = {
   slideJoins?: boolean;
   /** See CorridorCompilerParameters.straightRuns. */
   straightRuns?: boolean;
+  /** Complete checked guides outside this primary network constrain each
+   * opt-in run fit. Source terminal identities, not crossings, qualify joins. */
+  retainedPaths?: readonly CorridorRetainedPath[];
 };
 
 /** Shaped-approach restriction of one terminal: 0 offers every shaped
@@ -1125,6 +1129,7 @@ function buildCorridorCenterline(
       proposals: approachProposals,
       maxApproachFeet: MAX_SHARED_CORRIDOR_APPROACH_FEET,
       requiredEdges: options.requiredEdges,
+      retainedPaths: options.retainedPaths,
     });
     if (!result.changed) return result.statistics;
     for (let i = vertices.length; i < result.vertices.length; i++)

@@ -4,7 +4,11 @@ import {
 } from "./raised-rotunda-plane";
 import { pathwayCirculationOwner } from "./reviewed-rotunda-role";
 import { sampledCorridorRun } from "./sampled-corridor-run";
-import { compareCombinedCorridorGuides } from "./corridor-guide-contacts";
+import {
+  compareCombinedCorridorGuides,
+  retainedCorridorGuidePaths,
+  type CorridorGuideTopologyInput,
+} from "./corridor-guide-contacts";
 import { straightenSharedDoorGuideBends } from "./shared-door-guide-bend";
 import { recoverCorridorRuns } from "./corridor-run-recovery";
 import { routingDoorApertures } from "./routing-apertures";
@@ -193,7 +197,10 @@ export async function prepareSharedCorridorRouting(
       const proposalRings = nativeExactPartsForProposals(physical);
       // Each candidate/control includes every current recovery pass before
       // mixed-network contact comparison. No partially checked cell is emitted.
-      const compileCell = (straightRuns: boolean) => {
+      const compileCell = (
+        straightRuns: boolean,
+        reference?: CorridorGuideTopologyInput,
+      ) => {
         const trial: CorridorCellCompilation = {
           ...report,
           refusedEdges: [],
@@ -201,12 +208,19 @@ export async function prepareSharedCorridorRouting(
           networks: [],
         };
         const build = (shapedApproaches: boolean) =>
-          proposalRings.map((rings) =>
+          proposalRings.map((rings, networkIndex) =>
             createCorridorCenterline(rings, terminals, support.supported, {
               ...parameters,
               shapedApproaches,
               straightRuns,
               requiredEdges: edges,
+              retainedPaths:
+                straightRuns && shapedApproaches && reference
+                  ? retainedCorridorGuidePaths(
+                      reference,
+                      `primary:${networkIndex}`,
+                    )
+                  : undefined,
             }),
           );
         const networks = build(parameters.shapedApproaches);
@@ -349,10 +363,10 @@ export async function prepareSharedCorridorRouting(
               ramp,
               cellGuides,
               (e, g) =>
-                [311, 1487816].every(
+                [311, 1_487_816].every(
                   (level) =>
-                    !passages(level, e.pointsFeet).length &&
-                    !passages(level, g.pointsFeet).length,
+                    passages(level, e.pointsFeet).length === 0 &&
+                    passages(level, g.pointsFeet).length === 0,
                 ) &&
                 support.edgeSupported(
                   g.pointsFeet.toReversed().map(([x, y]) => [x, y]),
@@ -462,15 +476,22 @@ export async function prepareSharedCorridorRouting(
           trial.legacyNetworks = legacy.map((network) => network.statistics());
         return { guides: cellGuides, origins, report: trial };
       };
-      let result = compileCell(parameters.straightRuns);
+      // Establish the complete unfitted control first. Its legacy and refined
+      // guides constrain individual proposals, so a local conflict need not
+      // discard beneficial fits elsewhere. The final all-pass guard below is
+      // still authoritative after every recovery/refinement pass.
+      const sourceEdges = new Map(edges.map((edge) => [edge.id, edge]));
+      const control = parameters.straightRuns ? compileCell(false) : null;
+      let result = compileCell(
+        parameters.straightRuns,
+        control ? { ...control, edges: sourceEdges } : undefined,
+      );
       if (
-        parameters.straightRuns &&
+        control &&
         result.report.networks.some(
           (network) => (network.straightRuns?.fittedRuns ?? 0) > 0,
         )
       ) {
-        const control = compileCell(false);
-        const sourceEdges = new Map(edges.map((edge) => [edge.id, edge]));
         const comparison = compareCombinedCorridorGuides(
           { ...control, edges: sourceEdges },
           { ...result, edges: sourceEdges },

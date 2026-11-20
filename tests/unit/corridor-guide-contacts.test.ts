@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
   compareCombinedCorridorGuides,
+  retainedCorridorGuidePaths,
   type CorridorGuideTopologyInput,
 } from "../../app/indoor-project/corridor-guide-contacts";
 
@@ -36,6 +37,75 @@ function input(
     ),
   };
 }
+
+test("retained paths include full legacy/refined/other-part guides with original terminal identities", () => {
+  const control = input([
+    {
+      id: "own",
+      path: [
+        [0, 0],
+        [5, 0],
+      ],
+      origin: "primary:0",
+    },
+    {
+      id: "legacy",
+      path: [
+        [-1, 1],
+        [0, 1],
+        [5, 1],
+        [6, 1],
+      ],
+      origin: "legacy:0",
+      from: "original-door:a",
+      to: "original-door:b",
+    },
+    {
+      id: "refined",
+      path: [
+        [0, 2],
+        [5, 2],
+      ],
+      origin: "refined:refined",
+    },
+    {
+      id: "other-part",
+      path: [
+        [0, 3],
+        [5, 3],
+      ],
+      origin: "primary:1",
+    },
+    {
+      id: "unknown",
+      path: [
+        [0, 4],
+        [5, 4],
+      ],
+    },
+  ]);
+  control.guides.find((guide) => guide.edgeId === "legacy")!.hallwayJoins = [
+    1, 2,
+  ];
+  const before = structuredClone(control);
+  const retained = retainedCorridorGuidePaths(control, "primary:0");
+  assert.deepEqual(
+    retained.map((path) => path.id),
+    ["legacy", "other-part", "refined", "unknown"],
+  );
+  assert.deepEqual(retained[0], {
+    id: "legacy",
+    from: "original-door:a",
+    to: "original-door:b",
+    points: [
+      [-1, 1],
+      [0, 1],
+      [5, 1],
+      [6, 1],
+    ],
+  });
+  assert.deepEqual(control, before);
+});
 
 test("a new mixed-network crossing is refused even when another crossing disappears", () => {
   const primary = {

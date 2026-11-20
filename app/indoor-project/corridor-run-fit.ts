@@ -52,8 +52,18 @@ export type CorridorRunTerminal = {
   point: CorridorXY;
   approachDirection?: CorridorXY;
 };
+/** A complete checked guide retained outside this primary network. Its core
+ * and original terminal approaches constrain proposals; it supplies no new
+ * graph junction or physical/access authority. */
+export type CorridorRetainedPath = {
+  id: string;
+  from: string;
+  to: string;
+  points: readonly CorridorXY[];
+};
 
 export type CorridorRunFitStatistics = {
+  retainedPaths: number;
   strokes: number;
   cycles: number;
   shortRuns: number;
@@ -138,8 +148,8 @@ const segmentsCross = (
     Math.min(Math.abs(da), Math.abs(db)) > n
   );
 };
-const conflictKey = (first: string, second: string | null) =>
-  JSON.stringify(second === null ? [first, null] : [first, second].sort());
+const conflictKey = (first: string, second: string) =>
+  JSON.stringify([first, second].sort());
 
 type Line = { origin: CorridorXY; direction: CorridorXY };
 const project = (line: Line, p: CorridorXY): CorridorXY => {
@@ -209,6 +219,7 @@ export function fitCorridorRuns(input: {
   /** Original edges whose terminals must stay connected; a run may not
    * lengthen their shared-lane route beyond `detourRatio`/`detourFeet`. */
   requiredEdges?: readonly { from: string; to: string }[];
+  retainedPaths?: readonly CorridorRetainedPath[];
 }) {
   const P = CORRIDOR_RUN_FIT;
   const vertices = input.vertices.map(copy);
@@ -220,6 +231,13 @@ export function fitCorridorRuns(input: {
       points: chain.points.map(copy),
     })),
   );
+  // Contacts belong to original checked paths, not positions in the changing
+  // live set. Unfitted spurs, self-loops and explicit zero lanes retain their
+  // original chain identity; ordinary lanes receive their original stroke's
+  // identity below. Splitting a path at a doorway must not change its lineage.
+  const lineage = new WeakMap<Chain, string>(
+    [...live].map((chain, i) => [chain, `chain:${i}`]),
+  );
   const joins = new Map(
     [...input.joins]
       .sort(([a], [b]) => a.localeCompare(b))
@@ -229,7 +247,14 @@ export function fitCorridorRuns(input: {
       ]),
   );
   const terminalById = new Map(input.terminals.map((t) => [t.id, t]));
+  const retained = (input.retainedPaths ?? []).map((path) => ({
+    id: `retained:${path.id}`,
+    from: `terminal:${path.from}` as string | number,
+    to: `terminal:${path.to}` as string | number,
+    points: path.points.map(copy),
+  }));
   const statistics: CorridorRunFitStatistics = {
+    retainedPaths: retained.length,
     strokes: 0,
     cycles: 0,
     shortRuns: 0,
@@ -403,6 +428,8 @@ export function fitCorridorRuns(input: {
     // that stroke: a run ending there (a T stem) keeps them fixed.
   }
   statistics.strokes = strokes.length;
+  for (const [i, stroke] of strokes.entries())
+    for (const { chain } of stroke.steps) lineage.set(chain, `run:${i}`);
   const order = strokes
     .map((stroke, i) => ({ stroke, i }))
     .sort((a, b) => b.stroke.raw - a.stroke.raw || a.i - b.i);
@@ -410,33 +437,27 @@ export function fitCorridorRuns(input: {
   const placed = new Set<number>();
   const topologyKeys = () => {
     const items = [
-      ...[...live].map((chain, i) => ({
-        id: `core:${i}`,
+      ...[...live].map((chain) => ({
+        id: lineage.get(chain)!,
         from: chain.from as string | number,
         to: chain.to as string | number,
         points: chain.points,
       })),
       ...[...joins].map(([id, join]) => ({
         id: `approach:${id}`,
-        terminal: id,
         from: `terminal:${id}` as string | number,
         to: join.vertex as string | number,
         points: join.approach,
       })),
+      ...retained,
     ];
-    // A contact is identified by its approach-conflict key (as in the
-    // complete-network acceptance) and its exact location: a run may keep a
-    // contact the checked network already had, never add or move one.
+    // Both original path identities and the exact location must be retained.
+    // A contact between two other lanes at the same point cannot authorize a
+    // moved core/core or approach/core contact. Explicit shared endpoints are
+    // still qualified by their graph identities in the contact inspector.
     const keys = new Set<string>();
     for (const { pair, at } of corridorChainTopologyContacts(items)) {
-      const a = (items[pair[0]] as { terminal?: string }).terminal,
-        b = (items[pair[1]] as { terminal?: string }).terminal;
-      const key =
-        a === undefined && b === undefined
-          ? "core"
-          : a !== undefined && b !== undefined
-            ? conflictKey(a, b)
-            : conflictKey((a ?? b)!, null);
+      const key = conflictKey(items[pair[0]].id, items[pair[1]].id);
       keys.add(`${key}@${at}`);
     }
     return keys;
@@ -1144,7 +1165,9 @@ export function fitCorridorRuns(input: {
         if (!same(q[k], points.at(-1)!) && !same(q[k], b.point))
           points.push(copy(q[k]));
       points.push(copy(b.point));
-      pieces.push({ from: idOf(a.vertex), to: idOf(b.vertex), points });
+      const piece = { from: idOf(a.vertex), to: idOf(b.vertex), points };
+      lineage.set(piece, lineage.get(stroke.steps[0].chain)!);
+      pieces.push(piece);
     }
     // Kept branches: their old join becomes a new dead-end vertex.
     const connectorEnds = new Map<string, number>();
@@ -1157,11 +1180,19 @@ export function fitCorridorRuns(input: {
       const vertex = nextVertex + newVertices.length;
       newVertices.push(copy(placement.connector[0]));
       connectorEnds.set(key, vertex);
-      pieces.push({
+      const piece = {
         from: vertex,
         to: idOf(vertexFor(placement.point)!),
         points: placement.connector.map(copy),
-      });
+      };
+      // A new connector has no old non-junction contacts to inherit. Its real
+      // endpoint identities still permit the kept approach and fitted run to
+      // meet it. Reused connectors are represented by the same piece above.
+      lineage.set(
+        piece,
+        `connector:${lineage.get(stroke.steps[0].chain)!}:${key}`,
+      );
+      pieces.push(piece);
     }
     const piecesSupported = pieces.every((piece) =>
       piece.points

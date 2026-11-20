@@ -33,6 +33,7 @@ import { routeWorkerDataset } from "../../app/indoor-project/route-worker-datase
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { projectNavigationSteps } from "../../app/indoor-project/navigation-steps";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import { corridorCandidateDatasetSha256 } from "./lib/corridor-candidate-input";
 import {
   assertSharedCorridorRouteParity,
   assertPathwayRoute,
@@ -66,7 +67,7 @@ const root = path.resolve(import.meta.dirname, "../.."),
 await mkdir(out, { recursive: false });
 const sha = (bytes: Uint8Array | string) =>
   createHash("sha256").update(bytes).digest("hex");
-const jsonSha = (value: unknown) => sha(JSON.stringify(value));
+const jsonSha = corridorCandidateDatasetSha256;
 async function fileSha(filename: string) {
   const hash = createHash("sha256");
   for await (const bytes of createReadStream(filename)) hash.update(bytes);
@@ -109,8 +110,14 @@ const log = (phase: string, details: object = {}) =>
       phase,
       elapsedSeconds: (performance.now() - started) / 1000,
       ...details,
+      memory: process.memoryUsage(),
+      maxRSSKiB: process.resourceUsage().maxRSS,
     }),
   );
+const collect = (phase: string, details: object = {}) => {
+  globalThis.gc?.();
+  log(phase, details);
+};
 const write = (name: string, value: unknown) =>
   writeFile(path.join(out, name), JSON.stringify(value, null, 2) + "\n");
 await write("started.json", {
@@ -131,7 +138,7 @@ await initializeNativeExactGeosOverlay();
 let at = performance.now();
 let project: IndoorProject | undefined = await readIndoorProject(
   await readFile(input),
-  (progress) => log("normal-source-import", progress),
+  (progress) => collect("normal-source-import", progress),
 );
 assert.equal(
   project.manifest.format,
@@ -142,6 +149,7 @@ phases.push({
   phase: "normal-source-import",
   seconds: (performance.now() - at) / 1000,
 });
+collect("normal-source-import-complete");
 const source = project.dataset,
   sourceSha256 = jsonSha(source),
   heldTransitions = source.edges
@@ -192,12 +200,16 @@ assert.equal(
   sourceSha256,
   "Guide installation changed the source",
 );
-log("candidate-guides-bound", { guides: metadata.guides.length });
+collect("candidate-guides-bound", { guides: metadata.guides.length });
 at = performance.now();
 let archive: Uint8Array | undefined = await exportPreparedRoutingProject(
   project,
   data,
 );
+collect("normal-export-complete", { archiveBytes: archive.length });
+// Hash the complete accepted value before retaining a second inflated indoor
+// member. The following readback still verifies every exported original member.
+const acceptedDatasetSha256 = jsonSha(data);
 const archiveSha256 = sha(archive),
   outputZip = path.join(out, "UNBC.shared-pathways.candidate.reviter.zip");
 await writeFile(outputZip, archive, { flag: "wx" });
@@ -208,7 +220,7 @@ const manifest = JSON.parse(strFromU8(manifestFiles["manifest.json"]));
 const preservation: { name: string; sha256: string; bytes: number }[] = [];
 for (const [name, original] of Object.entries(project.files)) {
   if (name === "manifest.json" || name.startsWith("viewer/display/")) continue;
-  const saved: Uint8Array = unzipSync(archive, {
+  let saved: Uint8Array | undefined = unzipSync(archive, {
     filter: (entry) => entry.name === name,
   })[name];
   assert(saved, `Missing exported member ${name}`);
@@ -216,7 +228,7 @@ for (const [name, original] of Object.entries(project.files)) {
   if (name === "viewer/indoor.json") {
     assert.equal(
       digest,
-      jsonSha(data),
+      acceptedDatasetSha256,
       "Exported dataset bytes differ from the accepted value",
     );
     assert.equal(digest, manifest.indoor.sha256);
@@ -226,10 +238,18 @@ for (const [name, original] of Object.entries(project.files)) {
     assert.equal(saved.length, original.length);
     preservation.push({ name, sha256: digest, bytes: saved.length });
   }
+  const savedBytes = saved.length;
+  saved = undefined;
+  collect("export-member-verified", {
+    member: name,
+    bytes: savedBytes,
+    sha256: digest,
+  });
 }
 const archiveBytes = archive.length;
 archive = undefined;
 project = undefined;
+collect("export-archive-and-project-released");
 phases.push({
   phase: "normal-export-and-transport-verification",
   seconds: (performance.now() - at) / 1000,
@@ -255,8 +275,9 @@ for (const item of cases) {
       `${item.id}: required source edge is absent or disabled: ${id}`,
     );
 }
-const calculate = createWorkerRouteCalculator(data),
-  actual: {
+let calculate: ReturnType<typeof createWorkerRouteCalculator> | undefined =
+  createWorkerRouteCalculator(data);
+const actual: {
     id: string;
     result: RouteCalculation;
     instructions: ReturnType<typeof projectNavigationSteps>;
@@ -282,12 +303,22 @@ for (const item of cases) {
   at = performance.now();
   log("normal-route-start", { id: item.id });
   try {
-    const options = { ...item.options, useSharedCorridorGuides: true },
-      result = calculate(item.from, item.to, item.mode, options),
-      baseline = calculate(item.from, item.to, item.mode, {
+    const options = { ...item.options, useSharedCorridorGuides: true };
+    const result: RouteCalculation = calculate(
+      item.from,
+      item.to,
+      item.mode,
+      options,
+    );
+    const baseline: RouteCalculation = calculate(
+      item.from,
+      item.to,
+      item.mode,
+      {
         ...options,
         useSharedCorridorGuides: false,
-      });
+      },
+    );
     const pathway = item.options.endpointMode === "pathway";
     const parity = pathway
       ? assertPathwayRoute(item, result, baseline, originalEdges, verifyStop)
@@ -340,6 +371,8 @@ for (const item of cases) {
   await write("normal-routes.json", { rows, failures });
 }
 await write("actual-route-values.json", actual);
+calculate = undefined;
+collect("normal-calculator-released");
 // Bundle the unchanged production worker entry. The adapter supplies only the
 // Node message bridge; no fake cache, source mutation or receipt is installed.
 const workerDirectory = path.join(out, "worker");
@@ -379,6 +412,7 @@ await writeFile(
     ),
   ),
 );
+collect("production-worker-start");
 const worker = new Worker(pathToFileURL(bundle), {
   execArgv: [],
   resourceLimits: {
@@ -456,7 +490,10 @@ try {
         mode: item.mode,
         options: { ...item.options, useSharedCorridorGuides: true },
       } satisfies RouteRequest);
-      sentData = true;
+      if (!sentData) {
+        sentData = true;
+        collect("production-worker-dataset-sent");
+      }
       let timeout: ReturnType<typeof setTimeout> | undefined;
       const value = await Promise.race([
         response,
@@ -497,6 +534,7 @@ try {
   }
 } finally {
   await worker.terminate();
+  collect("production-worker-terminated");
 }
 assert.equal(
   jsonSha(source),

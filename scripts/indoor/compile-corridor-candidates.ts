@@ -1,7 +1,6 @@
 import { readFile, mkdir, readdir, open, unlink } from "node:fs/promises";
 import { writeFileSync, renameSync } from "node:fs";
 import path from "node:path";
-import { unzipSync, strFromU8 } from "fflate";
 import { initializeNativeExactGeosOverlay } from "../../app/indoor-project/native-exact-geos-overlay";
 import { prepareSharedCorridorRouting } from "../../app/indoor-project/prepare-corridor-routing";
 import { indexCorridorRoutingScope } from "../../app/indoor-project/corridor-routing-scope";
@@ -11,8 +10,11 @@ import {
   preparedRoutingKey,
   ROUTING_GUIDE_VERSION,
 } from "../../app/indoor-project/prepared-routing";
-import type { IndoorDataset } from "../../app/indoor-project/contract";
 import { preparedDisplayEngineBinding } from "./prepared-display-engine-binding";
+import {
+  corridorCandidateDatasetSha256,
+  readCorridorCandidateInput,
+} from "./lib/corridor-candidate-input";
 import {
   CORRIDOR_CANDIDATE_PARAMETERS,
   corridorCandidateCanonicalJson,
@@ -95,43 +97,16 @@ const compilerSource = () =>
 const source = compilerSource();
 // The dependency walker follows local imports and WASM URLs, including this
 // CLI, the checkpoint emitter/merger and its own resolver implementation.
-const readInput = async () => {
-  const bytes = await readFile(input);
-  const manifestFiles = unzipSync(bytes, {
-    filter: (entry) => entry.name === "manifest.json",
-  });
-  if (!manifestFiles["manifest.json"])
-    throw new Error("Missing package manifest");
-  const manifest = JSON.parse(strFromU8(manifestFiles["manifest.json"]));
-  const descriptors = [manifest.indoor, manifest.floors, manifest.georeference];
-  if (descriptors.some((descriptor) => typeof descriptor?.path !== "string"))
-    throw new Error("Missing package member descriptor");
-  const wanted = new Set(descriptors.map((descriptor) => descriptor.path));
-  // A master may carry large native models. Read only the three bound
-  // members needed here; do not inflate unrelated original source assets.
-  const files = unzipSync(bytes, { filter: (entry) => wanted.has(entry.name) });
-  for (const descriptor of descriptors) {
-    const member = files[descriptor.path];
-    if (
-      !member ||
-      member.length !== descriptor.bytes ||
-      sha(member) !== descriptor.sha256
-    )
-      throw new Error("Package member does not match its manifest");
-  }
-  const data = JSON.parse(
-    strFromU8(files[manifest.indoor.path]),
-  ) as IndoorDataset;
-  if (data.source.modelSha256 !== manifest.model.sha256)
-    throw new Error("Model identities disagree");
-  return {
-    data,
-    inputZipSha256: sha(bytes),
-    inputJsonSha256: sha(files[manifest.indoor.path]),
-  };
-};
-const { data, inputZipSha256, inputJsonSha256 } = await readInput();
-const sourceSnapshot = sha(JSON.stringify(data));
+const { data, inputZipSha256, inputJsonSha256, sourceSnapshot } =
+  await readCorridorCandidateInput(input, (phase) =>
+    console.log(
+      JSON.stringify({
+        phase: `candidate-input:${phase}`,
+        memory: process.memoryUsage(),
+        maxRSSKiB: process.resourceUsage().maxRSS,
+      }),
+    ),
+  );
 const binding: CorridorCandidateBinding = {
   version: 2,
   inputZipSha256,
@@ -316,7 +291,7 @@ try {
       );
     },
   });
-  const unchangedData = sha(JSON.stringify(data)) === sourceSnapshot;
+  const unchangedData = corridorCandidateDatasetSha256(data) === sourceSnapshot;
   const unchangedCompiler = compilerSource().sha256 === source.sha256;
   sourcePreserved = unchangedData && unchangedCompiler;
   if (!unchangedData) throw new Error("Compiler modified the original dataset");
@@ -447,7 +422,7 @@ try {
   if (sourcePreserved === undefined) {
     try {
       sourcePreserved =
-        sha(JSON.stringify(data)) === sourceSnapshot &&
+        corridorCandidateDatasetSha256(data) === sourceSnapshot &&
         compilerSource().sha256 === source.sha256;
     } catch {
       sourcePreserved = false;

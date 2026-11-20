@@ -1,0 +1,94 @@
+{
+  "format": "unbc-map-cleanup-browser-check-v1",
+  "baseCommit": "8e676896768a52a6a2017fa009e307791fb60722",
+  "status": "browser-blocked-before-application-load",
+  "server": {
+    "mode": "pages",
+    "url": "http://127.0.0.1:42173/openindoormaps/",
+    "readyMilliseconds": 4769,
+    "stopped": true,
+    "stopExitCode": 130,
+    "log": "vite.log"
+  },
+  "attempts": [
+    {
+      "surface": "repository Playwright with system Chromium",
+      "executable": "/usr/bin/chromium",
+      "flags": [
+        "--use-angle=swiftshader",
+        "--enable-unsafe-swiftshader",
+        "--disable-gpu-sandbox"
+      ],
+      "outcome": "Chromium aborted before opening a page",
+      "error": "FATAL:chrome/browser/process_singleton_posix.cc:297 Check failed: . socket() failed: Operation not permitted (1)"
+    },
+    {
+      "surface": "connected Browser plugin",
+      "outcome": "Unavailable",
+      "error": "Browser access requires the originating browser context. Open ChatGPT in the browser with the connected extension and try again."
+    },
+    {
+      "surface": "cloud Chrome",
+      "requestedUrl": "http://127.0.0.1:42173/openindoormaps/#/unbc",
+      "outcome": "Navigation failed",
+      "error": "net::ERR_CONNECTION_REFUSED",
+      "followup": "Observing the resulting error tab was denied by browser URL policy. The tool explicitly prohibited workarounds; browser attempts stopped."
+    }
+  ],
+  "desktop": {
+    "viewportIntended": {
+      "width": 1440,
+      "height": 1000
+    },
+    "navigationExecuted": false,
+    "pageErrors": null
+  },
+  "mobile": {
+    "viewportIntended": {
+      "width": 390,
+      "height": 844
+    },
+    "navigationExecuted": false,
+    "pageErrors": null
+  },
+  "persistentRegression": {
+    "file": "tests/e2e/github-pages.spec.ts",
+    "sha256": "03c84017e8c7ca5a14dd374b71097865bc3285d0ac688c07a3a35a4c3405870f",
+    "status": "added; browser execution remains blocked",
+    "sequence": [
+      "open empty project workspace to load shared MapLibre chunk",
+      "click Venue maps and UNBC IFC Import",
+      "wait for real MapLibre style readiness and basemap-3d-buildings layer",
+      "same-document hash navigation to project workspace; verify old map removed",
+      "browser back; verify a newly created map with the real building layer",
+      "browser forward and reload workspace",
+      "click Venue maps and verify home heading",
+      "assert no uncaught pageerror"
+    ],
+    "fixture": "tiny deterministic basemap vector source and empty PBF replies; actual UNBC demo data and runtime component; no full viewer import",
+    "checksCompleted": [
+      "Prettier formatting",
+      "TypeScript single-file syntactic transpilation without errors",
+      "git diff --check",
+      "actual built maplibre-BcKPbwae.js lazy CommonJS export resolved successfully and exposes Map.prototype.addLayer"
+    ],
+    "notClaimed": [
+      "browser pass",
+      "full TypeScript semantic check",
+      "production deployment qualification",
+      "geometry or route qualification"
+    ]
+  },
+  "priorTargetedEffectHarness": {
+    "passed": 8,
+    "failed": 0,
+    "path": "/workspace/scratch/3d6560c4a7bf/pr4-workflow-fix/verify-map-cleanup.mjs"
+  },
+  "analogousCleanupInspection": "No additional runtime crash observed. The UNBC route uses existing guarded cleanup helpers for indoor and POI layers. The unguarded VenueModelsLayer cleanup is mounted only by the unrelated Galleria demo; no changes made.",
+  "bindings": {
+    "before": "bindings-before.json",
+    "after": "bindings-after.json",
+    "automaticallyRegeneratedByVite": true,
+    "reverted": false
+  }
+}

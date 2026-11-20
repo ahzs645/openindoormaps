@@ -4,6 +4,11 @@ This change prepares a reviewable next step from the November 17 handoff. It is
 **not a new UNBC publication**. The pull request remains draft until its changed
 preparation, route and plan consumers have matching, freshly qualified assets.
 
+The [review follow-up](review-followup/README.md) records the subsequent contact
+lineage fix, retained-path constraints, navigation cleanup, CI coverage and
+complete-input memory work. Its validation record distinguishes the current
+checks from the original 107-test review record below.
+
 ## What changed
 
 - Compiled directions-cache URLs now follow the application's deployment base in
@@ -63,8 +68,11 @@ describes complete-cell inputs, exact support, fallback handling and checkpoint
 bindings. A scoped diagnostic is evidence about a candidate; it does not authorize
 publication or replace the complete physical and policy replay.
 
-The workspace's full-model preparation and initial unrestricted build/typecheck
-attempts were stopped with exit 137. The scoped indoor-project typecheck passed.
+At the original PR checkpoint, full-model preparation and initial unrestricted
+build/typecheck attempts were stopped with exit 137; the scoped indoor-project
+typecheck passed. The [follow-up record](review-followup/README.md) supersedes
+those results where a later check completed, including the full TypeScript check
+and complete-source Building 10 compiler runs.
 The local command-line browser could not start because its required socket call
 was denied; connected and cloud browsers could not reach the workspace server.
 Accordingly, the gallery contains exact scientific plots of the handoff's recorded
